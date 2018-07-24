@@ -1,7 +1,10 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
+import activesupport.IllegalBrowserException;
+import activesupport.MissingDriverException;
 import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.S3;
+import activesupport.driver.Browser;
 import activesupport.http.RestUtils;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
@@ -15,7 +18,6 @@ import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.GrantLicenceAPI;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.stepdefs.World;
 import org.dvsa.testing.lib.Login;
-import org.dvsa.testing.lib.browser.Browser;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.internal.SearchNavBar;
@@ -46,7 +48,7 @@ import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 
 public class GenericUtils extends BasePage {
-
+   private static Browser browser = new Browser();
     private static EnvironmentType env;
 
     static {
@@ -206,16 +208,16 @@ public class GenericUtils extends BasePage {
         ZipUtil.pack(new File("./src/test/resources/ESBR"), new File("./src/test/resources/ESBR.zip"));
     }
 
-    public static void internalUserLogin() throws MissingRequiredArgument, MalformedURLException {
+    public static void internalUserLogin() throws MissingRequiredArgument, MalformedURLException, MissingDriverException, IllegalBrowserException {
         String url = URL.build(ApplicationType.INTERNAL, env).toString();
 
         if (Browser.isInitialised()) {
             //Quit Browser and open a new window
-            Browser.quit();
+            browser.quit();
         }
-        Browser.go(url);
+        browser.navigate(url);
 
-        if (Browser.getURL().contains("da")) {
+        if (url.contains("da")) {
             Login.signIn(DA_USER, DA_PASSWORD);
         } else {
             Login.signIn(USER, USER_PASSWORD);
