@@ -275,11 +275,15 @@ public class GenericUtils extends BasePage {
         List<WebElement> radioButtons = Browser.navigate().findElements(By.xpath("//label[@class='form-control form-control--radio form-control--inline']"));
         radioButtons.stream().filter(s -> s.getText().equals(radioButtonValue)).forEach(x -> x.click());
     }
-    public void selectInternalRadioButtons(String value) throws IllegalBrowserException {
+    public void findAllRadioButtons(String value) throws IllegalBrowserException {
         List<WebElement> radioButtons = Browser.navigate().findElements(By.xpath("//*[@type='radio']"));
         radioButtons.stream().filter(x -> x.getAttribute("value").equals(value)).forEach(x -> x.click());
     }
     public void selectFirstValueInList(String selector) throws IllegalBrowserException {
         Browser.navigate().findElements(By.xpath(selector)).stream().findFirst().get().click();
+    }
+
+    public boolean checkForValuesInTable(String searchTerm) throws IllegalBrowserException {
+        return Browser.navigate().findElements(By.xpath("//table/tbody/tr[*]")).stream().allMatch(w -> w.getText().contains(searchTerm));
     }
 }

@@ -59,7 +59,7 @@ public class ESBRupload extends BasePage implements En {
         Given("^i add a new bus registration$", () -> {
             world.journeySteps.internalSiteAddBusNewReg(5);
             clickByLinkText("Register");
-            world.genericUtils.selectInternalRadioButtons("Y");
+            world.genericUtils.findAllRadioButtons("Y");
             clickByName("form-actions[submit]");
             clickByLinkText("Service details");
             clickByLinkText("TA's");

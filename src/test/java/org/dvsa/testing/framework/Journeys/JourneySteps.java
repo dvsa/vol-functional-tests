@@ -308,6 +308,11 @@ public class JourneySteps extends BasePage {
         }
     }
 
+    public void externalSearch() throws IllegalBrowserException {
+        String myURL = URL.build(ApplicationType.EXTERNAL, env, "search/find-lorry-bus-operators/").toString();
+        Browser.navigate().get(myURL);
+    }
+
     public static void generateLetter() throws IllegalBrowserException {
         clickByLinkText("Docs & attachments");
         isTextPresent("1 Docs & attachments", 60);
