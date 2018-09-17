@@ -7,9 +7,9 @@ import org.dvsa.testing.lib.pages.BasePage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TmVerifySameOperator1 extends BasePage implements En {
+public class TmVerifySameOperator extends BasePage implements En {
 
-    public TmVerifySameOperator1(World world) {
+    public TmVerifySameOperator(World world) {
         Given("^the operator is on check your answers page$", () -> {
             // Write code here that turns the phrase above into concrete actions
             throw new PendingException();
@@ -74,5 +74,53 @@ public class TmVerifySameOperator1 extends BasePage implements En {
             //TODO: Add link
             assertTrue(isElementPresent(""));
         });
+        When("^you change your details details$", () -> {
+            click("");
+        });
+        When("^you change your responsibilities details$", () -> {
+            //click change details
+            //use hard coded values to to change the details i.e call encapsulated methods
+            //check for validation
+            click("");
+            assertTrue();
+        });
+        When("^you change your Hour per week details$", () -> {
+            //click change details
+            //use hard coded values to to change the details i.e call encapsulated methods
+            //check for validation
+            click("");
+        });
+        When("^you change your other licences details$", () -> {
+            //click change details
+            //use hard coded values to to change the details i.e call encapsulated methods
+            //check for validation
+            click("");
+        });
+        When("^you change your additional information details$", () -> {
+             //click change details
+            //use hard coded values to to change the details i.e call encapsulated methods
+            //check for validation
+            click("");
+        });
+        When("^you change your other employment details$", () -> {
+            //click change details
+            //use hard coded values to to change the details i.e call encapsulated methods
+            //check for validation
+            click("");
+        });
+        When("^you change your convitions & penalties details$", () -> {
+            //click change details
+            //use hard coded values to to change the details i.e call encapsulated methods
+            //check for validation
+            click("");
+        });
+        When("^you change your revoked, curtailed or suspended licences details$", () -> {
+            //click change details
+            //use hard coded values
+            //to to change the details i.e call encapsulated methods
+            //check for validation
+            click("");
+        });
+
     }
 }
