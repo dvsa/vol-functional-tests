@@ -58,9 +58,113 @@ public class CreateLicenceAPI {
     private String applicationStatus;
     private String licenceId;
     private String businessName = "API";
-
     private static int version = 1;
     private int noOfVehiclesRequired = 5;
+
+
+    //TM API
+        private String tmType;
+        private String isOwner;
+        private String hoursMon;
+        private String hoursTue;
+        private String hoursWed;
+        private String hoursThu;
+        private String hoursFri;
+        private String hoursSat;
+        private String hoursSun;
+        private String additionalInformation;
+        private String tmApplicationStatus;
+
+
+
+
+    public String getTmType() {
+        return tmType;
+    }
+
+    public void setTmType(String tmType) {
+        this.tmType = tmType;
+    }
+
+    public String getIsOwner() {
+        return isOwner;
+    }
+
+    public void setIsOwner(String isOwner) {
+        this.isOwner = isOwner;
+    }
+
+    public String getHoursMon() {
+        return hoursMon;
+    }
+
+    public void setHoursMon(String hoursMon) {
+        this.hoursMon = hoursMon;
+    }
+
+    public String getHoursTue() {
+        return hoursTue;
+    }
+
+    public void setHoursTue(String hoursTue) {
+        this.hoursTue = hoursTue;
+    }
+
+    public String getHoursWed() {
+        return hoursWed;
+    }
+
+    public void setHoursWed(String hoursWed) {
+        this.hoursWed = hoursWed;
+    }
+
+    public String getHoursThu() {
+        return hoursThu;
+    }
+
+    public void setHoursThu(String hoursThu) {
+        this.hoursThu = hoursThu;
+    }
+
+    public String getHoursFri() {
+        return hoursFri;
+    }
+
+    public void setHoursFri(String hoursFri) {
+        this.hoursFri = hoursFri;
+    }
+
+    public String getHoursSat() {
+        return hoursSat;
+    }
+
+    public void setHoursSat(String hoursSat) {
+        this.hoursSat = hoursSat;
+    }
+
+    public String getHoursSun() {
+        return hoursSun;
+    }
+
+    public void setHoursSun(String hoursSun) {
+        this.hoursSun = hoursSun;
+    }
+
+    public String getAdditionalInformation() {
+        return additionalInformation;
+    }
+
+    public void setAdditionalInformation(String additionalInformation) {
+        this.additionalInformation = additionalInformation;
+    }
+
+    public String getTmApplicationStatus() {
+        return tmApplicationStatus;
+    }
+
+    public void setTmApplicationStatus(String tmApplicationStatus) {
+        this.tmApplicationStatus = tmApplicationStatus;
+    }
 
     public String getTitle() {
         return title;
