@@ -22,7 +22,6 @@ public class GenerateLastTMLetter extends BasePage implements En {
 
         Given("^i have a valid \"([^\"]*)\" licence$", (String arg0) -> {
             world.genericUtils = new GenericUtils(world);
-            world.createLicence.setIsInterim("N");
             world.createLicence.setOperatorType(arg0);
             world.APIJourneySteps.createAndSubmitApplication();
             if(String.valueOf(arg0).equals("public")){
