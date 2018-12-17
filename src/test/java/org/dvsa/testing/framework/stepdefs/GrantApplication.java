@@ -15,12 +15,16 @@ public class GrantApplication implements En {
         this.world = world;
 
         When("^I grant licence$", () -> {
-            world.grantLicence.grantLicence();
+            apiResponse = world.grantLicence.grantLicence();
         });
         Then("^the licence should be granted$", () -> {
-            apiResponse = world.grantLicence.payGrantFees();
-            assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
-            System.out.println(world.createLicence.getLicenceNumber());
+            if (world.createLicence.getOperatorType().equals("goods")) {
+                apiResponse = world.grantLicence.payGrantFees();
+                assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
+            } else {
+                assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
+            }
+            System.out.println("Licence Numuber: " + world.createLicence.getLicenceNumber());
         });
     }
 }

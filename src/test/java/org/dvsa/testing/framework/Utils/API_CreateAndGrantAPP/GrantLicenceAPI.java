@@ -128,7 +128,7 @@ public class GrantLicenceAPI {
         return apiResponse;
     }
 
-    public void grantLicence() {
+    public ValidatableResponse grantLicence() {
         if (world.updateLicence.getVariationApplicationNumber() != null) {
             world.grantLicence.createOverview(world.updateLicence.getVariationApplicationNumber());
             world.grantLicence.variationGrant(world.updateLicence.getVariationApplicationNumber());
@@ -138,9 +138,10 @@ public class GrantLicenceAPI {
             world.grantLicence.payOutstandingFees(world.createLicence.getOrganisationId(), world.createLicence.getApplicationNumber());
             world.grantLicence.grant(world.createLicence.getApplicationNumber());
         }
+        return apiResponse;
     }
 
-    public void variationGrant(String applicationNumber) {
+    private void variationGrant(String applicationNumber) {
         String grantApplicationResource = URL.build(env,String.format("variation/%s/grant/", applicationNumber)).toString();
         GenericBuilder grantVariationBuilder = new GenericBuilder().withId(applicationNumber);
         apiResponse = RestUtils.put(grantVariationBuilder, grantApplicationResource, getHeaders());

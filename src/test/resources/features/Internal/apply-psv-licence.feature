@@ -1,7 +1,6 @@
 @INT
 @APPLY-PSV-LICENCE
 Feature: Apply for a psv licence
-
   Scenario: Apply for a restricted licence
     Given I have applied for a "public" "restricted" licence
     When I grant licence

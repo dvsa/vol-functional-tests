@@ -16,5 +16,6 @@ Feature:Digital Surrender - PSV Surrender licence
     Then the new correspondence details should be displayed on the review page
 
   Scenario: Check current discs
+    And discs have been added to my licence
     And i navigate to the current discs page
     Then the number of disc should match the vehicles registered on the licence

@@ -78,5 +78,8 @@ public class PsvSurrenders extends BasePage implements En {
         Then("^the number of disc should match the vehicles registered on the licence$", () -> {
             assertEquals(getText("",SelectorType.XPATH),String.valueOf(world.createLicence.getNoOfVehiclesRequired()));
         });
+        And("^discs have been added to my licence$", () -> {
+           world.updateLicence.printLicenceDiscs();
+        });
     }
 }

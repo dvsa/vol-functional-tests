@@ -13,13 +13,19 @@ import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import Injectors.World;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class UpdateLicenceAPI extends BasePage {
     private ValidatableResponse apiResponse;
@@ -34,6 +40,7 @@ public class UpdateLicenceAPI extends BasePage {
     private String businessType;
     private String licenceType;
 
+    private int endNumber;
     private int caseNoteId;
     private int complaintId;
     private int convictionId;
@@ -109,6 +116,8 @@ public class UpdateLicenceAPI extends BasePage {
     public String getLicenceStatus() {
         return licenceStatus;
     }
+    public int getEndNumber() { return endNumber; }
+    public void setEndNumber(int endNumber) { this.endNumber = endNumber; }
     private static EnvironmentType env;
 
     static {
@@ -437,5 +446,29 @@ public class UpdateLicenceAPI extends BasePage {
 
         apiResponse = RestUtils.put(featureToggleBuilder, updateFeatureToggleResource, getHeaders());
         apiResponse.statusCode(HttpStatus.SC_OK);
+    }
+
+    public void getDiscInformation(){
+        Map<String,String> queryParams = new HashMap<>();
+        {
+            queryParams.put("niFlag","N");
+            queryParams.put("licenceType",world.createLicence.getLicenceType());
+            queryParams.put("operatorType",world.createLicence.getOperatorType());
+            queryParams.put("discSequence","6");
+        }
+        Headers.getHeaders().put("x-pid",adminApiHeader());
+        String discNumberingResource = org.dvsa.testing.lib.url.api.URL.build(env,"disc-sequence/discs-numbering").toString();
+        apiResponse = RestUtils.getWithQueryParams(discNumberingResource,queryParams,getHeaders());
+        setEndNumber(apiResponse.extract().jsonPath().get("results.endNumber"));
+    }
+
+    public void printLicenceDiscs(){
+        getDiscInformation();
+        Headers.getHeaders().put("x-pid",adminApiHeader());
+        String discPrintResource = org.dvsa.testing.lib.url.api.URL.build(env,"goods-disc/print-discs/").toString();
+        PrintDiscBuilder printDiscBuilder = new PrintDiscBuilder().withDiscSequence("6").withLicenceType(world.createLicence.getLicenceType()).withNiFlag(world.createLicence.getNiFlag())
+                .withStartNumber(String.valueOf(getEndNumber()+1));
+        apiResponse = RestUtils.post(printDiscBuilder,discPrintResource,getHeaders());
+        assertThat(apiResponse.extract().body().jsonPath().get("id.queue"), Matchers.notNullValue());
     }
 }
