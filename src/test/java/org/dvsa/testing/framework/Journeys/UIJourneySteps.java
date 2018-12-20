@@ -707,4 +707,18 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Convictions and Penalties");
         click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
+    public void navigateToSurrendersReviewPage() throws IllegalBrowserException {
+        click("//*[@id='submit']", SelectorType.XPATH);
+        waitForTextToBePresent("Review your contact information");
+    }
+    public void navigateToOperatorLicencePage() throws IllegalBrowserException {
+        navigateToSurrendersReviewPage();
+        navigateToLicenceDiscsPage();
+        //TODO click continue button
+        waitForTextToBePresent("Where is your operator licence?");
+    }
+    public void navigateToLicenceDiscsPage() throws IllegalBrowserException {
+        navigateToSurrendersReviewPage();
+        //TODO add step to click continue button - click(//*[@id='']);
+    }
 }

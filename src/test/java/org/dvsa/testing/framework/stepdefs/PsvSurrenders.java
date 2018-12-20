@@ -81,5 +81,8 @@ public class PsvSurrenders extends BasePage implements En {
         And("^discs have been added to my licence$", () -> {
            world.updateLicence.printLicenceDiscs();
         });
+        And("^i navigate to the current discs page$", () -> {
+
+        });
     }
 }

@@ -133,3 +133,5 @@ target/
 /src/test/resources/parallel/features/
 /src/test/java/runners/
 /allure-report.zip
+/src/test/resources/Operator.csv
+/src/test/resources/TM.csv
