@@ -587,11 +587,11 @@ public class UIJourneySteps extends BasePage {
         String tmEmailAddress = "externalTM@vol.com";
         String hours = "8";
         findElement("//*[@id='responsibilities']//*[contains(text(),'Internal')]", SelectorType.XPATH, 10).click();
-        findElement("//*[contains(text(),'" + OtherLicence + "')]//*[@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 10).click();
-        findElement("//*[contains(text(),'" + isOwner + "')]//*[@name='responsibilities[isOwner]']", SelectorType.XPATH, 10).click();
-        findElement("//*[contains(text(),'" + hasEmployment + "')]//*[@name='otherEmployments[hasOtherEmployment]']", SelectorType.XPATH, 10).click();
-        findElement("//*[contains(text(),'" + hasConvictions + "')]//*[@name='previousHistory[hasConvictions]']", SelectorType.XPATH, 10).click();
-        findElement("//*[contains(text(),'" + hasPreviousLicences + "')]//*[@name='previousHistory[hasPreviousLicences]']", SelectorType.XPATH, 10).click();
+        findElement( "//*[@class='govuk-radios__input'][@value='N'][@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 10).click();
+        findElement("//*[@class='govuk-radios__input'][@value='N'][@name='responsibilities[isOwner]']", SelectorType.XPATH, 10).click();
+        findElement("//*[@class='govuk-radios__input'][@value='N'][@name='otherEmployments[hasOtherEmployment]']", SelectorType.XPATH, 10).click();
+        findElement("//*[@class='govuk-radios__input'][@value='N'][@name='previousHistory[hasConvictions]']", SelectorType.XPATH, 10).click();
+        findElement("//*[@class='govuk-radios__input'][@value='N'][@name='previousHistory[hasPreviousLicences]']", SelectorType.XPATH, 10).click();
         findElement("emailAddress", SelectorType.ID, 10).clear();
         if(findElement("emailAddress",SelectorType.ID,10).getText().isEmpty()) {
             waitAndEnterText("emailAddress", SelectorType.ID, tmEmailAddress);
