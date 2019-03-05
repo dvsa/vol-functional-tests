@@ -1,24 +1,19 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import cucumber.api.PendingException;
 import cucumber.api.Scenario;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class VerifySwitchedOff extends BasePage implements En {
 
     public VerifySwitchedOff(World world) {
-        Given("^i have a \"([^\"]*)\" \"([^\"]*)\" partial application$", (String arg0, String arg1) -> {
-            world.genericUtils = new GenericUtils(world);
+        Given("^I have a \"([^\"]*)\" \"([^\"]*)\" partial application$", (String arg0, String arg1) -> {
             world.createLicence.setOperatorType(arg0);
             if (arg1.equals("NI")) {
                 world.APIJourneySteps.nIAddressBuilder();
