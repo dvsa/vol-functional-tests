@@ -620,7 +620,9 @@ public class CreateLicenceAPI {
             apiResponse = RestUtils.put(genericBuilder, submitTransportManager, getHeaders());
         }
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
+            System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
+            System.out.println(apiResponse.extract().headers().asList());
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }

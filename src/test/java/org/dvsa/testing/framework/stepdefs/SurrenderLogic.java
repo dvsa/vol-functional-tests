@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import com.sun.source.tree.AssertTree;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java8.En;
@@ -221,6 +222,15 @@ public class SurrenderLogic extends BasePage implements En {
             Hooks hooks = new Hooks();
             hooks.attach(scenario);
             hooks.tearDown();
+        });
+        And("^i create and url search for my licence$", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewApplication();
+        });
+        Then("^the \"([^\"]*)\" document is produced automatically$", (String documentName) -> {
+            clickByLinkText("Docs & attachments");
+            assertTrue(isTextPresent(documentName,5));
         });
     }
 }
