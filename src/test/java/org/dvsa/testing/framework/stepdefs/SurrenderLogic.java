@@ -226,6 +226,11 @@ public class SurrenderLogic extends BasePage implements En {
         And("^i create and url search for my licence$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewLicence();
+        });
+        And("^i create and url search for my application", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewApplication();
         });
         Then("^the \"([^\"]*)\" document is produced automatically$", (String documentName) -> {
