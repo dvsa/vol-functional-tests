@@ -88,5 +88,25 @@ public class TMDetails extends BasePage implements En {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
             }
         });
+        When("^a self-serve user adds a TM$", () -> {
+            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            clickByLinkText(world.createLicence.getLicenceNumber());
+            clickByLinkText("Transport Managers");
+            waitForTextToBePresent("Transport Managers");
+            clickByLinkText("change your licence");
+            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+            click("//*[@id='add']",SelectorType.XPATH);
+            selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
+            click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+            enterText("dob_day", String.valueOf(getPastDayOfMonth(5)), SelectorType.ID);
+            enterText("dob_month", String.valueOf(getCurrentMonth()), SelectorType.ID);
+            enterText("dob_year", String.valueOf(getPastYear(20)), SelectorType.ID);
+            enterText("birthPlace","Test",SelectorType.ID);
+
+
+
+            click("form-actions[send]", SelectorType.ID);
+            waitForTextToBePresent("Transport Managers");
+        });
     }
 }
