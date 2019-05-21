@@ -8,3 +8,5 @@ Feature: Grant under consideration application
   Scenario: Grant a goods standard international licence
     When I grant licence
     Then the licence should be granted
+    And i create and url search for my application
+    And the "GV Licence" document is produced automatically

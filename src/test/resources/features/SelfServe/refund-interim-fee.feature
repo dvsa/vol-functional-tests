@@ -68,3 +68,5 @@ Feature: Refund fee paid on new application
     When i pay for the interim application
     And the variation interim is granted
     Then the interim fee should not be refunded
+    And the interim fee has been paid
+    And the "GV Interim Licence" document is produced automatically
