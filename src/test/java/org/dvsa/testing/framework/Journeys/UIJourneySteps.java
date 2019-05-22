@@ -26,6 +26,7 @@ import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -549,7 +550,7 @@ public class UIJourneySteps extends BasePage {
         LoginPage.untilNotOnPage(timeLimitInSeconds);
     }
 
-    public void addTransportManagerDetails() throws IllegalBrowserException {
+    public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
         String[] date = world.genericUtils.getPastDate(25).toString().split("-");
@@ -570,15 +571,19 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("data[role]", SelectorType.ID, role);
     }
 
-    public void addAddressDetails() throws IllegalBrowserException {
+    public void addAddressDetails() throws IllegalBrowserException, InterruptedException {
         //Add Home Address
         String postCode = world.createLicence.getPostcode();
         enterText("postcodeInput1", postCode, SelectorType.ID);
         clickByName("homeAddress[searchPostcode][search]");
+        waitAndClick("homeAddress[searchPostcode][addresses]", SelectorType.ID);
         selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
         //Add Work Address
+        WebDriverWait wait = new WebDriverWait(Driver, 5);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
         enterText("postcodeInput2", postCode, SelectorType.ID);
         clickByName("workAddress[searchPostcode][search]");
+        waitAndClick("workAddress[searchPostcode][addresses]", SelectorType.ID);
         selectValueFromDropDownByIndex("workAddress[searchPostcode][addresses]", SelectorType.ID, 1);
     }
 

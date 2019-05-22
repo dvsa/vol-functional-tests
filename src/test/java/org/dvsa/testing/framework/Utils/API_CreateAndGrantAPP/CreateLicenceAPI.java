@@ -621,6 +621,7 @@ public class CreateLicenceAPI {
         }
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().response().asString());
+            System.out.println(apiResponse.extract().statusCode());
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }

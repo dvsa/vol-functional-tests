@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
@@ -10,7 +11,9 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 
+import java.sql.Driver;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -94,19 +97,35 @@ public class TMDetails extends BasePage implements En {
             clickByLinkText("Transport Managers");
             waitForTextToBePresent("Transport Managers");
             clickByLinkText("change your licence");
+            waitForTextToBePresent("Applying to change a licence");
             click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+            waitForTextToBePresent("Add Transport Manager");
             click("//*[@id='add']",SelectorType.XPATH);
             selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-            enterText("dob_day", String.valueOf(getPastDayOfMonth(5)), SelectorType.ID);
-            enterText("dob_month", String.valueOf(getCurrentMonth()), SelectorType.ID);
-            enterText("dob_year", String.valueOf(getPastYear(20)), SelectorType.ID);
-            enterText("birthPlace","Test",SelectorType.ID);
-
-
-
-            click("form-actions[send]", SelectorType.ID);
-            waitForTextToBePresent("Transport Managers");
+//            enterText("dob_day", String.valueOf(getPastDayOfMonth(5)), SelectorType.ID);
+//            enterText("dob_month", String.valueOf(getCurrentMonth()), SelectorType.ID);
+//            enterText("dob_year", String.valueOf(getPastYear(20)), SelectorType.ID);
+//            enterText("birthPlace","Test",SelectorType.ID);
+//            world.UIJourneySteps.addAddressDetails();
+            world.UIJourneySteps.addTransportManagerDetails();
+//            click("//*[@id='5ce5144507a59']",SelectorType.XPATH);
+//            click("//*[@id='responsibilities[isOwner]']",SelectorType.XPATH);
+//            Browser.getDriver().findElements(By.xpath("//*[contains(@id,'responsibilities[hoursOfWeek]')]")).forEach(x -> {
+//                        try {
+//                            enterText(x.getText(),"3",SelectorType.XPATH);
+//                        } catch (IllegalBrowserException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//            );
+//            click("//*[@id='5ce5144508028']", SelectorType.XPATH);
+//            click("//*[@id='5ce514450ae7b']", SelectorType.XPATH);
+//            click("//*[@id='5ce514450b12b']", SelectorType.XPATH);
+//            click("//*[@id='5ce514450b303']", SelectorType.XPATH);
+//            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+//            click("form-actions[send]", SelectorType.ID);
+//            waitForTextToBePresent("Transport Managers");
         });
     }
 }
