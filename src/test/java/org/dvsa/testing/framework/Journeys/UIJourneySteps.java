@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
@@ -561,14 +562,53 @@ public class UIJourneySteps extends BasePage {
         //Add Home Address
         addAddressDetails();
         //Add Responsibilities
-        click("//*[contains(text(),'External')]", SelectorType.XPATH);
-        world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        waitAndClick("//*[contains(text(),'External')]", SelectorType.XPATH);
+        try {
+            world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        }
+        catch (org.openqa.selenium.StaleElementReferenceException ex) {
+            world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        }
+
+        //Add Other Employment
+        waitForTextToBePresent("Add other employment");
+        waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='tm-employer-name-details[employerName]']",SelectorType.XPATH,"test");
+        String postCode = world.createLicence.getPostcode();
+        enterText("postcodeInput1", postCode, SelectorType.ID);
+        clickByName("homeAddress[searchPostcode][search]");
+        waitAndClick("homeAddress[searchPostcode][addresses]", SelectorType.ID);
+        selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
+        waitAndEnterText("//*[@id='tm-employment-details[position]']",SelectorType.XPATH,"test");
+        enterText("//*[@id='tm-employment-details[hoursPerWeek]']", postCode, SelectorType.ID);
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
+
+        // Convictions
+        waitForTextToBePresent("Add other licences");
+        waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='conviction-date_day']",SelectorType.XPATH,"03");
+        enterText("//*[@id='conviction-date_month']","03",SelectorType.XPATH);
+        enterText("//*[@id='conviction-date_year']","2014",SelectorType.XPATH);
+        enterText("//*[@id='category-text']","Test",SelectorType.XPATH);
+        enterText("//*[@id='notes']","Test",SelectorType.XPATH);
+        enterText("//*[@id='court-fpn']","Test",SelectorType.XPATH);
+        enterText("//*[@id='penalty']","Test",SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
         //Add Other Licences
         String role = "Transport Manager";
-        click("//*[contains(text(),'Add other licences')]", SelectorType.XPATH);
-        waitForTextToBePresent("Add other licence");
-        enterText("licNo", "PB123456", SelectorType.ID);
-        selectValueFromDropDown("data[role]", SelectorType.ID, role);
+        waitForTextToBePresent("Add other licences");
+        waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
+        javaScriptExecutor("location.reload(true)");
+        waitAndEnterText("licNo", SelectorType.ID, "PB123456");
+        selectValueFromDropDown("//*[@id='data[role]']",SelectorType.XPATH,role);
+        enterText("//*[@id='operatingCentres']","Test", SelectorType.XPATH);
+        enterText("//*[@id='hoursPerWeek']","1", SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
+        //
+
     }
 
     public void addAddressDetails() throws IllegalBrowserException, InterruptedException {
@@ -579,10 +619,8 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("homeAddress[searchPostcode][addresses]", SelectorType.ID);
         selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
         //Add Work Address
-        WebDriverWait wait = new WebDriverWait(Driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("password")));
-        enterText("postcodeInput2", postCode, SelectorType.ID);
-        clickByName("workAddress[searchPostcode][search]");
+        waitAndEnterText("postcodeInput2", SelectorType.ID, postCode);
+        waitAndClick("workAddress[searchPostcode][search]",SelectorType.ID);
         waitAndClick("workAddress[searchPostcode][addresses]", SelectorType.ID);
         selectValueFromDropDownByIndex("workAddress[searchPostcode][addresses]", SelectorType.ID, 1);
     }

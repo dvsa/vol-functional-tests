@@ -14,3 +14,6 @@ Feature: Set and check criteria for triggering automatic letter
 
   Scenario: No letter generated when ss adds a TM
     When a self-serve user adds a TM
+    And i sign the declaration
+    And i choose to sign with verify with "pavlov"
+

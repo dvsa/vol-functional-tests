@@ -103,29 +103,18 @@ public class TMDetails extends BasePage implements En {
             click("//*[@id='add']",SelectorType.XPATH);
             selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-//            enterText("dob_day", String.valueOf(getPastDayOfMonth(5)), SelectorType.ID);
-//            enterText("dob_month", String.valueOf(getCurrentMonth()), SelectorType.ID);
-//            enterText("dob_year", String.valueOf(getPastYear(20)), SelectorType.ID);
-//            enterText("birthPlace","Test",SelectorType.ID);
-//            world.UIJourneySteps.addAddressDetails();
-            world.UIJourneySteps.addTransportManagerDetails();
-//            click("//*[@id='5ce5144507a59']",SelectorType.XPATH);
-//            click("//*[@id='responsibilities[isOwner]']",SelectorType.XPATH);
+            // Hours Of Week
 //            Browser.getDriver().findElements(By.xpath("//*[contains(@id,'responsibilities[hoursOfWeek]')]")).forEach(x -> {
-//                        try {
-//                            enterText(x.getText(),"3",SelectorType.XPATH);
-//                        } catch (IllegalBrowserException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//            );
-//            click("//*[@id='5ce5144508028']", SelectorType.XPATH);
-//            click("//*[@id='5ce514450ae7b']", SelectorType.XPATH);
-//            click("//*[@id='5ce514450b12b']", SelectorType.XPATH);
-//            click("//*[@id='5ce514450b303']", SelectorType.XPATH);
-//            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-//            click("form-actions[send]", SelectorType.ID);
-//            waitForTextToBePresent("Transport Managers");
+//                try {
+//                    enterText(x.getText(),"3",SelectorType.XPATH);
+//                } catch (IllegalBrowserException e) {
+//                    e.printStackTrace();
+//                }
+//            });
+            world.UIJourneySteps.addTransportManagerDetails();
+            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            click("//*[@id='form-actions[submit]']", SelectorType.ID);
+
         });
     }
 }
