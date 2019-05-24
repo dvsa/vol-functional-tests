@@ -551,7 +551,7 @@ public class UIJourneySteps extends BasePage {
         LoginPage.untilNotOnPage(timeLimitInSeconds);
     }
 
-    public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException {
+    public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
         String[] date = world.genericUtils.getPastDate(25).toString().split("-");
@@ -562,13 +562,24 @@ public class UIJourneySteps extends BasePage {
         //Add Home Address
         addAddressDetails();
         //Add Responsibilities
+        waitForElementToBeClickable("//*[@id='responsibilities[tmType]']",SelectorType.XPATH);
+        waitForElementToBeClickable("//*[contains(text(),'External')]",SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'External')]", SelectorType.XPATH);
-        try {
-            world.genericUtils.findSelectAllRadioButtonsByValue("Y");
-        }
-        catch (org.openqa.selenium.StaleElementReferenceException ex) {
-            world.genericUtils.findSelectAllRadioButtonsByValue("Y");
-        }
+        world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+
+//         Hours Of Week
+        waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]",SelectorType.XPATH);
+        enterSameTextIntoMultipleFieldsPartialMatch("//*[contains(@name,'responsibilities[hoursOfWeek]')]",SelectorType.XPATH,"3");
+
+        //Add Other Licences
+        String role = "Transport Manager";
+        waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
+        javaScriptExecutor("location.reload(true)");
+        waitAndEnterText("licNo", SelectorType.ID, "PB123456");
+        selectValueFromDropDown("//*[@id='data[role]']",SelectorType.XPATH,role);
+        enterText("//*[@id='operatingCentres']","Test", SelectorType.XPATH);
+        enterText("//*[@id='hoursPerWeek']","1", SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
         //Add Other Employment
         waitForTextToBePresent("Add other employment");
@@ -595,19 +606,6 @@ public class UIJourneySteps extends BasePage {
         enterText("//*[@id='court-fpn']","Test",SelectorType.XPATH);
         enterText("//*[@id='penalty']","Test",SelectorType.XPATH);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-
-        //Add Other Licences
-        String role = "Transport Manager";
-        waitForTextToBePresent("Add other licences");
-        waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
-        javaScriptExecutor("location.reload(true)");
-        waitAndEnterText("licNo", SelectorType.ID, "PB123456");
-        selectValueFromDropDown("//*[@id='data[role]']",SelectorType.XPATH,role);
-        enterText("//*[@id='operatingCentres']","Test", SelectorType.XPATH);
-        enterText("//*[@id='hoursPerWeek']","1", SelectorType.XPATH);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-
-        //
 
     }
 

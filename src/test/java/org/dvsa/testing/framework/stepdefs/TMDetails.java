@@ -103,14 +103,7 @@ public class TMDetails extends BasePage implements En {
             click("//*[@id='add']",SelectorType.XPATH);
             selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-            // Hours Of Week
-//            Browser.getDriver().findElements(By.xpath("//*[contains(@id,'responsibilities[hoursOfWeek]')]")).forEach(x -> {
-//                try {
-//                    enterText(x.getText(),"3",SelectorType.XPATH);
-//                } catch (IllegalBrowserException e) {
-//                    e.printStackTrace();
-//                }
-//            });
+
             world.UIJourneySteps.addTransportManagerDetails();
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             click("//*[@id='form-actions[submit]']", SelectorType.ID);
