@@ -16,7 +16,9 @@ Feature: Set and check criteria for triggering automatic letter
     When a self-serve user adds a TM
     And i sign the declaration
     And i choose to sign with verify with "pavlov"
+    And i navigate to the review and declarations page and submit the application
     And i have logged in to internal
-    And i search for my licence
+    And i url search for my application
+
 
 

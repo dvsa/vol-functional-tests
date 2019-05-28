@@ -160,6 +160,10 @@ public class GenericUtils extends BasePage {
         return value.replaceAll("[^0-9]", "");
     }
 
+    public static String returnNthNumberSequenceInString(String value, int num) {
+        return value.replaceAll("[^\\d]", " ").split(" ")[num];
+    }
+
     public static java.time.LocalDate getFutureDate(@NotNull int month) {
         java.time.LocalDate date = java.time.LocalDate.now().plusMonths(month);
         return date;

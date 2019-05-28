@@ -15,6 +15,8 @@ import org.openqa.selenium.JavascriptExecutor;
 
 import java.sql.Driver;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -103,6 +105,11 @@ public class TMDetails extends BasePage implements En {
             click("//*[@id='add']",SelectorType.XPATH);
             selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+
+            String url = Browser.navigate().getCurrentUrl();
+            String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url,1);
+            world.createLicence.setApplicationNumber(applicationNumber);
+
 
             world.UIJourneySteps.addTransportManagerDetails();
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
