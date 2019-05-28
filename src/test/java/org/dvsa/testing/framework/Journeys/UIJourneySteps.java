@@ -559,13 +559,14 @@ public class UIJourneySteps extends BasePage {
         enterText("dob_month", date[1], SelectorType.ID);
         enterText("dob_year", date[0], SelectorType.ID);
         enterText("birthPlace", birthPlace, SelectorType.ID);
-        //Add Home Address
-        addAddressDetails();
-        //Add Responsibilities
-        waitForElementToBeClickable("//*[@id='responsibilities[tmType]']",SelectorType.XPATH);
+
         waitForElementToBeClickable("//*[contains(text(),'External')]",SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'External')]", SelectorType.XPATH);
         world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+
+        //Add Home Address
+        addAddressDetails();
+
 
 //         Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]",SelectorType.XPATH);
@@ -583,21 +584,21 @@ public class UIJourneySteps extends BasePage {
 
         //Add Other Employment
         waitForTextToBePresent("Add other employment");
-        waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Add other employment')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='tm-employer-name-details[employerName]']",SelectorType.XPATH,"test");
         String postCode = world.createLicence.getPostcode();
         enterText("postcodeInput1", postCode, SelectorType.ID);
-        clickByName("homeAddress[searchPostcode][search]");
-        waitAndClick("homeAddress[searchPostcode][addresses]", SelectorType.ID);
-        selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
+        clickByName("address[searchPostcode][search]");
+        waitAndClick("address[searchPostcode][addresses]", SelectorType.ID);
+        selectValueFromDropDownByIndex("address[searchPostcode][addresses]", SelectorType.ID, 1);
         waitAndEnterText("//*[@id='tm-employment-details[position]']",SelectorType.XPATH,"test");
-        enterText("//*[@id='tm-employment-details[hoursPerWeek]']", postCode, SelectorType.ID);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='tm-employment-details[hoursPerWeek]']", SelectorType.XPATH, "Test");
+        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
 
         // Convictions
-        waitForTextToBePresent("Add other licences");
-        waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
+        waitForTextToBePresent("Add convictions and penalties");
+        waitAndClick("//*[contains(text(),'Add convictions and penalties')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='conviction-date_day']",SelectorType.XPATH,"03");
         enterText("//*[@id='conviction-date_month']","03",SelectorType.XPATH);
         enterText("//*[@id='conviction-date_year']","2014",SelectorType.XPATH);
@@ -606,6 +607,15 @@ public class UIJourneySteps extends BasePage {
         enterText("//*[@id='court-fpn']","Test",SelectorType.XPATH);
         enterText("//*[@id='penalty']","Test",SelectorType.XPATH);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
+        waitForTextToBePresent("Add licences");
+        waitAndClick("//*[contains(text(),'Add licences')]", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='lic-no']",SelectorType.XPATH, "PD263849");
+        waitAndEnterText("//*[@id='holderName']",SelectorType.XPATH, "PD263849");
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
+
+
 
     }
 

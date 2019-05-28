@@ -105,8 +105,9 @@ public class TMDetails extends BasePage implements En {
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
             world.UIJourneySteps.addTransportManagerDetails();
+            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitForTextToBePresent("Revoked, curtailed or suspended Licences");
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            click("//*[@id='form-actions[submit]']", SelectorType.ID);
 
         });
     }
