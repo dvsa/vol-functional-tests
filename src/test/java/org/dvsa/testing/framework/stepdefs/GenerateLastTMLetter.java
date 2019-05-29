@@ -50,7 +50,7 @@ public class GenerateLastTMLetter extends BasePage implements En {
             clickByLinkText("GOV.UK");
             clickByLinkText(world.createLicence.getApplicationNumber());
             clickByLinkText("Review and declarations");
-            waitAndClick("//*[@id='declarationsAndUndertakings[declarationConfirmation]']", SelectorType.XPATH);
+            waitAndClick("//*[@id='label-declarationConfirmation']", SelectorType.XPATH);
             click("//*[@id='submit']",SelectorType.XPATH);
         });
     }

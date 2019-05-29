@@ -577,7 +577,7 @@ public class UIJourneySteps extends BasePage {
         addAddressDetails();
 
 
-//         Hours Of Week
+        //Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]",SelectorType.XPATH);
         enterSameTextIntoMultipleFieldsPartialMatch("//*[contains(@name,'responsibilities[hoursOfWeek]')]",SelectorType.XPATH,"3");
 
@@ -665,7 +665,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToTransportManagersPage() throws IllegalBrowserException {
-        waitForTextToBePresent("Apply for a new licence");
+//        waitForTextToBePresent("Apply for a new licence");
         clickByLinkText("Transport");
         waitForTextToBePresent("Transport Managers");
     }
@@ -1110,7 +1110,7 @@ public class UIJourneySteps extends BasePage {
     public void caseWorkerCompleteOverview() throws IllegalBrowserException, MalformedURLException {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         Browser.navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        click("//*[contains(@id,'save')]", SelectorType.XPATH);
     }
 
     public void caseWorkerGrantApplication() throws IllegalBrowserException {

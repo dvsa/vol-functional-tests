@@ -5,6 +5,8 @@ import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.UIJourneySteps.generateLetter;
@@ -86,6 +88,14 @@ public class InternalApplication extends BasePage implements En {
         Then("^the licence is granted in Internal$", () -> {
             waitForTextToBePresent("Overview");
             world.UIJourneySteps.checkLicenceStatus("Granted");
+        });
+        And("^the caseworker completes the tracking and grants the application$", () -> {
+            world.UIJourneySteps.caseWorkerCompleteOverview();
+            javaScriptExecutor("location.reload(true)");
+            clickByLinkText("Grant application");
+            waitAndClick("//*[@id='form-actions[grant]']",SelectorType.XPATH);
+            clickByLinkText("Docs & attachments");
+            wait();
         });
     }
 }

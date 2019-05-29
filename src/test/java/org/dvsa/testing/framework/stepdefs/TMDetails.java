@@ -93,11 +93,9 @@ public class TMDetails extends BasePage implements En {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
             }
         });
-        When("^a self-serve user adds a TM$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getLicenceNumber());
-            clickByLinkText("Transport Managers");
-            waitForTextToBePresent("Transport Managers");
+        When("^a self-serve user adds another TM$", () -> {
+            javaScriptExecutor("location.reload(true)");
+            waitForTextToBePresent("change your licence");
             clickByLinkText("change your licence");
             waitForTextToBePresent("Applying to change a licence");
             click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
@@ -107,7 +105,7 @@ public class TMDetails extends BasePage implements En {
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
             String url = Browser.navigate().getCurrentUrl();
-            String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url,1);
+            String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url,2);
             world.createLicence.setApplicationNumber(applicationNumber);
 
 
@@ -116,6 +114,15 @@ public class TMDetails extends BasePage implements En {
             waitForTextToBePresent("Revoked, curtailed or suspended Licences");
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
+        });
+        And("^i navigate to the transport managers page$", () -> {
+            clickByLinkText("GOV.UK");
+            clickByLinkText(world.createLicence.getLicenceNumber());
+            world.UIJourneySteps.navigateToTransportManagersPage();
+        });
+        And("^i remove the last transport manager on the TM page$", () -> {
+            waitAndClick("//*[contains(@name,'table[action][delete]')]",SelectorType.XPATH);
+            waitAndClick("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         });
     }
 }

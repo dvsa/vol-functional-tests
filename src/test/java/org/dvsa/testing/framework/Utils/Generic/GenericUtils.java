@@ -161,7 +161,7 @@ public class GenericUtils extends BasePage {
     }
 
     public static String returnNthNumberSequenceInString(String value, int num) {
-        return value.replaceAll("[^\\d]", " ").split(" ")[num];
+        return value.replaceAll("[^\\d]+", " ").split(" ")[num];
     }
 
     public static java.time.LocalDate getFutureDate(@NotNull int month) {
