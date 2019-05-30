@@ -622,10 +622,6 @@ public class UIJourneySteps extends BasePage {
         waitAndEnterText("//*[@id='lic-no']",SelectorType.XPATH, "PD263849");
         waitAndEnterText("//*[@id='holderName']",SelectorType.XPATH, "PD263849");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-
-
-
-
     }
 
     public void addAddressDetails() throws IllegalBrowserException, InterruptedException {
