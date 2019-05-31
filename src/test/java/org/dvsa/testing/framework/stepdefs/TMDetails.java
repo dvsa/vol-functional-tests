@@ -124,5 +124,23 @@ public class TMDetails extends BasePage implements En {
             waitAndClick("//*[contains(@name,'table[action][delete]')]",SelectorType.XPATH);
             waitAndClick("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         });
+        And("^i initiate a variation on the TM page$", () -> {
+            javaScriptExecutor("location.reload(true)");
+            waitForTextToBePresent("change your licence");
+            clickByLinkText("change your licence");
+            waitForTextToBePresent("Applying to change a licence");
+            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+            waitForTextToBePresent("Add Transport Manager");
+            click("//*[@id='add']",SelectorType.XPATH);
+            selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
+            click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+            String url = Browser.navigate().getCurrentUrl();
+            String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url,2);
+            world.createLicence.setApplicationNumber(applicationNumber);
+
+
+
+
+        });
     }
 }

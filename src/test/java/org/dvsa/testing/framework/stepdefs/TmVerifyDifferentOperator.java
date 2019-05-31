@@ -114,7 +114,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             world.UIJourneySteps.addOperatorUserAsTransportManager(1, "N");
         });
         And("^the operator countersigns digitally$", () -> {
-            waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             clickByLinkText(world.createLicence.getApplicationNumber());

@@ -24,6 +24,17 @@ Feature: Set and check criteria for triggering automatic letter
     And i url search for my application
     And the caseworker completes the tracking and grants the application
 
+  Scenario: TM verifies variational not as operator
+    When i have logged in to self serve
+    And i navigate to the transport managers page
+    And i initiate a variation on the TM page
+    And i add an existing person as a transport manager who is not the operator
+    And i sign the declaration
+    And i choose to sign with verify with "pavlov"
+    Then the 'Review and declarations' post signature page is displayed
+
+
+
 
 
 

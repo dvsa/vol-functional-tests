@@ -12,6 +12,9 @@ public class CheckCorrespondence extends BasePage implements En {
         And("^i have logged in to self serve$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
         });
+        And("^i have logged in to self serve as a TM$", () -> {
+            world.UIJourneySteps.navigateToExternalUserLogin(world.UIJourneySteps.getOperatorUser(), world.UIJourneySteps.getOperatorUserEmail());
+        });
         When("^i open the documents tab$", () -> {
            click("//a[@href='/correspondence/']", SelectorType.XPATH);
         });
