@@ -18,26 +18,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateApplications extends BasePage implements En {
     public CreateApplications(World world) {
-        Given("^i have a \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" application in traffic area$", (String operatorType, String licenceType, String Region,DataTable trafficAreaTable) -> {
+        Given("^i have a \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" licence in traffic area$", (String operatorType, String licenceType, String Region,String trafficArea) -> {
             if(Region.equals("NI".toUpperCase())){
                 Region = "Y";
             }else{
                 Region = "N";
             }
-            List<String> trafficAreas = trafficAreaTable.asList(String.class);
             world.APIJourneySteps.registerAndGetUserDetails();
-            for (int i = 0; i < trafficAreas.size();) {
-                for (String ta : trafficAreas) {
-                    world.createLicence.setNiFlag(Region);
-                    world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta.toUpperCase())));
-                    world.createLicence.setOperatorType(operatorType);
-                    world.createLicence.setLicenceType(licenceType);
-                    world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta.toUpperCase())));
-                    world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta.toUpperCase())));
-                    world.APIJourneySteps.createApplication();
-                    i++;
-                }
-            }
+            world.createLicence.setNiFlag(Region);
+            world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(trafficArea.toUpperCase())));
+            world.createLicence.setOperatorType(operatorType);
+            world.createLicence.setLicenceType(licenceType);
+            world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(trafficArea.toUpperCase())));
+            world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(trafficArea.toUpperCase())));
+            world.APIJourneySteps.createApplication();
+            world.APIJourneySteps.submitApplication();
         });
         When("^i choose to print and sign$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
