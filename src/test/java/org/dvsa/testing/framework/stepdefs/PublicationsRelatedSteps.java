@@ -17,14 +17,27 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             click("//*[@id='menu-admin-dashboard/admin-publication']",SelectorType.XPATH);
         });
         And("^i generate and publish all \"([^\"]*)\" publications$", (String cap) -> {
-            waitAndClick("//*[text()='50']", SelectorType.XPATH);
             List<WebElement> radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
-            Object[] radioButtonsArray = radioButtons.toArray();
+            List<WebElement> publicationNumbers;
             for (int i=0; i< Integer.parseInt(cap); i++) {
-                waitAndClick("//*[text()='50']", SelectorType.XPATH);
+]               waitAndClick("//*[text()='50']", SelectorType.XPATH);
+                waitForElementToBeClickable(String.valueOf(radioButtons.get(i)),SelectorType.XPATH);
+
                 click(String.valueOf(radioButtons.get(i)),SelectorType.XPATH);
                 waitAndClick("//*[@id='generate']",SelectorType.XPATH);
-                
+
+                waitAndClick("//*[text()='50']", SelectorType.XPATH);
+                waitForElementToBeClickable(String.valueOf(radioButtons.get(i)),SelectorType.XPATH);
+
+                radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
+
+                assertTrue(isElementEnabled(String.valueOf(publicationNumbers.get(i+1)),SelectorType.XPATH));
+                click(String.valueOf(radioButtons.get(i+1)),SelectorType.XPATH);
+
+
+                waitAndClick(String.valueOf(radioButtons.get(i)),SelectorType.XPATH);
+
             }
         });
     }
