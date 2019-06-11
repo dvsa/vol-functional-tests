@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
+import cucumber.api.java.eo.Se;
 import cucumber.api.java8.En;
 import enums.TrafficArea;
 import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
@@ -62,6 +63,9 @@ public class CreateApplications extends BasePage implements En {
             enterText("scp_additionalInformationPage_csc_input","265", SelectorType.ID);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
+        });
+        And("^i click pay and submit$", () -> {
+            waitAndClick("//*[@id='submitAndPay']", SelectorType.XPATH);
         });
     }
 }

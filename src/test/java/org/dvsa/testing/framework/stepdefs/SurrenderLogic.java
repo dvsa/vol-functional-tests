@@ -222,5 +222,15 @@ public class SurrenderLogic extends BasePage implements En {
             hooks.attach(scenario);
             hooks.tearDown();
         });
+        And("^the withdraw application link is present$", () -> {
+            checkTextisPresent("Withdraw application");
+        });
+        Then("^the withdraw application link is not present$", () -> {
+
+        });
+        And("^i navigate to the application page$", () -> {
+            clickByLinkText("GOV.UK");
+            clickByLinkText(world.createLicence.getApplicationNumber());
+        });
     }
 }
