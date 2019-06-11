@@ -87,5 +87,17 @@ public class CreateCase extends BasePage implements En {
         Then("^the note should be deleted$", () -> {
             waitForTextToBePresent("The table is empty");
         });
+        And("^i add a case$", () -> {
+            world.UIJourneySteps.urlSearchAndViewLicence();
+            click("//*[@id='menu-application_case']", SelectorType.XPATH);
+            click("//*[@id='add']",SelectorType.XPATH);
+            waitAndClick("//*[@id='fields_categorys__chosen']/ul",SelectorType.XPATH);
+            click("//li[contains(text(),'Convictions')]",SelectorType.XPATH);
+            enterText("//*[@id='fields[description]']","testing",SelectorType.XPATH);
+            enterText("//*[@id='fields[ecmsNo]']","12345",SelectorType.XPATH);
+            click("//*[@id='fields_outcomes__chosen']",SelectorType.XPATH);
+            click("//li[contains(text(),'Bus registration refused')]",SelectorType.XPATH);
+            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        });
     }
 }
