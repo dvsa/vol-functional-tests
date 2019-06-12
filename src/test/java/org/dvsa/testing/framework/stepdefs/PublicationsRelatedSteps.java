@@ -71,7 +71,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                         clickByLinkText("50");
                     }
                     int pageNumber = 1;
-                    boolean kickout = false;
+                    boolean kickout = true;
                     //Start looping over pages here
                     do {
                         // Storing numbers
@@ -85,7 +85,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
                         if (textList.contains(linkedPubNo)) {
                             assertTrue(Browser.getDriver().findElements(By.linkText(linkedPubNo)).size() != 0);
-                            kickout = true;
+                            kickout = false;
                         } else {
                             pageNumber++;
                             clickByLinkText(Integer.toString(pageNumber));
