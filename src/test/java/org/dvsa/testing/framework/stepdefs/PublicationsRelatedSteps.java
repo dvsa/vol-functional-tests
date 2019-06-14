@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs;
 
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import activesupport.number.Int;
 import cucumber.api.java.eo.Se;
@@ -25,17 +26,20 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             String currentPubNo;
             String linkedPubNo;
             String publishedDate;
-            for (int i = 0; i < noOfDifferentLicences; i++) { //NEED TO CHANGE POSITION OF FOR OR IF. ELSE STATEMENT ADDS TWO TO i
+            for (int i = 0; i < noOfDifferentLicences; i++) {
                 // Pending Page
                 waitAndClick("//*[text()='50']", SelectorType.XPATH);
 
 
-                List<WebElement> radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                List<WebElement> radioButtons;
                 List<WebElement> publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr[*]/td[2]"));
                 currentPubNo = publicationNumbers.get(i).getText();
 
                 if (Browser.getDriver().findElements(By.linkText(currentPubNo)).size() == 0) {
+
+                    radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
                     radioButtons.get(i).click();
+
                     waitAndClick("//*[@id='generate']", SelectorType.XPATH);
                     waitForTextToBePresent("Publication was generated, a new publication was also created");
                     waitAndClick("//*[text()='50']", SelectorType.XPATH);
@@ -44,7 +48,6 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
                     List<WebElement> publicationDates = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[5]"));
 
-                    assertTrue(publicationNumbers.get(i + 1).isEnabled());
                     linkedPubNo = publicationNumbers.get(i + 1).getText();
                     publishedDate = publicationDates.get(i + 1).getText();
                     radioButtons.get(i + 1).click();
@@ -63,7 +66,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     selectValueFromDropDown("//*[@name='pubDate[year]']",SelectorType.XPATH,year);
                     click("//*[@id='filter']",SelectorType.XPATH);
 
-                    // Increasing table if possible
+                    // Increasing table if possible  // CLICKING ON PUBLICATIONS AS WELL!!!!!!!!!!!!!
                     if (Browser.getDriver().findElements(By.linkText("25")).size() != 0) {
                         clickByLinkText("25");
                     }
@@ -88,16 +91,21 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                             kickout = false;
                         } else {
                             pageNumber++;
-                            clickByLinkText(Integer.toString(pageNumber));
+                            try {
+                                clickByLinkText(Integer.toString(pageNumber));
+                            } catch (IllegalBrowserException var4) {
+                                var4.printStackTrace();
+                                System.out.println("Publication not found. Something has gone wrong.");
+                            }
                         }
                     } while(kickout);
 
 
                     click("//*[@id='menu-admin-dashboard/admin-publication/pending']", SelectorType.XPATH);
-                    waitForTextToBePresent("Publications");
+                    waitForTextToBePresent("Generate");
                 } else {
-                    i++;
                     noOfDifferentLicences++;
+                    javaScriptExecutor("location.reload(true)");
                 }
             }
         });
