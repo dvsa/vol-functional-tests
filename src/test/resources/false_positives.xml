@@ -14,4 +14,11 @@
         <gav regex="true">^org\.apache\.tika:tika-core:.*$</gav>
         <cpe>cpe:/a:apache:tika</cpe>
     </suppress>
+    <suppress>
+        <notes><![CDATA[
+   file name: postgresql-8.4-701.jdbc3.jar
+   ]]></notes>
+        <gav regex="true">^postgresql:postgresql:.*$</gav>
+        <cpe>cpe:/a:postgresql:postgresql</cpe>
+    </suppress>
 </suppressions>
