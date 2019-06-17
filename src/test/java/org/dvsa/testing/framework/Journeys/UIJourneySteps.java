@@ -1172,4 +1172,18 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
+
+    public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
+        waitForTextToBePresent("Add Transport Manager");
+        click("//*[@id='add']", SelectorType.XPATH);
+        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
+        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        String url = Browser.navigate().getCurrentUrl();
+        String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url,2);
+        world.createLicence.setApplicationNumber(applicationNumber);
+        addTransportManagerDetails();
+        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitForTextToBePresent("Revoked, curtailed or suspended Licences");
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
 }

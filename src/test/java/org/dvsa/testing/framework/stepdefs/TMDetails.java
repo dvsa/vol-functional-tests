@@ -13,6 +13,7 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 
+import java.net.MalformedURLException;
 import java.sql.Driver;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -91,20 +92,6 @@ public class TMDetails extends BasePage implements En {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
             }
         });
-        When("^a self-serve user adds another TM$", () -> {
-            world.UIJourneySteps.changeLicenceOnTMPage();
-            waitForTextToBePresent("Add Transport Manager");
-            click("//*[@id='add']",SelectorType.XPATH);
-            selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-            click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-            String url = Browser.navigate().getCurrentUrl();
-            String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url,2);
-            world.createLicence.setApplicationNumber(applicationNumber);
-            world.UIJourneySteps.addTransportManagerDetails();
-            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            waitForTextToBePresent("Revoked, curtailed or suspended Licences");
-            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        });
         And("^i remove the last transport manager on self serve$", () -> {
             world.UIJourneySteps.navigateToTransportManagersPage();
             waitAndClick("//*[contains(@name,'table[action][delete]')]",SelectorType.XPATH);
@@ -113,19 +100,7 @@ public class TMDetails extends BasePage implements En {
         And("^i initiate a variation by adding a transport manager$", () -> {
             world.UIJourneySteps.navigateToTransportManagersPage();
             world.UIJourneySteps.changeLicenceOnTMPage();
-            waitForTextToBePresent("Add Transport Manager");
-            click("//*[@id='add']",SelectorType.XPATH);
-            selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-            click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-            String url = Browser.navigate().getCurrentUrl();
-            String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url,2);
-            world.createLicence.setApplicationNumber(applicationNumber);
-            world.UIJourneySteps.addTransportManagerDetails();
-            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            waitForTextToBePresent("Revoked, curtailed or suspended Licences");
-            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            world.UIJourneySteps.addTransportManagerOnTMPage();
         });
     }
-
-
 }
