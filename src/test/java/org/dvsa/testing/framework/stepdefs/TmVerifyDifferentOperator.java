@@ -132,7 +132,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         When("^i add an operator as a transport manager$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
             world.UIJourneySteps.addOperatorAdminAsTransportManager(1);
         });
         And("^i sign the declaration$", () -> {

@@ -26,6 +26,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -661,7 +662,12 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToTransportManagersPage() throws IllegalBrowserException {
-//        waitForTextToBePresent("Apply for a new licence");
+        clickByLinkText("GOV.UK");
+        try {
+            clickByLinkText(world.createLicence.getLicenceNumber());
+        } catch (Exception e){
+            clickByLinkText(world.createLicence.getApplicationNumber());
+        }
         clickByLinkText("Transport");
         waitForTextToBePresent("Transport Managers");
     }
@@ -720,8 +726,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addOperatorUserAsTransportManager(int user, String isOwner) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
-        clickByLinkText("Home");
-        clickByLinkText(world.createLicence.getApplicationNumber());
         world.UIJourneySteps.nominateOperatorUserAsTransportManager(user);
         world.UIJourneySteps.navigateToExternalUserLogin(world.UIJourneySteps.getOperatorUser(), world.UIJourneySteps.getOperatorUserEmail());
         clickByLinkText(world.createLicence.getApplicationNumber());
@@ -1159,5 +1163,13 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='delete']",SelectorType.XPATH);
         waitForTextToBePresent("Delete record");
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
+    }
+
+    public void changeLicenceOnTMPage() throws IllegalBrowserException {
+        javaScriptExecutor("location.reload(true)");
+        waitForTextToBePresent("change your licence");
+        clickByLinkText("change your licence");
+        waitForTextToBePresent("Applying to change a licence");
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 }

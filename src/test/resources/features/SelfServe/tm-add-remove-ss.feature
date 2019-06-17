@@ -14,8 +14,7 @@ Feature: Set and check criteria for triggering automatic letter
 
   Scenario: No letter generated when ss adds a TM
     When i have logged in to self serve
-    And i navigate to the transport managers page
-    And i remove the last transport manager on the TM page
+    And i remove the last transport manager on self serve
     And a self-serve user adds another TM
     And i sign the declaration
     And i choose to sign with verify with "pavlov"
@@ -26,8 +25,7 @@ Feature: Set and check criteria for triggering automatic letter
 
   Scenario: TM verifies variational not as operator
     When i have logged in to self serve
-    And i navigate to the transport managers page
-    And i initiate a variation on the TM page
+    And i initiate a variation by adding a transport manager
     And i add an existing person as a transport manager who is not the operator
     And i sign the declaration
     And i choose to sign with verify with "pavlov"

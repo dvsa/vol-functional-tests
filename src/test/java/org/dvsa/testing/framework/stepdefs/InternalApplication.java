@@ -95,7 +95,6 @@ public class InternalApplication extends BasePage implements En {
             clickByLinkText("Grant application");
             waitAndClick("//*[@id='form-actions[grant]']",SelectorType.XPATH);
             clickByLinkText("Docs & attachments");
-            wait();
         });
     }
 }
