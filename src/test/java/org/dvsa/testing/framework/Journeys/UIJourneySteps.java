@@ -510,7 +510,6 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='login']", SelectorType.XPATH);
         waitForTextToBePresent("Personal Details");
         click("//*[@id='agree']", SelectorType.XPATH);
-        waitAndClick("//*[@type='submit']",SelectorType.XPATH);
     }
 
     public void addNewPersonAsTransportManager(String forename, String familyName, String emailAddress) throws IllegalBrowserException {

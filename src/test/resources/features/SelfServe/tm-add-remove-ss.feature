@@ -26,7 +26,7 @@ Feature: Set and check criteria for triggering automatic letter
 
   Scenario: TM verifies variational not as operator
     When i have logged in to self serve
-#    And i initiate a variation by adding a transport manager
+    And i initiate a variation by adding a transport manager
     And i add an existing person as a transport manager who is not the operator
     And i sign the declaration
     And i choose to sign with verify with "pavlov"
