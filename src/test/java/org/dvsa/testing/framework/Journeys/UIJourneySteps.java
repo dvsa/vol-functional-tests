@@ -638,8 +638,11 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDownByIndex("workAddress[searchPostcode][addresses]", SelectorType.ID, 1);
     }
 
-    public void nominateOperatorUserAsTransportManager(int user) throws IllegalBrowserException {
+    public void nominateOperatorUserAsTransportManager(int user) throws IllegalBrowserException, MalformedURLException {
         navigateToTransportManagersPage();
+        if (isTextPresent("change your licence",5)) { // If a variational (for an already created licence)
+            world.UIJourneySteps.changeLicenceOnTMPage();
+        }
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
@@ -1164,12 +1167,16 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void changeLicenceOnTMPage() throws IllegalBrowserException {
+    public void changeLicenceOnTMPage() throws IllegalBrowserException, MalformedURLException {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        javaScriptExecutor("location.reload(true)");
+        waitForTextToBePresent("Transport Managers");
+        resetApplicationNumberWithURLOnVariational();
+        // Set application number because one already exists within the code for the previous test and this requires the new variational one.
     }
 
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
@@ -1184,5 +1191,11 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Revoked, curtailed or suspended Licences");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    public void resetApplicationNumberWithURLOnVariational() throws IllegalBrowserException, MalformedURLException {
+        String url = Browser.navigate().getCurrentUrl();
+        String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url, 2);
+        world.createLicence.setApplicationNumber(applicationNumber);
     }
 }

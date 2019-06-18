@@ -98,6 +98,9 @@ public class TMDetails extends BasePage implements En {
             waitAndClick("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         });
         And("^i initiate a variation by adding a transport manager$", () -> {
+            world.UIJourneySteps.addInternalAdmin();
+
+            world.UIJourneySteps.navigateToExternalUserLogin(world.UIJourneySteps.getOperatorUser(), world.UIJourneySteps.getOperatorUserEmail());
             world.UIJourneySteps.navigateToTransportManagersPage();
             world.UIJourneySteps.changeLicenceOnTMPage();
             world.UIJourneySteps.addTransportManagerOnTMPage();
