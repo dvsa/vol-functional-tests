@@ -31,7 +31,7 @@ Feature: Set and check criteria for triggering automatic letter
     And i choose to sign with verify with "pavlov"
     And the operator countersigns digitally
     Then the 'Review and declarations' post signature page is displayed
-
+    # See if you can get the test to end with Tm verifying and ending on the review and declarations page
 
 
 
