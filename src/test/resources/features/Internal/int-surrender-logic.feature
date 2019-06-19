@@ -84,11 +84,3 @@ Feature: Logic for Surrender menu item
       | Processing      |
       | Fees            |
       | Licence details |
-
-  Scenario: Change history updates for surrender under consideration
-    And i have logged in to internal
-    And the change history doesn't have a surrender under consideration
-    When my application to surrender is under consideration
-    And i search for my licence
-    Then the change history has the surrender under consideration
-

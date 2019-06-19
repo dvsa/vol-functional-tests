@@ -223,13 +223,9 @@ public class SurrenderLogic extends BasePage implements En {
             hooks.attach(scenario);
             hooks.tearDown();
         });
-        And("^the change history doesn't have a surrender under consideration$", () -> {
-            navigateToChangeHistoryInProcessing();
-            checkTextisPresent("Surrender Under Consideration");
-        });
         Then("^the change history has the surrender under consideration$", () -> {
             navigateToChangeHistoryInProcessing();
-            checkTextisPresent("Surrender Under Consideration");
+            assertTrue(isTextPresent("Surrender Under Consideration",5));
         });
     }
 
