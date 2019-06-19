@@ -118,7 +118,11 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             clickByLinkText("Sign out");
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             clickByLinkText(world.createLicence.getApplicationNumber());
-            waitForTextToBePresent("Apply for a new licence");
+            if(Browser.getDriver().findElements(By.xpath("//*[contains(text(),'Apply for a new licence')]")).size()>0) {
+                waitForTextToBePresent("Apply for a new licence");
+            } else if (Browser.getDriver().findElements(By.xpath("//*[contains(text(),'Apply to change a licence')]")).size()>0) { // Is there a better check for if the licence is variation or new or not?
+                waitForTextToBePresent("Apply to change a licence");
+            }
             clickByLinkText("Transport");
             clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
             click("form-actions[submit]", SelectorType.ID);
