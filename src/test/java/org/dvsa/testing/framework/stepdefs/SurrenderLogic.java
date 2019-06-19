@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
@@ -222,5 +223,20 @@ public class SurrenderLogic extends BasePage implements En {
             hooks.attach(scenario);
             hooks.tearDown();
         });
+        And("^the change history doesn't have a surrender under consideration$", () -> {
+            navigateToChangeHistoryInProcessing();
+            checkTextisPresent("Surrender Under Consideration");
+        });
+        Then("^the change history has the surrender under consideration$", () -> {
+            navigateToChangeHistoryInProcessing();
+            checkTextisPresent("Surrender Under Consideration");
+        });
+    }
+
+    public void navigateToChangeHistoryInProcessing() throws IllegalBrowserException {
+        clickByLinkText("Processing");
+        waitForTextToBePresent("Tasks");
+        clickByLinkText("Change history");
+        waitForTextToBePresent("Details");
     }
 }
