@@ -10,6 +10,7 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,18 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             String publishedDate;
             for (int i = 0; i < noOfDifferentLicences; i++) {
                 // Pending Page
-                waitAndClick("//*[text()='50']", SelectorType.XPATH);
-
-
                 List<WebElement> radioButtons;
-                List<WebElement> publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr[*]/td[2]"));
-                currentPubNo = publicationNumbers.get(i).getText();
+                List<WebElement> publicationNumbers;
+
+                if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
+                    click("//*/a[text()=50]",SelectorType.XPATH);
+                    radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                    while (radioButtons.size()<10) {
+                        radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                    }
+                }
+                    publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr[*]/td[2]"));
+                    currentPubNo = publicationNumbers.get(i).getText();
 
                 if (Browser.getDriver().findElements(By.linkText(currentPubNo)).size() == 0) {
 
@@ -42,8 +49,14 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
                     waitAndClick("//*[@id='generate']", SelectorType.XPATH);
                     waitForTextToBePresent("Publication was generated, a new publication was also created");
-                    waitAndClick("//*[text()='50']", SelectorType.XPATH);
 
+                    if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
+                        click("//*/a[text()=50]",SelectorType.XPATH);
+                        radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                        while (radioButtons.size()<10) {
+                            radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                        }
+                    }
                     radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
                     publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
                     List<WebElement> publicationDates = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[5]"));
@@ -67,11 +80,12 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     click("//*[@id='filter']",SelectorType.XPATH);
 
                     // Increasing table if possible  // CLICKING ON PUBLICATIONS AS WELL!!!!!!!!!!!!!
-                    if (Browser.getDriver().findElements(By.linkText("25")).size() != 0) {
-                        clickByLinkText("25");
-                    }
-                    if (Browser.getDriver().findElements(By.linkText("50")).size() != 0) {
-                        clickByLinkText("50");
+                    if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
+                        click("//*/a[text()=50]",SelectorType.XPATH);
+                        radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                        while (radioButtons.size()<10) {
+                            radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                        }
                     }
                     int pageNumber = 1;
                     boolean kickout = true;
