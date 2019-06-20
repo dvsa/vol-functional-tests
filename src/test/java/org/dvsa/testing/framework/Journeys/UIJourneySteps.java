@@ -1112,4 +1112,11 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Delete record");
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
+
+    public void navigateToChangeHistoryInProcessing() throws IllegalBrowserException {
+        clickByLinkText("Processing");
+        waitForTextToBePresent("Tasks");
+        clickByLinkText("Change history");
+        waitForTextToBePresent("Details");
+    }
 }

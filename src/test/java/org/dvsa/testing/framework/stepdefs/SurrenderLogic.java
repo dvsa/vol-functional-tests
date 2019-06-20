@@ -9,6 +9,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.runner.Hooks;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.By;
 
 import java.util.List;
 
@@ -224,15 +225,13 @@ public class SurrenderLogic extends BasePage implements En {
             hooks.tearDown();
         });
         Then("^the change history has the surrender under consideration$", () -> {
-            navigateToChangeHistoryInProcessing();
-            assertTrue(isTextPresent("Surrender Under Consideration",5));
+            world.UIJourneySteps.navigateToChangeHistoryInProcessing();
+            assertLinkTextPresentMultipleTimes("Surrender Under Consideration",1);
         });
-    }
-
-    public void navigateToChangeHistoryInProcessing() throws IllegalBrowserException {
-        clickByLinkText("Processing");
-        waitForTextToBePresent("Tasks");
-        clickByLinkText("Change history");
-        waitForTextToBePresent("Details");
+        Then("^the change history has the surrender under consideration and surrender application withdrawn$", () -> {
+            world.UIJourneySteps.navigateToChangeHistoryInProcessing();
+            assertLinkTextPresentMultipleTimes("Surrender Under Consideration",2);
+            assertLinkTextPresentMultipleTimes("Surrender Application Withdrawn",1);
+        });
     }
 }
