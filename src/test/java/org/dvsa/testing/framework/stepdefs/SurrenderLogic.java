@@ -212,6 +212,16 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.searchAndViewLicence();
         });
+        And("^i create and url search for my licence$", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewLicence();
+        });
+        And("^i create and url search for my application", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewApplication();
+        });
         And("^the case worker undoes the surrender$", () -> {
             waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
@@ -222,16 +232,6 @@ public class SurrenderLogic extends BasePage implements En {
             Hooks hooks = new Hooks();
             hooks.attach(scenario);
             hooks.tearDown();
-        });
-        And("^i create and url search for my licence$", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
-        });
-        And("^i create and url search for my application", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewApplication();
         });
     }
 }
