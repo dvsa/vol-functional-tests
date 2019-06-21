@@ -233,9 +233,5 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewApplication();
         });
-        Then("^the \"([^\"]*)\" document is produced automatically$", (String documentName) -> {
-            clickByLinkText("Docs & attachments");
-            checkForPartialMatch(documentName);
-        });
     }
 }
