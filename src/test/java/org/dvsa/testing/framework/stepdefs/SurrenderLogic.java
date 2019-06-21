@@ -235,7 +235,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         Then("^the \"([^\"]*)\" document is produced automatically$", (String documentName) -> {
             clickByLinkText("Docs & attachments");
-            assertTrue(isTextPresent(documentName,5));
+            checkForPartialMatch(documentName);
         });
     }
 }
