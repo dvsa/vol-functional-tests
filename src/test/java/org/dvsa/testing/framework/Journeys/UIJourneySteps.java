@@ -218,12 +218,12 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
-        String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
         Browser.navigate().get(myURL.concat(String.format("application/%s",world.createLicence.getApplicationNumber())));
     }
 
     public void urlSearchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
-        String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
         Browser.navigate().get(myURL.concat(String.format("licence/%s",world.createLicence.getLicenceId())));
     }
 
