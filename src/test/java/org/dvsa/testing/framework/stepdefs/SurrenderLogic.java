@@ -212,17 +212,6 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.searchAndViewLicence();
         });
-        And("^the case worker undoes the surrender$", () -> {
-            waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
-            waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
-            waitAndClick("form-actions[submit]", SelectorType.ID);
-        });
-
-        After((Scenario scenario) -> {
-            Hooks hooks = new Hooks();
-            hooks.attach(scenario);
-            hooks.tearDown();
-        });
         And("^i create and url search for my licence$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
@@ -233,9 +222,16 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewApplication();
         });
-        Then("^the \"([^\"]*)\" document is produced automatically$", (String documentName) -> {
-            clickByLinkText("Docs & attachments");
-            assertTrue(checkForPartialMatch(documentName));
+        And("^the case worker undoes the surrender$", () -> {
+            waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
+            waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
+            waitAndClick("form-actions[submit]", SelectorType.ID);
+        });
+
+        After((Scenario scenario) -> {
+            Hooks hooks = new Hooks();
+            hooks.attach(scenario);
+            hooks.tearDown();
         });
     }
 }
