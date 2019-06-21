@@ -92,18 +92,5 @@ public class TMDetails extends BasePage implements En {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
             }
         });
-        And("^i remove the last transport manager on self serve$", () -> {
-            world.UIJourneySteps.navigateToTransportManagersPage();
-            waitAndClick("//*[contains(@name,'table[action][delete]')]",SelectorType.XPATH);
-            waitAndClick("//*[@id='form-actions[submit]']",SelectorType.XPATH);
-        });
-        And("^i initiate a variation by adding a transport manager$", () -> {
-            world.UIJourneySteps.addInternalAdmin();
-
-            world.UIJourneySteps.navigateToExternalUserLogin(world.UIJourneySteps.getOperatorUser(), world.UIJourneySteps.getOperatorUserEmail());
-            world.UIJourneySteps.navigateToTransportManagersPage();
-            world.UIJourneySteps.changeLicenceOnTMPage();
-            world.UIJourneySteps.addTransportManagerOnTMPage();
-        });
     }
 }

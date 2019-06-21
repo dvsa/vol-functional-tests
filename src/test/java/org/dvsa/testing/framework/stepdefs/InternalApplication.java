@@ -89,12 +89,5 @@ public class InternalApplication extends BasePage implements En {
             waitForTextToBePresent("Overview");
             world.UIJourneySteps.checkLicenceStatus("Granted");
         });
-        And("^the caseworker completes the tracking and grants the application$", () -> {
-            world.UIJourneySteps.caseWorkerCompleteOverview();
-            javaScriptExecutor("location.reload(true)");
-            clickByLinkText("Grant application");
-            waitAndClick("//*[@id='form-actions[grant]']",SelectorType.XPATH);
-            clickByLinkText("Docs & attachments");
-        });
     }
 }
