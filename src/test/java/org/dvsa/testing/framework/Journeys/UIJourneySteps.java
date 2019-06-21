@@ -218,11 +218,13 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
-        Browser.navigate().get(String.format("https://iuap1.olcs.qa.nonprod.dvsa.aws/application/%s",world.createLicence.getApplicationNumber()));
+        String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
+        Browser.navigate().get(myURL.concat(String.format("application/%s",world.createLicence.getApplicationNumber())));
     }
 
     public void urlSearchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
-        Browser.navigate().get(String.format("https://iuap1.olcs.qa.nonprod.dvsa.aws/licence/%s",world.createLicence.getLicenceId()));
+        String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
+        Browser.navigate().get(myURL.concat(String.format("licence/%s",world.createLicence.getLicenceId())));
     }
 
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
