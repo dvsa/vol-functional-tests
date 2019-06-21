@@ -14,13 +14,13 @@
         <cucumber-java.version>2.4.0</cucumber-java.version>
         <cucumber-junit.version>2.4.0</cucumber-junit.version>
         <junit.version>4.12</junit.version>
-        <active-support.version>1.3.7.2</active-support.version>
+        <active-support.version>1.3.7.4</active-support.version>
         <slf4j.version>1.7.25</slf4j.version>
         <slf4j-log4j12.version>1.7.5</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <page-objects.version>0.6.8.1</page-objects.version>
         <page-action.version>0.2</page-action.version>
-        <uri-constructor.version>1.4.7</uri-constructor.version>
+        <uri-constructor.version>1.4.8</uri-constructor.version>
         <assertj-core-version>3.9.1</assertj-core-version>
         <hamcrest-version>1.3</hamcrest-version>
         <pico-container-version>2.4.0</pico-container-version>
@@ -271,16 +271,6 @@
             <artifactId>axe-selenium</artifactId>
             <version>3.0</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.jknack</groupId>
-            <artifactId>handlebars</artifactId>
-            <version>4.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.jknack</groupId>
-            <artifactId>handlebars-proto</artifactId>
-            <version>4.1.2</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>

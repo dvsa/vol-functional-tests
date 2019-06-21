@@ -386,12 +386,13 @@ public class CreateLicenceAPI {
                 .withOrganisationName(getOrganisationName()).withBusinessType(String.valueOf(BusinessType.getEnum(getBusinessType())));
 
         apiResponse = RestUtils.post(selfServeUserRegistrationDetailsBuilder, registerResource, getHeaders());
-        userId = apiResponse.extract().jsonPath().getString("id.user");
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
             throw new HTTPException(apiResponse.extract().statusCode());
+        } else {
+            userId = apiResponse.extract().jsonPath().getString("id.user");
         }
     }
 
@@ -400,15 +401,15 @@ public class CreateLicenceAPI {
 
         String userDetailsResource = URL.build(env, String.format("user/selfserve/%s", userId)).toString();
         apiResponse = RestUtils.get(userDetailsResource, getHeaders());
-        apiResponse.statusCode(HttpStatus.SC_OK);
-        setPid(apiResponse.extract().jsonPath().getString("pid"));
-        organisationId = apiResponse.extract().jsonPath().prettyPeek().getString("organisationUsers.organisation.id");
-        setOrganisationId(organisationId);
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
             throw new HTTPException(apiResponse.extract().statusCode());
+        } else {
+            setPid(apiResponse.extract().jsonPath().getString("pid"));
+            organisationId = apiResponse.extract().jsonPath().prettyPeek().getString("organisationUsers.organisation.id");
+            setOrganisationId(organisationId);
         }
     }
 
@@ -687,9 +688,9 @@ public class CreateLicenceAPI {
                 vehiclesResource = URL.build(env, String.format("application/%s/psv-vehicles", getApplicationNumber())).toString();
             }
             do {
-                for (int i = 0; i < getNoOfVehiclesRequired(); i++ ) {
+                for (int i = 0; i < getNoOfVehiclesRequired(); i++) {
                     vrm = Str.randomWord(2).concat(String.valueOf(GenericUtils.getRandomNumberInts(99, 99)).concat(Str.randomWord(3)))
-                           .toLowerCase();
+                            .toLowerCase();
                     VehiclesBuilder vehiclesDetails = new VehiclesBuilder().withId(getApplicationNumber()).withApplication(getApplicationNumber()).withHasEnteredReg("Y").withVrm(vrm)
                             .withPlatedWeight(String.valueOf(GenericUtils.getRandomNumberInts(0, 9999))).withVersion(version);
                     assert vehiclesResource != null;
