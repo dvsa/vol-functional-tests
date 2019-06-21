@@ -35,7 +35,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
                     click("//*/a[text()=50]",SelectorType.XPATH);
                     radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
-                    while (radioButtons.size()<10) {
+                    while (radioButtons.size()<=10) {
                         radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
                     }
                 }
@@ -53,7 +53,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
                         click("//*/a[text()=50]",SelectorType.XPATH);
                         radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
-                        while (radioButtons.size()<10) {
+                        while (radioButtons.size()<=10) {
                             radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
                         }
                     }
@@ -79,12 +79,12 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     selectValueFromDropDown("//*[@name='pubDate[year]']",SelectorType.XPATH,year);
                     click("//*[@id='filter']",SelectorType.XPATH);
 
-                    // Increasing table if possible  // CLICKING ON PUBLICATIONS AS WELL!!!!!!!!!!!!!
+                    // Increasing table if possible
                     if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
                         click("//*/a[text()=50]",SelectorType.XPATH);
-                        radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
-                        while (radioButtons.size()<10) {
-                            radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                        publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
+                        while (publicationNumbers.size()<=10) {
+                            publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
                         }
                     }
                     int pageNumber = 1;
@@ -113,7 +113,6 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                             }
                         }
                     } while(kickout);
-
 
                     click("//*[@id='menu-admin-dashboard/admin-publication/pending']", SelectorType.XPATH);
                     waitForTextToBePresent("Generate");
