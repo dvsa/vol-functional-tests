@@ -1113,4 +1113,17 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Delete record");
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
+
+    public void createCaseUI() throws IllegalBrowserException, MalformedURLException {
+        world.UIJourneySteps.urlSearchAndViewLicence();
+        click("//*[@id='menu-application_case']", SelectorType.XPATH);
+        click("//*[@id='add']",SelectorType.XPATH);
+        waitAndClick("//*[@id='fields_categorys__chosen']/ul",SelectorType.XPATH);
+        click("//li[contains(text(),'Convictions')]",SelectorType.XPATH);
+        enterText("//*[@id='fields[description]']","testing",SelectorType.XPATH);
+        enterText("//*[@id='fields[ecmsNo]']","12345",SelectorType.XPATH);
+        click("//*[@id='fields_outcomes__chosen']",SelectorType.XPATH);
+        click("//li[contains(text(),'Bus registration refused')]",SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+    }
 }

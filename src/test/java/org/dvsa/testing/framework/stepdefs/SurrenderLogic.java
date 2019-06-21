@@ -222,31 +222,5 @@ public class SurrenderLogic extends BasePage implements En {
             hooks.attach(scenario);
             hooks.tearDown();
         });
-        And("^i create and url search for my licence$", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
-        });
-        And("^i create and url search for my application", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewApplication();
-        });
-        And("^i url search for my licence$", () -> {
-            world.UIJourneySteps.urlSearchAndViewLicence();
-        });
-        And("^i url search for my application", () -> {
-            world.UIJourneySteps.urlSearchAndViewApplication();
-        });
-        And("^the withdraw application link is present$", () -> {
-            clickByLinkText("GOV.UK");
-            clickByLinkText(world.createLicence.getApplicationNumber());
-            checkTextisPresent("Withdraw application");
-        });
-        Then("^the withdraw application link is not present$", () -> {
-            clickByLinkText("GOV.UK");
-            clickByLinkText(world.createLicence.getApplicationNumber());
-            assertFalse(isTextPresent("Withdraw application",5));
-        });
     }
 }

@@ -12,6 +12,8 @@ import org.hamcrest.Matchers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.net.MalformedURLException;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class CreateCase extends BasePage implements En {
@@ -87,17 +89,10 @@ public class CreateCase extends BasePage implements En {
         Then("^the note should be deleted$", () -> {
             waitForTextToBePresent("The table is empty");
         });
-        And("^i add a case$", () -> {
-            world.UIJourneySteps.urlSearchAndViewLicence();
-            click("//*[@id='menu-application_case']", SelectorType.XPATH);
-            click("//*[@id='add']",SelectorType.XPATH);
-            waitAndClick("//*[@id='fields_categorys__chosen']/ul",SelectorType.XPATH);
-            click("//li[contains(text(),'Convictions')]",SelectorType.XPATH);
-            enterText("//*[@id='fields[description]']","testing",SelectorType.XPATH);
-            enterText("//*[@id='fields[ecmsNo]']","12345",SelectorType.XPATH);
-            click("//*[@id='fields_outcomes__chosen']",SelectorType.XPATH);
-            click("//li[contains(text(),'Bus registration refused')]",SelectorType.XPATH);
-            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        And("^i add a case in internal$", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.createCaseUI();
         });
     }
 }
