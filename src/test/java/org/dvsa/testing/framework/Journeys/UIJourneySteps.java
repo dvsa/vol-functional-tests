@@ -217,6 +217,16 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText(world.createLicence.getLicenceNumber());
     }
 
+    public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
+        Browser.navigate().get(myURL.concat(String.format("application/%s",world.createLicence.getApplicationNumber())));
+    }
+
+    public void urlSearchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
+        Browser.navigate().get(myURL.concat(String.format("licence/%s",world.createLicence.getLicenceId())));
+    }
+
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
         waitForTextToBePresent("Create new fee");
