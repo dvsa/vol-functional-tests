@@ -412,6 +412,24 @@ public class CreateLicenceAPI {
         }
     }
 
+    public void resetApplicationNumberForVariation() { // WAITING FOR CLEARANCE TO PROJECT. Leave until I have access to api paths.
+        Headers.headers.put("x-pid", adminApiHeader());
+
+        String userDetailsResource = URL.build(env, String.format("application/%s", userId)).toString();
+        apiResponse = RestUtils.get(userDetailsResource, getHeaders());
+        apiResponse.statusCode(HttpStatus.SC_OK);
+        setPid(apiResponse.extract().jsonPath().getString("pid"));
+        organisationId = apiResponse.extract().jsonPath().prettyPeek().getString("organisationUsers.organisation.id");
+        System.out.println(apiResponse.extract().jsonPath());
+        setOrganisationId(organisationId);
+
+        if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
+            System.out.println(apiResponse.extract().statusCode());
+            System.out.println(apiResponse.extract().response().asString());
+            throw new HTTPException(apiResponse.extract().statusCode());
+        }
+    }
+
     public void createApplication() {
         String createApplicationResource = URL.build(env, "application").toString();
         Headers.headers.put("x-pid", pid);

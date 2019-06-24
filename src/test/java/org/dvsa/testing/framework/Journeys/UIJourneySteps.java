@@ -643,7 +643,7 @@ public class UIJourneySteps extends BasePage {
         if (isTextPresent("change your licence",5)) { // If a variational (for an already created licence)
             world.UIJourneySteps.changeLicenceOnTMPage();
         }
-        click("//*[@name='table[action]']", SelectorType.XPATH);
+        waitAndClick("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
@@ -1194,8 +1194,9 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void resetApplicationNumberWithURLOnVariational() throws IllegalBrowserException, MalformedURLException {
-        String url = Browser.navigate().getCurrentUrl();
-        String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url, 2);
-        world.createLicence.setApplicationNumber(applicationNumber);
+//        String url = Browser.navigate().getCurrentUrl();
+//        String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url, 2);
+//        world.createLicence.setApplicationNumber(applicationNumber);
+        world.createLicence.resetApplicationNumberForVariation();
     }
 }
