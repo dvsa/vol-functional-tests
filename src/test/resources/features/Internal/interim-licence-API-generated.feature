@@ -11,4 +11,3 @@ Feature: Interim License document generation
     When the interim fee has been paid
     And the interim is granted
     Then the "GV Interim Licence" document is produced automatically
-
