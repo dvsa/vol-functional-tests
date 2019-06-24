@@ -229,7 +229,7 @@ public class UIJourneySteps extends BasePage {
 
     public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
-        Browser.navigate().get(myURL.concat(String.format("licence/%s",world.updateLicence.getVariationApplicationNumber())));
+        Browser.navigate().get(myURL.concat(String.format("variation/%s",world.updateLicence.getVariationApplicationNumber())));
     }
 
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
@@ -1120,8 +1120,18 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void createCaseUI() throws IllegalBrowserException, MalformedURLException {
-        world.UIJourneySteps.urlSearchAndViewLicence();
+    public void createCaseUI(String target) throws IllegalBrowserException, MalformedURLException {
+        switch (target.toLowerCase()) {
+            case "licence":
+                world.UIJourneySteps.urlSearchAndViewLicence();
+                break;
+            case "application":
+                world.UIJourneySteps.urlSearchAndViewApplication();
+                break;
+            case "variation":
+                world.UIJourneySteps.urlSearchAndViewVariational();
+                break;
+        }
         if (Browser.getDriver().findElement(By.xpath("//*/span[contains(@class,'status')]")).getText().equals("UNDER CONSIDERATION")) {
             waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
         } else if (Browser.getDriver().findElement(By.xpath("//*/span[contains(@class,'status')]")).getText().equals("VALID")) {

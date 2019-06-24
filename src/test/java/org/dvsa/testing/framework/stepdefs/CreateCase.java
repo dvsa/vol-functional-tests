@@ -89,10 +89,10 @@ public class CreateCase extends BasePage implements En {
         Then("^the note should be deleted$", () -> {
             waitForTextToBePresent("The table is empty");
         });
-        And("^i add a case in internal$", () -> {
+        And("^i add a case in internal on the \"([^\"]*)\" page$", (String page) -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.createCaseUI();
+            world.UIJourneySteps.createCaseUI(page);
         });
     }
 }
