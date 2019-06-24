@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 
 import java.net.MalformedURLException;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class PageChecks extends BasePage implements En {
@@ -25,6 +26,10 @@ public class PageChecks extends BasePage implements En {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.UIJourneySteps.navigateToApplicationOrVariationalPage();
             assertFalse(isTextPresent("Withdraw application", 5));
+        });
+        Then("^the \"([^\"]*)\" document is produced automatically$", (String documentName) -> {
+            clickByLinkText("Docs & attachments");
+            assertTrue(checkForPartialMatch(documentName));
         });
     }
 }
