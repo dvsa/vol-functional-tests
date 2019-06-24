@@ -212,12 +212,12 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.searchAndViewLicence();
         });
-        And("^i create and url search for my licence$", () -> {
+        And("^i create admin and url search for my licence$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewLicence();
         });
-        And("^i create and url search for my application", () -> {
+        And("^i create admin and url search for my application", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewApplication();
