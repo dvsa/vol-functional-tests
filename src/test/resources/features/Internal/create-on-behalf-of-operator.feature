@@ -11,3 +11,4 @@ Feature: Internal User should be able to create an operator account
       When the caseworker completes and submits the application
       And grants the application
       Then the licence is granted in Internal
+      And the "PSV Licence" document is produced automatically
