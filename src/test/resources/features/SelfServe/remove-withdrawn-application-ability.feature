@@ -11,7 +11,8 @@ Feature: SS user ability to withdraw application removed
 
 
   Scenario: SS user ability to withdraw application removed for variation
-    Given I have a "goods" "standard_international" application which is under consideration
+    Given i have a valid "goods" "sn" licence
+    And i create a variation
     And on self serve the withdraw application link is present
     And i add a case in internal
     Then on self serve the withdraw application link is not present

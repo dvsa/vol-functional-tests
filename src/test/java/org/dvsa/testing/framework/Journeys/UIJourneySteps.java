@@ -225,6 +225,10 @@ public class UIJourneySteps extends BasePage {
         Browser.navigate().get(String.format("https://iuap1.olcs.qa.nonprod.dvsa.aws/licence/%s",world.createLicence.getLicenceId()));
     }
 
+    public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {
+        Browser.navigate().get(String.format("https://iuap1.olcs.qa.nonprod.dvsa.aws/licence/%s",world.updateLicence.getVariationApplicationNumber()));
+    }
+
 
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
@@ -1116,7 +1120,11 @@ public class UIJourneySteps extends BasePage {
 
     public void createCaseUI() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.urlSearchAndViewLicence();
-        click("//*[@id='menu-application_case']", SelectorType.XPATH);
+        if (Browser.getDriver().findElement(By.xpath("//*/span[contains(@class,'status')]")).getText().equals("UNDER CONSIDERATION")) {
+            waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
+        } else if (Browser.getDriver().findElement(By.xpath("//*/span[contains(@class,'status')]")).getText().equals("VALID")) {
+            waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);
+        }
         click("//*[@id='add']",SelectorType.XPATH);
         waitAndClick("//*[@id='fields_categorys__chosen']/ul",SelectorType.XPATH);
         click("//li[contains(text(),'Convictions')]",SelectorType.XPATH);
@@ -1125,5 +1133,16 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='fields_outcomes__chosen']",SelectorType.XPATH);
         click("//li[contains(text(),'Bus registration refused')]",SelectorType.XPATH);
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+    }
+
+    public void navigateToApplicationOrVariationalPage() throws IllegalBrowserException, MalformedURLException {
+        clickByLinkText("GOV.UK");
+        if (world.updateLicence.getVariationApplicationNumber() != null) {
+            if (Browser.getDriver().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationNumber())).size() != 0) {
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+            }
+        } else if (Browser.getDriver().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size() != 0) {
+            clickByLinkText(world.createLicence.getApplicationNumber());
+        }
     }
 }
