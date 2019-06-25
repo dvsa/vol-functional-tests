@@ -353,7 +353,7 @@ public class UIJourneySteps extends BasePage {
     public void navigateToDirectorsPage() throws IllegalBrowserException {
         waitForTextToBePresent("Current licences");
         clickByLinkText(world.createLicence.getLicenceNumber());
-        waitForTextToBePresent("View your licence");
+        waitForTextToBePresent("View and amend your licence");
         clickByLinkText("Directors");
         waitForTextToBePresent("Directors");
     }

@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import com.sun.source.tree.AssertTree;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java8.En;
