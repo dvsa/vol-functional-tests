@@ -1,5 +1,6 @@
 @INT
 @GRANT-GOODS-INTERIM-APP
+@CPMS_tests
 Feature: apply for interim goods licence
 
   Background:

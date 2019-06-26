@@ -1,7 +1,7 @@
 @OLCS-23724
 @ss-interim-refund
 @SS
-
+@CPMS_tests
 Feature: Refund fee paid on new application
 
   @ss_regression

@@ -1,6 +1,7 @@
 @SS
 @ss-pay-app
 @ss_regression
+@CPMS_tests
 Feature: Self Serve Apply for licence
 
   Scenario Outline: Create and pay application fees
