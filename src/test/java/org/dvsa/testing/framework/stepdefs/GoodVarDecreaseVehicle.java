@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -34,9 +35,7 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
         });
         And("^removes a vehicle because of new vehicle cap", () -> {
             world.UIJourneySteps.navigateToVehiclesPage();
-            Browser.getDriver().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
-            Browser.getDriver().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
-            waitAndClick("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+            world.UIJourneySteps.removeFirstVehicleOnVehiclePage();
             javaScriptExecutor("location.reload(true)");
             waitAndClick("//*[@class='back-link']",SelectorType.XPATH);
         });

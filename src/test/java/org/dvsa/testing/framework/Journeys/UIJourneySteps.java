@@ -1130,4 +1130,10 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Delete record");
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
+
+    public void removeFirstVehicleOnVehiclePage() throws IllegalBrowserException {
+        Browser.getDriver().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
+        Browser.getDriver().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
+        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
 }
