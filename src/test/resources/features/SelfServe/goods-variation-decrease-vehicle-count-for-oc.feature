@@ -8,7 +8,9 @@ Feature: Goods Variation decrease vehicle count for an OC
 
   Scenario: Create a variation and decrease vehicle count
     When A selfserve user decreases the vehicle authority count
+    And removes a vehicle because of new vehicle cap
     Then a status of update required should be shown next to Review and declarations
+
 
   Scenario: Decreasing the vehicle count to an invalid character for required vehicles
     When A selfserve user decreases the vehicle required count by invalid characters

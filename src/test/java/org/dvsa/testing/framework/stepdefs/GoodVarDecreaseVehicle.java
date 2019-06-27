@@ -1,9 +1,11 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.By;
 
 public class GoodVarDecreaseVehicle extends BasePage implements En {
     World world = new World();
@@ -27,7 +29,16 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
             world.UIJourneySteps.changeVehicleAuth("-6");
         });
         Then("^a status of update required should be shown next to Review and declarations$", () -> {
-            untilExpectedTextInElement("//*[@id=\"overview-item__undertakings\"]",  SelectorType.XPATH,"REQUIRES ATTENTION", 10);
+//            world.UIJourneySteps.navigateApplicationMainPage();
+            untilExpectedTextInElement("//*[@id='overview-item__undertakings']",  SelectorType.XPATH,"REQUIRES ATTENTION", 10);
+        });
+        And("^removes a vehicle because of new vehicle cap", () -> {
+            world.UIJourneySteps.navigateToVehiclesPage();
+            Browser.getDriver().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
+            Browser.getDriver().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
+            waitAndClick("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+            javaScriptExecutor("location.reload(true)");
+            waitAndClick("//*[@class='back-link']",SelectorType.XPATH);
         });
     }
 }

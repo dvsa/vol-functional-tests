@@ -620,6 +620,22 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
+    public void navigateToVehiclesPage() throws IllegalBrowserException{
+//        clickByLinkText("GOV.UK");
+//        clickByLinkText(world.createLicence.getApplicationNumber());
+        clickByLinkText("Vehicles");
+        waitForTextToBePresent("Vehicle details");
+    }
+
+    public void navigateApplicationMainPage() throws IllegalBrowserException{
+//        clickByLinkText("GOV.UK");
+//        if (Browser.getDriver().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size()!=0){
+//        clickByLinkText(world.createLicence.getApplicationNumber());
+//        } else if (Browser.getDriver().findElements(By.partialLinkText(world.createLicence.getLicenceNumber())).size()!=0){
+//            clickByLinkText(world.createLicence.getLicenceNumber());
+//        }
+    }
+
     public void navigateToApplicationReviewDeclarationsPage() throws IllegalBrowserException {
         clickByLinkText(world.createLicence.getApplicationNumber());
         clickByLinkText("Review");
