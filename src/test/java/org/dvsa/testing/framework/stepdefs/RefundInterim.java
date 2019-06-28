@@ -56,7 +56,7 @@ public class RefundInterim extends BasePage implements En {
         Then("^the interim fee should not be refunded$", () -> {
             world.updateLicence.createInternalAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
-            world.UIJourneySteps.searchAndViewLicence();
+            world.UIJourneySteps.urlSearchAndViewLicence();
             clickByLinkText("Fees");
             do {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);

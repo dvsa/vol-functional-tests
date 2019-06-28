@@ -117,7 +117,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
+            clickByLinkText(world.updateLicence.getVariationApplicationNumber());
             if(Browser.getDriver().getCurrentUrl().contains("application")) {
                 waitForTextToBePresent("Apply for a new licence");
             } else if (Browser.getDriver().getCurrentUrl().contains("variation")) {

@@ -75,7 +75,7 @@ public class UpdateLicenceAPI extends BasePage {
         return variationApplicationNumber;
     }
 
-    private static void setVariationApplicationNumber(String variationApplicationNumber) {
+    public void setVariationApplicationNumber(String variationApplicationNumber) {
         UpdateLicenceAPI.variationApplicationNumber = variationApplicationNumber;
     }
 
