@@ -30,7 +30,7 @@ public class CPMS extends BasePage implements En {
         Then("^i check on internal that the payment has processed$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewApplication(); // NEED TO DO IT FOR A VARIATION. WHAT DID I DO BEFORE FOR A VARIATION? I DIDN'T STORE THE NUMBER. CHECK.
+            world.UIJourneySteps.url(); // NEED TO DO IT FOR A VARIATION. WHAT DID I DO BEFORE FOR A VARIATION? I DIDN'T STORE THE NUMBER. CHECK.
         });
 
     }
