@@ -117,8 +117,12 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
-            waitForTextToBePresent("Apply for a new licence");
+            clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+            if(Browser.getDriver().getCurrentUrl().contains("application")) {
+                waitForTextToBePresent("Apply for a new licence");
+            } else if (Browser.getDriver().getCurrentUrl().contains("variation")) {
+                waitForTextToBePresent("Apply to change a licence");
+            }
             clickByLinkText("Transport");
             clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
             click("form-actions[submit]", SelectorType.ID);
@@ -133,7 +137,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         When("^i add an operator as a transport manager$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
             world.UIJourneySteps.addOperatorAdminAsTransportManager(1);
         });
         And("^i sign the declaration$", () -> {
