@@ -47,7 +47,9 @@ public class CPMS extends BasePage implements En {
 
         });
         Then("^the \"([^\"]*)\" fee should be paid$", (String feeName) -> {
-            clickByLinkText("fee");
+            clickByLinkText("Fees");
+            selectValueFromDropDown("//*[@id='status']",SelectorType.XPATH,"All");
+            checkForPartialMatch(feeName);
         });
 
     }
