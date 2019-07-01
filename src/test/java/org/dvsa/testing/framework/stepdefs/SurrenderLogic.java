@@ -221,6 +221,11 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewApplication();
         });
+        And("^i create admin and url search for my variation", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewVariational();
+        });
         And("^the case worker undoes the surrender$", () -> {
             waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");

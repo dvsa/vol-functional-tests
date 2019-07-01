@@ -645,12 +645,11 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void nominateOperatorUserAsTransportManager(int user) throws IllegalBrowserException, MalformedURLException {
-        navigateToTransportManagersPage();
+        navigateToTransportManagersPage("licence");
         if (Browser.getDriver().findElements(By.linkText("change your licence")).size()!=0) { // If a variational (for an already created licence)
             world.UIJourneySteps.changeLicenceForVariation();
             waitForTextToBePresent("Transport Managers");
         }
-        javaScriptExecutor("location.reload(true)");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
@@ -663,7 +662,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addOperatorAdminAsTransportManager(int user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException {
-        navigateToTransportManagersPage();
+        navigateToTransportManagersPage("variation");
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
@@ -671,12 +670,18 @@ public class UIJourneySteps extends BasePage {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
 
-    public void navigateToTransportManagersPage() throws IllegalBrowserException {
+    public void navigateToTransportManagersPage(String type) throws IllegalBrowserException {
         clickByLinkText("GOV.UK");
-        try {
-            clickByLinkText(world.createLicence.getLicenceNumber());
-        } catch (Exception e){
-            clickByLinkText(world.createLicence.getApplicationNumber());
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
         }
         clickByLinkText("Transport");
         waitForTextToBePresent("Transport Managers");
@@ -765,9 +770,7 @@ public class UIJourneySteps extends BasePage {
     public void addOperatorUserAsTransportManager(int user, String isOwner) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
         world.UIJourneySteps.nominateOperatorUserAsTransportManager(user);
         world.UIJourneySteps.navigateToExternalUserLogin(world.UIJourneySteps.getOperatorUser(), world.UIJourneySteps.getOperatorUserEmail());
-        clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-        waitForTextToBePresent("Transport Managers");
-        clickByLinkText("Transport");
+        world.UIJourneySteps.navigateToTransportManagersPage("variation");
         clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
@@ -834,6 +837,15 @@ public class UIJourneySteps extends BasePage {
         } else if (isTextPresent("Declaration", 10)) {
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
+    }
+
+    public void signDeclarationForVariation() throws IllegalBrowserException {
+        world.UIJourneySteps.navigateToReviewDeclarationsPage("variation");
+        click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
+        if (Browser.getDriver().findElements(By.xpath("//*[@id='submitAndPay']")).size()!=0) {
+            click("//*[@id='submitAndPay']", SelectorType.XPATH);
+        } else if (Browser.getDriver().findElements(By.xpath("//*[@id='submit']")).size()!=0)
+            click("//*[@id='submit']", SelectorType.XPATH);
     }
 
     public void navigateThroughApplication() throws IllegalBrowserException {
