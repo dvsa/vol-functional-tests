@@ -229,6 +229,11 @@ public class UIJourneySteps extends BasePage {
         Browser.navigate().get(myURL.concat(String.format("licence/%s",world.createLicence.getLicenceId())));
     }
 
+    public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
+        Browser.navigate().get(myURL.concat(String.format("variation/%s",world.updateLicence.getVariationApplicationNumber())));
+    }
+
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
         waitForTextToBePresent("Create new fee");
@@ -482,12 +487,13 @@ public class UIJourneySteps extends BasePage {
         clickByName("form-actions[saveAndContinue]");
     }
 
-    public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException {
+    public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Operating centres and authorisation");
         clickByLinkText("change your licence");
         waitAndClick("button[name='form-actions[submit]'", SelectorType.CSS);
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
+        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(Browser.navigate().getCurrentUrl(),2));
         if (Integer.parseInt(noOfVehicles) > world.createLicence.getNoOfVehiclesRequired()) {
             click(nameAttribute("button", "form-actions[submit]"));
         }
@@ -692,8 +698,19 @@ public class UIJourneySteps extends BasePage {
 //        }
     }
 
-    public void navigateToApplicationReviewDeclarationsPage() throws IllegalBrowserException {
-        clickByLinkText(world.createLicence.getApplicationNumber());
+    public void navigateToReviewDeclarationsPage(String type) throws IllegalBrowserException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
+        }
         clickByLinkText("Review");
         waitForTextToBePresent("Review and declarations");
     }
