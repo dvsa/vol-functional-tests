@@ -38,8 +38,11 @@ public class CPMS extends BasePage implements En {
         When("^a selfserve user creates a variation and increases the vehicle authority count$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             clickByLinkText(world.createLicence.getLicenceNumber());
-            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createLicence.getNoOfVehiclesRequired() - 1));
-            world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createLicence.getNoOfVehiclesRequired() - 1));
+            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createLicence.getNoOfVehiclesRequired() +2));
+            world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createLicence.getNoOfVehiclesRequired() + 2));
+            world.UIJourneySteps.updateFinancialInformation(world);
+            world.UIJourneySteps.navigateToReviewDeclarationsPage("variation");
+
             wait();
         });
         And("^a selfserve user creates a variation and adds an operating centre$", () -> {

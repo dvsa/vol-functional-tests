@@ -1,5 +1,5 @@
-@CMPS-tests
-Feature: CMPS client processes payments correctly
+@CPMS-tests
+Feature: CPMS client processes payments correctly
 
   Background:
     Given i have a valid "goods" "sn" licence

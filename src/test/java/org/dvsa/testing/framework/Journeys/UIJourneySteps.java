@@ -489,8 +489,7 @@ public class UIJourneySteps extends BasePage {
 
     public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Operating centres and authorisation");
-        clickByLinkText("change your licence");
-        waitAndClick("button[name='form-actions[submit]'", SelectorType.CSS);
+        world.UIJourneySteps.changeLicenceForVariation();
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(Browser.navigate().getCurrentUrl(),2));
@@ -648,7 +647,8 @@ public class UIJourneySteps extends BasePage {
     public void nominateOperatorUserAsTransportManager(int user) throws IllegalBrowserException, MalformedURLException {
         navigateToTransportManagersPage();
         if (Browser.getDriver().findElements(By.linkText("change your licence")).size()!=0) { // If a variational (for an already created licence)
-            world.UIJourneySteps.changeLicenceOnTMPage();
+            world.UIJourneySteps.changeLicenceForVariation();
+            waitForTextToBePresent("Transport Managers");
         }
         javaScriptExecutor("location.reload(true)");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
@@ -801,6 +801,30 @@ public class UIJourneySteps extends BasePage {
         Browser.navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().ifPresent(WebElement::click);
         waitForTextToBePresent("Summary");
         clickByLinkText("Apply to");
+    }
+
+    public void navigateToFinancialEvidencePage(String type) throws IllegalBrowserException, MalformedURLException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
+        }
+        clickByLinkText("Financial evidence");
+        waitForTextToBePresent("need to prove you have enough money");
+    }
+
+    public void updateFinancialInformation(World world) throws IllegalBrowserException, MalformedURLException {
+        world.UIJourneySteps.navigateToFinancialEvidencePage("variation");
+        javaScriptExecutor("location.reload(true)");
+        click("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
+        click("//*[@id='form-actions[save]']",SelectorType.XPATH);
     }
 
     public void signDeclaration() throws IllegalBrowserException {
@@ -1202,17 +1226,15 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void changeLicenceOnTMPage() throws IllegalBrowserException, MalformedURLException {
+    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         javaScriptExecutor("location.reload(true)");
-        waitForTextToBePresent("Transport Managers");
         String url = Browser.navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2)); // Replace this with getting the variational number through the API once access is granted
-        // Set application number because one already exists within the code for the previous test and this requires the new variational one.
     }
 
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
