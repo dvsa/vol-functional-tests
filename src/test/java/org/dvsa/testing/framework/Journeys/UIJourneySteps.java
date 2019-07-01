@@ -6,6 +6,7 @@ import activesupport.MissingDriverException;
 import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.S3;
 import activesupport.driver.Browser;
+import activesupport.number.Int;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
@@ -687,6 +688,23 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
+    public void navigateToOperatingCentresPage(String type) throws IllegalBrowserException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
+        }
+        clickByLinkText("Operating centres and authorisation");
+        waitForTextToBePresent("How many vehicles do you want to authorise on the licence");
+    }
+
     public void navigateToVehiclesPage() throws IllegalBrowserException{
 //        clickByLinkText("GOV.UK");
 //        clickByLinkText(world.createLicence.getApplicationNumber());
@@ -823,7 +841,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("need to prove you have enough money");
     }
 
-    public void updateFinancialInformation(World world) throws IllegalBrowserException, MalformedURLException {
+    public void updateFinancialInformation() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.navigateToFinancialEvidencePage("variation");
         javaScriptExecutor("location.reload(true)");
         click("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
@@ -1267,5 +1285,24 @@ public class UIJourneySteps extends BasePage {
         Browser.getDriver().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
         Browser.getDriver().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    public void addNewOperatingCentreSelfServe(String postcode, int vehicles, int trailers) throws IllegalBrowserException {
+        waitForTextToBePresent("Operating centres");
+        click("//*[@id='add']",SelectorType.XPATH);
+        enterText("//*[@id='postcodeInput1']",postcode,SelectorType.XPATH);
+        click("//*[@id='address[searchPostcode][search]']",SelectorType.XPATH);
+        waitForElementToBeClickable("//*[@id='address[searchPostcode][addresses]']",SelectorType.XPATH);
+        selectValueFromDropDownByIndex("//*[@id='address[searchPostcode][addresses]']",SelectorType.XPATH,1);
+        waitForElementToBeClickable("//*[@id='addressLine1']",SelectorType.XPATH);
+        enterText("//*[@id='noOfVehiclesRequired']",Integer.toString(vehicles),SelectorType.XPATH);
+        enterText("//*[@id='noOfTrailersRequired']",Integer.toString(trailers),SelectorType.XPATH);
+        click("//*[@id='permission']",SelectorType.XPATH);
+        click("//*[@value='adPlacedLater']",SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        waitForTextToBePresent("Operating centre added");
+        replaceText("//*[@id='totAuthVehicles']",Integer.toString(vehicles));
+        replaceText("//*[@id='totAuthTrailers']", Integer.toString(vehicles));
+        click("//*[@id='form-actions[save]']",SelectorType.XPATH);
     }
 }

@@ -19,4 +19,6 @@ Feature: CPMS client processes payments correctly
 
   Scenario: Create a variation and add operating centre
     And a selfserve user creates a variation and adds an operating centre
-
+    And i pay for my application
+    And i create admin and url search for my variation
+    Then the "Variation Fee for application" fee should be paid
