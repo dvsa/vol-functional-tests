@@ -1,7 +1,6 @@
 @OLCS-23724
 @ss-interim-refund
 @SS
-@CPMS_tests
 Feature: Refund fee paid on new application
 
   @ss_regression
@@ -26,6 +25,7 @@ Feature: Refund fee paid on new application
       | OperatorType | LicenceType |
       | goods        | sn          |
 
+  @CPMS_tests
   Scenario Outline: Interim fee has been paid and licence has been granted
     Given i have an interim "<OperatorType>" "<LicenceType>" application
     When the interim fee has been paid
