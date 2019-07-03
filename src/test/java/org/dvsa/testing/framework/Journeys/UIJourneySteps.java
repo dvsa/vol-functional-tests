@@ -235,6 +235,11 @@ public class UIJourneySteps extends BasePage {
         Browser.navigate().get(myURL.concat(String.format("variation/%s",world.updateLicence.getVariationApplicationNumber())));
     }
 
+    public void urlSearchAndViewEditFee(String feeNumber) throws IllegalBrowserException, MalformedURLException {
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
+        Browser.navigate().get(myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s",feeNumber)));
+    }
+
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
         waitForTextToBePresent("Create new fee");

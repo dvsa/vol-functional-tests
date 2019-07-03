@@ -1,9 +1,16 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -53,12 +60,9 @@ public class PaymentProcessing extends BasePage implements En {
             assertNotEquals(currentFeeCount, newFeeCount);
         });
         Then("^the fee should be paid and no longer visible in the fees table$", () -> {
-            waitForTextToBePresent("Fee No.");
-            // Refresh page
-            javaScriptExecutor("location.reload(true)");
-            selectValueFromDropDown("status", SelectorType.ID, "All");
-            waitForTextToBePresent("Paid");
-            assertEquals(getText("//*[contains(text(),'" + getFeeNumber() + "')]//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
+            world.UIJourneySteps.urlSearchAndViewEditFee(getFeeNumber());
+            waitForTextToBePresent("Payments and adjustments");
+            assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
         });
         And("^when i pay for the fee by \"([^\"]*)\"$", (String arg0) -> {
             waitForTextToBePresent("Fee No.");
