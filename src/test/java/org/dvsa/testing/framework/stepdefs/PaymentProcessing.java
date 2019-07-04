@@ -62,6 +62,8 @@ public class PaymentProcessing extends BasePage implements En {
         Then("^the fee should be paid and no longer visible in the fees table$", () -> {
             world.UIJourneySteps.urlSearchAndViewEditFee(getFeeNumber());
             waitForTextToBePresent("Payments and adjustments");
+            javaScriptExecutor("location.reload(true)");
+
             assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
         });
         And("^when i pay for the fee by \"([^\"]*)\"$", (String arg0) -> {

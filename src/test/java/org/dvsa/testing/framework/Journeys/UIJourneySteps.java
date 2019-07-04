@@ -260,7 +260,7 @@ public class UIJourneySteps extends BasePage {
             if (isTextPresent("Customer reference", 10)) {
                 enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
                 enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
-                findAddress();
+                findAddress(paymentMethod);
             }
         }
         switch (paymentMethod.toLowerCase().trim()) {
@@ -269,7 +269,7 @@ public class UIJourneySteps extends BasePage {
                 if (isTextPresent("Customer reference", 10)) {
                     enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                     enterText("details[customerReference]", "AutomationCashCustomerRef", SelectorType.NAME);
-                    findAddress();
+                    findAddress(paymentMethod);
                 } else {
                     clickByName("form-actions[pay]");
                 }
@@ -284,7 +284,7 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[chequeDate][day]", String.valueOf(getCurrentDayOfMonth()), SelectorType.NAME);
                 enterText("details[chequeDate][month]", String.valueOf(getCurrentMonth()), SelectorType.NAME);
                 enterText("details[chequeDate][year]", String.valueOf(getCurrentYear()), SelectorType.NAME);
-                findAddress();
+                findAddress(paymentMethod);
                 break;
             case "postal":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
@@ -294,7 +294,7 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[customerReference]", "AutomationPostalOrderCustomerRef", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                 enterText("details[poNo]", "123456", SelectorType.NAME);
-                findAddress();
+                findAddress(paymentMethod);
                 break;
             case "card":
                 customerPaymentModule(bankCardNumber, cardExpiryMonth, cardExpiryYear);
@@ -342,13 +342,15 @@ public class UIJourneySteps extends BasePage {
     }
 
 
-    private void findAddress() throws IllegalBrowserException {
+    private void findAddress(String paymentMethod) throws IllegalBrowserException {
         enterText("address[searchPostcode][postcode]", "NG1 5FW", SelectorType.NAME);
         waitAndClick("address[searchPostcode][search]", SelectorType.NAME);
         waitAndSelectByIndex("", "//*[@id='fee_payment']/fieldset[2]/fieldset/div[3]/select[@name='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         do {
             retryingFindClick(By.xpath("//*[@id='form-actions[pay]']"));
         } while (getAttribute("//*[@name='address[addressLine1]']", SelectorType.XPATH, "value").isEmpty());
+        if (!paymentMethod.toLowerCase().trim().equals("card"))
+        waitForTextToBePresent("The payment was made successfully");
     }
 
     public void addPerson(String firstName, String lastName) throws IllegalBrowserException {
@@ -1124,7 +1126,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException {
+    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         if (licenceType.equals("si")) {
             world.createLicence.setLicenceType("standard_international");
         } else if (licenceType.equals("sn")) {
@@ -1162,7 +1164,7 @@ public class UIJourneySteps extends BasePage {
         click("menu-licence_surrender", SelectorType.ID);
     }
 
-    public void payForInterimApp() throws IllegalBrowserException {
+    public void payForInterimApp() throws IllegalBrowserException, InterruptedException {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
         waitAndClick("form-actions[save]", SelectorType.NAME);
