@@ -63,7 +63,6 @@ public class PaymentProcessing extends BasePage implements En {
             world.UIJourneySteps.urlSearchAndViewEditFee(getFeeNumber());
             waitForTextToBePresent("Payments and adjustments");
             javaScriptExecutor("location.reload(true)");
-
             assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
         });
         And("^when i pay for the fee by \"([^\"]*)\"$", (String arg0) -> {

@@ -719,15 +719,6 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Vehicle details");
     }
 
-    public void navigateApplicationMainPage() throws IllegalBrowserException{
-//        clickByLinkText("GOV.UK");
-//        if (Browser.getDriver().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size()!=0){
-//        clickByLinkText(world.createLicence.getApplicationNumber());
-//        } else if (Browser.getDriver().findElements(By.partialLinkText(world.createLicence.getLicenceNumber())).size()!=0){
-//            clickByLinkText(world.createLicence.getLicenceNumber());
-//        }
-    }
-
     public void navigateToReviewDeclarationsPage(String type) throws IllegalBrowserException {
         clickByLinkText("GOV.UK");
         switch (type.toLowerCase()) {

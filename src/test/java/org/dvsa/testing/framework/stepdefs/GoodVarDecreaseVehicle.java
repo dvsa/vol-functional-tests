@@ -30,7 +30,6 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
             world.UIJourneySteps.changeVehicleAuth("-6");
         });
         Then("^a status of update required should be shown next to Review and declarations$", () -> {
-//            world.UIJourneySteps.navigateApplicationMainPage();
             untilExpectedTextInElement("//*[@id='overview-item__undertakings']",  SelectorType.XPATH,"REQUIRES ATTENTION", 10);
         });
         And("^removes a vehicle because of new vehicle cap", () -> {

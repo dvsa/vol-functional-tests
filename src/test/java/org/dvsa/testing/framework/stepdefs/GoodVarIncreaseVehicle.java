@@ -5,6 +5,8 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
+import static org.junit.Assert.assertEquals;
+
 
 public class GoodVarIncreaseVehicle extends BasePage implements En  {
     World world = new World();
@@ -59,7 +61,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         Then("^the \"([^\"]*)\" fee should be paid$", (String feeName) -> {
             clickByLinkText("Fees");
             selectValueFromDropDown("//*[@id='status']",SelectorType.XPATH,"All");
-            checkForPartialMatch(feeName);
+            assertEquals(getText("//table//tr[td//text()[contains(., 'Variation Fee for application')]]//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
         });
     }
 }
