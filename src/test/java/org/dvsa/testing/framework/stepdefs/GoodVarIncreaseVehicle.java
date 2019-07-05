@@ -40,5 +40,26 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         Then("^An error should appear$", () -> {
             isTextPresent("//*[@id=\"OperatingCentres\"]/fieldset[3]/div[1]/div/p",  20);
         });
+        When("^a selfserve user creates a variation and increases the vehicle authority count$", () -> {
+            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            clickByLinkText(world.createLicence.getLicenceNumber());
+            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createLicence.getNoOfVehiclesRequired() +2));
+            world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createLicence.getNoOfVehiclesRequired() + 2));
+            world.UIJourneySteps.updateFinancialInformation();
+            world.UIJourneySteps.signDeclarationForVariation();
+        });
+        And("^a selfserve user creates a variation and adds an operating centre$", () -> {
+            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.UIJourneySteps.navigateToOperatingCentresPage("licence");
+            world.UIJourneySteps.changeLicenceForVariation();
+            world.UIJourneySteps.addNewOperatingCentreSelfServe("B988QF",7,7);
+            world.UIJourneySteps.updateFinancialInformation();
+            world.UIJourneySteps.signDeclarationForVariation();
+        });
+        Then("^the \"([^\"]*)\" fee should be paid$", (String feeName) -> {
+            clickByLinkText("Fees");
+            selectValueFromDropDown("//*[@id='status']",SelectorType.XPATH,"All");
+            checkForPartialMatch(feeName);
+        });
     }
 }
