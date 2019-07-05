@@ -1,6 +1,7 @@
 @INT
 @MANUAL-BUS-REG
 @int_regression
+@CPMS_tests
 Feature: Complete Manual Bus Registration Steps
 
   Background:

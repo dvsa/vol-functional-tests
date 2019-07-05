@@ -48,7 +48,7 @@ public class RefundInterim extends BasePage implements En {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
             } while (!isTextPresent("Paid",10));
             assertTrue(checkForPartialMatch("£68.00"));
-            assertTrue(world.genericUtils.returnFeeStatus("CANCELLED"));
+            assertTrue(world.genericUtils.returnFeeStatus("REFUNDED"));
         });
         And("^the licence has been withdrawn$", () -> {
             world.grantLicence.withdraw(world.createLicence.getApplicationNumber());

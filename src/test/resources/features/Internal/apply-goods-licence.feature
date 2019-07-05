@@ -1,6 +1,7 @@
 @INT
 @APPLY-GOODS-LICENCE
 @int_regression
+@CPMS_tests
 Feature: Apply for a goods licence
 
   Scenario: Apply for a restricted licence

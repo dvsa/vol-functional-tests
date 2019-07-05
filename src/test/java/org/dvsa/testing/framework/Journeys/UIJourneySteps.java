@@ -6,6 +6,7 @@ import activesupport.MissingDriverException;
 import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.S3;
 import activesupport.driver.Browser;
+import activesupport.number.Int;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
@@ -229,6 +230,16 @@ public class UIJourneySteps extends BasePage {
         Browser.navigate().get(myURL.concat(String.format("licence/%s",world.createLicence.getLicenceId())));
     }
 
+    public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
+        Browser.navigate().get(myURL.concat(String.format("variation/%s",world.updateLicence.getVariationApplicationNumber())));
+    }
+
+    public void urlSearchAndViewEditFee(String feeNumber) throws IllegalBrowserException, MalformedURLException {
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
+        Browser.navigate().get(myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s",feeNumber)));
+    }
+
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
         waitForTextToBePresent("Create new fee");
@@ -249,7 +260,7 @@ public class UIJourneySteps extends BasePage {
             if (isTextPresent("Customer reference", 10)) {
                 enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
                 enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
-                findAddress();
+                findAddress(paymentMethod);
             }
         }
         switch (paymentMethod.toLowerCase().trim()) {
@@ -258,7 +269,7 @@ public class UIJourneySteps extends BasePage {
                 if (isTextPresent("Customer reference", 10)) {
                     enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                     enterText("details[customerReference]", "AutomationCashCustomerRef", SelectorType.NAME);
-                    findAddress();
+                    findAddress(paymentMethod);
                 } else {
                     clickByName("form-actions[pay]");
                 }
@@ -273,7 +284,7 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[chequeDate][day]", String.valueOf(getCurrentDayOfMonth()), SelectorType.NAME);
                 enterText("details[chequeDate][month]", String.valueOf(getCurrentMonth()), SelectorType.NAME);
                 enterText("details[chequeDate][year]", String.valueOf(getCurrentYear()), SelectorType.NAME);
-                findAddress();
+                findAddress(paymentMethod);
                 break;
             case "postal":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
@@ -283,7 +294,7 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[customerReference]", "AutomationPostalOrderCustomerRef", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                 enterText("details[poNo]", "123456", SelectorType.NAME);
-                findAddress();
+                findAddress(paymentMethod);
                 break;
             case "card":
                 customerPaymentModule(bankCardNumber, cardExpiryMonth, cardExpiryYear);
@@ -331,13 +342,15 @@ public class UIJourneySteps extends BasePage {
     }
 
 
-    private void findAddress() throws IllegalBrowserException {
+    private void findAddress(String paymentMethod) throws IllegalBrowserException {
         enterText("address[searchPostcode][postcode]", "NG1 5FW", SelectorType.NAME);
         waitAndClick("address[searchPostcode][search]", SelectorType.NAME);
         waitAndSelectByIndex("", "//*[@id='fee_payment']/fieldset[2]/fieldset/div[3]/select[@name='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         do {
             retryingFindClick(By.xpath("//*[@id='form-actions[pay]']"));
         } while (getAttribute("//*[@name='address[addressLine1]']", SelectorType.XPATH, "value").isEmpty());
+        if (!paymentMethod.toLowerCase().trim().equals("card"))
+        waitForTextToBePresent("The payment was made successfully");
     }
 
     public void addPerson(String firstName, String lastName) throws IllegalBrowserException {
@@ -355,7 +368,7 @@ public class UIJourneySteps extends BasePage {
     public void navigateToDirectorsPage() throws IllegalBrowserException {
         waitForTextToBePresent("Current licences");
         clickByLinkText(world.createLicence.getLicenceNumber());
-        waitForTextToBePresent("View your licence");
+        waitForTextToBePresent("View and amend your licence");
         clickByLinkText("Directors");
         waitForTextToBePresent("Directors");
     }
@@ -482,12 +495,12 @@ public class UIJourneySteps extends BasePage {
         clickByName("form-actions[saveAndContinue]");
     }
 
-    public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException {
+    public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Operating centres and authorisation");
-        clickByLinkText("change your licence");
-        waitAndClick("button[name='form-actions[submit]'", SelectorType.CSS);
+        world.UIJourneySteps.changeLicenceForVariation();
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
+        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(Browser.navigate().getCurrentUrl(),2));
         if (Integer.parseInt(noOfVehicles) > world.createLicence.getNoOfVehiclesRequired()) {
             click(nameAttribute("button", "form-actions[submit]"));
         }
@@ -640,11 +653,11 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void nominateOperatorUserAsTransportManager(int user) throws IllegalBrowserException, MalformedURLException {
-        navigateToTransportManagersPage();
+        navigateToTransportManagersPage("licence");
         if (Browser.getDriver().findElements(By.linkText("change your licence")).size()!=0) { // If a variational (for an already created licence)
-            world.UIJourneySteps.changeLicenceOnTMPage();
+            world.UIJourneySteps.changeLicenceForVariation();
+            waitForTextToBePresent("Transport Managers");
         }
-        javaScriptExecutor("location.reload(true)");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
@@ -657,7 +670,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addOperatorAdminAsTransportManager(int user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException {
-        navigateToTransportManagersPage();
+        navigateToTransportManagersPage("variation");
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
@@ -665,19 +678,60 @@ public class UIJourneySteps extends BasePage {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
 
-    public void navigateToTransportManagersPage() throws IllegalBrowserException {
+    public void navigateToTransportManagersPage(String type) throws IllegalBrowserException {
         clickByLinkText("GOV.UK");
-        try {
-            clickByLinkText(world.createLicence.getLicenceNumber());
-        } catch (Exception e){
-            clickByLinkText(world.createLicence.getApplicationNumber());
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
         }
         clickByLinkText("Transport");
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void navigateToApplicationReviewDeclarationsPage() throws IllegalBrowserException {
-        clickByLinkText(world.createLicence.getApplicationNumber());
+    public void navigateToOperatingCentresPage(String type) throws IllegalBrowserException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
+        }
+        clickByLinkText("Operating centres and authorisation");
+        waitForTextToBePresent("How many vehicles do you want to authorise on the licence");
+    }
+
+    public void navigateToVehiclesPage() throws IllegalBrowserException{
+//        clickByLinkText("GOV.UK");
+//        clickByLinkText(world.createLicence.getApplicationNumber());
+        clickByLinkText("Vehicles");
+        waitForTextToBePresent("Vehicle details");
+    }
+
+    public void navigateToReviewDeclarationsPage(String type) throws IllegalBrowserException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
+        }
         clickByLinkText("Review");
         waitForTextToBePresent("Review and declarations");
     }
@@ -732,9 +786,7 @@ public class UIJourneySteps extends BasePage {
     public void addOperatorUserAsTransportManager(int user, String isOwner) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
         world.UIJourneySteps.nominateOperatorUserAsTransportManager(user);
         world.UIJourneySteps.navigateToExternalUserLogin(world.UIJourneySteps.getOperatorUser(), world.UIJourneySteps.getOperatorUserEmail());
-        clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-        waitForTextToBePresent("Transport Managers");
-        clickByLinkText("Transport");
+        world.UIJourneySteps.navigateToTransportManagersPage("variation");
         clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
@@ -770,6 +822,30 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("Apply to");
     }
 
+    public void navigateToFinancialEvidencePage(String type) throws IllegalBrowserException, MalformedURLException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
+        }
+        clickByLinkText("Financial evidence");
+        waitForTextToBePresent("need to prove you have enough money");
+    }
+
+    public void updateFinancialInformation() throws IllegalBrowserException, MalformedURLException {
+        world.UIJourneySteps.navigateToFinancialEvidencePage("variation");
+        javaScriptExecutor("location.reload(true)");
+        click("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
+        click("//*[@id='form-actions[save]']",SelectorType.XPATH);
+    }
+
     public void signDeclaration() throws IllegalBrowserException {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
         if (isTextPresent("Review and declarations", 10)) {
@@ -777,6 +853,15 @@ public class UIJourneySteps extends BasePage {
         } else if (isTextPresent("Declaration", 10)) {
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
+    }
+
+    public void signDeclarationForVariation() throws IllegalBrowserException {
+        world.UIJourneySteps.navigateToReviewDeclarationsPage("variation");
+        click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
+        if (Browser.getDriver().findElements(By.xpath("//*[@id='submitAndPay']")).size()!=0) {
+            click("//*[@id='submitAndPay']", SelectorType.XPATH);
+        } else if (Browser.getDriver().findElements(By.xpath("//*[@id='submit']")).size()!=0)
+            click("//*[@id='submit']", SelectorType.XPATH);
     }
 
     public void navigateThroughApplication() throws IllegalBrowserException {
@@ -1032,7 +1117,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException {
+    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         if (licenceType.equals("si")) {
             world.createLicence.setLicenceType("standard_international");
         } else if (licenceType.equals("sn")) {
@@ -1070,7 +1155,7 @@ public class UIJourneySteps extends BasePage {
         click("menu-licence_surrender", SelectorType.ID);
     }
 
-    public void payForInterimApp() throws IllegalBrowserException {
+    public void payForInterimApp() throws IllegalBrowserException, InterruptedException {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
         waitAndClick("form-actions[save]", SelectorType.NAME);
@@ -1169,17 +1254,15 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void changeLicenceOnTMPage() throws IllegalBrowserException, MalformedURLException {
+    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         javaScriptExecutor("location.reload(true)");
-        waitForTextToBePresent("Transport Managers");
         String url = Browser.navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2)); // Replace this with getting the variational number through the API once access is granted
-        // Set application number because one already exists within the code for the previous test and this requires the new variational one.
     }
 
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
@@ -1194,5 +1277,30 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Revoked, curtailed or suspended Licences");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    public void removeFirstVehicleOnVehiclePage() throws IllegalBrowserException {
+        Browser.getDriver().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
+        Browser.getDriver().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
+        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    public void addNewOperatingCentreSelfServe(String postcode, int vehicles, int trailers) throws IllegalBrowserException {
+        waitForTextToBePresent("Operating centres");
+        click("//*[@id='add']",SelectorType.XPATH);
+        enterText("//*[@id='postcodeInput1']",postcode,SelectorType.XPATH);
+        click("//*[@id='address[searchPostcode][search]']",SelectorType.XPATH);
+        waitForElementToBeClickable("//*[@id='address[searchPostcode][addresses]']",SelectorType.XPATH);
+        selectValueFromDropDownByIndex("//*[@id='address[searchPostcode][addresses]']",SelectorType.XPATH,1);
+        waitForElementToBeClickable("//*[@id='addressLine1']",SelectorType.XPATH);
+        enterText("//*[@id='noOfVehiclesRequired']",Integer.toString(vehicles),SelectorType.XPATH);
+        enterText("//*[@id='noOfTrailersRequired']",Integer.toString(trailers),SelectorType.XPATH);
+        click("//*[@id='permission']",SelectorType.XPATH);
+        click("//*[@value='adPlacedLater']",SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        waitForTextToBePresent("Operating centre added");
+        replaceText("//*[@id='totAuthVehicles']",Integer.toString(vehicles));
+        replaceText("//*[@id='totAuthTrailers']", Integer.toString(vehicles));
+        click("//*[@id='form-actions[save]']",SelectorType.XPATH);
     }
 }
