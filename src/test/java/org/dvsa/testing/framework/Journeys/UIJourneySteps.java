@@ -376,7 +376,7 @@ public class UIJourneySteps extends BasePage {
     public void navigateToInternalTask() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
         world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-        world.UIJourneySteps.searchAndViewApplication();
+        world.UIJourneySteps.urlSearchAndViewApplication();
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
         isElementEnabled("//body", SelectorType.XPATH);
@@ -495,7 +495,7 @@ public class UIJourneySteps extends BasePage {
         clickByName("form-actions[saveAndContinue]");
     }
 
-    public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException {
+    public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         clickByLinkText("Operating centres and authorisation");
         world.UIJourneySteps.changeLicenceForVariation();
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
@@ -652,12 +652,14 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDownByIndex("workAddress[searchPostcode][addresses]", SelectorType.ID, 1);
     }
 
-    public void nominateOperatorUserAsTransportManager(int user) throws IllegalBrowserException, MalformedURLException {
-        navigateToTransportManagersPage("licence");
-        if (Browser.getDriver().findElements(By.linkText("change your licence")).size()!=0) { // If a variational (for an already created licence)
-            world.UIJourneySteps.changeLicenceForVariation();
-            waitForTextToBePresent("Transport Managers");
+    public void nominateOperatorUserAsTransportManager(int user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+        if (applicationOrNot) {
+            navigateToTransportManagersPage("application");
+        } else {
+            navigateToTransportManagersPage("licence");
+            world.UIJourneySteps.changeLicenceForVariation(); // If licence already created then this creates variational
         }
+        waitForTextToBePresent("Transport Managers");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
@@ -670,7 +672,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addOperatorAdminAsTransportManager(int user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException {
-        navigateToTransportManagersPage("variation");
+        navigateToTransportManagersPage("application");
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
@@ -783,10 +785,14 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Declaration");
     }
 
-    public void addOperatorUserAsTransportManager(int user, String isOwner) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
-        world.UIJourneySteps.nominateOperatorUserAsTransportManager(user);
+    public void addOperatorUserAsTransportManager(int user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
+        world.UIJourneySteps.nominateOperatorUserAsTransportManager(user, applicationOrNot);
         world.UIJourneySteps.navigateToExternalUserLogin(world.UIJourneySteps.getOperatorUser(), world.UIJourneySteps.getOperatorUserEmail());
-        world.UIJourneySteps.navigateToTransportManagersPage("variation");
+        if (applicationOrNot) {
+            world.UIJourneySteps.navigateToTransportManagersPage("application");
+        } else {
+            world.UIJourneySteps.navigateToTransportManagersPage("variation");
+        }
         clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
@@ -1254,12 +1260,13 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException {
+    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException, InterruptedException {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitForElementToBeClickable("//*[contains(text(),'GOV.UK')]",SelectorType.XPATH);
         javaScriptExecutor("location.reload(true)");
         String url = Browser.navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2)); // Replace this with getting the variational number through the API once access is granted
