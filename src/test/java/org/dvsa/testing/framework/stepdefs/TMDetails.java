@@ -31,10 +31,6 @@ public class TMDetails extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails();
             world.APIJourneySteps.createPartialApplication();
         });
-//        And("^the transport manager is the operator$", () -> {
-//            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-//            world.UIJourneySteps.nominateOperatorUserAsTransportManager(1);
-//        });
         And("^the \"([^\"]*)\" button should not be displayed$", (String button) -> {
             assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
         });
