@@ -1,6 +1,6 @@
 @OLCS-17639
 @INT
-
+@int_regression
 Feature: Interim License document generation
 
   Background:
