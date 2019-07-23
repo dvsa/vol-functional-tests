@@ -13,7 +13,7 @@ Feature: Set and check criteria for triggering automatic letter
     Then a flag should be set in the DB
 
   Scenario: TM verifies variational not as operator
-    When i add an existing person as a transport manager who is not the operator
+    When i add an existing person as a transport manager who is not the operator on "variation"
     And i sign the declaration
     And i choose to sign with verify with "pavlov"
     And the operator countersigns digitally
