@@ -109,17 +109,25 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         And("^I am the operator and not the transport manager$", () -> {
             world.createLicence.setIsOwner("N");
         });
-        And("^i add an existing person as a transport manager who is not the operator$", () -> {
+        And("^i add an existing person as a transport manager who is not the operator on \"([^\"]*)\"$", (String applicationType) -> {
             world.UIJourneySteps.addInternalAdmin();
-            world.UIJourneySteps.addOperatorUserAsTransportManager(1, "N");
+            boolean applicationOrNot;
+            if (applicationType.equals("application")) {
+                applicationOrNot = true;
+            } else {
+                applicationOrNot = false;
+            }
+            world.UIJourneySteps.addOperatorUserAsTransportManager(1, "N", applicationOrNot);
         });
         And("^the operator countersigns digitally$", () -> {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
-            waitForTextToBePresent("Apply for a new licence");
-            clickByLinkText("Transport");
+            if(Browser.getDriver().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size()!=0) {
+            world.UIJourneySteps.navigateToTransportManagersPage("application");
+            } else if (Browser.getDriver().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationNumber())).size()!=0) {
+            world.UIJourneySteps.navigateToTransportManagersPage("variation");
+            }
             clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
             click("form-actions[submit]", SelectorType.ID);
             world.UIJourneySteps.signDeclaration();
@@ -129,11 +137,14 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             waitForTextToBePresent("Review and declarations");
             Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
             Assert.assertTrue(isTextPresent("Review and declarations", 10));
-            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")), 20));
+            if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])<10) {
+                Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
+            } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])>=10){
+                Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")), 20));
+            }
         });
         When("^i add an operator as a transport manager$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
             world.UIJourneySteps.addOperatorAdminAsTransportManager(1);
         });
         And("^i sign the declaration$", () -> {

@@ -42,13 +42,17 @@ public class RefundInterim extends BasePage implements En {
         Then("^the interim fee should be refunded$", () -> {
             world.updateLicence.createInternalAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
-            world.UIJourneySteps.searchAndViewLicence();
+            world.UIJourneySteps.urlSearchAndViewLicence();
             clickByLinkText("Fees");
             do {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
             } while (!isTextPresent("Paid",10));
+            clickByLinkText("Interim Fee");
+            while (Browser.getDriver().findElements(By.xpath("//*[contains(@class,'status')][contains(text(),'Refunded')]")).size()==0) {
+                javaScriptExecutor("location.reload(true)");
+            }
             assertTrue(checkForPartialMatch("£68.00"));
-            assertTrue(world.genericUtils.returnFeeStatus("CANCELLED"));
+            assertTrue(isTextPresent("Refunded",5));
         });
         And("^the licence has been withdrawn$", () -> {
             world.grantLicence.withdraw(world.createLicence.getApplicationNumber());

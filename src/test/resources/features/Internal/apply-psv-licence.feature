@@ -1,6 +1,7 @@
 @INT
 @APPLY-PSV-LICENCE
 @int_regression
+@CPMS_tests
 Feature: Apply for a psv licence
 
   Scenario: Apply for a restricted licence

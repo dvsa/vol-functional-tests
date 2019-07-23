@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import com.sun.source.tree.AssertTree;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
 import cucumber.api.java8.En;
@@ -221,6 +220,11 @@ public class SurrenderLogic extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewApplication();
+        });
+        And("^i create admin and url search for my variation", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewVariational();
         });
         And("^the case worker undoes the surrender$", () -> {
             waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);

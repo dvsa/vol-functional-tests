@@ -1,7 +1,6 @@
 @OLCS-23724
 @ss-interim-refund
 @SS
-
 Feature: Refund fee paid on new application
 
   @ss_regression
@@ -26,6 +25,7 @@ Feature: Refund fee paid on new application
       | OperatorType | LicenceType |
       | goods        | sn          |
 
+  @CPMS_tests
   Scenario Outline: Interim fee has been paid and licence has been granted
     Given i have an interim "<OperatorType>" "<LicenceType>" application
     When the interim fee has been paid
@@ -62,6 +62,7 @@ Feature: Refund fee paid on new application
     And the application has been withdrawn
     Then the interim fee should be refunded
 
+  @ss_regression
   Scenario: Interim fee has been paid and granted
     Given i have a valid "goods" "si" licence
     And i increase my vehicle authority count
