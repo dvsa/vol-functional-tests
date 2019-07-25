@@ -13,6 +13,7 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.io.*;
@@ -20,6 +21,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static activesupport.driver.Browser.*;
 import static junit.framework.TestCase.*;
@@ -68,6 +70,23 @@ public class KeyboardAccessibility extends BasePage implements En {
             Hooks hooks = new Hooks();
             hooks.attach(scenario);
             hooks.tearDown();
+        });
+        When("^i navigate to self serve licence main pages and skip to main content$", () -> {
+            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.UIJourneySteps.navigateToTransportManagersPage("licence");
+        });
+        Then("^i should be on the main content of the page$", () -> {
+//            Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
+//            Browser.getDriver().findElement(By.xpath("//*[@href='#main']")).sendKeys(Keys.RETURN);
+//            Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
+//            WebElement currentElement = getDriver().switchTo().activeElement();
+//            System.out.println(currentElement);
+//            WebElement mainElement;
+//            Browser.getDriver().findElements(By.xpath("//*[@id='main']//*[1]")).stream().filter( x -> {
+//                return x.isEnabled();
+//            }).findFirst();
+//            System.out.println(mainElement);
+//            wait();
         });
     }
 
