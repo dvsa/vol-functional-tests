@@ -20,6 +20,7 @@ import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.Key;
 import java.time.Instant;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -76,17 +77,13 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.UIJourneySteps.navigateToTransportManagersPage("licence");
         });
         Then("^i should be on the main content of the page$", () -> {
-//            Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
-//            Browser.getDriver().findElement(By.xpath("//*[@href='#main']")).sendKeys(Keys.RETURN);
-//            Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
-//            WebElement currentElement = getDriver().switchTo().activeElement();
-//            System.out.println(currentElement);
-//            WebElement mainElement;
-//            Browser.getDriver().findElements(By.xpath("//*[@id='main']//*[1]")).stream().filter( x -> {
-//                return x.isEnabled();
-//            }).findFirst();
-//            System.out.println(mainElement);
-//            wait();
+            Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
+            Browser.getDriver().findElement(By.xpath("//*[@href='#main']")).sendKeys(Keys.RETURN);
+            Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
+            WebElement currentElement = getDriver().switchTo().activeElement();
+            while (!currentElement.getTagName().equals("main")) {
+                currentElement = currentElement.findElement(By.xpath(".//.."));
+            }
         });
     }
 
