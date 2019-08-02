@@ -1467,7 +1467,7 @@ public class UIJourneySteps extends BasePage {
 
     public void skipToMainContentAndCheck() {
         Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
-        Browser.getDriver().findElement(By.xpath("//*[@href='#main']")).sendKeys(Keys.RETURN);
+        Browser.getDriver().switchTo().activeElement().sendKeys(Keys.RETURN);
         Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
         WebElement currentElement = getDriver().switchTo().activeElement();
         while (!currentElement.getTagName().equals("main")) {

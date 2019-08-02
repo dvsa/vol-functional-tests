@@ -114,13 +114,27 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence nav bar pages i can skip to main content$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToNavBarPage("Home");
+            world.UIJourneySteps.navigateToSurrendersStartPage();
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToNavBarPage("manage users");
+            world.UIJourneySteps.startSurrender();
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToNavBarPage("your account");
+            waitAndClick("form-actions[submit]",SelectorType.ID);
             world.UIJourneySteps.skipToMainContentAndCheck();
+            world.UIJourneySteps.addDiscInformation("2", "2", "1");
+            waitForTextToBePresent("In your possession");
+            world.UIJourneySteps.skipToMainContentAndCheck();
+            world.UIJourneySteps.addOperatorLicenceDetails();
+            if (world.createLicence.getLicenceType().equals("standard_international")) {
+                assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
+                world.UIJourneySteps.skipToMainContentAndCheck();
+                world.UIJourneySteps.addCommunityLicenceDetails();
+            }
+            world.UIJourneySteps.skipToMainContentAndCheck();
+            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitForTextToBePresent("Securely destroy");
+            world.UIJourneySteps.skipToMainContentAndCheck();
+            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitForTextToBePresent("Declaration");
         });
     }
 
