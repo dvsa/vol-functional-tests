@@ -48,6 +48,7 @@ public class RefundInterim extends BasePage implements En {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
             } while (!isTextPresent("Paid",10));
             clickByLinkText("Interim Fee");
+            waitForTextToBePresent("Fee details");
             while (Browser.getDriver().findElements(By.xpath("//*[contains(@class,'status')][contains(text(),'Refunded')]")).size()==0) {
                 javaScriptExecutor("location.reload(true)");
             }

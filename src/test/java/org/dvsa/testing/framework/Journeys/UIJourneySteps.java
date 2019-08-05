@@ -635,7 +635,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException, InterruptedException {
-        clickByLinkText("Operating centres and authorisation");
+        click("//*[@id='overview-item__operating_centres']",SelectorType.XPATH);
         world.UIJourneySteps.changeLicenceForVariation();
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
@@ -832,7 +832,7 @@ public class UIJourneySteps extends BasePage {
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
                 break;
         }
-        clickByLinkText("Transport");
+        clickByLinkText("Transport Managers");
         waitForTextToBePresent("Transport Managers");
     }
 
@@ -1414,7 +1414,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
         clickByLinkText("change your licence");
