@@ -49,8 +49,11 @@ public class RefundInterim extends BasePage implements En {
             } while (!isTextPresent("Paid",10));
             clickByLinkText("Interim Fee");
             waitForTextToBePresent("Fee details");
-            while (Browser.getDriver().findElements(By.xpath("//*[contains(@class,'status')][contains(text(),'Refunded')]")).size()==0) {
+            try {
+            waitForElementToBePresent("//*[contains(@class,'status')][contains(text(),'Refunded')]");
+            } catch (Exception e) {
                 javaScriptExecutor("location.reload(true)");
+                waitForElementToBePresent("//*[contains(@class,'status')][contains(text(),'Refunded')]");
             }
             assertTrue(checkForPartialMatch("£68.00"));
             assertTrue(isTextPresent("Refunded",5));

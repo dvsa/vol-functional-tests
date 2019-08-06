@@ -14,6 +14,7 @@ Feature: Add a director variation
     Then a new director should be added to my licence
     And a non urgent task is created in internal
 
+    @lastTests
   Scenario: Director with convictions and bankruptcy
     When i add a new person
     And i enter "Yes" to financial details question
