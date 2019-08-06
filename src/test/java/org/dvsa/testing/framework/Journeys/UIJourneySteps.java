@@ -1154,7 +1154,7 @@ public class UIJourneySteps extends BasePage {
         }
         world.APIJourneySteps.createAdminUser();
         world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-        world.UIJourneySteps.searchAndViewLicence();
+        world.UIJourneySteps.urlSearchAndViewLicence();
         world.UIJourneySteps.internalSiteAddBusNewReg(5);
         world.UIJourneySteps.payFeesAndGrantNewBusReg();
         world.updateLicence.createCase();
