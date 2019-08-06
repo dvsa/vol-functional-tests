@@ -1,9 +1,12 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
+import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.By;
 
 public class GoodVarDecreaseVehicle extends BasePage implements En {
     World world = new World();
@@ -27,7 +30,13 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
             world.UIJourneySteps.changeVehicleAuth("-6");
         });
         Then("^a status of update required should be shown next to Review and declarations$", () -> {
-            untilExpectedTextInElement("//*[@id=\"overview-item__undertakings\"]",  SelectorType.XPATH,"REQUIRES ATTENTION", 10);
+            untilExpectedTextInElement("//*[@id='overview-item__undertakings']",  SelectorType.XPATH,"REQUIRES ATTENTION", 10);
+        });
+        And("^removes a vehicle because of new vehicle cap", () -> {
+            world.UIJourneySteps.navigateToVehiclesPage();
+            world.UIJourneySteps.removeFirstVehicleOnVehiclePage();
+            javaScriptExecutor("location.reload(true)");
+            waitAndClick("//*[@class='back-link']",SelectorType.XPATH);
         });
     }
 }

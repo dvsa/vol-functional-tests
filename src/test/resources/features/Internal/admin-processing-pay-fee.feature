@@ -1,6 +1,7 @@
 @INT
 @Admin-Payment-Processing
 @int_regression
+@CPMS_tests
 Feature: Admin paying fees
 
   Background:

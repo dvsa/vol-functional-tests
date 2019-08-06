@@ -6,7 +6,7 @@ Feature: Change Validation On Interim Vehicle Authority
 
   Background:
     Given i have a valid "goods" "sn" licence
-    And i search for my licence
+    And i create admin and url search for my licence
     And i create a variation in internal
 
   Scenario: Interim Vehicle Authority Greater than Application Vehicle Authority

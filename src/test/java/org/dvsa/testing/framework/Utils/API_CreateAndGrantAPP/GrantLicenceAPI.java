@@ -139,7 +139,6 @@ public class GrantLicenceAPI {
             System.out.println(apiResponse.extract().response().asString());
             throw new HTTPException(apiResponse.extract().statusCode());
         }
-
         return apiResponse;
     }
 
