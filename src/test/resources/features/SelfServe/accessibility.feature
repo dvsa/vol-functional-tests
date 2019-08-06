@@ -20,4 +20,4 @@ Feature: Various accessibility Rules Checks
 
   Scenario: Keyboard - Skip to main content on all VOL surrender pages
     Given i have a valid "goods" "sn" licence
-    When i navigate to self serve licence nav bar pages i can skip to main content
+    When i navigate to self serve licence surrender pages i can skip to main content
