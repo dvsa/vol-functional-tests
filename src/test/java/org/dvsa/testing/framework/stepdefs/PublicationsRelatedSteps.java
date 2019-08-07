@@ -32,8 +32,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 List<WebElement> radioButtons;
                 List<WebElement> publicationNumbers;
 
-                if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
-                    click("//*/a[text()=50]",SelectorType.XPATH);
+                if (Browser.getDriver().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
+                    click("//li//a[contains(text(),'50')]",SelectorType.XPATH);
                     radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
                     while (radioButtons.size()<=10) {
                         radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
@@ -50,8 +50,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     waitAndClick("//*[@id='generate']", SelectorType.XPATH);
                     waitForTextToBePresent("Publication was generated, a new publication was also created");
 
-                    if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
-                        click("//*/a[text()=50]",SelectorType.XPATH);
+                    if (Browser.getDriver().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
+                        click("//li//a[contains(text(),'50')]",SelectorType.XPATH);
                         radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
                         while (radioButtons.size()<=10) {
                             radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
@@ -80,8 +80,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     click("//*[@id='filter']",SelectorType.XPATH);
 
                     // Increasing table if possible
-                    if (Browser.getDriver().findElements(By.xpath("//*/a[text()=50]")).size() != 0) {
-                        click("//*/a[text()=50]",SelectorType.XPATH);
+                    if (Browser.getDriver().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
+                        click("//li//a[contains(text(),'50')]",SelectorType.XPATH);
                         publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
                         while (publicationNumbers.size()<=10) {
                             publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
