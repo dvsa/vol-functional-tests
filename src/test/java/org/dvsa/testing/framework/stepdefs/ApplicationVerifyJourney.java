@@ -14,7 +14,7 @@ public class ApplicationVerifyJourney extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails();
             world.APIJourneySteps.createApplication();
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToApplicationReviewDeclarationsPage();
+            world.UIJourneySteps.navigateToReviewDeclarationsPage("application");
             world.UIJourneySteps.signDeclaration();
         });
         When("^i choose to sign with verify with \"([^\"]*)\"$", (String arg0) -> {

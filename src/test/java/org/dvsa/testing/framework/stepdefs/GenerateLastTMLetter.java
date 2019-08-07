@@ -5,6 +5,7 @@ import activesupport.database.DBUnit;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
+import cucumber.api.java.eo.Se;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -44,6 +45,13 @@ public class GenerateLastTMLetter extends BasePage implements En {
             jenkinsParams.put(JenkinsParameterKey.COMMAND.toString(), "last-tm-letter");
 
             Jenkins.trigger(Jenkins.Job.BATCH_RUN_CLI, jenkinsParams);
+        });
+        And("^i navigate to the review and declarations page and submit the application$", () -> {
+            clickByLinkText("GOV.UK");
+            clickByLinkText(world.createLicence.getApplicationNumber());
+            clickByLinkText("Review and declarations");
+            waitAndClick("//*[@id='label-declarationConfirmation']", SelectorType.XPATH);
+            click("//*[@id='submit']",SelectorType.XPATH);
         });
     }
 }

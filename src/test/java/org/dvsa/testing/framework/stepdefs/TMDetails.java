@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
 import cucumber.api.PendingException;
@@ -10,8 +11,13 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 
+import java.net.MalformedURLException;
+import java.sql.Driver;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,11 +30,6 @@ public class TMDetails extends BasePage implements En {
         Given("^I have a new application$", () -> {
             world.APIJourneySteps.registerAndGetUserDetails();
             world.APIJourneySteps.createPartialApplication();
-        });
-        And("^the transport manager is the operator$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
-            world.UIJourneySteps.nominateOperatorUserAsTransportManager(1);
         });
         And("^the \"([^\"]*)\" button should not be displayed$", (String button) -> {
             assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
@@ -69,8 +70,7 @@ public class TMDetails extends BasePage implements En {
         });
         And("^i navigate to the transport managers details page$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
-            world.UIJourneySteps.navigateToTransportManagersPage();
+            world.UIJourneySteps.navigateToTransportManagersPage("application");
             click("//*[@name='table[action]']", SelectorType.XPATH);
             waitForTextToBePresent("Add Transport Manager");
             selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);

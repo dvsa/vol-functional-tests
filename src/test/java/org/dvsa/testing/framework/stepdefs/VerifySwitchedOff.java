@@ -38,8 +38,7 @@ public class VerifySwitchedOff extends BasePage implements En {
         });
         And("^i add a transport manager$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
-            world.UIJourneySteps.nominateOperatorUserAsTransportManager(1);
+            world.UIJourneySteps.nominateOperatorUserAsTransportManager(1, true);
         });
         When("^the transport manager is the owner$", () -> {
             world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");

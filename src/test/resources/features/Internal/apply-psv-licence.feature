@@ -1,18 +1,25 @@
 @INT
 @APPLY-PSV-LICENCE
 @int_regression
+@CPMS_tests
 Feature: Apply for a psv licence
 
-  Scenario Outline: Apply for a different type of licence
-    Given I have applied for a "public" "<licence_type>" licence
-    And i have logged in to internal
+  Scenario: Apply for a restricted licence
+    Given I have applied for a "public" "restricted" licence
     When I grant licence
+    Then the licence should be granted
 
-  Examples:
-  |   licence_type             |
-  |   standard_national        |
-  |   standard_international   |
-  |   restricted               |
-  |   special_restricted       |
+  Scenario: Apply for a special restricted licence
+    Given I have applied for a "public" "special_restricted" licence
+    When I grant licence
+    Then the licence should be granted
 
+  Scenario: Apply for a standard international licence
+    Given I have applied for a "public" "standard_international" licence
+    When I grant licence
+    Then the licence should be granted
 
+  Scenario: Apply for a standard national licence
+    Given I have applied for a "public" "standard_national" licence
+    When I grant licence
+    Then the licence should be granted
