@@ -253,9 +253,5 @@ public class SurrenderLogic extends BasePage implements En {
         And("^i url search for my application", () -> {
             world.UIJourneySteps.urlSearchAndViewApplication();
         });
-        Then("^the \"([^\"]*)\" document is produced automatically$", (String documentName) -> {
-            clickByLinkText("Docs & attachments");
-            assertTrue(isTextPresent(documentName,5));
-        });
     }
 }
