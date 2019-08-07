@@ -41,7 +41,6 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     waitForTextToBePresent("Publication was generated, a new publication was also created");
 
                     radioButtons = show50ResultsAndUpdateWebElementsList("//*[@type='radio']");
-//                    radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
                     publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
                     List<WebElement> publicationDates = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[5]"));
 
