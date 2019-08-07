@@ -64,17 +64,11 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     click("//*[@id='filter']",SelectorType.XPATH);
 
                     // Increasing table if possible
-                    if (Browser.getDriver().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
-                        click("//li//a[contains(text(),'50')]",SelectorType.XPATH);
-                        publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
-                        while (publicationNumbers.size()<=10) {
-                            publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
-                        }
-                    }
+                    publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr/td[2]");
                     int pageNumber = 1;
-                    boolean kickout = true;
+                    boolean kickOut = true;
                     //Start looping over pages here
-                    do {
+                    while (kickOut) {
                         // Storing numbers
                         publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
 
@@ -86,7 +80,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
                         if (textList.contains(linkedPubNo)) {
                             assertTrue(Browser.getDriver().findElements(By.linkText(linkedPubNo)).size() != 0);
-                            kickout = false;
+                            kickOut = false;
                         } else {
                             pageNumber++;
                             try {
@@ -96,8 +90,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                                 System.out.println("Publication not found. Something has gone wrong.");
                             }
                         }
-                    } while(kickout);
-
+                    }
                     click("//*[@id='menu-admin-dashboard/admin-publication/pending']", SelectorType.XPATH);
                     waitForTextToBePresent("Generate");
                 } else {
