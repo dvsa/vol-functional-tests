@@ -25,9 +25,9 @@ Feature: Logic for Surrender menu item
     And the caseworker confirms the withdraw
     Then the licence status should be "valid"
     And the surrender menu should be hidden in internal
-    And i choose to surrender my licence with print and sign
-    And a caseworker views the surrender details
-    And the change history has the surrender under consideration and surrender application withdrawn
+    And the change history shows the surrender and its withdrawal
+    And the user should be able to re apply for a surrender in internal
+
 
   Scenario: Cancel surrender withdraw for valid licence
     And my application to surrender is under consideration

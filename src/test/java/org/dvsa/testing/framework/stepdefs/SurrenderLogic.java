@@ -243,10 +243,10 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.navigateToChangeHistoryInProcessing();
             assertLinkTextPresentMultipleTimes("Surrender Under Consideration",1);
         });
-        Then("^the change history has the surrender under consideration and surrender application withdrawn$", () -> {
+        Then("^the change history shows the surrender and its withdrawal$", () -> {
             world.UIJourneySteps.navigateToChangeHistoryInProcessing();
-            assertLinkTextPresentMultipleTimes("Surrender Under Consideration",2);
-            assertLinkTextPresentMultipleTimes("Surrender Application Withdrawn",1);
+            checkForPartialMatch("Surrender Application Withdrawn");
+            checkForPartialMatch("Surrender Under Consideration");
         });
     }
 }
