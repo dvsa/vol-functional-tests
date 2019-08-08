@@ -28,7 +28,6 @@ Feature: Logic for Surrender menu item
     And the change history shows the surrender and its withdrawal
     And the user should be able to re apply for a surrender in internal
 
-
   Scenario: Cancel surrender withdraw for valid licence
     And my application to surrender is under consideration
     When the caseworker attempts to withdraw the surrender
