@@ -28,8 +28,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 List<WebElement> radioButtons;
                 List<WebElement> publicationNumbers;
 
-                radioButtons = show50ResultsAndUpdateWebElementsList("//*[@type='radio']");
-                publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr[*]/td[2]"));
+                publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr[*]/td[2]");
                     currentPubNo = publicationNumbers.get(i).getText();
 
                 if (Browser.getDriver().findElements(By.linkText(currentPubNo)).size() == 0) {
@@ -41,10 +40,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     waitForTextToBePresent("Publication was generated, a new publication was also created");
 
                     radioButtons = show50ResultsAndUpdateWebElementsList("//*[@type='radio']");
-                    publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
                     List<WebElement> publicationDates = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[5]"));
 
-                    linkedPubNo = publicationNumbers.get(i + 1).getText();
                     publishedDate = publicationDates.get(i + 1).getText();
                     radioButtons.get(i + 1).click();
 
@@ -77,8 +74,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                             textList.add(elements.getText());
                         }
 
-                        if (textList.contains(linkedPubNo)) {
-                            assertTrue(Browser.getDriver().findElements(By.linkText(linkedPubNo)).size() != 0);
+                        if (textList.contains(currentPubNo)) {
+                            assertTrue(Browser.getDriver().findElements(By.linkText(currentPubNo)).size() != 0);
                             kickOut = false;
                         } else {
                             pageNumber++;
