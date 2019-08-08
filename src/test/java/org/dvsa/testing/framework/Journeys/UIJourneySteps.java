@@ -373,7 +373,7 @@ public class UIJourneySteps extends BasePage {
                 clickByLinkText("Home");
                 waitForTextToBePresent("You must keep your records up to date");
                 break;
-            case "manager users":
+            case "manage users":
                 clickByLinkText("Manage users");
                 waitForTextToBePresent("Permission");
                 break;
@@ -393,15 +393,17 @@ public class UIJourneySteps extends BasePage {
         switch (type.toLowerCase()) {
             case "licence":
                 clickByLinkText(world.createLicence.getLicenceNumber());
+                waitForTextToBePresent("View and amend your licence");
                 break;
             case "application":
                 clickByLinkText(world.createLicence.getApplicationNumber());
+                waitForTextToBePresent("Apply for a new licence");
                 break;
             case "variation":
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                waitForTextToBePresent("View and amend your licence");
                 break;
         }
-        waitForTextToBePresent("View and amend your licence");
         switch (page.toLowerCase()) {
             case "view":
                 waitForTextToBePresent("View and amend your licence");
