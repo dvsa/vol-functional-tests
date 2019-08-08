@@ -1268,7 +1268,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void navigateToChangeHistoryInProcessing() throws IllegalBrowserException {
+    public void navigateToChangeHistory() throws IllegalBrowserException {
         clickByLinkText("Processing");
         waitForTextToBePresent("Tasks");
         clickByLinkText("Change history");

@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
 import cucumber.api.Scenario;
@@ -9,12 +8,10 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.runner.Hooks;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.openqa.selenium.By;
 
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -240,11 +237,11 @@ public class SurrenderLogic extends BasePage implements En {
             hooks.tearDown();
         });
         Then("^the change history has the surrender under consideration$", () -> {
-            world.UIJourneySteps.navigateToChangeHistoryInProcessing();
-            assertLinkTextPresentMultipleTimes("Surrender Under Consideration",1);
+            world.UIJourneySteps.navigateToChangeHistory();
+            checkForPartialMatch("Surrender Under Consideration");
         });
         Then("^the change history shows the surrender and its withdrawal$", () -> {
-            world.UIJourneySteps.navigateToChangeHistoryInProcessing();
+            world.UIJourneySteps.navigateToChangeHistory();
             checkForPartialMatch("Surrender Application Withdrawn");
             checkForPartialMatch("Surrender Under Consideration");
         });
