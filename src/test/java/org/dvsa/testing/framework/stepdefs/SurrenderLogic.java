@@ -236,6 +236,22 @@ public class SurrenderLogic extends BasePage implements En {
             hooks.attach(scenario);
             hooks.tearDown();
         });
+        And("^i create and url search for my licence$", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewLicence();
+        });
+        And("^i create and url search for my application", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewApplication();
+        });
+        And("^i url search for my licence$", () -> {
+            world.UIJourneySteps.urlSearchAndViewLicence();
+        });
+        And("^i url search for my application", () -> {
+            world.UIJourneySteps.urlSearchAndViewApplication();
+        });
         Then("^the change history has the surrender under consideration$", () -> {
             world.UIJourneySteps.navigateToChangeHistory();
             checkForPartialMatch("Surrender Under Consideration");
