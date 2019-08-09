@@ -12,7 +12,6 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -252,6 +251,15 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i url search for my application", () -> {
             world.UIJourneySteps.urlSearchAndViewApplication();
+        });
+        Then("^the change history has the surrender under consideration$", () -> {
+            world.UIJourneySteps.navigateToChangeHistory();
+            checkForPartialMatch("Surrender Under Consideration");
+        });
+        Then("^the change history shows the surrender and its withdrawal$", () -> {
+            world.UIJourneySteps.navigateToChangeHistory();
+            checkForPartialMatch("Surrender Application Withdrawn");
+            checkForPartialMatch("Surrender Under Consideration");
         });
     }
 }
