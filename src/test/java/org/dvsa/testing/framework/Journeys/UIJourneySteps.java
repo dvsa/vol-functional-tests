@@ -1130,6 +1130,28 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void submitSurrender() throws MalformedURLException, IllegalBrowserException {
+        submitSurrenderUntilChoiceOfVerification();
+        if (Browser.navigate().getCurrentUrl().contains("qa")) {
+            waitAndClick("//*[@id='sign']", SelectorType.XPATH);
+            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+            checkVerifyConfirmation();
+        } else {
+            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            world.UIJourneySteps.signManually();
+        }
+        assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+    }
+
+    public void checkVerifyConfirmation() throws IllegalBrowserException {
+        waitForTextToBePresent("What happens next");
+        Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
+        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 10));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
+        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
+        waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
+    }
+
+    public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.navigateToSurrendersStartPage();
         world.UIJourneySteps.startSurrender();
         waitAndClick("form-actions[submit]", SelectorType.ID);
@@ -1141,20 +1163,6 @@ public class UIJourneySteps extends BasePage {
             world.UIJourneySteps.addCommunityLicenceDetails();
         }
         world.UIJourneySteps.acknowledgeDestroyPage();
-        if (Browser.navigate().getCurrentUrl().contains("qa")) {
-            waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
-            waitForTextToBePresent("What happens next");
-            Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 10));
-            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
-            assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
-            waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
-        } else {
-            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            world.UIJourneySteps.signManually();
-        }
-        assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
 
     public void caseworkManageSurrender() throws MalformedURLException, IllegalBrowserException {
@@ -1302,7 +1310,7 @@ public class UIJourneySteps extends BasePage {
         }
         world.APIJourneySteps.createAdminUser();
         world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-        world.UIJourneySteps.searchAndViewLicence();
+        world.UIJourneySteps.urlSearchAndViewLicence();
         world.UIJourneySteps.internalSiteAddBusNewReg(5);
         world.UIJourneySteps.payFeesAndGrantNewBusReg();
         world.updateLicence.createCase();
@@ -1416,7 +1424,14 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException {
+    public void navigateToChangeHistory() throws IllegalBrowserException {
+        clickByLinkText("Processing");
+        waitForTextToBePresent("Tasks");
+        clickByLinkText("Change history");
+        waitForTextToBePresent("Details");
+    }
+
+    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException, InterruptedException {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
         clickByLinkText("change your licence");

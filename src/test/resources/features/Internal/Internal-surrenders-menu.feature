@@ -13,6 +13,7 @@ Feature: View Surrender Menu and details on Internal
     And any open bus registrations should be displayed
     And tick boxes should be displayed
     Then the Surrender button should not be clickable
+    And the change history has the surrender under consideration
 
   Scenario: Surrender after closing cases & bus Reg
     And the open case and bus reg is closed

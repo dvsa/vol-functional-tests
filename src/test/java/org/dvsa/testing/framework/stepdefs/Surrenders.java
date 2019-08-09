@@ -5,6 +5,7 @@ import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
+import junit.framework.TestCase;
 import org.apache.http.HttpStatus;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -193,7 +194,6 @@ public class Surrenders extends BasePage implements En {
             click("//*[@id='submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
             world.UIJourneySteps.signWithVerify("pavlov", "Password1");
-
         });
         Then("^the internal surrender menu should be displayed$", () -> {
             waitForTextToBePresent(world.createLicence.getLicenceNumber());
@@ -203,12 +203,10 @@ public class Surrenders extends BasePage implements En {
         });
         And("^any open bus registrations should be displayed$", () -> {
             isLinkPresent("PB2026379/1",5);
-
         });
         And("^tick boxes should be displayed$", () -> {
             isTextPresent("Digital signature has been checked", 5);
             isTextPresent("ECMS has been checked", 5);
-
         });
         Then("^the surrender print and sign page is displayed$", () -> {
             world.UIJourneySteps.signManually();
@@ -230,25 +228,11 @@ public class Surrenders extends BasePage implements En {
             waitAndClick("menu-licence_surrender",SelectorType.ID);
         });
         And("^i choose to surrender my licence with verify$", () -> {
-            world.UIJourneySteps.navigateToSurrendersStartPage();
-            world.UIJourneySteps.startSurrender();
-            waitAndClick("form-actions[submit]",SelectorType.ID);
-            world.UIJourneySteps.addDiscInformation("2", "2", "1");
-            waitForTextToBePresent("In your possession");
-            world.UIJourneySteps.addOperatorLicenceDetails();
-            if (world.createLicence.getLicenceType().equals("standard_international")) {
-                assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
-                world.UIJourneySteps.addCommunityLicenceDetails();
-            }
-            world.UIJourneySteps.acknowledgeDestroyPage();
+            world.UIJourneySteps.submitSurrenderUntilChoiceOfVerification();
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
             world.UIJourneySteps.signWithVerify("pavlov", "Password1");
-            waitForTextToBePresent("What happens next");
-            Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 10));
-            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
-            assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
-            waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
+            world.UIJourneySteps.checkVerifyConfirmation();
+            assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
         });
         Then("^the Surrender button should not be clickable$", () -> {
         if (isElementPresent("//*[contains(@name,'actions[surrender]')]",SelectorType.XPATH)) {
@@ -272,7 +256,12 @@ public class Surrenders extends BasePage implements En {
         Then("^the licence should be surrendered$", () -> {
             assertTrue(isElementPresent("//*[contains(text(),'Surrendered')]",SelectorType.XPATH));
         });
-
+        And("^i choose to surrender my licence with print and sign", () -> {
+            world.UIJourneySteps.submitSurrenderUntilChoiceOfVerification();
+            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            world.UIJourneySteps.signManually();
+            javaScriptExecutor("location.reload(true)");
+            assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+        });
     }
-
 }
