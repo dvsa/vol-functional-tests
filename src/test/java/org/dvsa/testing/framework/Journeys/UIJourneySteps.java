@@ -24,13 +24,16 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
+import static activesupport.driver.Browser.getDriver;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
@@ -365,10 +368,151 @@ public class UIJourneySteps extends BasePage {
         clickByName("form-actions[saveAndContinue]");
     }
 
-    public void navigateToDirectorsPage() throws IllegalBrowserException {
-        waitForTextToBePresent("Current licences");
-        clickByLinkText(world.createLicence.getLicenceNumber());
-        waitForTextToBePresent("View and amend your licence");
+    public void navigateToNavBarPage(String page) throws IllegalBrowserException {
+        switch (page.toLowerCase()) {
+            case "home":
+                clickByLinkText("Home");
+                waitForTextToBePresent("You must keep your records up to date");
+                break;
+            case "manage users":
+                clickByLinkText("Manage users");
+                waitForTextToBePresent("Permission");
+                break;
+            case "your account":
+                clickByLinkText("Your account");
+                waitForTextToBePresent("Username");
+                break;
+            case "sign out":
+                clickByLinkText("Sign out");
+                waitForTextToBePresent("Thank you");
+                break;
+        }
+    }
+
+    public void navigateToSelfServePage(String type, String page) throws  IllegalBrowserException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                waitForTextToBePresent("View and amend your licence");
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                try {
+                    waitForTextToBePresent("Apply for a new licence");
+                } catch (Exception e) {
+                    waitForTextToBePresent("Application overview");
+                }
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                try {
+                waitForTextToBePresent("View and amend your licence");
+                } catch (Exception e) {
+                    waitForTextToBePresent("Application overview");
+                }
+                break;
+        }
+        switch (page.toLowerCase()) {
+            case "view":
+                try {
+                    waitForTextToBePresent("View and amend your licence");
+                } catch (Exception e) {
+                    waitForTextToBePresent("What happens next?");
+                }
+                break;
+            case "type of licence":
+                clickByLinkText("Type of licence");
+                waitForTextToBePresent("Operator location");
+                break;
+            case "business type":
+                clickByLinkText("Business type");
+                waitForTextToBePresent("Business type");
+                break;
+            case "business details":
+                clickByLinkText("Business details");
+                waitForTextToBePresent("Business details");
+                break;
+            case "address":
+                clickByLinkText("Address");
+                waitForTextToBePresent("Address");
+                break;
+            case "addresses":
+                clickByLinkText("Addresses");
+                waitForTextToBePresent("Addresses");
+                break;
+            case "directors":
+                clickByLinkText("Directors");
+                waitForTextToBePresent("Directors");
+                break;
+            case "operating centres":
+                clickByLinkText("Operating centres and authorisation");
+                waitForTextToBePresent("Operating centres and authorisation");
+                break;
+            case "transport managers":
+                clickByLinkText("Transport Managers");
+                waitForTextToBePresent("Transport Managers");
+                break;
+            case "vehicles":
+                clickByLinkText("Vehicles");
+                waitForTextToBePresent("Vehicle details");
+                break;
+            case "vehicle declarations":
+                clickByLinkText("Vehicle declarations");
+                waitForTextToBePresent("Vehicle declarations");
+                break;
+            case "trailers":
+                clickByLinkText("Trailers");
+                waitForTextToBePresent("Trailers");
+                break;
+            case "licence discs":
+                clickByLinkText("Licence discs");
+                waitForTextToBePresent("Licence discs");
+                break;
+            case "safety and compliance":
+                clickByLinkText("Safety and compliance");
+                waitForTextToBePresent("Safety and compliance");
+                break;
+            case "conditions and undertakings":
+                clickByLinkText("Conditions and undertakings");
+                waitForTextToBePresent("Conditions and undertakings");
+                break;
+            case "financial history":
+                clickByLinkText("Financial history");
+                waitForTextToBePresent("Financial history");
+                break;
+            case "financial evidence":
+                clickByLinkText("Financial evidence");
+                waitForTextToBePresent("Financial evidence");
+                break;
+            case "licence history":
+                clickByLinkText("Licence history");
+                waitForTextToBePresent("Licence history");
+                break;
+            case "convictions and penalties":
+                clickByLinkText("Convictions and penalties");
+                waitForTextToBePresent("Convictions and Penalties");
+                break;
+            case "review and declarations":
+                clickByLinkText("Review and declarations");
+                waitForTextToBePresent("Review and declarations");
+                break;
+        }
+    }
+
+    public void navigateToDirectorsPage(String type) throws IllegalBrowserException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
+        }
         clickByLinkText("Directors");
         waitForTextToBePresent("Directors");
     }
@@ -459,6 +603,16 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
+    public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
+        String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
+
+        if (Browser.isBrowserOpen()) {
+            Browser.navigate().manage().deleteAllCookies();
+        }
+        Browser.navigate().get(myURL);
+        skipToMainContentAndCheck();
+    }
+
     public void navigateToExternalSearch() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.EXTERNAL, env, "search/find-lorry-bus-operators/").toString();
         Browser.navigate().get(myURL);
@@ -471,7 +625,7 @@ public class UIJourneySteps extends BasePage {
         findElement("//*[@id='modal-title']", SelectorType.XPATH, 600);
         waitAndSelectByIndex("Generate letter", "//*[@id='category']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("Generate letter", "//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 5);
+        waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
@@ -487,7 +641,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addDirectorWithoutConvictions(String firstName, String lastName) throws MissingDriverException, IllegalBrowserException, MalformedURLException {
-        world.UIJourneySteps.navigateToDirectorsPage();
+        world.UIJourneySteps.navigateToDirectorsPage("licence");
         world.UIJourneySteps.addPerson(firstName, lastName);
         findSelectAllRadioButtonsByValue("N");
         clickByName("form-actions[saveAndContinue]");
@@ -496,7 +650,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException, InterruptedException {
-        clickByLinkText("Operating centres and authorisation");
+        click("//*[@id='overview-item__operating_centres']",SelectorType.XPATH);
         world.UIJourneySteps.changeLicenceForVariation();
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
@@ -693,8 +847,23 @@ public class UIJourneySteps extends BasePage {
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
                 break;
         }
-        clickByLinkText("Transport");
+        clickByLinkText("Transport Managers");
         waitForTextToBePresent("Transport Managers");
+    }
+
+    public void navigateToViewAndAmendPage(String type) throws IllegalBrowserException {
+        clickByLinkText("GOV.UK");
+        switch (type.toLowerCase()) {
+            case "licence":
+                clickByLinkText(world.createLicence.getLicenceNumber());
+                break;
+            case "application":
+                clickByLinkText(world.createLicence.getApplicationNumber());
+                break;
+            case "variation":
+                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                break;
+        }
     }
 
     public void navigateToOperatingCentresPage(String type) throws IllegalBrowserException {
@@ -974,6 +1143,28 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void submitSurrender() throws MalformedURLException, IllegalBrowserException {
+        submitSurrenderUntilChoiceOfVerification();
+        if (Browser.navigate().getCurrentUrl().contains("qa")) {
+            waitAndClick("//*[@id='sign']", SelectorType.XPATH);
+            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+            checkVerifyConfirmation();
+        } else {
+            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            world.UIJourneySteps.signManually();
+        }
+        assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+    }
+
+    public void checkVerifyConfirmation() throws IllegalBrowserException {
+        waitForTextToBePresent("What happens next");
+        Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
+        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 10));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
+        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
+        waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
+    }
+
+    public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.navigateToSurrendersStartPage();
         world.UIJourneySteps.startSurrender();
         waitAndClick("form-actions[submit]", SelectorType.ID);
@@ -985,20 +1176,6 @@ public class UIJourneySteps extends BasePage {
             world.UIJourneySteps.addCommunityLicenceDetails();
         }
         world.UIJourneySteps.acknowledgeDestroyPage();
-        if (Browser.navigate().getCurrentUrl().contains("qa")) {
-            waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
-            waitForTextToBePresent("What happens next");
-            Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 10));
-            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
-            assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
-            waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
-        } else {
-            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            world.UIJourneySteps.signManually();
-        }
-        assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
 
     public void caseworkManageSurrender() throws MalformedURLException, IllegalBrowserException {
@@ -1146,7 +1323,7 @@ public class UIJourneySteps extends BasePage {
         }
         world.APIJourneySteps.createAdminUser();
         world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-        world.UIJourneySteps.searchAndViewLicence();
+        world.UIJourneySteps.urlSearchAndViewLicence();
         world.UIJourneySteps.internalSiteAddBusNewReg(5);
         world.UIJourneySteps.payFeesAndGrantNewBusReg();
         world.updateLicence.createCase();
@@ -1260,6 +1437,13 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
+    public void navigateToChangeHistory() throws IllegalBrowserException {
+        clickByLinkText("Processing");
+        waitForTextToBePresent("Tasks");
+        clickByLinkText("Change history");
+        waitForTextToBePresent("Details");
+    }
+
     public void createCaseUI(String target) throws IllegalBrowserException, MalformedURLException {
         switch (target.toLowerCase()) {
             case "licence":
@@ -1351,5 +1535,15 @@ public class UIJourneySteps extends BasePage {
         replaceText("//*[@id='totAuthVehicles']",Integer.toString(vehicles));
         replaceText("//*[@id='totAuthTrailers']", Integer.toString(vehicles));
         click("//*[@id='form-actions[save]']",SelectorType.XPATH);
+    }
+
+    public void skipToMainContentAndCheck() {
+        Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
+        Browser.getDriver().switchTo().activeElement().sendKeys(Keys.RETURN);
+        Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
+        WebElement currentElement = getDriver().switchTo().activeElement();
+        while (!currentElement.getTagName().equals("main")) {
+            currentElement = currentElement.findElement(By.xpath(".//.."));
+        }
     }
 }

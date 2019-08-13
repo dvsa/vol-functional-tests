@@ -19,12 +19,12 @@ public class PageChecks extends BasePage implements En {
     public PageChecks(World world) {
         And("^on self serve the withdraw application link is present on \"([^\"]*)\"$", (String page) -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToViewMainPage(page);
+            world.UIJourneySteps.navigateToSelfServePage(page,"view");
             checkTextisPresent("Withdraw application");
         });
         Then("^on self serve the withdraw application link is not present on \"([^\"]*)\"$", (String page) -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToViewMainPage(page);
+            world.UIJourneySteps.navigateToSelfServePage(page,"view");
             assertFalse(isTextPresent("Withdraw application", 5));
         });
         Then("^the \"([^\"]*)\" document is produced automatically$", (String documentName) -> {

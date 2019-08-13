@@ -27,7 +27,7 @@ public class DirectorVariation extends BasePage implements En {
         world.UIJourneySteps = new UIJourneySteps(world);
 
         When("^i add a new person$", () -> {
-            world.UIJourneySteps.navigateToDirectorsPage();
+            world.UIJourneySteps.navigateToDirectorsPage("licence");
             world.UIJourneySteps.addPerson(firstName, lastName);
         });
         Then("^a new director should be added to my licence$", () -> {
@@ -83,7 +83,7 @@ public class DirectorVariation extends BasePage implements En {
             world.UIJourneySteps.addDirectorWithoutConvictions(firstName, lastName);
         });
         Given("^i add a director$", () -> {
-            world.UIJourneySteps.navigateToDirectorsPage();
+            world.UIJourneySteps.navigateToDirectorsPage("licence");
             world.UIJourneySteps.addDirector(firstName, lastName);
         });
         Then("^i should have multiple directors on my application$", () -> {
@@ -108,7 +108,7 @@ public class DirectorVariation extends BasePage implements En {
         When("^i remove a the last director$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToDirectorsPage();
+            world.UIJourneySteps.navigateToDirectorsPage("licence");
             world.UIJourneySteps.removeDirector();
         });
 
