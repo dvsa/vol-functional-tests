@@ -1471,21 +1471,6 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
     }
 
-    public void navigateToViewMainPage(String type) throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("GOV.UK");
-        switch (type.toLowerCase()) {
-            case "licence":
-                clickByLinkText(world.createLicence.getLicenceNumber());
-                break;
-            case "application":
-                clickByLinkText(world.createLicence.getApplicationNumber());
-                break;
-            case "variation":
-                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                break;
-        }
-    }
-
     public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException, InterruptedException {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
