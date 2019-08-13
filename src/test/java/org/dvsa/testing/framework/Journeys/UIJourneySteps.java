@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static activesupport.driver.Browser.getDriver;
 import static junit.framework.TestCase.assertEquals;
@@ -397,16 +398,28 @@ public class UIJourneySteps extends BasePage {
                 break;
             case "application":
                 clickByLinkText(world.createLicence.getApplicationNumber());
-                waitForTextToBePresent("Apply for a new licence");
+                try {
+                    waitForTextToBePresent("Apply for a new licence");
+                } catch (Exception e) {
+                    waitForTextToBePresent("Application overview");
+                }
                 break;
             case "variation":
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                try {
                 waitForTextToBePresent("View and amend your licence");
+                } catch (Exception e) {
+                    waitForTextToBePresent("Application overview");
+                }
                 break;
         }
         switch (page.toLowerCase()) {
             case "view":
-                waitForTextToBePresent("View and amend your licence");
+                try {
+                    waitForTextToBePresent("View and amend your licence");
+                } catch (Exception e) {
+                    waitForTextToBePresent("What happens next?");
+                }
                 break;
             case "type of licence":
                 clickByLinkText("Type of licence");
@@ -1369,7 +1382,7 @@ public class UIJourneySteps extends BasePage {
     public void caseWorkerCompleteOverview() throws IllegalBrowserException, MalformedURLException {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         Browser.navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        click("//*[contains(@id,'save')]", SelectorType.XPATH);
+        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
     public void caseWorkerGrantApplication() throws IllegalBrowserException {
@@ -1429,6 +1442,33 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Tasks");
         clickByLinkText("Change history");
         waitForTextToBePresent("Details");
+    }
+
+    public void createCaseUI(String target) throws IllegalBrowserException, MalformedURLException {
+        switch (target.toLowerCase()) {
+            case "licence":
+                world.UIJourneySteps.urlSearchAndViewLicence();
+                break;
+            case "application":
+                world.UIJourneySteps.urlSearchAndViewApplication();
+                break;
+            case "variation":
+                world.UIJourneySteps.urlSearchAndViewVariational();
+                break;
+        }
+        if (Browser.getDriver().findElement(By.xpath("//*/span[contains(@class,'status')]")).getText().equals("UNDER CONSIDERATION")) {
+            waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
+        } else if (Browser.getDriver().findElement(By.xpath("//*/span[contains(@class,'status')]")).getText().equals("VALID")) {
+            waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);
+        }
+        click("//*[@id='add']",SelectorType.XPATH);
+        waitAndClick("//*[@id='fields_categorys__chosen']/ul",SelectorType.XPATH);
+        click("//li[contains(text(),'Convictions')]",SelectorType.XPATH);
+        enterText("//*[@id='fields[description]']","testing",SelectorType.XPATH);
+        enterText("//*[@id='fields[ecmsNo]']","12345",SelectorType.XPATH);
+        click("//*[@id='fields_outcomes__chosen']",SelectorType.XPATH);
+        click("//li[contains(text(),'Bus registration refused')]",SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
     }
 
     public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException, InterruptedException {
