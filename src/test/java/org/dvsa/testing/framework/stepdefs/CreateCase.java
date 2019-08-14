@@ -12,6 +12,8 @@ import org.hamcrest.Matchers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.net.MalformedURLException;
+
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
 public class CreateCase extends BasePage implements En {
@@ -86,6 +88,11 @@ public class CreateCase extends BasePage implements En {
         });
         Then("^the note should be deleted$", () -> {
             waitForTextToBePresent("The table is empty");
+        });
+        And("^i add a case in internal on the \"([^\"]*)\" page$", (String page) -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.createCaseUI(page);
         });
     }
 }
