@@ -4,6 +4,7 @@
 
 Feature: Operator signs with verify
 
+  @ss_regression_fix
   Scenario Outline: Operator chooses to sign with verify
     Given verify has been switched "on"
     And i have an application in progress

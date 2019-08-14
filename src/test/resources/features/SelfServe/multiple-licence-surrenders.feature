@@ -8,6 +8,7 @@ Feature: Multiple licence holder
   Background:
     Given I have applied for "standard_national" "goods" licences
 
+  @ss_regression_fix
   Scenario: Surrender multiple licences
     And my application to surrender is under consideration
     When the caseworker approves the surrender

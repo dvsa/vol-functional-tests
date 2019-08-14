@@ -37,6 +37,7 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     When I search for a lorry and bus operator by "licence"
     Then search results page should not display any other licence number
 
+  @ss_regression_fix
   Scenario: [Negative]Search for lorry and bus operators by Person's name
     When I search for a lorry and bus operator by "person"
     Then search results page should only display names containing our operator name

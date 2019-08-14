@@ -6,6 +6,7 @@ Feature: Sign surrender
     Given i have a valid "goods" "sn" licence
     And i choose to surrender my licence
 
+  @ss_regression_fix
   @ss_regression
   Scenario: Sign with verify - check that surrender has been created
     When i sign with verify

@@ -8,6 +8,7 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
     Given I have a new application
     And i navigate to the transport managers details page
 
+  @ss_regression_fix
   Scenario: Radio button not clicked
     Then the optional wording should not be displayed on the page
       | Other Licences       |
