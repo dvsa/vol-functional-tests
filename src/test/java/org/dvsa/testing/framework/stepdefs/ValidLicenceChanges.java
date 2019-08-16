@@ -22,6 +22,13 @@ public class ValidLicenceChanges extends BasePage implements En {
     String companyName = "test company name";
     String companyNumber = "test1234";
 
+    String forAttentionOf = "testName";
+    String phoneNumber = "0800 001 066";
+    String secondaryPhoneNumber = "0800 001 067";
+    String email = "tester@testersAA.com";
+    String transportConsultantName = "Harold Hastings";
+
+
     public ValidLicenceChanges(World world) {
         When("^i make changes to the business details page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","business details");
@@ -56,6 +63,45 @@ public class ValidLicenceChanges extends BasePage implements En {
             checkValue("//td[1]//input[@type='submit']",SelectorType.XPATH,companyName);
             Assert.assertEquals(Browser.getDriver().findElement(By.xpath("//td[2]")).getText(),companyNumber);
             Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
+        });
+        When("^i make changes to the addresses page$", () -> {
+            world.UIJourneySteps.navigateToSelfServePage("licence","addresses");
+            clearAndEnterText("//*[@id='correspondence[fao]']",SelectorType.XPATH,forAttentionOf);
+            clearAndEnterText("//*[@id='addressLine1']",SelectorType.XPATH,registeredAddress1);
+            clearAndEnterText("//*[@id='correspondence_address[addressLine2]']",SelectorType.XPATH,registeredAddress2);
+            clearAndEnterText("//*[@id='correspondence_address[addressLine3]']",SelectorType.XPATH,registeredAddress3);
+            clearAndEnterText("//*[@id='correspondence_address[addressLine4]']",SelectorType.XPATH,registeredAddress4);
+            clearAndEnterText("//*[@id='addressTown']",SelectorType.XPATH,registeredAddressTown);
+            clearAndEnterText("//*[@id='postcode']",SelectorType.XPATH,registeredAddressPostCode);
+            selectValueFromDropDownByIndex("//*[@id='correspondence_address[countryCode]']",SelectorType.XPATH,5);
+            clearAndEnterText("//*[@id='phone_primary']",SelectorType.XPATH,phoneNumber);
+            clearAndEnterText("//*[@id='$phone_secondary']",SelectorType.XPATH,secondaryPhoneNumber);
+            clearAndEnterText("//*[@id='email']",SelectorType.XPATH,email);
+            clearAndEnterText("//*[@id='establishment_address[addressLine1]']",SelectorType.XPATH,registeredAddress1);
+            clearAndEnterText("//*[@id='establishment_address[addressLine2]']",SelectorType.XPATH,registeredAddress2);
+            clearAndEnterText("//*[@id='establishment_address[addressLine3]']",SelectorType.XPATH,registeredAddress3);
+            clearAndEnterText("//*[@id='establishment_address[addressLine4]']",SelectorType.XPATH,registeredAddress4);
+            clearAndEnterText("//*[@id='establishment_address[town]']",SelectorType.XPATH,registeredAddressTown);
+            clearAndEnterText("//*[@id='postcodeOptional']",SelectorType.XPATH,registeredAddressPostCode);
+//            selectValueFromDropDownByIndex("//*[@id='establishment_address_countryCode__chosen']",SelectorType.XPATH,5);
+            click("//*[@id='consultant[add-transport-consultant']",SelectorType.XPATH);
+            click("//*[@id='written-permission-to-engage']",SelectorType.XPATH);
+            clearAndEnterText("//*[@id='consultant[transportConsultantName']",SelectorType.XPATH,transportConsultantName);
+            clickByLinkText("Enter the address yourself");
+            clearAndEnterText("//*[@id='consultantAddress[addressLine1]']",SelectorType.XPATH,registeredAddress1);
+            clearAndEnterText("//*[@id='consultantAddress[addressLine2]']",SelectorType.XPATH,registeredAddress2);
+            clearAndEnterText("//*[@id='consultantAddress[addressLine3]']",SelectorType.XPATH,registeredAddress3);
+            clearAndEnterText("//*[@id='consultantAddress[addressLine4]']",SelectorType.XPATH,registeredAddress4);
+            clearAndEnterText("//*[@id='addressTown']",SelectorType.XPATH,registeredAddressTown);
+            clearAndEnterText("//*[@id='postcode']",SelectorType.XPATH,registeredAddressPostCode);
+            selectValueFromDropDownByIndex("consultantAddress[countryCode]",SelectorType.XPATH,5);
+            clearAndEnterText("//*[@id='tc_phone_primary']",SelectorType.XPATH,phoneNumber);
+            clearAndEnterText("//*[@id='tc_phone_secondary']",SelectorType.XPATH,secondaryPhoneNumber);
+            clearAndEnterText("//*[@id='consultantContact[email]",SelectorType.XPATH,email);
+            click("form-actions[save]");
+            wait();
+        });
+        Then("^the changes to the addresses page are made$", () -> {
         });
     }
 }

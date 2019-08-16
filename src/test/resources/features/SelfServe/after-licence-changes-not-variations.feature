@@ -10,3 +10,9 @@ Feature: Self Serve users can make changes to their valid licence.
     When i make changes to the business details page
     Then the changes to the business details page are made
 
+
+  Scenario: A serve serve user changes their Addresses
+    And i have logged in to self serve
+    When i make changes to the addresses page
+    Then the changes to the addresses page are made
+
