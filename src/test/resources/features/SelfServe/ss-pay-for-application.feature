@@ -4,7 +4,6 @@
 Feature: Self Serve Apply for licence
 
   @CPMS_tests
-  @ss_regression_fix
   Scenario Outline: Create and pay application fees
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | b |

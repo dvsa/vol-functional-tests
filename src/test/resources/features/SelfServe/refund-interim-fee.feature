@@ -1,7 +1,6 @@
 @OLCS-23724
 @ss-interim-refund
 @SS
-@ss_regression_fix
 Feature: Refund fee paid on new application
 
   @ss_regression

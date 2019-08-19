@@ -100,7 +100,6 @@ Feature: User should be able to continue where they left off
       | public       | sn          |
       | goods        | si          |
 
-  @ss_regression_fix
   Scenario Outline: Leave declaration page and navigate back to disc and doc review page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender
