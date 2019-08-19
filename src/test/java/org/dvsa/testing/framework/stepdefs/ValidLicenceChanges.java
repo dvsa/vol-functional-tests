@@ -83,12 +83,11 @@ public class ValidLicenceChanges extends BasePage implements En {
             clearAndEnterText("//*[@id='establishment_address[addressLine4]']",SelectorType.XPATH,registeredAddress4);
             clearAndEnterText("//*[@id='establishment_address[town]']",SelectorType.XPATH,registeredAddressTown);
             clearAndEnterText("//*[@id='postcodeOptional']",SelectorType.XPATH,registeredAddressPostCode);
-//            selectValueFromDropDownByIndex("//*[@id='establishment_address_countryCode__chosen']",SelectorType.XPATH,5);
-            click("//*[@id='consultant[add-transport-consultant']",SelectorType.XPATH);
+            click("//*[@id='consultant[add-transport-consultant]']",SelectorType.XPATH);
             click("//*[@id='written-permission-to-engage']",SelectorType.XPATH);
-            clearAndEnterText("//*[@id='consultant[transportConsultantName']",SelectorType.XPATH,transportConsultantName);
+            clearAndEnterText("//*[@id='consultant[transportConsultantName]']",SelectorType.XPATH,transportConsultantName);
             clickByLinkText("Enter the address yourself");
-            clearAndEnterText("//*[@id='consultantAddress[addressLine1]']",SelectorType.XPATH,registeredAddress1);
+            clearAndEnterText("//*[@id='addressLine1']",SelectorType.XPATH,registeredAddress1);
             clearAndEnterText("//*[@id='consultantAddress[addressLine2]']",SelectorType.XPATH,registeredAddress2);
             clearAndEnterText("//*[@id='consultantAddress[addressLine3]']",SelectorType.XPATH,registeredAddress3);
             clearAndEnterText("//*[@id='consultantAddress[addressLine4]']",SelectorType.XPATH,registeredAddress4);
