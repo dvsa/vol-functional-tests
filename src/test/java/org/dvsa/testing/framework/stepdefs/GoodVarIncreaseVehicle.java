@@ -4,8 +4,7 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-
-import static org.junit.Assert.assertEquals;
+import org.junit.Assert;
 
 
 public class GoodVarIncreaseVehicle extends BasePage implements En  {
@@ -61,7 +60,8 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         Then("^the \"([^\"]*)\" fee should be paid$", (String feeName) -> {
             clickByLinkText("Fees");
             selectValueFromDropDown("//*[@id='status']",SelectorType.XPATH,"All");
-            assertEquals(getText("//table//tr[td//text()[contains(., 'Variation Fee for application')]]//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
+            waitForTextToBePresent("Grant Fee for application");
+            Assert.assertTrue(getText("//table//tr[td//text()[contains(., 'Variation Fee for application')]]//*[contains(@class,'status')]",SelectorType.XPATH).equals("PAID"));
         });
     }
 }
