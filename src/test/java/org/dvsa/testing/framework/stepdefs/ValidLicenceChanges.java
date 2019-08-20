@@ -93,12 +93,11 @@ public class ValidLicenceChanges extends BasePage implements En {
             clearAndEnterText("//*[@id='consultantAddress[addressLine4]']",SelectorType.XPATH,registeredAddress4);
             clearAndEnterText("//*[@id='addressTown']",SelectorType.XPATH,registeredAddressTown);
             clearAndEnterText("//*[@id='postcode']",SelectorType.XPATH,registeredAddressPostCode);
-            selectValueFromDropDownByIndex("consultantAddress[countryCode]",SelectorType.XPATH,5);
+            selectValueFromDropDownByIndex("//*[@id='consultantAddress[countryCode]']",SelectorType.XPATH,5);
             clearAndEnterText("//*[@id='tc_phone_primary']",SelectorType.XPATH,phoneNumber);
             clearAndEnterText("//*[@id='tc_phone_secondary']",SelectorType.XPATH,secondaryPhoneNumber);
-            clearAndEnterText("//*[@id='consultantContact[email]",SelectorType.XPATH,email);
-            click("form-actions[save]");
-            wait();
+            clearAndEnterText("//*[@id='consultantContact[email]']",SelectorType.XPATH,email);
+            click("//*[@id='form-actions[save]']",SelectorType.XPATH);
         });
         Then("^the changes to the addresses page are made$", () -> {
         });
