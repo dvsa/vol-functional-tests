@@ -18,7 +18,7 @@ Feature: Self Serve users can make changes to their valid licence.
     When i make changes to the vehicles page
     Then the changes to the vehicles page are made
 
-  Scenario: A self serve user changes their licence discs
+  Scenario: A self serve user changes their licence discs (public only)
     When i make changes to the licence discs page
     Then the changes to the licence discs page are made
 

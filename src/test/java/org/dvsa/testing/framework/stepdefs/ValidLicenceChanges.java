@@ -136,18 +136,28 @@ public class ValidLicenceChanges extends BasePage implements En {
         When("^i make changes to the vehicles page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","vehicles");
             for (int i = 0; i < 3; i++) {
-                click("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
-                waitForTextToBePresent("Are you sure you want to remove these vehicle(s)");
-                click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-                waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
+                if (Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
+                    click("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
+                    waitForTextToBePresent("Are you sure you want to remove these records?");
+                    click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+                    waitForElementToBeClickable("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
+                } else {
+                    click("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
+                    waitForTextToBePresent("Are you sure you want to remove these vehicle(s)");
+                    click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+                    waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
+                }
             }
             click("//*[@id='shareInfo[shareInfo]']", SelectorType.XPATH);
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
         });
         Then("^the changes to the vehicles page are made$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","vehicles");
-            Assert.assertEquals(Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
-            Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
+            if (Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
+                Assert.assertEquals(Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
+            } else {
+                Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
+            }
         });
         When("^i make changes to the licence discs page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","licence discs");
