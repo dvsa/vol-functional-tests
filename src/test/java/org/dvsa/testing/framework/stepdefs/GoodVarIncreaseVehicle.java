@@ -61,7 +61,8 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         Then("^the \"([^\"]*)\" fee should be paid$", (String feeName) -> {
             clickByLinkText("Fees");
             selectValueFromDropDown("//*[@id='status']",SelectorType.XPATH,"All");
-            assertEquals(getText("//table//tr[td//text()[contains(., 'Variation Fee for application')]]//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
+            waitForTextToBePresent("Grant Fee for application");
+            assertEquals(getText("//table//tr[td//text()[contains(., 'Variation Fee for application')]]//*[contains(@class,'status')]",SelectorType.XPATH),"PAID");
         });
     }
 }
