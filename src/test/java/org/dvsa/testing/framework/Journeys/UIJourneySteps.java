@@ -675,7 +675,9 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Verified");
         enterText("username", verifyUsername, SelectorType.NAME);
         enterText("password", verifyPassword, SelectorType.NAME);
-        click("//*[@id='login']", SelectorType.XPATH);
+        while(Browser.getDriver().findElements(By.xpath("//*[contains(text(),'Verified ID Login')]")).size()>0) {
+            Browser.getDriver().findElement(By.xpath("//*[@value='SignIn']")).click();
+        }
         waitForTextToBePresent("Personal Details");
         click("//*[@id='agree']", SelectorType.XPATH);
     }
