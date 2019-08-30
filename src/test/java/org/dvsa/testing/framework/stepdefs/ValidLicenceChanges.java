@@ -38,13 +38,13 @@ public class ValidLicenceChanges extends BasePage implements En {
             enterText("//*[@id='data[tradingNames][0][name]']",tradingName,SelectorType.XPATH);
             click("//a[@class='add-another-trigger']",SelectorType.XPATH);
             enterText("//*[@id='data[tradingNames][1][name]']",tradingName2,SelectorType.XPATH);
-            clearAndEnterText("//*[@id='natureOfBusiness']",SelectorType.XPATH,natureOfBusiness);
-            clearAndEnterText("//*[@id='addressLine1']",SelectorType.XPATH,registeredAddress1);
-            clearAndEnterText("//*[@id='registeredAddress[addressLine2]']",SelectorType.XPATH,registeredAddress2);
-            clearAndEnterText("//*[@id='registeredAddress[addressLine3]']",SelectorType.XPATH,registeredAddress3);
-            clearAndEnterText("//*[@id='registeredAddress[addressLine4]']",SelectorType.XPATH,registeredAddress4);
-            clearAndEnterText("//*[@id='registeredAddress[town]']",SelectorType.XPATH,registeredAddressTown);
-            clearAndEnterText("//*[@id='registeredAddress[postcode]']",SelectorType.XPATH,registeredAddressPostCode);
+            replaceText("//*[@id='natureOfBusiness']",natureOfBusiness);
+            replaceText("//*[@id='addressLine1']",registeredAddress1);
+            replaceText("//*[@id='registeredAddress[addressLine2]']",registeredAddress2);
+            replaceText("//*[@id='registeredAddress[addressLine3]']",registeredAddress3);
+            replaceText("//*[@id='registeredAddress[addressLine4]']",registeredAddress4);
+            replaceText("//*[@id='registeredAddress[town]']",registeredAddressTown);
+            replaceText("//*[@id='registeredAddress[postcode]']",registeredAddressPostCode);
             click("//*[@id='add']",SelectorType.XPATH);
             waitAndEnterText("//*[@id='name']",SelectorType.XPATH,companyName);
             enterText("//*[@id='companyNo']",companyNumber,SelectorType.XPATH);
@@ -69,37 +69,37 @@ public class ValidLicenceChanges extends BasePage implements En {
         });
         When("^i make changes to the addresses page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","addresses");
-            clearAndEnterText("//*[@id='correspondence[fao]']",SelectorType.XPATH,forAttentionOf);
-            clearAndEnterText("//*[@id='addressLine1']",SelectorType.XPATH,registeredAddress1);
-            clearAndEnterText("//*[@id='correspondence_address[addressLine2]']",SelectorType.XPATH,registeredAddress2);
-            clearAndEnterText("//*[@id='correspondence_address[addressLine3]']",SelectorType.XPATH,registeredAddress3);
-            clearAndEnterText("//*[@id='correspondence_address[addressLine4]']",SelectorType.XPATH,registeredAddress4);
-            clearAndEnterText("//*[@id='addressTown']",SelectorType.XPATH,registeredAddressTown);
-            clearAndEnterText("//*[@id='postcode']",SelectorType.XPATH,registeredAddressPostCode);
+            replaceText("//*[@id='correspondence[fao]']",forAttentionOf);
+            replaceText("//*[@id='addressLine1']",registeredAddress1);
+            replaceText("//*[@id='correspondence_address[addressLine2]']",registeredAddress2);
+            replaceText("//*[@id='correspondence_address[addressLine3]']",registeredAddress3);
+            replaceText("//*[@id='correspondence_address[addressLine4]']",registeredAddress4);
+            replaceText("//*[@id='addressTown']",registeredAddressTown);
+            replaceText("//*[@id='postcode']",registeredAddressPostCode);
             selectValueFromDropDownByIndex("//*[@id='correspondence_address[countryCode]']",SelectorType.XPATH,5);
-            clearAndEnterText("//*[@id='phone_primary']",SelectorType.XPATH,phoneNumber);
-            clearAndEnterText("//*[@id='$phone_secondary']",SelectorType.XPATH,secondaryPhoneNumber);
-            clearAndEnterText("//*[@id='email']",SelectorType.XPATH,email);
-            clearAndEnterText("//*[@id='establishment_address[addressLine1]']",SelectorType.XPATH,registeredAddress1);
-            clearAndEnterText("//*[@id='establishment_address[addressLine2]']",SelectorType.XPATH,registeredAddress2);
-            clearAndEnterText("//*[@id='establishment_address[addressLine3]']",SelectorType.XPATH,registeredAddress3);
-            clearAndEnterText("//*[@id='establishment_address[addressLine4]']",SelectorType.XPATH,registeredAddress4);
-            clearAndEnterText("//*[@id='establishment_address[town]']",SelectorType.XPATH,registeredAddressTown);
-            clearAndEnterText("//*[@id='postcodeOptional']",SelectorType.XPATH,registeredAddressPostCode);
+            replaceText("//*[@id='phone_primary']",phoneNumber);
+            replaceText("//*[@id='$phone_secondary']",secondaryPhoneNumber);
+            replaceText("//*[@id='email']",email);
+            replaceText("//*[@id='establishment_address[addressLine1]']",registeredAddress1);
+            replaceText("//*[@id='establishment_address[addressLine2]']",registeredAddress2);
+            replaceText("//*[@id='establishment_address[addressLine3]']",registeredAddress3);
+            replaceText("//*[@id='establishment_address[addressLine4]']",registeredAddress4);
+            replaceText("//*[@id='establishment_address[town]']",registeredAddressTown);
+            replaceText("//*[@id='postcodeOptional']",registeredAddressPostCode);
             click("//*[@id='consultant[add-transport-consultant]']",SelectorType.XPATH);
             click("//*[@id='written-permission-to-engage']",SelectorType.XPATH);
-            clearAndEnterText("//*[@id='consultant[transportConsultantName]']",SelectorType.XPATH,transportConsultantName);
+            replaceText("//*[@id='consultant[transportConsultantName]']",transportConsultantName);
             clickByLinkText("Enter the address yourself");
-            clearAndEnterText("//*[@name='consultantAddress[addressLine1]']",SelectorType.XPATH,registeredAddress1);
-            clearAndEnterText("//*[@id='consultantAddress[addressLine2]']",SelectorType.XPATH,registeredAddress2);
-            clearAndEnterText("//*[@id='consultantAddress[addressLine3]']",SelectorType.XPATH,registeredAddress3);
-            clearAndEnterText("//*[@id='consultantAddress[addressLine4]']",SelectorType.XPATH,registeredAddress4);
-            clearAndEnterText("//*[@name='consultantAddress[town]']",SelectorType.XPATH,registeredAddressTown);
-            clearAndEnterText("//*[@name='consultantAddress[postcode]']",SelectorType.XPATH,registeredAddressPostCode);
+            replaceText("//*[@name='consultantAddress[addressLine1]']",registeredAddress1);
+            replaceText("//*[@id='consultantAddress[addressLine2]']",registeredAddress2);
+            replaceText("//*[@id='consultantAddress[addressLine3]']",registeredAddress3);
+            replaceText("//*[@id='consultantAddress[addressLine4]']",registeredAddress4);
+            replaceText("//*[@name='consultantAddress[town]']",registeredAddressTown);
+            replaceText("//*[@name='consultantAddress[postcode]']",registeredAddressPostCode);
             selectValueFromDropDownByIndex("//*[@id='consultantAddress[countryCode]']",SelectorType.XPATH,5);
-            clearAndEnterText("//*[@id='tc_phone_primary']",SelectorType.XPATH,phoneNumber);
-            clearAndEnterText("//*[@id='tc_phone_secondary']",SelectorType.XPATH,secondaryPhoneNumber);
-            clearAndEnterText("//*[@id='consultantContact[email]']",SelectorType.XPATH,email);
+            replaceText("//*[@id='tc_phone_primary']",phoneNumber);
+            replaceText("//*[@id='tc_phone_secondary']",secondaryPhoneNumber);
+            replaceText("//*[@id='consultantContact[email]']",email);
             click("//*[@id='form-actions[save]']",SelectorType.XPATH);
         });
         Then("^the changes to the addresses page are made$", () -> {
@@ -156,8 +156,9 @@ public class ValidLicenceChanges extends BasePage implements En {
             if (Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
                 Assert.assertEquals(Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
             } else {
-                Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
+                Assert.assertEquals(Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size(),2);
             }
+                Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
         });
         When("^i make changes to the licence discs page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","licence discs");
@@ -182,7 +183,7 @@ public class ValidLicenceChanges extends BasePage implements En {
         });
         When("^i make changes to the safety and compliance page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","safety and compliance");
-            clearAndEnterText("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH, "6");
+            replaceText("//*[@id='licence[safetyInsVehicles]']", "6");
             click("//*[@id='licence[safetyInsVaries]']", SelectorType.XPATH);
             click("//*[contains(@value,'tach_external')]", SelectorType.XPATH);
             enterText("//*[@id='licence[tachographInsName]']", externalAnalysisBureau, SelectorType.XPATH);
