@@ -1,5 +1,6 @@
 @INT
 @GRANT-GOODS-APP
+@int_regression
 Feature: Grant under consideration application
 
   Background:
