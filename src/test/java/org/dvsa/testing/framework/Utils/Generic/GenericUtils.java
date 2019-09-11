@@ -25,10 +25,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -242,5 +239,30 @@ public class GenericUtils extends BasePage {
 
     public boolean returnFeeStatus(String searchTerm) throws MalformedURLException, IllegalBrowserException {
         return Browser.navigate().findElements(By.xpath("//*[contains(@class,'status')]")).stream().anyMatch(a -> a.getText().contains(searchTerm.toUpperCase()));
+    }
+
+    public String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))){
+            String line = null;
+            int lineCounter = 0;
+            while (lineNumber == -1 ? (line = br.readLine()) != null : lineCounter <= lineNumber) {
+                line = br.readLine();
+                lineNumber++;
+            }
+            return line;
+        }
+    }
+
+    public String readLastLineFromFile( String fileLocation) throws IOException {
+        return readLineFromFile(fileLocation, -1);
+    }
+
+    private void writeLineToFile(String[] data, String fileLocation) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation))){
+            for (String d:data) {
+                bw.append(d);
+                bw.newLine();
+            }
+        }
     }
 }

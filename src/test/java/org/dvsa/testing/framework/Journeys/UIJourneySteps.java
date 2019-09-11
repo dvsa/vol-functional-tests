@@ -6,11 +6,9 @@ import activesupport.MissingDriverException;
 import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.S3;
 import activesupport.driver.Browser;
-import activesupport.number.Int;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.framework.stepdefs.PaymentProcessing;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -23,15 +21,11 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
-import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import static activesupport.driver.Browser.getDriver;
 import static junit.framework.TestCase.assertEquals;
@@ -513,7 +507,7 @@ public class UIJourneySteps extends BasePage {
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
                 break;
         }
-        clickByLinkText("Directors");
+        clickByLinkText("directors");
         waitForTextToBePresent("Directors");
     }
 
@@ -618,15 +612,19 @@ public class UIJourneySteps extends BasePage {
         Browser.navigate().get(myURL);
     }
 
-    public static void generateLetter() throws IllegalBrowserException {
+    public void generateLetter() throws IllegalBrowserException {
         clickByLinkText("Docs & attachments");
-        isTextPresent("1 Docs & attachments", 60);
+        waitForElementToBePresent("//button[@id='New letter']");
         clickByName("New letter");
-        findElement("//*[@id='modal-title']", SelectorType.XPATH, 600);
+        findElement("//*[@id='modal-title']", SelectorType.XPATH, 60);
         waitAndSelectByIndex("Generate letter", "//*[@id='category']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("Generate letter", "//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        click("//button[@id='form-actions[submit]']",SelectorType.XPATH);
+        waitForTextToBePresent("Amend letter");
+        String licenceNumber = world.createLicence.getLicenceNumber();
+        String webDavLink = getText("//strong[@class='word-wrap']",SelectorType.XPATH);
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
