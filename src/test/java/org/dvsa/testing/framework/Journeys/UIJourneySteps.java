@@ -535,7 +535,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToInternalAdminUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        String newPassword = "Password1";
+        String newPassword = "BunDog=336MixZoo";
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
 
         if (Browser.isBrowserOpen()) {
@@ -572,7 +572,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        String newPassword = "Password1";
+        String newPassword = "BunDog=336MixZoo";
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
 
         if (Browser.isBrowserOpen()) {
