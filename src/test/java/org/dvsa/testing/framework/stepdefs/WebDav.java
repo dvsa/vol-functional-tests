@@ -12,15 +12,9 @@ public class WebDav extends BasePage implements En {
 
     public WebDav(World world) {
         Then("^I check the document has been generated$", () -> {
-            switch (env.toString()) {
-                case "DA":
-                    break;
-                case "Demo":
-                    break;
-                    default:
-                        throw new Exception();
-            }
-//            GenericUtils.writeLineToFile();
+
+//            world.genericUtils.writeLineToFile();
+//            world.genericUtils.readLineFromFile();
         });
         And("^i write to a file the necessary information$", () -> {
 

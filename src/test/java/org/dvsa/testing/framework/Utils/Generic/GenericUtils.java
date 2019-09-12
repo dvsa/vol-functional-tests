@@ -257,7 +257,7 @@ public class GenericUtils extends BasePage {
         return readLineFromFile(fileLocation, -1);
     }
 
-    private void writeLineToFile(String[] data, String fileLocation) throws IOException {
+    public void writeLineToFile(String[] data, String fileLocation) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation))){
             for (String d:data) {
                 bw.append(d);
