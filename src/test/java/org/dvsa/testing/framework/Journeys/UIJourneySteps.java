@@ -24,8 +24,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Paths;
 import java.util.Set;
 
 import static activesupport.driver.Browser.getDriver;
@@ -613,7 +615,7 @@ public class UIJourneySteps extends BasePage {
         Browser.navigate().get(myURL);
     }
 
-    public void generateLetter() throws IllegalBrowserException, IOException {
+    public void generateLetter() throws IllegalBrowserException, IOException, AWTException {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
         clickByName("New letter");
@@ -625,7 +627,8 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Amend letter");
         String licenceNumber = world.createLicence.getLicenceNumber();
         String webDavLink = getText("//strong[@class='word-wrap']",SelectorType.XPATH);
-        world.genericUtils.writeLineToFile(new String[]{String.format("%s,%s",licenceNumber,webDavLink)},String.format("../src/test/java/textFileStorage/%sWebDav.txt",env.toString()));
+        world.genericUtils.writeLineToFile(new String[]{String.format("%s,%s",licenceNumber,webDavLink)},String.format("%s/src/test/java/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString()));
+        click("//strong[@class='word-wrap']",SelectorType.XPATH);
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
