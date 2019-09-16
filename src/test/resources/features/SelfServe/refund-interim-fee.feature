@@ -48,8 +48,6 @@ Feature: Refund fee paid on new application
       | goods        | sn          |
 
   @ss_regression
-  @apiBreak
-  @refundInterim
   Scenario: Interim fee has been paid and variation application has been refused
     Given i have a valid "goods" "sn" licence
     And i increase my vehicle authority count

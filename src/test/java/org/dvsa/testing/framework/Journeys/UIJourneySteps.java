@@ -409,10 +409,16 @@ public class UIJourneySteps extends BasePage {
         }
         switch (page.toLowerCase()) {
             case "view":
-                try {
-                    waitForTextToBePresent("View and amend your licence");
-                } catch (Exception e) {
-                    waitForTextToBePresent("What happens next?");
+                switch (type.toLowerCase()){
+                    case"licence":
+                        waitForTextToBePresent("View and amend your licence");
+                        break;
+                    case "application":
+                        waitForTextToBePresent("What you need to do next");
+                        break;
+                    case "variation":
+                        waitForTextToBePresent("What happens next?");
+                        break;
                 }
                 break;
             case "type of licence":
@@ -507,7 +513,7 @@ public class UIJourneySteps extends BasePage {
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
                 break;
         }
-        clickByLinkText("directors");
+        clickByLinkText("Directors");
         waitForTextToBePresent("Directors");
     }
 
@@ -621,7 +627,6 @@ public class UIJourneySteps extends BasePage {
         waitAndSelectByIndex("Generate letter", "//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        click("//button[@id='form-actions[submit]']",SelectorType.XPATH);
         waitForTextToBePresent("Amend letter");
         String licenceNumber = world.createLicence.getLicenceNumber();
         String webDavLink = getText("//strong[@class='word-wrap']",SelectorType.XPATH);

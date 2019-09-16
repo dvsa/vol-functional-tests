@@ -1,3 +1,4 @@
+@SS-changes-not-variation
 @ss_regression
 
 Feature: Self Serve users can make changes to their valid licence.
@@ -25,3 +26,6 @@ Feature: Self Serve users can make changes to their valid licence.
   Scenario: A self serve user changes their safety and compliance
     When i make changes to the safety and compliance page
     Then the changes to the safety and compliance page are made
+
+# mvn clean verify -Denv=demo -Dbrowser=chrome -DdbUsername=olcsapi -DdbPassword=NsbJBrYaYAwu0Ysm -Dcucumber.options="--tags @SS-changes-not-variation,@SS-CHECK-DOCUMENTS,@OLCS-21298,@SS-ADD-DIRECTOR,@ESBR,@SS-EXTERNAL-SEARCH,@External-Search-Filter,@OLCS-22913,@OLCS-23724,@OLCS-24464,@ss-pay-app,@OLCS-22275"
+# mvn clean verify -Denv=da -Dbrowser=chrome -DdbUsername=olcsapi -DdbPassword=NsbJBrYaYAwu0Ysm -Dcucumber.options="--tags @SS-changes-not-variation,@SS-CHECK-DOCUMENTS,@OLCS-21298,@SS-ADD-DIRECTOR,@ESBR,@SS-EXTERNAL-SEARCH,@External-Search-Filter,@OLCS-22913,@OLCS-23724,@OLCS-24464,@ss-pay-app,@OLCS-22275"
