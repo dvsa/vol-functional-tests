@@ -409,16 +409,10 @@ public class UIJourneySteps extends BasePage {
         }
         switch (page.toLowerCase()) {
             case "view":
-                switch (type.toLowerCase()){
-                    case"licence":
-                        waitForTextToBePresent("View and amend your licence");
-                        break;
-                    case "application":
-                        waitForTextToBePresent("What you need to do next");
-                        break;
-                    case "variation":
-                        waitForTextToBePresent("What happens next?");
-                        break;
+                try {
+                    waitForTextToBePresent("View and amend your licence");
+                } catch (Exception e) {
+                    waitForTextToBePresent("What happens next?");
                 }
                 break;
             case "type of licence":
