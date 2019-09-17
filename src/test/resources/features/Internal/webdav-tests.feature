@@ -1,6 +1,6 @@
 @INT
 @WebDav
-@int_regression
+#@int_regression
 Feature: All WebDav functionality tests
 
   Background:
