@@ -629,6 +629,7 @@ public class UIJourneySteps extends BasePage {
         String webDavLink = getText("//strong[@class='word-wrap']",SelectorType.XPATH);
         world.genericUtils.writeLineToFile(new String[]{String.format("%s,%s",licenceNumber,webDavLink)},String.format("%s/src/test/java/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString()));
         click("//strong[@class='word-wrap']",SelectorType.XPATH);
+        waitForTextToBePresent("w");
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
