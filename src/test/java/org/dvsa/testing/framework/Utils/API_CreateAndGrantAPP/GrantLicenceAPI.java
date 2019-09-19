@@ -42,7 +42,7 @@ public class GrantLicenceAPI {
         String trackingId = "12345";
         String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
         Headers.headers.put("x-pid", world.APIJourneySteps.adminApiHeader());
-        int breakCounter = 1;
+//        int breakCounter = 1;
 
         do {
             TrackingBuilder tracking = new TrackingBuilder().withId(trackingId).withVersion(overviewVersion).withAddressesStatus(status).withBusinessDetailsStatus(status).withBusinessTypeStatus(status)
@@ -56,12 +56,12 @@ public class GrantLicenceAPI {
             version++;
             if (version > 20) {
                 version = 1;
-                breakCounter++;
-                if (breakCounter >= 20) {
-                    System.out.println(apiResponse.extract().statusCode());
-                    System.out.println(apiResponse.extract().response().asString());
-                    throw new HTTPException(apiResponse.extract().statusCode());
-                }
+//                breakCounter++;
+//                if (breakCounter >= 20) {
+//                    System.out.println(apiResponse.extract().statusCode());
+//                    System.out.println(apiResponse.extract().response().asString());
+//                    throw new HTTPException(apiResponse.extract().statusCode());
+//                }
             }
         } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {

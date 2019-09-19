@@ -1,6 +1,7 @@
 @SS
 @SS-ADD-DIRECTOR
 @ss_regression
+@apiBreak
 Feature: Add a director variation
 
   Background:

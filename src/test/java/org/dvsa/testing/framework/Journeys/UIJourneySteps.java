@@ -23,11 +23,14 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.util.Set;
 
 import static activesupport.driver.Browser.getDriver;
+import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
@@ -198,7 +201,7 @@ public class UIJourneySteps extends BasePage {
                 SearchNavBar.search(variationApplicationNumber);
             } while (!isLinkPresent(variationApplicationNumber, 60));
             clickByLinkText(variationApplicationNumber);
-            assertTrue(Boolean.parseBoolean(String.valueOf(Browser.navigate().getCurrentUrl().contains("variation"))));
+            assertTrue(Boolean.parseBoolean(String.valueOf(navigate().getCurrentUrl().contains("variation"))));
         } else {
             do {
                 SearchNavBar.search(String.valueOf(world.createLicence.getApplicationNumber()));
@@ -219,22 +222,22 @@ public class UIJourneySteps extends BasePage {
 
     public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
-        Browser.navigate().get(myURL.concat(String.format("application/%s",world.createLicence.getApplicationNumber())));
+        navigate().get(myURL.concat(String.format("application/%s",world.createLicence.getApplicationNumber())));
     }
 
     public void urlSearchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
-        Browser.navigate().get(myURL.concat(String.format("licence/%s",world.createLicence.getLicenceId())));
+        navigate().get(myURL.concat(String.format("licence/%s",world.createLicence.getLicenceId())));
     }
 
     public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
-        Browser.navigate().get(myURL.concat(String.format("variation/%s",world.updateLicence.getVariationApplicationNumber())));
+        navigate().get(myURL.concat(String.format("variation/%s",world.updateLicence.getVariationApplicationNumber())));
     }
 
     public void urlSearchAndViewEditFee(String feeNumber) throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
-        Browser.navigate().get(myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s",feeNumber)));
+        navigate().get(myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s",feeNumber)));
     }
 
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
@@ -539,9 +542,9 @@ public class UIJourneySteps extends BasePage {
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
 
         if (Browser.isBrowserOpen()) {
-            Browser.navigate().manage().deleteAllCookies();
+            navigate().manage().deleteAllCookies();
         }
-        Browser.navigate().get(myURL);
+        navigate().get(myURL);
         String password = S3.getTempPassword(emailAddress, getBucketName());
 
         try {
@@ -576,9 +579,9 @@ public class UIJourneySteps extends BasePage {
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
 
         if (Browser.isBrowserOpen()) {
-            Browser.navigate().manage().deleteAllCookies();
+            navigate().manage().deleteAllCookies();
         }
-        Browser.navigate().get(myURL);
+        navigate().get(myURL);
         String password = getTempPassword(emailAddress);
 
         try {
@@ -601,15 +604,15 @@ public class UIJourneySteps extends BasePage {
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
 
         if (Browser.isBrowserOpen()) {
-            Browser.navigate().manage().deleteAllCookies();
+            navigate().manage().deleteAllCookies();
         }
-        Browser.navigate().get(myURL);
+        navigate().get(myURL);
         skipToMainContentAndCheck();
     }
 
     public void navigateToExternalSearch() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.EXTERNAL, env, "search/find-lorry-bus-operators/").toString();
-        Browser.navigate().get(myURL);
+        navigate().get(myURL);
     }
 
     public void generateLetter() throws IllegalBrowserException {
@@ -621,9 +624,6 @@ public class UIJourneySteps extends BasePage {
         waitAndSelectByIndex("Generate letter", "//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForTextToBePresent("Amend letter");
-        String licenceNumber = world.createLicence.getLicenceNumber();
-        String webDavLink = getText("//strong[@class='word-wrap']",SelectorType.XPATH);
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
@@ -651,7 +651,7 @@ public class UIJourneySteps extends BasePage {
         world.UIJourneySteps.changeLicenceForVariation();
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
-        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(Browser.navigate().getCurrentUrl(),2));
+        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(navigate().getCurrentUrl(),2));
         if (Integer.parseInt(noOfVehicles) > world.createLicence.getNoOfVehiclesRequired()) {
             click(nameAttribute("button", "form-actions[submit]"));
         }
@@ -913,11 +913,11 @@ public class UIJourneySteps extends BasePage {
 
     public void resettingExternalPassword() throws IllegalBrowserException, MalformedURLException {
         if (Browser.isBrowserOpen()) {
-            Browser.navigate().manage().deleteAllCookies();
+            navigate().manage().deleteAllCookies();
         }
         String env = System.getProperty("env");
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
-        Browser.navigate().get(myURL);
+        navigate().get(myURL);
         clickByLinkText("Forgotten your password?");
     }
 
@@ -990,8 +990,8 @@ public class UIJourneySteps extends BasePage {
 
     public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
         navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        setLicenceNumber(Browser.navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().get().getText());
-        Browser.navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().ifPresent(WebElement::click);
+        setLicenceNumber(navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().get().getText());
+        navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().ifPresent(WebElement::click);
         waitForTextToBePresent("Summary");
         clickByLinkText("Apply to");
     }
@@ -1077,7 +1077,7 @@ public class UIJourneySteps extends BasePage {
         if (world.createLicence.getLicenceType().equals("standard_international")) {
             addCommunityLicenceDetails();
         }
-        assertTrue(Browser.navigate().getCurrentUrl().contains("review"));
+        assertTrue(navigate().getCurrentUrl().contains("review"));
         assertTrue(isTextPresent("Review your surrender", 40));
     }
 
@@ -1087,7 +1087,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addDiscInformation(String discToDestroy, String discsLost, String discsStolen) throws IllegalBrowserException, MalformedURLException {
-        assertTrue(Browser.navigate().getCurrentUrl().contains("current-discs"));
+        assertTrue(navigate().getCurrentUrl().contains("current-discs"));
         click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
         waitForTextToBePresent("Number of discs you will destroy");
         waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, discToDestroy);
@@ -1143,7 +1143,7 @@ public class UIJourneySteps extends BasePage {
 
     public void submitSurrender() throws MalformedURLException, IllegalBrowserException {
         submitSurrenderUntilChoiceOfVerification();
-        if (Browser.navigate().getCurrentUrl().contains("qa")) {
+        if (navigate().getCurrentUrl().contains("qa")) {
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
             world.UIJourneySteps.signWithVerify("pavlov", "Password1");
             checkVerifyConfirmation();
@@ -1171,7 +1171,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("In your possession");
         world.UIJourneySteps.addOperatorLicenceDetails();
         if (world.createLicence.getLicenceType().equals("standard_international")) {
-            assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
+            assertTrue(navigate().getCurrentUrl().contains("community-licence"));
             world.UIJourneySteps.addCommunityLicenceDetails();
         }
         world.UIJourneySteps.acknowledgeDestroyPage();
@@ -1190,16 +1190,16 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void signManually() throws IllegalBrowserException, MalformedURLException {
-        String defaultWindow = Browser.navigate().getWindowHandle();
+        String defaultWindow = navigate().getWindowHandle();
         Set<String> windows;
         waitForTextToBePresent("A business owner");
         do {
             clickByLinkText("Print");
-            windows = Browser.navigate().getWindowHandles();
+            windows = navigate().getWindowHandles();
         } while (windows.size() == 1);
         String printWindow = windows.stream().reduce((first, second) -> second).get();
-        Browser.navigate().switchTo().window(printWindow).close();
-        Browser.navigate().switchTo().window(defaultWindow);
+        navigate().switchTo().window(printWindow).close();
+        navigate().switchTo().window(defaultWindow);
         click("//*[contains(@title,'return to home')]", SelectorType.XPATH);
     }
 
@@ -1263,7 +1263,7 @@ public class UIJourneySteps extends BasePage {
         do {
             System.out.println("waiting for page to load");
             javaScriptExecutor("location.reload(true)");
-        } while (!Browser.navigate().getCurrentUrl().contains("case/details"));
+        } while (!navigate().getCurrentUrl().contains("case/details"));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
         click("form-actions[confirm]", SelectorType.ID);
@@ -1380,7 +1380,7 @@ public class UIJourneySteps extends BasePage {
 
     public void caseWorkerCompleteOverview() throws IllegalBrowserException, MalformedURLException {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
-        Browser.navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
+        navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
         click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
@@ -1476,10 +1476,16 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForElementToBeClickable("//*[contains(text(),'GOV.UK')]",SelectorType.XPATH);
-        javaScriptExecutor("location.reload(true)");
-        String url = Browser.navigate().getCurrentUrl();
-        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2)); // Replace this with getting the variational number through the API once access is granted
+        waitForPageLoad();
+        WebDriverWait wait = new WebDriverWait(getDriver(), 60);
+        wait.until(ExpectedConditions.urlContains("variation"));
+        String url = navigate().getCurrentUrl();
+        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2));
+    }
+
+    public void waitForPageLoad() throws MalformedURLException, IllegalBrowserException {
+        WebDriverWait wait = new WebDriverWait(getDriver(), 60);
+        assertEquals("complete", wait.until(ExpectedConditions.jsReturnsValue("return document.readyState")));
     }
 
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
@@ -1487,7 +1493,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='add']", SelectorType.XPATH);
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        String url = Browser.navigate().getCurrentUrl();
+        String url = navigate().getCurrentUrl();
         String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url,2);
         world.createLicence.setApplicationNumber(applicationNumber);
         addTransportManagerDetails();
