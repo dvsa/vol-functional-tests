@@ -388,34 +388,56 @@ public class UIJourneySteps extends BasePage {
 
     public void navigateToSelfServePage(String type, String page) throws  IllegalBrowserException {
         clickByLinkText("GOV.UK");
+        waitForTextToBePresent("You must keep your records up to date");
+        String applicationStatus = null;
+        String variationApplicationStatus = null;
+        String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
                 clickByLinkText(world.createLicence.getLicenceNumber());
                 waitForTextToBePresent("View and amend your licence");
                 break;
             case "application":
+                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
+                applicationStatus = Browser.getDriver().findElement(By.xpath(overviewStatus)).getText();
                 clickByLinkText(world.createLicence.getApplicationNumber());
-                try {
+                if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply for a new licence");
-                } catch (Exception e) {
+                } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
                     waitForTextToBePresent("Application overview");
                 }
                 break;
             case "variation":
+                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.updateLicence.getVariationApplicationNumber());
+                variationApplicationStatus = Browser.getDriver().findElement(By.xpath(overviewStatus)).getText();
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                try {
-                waitForTextToBePresent("View and amend your licence");
-                } catch (Exception e) {
+                if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
+                    waitForTextToBePresent("Apply to change a licence");
+                } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
                     waitForTextToBePresent("Application overview");
                 }
                 break;
         }
         switch (page.toLowerCase()) {
             case "view":
-                try {
-                    waitForTextToBePresent("View and amend your licence");
-                } catch (Exception e) {
-                    waitForTextToBePresent("What happens next?");
+                switch (type.toLowerCase()) {
+                    case "licence":
+                        waitForTextToBePresent("View and amend your licence");
+                        break;
+                    case "application":
+                        if (applicationStatus.equals("NOT YET SUBMITTED")) {
+                            waitForTextToBePresent("Apply for a new licence");
+                        } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
+                            waitForTextToBePresent("What you need to do next");
+                        }
+                        break;
+                    case "variation":
+                        if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
+                            waitForTextToBePresent("Apply to change a licence");
+                        } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
+                            waitForTextToBePresent("What happens next?");
+                        }
+                        break;
                 }
                 break;
             case "type of licence":
@@ -1466,6 +1488,8 @@ public class UIJourneySteps extends BasePage {
         enterText("//*[@id='fields[description]']","testing",SelectorType.XPATH);
         enterText("//*[@id='fields[ecmsNo]']","12345",SelectorType.XPATH);
         click("//*[@id='fields_outcomes__chosen']",SelectorType.XPATH);
+        attr
+        Browser.getDriver().findElement(By.xpath("//li[contains(text(),'Bus registration refused')]")). result-selected
         click("//li[contains(text(),'Bus registration refused')]",SelectorType.XPATH);
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
     }
