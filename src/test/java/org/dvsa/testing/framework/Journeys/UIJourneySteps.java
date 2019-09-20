@@ -660,7 +660,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addDirectorWithoutConvictions(String firstName, String lastName) throws MissingDriverException, IllegalBrowserException, MalformedURLException {
-        world.UIJourneySteps.navigateToDirectorsPage("licence");
+        world.UIJourneySteps.navigateToSelfServePage("licence","directors");
         world.UIJourneySteps.addPerson(firstName, lastName);
         findSelectAllRadioButtonsByValue("N");
         clickByName("form-actions[saveAndContinue]");
@@ -738,7 +738,7 @@ public class UIJourneySteps extends BasePage {
     public void internalUserNavigateToDocsTable() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
         world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-        world.UIJourneySteps.searchAndViewApplication();
+        world.UIJourneySteps.urlSearchAndViewApplication();
         clickByLinkText("Docs");
     }
 
@@ -1487,10 +1487,6 @@ public class UIJourneySteps extends BasePage {
         click("//li[contains(text(),'Convictions')]",SelectorType.XPATH);
         enterText("//*[@id='fields[description]']","testing",SelectorType.XPATH);
         enterText("//*[@id='fields[ecmsNo]']","12345",SelectorType.XPATH);
-        click("//*[@id='fields_outcomes__chosen']",SelectorType.XPATH);
-        attr
-        Browser.getDriver().findElement(By.xpath("//li[contains(text(),'Bus registration refused')]")). result-selected
-        click("//li[contains(text(),'Bus registration refused')]",SelectorType.XPATH);
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
     }
 

@@ -1,5 +1,6 @@
 @OLCS-24464
 @ss_regression
+@da_ss_regression
 
 Feature: SS user ability to withdraw application removed
 

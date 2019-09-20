@@ -2,6 +2,7 @@
 @SS
 @SS-EXTERNAL-SEARCH
 @ss_regression
+@da_ss_regression
 
 Feature: External user search by Address, Business name, Licence Number and Person's name
 

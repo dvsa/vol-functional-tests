@@ -2,6 +2,7 @@
 @SS
 @OLCS-21298
 @ss_regression
+@da_ss_regression
 Feature: TM/operator checks optional wording has been removed for TM details page
 
   Background:
