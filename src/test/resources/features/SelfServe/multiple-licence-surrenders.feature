@@ -2,6 +2,7 @@
 @SS
 @Surrender
 @ss_regression
+@da_ss_regression
 
 Feature: Multiple licence holder
 

@@ -2,6 +2,7 @@
 @INT
 @Surrender-int
 @int_regression
+#  Need not headless tag
 Feature: Logic for Surrender menu item
 
   Background:

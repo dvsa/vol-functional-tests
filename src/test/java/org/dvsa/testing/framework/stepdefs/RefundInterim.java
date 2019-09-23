@@ -1,17 +1,11 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.net.MalformedURLException;
-import java.util.Optional;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -49,14 +43,9 @@ public class RefundInterim extends BasePage implements En {
             } while (!isTextPresent("Paid",10));
             clickByLinkText("Interim Fee");
             waitForTextToBePresent("Fee details");
-            try {
-            waitForElementToBePresent("//*[contains(@class,'status')][contains(text(),'Refunded')]");
-            } catch (Exception e) {
-                javaScriptExecutor("location.reload(true)");
-                waitForElementToBePresent("//*[contains(@class,'status')][contains(text(),'Refunded')]");
-            }
+            assertTrue(Browser.getDriver().findElement(By.xpath("//*//dd//span")).getText().toLowerCase().contains("refund"));
+            assertFalse(Browser.getDriver().findElement(By.xpath("//*//dd//span")).getText().toLowerCase().contains("cancelled"));
             assertTrue(checkForPartialMatch("£68.00"));
-            assertTrue(isTextPresent("Refunded",5));
         });
         And("^the licence has been withdrawn$", () -> {
             world.grantLicence.withdraw(world.createLicence.getApplicationNumber());

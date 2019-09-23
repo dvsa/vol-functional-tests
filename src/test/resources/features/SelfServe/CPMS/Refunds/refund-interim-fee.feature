@@ -3,6 +3,7 @@
 @SS
 Feature: Refund fee paid on new application
 
+  @da_ss_regression
   @ss_regression
   Scenario Outline: Interim fee has been paid and licence has been refused
     Given i have an interim "<OperatorType>" "<LicenceType>" application
@@ -47,9 +48,6 @@ Feature: Refund fee paid on new application
       | OperatorType | LicenceType |
       | goods        | sn          |
 
-  @ss_regression
-  @apiBreak
-  @refundInterim
   Scenario: Interim fee has been paid and variation application has been refused
     Given i have a valid "goods" "sn" licence
     And i increase my vehicle authority count
@@ -64,6 +62,7 @@ Feature: Refund fee paid on new application
     And the application has been withdrawn
     Then the interim fee should be refunded
 
+  @da_ss_regression
   @ss_regression
   Scenario: Interim fee has been paid and granted
     Given i have a valid "goods" "si" licence

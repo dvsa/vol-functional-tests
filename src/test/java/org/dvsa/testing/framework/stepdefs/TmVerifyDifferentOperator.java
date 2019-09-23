@@ -4,7 +4,6 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;

@@ -31,7 +31,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr[*]/td[2]");
                     currentPubNo = publicationNumbers.get(i).getText();
 
-                if (Browser.getDriver().findElements(By.linkText(currentPubNo)).size() == 0) {
+                if (Browser.getDriver().findElements(By.linkText(currentPubNo)).size() == 0 || Browser.getDriver().findElements(By.xpath(String.format("//*[contains(text(),%s)]",currentPubNo))).size()>1) {
 
                     radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
                     radioButtons.get(i).click();

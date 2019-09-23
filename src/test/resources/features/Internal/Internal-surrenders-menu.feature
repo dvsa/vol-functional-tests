@@ -6,6 +6,7 @@ Feature: View Surrender Menu and details on Internal
   Background:
     Given i have a valid "public" "sn" licence with an open case and bus reg
     And i choose to surrender my licence with verify
+#    change to print and sign + renaming feature + add if statement for qa da switch
     When a caseworker views the surrender details
 
   Scenario: Surrender details should be displayed on Internal

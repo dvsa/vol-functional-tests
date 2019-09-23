@@ -1,6 +1,7 @@
 @SS
 @ss-pay-app
 @ss_regression
+@da_ss_regression
 Feature: Self Serve Apply for licence
 
   @CPMS_tests
@@ -31,7 +32,6 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
-    @apiBreak
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | N |

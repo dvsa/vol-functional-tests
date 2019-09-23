@@ -1,25 +1,21 @@
 package org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP;
 
+import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.http.RestUtils;
 import activesupport.system.Properties;
-import cucumber.api.java.sl.In;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
-import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
+import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import Injectors.World;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import javax.xml.ws.http.HTTPException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 
@@ -46,6 +42,7 @@ public class GrantLicenceAPI {
         String trackingId = "12345";
         String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
         Headers.headers.put("x-pid", world.APIJourneySteps.adminApiHeader());
+        int breakCounter = 1;
 
         do {
             TrackingBuilder tracking = new TrackingBuilder().withId(trackingId).withVersion(overviewVersion).withAddressesStatus(status).withBusinessDetailsStatus(status).withBusinessTypeStatus(status)
@@ -59,6 +56,12 @@ public class GrantLicenceAPI {
             version++;
             if (version > 20) {
                 version = 1;
+                breakCounter++;
+                if (breakCounter >= 50) {
+                    System.out.println(apiResponse.extract().statusCode());
+                    System.out.println(apiResponse.extract().response().asString());
+                    throw new HTTPException(apiResponse.extract().statusCode());
+                }
             }
         } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {

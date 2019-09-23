@@ -83,7 +83,7 @@ public class DirectorVariation extends BasePage implements En {
             world.UIJourneySteps.addDirectorWithoutConvictions(firstName, lastName);
         });
         Given("^i add a director$", () -> {
-            world.UIJourneySteps.navigateToDirectorsPage("licence");
+            world.UIJourneySteps.navigateToSelfServePage("licence","directors");
             world.UIJourneySteps.addDirector(firstName, lastName);
         });
         Then("^i should have multiple directors on my application$", () -> {
