@@ -308,6 +308,7 @@ public class UIJourneySteps extends BasePage {
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         waitForTextToBePresent("Outstanding");
+        clickByLinkText("50");
         waitAndClick("//*[@value='" + feeNumber + "']", SelectorType.XPATH);
         waitAndClick("//*[@value='Pay']", SelectorType.XPATH);
         waitForTextToBePresent("Pay fee");
