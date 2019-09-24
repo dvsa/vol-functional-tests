@@ -2,6 +2,8 @@
 @INT
 @Surrender-int
 @int_regression
+@gov-verify
+
 #  Need not headless tag
 Feature: Logic for Surrender menu item
 
