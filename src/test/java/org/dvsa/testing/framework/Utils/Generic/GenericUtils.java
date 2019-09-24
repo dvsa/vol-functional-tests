@@ -262,6 +262,7 @@ public class GenericUtils extends BasePage {
             for (String d:data) {
                 bw.append(d);
                 bw.newLine();
+                bw.close();
             }
         }
     }

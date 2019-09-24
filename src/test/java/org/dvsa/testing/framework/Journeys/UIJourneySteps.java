@@ -653,9 +653,16 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Amend letter");
         String licenceNumber = world.createLicence.getLicenceNumber();
         String webDavLink = getText("//strong[@class='word-wrap']",SelectorType.XPATH);
-        world.genericUtils.writeLineToFile(new String[]{String.format("%s,%s",licenceNumber,webDavLink)},String.format("%s/src/test/java/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString()));
-        click("//strong[@class='word-wrap']",SelectorType.XPATH);
-        waitForTextToBePresent("w");
+//        click("//strong[@class='word-wrap']",SelectorType.XPATH);
+
+//        Add in editing with robot here.
+
+
+        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        waitAndClick("//*[@id='close']",SelectorType.XPATH);
+        waitForTextToBePresent("The document has been saved");
+        String fileName = getText("//table//tbody//tr//td",SelectorType.XPATH);
+        world.genericUtils.writeLineToFile(new String[]{String.format("%s, %s, %s",licenceNumber,webDavLink,fileName)},String.format("%s/src/test/java/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString()));
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {

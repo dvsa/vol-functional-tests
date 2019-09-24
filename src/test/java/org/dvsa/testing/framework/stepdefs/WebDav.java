@@ -13,8 +13,6 @@ public class WebDav extends BasePage implements En {
     public WebDav(World world) {
         Then("^I check the document has been generated$", () -> {
 
-//            world.genericUtils.writeLineToFile();
-//            world.genericUtils.readLineFromFile();
         });
         And("^i write to a file the necessary information$", () -> {
 
