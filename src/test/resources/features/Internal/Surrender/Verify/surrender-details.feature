@@ -1,6 +1,8 @@
 @INT
 @OLCS-22990
 @regression
+@govuk-verify
+
 Feature: View Surrender Menu and details on Internal
 
   Background:
@@ -20,7 +22,7 @@ Feature: View Surrender Menu and details on Internal
     Examples:
       | surrenderType  |
       | verify         |
-      | print and sign |
+
 
   Scenario: Surrender after closing cases & bus Reg
     And the open case and bus reg is closed
