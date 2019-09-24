@@ -57,7 +57,7 @@ public class GrantLicenceAPI {
             if (version > 20) {
                 version = 1;
                 breakCounter++;
-                if (breakCounter >= 50) {
+                if (breakCounter >= 40) {
                     System.out.println(apiResponse.extract().statusCode());
                     System.out.println(apiResponse.extract().response().asString());
                     throw new HTTPException(apiResponse.extract().statusCode());
