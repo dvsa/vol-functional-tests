@@ -19,11 +19,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
-import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.isVerifySupportedPlatform;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -202,10 +202,10 @@ public class Surrenders extends BasePage implements En {
             waitForTextToBePresent(world.createLicence.getLicenceNumber());
         });
         Then("^any open cases should be displayed$", () -> {
-            isLinkPresent(toString(),world.updateLicence.getCaseId());
+            isLinkPresent(toString(), world.updateLicence.getCaseId());
         });
         And("^any open bus registrations should be displayed$", () -> {
-            isLinkPresent("PB2026379/1",5);
+            isLinkPresent("PB2026379/1", 5);
         });
         And("^tick boxes should be displayed$", () -> {
             isTextPresent("Digital signature has been checked", 5);
@@ -228,21 +228,25 @@ public class Surrenders extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.searchAndViewLicence();
-            waitAndClick("menu-licence_surrender",SelectorType.ID);
+            waitAndClick("menu-licence_surrender", SelectorType.ID);
         });
 
         And("^i choose to surrender my licence with \"([^\"]*)\"$", (String surrenderMethod) -> {
             world.UIJourneySteps.submitSurrenderUntilChoiceOfVerification();
             EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-            if(surrenderMethod.equalsIgnoreCase("verify") && isVerifySupportedPlatform(env.name())){
-                waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-                world.UIJourneySteps.signWithVerify("pavlov", "Password1");
-                world.UIJourneySteps.checkVerifyConfirmation();
-                assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
 
-            }
-            else
-            {
+            if (surrenderMethod.equalsIgnoreCase("verify")) {
+                if (GenericUtils.isVerifySupportedPlatform(env.name())) {
+                    waitAndClick("//*[@id='sign']", SelectorType.XPATH);
+                    world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+                    world.UIJourneySteps.checkVerifyConfirmation();
+                    assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+
+                } else {
+                    fail("Verify not supported on this platform");
+                }
+            } else {
+
                 waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
                 world.UIJourneySteps.signManually();
                 javaScriptExecutor("location.reload(true)");
@@ -252,8 +256,8 @@ public class Surrenders extends BasePage implements En {
         });
 
         Then("^the Surrender button should not be clickable$", () -> {
-        if (isElementPresent("//*[contains(@name,'actions[surrender]')]",SelectorType.XPATH)) {
-            isElementEnabled("//*[@id='actions[surrender]']",SelectorType.XPATH);
+            if (isElementPresent("//*[contains(@name,'actions[surrender]')]", SelectorType.XPATH)) {
+                isElementEnabled("//*[@id='actions[surrender]']", SelectorType.XPATH);
             }
         });
         And("^the open case and bus reg is closed$", () -> {
@@ -264,24 +268,21 @@ public class Surrenders extends BasePage implements En {
         });
 
         And("^the tick boxes are checked$", () -> {
-            boolean isDigital = isElementPresent("//*[contains(text(),'Digital signature')]",SelectorType.XPATH);
+            boolean isDigital = isElementPresent("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
 
-            if(isDigital)
-            {
-                waitAndClick("//*[contains(text(),'Digital signature')]",SelectorType.XPATH);
+            if (isDigital) {
+                waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
+            } else {
+                waitAndClick("//*[contains(text(),'Physical signature')]", SelectorType.XPATH);
             }
-            else
-            {
-                waitAndClick("//*[contains(text(),'Physical signature')]",SelectorType.XPATH);
-            }
-            waitAndClick("//*[contains(text(),'ECMS')]",SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'ECMS')]", SelectorType.XPATH);
 
         });
         When("^the Surrender button is clicked$", () -> {
-            click("actions[surrender]",SelectorType.ID);
+            click("actions[surrender]", SelectorType.ID);
         });
         Then("^the licence should be surrendered$", () -> {
-            assertTrue(isElementPresent("//*[contains(text(),'Surrendered')]",SelectorType.XPATH));
+            assertTrue(isElementPresent("//*[contains(text(),'Surrendered')]", SelectorType.XPATH));
         });
     }
 }
