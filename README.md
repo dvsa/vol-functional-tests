@@ -31,3 +31,6 @@ To produce the reports run the following command in your terminal
 
 ## Dependency Vulnerability Scanner
 To scan use the following command ``mvn verify -DskipTests``   
+
+## Refactoring todos
+Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
