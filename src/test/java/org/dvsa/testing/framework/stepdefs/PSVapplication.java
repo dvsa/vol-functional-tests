@@ -24,10 +24,10 @@ public class PSVapplication implements En {
             }
         });
 
-        Given("^I have a \"([^\"]*)\" \"([^\"]*)\" application which is under consideration$", (String arg0, String arg1) -> {
+        Given("^I have a \"([^\"]*)\" \"([^\"]*)\" application which is under consideration$", (String vehicleType, String typeOfLicence) -> {
             world.createLicence.setIsInterim("Y");
-            world.createLicence.setOperatorType(arg0);
-            world.createLicence.setLicenceType(arg1);
+            world.createLicence.setOperatorType(vehicleType);
+            world.createLicence.setLicenceType(typeOfLicence);
             if (world.createLicence.getApplicationNumber() == null) {
                 world.APIJourneySteps.registerAndGetUserDetails();
                 world.APIJourneySteps.createApplication();
