@@ -3,7 +3,6 @@
 @SS
 Feature: Refund fee paid on new application
 
-  @da_ss_regression
   @ss_regression
   Scenario Outline: Interim fee has been paid and licence has been refused
     Given i have an interim "<OperatorType>" "<LicenceType>" application
@@ -62,7 +61,6 @@ Feature: Refund fee paid on new application
     And the application has been withdrawn
     Then the interim fee should be refunded
 
-  @da_ss_regression
   @ss_regression
   Scenario: Interim fee has been paid and granted
     Given i have a valid "goods" "si" licence

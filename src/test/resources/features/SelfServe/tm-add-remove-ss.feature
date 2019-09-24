@@ -13,7 +13,6 @@ Feature: Set and check criteria for triggering automatic letter
     Then a flag should be set in the DB
 
   @apiBreak
-  # verify tag
   Scenario: TM verifies variational not as operator
     When i add an existing person as a transport manager who is not the operator on "variation"
     And i sign the declaration

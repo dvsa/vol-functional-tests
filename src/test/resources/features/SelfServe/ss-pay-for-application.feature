@@ -1,7 +1,6 @@
 @SS
 @ss-pay-app
 @ss_regression
-@da_ss_regression
 Feature: Self Serve Apply for licence
 
   @CPMS_tests

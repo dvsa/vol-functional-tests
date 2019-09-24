@@ -1,7 +1,6 @@
 @SS
 @ESBR
 @ss_regression
-@da_ss_regression
 Feature: ESBR for English, Welsh and Scottish Areas
 
   Scenario Outline: Short notice ESBR in self-serve
