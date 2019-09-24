@@ -241,17 +241,14 @@ public class Surrenders extends BasePage implements En {
                     world.UIJourneySteps.signWithVerify("pavlov", "Password1");
                     world.UIJourneySteps.checkVerifyConfirmation();
                     assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
-
                 } else {
                     fail("Verify not supported on this platform");
                 }
             } else {
-
                 waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
                 world.UIJourneySteps.signManually();
                 javaScriptExecutor("location.reload(true)");
                 assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
-
             }
         });
 
