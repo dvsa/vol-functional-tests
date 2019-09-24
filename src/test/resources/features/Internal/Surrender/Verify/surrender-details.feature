@@ -1,7 +1,7 @@
 @INT
 @OLCS-22990
 @regression
-@govuk-verify
+@gov-verify
 
 Feature: View Surrender Menu and details on Internal
 
