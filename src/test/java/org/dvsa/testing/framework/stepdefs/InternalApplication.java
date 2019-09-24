@@ -57,7 +57,7 @@ public class InternalApplication extends BasePage implements En {
         When("^the caseworker completes and submits the application$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            Browser.navigate().get("https://iuap1.olcs.qa.nonprod.dvsa.aws/application/" + world.createLicence.getApplicationNumber());
+            world.UIJourneySteps.urlSearchAndViewApplication();
             click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             javaScriptExecutor("location.reload(true)");
