@@ -2,6 +2,7 @@
 @SS-LAST-TM-TRIGGER
 @OLCS-19479
 @ss_regression
+@gov-verify
 
 Feature: Set and check criteria for triggering automatic letter
 

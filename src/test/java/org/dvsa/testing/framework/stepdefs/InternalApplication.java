@@ -72,7 +72,8 @@ public class InternalApplication extends BasePage implements En {
             int tableColumns;
             waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
             world.UIJourneySteps.selectFee();
-            world.UIJourneySteps.payFee("209", "cash", null, null, null);
+            String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
+            world.UIJourneySteps.payFee(fee, "cash", null, null, null);
             do {
                 tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
                 javaScriptExecutor("location.reload(true)");
