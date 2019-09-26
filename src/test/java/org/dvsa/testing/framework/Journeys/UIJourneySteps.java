@@ -34,6 +34,7 @@ import java.util.Set;
 
 import static activesupport.driver.Browser.getDriver;
 import static activesupport.driver.Browser.navigate;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
@@ -662,6 +663,43 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("The document has been saved");
         String fileName = getText("//table//tbody//tr//td",SelectorType.XPATH);
         world.genericUtils.writeLineToFile(new String[]{String.format("%s, %s",licenceNumber,fileName)},String.format("%s/target/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
+    }
+
+    public void printLicence() throws IllegalBrowserException {
+        clickByLinkText("Docs & attachments");
+        waitForElementToBePresent("//a[@id='menu-licence-quick-actions-print-licence']");
+        clickByLinkText("Print licence");
+        waitForElementToBePresent("//p[contains(text(),'Licence printed successfully')]");
+    }
+
+    public void deleteLicenceDocument() throws IllegalBrowserException {
+        clickByLinkText("Docs & attachments");
+        waitForTextToBePresent("GV Licence");
+        click("//input[@name='id[]']", SelectorType.XPATH);
+        click("//button[@id='delete']",SelectorType.XPATH);
+        waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
+        click("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
+        waitForTextToBePresent("Deleted successfully");
+    }
+
+    public void deleteLetterDocument() throws IllegalBrowserException {
+        clickByLinkText("Docs & attachments");
+        waitForTextToBePresent("GV Licence");
+        click("//input[@name='id[]']", SelectorType.XPATH);
+        click("//button[@id='delete']",SelectorType.XPATH);
+        waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
+        click("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
+        waitForTextToBePresent("Deleted successfully");
+    }
+
+    public void noLicenceDocumentIntable() throws IllegalBrowserException {
+        waitForTextToBePresent("Docs & attachments");
+        assertFalse("GV Licence",false);
+    }
+
+    public void noLetterDocumentIntable() throws IllegalBrowserException {
+        waitForTextToBePresent("Docs & attachments");
+        assertFalse("GV Licence",false);
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
