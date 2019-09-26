@@ -271,12 +271,13 @@ public class Surrenders extends BasePage implements En {
             boolean isDigital = isElementPresent("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
 
             if (isDigital) {
-                waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
+                waitAndClick("//*[contains(text(),'Digital signature has been checked')]", SelectorType.XPATH);
             } else {
-                waitAndClick("//*[contains(text(),'Physical signature')]", SelectorType.XPATH);
+                waitAndClick("//*[contains(text(),'Physical signature has been checked')]", SelectorType.XPATH);
             }
-            waitAndClick("//*[contains(text(),'ECMS')]", SelectorType.XPATH);
-
+            waitForTextToBePresent("Your changes have been successfully saved");
+            waitAndClick("//*[contains(text(),'ECMS has been checked')]", SelectorType.XPATH);
+            waitForTextToBePresent("Your changes have been successfully saved");
         });
         When("^the Surrender button is clicked$", () -> {
             click("actions[surrender]", SelectorType.ID);
