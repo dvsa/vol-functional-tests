@@ -1378,11 +1378,13 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void internalDigitalSurrenderMenu() throws IllegalBrowserException {
-        do {
-            System.out.println("waiting for page to load");
-            javaScriptExecutor("location.reload(true)");
-        } while (!isLinkPresent("" + world.createLicence.getLicenceNumber() + "", 10));
-        clickByLinkText("" + world.createLicence.getLicenceNumber() + "");
+        if (!isElementPresent("menu-licence_surrender", SelectorType.ID)) {
+            do {
+                System.out.println("waiting for page to load");
+                javaScriptExecutor("location.reload(true)");
+            } while (!isLinkPresent("" + world.createLicence.getLicenceNumber() + "", 10));
+            clickByLinkText("" + world.createLicence.getLicenceNumber() + "");
+        }
         click("menu-licence_surrender", SelectorType.ID);
     }
 
