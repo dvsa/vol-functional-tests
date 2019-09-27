@@ -662,7 +662,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
         String fileName = getText("//table//tbody//tr//td",SelectorType.XPATH);
-        //world.genericUtils.writeLineToFile(new String[]{String.format("%s, %s",licenceNumber,fileName)},String.format("%s/target/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
+        world.genericUtils.writeLineToFile(new String[]{String.format("%s, %s",licenceNumber,fileName)},String.format("%s/target/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
     }
 
     public void printLicence() throws IllegalBrowserException {
