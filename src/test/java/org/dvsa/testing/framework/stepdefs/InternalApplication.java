@@ -29,6 +29,7 @@ public class InternalApplication extends BasePage implements En {
             assertNotNull(docStoreLink);
             assertTrue(docStoreLink.contains(".rtf"));
         });
+
         When("^I generate a letter$", () -> {
             world.UIJourneySteps.generateLetter();
         });
@@ -45,17 +46,14 @@ public class InternalApplication extends BasePage implements En {
             world.UIJourneySteps.deleteLetterDocument();
         });
 
-        When("^I should see no licence document in table$", () -> {
-            world.UIJourneySteps.noLicenceDocumentIntable();
-        });
-
-        When("^I should see no generated letter in the table$", () -> {
-            world.UIJourneySteps.noLetterDocumentIntable();
+        When("^the document should be deleted$", () -> {
+            waitForTextToBePresent("Deleted successfully");
         });
 
         When("^a caseworker adds a new operating centre out of the traffic area$", () -> {
             world.UIJourneySteps.addNewOperatingCentre();
         });
+
         Then("^the postcode warning message should be displayed on internal$", () -> {
             assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres.", 10));
             click("form-actions[confirm-add]", SelectorType.ID);

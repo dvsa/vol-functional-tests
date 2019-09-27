@@ -662,7 +662,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
         String fileName = getText("//table//tbody//tr//td",SelectorType.XPATH);
-        world.genericUtils.writeLineToFile(new String[]{String.format("%s, %s",licenceNumber,fileName)},String.format("%s/target/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
+        //world.genericUtils.writeLineToFile(new String[]{String.format("%s, %s",licenceNumber,fileName)},String.format("%s/target/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
     }
 
     public void printLicence() throws IllegalBrowserException {
@@ -675,31 +675,19 @@ public class UIJourneySteps extends BasePage {
     public void deleteLicenceDocument() throws IllegalBrowserException {
         clickByLinkText("Docs & attachments");
         waitForTextToBePresent("GV Licence");
+        String licenceId = findElement("//input[@name='id[]']", SelectorType.XPATH,60).getAttribute("href");
         click("//input[@name='id[]']", SelectorType.XPATH);
         click("//button[@id='delete']",SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
         click("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
-        waitForTextToBePresent("Deleted successfully");
     }
 
     public void deleteLetterDocument() throws IllegalBrowserException {
-        clickByLinkText("Docs & attachments");
-        waitForTextToBePresent("GV Licence");
+        waitForTextToBePresent("Bus Registration");
         click("//input[@name='id[]']", SelectorType.XPATH);
         click("//button[@id='delete']",SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
         click("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
-        waitForTextToBePresent("Deleted successfully");
-    }
-
-    public void noLicenceDocumentIntable() throws IllegalBrowserException {
-        waitForTextToBePresent("Docs & attachments");
-        assertFalse("GV Licence",false);
-    }
-
-    public void noLetterDocumentIntable() throws IllegalBrowserException {
-        waitForTextToBePresent("Docs & attachments");
-        assertFalse("GV Licence",false);
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
