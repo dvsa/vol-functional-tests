@@ -8,6 +8,7 @@ import activesupport.aws.s3.S3;
 import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
+import autoitx4java.AutoItX;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.LoginPage;
@@ -31,6 +32,7 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.Set;
 
 import static activesupport.driver.Browser.getDriver;
@@ -38,6 +40,10 @@ import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
+
+import com.sun.jna.Native;
+import com.sun.jna.platform.win32.WinDef.HWND;
+import com.sun.jna.win32.W32APIOptions;
 
 
 public class UIJourneySteps extends BasePage {
@@ -571,7 +577,11 @@ public class UIJourneySteps extends BasePage {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
         }
-        navigate().get(myURL);
+        try {
+            navigate().get(myURL);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         String password = S3.getTempPassword(emailAddress, getBucketName());
 
         try {
@@ -588,6 +598,20 @@ public class UIJourneySteps extends BasePage {
                 setPassword(newPassword);
             }
         }
+    }
+
+    public interface User32 extends W32APIOptions {
+        User32 instance = Native.load("user32", User32.class, DEFAULT_OPTIONS);
+        boolean ShowWindow(HWND hWnd, int nCmdShow);
+        boolean SetForegroundWindow(HWND hWnd);
+        HWND FindWindow(String winClass, String title);
+        int SW_SHOW = 1;
+    }
+    public static void focusWindows() {
+        User32 user32 = User32.instance;
+        HWND hWnd = user32.FindWindow(null, "Chrome"); // Sets focus to my opened ‘Downloads’ folder
+        user32.ShowWindow(hWnd, User32.SW_SHOW);
+        user32.SetForegroundWindow(hWnd);
     }
 
     private String getTempPassword(String emailAddress) {
@@ -642,7 +666,7 @@ public class UIJourneySteps extends BasePage {
         navigate().get(myURL);
     }
 
-    public void generateLetter(String editValidation) throws IllegalBrowserException, IOException, AWTException {
+    public void generateLetter(String editValidation) throws IllegalBrowserException, IOException, AWTException, InterruptedException {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
         clickByName("New letter");
@@ -654,15 +678,35 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Amend letter");
         String licenceNumber = world.createLicence.getLicenceNumber();
         if (editValidation.equals("edited")) {
-            click("//*[@id='letter-link']", SelectorType.XPATH);
+            clickByLinkText("BUS");
+            AutoItX x = new AutoItX();
+            x.winActivate("Open Word?");
+            x.winWaitActive("Open Word?");
+            x.controlClick("Open Word", "", "");
+            x.controlClick("Open Word", "", "");
+//            click("//*[@id='letter-link']", SelectorType.XPATH);
+
+
             //        Add in editing with robot here.
             //        Runtime runtime = Runtime.getRuntime();
             //        String[] arg = {"osascript", "-e", "tell app \"Stickies\" to activate"};
             //        runtime.exec(arg);
+
+
             Robot robot = new Robot();
-            robot.delay(3000);
+  for(int i =0; i < 2; i++){
+      robot.keyPress(KeyEvent.VK_TAB);
+      robot.delay(500);
+      robot.keyRelease(KeyEvent.VK_TAB);
+      robot.delay(500);
+      robot.keyPress(KeyEvent.VK_ENTER);
+      robot.keyRelease(KeyEvent.VK_ENTER);
+
+  }
+
+                        robot.keyRelease(   KeyEvent.VK_ENTER    );
             robot.keyPress(KeyEvent.VK_TAB);
-            robot.keyRelease(KeyEvent.VK_TAB);
+
             robot.delay(1000);
             robot.keyPress(KeyEvent.VK_TAB);
             robot.keyRelease(KeyEvent.VK_TAB);
