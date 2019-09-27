@@ -675,7 +675,6 @@ public class UIJourneySteps extends BasePage {
     public void deleteLicenceDocument() throws IllegalBrowserException {
         clickByLinkText("Docs & attachments");
         waitForTextToBePresent("GV Licence");
-        String licenceId = findElement("//input[@name='id[]']", SelectorType.XPATH,60).getAttribute("href");
         click("//input[@name='id[]']", SelectorType.XPATH);
         click("//button[@id='delete']",SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
