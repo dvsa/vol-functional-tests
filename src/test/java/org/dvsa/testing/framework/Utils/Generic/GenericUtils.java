@@ -10,6 +10,7 @@ import activesupport.system.Properties;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.jetbrains.annotations.NotNull;
@@ -297,6 +298,16 @@ public class GenericUtils extends BasePage {
         }
         br.close();
         return isTrue;
+    }
+
+    public static File getDownloadedFile(String filenameRegex) {
+        File directory = new File("/Users/hodgsonj/Downloads");
+        File[] files = directory.listFiles((FileFilter) new RegexFileFilter(filenameRegex));
+
+        if (files == null || files.length == 0) {
+            return null;
+        }
+        return files[0];
     }
 
 }
