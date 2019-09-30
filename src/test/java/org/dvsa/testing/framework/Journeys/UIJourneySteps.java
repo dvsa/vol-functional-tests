@@ -652,6 +652,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Amend letter");
         String licenceNumber = world.createLicence.getLicenceNumber();
+        String documentLink = Browser.getDriver().findElement(By.id("letter-link")).getText();
         if (editValidation.equals("edited")) {
             click("//*[@id='letter-link']", SelectorType.XPATH);
         }
@@ -659,7 +660,10 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
         String fileName = getText("//table//tbody//tr//td",SelectorType.XPATH);
-        world.genericUtils.writeLineToFile(String.format("%s, %s",licenceNumber,fileName),String.format("%s/target/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
+        world.genericUtils.writeLineToFile(
+                String.format("%s,%s,%s",licenceNumber, fileName, documentLink),
+                String.format("%s/target/%sWebDav.csv", Paths.get("").toAbsolutePath().toString(),env.toString())
+        );
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
