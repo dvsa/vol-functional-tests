@@ -27,7 +27,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
@@ -655,24 +654,12 @@ public class UIJourneySteps extends BasePage {
         String licenceNumber = world.createLicence.getLicenceNumber();
         if (editValidation.equals("edited")) {
             click("//*[@id='letter-link']", SelectorType.XPATH);
-            //        Add in editing with robot here.
-            //        Runtime runtime = Runtime.getRuntime();
-            //        String[] arg = {"osascript", "-e", "tell app \"Stickies\" to activate"};
-            //        runtime.exec(arg);
-            Robot robot = new Robot();
-            robot.delay(3000);
-            robot.keyPress(KeyEvent.VK_TAB);
-            robot.keyRelease(KeyEvent.VK_TAB);
-            robot.delay(1000);
-            robot.keyPress(KeyEvent.VK_TAB);
-            robot.keyRelease(KeyEvent.VK_TAB);
-            robot.delay(1000);
         }
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         waitAndClick("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
         String fileName = getText("//table//tbody//tr//td",SelectorType.XPATH);
-        world.genericUtils.writeLineToFile(new String[]{String.format("%s, %s",licenceNumber,fileName)},String.format("%s\\target\\%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
+        world.genericUtils.writeLineToFile(String.format("%s, %s",licenceNumber,fileName),String.format("%s/target/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
