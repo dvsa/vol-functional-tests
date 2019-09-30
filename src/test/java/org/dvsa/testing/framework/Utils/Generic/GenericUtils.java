@@ -251,6 +251,7 @@ public class GenericUtils extends BasePage {
                 prevLine = line;
                 lineCounter++;
             }
+            br.close();
             if (lineNumber == -1){
                 return prevLine;
             } else {
@@ -267,7 +268,6 @@ public class GenericUtils extends BasePage {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))){
                 bw.append(data);
                 bw.newLine();
-                bw.close();
         }
     }
 
