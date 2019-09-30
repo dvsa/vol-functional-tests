@@ -7,6 +7,8 @@ import activesupport.driver.Browser;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
@@ -301,7 +303,8 @@ public class GenericUtils extends BasePage {
     }
 
     public static File getDownloadedFile(String filenameRegex) {
-        File directory = new File("/Users/hodgsonj/Downloads");
+        Config config = GenericUtils.getConfig();
+        File directory = new File(config.getString("downloadDirectory"));
         File[] files = directory.listFiles((FileFilter) new RegexFileFilter(filenameRegex));
 
         if (files == null || files.length == 0) {
@@ -310,4 +313,8 @@ public class GenericUtils extends BasePage {
         return files[0];
     }
 
+    public static Config getConfig() {
+        return ConfigFactory.defaultApplication();
+    }
 }
+
