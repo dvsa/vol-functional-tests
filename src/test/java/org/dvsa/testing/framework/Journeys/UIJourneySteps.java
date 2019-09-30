@@ -674,20 +674,22 @@ public class UIJourneySteps extends BasePage {
 
     public void deleteLicenceDocument() throws IllegalBrowserException {
         clickByLinkText("Docs & attachments");
-        waitForTextToBePresent("GV Licence");
+        deleteDocument();
+    }
+
+    public void deleteLetterDocument() throws IllegalBrowserException {
+        waitForTextToBePresent("Bus Registration");
+        deleteDocument();
+    }
+
+    public void deleteDocument() throws IllegalBrowserException {
         click("//input[@name='id[]']", SelectorType.XPATH);
         click("//button[@id='delete']",SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
         click("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void deleteLetterDocument() throws IllegalBrowserException {
-        waitForTextToBePresent("Bus Registration");
-        click("//input[@name='id[]']", SelectorType.XPATH);
-        click("//button[@id='delete']",SelectorType.XPATH);
-        waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
-        click("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
-    }
+
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
         assertTrue(isTextPresent("Overview", 60));
