@@ -1,18 +1,15 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
 
 import java.io.File;
 
 public class WebDav extends BasePage implements En {
 
-    private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     private String templateName = "BUS_REG_CANCELLATION";
 
     public WebDav(World world) {
