@@ -34,9 +34,10 @@ public class GrantLicenceAPI {
         this.world = world;
     }
 
-    protected String getEntityData(String endpoint, String jsonPath, String defaultData) {
+    protected String getOverviewData(String applicationNumber, String jsonPath, String defaultData) {
+        String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
         Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
-        ValidatableResponse response = RestUtils.get(endpoint, getHeaders());
+        ValidatableResponse response = RestUtils.get(overviewResource, getHeaders());
         try {
             return response.extract().response().jsonPath().getString(jsonPath);
         } catch (NullPointerException ne) {
@@ -50,9 +51,9 @@ public class GrantLicenceAPI {
         String status = "1";
         String overrideOption = "Y";
         String transportArea = "D";
-        String trackingId = getEntityData(overviewResource, "applicationTracking.id", null);
-        int applicationVersion = Integer.parseInt(getEntityData(overviewResource, "version", "1"));
-        int applicationTrackingVersion = Integer.parseInt(getEntityData(overviewResource, "applicationTracking.version", "1"));
+        String trackingId = getOverviewData(applicationNumber, "applicationTracking.id", null);
+        int applicationVersion = Integer.parseInt(getOverviewData(applicationNumber, "version", "1"));
+        int applicationTrackingVersion = Integer.parseInt(getOverviewData(applicationNumber, "applicationTracking.version", "1"));
 
         TrackingBuilder tracking = new TrackingBuilder().withId(trackingId).withVersion(applicationTrackingVersion).withAddressesStatus(status).withBusinessDetailsStatus(status).withBusinessTypeStatus(status)
                 .withCommunityLicencesStatus(status).withConditionsUndertakingsStatus(status).withConvictionsPenaltiesStatus(status).withFinancialEvidenceStatus(status)
