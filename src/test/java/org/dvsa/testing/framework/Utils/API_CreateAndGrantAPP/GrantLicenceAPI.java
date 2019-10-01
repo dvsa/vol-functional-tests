@@ -23,7 +23,6 @@ import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 public class GrantLicenceAPI {
 
     private ValidatableResponse apiResponse;
-    private int version = 1;
     private List outstandingFeesIds;
     private int feeId;
     private World world;

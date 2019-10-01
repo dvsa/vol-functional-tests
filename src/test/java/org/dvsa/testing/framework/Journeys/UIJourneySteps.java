@@ -1298,13 +1298,8 @@ public class UIJourneySteps extends BasePage {
         world.APIJourneySteps.registerAndGetUserDetails();
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
-        if (String.valueOf(operatorType).equals("public")) {
-            world.APIJourneySteps.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.createLicence.getLicenceNumber());
-        } else {
-            world.APIJourneySteps.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.createLicence.getLicenceNumber());
-        }
+        world.APIJourneySteps.grantLicenceAndPayFees();
+        System.out.println("Licence: " + world.createLicence.getLicenceNumber());
     }
 
     public void closeCase() throws IllegalBrowserException, MalformedURLException {
