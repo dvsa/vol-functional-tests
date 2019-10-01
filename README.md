@@ -18,7 +18,7 @@ The following technologies should be installed on your system.
 
 On Environments that do not support verify run the follwing command 
 
-``mvn clean install -Denv=da -Dbrowser=chrome -DdbUsername=olcsapi -DdbPassword ""  -Dcucumber.options="--tags @ss_regression --tags ~@gov-verify"
+``mvn clean install -Denv=da -Dbrowser=chrome -DdbUsername=olcsapi -DdbPassword ""  -Dcucumber.options="--tags @ss_regression --tags ~@gov-verify" ``
 
   
 The environment and browser properties need to be set otherwise the test will not execute. If only environment and browser properties are set, the harness will
@@ -36,6 +36,9 @@ To produce the reports run the following command in your terminal
 
 ## Dependency Vulnerability Scanner
 To scan use the following command ``mvn verify -DskipTests``   
+To add the nvd.nist.gov cert to machine run the following command 
+ 
+``keytool -importcert -file <path of downloaded cert> -alias nvd-nist-gov -keystore (e.g. /Library/Java/JavaVirtualMachines/jdk-10.0.1.jdk/Contents/Home/lib/security/cacerts)``
 
 ## Refactoring todos
 Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.

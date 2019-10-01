@@ -34,7 +34,24 @@ public class GrantLicenceAPI {
         this.world = world;
     }
 
+
+    public int getApplicationCompletionVersion(String applicationNumber) {
+        Headers.headers.put("x-pid", world.APIJourneySteps.adminApiHeader());
+        String apiEndpoint = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
+        ValidatableResponse applicationOverviewResponse = RestUtils.get( apiEndpoint, getHeaders());
+
+        try{
+            version = applicationOverviewResponse.extract().response().jsonPath().getInt("applicationCompletion.version");
+        }
+        catch (NullPointerException ne) {
+            version = 1;
+        }
+
+        return version;
+    }
+
     public void createOverview(String applicationNumber) {
+        getApplicationCompletionVersion(applicationNumber);
         int overviewVersion = 1;
         String status = "1";
         String overrideOption = "Y";
@@ -44,7 +61,10 @@ public class GrantLicenceAPI {
         Headers.headers.put("x-pid", world.APIJourneySteps.adminApiHeader());
         int breakCounter = 1;
 
-        do {
+
+         version = getApplicationCompletionVersion(applicationNumber)+ 1;
+
+        //do {
             TrackingBuilder tracking = new TrackingBuilder().withId(trackingId).withVersion(overviewVersion).withAddressesStatus(status).withBusinessDetailsStatus(status).withBusinessTypeStatus(status)
                     .withCommunityLicencesStatus(status).withConditionsUndertakingsStatus(status).withConvictionsPenaltiesStatus(status).withFinancialEvidenceStatus(status)
                     .withFinancialHistoryStatus(status).withLicenceHistoryStatus(status).withOperatingCentresStatus(status).withPeopleStatus(status).withSafetyStatus(status)
@@ -53,7 +73,7 @@ public class GrantLicenceAPI {
             OverviewBuilder overview = new OverviewBuilder().withId(applicationNumber).withVersion(version).withLeadTcArea(transportArea).withOverrideOppositionDate(overrideOption)
                     .withTracking(tracking);
             apiResponse = RestUtils.put(overview, overviewResource, getHeaders());
-            version++;
+
             if (version > 20) {
                 version = 1;
                 breakCounter++;
@@ -63,7 +83,7 @@ public class GrantLicenceAPI {
                     throw new HTTPException(apiResponse.extract().statusCode());
                 }
             }
-        } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
+        //} while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
