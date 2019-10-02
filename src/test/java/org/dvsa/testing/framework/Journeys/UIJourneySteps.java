@@ -669,7 +669,7 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//a[@id='menu-licence-quick-actions-print-licence']");
         clickByLinkText("Print licence");
-        waitForElementToBePresent("//p[contains(text(),'Licence printed successfully')]");
+        waitForTextToBePresent("Licence printed successfully");
     }
 
     public void deleteLicenceDocument() throws IllegalBrowserException {
@@ -683,10 +683,10 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void deleteDocument() throws IllegalBrowserException {
-        click("//input[@name='id[]']", SelectorType.XPATH);
-        click("//button[@id='delete']",SelectorType.XPATH);
+        waitAndClick("//input[@name='id[]']", SelectorType.XPATH);
+        waitAndClick("//button[@id='delete']",SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
-        click("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
+        waitAndClick("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
 
