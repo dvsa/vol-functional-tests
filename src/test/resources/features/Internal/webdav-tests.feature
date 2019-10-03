@@ -9,7 +9,7 @@ Feature: All WebDav functionality tests
     And i url search for my licence
 
   Scenario: Generate a letter using WebDav
-    Then I generate a letter
+    Then I generate a "edited" letter
     And i write to a file the necessary information
 
   Scenario: Check an already generated letter

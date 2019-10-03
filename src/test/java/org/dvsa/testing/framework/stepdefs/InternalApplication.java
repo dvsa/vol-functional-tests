@@ -1,11 +1,9 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertNotNull;
@@ -29,9 +27,8 @@ public class InternalApplication extends BasePage implements En {
             assertNotNull(docStoreLink);
             assertTrue(docStoreLink.contains(".rtf"));
         });
-
-        When("^I generate a letter$", () -> {
-            world.UIJourneySteps.generateLetter();
+        When("^I generate a \"([^\"]*)\" letter$", (String editValidation) -> {
+            world.UIJourneySteps.generateLetter(editValidation);
         });
 
         When("^I generate Licence Document$", () -> {

@@ -27,6 +27,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
@@ -642,7 +643,7 @@ public class UIJourneySteps extends BasePage {
         navigate().get(myURL);
     }
 
-    public void generateLetter() throws IllegalBrowserException, IOException, AWTException {
+    public void generateLetter(String editValidation) throws IllegalBrowserException, IOException, AWTException {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
         clickByName("New letter");
@@ -653,11 +654,21 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Amend letter");
         String licenceNumber = world.createLicence.getLicenceNumber();
-//        click("//strong[@class='word-wrap']",SelectorType.XPATH);
-
-//        Add in editing with robot here.
-
-
+        if (editValidation.equals("edited")) {
+            click("//*[@id='letter-link']", SelectorType.XPATH);
+            //        Add in editing with robot here.
+            //        Runtime runtime = Runtime.getRuntime();
+            //        String[] arg = {"osascript", "-e", "tell app \"Stickies\" to activate"};
+            //        runtime.exec(arg);
+            Robot robot = new Robot();
+            robot.delay(3000);
+            robot.keyPress(KeyEvent.VK_TAB);
+            robot.keyRelease(KeyEvent.VK_TAB);
+            robot.delay(1000);
+            robot.keyPress(KeyEvent.VK_TAB);
+            robot.keyRelease(KeyEvent.VK_TAB);
+            robot.delay(1000);
+        }
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         waitAndClick("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
@@ -1394,11 +1405,13 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void internalDigitalSurrenderMenu() throws IllegalBrowserException {
-        do {
-            System.out.println("waiting for page to load");
-            javaScriptExecutor("location.reload(true)");
-        } while (!isLinkPresent("" + world.createLicence.getLicenceNumber() + "", 10));
-        clickByLinkText("" + world.createLicence.getLicenceNumber() + "");
+        if (!isElementPresent("menu-licence_surrender", SelectorType.ID)) {
+            do {
+                System.out.println("waiting for page to load");
+                javaScriptExecutor("location.reload(true)");
+            } while (!isLinkPresent("" + world.createLicence.getLicenceNumber() + "", 10));
+            clickByLinkText("" + world.createLicence.getLicenceNumber() + "");
+        }
         click("menu-licence_surrender", SelectorType.ID);
     }
 
