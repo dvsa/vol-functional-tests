@@ -27,8 +27,8 @@ public class InternalApplication extends BasePage implements En {
             assertNotNull(docStoreLink);
             assertTrue(docStoreLink.contains(".rtf"));
         });
-        When("^I generate a \"([^\"]*)\" letter$", (String editValidation) -> {
-            world.UIJourneySteps.generateLetter(editValidation);
+        When("^i generate a letter$", () -> {
+            world.UIJourneySteps.generateLetter();
         });
         When("^a caseworker adds a new operating centre out of the traffic area$", () -> {
             world.UIJourneySteps.addNewOperatingCentre();

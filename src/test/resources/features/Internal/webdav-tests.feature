@@ -9,5 +9,6 @@ Feature: All WebDav functionality tests
     And i url search for my licence
 
   Scenario: Generate a letter using WebDav
-    Then I generate a "not edited" letter
-    And I download and check the change has been made to the document
+    When i generate a letter
+    And i make changes to the document with WebDav and save it
+    Then the document should contain the changes

@@ -29,7 +29,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Paths;
 import java.util.Set;
 
 import static activesupport.driver.Browser.getDriver;
@@ -641,7 +640,7 @@ public class UIJourneySteps extends BasePage {
         navigate().get(myURL);
     }
 
-    public void generateLetter(String editValidation) throws IllegalBrowserException, IOException, AWTException {
+    public void generateLetter() throws IllegalBrowserException, IOException, AWTException {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
         clickByName("New letter");
@@ -651,19 +650,18 @@ public class UIJourneySteps extends BasePage {
         waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Amend letter");
-        String licenceNumber = world.createLicence.getLicenceNumber();
-        String documentLink = Browser.getDriver().findElement(By.id("letter-link")).getText();
-        if (editValidation.equals("edited")) {
-            click("//*[@id='letter-link']", SelectorType.XPATH);
-        }
+    }
+
+    public void saveDocumentInInternal() throws IllegalBrowserException {
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         waitAndClick("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
-        String fileName = getText("//table//tbody//tr//td",SelectorType.XPATH);
-        world.genericUtils.writeLineToFile(
-                String.format("%s,%s,%s",licenceNumber, fileName, documentLink),
-                String.format("%s/target/%sWebDav.csv", Paths.get("").toAbsolutePath().toString(),env.toString())
-        );
+    }
+
+    public void editDocumentWithWebDav () throws IllegalBrowserException, IOException, AWTException {
+        // Change needs to be made
+
+        saveDocumentInInternal();
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
