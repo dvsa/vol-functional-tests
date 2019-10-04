@@ -15,6 +15,11 @@ The following technologies should be installed on your system.
 
 ## Executing
 ``mvn clean verify -Denv= -Dbrowser= ``
+
+On Environments that do not support verify run the follwing command 
+
+``mvn clean install -Denv=da -Dbrowser=chrome -DdbUsername=olcsapi -DdbPassword ""  -Dcucumber.options="--tags @ss_regression --tags ~@gov-verify"
+
   
 The environment and browser properties need to be set otherwise the test will not execute. If only environment and browser properties are set, the harness will
 create by default ``a GB goods standard national limited company licence``

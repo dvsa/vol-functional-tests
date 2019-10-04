@@ -137,3 +137,5 @@ pom.xml.tag
 /Reports/
 Report.html
 /src/test/java/Test.java
+
+src/test/resources/application.conf

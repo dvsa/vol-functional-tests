@@ -241,29 +241,33 @@ public class GenericUtils extends BasePage {
         return Browser.navigate().findElements(By.xpath("//*[contains(@class,'status')]")).stream().anyMatch(a -> a.getText().contains(searchTerm.toUpperCase()));
     }
 
-    public String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
+    public static String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))){
             String line = null;
+            String prevLine = null;
             int lineCounter = 0;
             while (lineNumber == -1 ? (line = br.readLine()) != null : lineCounter <= lineNumber) {
                 line = br.readLine();
-                lineNumber++;
+                prevLine = line;
+                lineCounter++;
             }
-            return line;
+            br.close();
+            if (lineNumber == -1){
+                return prevLine;
+            } else {
+                return line;
+            }
         }
     }
 
-    public String readLastLineFromFile( String fileLocation) throws IOException {
+    public static String readLastLineFromFile(String fileLocation) throws IOException {
         return readLineFromFile(fileLocation, -1);
     }
 
-    public void writeLineToFile(String[] data, String fileLocation) throws IOException {
+    public void writeLineToFile(String data, String fileLocation) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))){
-            for (String d:data) {
-                bw.append(d);
+                bw.append(data);
                 bw.newLine();
-                bw.close();
-            }
         }
     }
 
@@ -277,3 +281,4 @@ public class GenericUtils extends BasePage {
         }
     }
 }
+
