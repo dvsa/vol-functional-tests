@@ -34,17 +34,12 @@ public class WebDav extends BasePage implements En {
         });
         And("^the document should contain the changes$", () -> {
 
-            Assert.assertTrue(isTextPresent(this.templateName,5));
-            clickByLinkText(this.templateName);
+            Assert.assertTrue(isTextPresent(templateName,5));
+            clickByLinkText(templateName);
 
             String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.createLicence.getLicenceNumber(), templateName);
-            File file = null;
-            do {
-                file = GenericUtils.getDownloadedFile(templateRegex);
-            }
-            while (file == null);
-            // We apologise sincerely, but we need a short delay to give the file a chance to fully download. Sorry.
-            Thread.sleep(1000);
+
+            File file = GenericUtils.getDownloadedFile("downloadDirectory",templateRegex);
 
             Assert.assertTrue(GenericUtils.checkFileContainsText(file.getAbsolutePath(), "I would remind you that you must"));
         });

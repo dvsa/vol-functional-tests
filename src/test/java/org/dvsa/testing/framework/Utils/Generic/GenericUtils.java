@@ -302,15 +302,29 @@ public class GenericUtils extends BasePage {
         return isTrue;
     }
 
-    public static File getDownloadedFile(String filenameRegex) {
+    public static File getDownloadedFile (String downloadDirectory, String filenameRegex) throws FileNotFoundException {
         Config config = GenericUtils.getConfig();
-        File directory = new File(config.getString("downloadDirectory"));
-        File[] files = directory.listFiles((FileFilter) new RegexFileFilter(filenameRegex));
+        File directory = new File(config.getString(downloadDirectory));
+        File[] files;
 
-        if (files == null || files.length == 0) {
-            return null;
+        long finish = System.currentTimeMillis() + 10000;
+        do {
+            files = directory.listFiles((FileFilter) new RegexFileFilter(filenameRegex));
+        } while ( files.length == 0 && System.currentTimeMillis() < finish);
+
+        if (files.length == 0) {
+            throw new FileNotFoundException();
+        } else {
+            long lastModified;
+            long prevLastModified;
+
+            do {
+                prevLastModified = files[0].lastModified();
+                lastModified = files[0].lastModified();
+            } while(prevLastModified != lastModified);
+
+            return files[0];
         }
-        return files[0];
     }
 
     public static Config getConfig() {
