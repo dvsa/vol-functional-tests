@@ -20,30 +20,19 @@ import java.util.List;
 
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 
-public class GrantLicenceAPI {
+public class GrantLicenceAPI extends BaseAPI{
 
     private ValidatableResponse apiResponse;
     private List outstandingFeesIds;
     private int feeId;
     private World world;
 
-    private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     private List<Double> feesToPay = new ArrayList<>();
 
     public GrantLicenceAPI(World world) throws MissingRequiredArgument {
         this.world = world;
     }
 
-    protected String getOverviewData(String applicationNumber, String jsonPath, String defaultData) {
-        String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
-        Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
-        ValidatableResponse response = RestUtils.get(overviewResource, getHeaders());
-        try {
-            return response.extract().response().jsonPath().getString(jsonPath);
-        } catch (NullPointerException ne) {
-            return defaultData;
-        }
-    }
 
     public void createOverview(String applicationNumber) {
         String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
@@ -51,9 +40,9 @@ public class GrantLicenceAPI {
         String status = "1";
         String overrideOption = "Y";
         String transportArea = "D";
-        String trackingId = getOverviewData(applicationNumber, "applicationTracking.id", null);
-        int applicationVersion = Integer.parseInt(getOverviewData(applicationNumber, "version", "1"));
-        int applicationTrackingVersion = Integer.parseInt(getOverviewData(applicationNumber, "applicationTracking.version", "1"));
+        String trackingId = fetchApplicationInformation(applicationNumber, "applicationTracking.id", null);
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
+        int applicationTrackingVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "applicationTracking.version", "1"));
 
         TrackingBuilder tracking = new TrackingBuilder().withId(trackingId).withVersion(applicationTrackingVersion).withAddressesStatus(status).withBusinessDetailsStatus(status).withBusinessTypeStatus(status)
                 .withCommunityLicencesStatus(status).withConditionsUndertakingsStatus(status).withConvictionsPenaltiesStatus(status).withFinancialEvidenceStatus(status)

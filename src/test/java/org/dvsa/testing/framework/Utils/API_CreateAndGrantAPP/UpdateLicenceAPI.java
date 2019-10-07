@@ -1,10 +1,8 @@
 package org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP;
 
 import Injectors.World;
-import activesupport.MissingRequiredArgument;
 import activesupport.http.RestUtils;
 import activesupport.string.Str;
-import activesupport.system.Properties;
 import enums.LicenceType;
 import enums.OperatorType;
 import io.restassured.response.ValidatableResponse;
@@ -14,7 +12,7 @@ import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.dvsa.testing.lib.url.api.URL;
 import org.hamcrest.Matchers;
 
 import javax.xml.ws.http.HTTPException;
@@ -29,7 +27,7 @@ import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 import static org.junit.Assert.assertThat;
 
 
-public class UpdateLicenceAPI extends BasePage {
+public class UpdateLicenceAPI extends BaseAPI {
     private ValidatableResponse apiResponse;
     private World world;
 
@@ -185,23 +183,13 @@ public class UpdateLicenceAPI extends BasePage {
         this.queueId = queueId;
     }
 
-    private static EnvironmentType env;
-
-    static {
-        try {
-            env = EnvironmentType.getEnum(Properties.get("env", false));
-        } catch (MissingRequiredArgument missingRequiredArgument) {
-            missingRequiredArgument.printStackTrace();
-        }
-    }
-
     public UpdateLicenceAPI(World world) {
         this.world = world;
     }
 
     public void createVariation(String variationType) {
         String licenceId = world.createLicence.getLicenceId();
-        String licenceHistoryResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s/variation", licenceId)).toString();
+        String licenceHistoryResource = URL.build(env, String.format("licence/%s/variation", licenceId)).toString();
 
         VariationBuilder variation = new VariationBuilder().withId(licenceId).withFeeRequired("N").withAppliedVia("applied_via_phone").withVariationType(variationType);
         apiResponse = RestUtils.post(variation, licenceHistoryResource, getHeaders());
@@ -211,7 +199,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public void updateLicenceType(String licenceId) {
         Integer version = 1;
-        String typeOfLicenceResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("variation/%s/type-of-licence", licenceId)).toString();
+        String typeOfLicenceResource = URL.build(env, String.format("variation/%s/type-of-licence", licenceId)).toString();
 
         do {
             GenericBuilder genericBuilder = new GenericBuilder().withId(variationApplicationNumber).withVersion(version).withLicenceType(String.valueOf(LicenceType.getEnum("standard_national")));
@@ -234,7 +222,7 @@ public class UpdateLicenceAPI extends BasePage {
         List<String> outcomes = new ArrayList<>();
         outcomes.add("case_o_other");
         outcomes.add("case_o_cur");
-        String caseResource = org.dvsa.testing.lib.url.api.URL.build(env, "cases").toString();
+        String caseResource = URL.build(env, "cases").toString();
         do {
             CaseBuilder caseBuilder = new CaseBuilder().withId(world.createLicence.getLicenceId()).withVersion(version).withCaseType(caseType).
                     withCategorys(categories).withDescription(description).withOutcomes(outcomes).withApplication(world.createLicence.getApplicationNumber());
@@ -266,7 +254,7 @@ public class UpdateLicenceAPI extends BasePage {
         String isDeclared = "Y";
         String isDealtWith = "Y";
         String takenIntoConsideration = "Y";
-        String convictionResource = org.dvsa.testing.lib.url.api.URL.build(env, "conviction").toString();
+        String convictionResource = URL.build(env, "conviction").toString();
         do {
             CaseConvictionBuilder caseConvictionBuilder = new CaseConvictionBuilder().withCase(caseId).withConvictionCategory(convictionCategory).withConvictionDate(convictionDate).withBirthDate(birthDate).withCategoryText(categoryText).withCosts(costs)
                     .withCourt(court).withMsi(msi).withPenalty(penalty).withNotes(notes).withTakenIntoConsideration(takenIntoConsideration).withIsDeclared(isDeclared).withIsDealtWith(isDealtWith).withDefendantType(defendantType)
@@ -293,7 +281,7 @@ public class UpdateLicenceAPI extends BasePage {
         String description = "Driver correcting entry in driver's record book in wrong fashion";
         String driverForename = "Skish";
         String driverFamilyName = "Dotell";
-        String complaintResource = org.dvsa.testing.lib.url.api.URL.build(env, "complaint").toString();
+        String complaintResource = URL.build(env, "complaint").toString();
         CaseComplaintBuilder complaintBuilder = new CaseComplaintBuilder().withCase(caseId).withComplainantForename(complainantForename).withComplainantFamilyName(complainantFamilyName).withComplaintType(complaintType).withStatus(status).withIsCompliance(isCompliance)
                 .withComplaintDate(complaintDate).withInfringementDate(infringementDate).withDescription(description).withDriverForename(driverForename).withDriverFamilyName(driverFamilyName);
         apiResponse = RestUtils.post(complaintBuilder, complaintResource, getHeaders());
@@ -308,7 +296,7 @@ public class UpdateLicenceAPI extends BasePage {
         String fulfilled = "N";
         String attachedTo = "cat_lic";
         String description = "This undertaken has not been fulfilled";
-        String conditionsUndertaking = org.dvsa.testing.lib.url.api.URL.build(env, "condition-undertaking").toString();
+        String conditionsUndertaking = URL.build(env, "condition-undertaking").toString();
         CaseConditionsBuilder conditionsBuilder = new CaseConditionsBuilder().withLicence(world.createLicence.getLicenceId()).withApplication(world.createLicence.getApplicationNumber()).withCase(Integer.toString(caseId)).withType(type).withConditionCategory(conditionCategory)
                 .withFulfilled(fulfilled).withAttachedTo(attachedTo).withNotes(description);
         apiResponse = RestUtils.post(conditionsBuilder, conditionsUndertaking, getHeaders());
@@ -319,7 +307,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public void createSubmission() throws MalformedURLException {
         String submissionType = "submission_type_o_env";
-        String submissionResource = org.dvsa.testing.lib.url.api.URL.build(env, "submission").toString();
+        String submissionResource = URL.build(env, "submission").toString();
         CaseSubmissionBuilder submissionBuilder = new CaseSubmissionBuilder().withCase(Integer.toString(caseId)).withSubmissionType(submissionType);
         apiResponse = RestUtils.post(submissionBuilder, submissionResource, getHeaders());
 
@@ -330,7 +318,7 @@ public class UpdateLicenceAPI extends BasePage {
     public void createCaseNote() throws MalformedURLException {
         String comment = "case note submitted through the API";
         String priority = "Y";
-        String caseNoteResource = org.dvsa.testing.lib.url.api.URL.build(env, "processing/note").toString();
+        String caseNoteResource = URL.build(env, "processing/note").toString();
         CaseNotesBuilder caseNotesBuilder = new CaseNotesBuilder().withCase(Integer.toString(caseId)).withLicence(world.createLicence.getLicenceId()).withApplication(world.createLicence.getApplicationNumber())
                 .withComment(comment).withPriority(priority);
         apiResponse = RestUtils.post(caseNotesBuilder, caseNoteResource, getHeaders());
@@ -340,7 +328,7 @@ public class UpdateLicenceAPI extends BasePage {
     }
 
     public ValidatableResponse getCaseDetails(String resource, int id) {
-        String caseResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("%s/%s", resource, id)).toString();
+        String caseResource = URL.build(env, String.format("%s/%s", resource, id)).toString();
         apiResponse = RestUtils.get(caseResource, getHeaders());
         return apiResponse;
     }
@@ -348,7 +336,7 @@ public class UpdateLicenceAPI extends BasePage {
     public ValidatableResponse variationUpdateOperatingCentre() {
         String noOfVehiclesRequired = "5";
         String licenceId = world.createLicence.getLicenceId();
-        String updateOperatingCentreResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("application/%s/variation-operating-centre/%s", licenceId, variationApplicationNumber)).toString();
+        String updateOperatingCentreResource = URL.build(env, String.format("application/%s/variation-operating-centre/%s", licenceId, variationApplicationNumber)).toString();
         OperatingCentreVariationBuilder updateOperatingCentre = new OperatingCentreVariationBuilder();
 
         do {
@@ -385,10 +373,10 @@ public class UpdateLicenceAPI extends BasePage {
         String team = "1";
         String userType = "internal";
         Headers.headers.put("x-pid", adminApiHeader());
-        String internalAdminUserResource = org.dvsa.testing.lib.url.api.URL.build(env, "user/internal").toString();
+        String internalAdminUserResource = URL.build(env, "user/internal").toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate(getPastYear(30) + "-" + getCurrentMonth() + "-" + getCurrentDayOfMonth());
+        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate(BasePage.getPastYear(30) + "-" + BasePage.getCurrentMonth() + "-" + BasePage.getCurrentDayOfMonth());
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withRoles(roles).withTeam(team).withUserType(userType);
@@ -404,7 +392,7 @@ public class UpdateLicenceAPI extends BasePage {
     }
 
     public ValidatableResponse grantVariation(String resource) throws MalformedURLException {
-        String grantVariation = org.dvsa.testing.lib.url.api.URL.build(env, String.format("variation/%s/%s", variationApplicationNumber, resource)).toString();
+        String grantVariation = URL.build(env, String.format("variation/%s/%s", variationApplicationNumber, resource)).toString();
 
         GenericBuilder genericBuilder = new GenericBuilder().withId(variationApplicationNumber);
         apiResponse = RestUtils.put(genericBuilder, grantVariation, getHeaders());
@@ -413,7 +401,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public String getLicenceTrafficArea() {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String getApplicationResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
+        String getApplicationResource = URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
 
         apiResponse = RestUtils.get(getApplicationResource, getHeaders());
         setTrafficAreaName(apiResponse.extract().jsonPath().getString("trafficArea.name"));
@@ -422,7 +410,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public String getLicenceStatusDetails() {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String getApplicationResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
+        String getApplicationResource = URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
 
         apiResponse = RestUtils.get(getApplicationResource, getHeaders());
         setLicenceStatus(apiResponse.extract().jsonPath().getString("status.description"));
@@ -431,7 +419,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public String getOperatorTypeDetails() {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String getApplicationResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
+        String getApplicationResource = URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
 
         apiResponse = RestUtils.get(getApplicationResource, getHeaders());
         setGoodOrPsv(apiResponse.extract().jsonPath().getString("goodsOrPsv.description"));
@@ -440,7 +428,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public String getBusinessTypeDetails() {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String getApplicationResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
+        String getApplicationResource = URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
 
         apiResponse = RestUtils.get(getApplicationResource, getHeaders());
         setBusinessType(apiResponse.extract().jsonPath().getString("organisation.type.description"));
@@ -450,7 +438,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public String getLicenceTypeDetails() {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String getApplicationResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
+        String getApplicationResource = URL.build(env, String.format("licence/%s", world.createLicence.getLicenceId())).toString();
 
         apiResponse = RestUtils.get(getApplicationResource, getHeaders());
         setLicenceType(apiResponse.extract().jsonPath().getString("licenceType.description"));
@@ -459,7 +447,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public void updateLicenceStatus(String licenceId, String status) {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String typeOfLicenceResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s/decisions/%s", licenceId, status)).toString();
+        String typeOfLicenceResource = URL.build(env, String.format("licence/%s/decisions/%s", licenceId, status)).toString();
 
         GenericBuilder genericBuilder = new GenericBuilder().withId(licenceId);
         apiResponse = RestUtils.post(genericBuilder, typeOfLicenceResource, getHeaders());
@@ -468,7 +456,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public ValidatableResponse surrenderLicence(String licenceId, String userPid) {
         Headers.getHeaders().put("x-pid", userPid);
-        String surrenderLicence = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s/surrender", licenceId)).toString();
+        String surrenderLicence = URL.build(env, String.format("licence/%s/surrender", licenceId)).toString();
 
         SurrendersBuilder surrendersBuilder = new SurrendersBuilder().withLicence(licenceId);
         apiResponse = RestUtils.post(surrendersBuilder, surrenderLicence, getHeaders());
@@ -477,7 +465,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public ValidatableResponse updateSurrender(String licenceId, String userPid, Integer surrenderId) {
         Headers.getHeaders().put("x-pid", userPid);
-        String updateSurrender = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s/surrender", licenceId)).toString();
+        String updateSurrender = URL.build(env, String.format("licence/%s/surrender", licenceId)).toString();
 
         SurrendersBuilder surrendersBuilder = new SurrendersBuilder().withLicence(licenceId);
         surrendersBuilder.setId(surrenderId.toString());
@@ -489,7 +477,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public ValidatableResponse deleteSurrender(String licenceId, String userPid, Integer surrenderId) {
         Headers.getHeaders().put("x-pid", userPid);
-        String deleteSurrender = org.dvsa.testing.lib.url.api.URL.build(env, String.format("licence/%s/surrender", licenceId)).toString();
+        String deleteSurrender = URL.build(env, String.format("licence/%s/surrender", licenceId)).toString();
 
         GenericBuilder genericBuilder = new GenericBuilder().withLicence(licenceId);
         genericBuilder.setId(surrenderId.toString());
@@ -500,7 +488,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public void enableDisableVerify(String toggle) {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String enableDisableVerifyResource = org.dvsa.testing.lib.url.api.URL.build(env, "system-parameter/DISABLE_GDS_VERIFY_SIGNATURES/").toString();
+        String enableDisableVerifyResource = URL.build(env, "system-parameter/DISABLE_GDS_VERIFY_SIGNATURES/").toString();
 
         GenericBuilder genericBuilder = new GenericBuilder().withId("DISABLE_GDS_VERIFY_SIGNATURES").withParamValue(toggle).
                 withDescription("Disable GDS verify digital signature functionality");
@@ -511,7 +499,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public void updateFeatureToggle(String id, String friendlyName, String configName, String status) {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String updateFeatureToggleResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("feature-toggle/%s/", id)).toString();
+        String updateFeatureToggleResource = URL.build(env, String.format("feature-toggle/%s/", id)).toString();
 
         FeatureToggleBuilder featureToggleBuilder = new FeatureToggleBuilder().withId(id).withFriendlyName(friendlyName).withConfigName(configName)
                 .withStatus(status);
@@ -529,7 +517,7 @@ public class UpdateLicenceAPI extends BasePage {
             queryParams.put("discSequence", "6");
         }
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String discNumberingResource = org.dvsa.testing.lib.url.api.URL.build(env, "disc-sequence/discs-numbering").toString();
+        String discNumberingResource = URL.build(env, "disc-sequence/discs-numbering").toString();
         apiResponse = RestUtils.getWithQueryParams(discNumberingResource, queryParams, getHeaders());
         setStartNumber(apiResponse.extract().jsonPath().get("results.startNumber").toString());
         setEndNumber(apiResponse.extract().jsonPath().get("results.endNumber").toString());
@@ -544,7 +532,7 @@ public class UpdateLicenceAPI extends BasePage {
         } else {
             operator = "psv";
         }
-        String discPrintResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("%s-disc/print-discs/", operator)).toString();
+        String discPrintResource = URL.build(env, String.format("%s-disc/print-discs/", operator)).toString();
         PrintDiscBuilder printDiscBuilder = new PrintDiscBuilder().withDiscSequence("6").withLicenceType(String.valueOf(LicenceType.getEnum(world.createLicence.getLicenceType()))).withNiFlag(world.createLicence.getNiFlag())
                 .withStartNumber(String.valueOf(getStartNumber()));
         apiResponse = RestUtils.post(printDiscBuilder, discPrintResource, getHeaders());
@@ -561,7 +549,7 @@ public class UpdateLicenceAPI extends BasePage {
             operator = "psv";
         }
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String discConfirmResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("%s-disc/confirm-printing/", operator)).toString();
+        String discConfirmResource = URL.build(env, String.format("%s-disc/confirm-printing/", operator)).toString();
         ConfirmPrintBuilder confirmPrintBuilder = new ConfirmPrintBuilder().withDiscSequence("6").withEndNumber(getEndNumber()).withStartNumber(getStartNumber()).withIsSuccessfull(true)
                 .withLicenceType(String.valueOf(LicenceType.getEnum(world.createLicence.getLicenceType()))).withNiFlag(world.createLicence.getNiFlag()).withQueueId(getQueueId());
         apiResponse = RestUtils.post(confirmPrintBuilder, discConfirmResource, getHeaders());
@@ -570,7 +558,7 @@ public class UpdateLicenceAPI extends BasePage {
 
     public void submitInterimApplication(String application) {
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String interimApplicationResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("application/%s/interim/", application)).toString();
+        String interimApplicationResource = URL.build(env, String.format("application/%s/interim/", application)).toString();
 
         do {
             InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withAuthVehicles(String.valueOf(world.createLicence.getNoOfVehiclesRequired())).withAuthTrailers(String.valueOf(world.createLicence.getNoOfVehiclesRequired()))
@@ -593,7 +581,7 @@ public class UpdateLicenceAPI extends BasePage {
     public void grantInterimApplication(String application) {
         submitInterimApplication(application);
         Headers.getHeaders().put("x-pid", adminApiHeader());
-        String interimApplicationResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("application/%s/interim/grant/", application)).toString();
+        String interimApplicationResource = URL.build(env, String.format("application/%s/interim/grant/", application)).toString();
 
         InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withId(world.createLicence.getApplicationNumber());
         apiResponse = RestUtils.post(interimApplicationBuilder, interimApplicationResource, getHeaders());
