@@ -9,8 +9,6 @@ import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import autoitx4java.AutoItX;
-import com.google.common.base.Function;
-import com.jacob.com.LibraryLoader;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -25,26 +23,24 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.Wait;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Paths;
 import java.time.Duration;
+import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
+import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.getDriver;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.jsReturnsValue;
+import static org.openqa.selenium.support.ui.ExpectedConditions.urlContains;
 
 
 public class UIJourneySteps extends BasePage {
@@ -575,7 +571,7 @@ public class UIJourneySteps extends BasePage {
         String newPassword = "BunDog=336MixZoo";
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
 
-        navigate().manage().window().maximize();
+         navigate().manage().window().maximize();
 
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
@@ -655,18 +651,6 @@ public class UIJourneySteps extends BasePage {
         navigate().get(myURL);
     }
 
-    public static void waitAndSelectByIndex(@NotNull final String textWait, @NotNull final String selector, @NotNull SelectorType selectorType, @NotNull final int listValue) throws IllegalBrowserException {
-        final FluentWait wait = (new FluentWait(getDriver())).withTimeout(Duration.ofMillis(2000)).pollingEvery(Duration.ofMillis(100)).ignoring(NoSuchElementException.class);
-        WebElement element = (WebElement)wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                WebElement foundIt = null;
-                foundIt = (WebElement)wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(String.format("//*[contains(text(),'%s')]", textWait)))));
-                Select selectItem = new Select(driver.findElement(By.xpath(selector)));
-                selectItem.selectByIndex(listValue);
-                return foundIt;
-            }
-        });
-    }
     public void generateLetter() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
@@ -692,13 +676,14 @@ public class UIJourneySteps extends BasePage {
 
         Thread.sleep(1000);
         clickByLinkText("BUS");
-        AutoItX autoIt = GenericUtils.initiateAutoItX();
+        AutoItX autoIt = initiateAutoItX();
 
         autoIt.winWaitActive(window,"Chrome Legacy Window",20);
         Thread.sleep(1000);
         autoIt.mouseClick("left",1200,195,2,20);
 
         autoIt.winWaitActive(wordLoginWindow,"",20);
+        Thread.sleep(3000);
         if (autoIt.winExists(wordLoginWindow,"")) {
             autoIt.mouseClick("left", 1000, 450, 2, 1);
             autoIt.send(world.updateLicence.getAdminUserLogin());
@@ -708,8 +693,8 @@ public class UIJourneySteps extends BasePage {
         }
         focusWindows("OpusApp");
         //Document edit and save
-        Thread.sleep(1000);
-        autoIt.mouseClick("left",755,440,2,1);
+        Thread.sleep(3000);
+        autoIt.mouseClick("left",755,750,2,1);
         autoIt.send("WebDav Change!");
         autoIt.mouseClick("left",335,60,2,1);
         autoIt.mouseClick("left",1805,85,2,1);
@@ -1594,15 +1579,27 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForPageLoad();
-        WebDriverWait wait = new WebDriverWait(getDriver(), 60);
-        wait.until(ExpectedConditions.urlContains("variation"));
+
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofMillis(200))
+                .ignoring(NoSuchElementException.class);
+
+        WebElement webElement = wait.until(webDriver -> (WebElement) urlContains("variation"));
+        assertTrue(Boolean.parseBoolean(webElement.getText()));
+
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2));
     }
 
     public void waitForPageLoad() throws MalformedURLException, IllegalBrowserException {
-        WebDriverWait wait = new WebDriverWait(getDriver(), 60);
-        assertEquals("complete", wait.until(ExpectedConditions.jsReturnsValue("return document.readyState")));
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofMillis(200))
+                .ignoring(NoSuchElementException.class);
+
+        WebElement browserStatus =  wait.until(webDriver -> (WebElement) jsReturnsValue("return document.readyState"));
+        assertEquals("completed",browserStatus.getText());
     }
 
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
