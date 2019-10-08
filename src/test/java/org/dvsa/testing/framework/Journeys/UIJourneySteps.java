@@ -9,8 +9,6 @@ import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import autoitx4java.AutoItX;
-import com.google.common.base.Function;
-import com.jacob.com.LibraryLoader;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -24,24 +22,19 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Paths;
-import java.time.Duration;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
+import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.getDriver;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
@@ -655,18 +648,18 @@ public class UIJourneySteps extends BasePage {
         navigate().get(myURL);
     }
 
-    public static void waitAndSelectByIndex(@NotNull final String textWait, @NotNull final String selector, @NotNull SelectorType selectorType, @NotNull final int listValue) throws IllegalBrowserException {
-        final FluentWait wait = (new FluentWait(getDriver())).withTimeout(Duration.ofMillis(2000)).pollingEvery(Duration.ofMillis(100)).ignoring(NoSuchElementException.class);
-        WebElement element = (WebElement)wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                WebElement foundIt = null;
-                foundIt = (WebElement)wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(String.format("//*[contains(text(),'%s')]", textWait)))));
-                Select selectItem = new Select(driver.findElement(By.xpath(selector)));
-                selectItem.selectByIndex(listValue);
-                return foundIt;
-            }
-        });
-    }
+//    public static void waitAndSelectByIndex(@NotNull final String textWait, @NotNull final String selector, @NotNull SelectorType selectorType, @NotNull final int listValue) throws IllegalBrowserException {
+//        final FluentWait wait = (new FluentWait(getDriver())).withTimeout(Duration.ofMillis(2000)).pollingEvery(Duration.ofMillis(100)).ignoring(NoSuchElementException.class);
+//        WebElement element = (WebElement)wait.until(new Function<WebDriver, WebElement>() {
+//            public WebElement apply(WebDriver driver) {
+//                WebElement foundIt = null;
+//                foundIt = (WebElement)wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath(String.format("//*[contains(text(),'%s')]", textWait)))));
+//                Select selectItem = new Select(driver.findElement(By.xpath(selector)));
+//                selectItem.selectByIndex(listValue);
+//                return foundIt;
+//            }
+//        });
+//    }
     public void generateLetter() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
@@ -692,7 +685,7 @@ public class UIJourneySteps extends BasePage {
 
         Thread.sleep(1000);
         clickByLinkText("BUS");
-        AutoItX autoIt = GenericUtils.initiateAutoItX();
+        AutoItX autoIt = initiateAutoItX();
 
         autoIt.winWaitActive(window,"Chrome Legacy Window",20);
         Thread.sleep(1000);
@@ -1595,14 +1588,14 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForPageLoad();
         WebDriverWait wait = new WebDriverWait(getDriver(), 60);
-        wait.until(ExpectedConditions.urlContains("variation"));
+//        wait.until(ExpectedConditions.urlContains("variation"));
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2));
     }
 
     public void waitForPageLoad() throws MalformedURLException, IllegalBrowserException {
         WebDriverWait wait = new WebDriverWait(getDriver(), 60);
-        assertEquals("complete", wait.until(ExpectedConditions.jsReturnsValue("return document.readyState")));
+//        assertEquals("complete", wait.until(ExpectedConditions.jsReturnsValue("return document.readyState")));
     }
 
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {

@@ -6,7 +6,6 @@ import activesupport.system.Properties;
 import autoitx4java.AutoItX;
 import cucumber.api.java8.En;
 import org.apache.commons.lang.StringUtils;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -17,6 +16,10 @@ import org.openqa.selenium.By;
 
 import java.io.File;
 import java.nio.file.Paths;
+
+import static activesupport.autoITX.AutoITX.initiateAutoItX;
+import static activesupport.file.Files.checkFileContainsText;
+import static activesupport.file.Files.getDownloadedFile;
 
 public class WebDav extends BasePage implements En {
 
@@ -44,16 +47,16 @@ public class WebDav extends BasePage implements En {
 
             String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.createLicence.getLicenceNumber(), templateName);
 
-            File file = GenericUtils.getDownloadedFile("downloadDirectory",templateRegex);
+            File file = getDownloadedFile("downloadDirectory",templateRegex);
 
-            Assert.assertTrue(GenericUtils.checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
+            Assert.assertTrue(checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
         });
         And("^i open the document in word for the first time$", () -> {
             String window = "Olcs - ".concat(world.createLicence.getLicenceNumber()).concat(" - Google Chrome");
             Thread.sleep(1000);
             clickByLinkText("BUS");
 
-            this.autoIt = GenericUtils.initiateAutoItX();
+            this.autoIt = initiateAutoItX();
             this.autoIt.winWaitActive(window,"Chrome Legacy Window");
             Thread.sleep(1000);
             this.autoIt.mouseClick("left",1200,195,2,20);
