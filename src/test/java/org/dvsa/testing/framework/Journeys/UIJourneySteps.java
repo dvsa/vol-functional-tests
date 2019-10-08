@@ -139,7 +139,7 @@ public class UIJourneySteps extends BasePage {
         this.licenceNumber = licenceNumber;
     }
 
-    public void internalSearchForBusReg() throws IllegalBrowserException {
+    public void internalSearchForBusReg() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Bus registrations");
         do {
             SearchNavBar.search(world.createLicence.getLicenceNumber());
@@ -147,7 +147,7 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText(world.createLicence.getLicenceNumber());
     }
 
-    public void internalSiteAddBusNewReg(int month) throws IllegalBrowserException {
+    public void internalSiteAddBusNewReg(int month) throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
         click(nameAttribute("button", "action"));
@@ -173,13 +173,13 @@ public class UIJourneySteps extends BasePage {
         while (!isTextPresent("Service details", 2));//condition
     }
 
-    private static void enterDate(int day, int month, int year) throws IllegalBrowserException {
+    private static void enterDate(int day, int month, int year) throws IllegalBrowserException, MalformedURLException {
         enterText("receivedDate_day", String.valueOf(day), SelectorType.ID);
         enterText("receivedDate_month", String.valueOf(month), SelectorType.ID);
         enterText("receivedDate_year", String.valueOf(year), SelectorType.ID);
     }
 
-    public void viewESBRInExternal() throws IllegalBrowserException {
+    public void viewESBRInExternal() throws IllegalBrowserException, MalformedURLException {
         do {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
@@ -247,7 +247,7 @@ public class UIJourneySteps extends BasePage {
         navigate().get(myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s",feeNumber)));
     }
 
-    public void createAdminFee(String amount, String feeType) throws IllegalBrowserException {
+    public void createAdminFee(String amount, String feeType) throws IllegalBrowserException, MalformedURLException {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
         waitForTextToBePresent("Create new fee");
         selectValueFromDropDown("fee-details[feeType]", SelectorType.NAME, feeType);
@@ -255,7 +255,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void payFee(String amount, @NotNull String paymentMethod, String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException {
+    public void payFee(String amount, @NotNull String paymentMethod, String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
         if (paymentMethod.toLowerCase().trim().equals("cash") || paymentMethod.toLowerCase().trim().equals("cheque") || paymentMethod.toLowerCase().trim().equals("postal")) {
             enterText("details[received]", amount, SelectorType.NAME);
             enterText("details[payer]", "Automation payer", SelectorType.NAME);
@@ -309,7 +309,7 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void selectFeeById(String feeNumber) throws IllegalBrowserException {
+    public void selectFeeById(String feeNumber) throws IllegalBrowserException, MalformedURLException {
         do {
             //nothing
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
@@ -321,7 +321,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Pay fee");
     }
 
-    public void selectFee() throws IllegalBrowserException {
+    public void selectFee() throws IllegalBrowserException, MalformedURLException {
         do {
             //nothing
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
@@ -332,7 +332,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Pay fee");
     }
 
-    private void customerPaymentModule(String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException {
+    private void customerPaymentModule(String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Card Number*");
         enterText("//*[@id='scp_cardPage_cardNumber_input']", bankCardNumber, SelectorType.XPATH);
         enterText("//*[@id='scp_cardPage_expiryDate_input']", cardExpiryMonth, SelectorType.XPATH);
@@ -350,7 +350,7 @@ public class UIJourneySteps extends BasePage {
     }
 
 
-    private void findAddress(String paymentMethod) throws IllegalBrowserException {
+    private void findAddress(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
         enterText("address[searchPostcode][postcode]", "NG1 5FW", SelectorType.NAME);
         waitAndClick("address[searchPostcode][search]", SelectorType.NAME);
         waitAndSelectByIndex("", "//*[@id='fee_payment']/fieldset[2]/fieldset/div[3]/select[@name='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
@@ -361,7 +361,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("The payment was made successfully");
     }
 
-    public void addPerson(String firstName, String lastName) throws IllegalBrowserException {
+    public void addPerson(String firstName, String lastName) throws IllegalBrowserException, MalformedURLException {
         clickByName("add");
         waitForTextToBePresent("Add a director");
         selectValueFromDropDown("//select[@id='title']", SelectorType.XPATH, "Dr");
@@ -373,7 +373,7 @@ public class UIJourneySteps extends BasePage {
         clickByName("form-actions[saveAndContinue]");
     }
 
-    public void navigateToNavBarPage(String page) throws IllegalBrowserException {
+    public void navigateToNavBarPage(String page) throws IllegalBrowserException, MalformedURLException {
         switch (page.toLowerCase()) {
             case "home":
                 clickByLinkText("Home");
@@ -394,7 +394,7 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToSelfServePage(String type, String page) throws  IllegalBrowserException {
+    public void navigateToSelfServePage(String type, String page) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
         String applicationStatus = null;
@@ -527,7 +527,7 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToDirectorsPage(String type) throws IllegalBrowserException {
+    public void navigateToDirectorsPage(String type) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
         switch (type.toLowerCase()) {
             case "licence":
@@ -553,7 +553,7 @@ public class UIJourneySteps extends BasePage {
         isElementEnabled("//body", SelectorType.XPATH);
     }
 
-    public void addPreviousConviction() throws IllegalBrowserException {
+    public void addPreviousConviction() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("data[title]", SelectorType.ID, "Ms");
         enterText("data[forename]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
@@ -663,7 +663,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Amend letter");
     }
 
-    public void saveDocumentInInternal() throws IllegalBrowserException {
+    public void saveDocumentInInternal() throws IllegalBrowserException, MalformedURLException {
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         waitAndClick("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
@@ -702,24 +702,24 @@ public class UIJourneySteps extends BasePage {
         saveDocumentInInternal();
     }
 
-    public void printLicence() throws IllegalBrowserException {
+    public void printLicence() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//a[@id='menu-licence-quick-actions-print-licence']");
         clickByLinkText("Print licence");
         waitForTextToBePresent("Licence printed successfully");
     }
 
-    public void deleteLicenceDocument() throws IllegalBrowserException {
+    public void deleteLicenceDocument() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Docs & attachments");
         deleteDocument();
     }
 
-    public void deleteLetterDocument() throws IllegalBrowserException {
+    public void deleteLetterDocument() throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Bus Registration");
         deleteDocument();
     }
 
-    public void deleteDocument() throws IllegalBrowserException {
+    public void deleteDocument() throws IllegalBrowserException, MalformedURLException {
         waitAndClick("//input[@name='id[]']", SelectorType.XPATH);
         waitAndClick("//button[@id='delete']",SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
@@ -728,7 +728,7 @@ public class UIJourneySteps extends BasePage {
 
 
 
-    public void removeInternalTransportManager() throws IllegalBrowserException {
+    public void removeInternalTransportManager() throws IllegalBrowserException, MalformedURLException {
         assertTrue(isTextPresent("Overview", 60));
         if (!isLinkPresent("Transport", 60) && isTextPresent("Granted", 60)) {
             clickByLinkText(world.createLicence.getLicenceNumber());
@@ -760,12 +760,12 @@ public class UIJourneySteps extends BasePage {
         click(nameAttribute("button", "form-actions[submit]"));
     }
 
-    public void changeVehicleAuth(String noOfAuthVehicles) throws IllegalBrowserException {
+    public void changeVehicleAuth(String noOfAuthVehicles) throws IllegalBrowserException, MalformedURLException {
         enterField(nameAttribute("input", "data[totAuthVehicles]"), noOfAuthVehicles);
         click(nameAttribute("button", "form-actions[save]"));
     }
 
-    public void signWithVerify(String verifyUsername, String verifyPassword) throws IllegalBrowserException {
+    public void signWithVerify(String verifyUsername, String verifyPassword) throws IllegalBrowserException, MalformedURLException {
         setVerifyUsername(verifyUsername);
         waitForTextToBePresent("Sign in with GOV.UK Verify");
         click("//*[@id='start_form_selection_false']", SelectorType.XPATH);
@@ -781,7 +781,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='agree']", SelectorType.XPATH);
     }
 
-    public void addNewPersonAsTransportManager(String forename, String familyName, String emailAddress) throws IllegalBrowserException {
+    public void addNewPersonAsTransportManager(String forename, String familyName, String emailAddress) throws IllegalBrowserException, MalformedURLException {
         this.externalTMEmail = emailAddress;
         externalTMUser = "TM".concat(Str.randomWord(3));
         waitForTextToBePresent("Transport Managers");
@@ -800,7 +800,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("form-actions[continue]", SelectorType.ID);
     }
 
-    public void addDirector(String forename, String familyName) throws IllegalBrowserException {
+    public void addDirector(String forename, String familyName) throws IllegalBrowserException, MalformedURLException {
         addPerson(forename, familyName);
         world.genericUtils.findSelectAllRadioButtonsByValue("N");
         clickByName("form-actions[saveAndContinue]");
@@ -808,7 +808,7 @@ public class UIJourneySteps extends BasePage {
         clickByName("form-actions[saveAndContinue]");
     }
 
-    public void removeDirector() throws IllegalBrowserException {
+    public void removeDirector() throws IllegalBrowserException, MalformedURLException {
         int sizeOfTable = size("//*/td[4]/input[@type='submit']", SelectorType.XPATH);
         click("//*/tr[" + sizeOfTable + "]/td[4]/input[@type='submit']", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure");
@@ -822,7 +822,7 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("Docs");
     }
 
-    private static void signIn(@NotNull String emailAddress, @NotNull String password, int timeLimitInSeconds) throws IllegalBrowserException {
+    private static void signIn(@NotNull String emailAddress, @NotNull String password, int timeLimitInSeconds) throws IllegalBrowserException, MalformedURLException {
         LoginPage.email(emailAddress);
         LoginPage.password(password);
         LoginPage.submit();
@@ -893,7 +893,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void addAddressDetails() throws IllegalBrowserException, InterruptedException {
+    public void addAddressDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         //Add Home Address
         String postCode = world.createLicence.getPostcode();
         enterText("postcodeInput1", postCode, SelectorType.ID);
@@ -926,7 +926,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void addOperatorAdminAsTransportManager(int user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException {
+    public void addOperatorAdminAsTransportManager(int user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
         navigateToTransportManagersPage("application");
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
@@ -935,7 +935,7 @@ public class UIJourneySteps extends BasePage {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
 
-    public void navigateToTransportManagersPage(String type) throws IllegalBrowserException {
+    public void navigateToTransportManagersPage(String type) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
         switch (type.toLowerCase()) {
             case "licence":
@@ -952,7 +952,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void navigateToViewAndAmendPage(String type) throws IllegalBrowserException {
+    public void navigateToViewAndAmendPage(String type) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
         switch (type.toLowerCase()) {
             case "licence":
@@ -967,7 +967,7 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToOperatingCentresPage(String type) throws IllegalBrowserException {
+    public void navigateToOperatingCentresPage(String type) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
         switch (type.toLowerCase()) {
             case "licence":
@@ -984,14 +984,14 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("How many vehicles do you want to authorise on the licence");
     }
 
-    public void navigateToVehiclesPage() throws IllegalBrowserException{
+    public void navigateToVehiclesPage() throws IllegalBrowserException, MalformedURLException {
 //        clickByLinkText("GOV.UK");
 //        clickByLinkText(world.createLicence.getApplicationNumber());
         clickByLinkText("Vehicles");
         waitForTextToBePresent("Vehicle details");
     }
 
-    public void navigateToReviewDeclarationsPage(String type) throws IllegalBrowserException {
+    public void navigateToReviewDeclarationsPage(String type) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
         switch (type.toLowerCase()) {
             case "licence":
@@ -1008,7 +1008,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Review and declarations");
     }
 
-    private static void signIn(@NotNull String emailAddress, @NotNull String password) throws IllegalBrowserException {
+    private static void signIn(@NotNull String emailAddress, @NotNull String password) throws IllegalBrowserException, MalformedURLException {
         int timeLimitInSeconds = 10;
         signIn(emailAddress, password, timeLimitInSeconds);
     }
@@ -1023,7 +1023,7 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("Forgotten your password?");
     }
 
-    public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException {
+    public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
         String tmEmailAddress = "externalTM@vol.com";
         String hours = "8";
         findElement("//*[@value='" + OtherLicence + "'][@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 30).click();
@@ -1067,7 +1067,7 @@ public class UIJourneySteps extends BasePage {
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
-    public void submitTMApplicationAndNavigateToTMLandingPage() throws ElementDidNotAppearWithinSpecifiedTimeException, IllegalBrowserException {
+    public void submitTMApplicationAndNavigateToTMLandingPage() throws ElementDidNotAppearWithinSpecifiedTimeException, IllegalBrowserException, MalformedURLException {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         click("form-actions[submit]", SelectorType.ID);
         clickByLinkText("Back to Transport");
@@ -1122,7 +1122,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[save]']",SelectorType.XPATH);
     }
 
-    public void signDeclaration() throws IllegalBrowserException {
+    public void signDeclaration() throws IllegalBrowserException, MalformedURLException {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
         if (isTextPresent("Review and declarations", 10)) {
             click("//*[@name='form-actions[sign]']", SelectorType.XPATH);
@@ -1131,7 +1131,7 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void signDeclarationForVariation() throws IllegalBrowserException {
+    public void signDeclarationForVariation() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.navigateToReviewDeclarationsPage("variation");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (Browser.getDriver().findElements(By.xpath("//*[@id='submitAndPay']")).size()!=0) {
@@ -1140,7 +1140,7 @@ public class UIJourneySteps extends BasePage {
             click("//*[@id='submit']", SelectorType.XPATH);
     }
 
-    public void navigateThroughApplication() throws IllegalBrowserException {
+    public void navigateThroughApplication() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Type");
         waitForTextToBePresent("Type of licence");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
@@ -1183,7 +1183,7 @@ public class UIJourneySteps extends BasePage {
         assertTrue(isTextPresent("Review your surrender", 40));
     }
 
-    public void startSurrender() throws IllegalBrowserException {
+    public void startSurrender() throws IllegalBrowserException, MalformedURLException {
         click("//*[@id='submit']", SelectorType.XPATH);
         waitForTextToBePresent("Review your contact information");
     }
@@ -1202,26 +1202,26 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
     }
 
-    public void addOperatorLicenceDetails() throws IllegalBrowserException {
+    public void addOperatorLicenceDetails() throws IllegalBrowserException, MalformedURLException {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void addCommunityLicenceDetails() throws IllegalBrowserException {
+    public void addCommunityLicenceDetails() throws IllegalBrowserException, MalformedURLException {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void acknowledgeDestroyPage() throws IllegalBrowserException {
+    public void acknowledgeDestroyPage() throws IllegalBrowserException, MalformedURLException {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Securely destroy");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Declaration");
     }
 
-    public void updateContactDetails(String addressLine1, String addressLine2, String contactNumber) throws IllegalBrowserException {
+    public void updateContactDetails(String addressLine1, String addressLine2, String contactNumber) throws IllegalBrowserException, MalformedURLException {
         findElement("addressLine1", SelectorType.ID, 10).clear();
         enterText("addressLine1", addressLine1, SelectorType.ID);
         findElement("correspondence_address[addressLine2]", SelectorType.ID, 10).clear();
@@ -1231,15 +1231,15 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("form-actions[save]", SelectorType.ID);
     }
 
-    public String getSurrenderAddressLine1() throws IllegalBrowserException {
+    public String getSurrenderAddressLine1() throws IllegalBrowserException, MalformedURLException {
         return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
     }
 
-    public String getSurrenderTown() throws IllegalBrowserException {
+    public String getSurrenderTown() throws IllegalBrowserException, MalformedURLException {
         return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][2]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
     }
 
-    public String getSurrenderContactNumber() throws IllegalBrowserException {
+    public String getSurrenderContactNumber() throws IllegalBrowserException, MalformedURLException {
         return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
     }
 
@@ -1256,7 +1256,7 @@ public class UIJourneySteps extends BasePage {
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
 
-    public void checkVerifyConfirmation() throws IllegalBrowserException {
+    public void checkVerifyConfirmation() throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 10));
@@ -1305,7 +1305,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[contains(@title,'return to home')]", SelectorType.XPATH);
     }
 
-    public void checkLicenceStatus(String arg0) throws IllegalBrowserException {
+    public void checkLicenceStatus(String arg0) throws IllegalBrowserException, MalformedURLException {
         do {
             System.out.println("Page not loaded yet");
         }
@@ -1327,7 +1327,7 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("Back");
     }
 
-    public void addDisc() throws IllegalBrowserException {
+    public void addDisc() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Home");
         clickByLinkText(world.createLicence.getLicenceNumber());
         clickByLinkText("Licence discs");
@@ -1372,7 +1372,7 @@ public class UIJourneySteps extends BasePage {
 
     }
 
-    public void closeBusReg() throws IllegalBrowserException {
+    public void closeBusReg() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("" + world.createLicence.getLicenceNumber() + "");
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
@@ -1380,7 +1380,7 @@ public class UIJourneySteps extends BasePage {
         click("form-actions[submit]", SelectorType.ID);
     }
 
-    public void payFeesAndGrantNewBusReg() throws IllegalBrowserException {
+    public void payFeesAndGrantNewBusReg() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Fees");
         world.UIJourneySteps.selectFee();
         world.UIJourneySteps.payFee("60", "cash", null, null, null);
@@ -1430,7 +1430,7 @@ public class UIJourneySteps extends BasePage {
         world.updateLicence.createCase();
     }
 
-    public void internalDigitalSurrenderMenu() throws IllegalBrowserException {
+    public void internalDigitalSurrenderMenu() throws IllegalBrowserException, MalformedURLException {
         if (!isElementPresent("menu-licence_surrender", SelectorType.ID)) {
             do {
                 System.out.println("waiting for page to load");
@@ -1441,7 +1441,7 @@ public class UIJourneySteps extends BasePage {
         click("menu-licence_surrender", SelectorType.ID);
     }
 
-    public void payForInterimApp() throws IllegalBrowserException, InterruptedException {
+    public void payForInterimApp() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
         waitAndClick("form-actions[save]", SelectorType.NAME);
@@ -1471,12 +1471,12 @@ public class UIJourneySteps extends BasePage {
         click("form-actions[submit]", SelectorType.ID);
     }
 
-    public void caseWorkerCompleteConditionsAndUndertakings() throws IllegalBrowserException {
+    public void caseWorkerCompleteConditionsAndUndertakings() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Conditions and undertakings");
         click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
-    public void caseWorkerCompleteReviewAndDeclarations() throws IllegalBrowserException {
+    public void caseWorkerCompleteReviewAndDeclarations() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
         click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
@@ -1488,14 +1488,14 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
-    public void caseWorkerGrantApplication() throws IllegalBrowserException {
+    public void caseWorkerGrantApplication() throws IllegalBrowserException, MalformedURLException {
         javaScriptExecutor("location.reload(true)");
         waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
         waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
         click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
     }
 
-    public void createPublicInquiry() throws IllegalBrowserException {
+    public void createPublicInquiry() throws IllegalBrowserException, MalformedURLException {
         click("//*[@id='menu-case_hearings_appeals']",SelectorType.XPATH);
         clickByLinkText("Add Public Inquiry");
         waitForTextToBePresent("Add Traffic Commissioner agreement and legislation");
@@ -1513,7 +1513,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
     }
 
-    public void addAndPublishHearing() throws IllegalBrowserException {
+    public void addAndPublishHearing() throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");
         waitForTextToBePresent("Venue");
@@ -1531,7 +1531,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[publish]']",SelectorType.XPATH);
     }
 
-    public void deleteCaseNote() throws IllegalBrowserException {
+    public void deleteCaseNote() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Processing");
         clickByLinkText("Notes");
         click("//*[@name='id']", SelectorType.XPATH);
@@ -1540,7 +1540,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
 
-    public void navigateToChangeHistory() throws IllegalBrowserException {
+    public void navigateToChangeHistory() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Processing");
         waitForTextToBePresent("Tasks");
         clickByLinkText("Change history");
@@ -1592,16 +1592,6 @@ public class UIJourneySteps extends BasePage {
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2));
     }
 
-    public void waitForPageLoad() throws MalformedURLException, IllegalBrowserException {
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofMillis(200))
-                .ignoring(NoSuchElementException.class);
-
-        WebElement browserStatus =  wait.until(webDriver -> (WebElement) jsReturnsValue("return document.readyState"));
-        assertEquals("completed",browserStatus.getText());
-    }
-
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
         waitForTextToBePresent("Add Transport Manager");
         click("//*[@id='add']", SelectorType.XPATH);
@@ -1616,13 +1606,13 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void removeFirstVehicleOnVehiclePage() throws IllegalBrowserException {
+    public void removeFirstVehicleOnVehiclePage() throws IllegalBrowserException, MalformedURLException {
         Browser.getDriver().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
         Browser.getDriver().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void addNewOperatingCentreSelfServe(String postcode, int vehicles, int trailers) throws IllegalBrowserException {
+    public void addNewOperatingCentreSelfServe(String postcode, int vehicles, int trailers) throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Operating centres");
         click("//*[@id='add']",SelectorType.XPATH);
         enterText("//*[@id='postcodeInput1']",postcode,SelectorType.XPATH);
