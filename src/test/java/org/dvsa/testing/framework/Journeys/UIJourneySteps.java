@@ -676,7 +676,7 @@ public class UIJourneySteps extends BasePage {
 
         Thread.sleep(1000);
         clickByLinkText("BUS");
-        AutoItX autoIt = initiateAutoItX();
+        AutoItX autoIt = initiateAutoItX("jacob-1.16","lib/jacob-1.16");
 
         autoIt.winWaitActive(window,"Chrome Legacy Window",20);
         Thread.sleep(1000);
@@ -689,7 +689,7 @@ public class UIJourneySteps extends BasePage {
             autoIt.send(world.updateLicence.getAdminUserLogin());
             autoIt.mouseClick("left", 1000, 530, 2, 1);
             autoIt.send(world.UIJourneySteps.getPassword());
-            autoIt.mouseClick("left", 800, 600, 2, 1);
+            autoIt.mouseClick("left", 830, 600, 2, 1);
         }
         focusWindows("OpusApp");
         //Document edit and save

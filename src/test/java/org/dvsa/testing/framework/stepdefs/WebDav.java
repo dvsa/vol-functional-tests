@@ -57,7 +57,7 @@ public class WebDav extends BasePage implements En {
             Thread.sleep(1000);
             clickByLinkText("BUS");
 
-            this.autoIt = initiateAutoItX();
+            this.autoIt = initiateAutoItX("jacob-1.16","lib/jacob-1.16");
             this.autoIt.winWaitActive(window,"Chrome Legacy Window");
             Thread.sleep(1000);
             this.autoIt.mouseClick("left",1200,195,2,20);

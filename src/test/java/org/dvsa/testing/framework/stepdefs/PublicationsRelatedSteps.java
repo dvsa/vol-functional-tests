@@ -8,6 +8,7 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         });
     }
 
-    public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath) throws IllegalBrowserException {
+    public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath) throws IllegalBrowserException, MalformedURLException {
         List<WebElement> webElements = Browser.getDriver().findElements(By.xpath(webElementsXpath));
         if (Browser.getDriver().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
             click("//li//a[contains(text(),'50')]", SelectorType.XPATH);
