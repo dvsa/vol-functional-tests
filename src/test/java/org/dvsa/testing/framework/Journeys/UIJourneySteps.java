@@ -35,12 +35,16 @@ import java.util.Set;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.getDriver;
 import static activesupport.driver.Browser.navigate;
+import static activesupport.file.Files.getConfig;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.jsReturnsValue;
 import static org.openqa.selenium.support.ui.ExpectedConditions.urlContains;
+
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
 
 public class UIJourneySteps extends BasePage {
@@ -568,19 +572,18 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToInternalAdminUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        String newPassword = "BunDog=336MixZoo";
+        Config config = getConfig();
+        String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
 
-         navigate().manage().window().maximize();
+        navigate().manage().window().maximize();
 
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
         }
-        try {
-            navigate().get(myURL);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+
+        navigate().get(myURL);
+
         String password = S3.getTempPassword(emailAddress, getBucketName());
 
         try {
@@ -611,7 +614,8 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        String newPassword = "BunDog=336MixZoo";
+        Config config = getConfig();
+        String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
 
         if (Browser.isBrowserOpen()) {
@@ -680,24 +684,24 @@ public class UIJourneySteps extends BasePage {
 
         autoIt.winWaitActive(window,"Chrome Legacy Window",20);
         Thread.sleep(1000);
-        autoIt.mouseClick("left",1200,195,2,20);
+        autoIt.mouseClick("left",1200,210,2,20);
 
         autoIt.winWaitActive(wordLoginWindow,"",20);
         Thread.sleep(3000);
         if (autoIt.winExists(wordLoginWindow,"")) {
-            autoIt.mouseClick("left", 1000, 450, 2, 1);
+            autoIt.mouseClick("left", 1000, 610, 2, 1);
             autoIt.send(world.updateLicence.getAdminUserLogin());
-            autoIt.mouseClick("left", 1000, 530, 2, 1);
+            autoIt.mouseClick("left", 1000, 710, 2, 1);
             autoIt.send(world.UIJourneySteps.getPassword());
-            autoIt.mouseClick("left", 830, 600, 2, 1);
+            autoIt.mouseClick("left", 990, 765, 2, 1);
         }
-        focusWindows("OpusApp");
+        focusWindows("OpusApp",null);
         //Document edit and save
         Thread.sleep(3000);
-        autoIt.mouseClick("left",755,750,2,1);
+        autoIt.mouseClick("left",955,750,2,1);
         autoIt.send("WebDav Change!");
-        autoIt.mouseClick("left",335,60,2,1);
-        autoIt.mouseClick("left",1805,85,2,1);
+        autoIt.mouseClick("left",210,27,2,1);
+        autoIt.mouseClick("left",2240,27,2,1);
 
         saveDocumentInInternal();
     }
