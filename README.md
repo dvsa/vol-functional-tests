@@ -38,4 +38,6 @@ To produce the reports run the following command in your terminal
 To scan use the following command ``mvn verify -DskipTests``   
 
 ## Refactoring todos
-Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
+- Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
+- Use config to hide pavlov and passwords.
+- Change all passwords from config to use secrets manager.
