@@ -9,6 +9,8 @@ import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import autoitx4java.AutoItX;
+import com.typesafe.config.Config;
+import junit.framework.TestCase;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -23,11 +25,9 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.IOException;
@@ -44,11 +44,7 @@ import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
-import static org.openqa.selenium.support.ui.ExpectedConditions.jsReturnsValue;
 import static org.openqa.selenium.support.ui.ExpectedConditions.urlContains;
-
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 
 
 public class UIJourneySteps extends BasePage {
@@ -1586,7 +1582,7 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForPageLoad();
+        world.UIJourneySteps.waitForPageLoad();
 
         Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
                 .withTimeout(Duration.ofSeconds(30))
@@ -1599,6 +1595,40 @@ public class UIJourneySteps extends BasePage {
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url,2));
     }
+
+    public void waitForPageLoad() throws MalformedURLException, IllegalBrowserException {
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+                .withTimeout(Duration.ofSeconds(60))
+                .pollingEvery(Duration.ofMillis(2))
+                .ignoring(java.util.NoSuchElementException.class);
+
+        WebElement browserStatus =  wait.until(
+            new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver driver){
+                    try {
+                        return (JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("completed");
+                    } catch (IllegalBrowserException | MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        );
+        TestCase.assertEquals("completed",browserStatus.getText());
+
+            ExpectedCondition<Boolean> expectation = new
+                    ExpectedCondition<Boolean>() {
+                        public Boolean apply(WebDriver driver) {
+                            return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+                        }
+                    };
+            try {
+                Thread.sleep(1000);
+                WebDriverWait wait = new WebDriverWait(Browser.getDriver(), 30);
+                wait.until(expectation);
+            } catch (Throwable error) {
+                Assert.fail("Timeout waiting for Page Load Request to complete.");
+            }
+        }
 
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
         waitForTextToBePresent("Add Transport Manager");
