@@ -18,7 +18,7 @@ The following technologies should be installed on your system.
 
 On Environments that do not support verify run the follwing command 
 
-``mvn clean install -Denv=da -Dbrowser=chrome -DdbUsername=olcsapi -DdbPassword ""  -Dcucumber.options="--tags @ss_regression --tags ~@gov-verify"
+``mvn clean install -Denv=da -Dbrowser=chrome -DdbUsername=olcsapi -DdbPassword ""  -Dcucumber.options="--tags @ss_regression --tags ~@gov-verify" ``
 
   
 The environment and browser properties need to be set otherwise the test will not execute. If only environment and browser properties are set, the harness will
@@ -30,12 +30,25 @@ create by default ``a GB goods standard national limited company licence``
 ## Executing with tags
 ``mvn clean verify {system props e.g. -Denv -Dbrowser} -Dcucumber.options="--tags @tag``
 
+
+
 ## Reports
 To produce the reports run the following command in your terminal
 ``mvn allure:report``
 
 ## Dependency Vulnerability Scanner
-To scan use the following command ``mvn verify -DskipTests``   
+To scan use the following command ``mvn verify -DskipTests``
+
+### Certificate issues
+
+If maven report issues with the nvd.nist.gov certificate you can follow the steps below to add it
+
+*  Follow the steps here https://github.com/jeremylong/InstallCert using the domain `nvd.nist.gov`. This will download and add the cert to your system keystore.
+*  Add the certificate to the java keystore using one of the following commands: 
+ 
+`JDK installed: keytool -importcert -file <path of extracted cert> -alias nvd-nist-gov -keystore $(/usr/libexec/java_home)/jre/lib/security/cacerts`
+
+`JDK not installed: keytool -importcert -file <path of extracted cert> -alias nvd-nist-gov -keystore $(/usr/libexec/java_home)/lib/security/cacerts`
 
 ## Refactoring todos
 - Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
