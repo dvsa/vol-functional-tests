@@ -27,14 +27,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.nio.file.Paths;
 import java.util.Set;
 
 import static activesupport.driver.Browser.getDriver;
 import static activesupport.driver.Browser.navigate;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
@@ -642,7 +641,7 @@ public class UIJourneySteps extends BasePage {
         navigate().get(myURL);
     }
 
-    public void generateLetter(String editValidation) throws IllegalBrowserException, IOException, AWTException {
+    public void generateLetter() throws IllegalBrowserException, IOException, AWTException {
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
         clickByName("New letter");
@@ -652,28 +651,45 @@ public class UIJourneySteps extends BasePage {
         waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Amend letter");
-        String licenceNumber = world.createLicence.getLicenceNumber();
-        if (editValidation.equals("edited")) {
-            click("//*[@id='letter-link']", SelectorType.XPATH);
-            //        Add in editing with robot here.
-            //        Runtime runtime = Runtime.getRuntime();
-            //        String[] arg = {"osascript", "-e", "tell app \"Stickies\" to activate"};
-            //        runtime.exec(arg);
-            Robot robot = new Robot();
-            robot.delay(3000);
-            robot.keyPress(KeyEvent.VK_TAB);
-            robot.keyRelease(KeyEvent.VK_TAB);
-            robot.delay(1000);
-            robot.keyPress(KeyEvent.VK_TAB);
-            robot.keyRelease(KeyEvent.VK_TAB);
-            robot.delay(1000);
-        }
+    }
+
+    public void saveDocumentInInternal() throws IllegalBrowserException {
         click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         waitAndClick("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
-        String fileName = getText("//table//tbody//tr//td",SelectorType.XPATH);
-        world.genericUtils.writeLineToFile(new String[]{String.format("%s, %s",licenceNumber,fileName)},String.format("%s/target/textFileStorage/%sWebDav.txt", Paths.get("").toAbsolutePath().toString(),env.toString())); // change this to write to target folder.
     }
+
+    public void editDocumentWithWebDav () throws IllegalBrowserException, IOException, AWTException {
+        // Change needs to be made
+
+        saveDocumentInInternal();
+    }
+
+    public void printLicence() throws IllegalBrowserException {
+        clickByLinkText("Docs & attachments");
+        waitForElementToBePresent("//a[@id='menu-licence-quick-actions-print-licence']");
+        clickByLinkText("Print licence");
+        waitForTextToBePresent("Licence printed successfully");
+    }
+
+    public void deleteLicenceDocument() throws IllegalBrowserException {
+        clickByLinkText("Docs & attachments");
+        deleteDocument();
+    }
+
+    public void deleteLetterDocument() throws IllegalBrowserException {
+        waitForTextToBePresent("Bus Registration");
+        deleteDocument();
+    }
+
+    public void deleteDocument() throws IllegalBrowserException {
+        waitAndClick("//input[@name='id[]']", SelectorType.XPATH);
+        waitAndClick("//button[@id='delete']",SelectorType.XPATH);
+        waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
+        waitAndClick("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
+    }
+
+
 
     public void removeInternalTransportManager() throws IllegalBrowserException {
         assertTrue(isTextPresent("Overview", 60));

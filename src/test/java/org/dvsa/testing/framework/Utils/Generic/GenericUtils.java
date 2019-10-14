@@ -9,10 +9,13 @@ import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
 import io.restassured.response.ValidatableResponse;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -245,29 +248,33 @@ public class GenericUtils extends BasePage {
         return Browser.navigate().findElements(By.xpath("//*[contains(@class,'status')]")).stream().anyMatch(a -> a.getText().contains(searchTerm.toUpperCase()));
     }
 
-    public String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
+    public static String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))){
             String line = null;
+            String prevLine = null;
             int lineCounter = 0;
             while (lineNumber == -1 ? (line = br.readLine()) != null : lineCounter <= lineNumber) {
                 line = br.readLine();
-                lineNumber++;
+                prevLine = line;
+                lineCounter++;
             }
-            return line;
+            br.close();
+            if (lineNumber == -1){
+                return prevLine;
+            } else {
+                return line;
+            }
         }
     }
 
-    public String readLastLineFromFile( String fileLocation) throws IOException {
+    public static String readLastLineFromFile(String fileLocation) throws IOException {
         return readLineFromFile(fileLocation, -1);
     }
 
-    public void writeLineToFile(String[] data, String fileLocation) throws IOException {
+    public void writeLineToFile(String data, String fileLocation) throws IOException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))){
-            for (String d:data) {
-                bw.append(d);
+                bw.append(data);
                 bw.newLine();
-                bw.close();
-            }
         }
     }
 
@@ -281,6 +288,54 @@ public class GenericUtils extends BasePage {
         }
     }
 
+    public static boolean checkFileContainsText(String fileLocation, String containsString) throws IOException {
+        boolean isTrue = false;
+        File template = new File(fileLocation);
+
+        BufferedReader br = new BufferedReader(new FileReader(template));
+        String readString;
+
+        while ((readString = br.readLine()) != null) {
+            System.out.println(readString);
+            isTrue = readString.contains(containsString);
+            if (isTrue){
+                break;
+            }
+        }
+        br.close();
+        return isTrue;
+    }
+
+    public static File getDownloadedFile (String downloadDirectory, String filenameRegex) throws FileNotFoundException {
+        Config config = GenericUtils.getConfig();
+        File directory = new File(config.getString(downloadDirectory));
+        File[] files;
+
+        long finish = System.currentTimeMillis() + 10000;
+        do {
+            files = directory.listFiles((FileFilter) new RegexFileFilter(filenameRegex));
+        } while ( files.length == 0 && System.currentTimeMillis() < finish);
+
+        if (files.length == 0) {
+            throw new FileNotFoundException();
+        } else {
+            long lastModified;
+            long prevLastModified;
+
+            do {
+                prevLastModified = files[0].lastModified();
+                lastModified = files[0].lastModified();
+            } while(prevLastModified != lastModified);
+
+            return files[0];
+        }
+    }
+
+    public static Config getConfig() {
+        return ConfigFactory.defaultApplication();
+    }
+
+
     public static String retrieveAPIData(String url, String jsonPath, String defaultReturn) {
         Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
         ValidatableResponse response = RestUtils.get(url, Headers.getHeaders());
@@ -291,3 +346,4 @@ public class GenericUtils extends BasePage {
         }
     }
 }
+

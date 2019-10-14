@@ -27,12 +27,30 @@ public class InternalApplication extends BasePage implements En {
             assertNotNull(docStoreLink);
             assertTrue(docStoreLink.contains(".rtf"));
         });
-        When("^I generate a \"([^\"]*)\" letter$", (String editValidation) -> {
-            world.UIJourneySteps.generateLetter(editValidation);
+        When("^i generate a letter$", () -> {
+            world.UIJourneySteps.generateLetter();
         });
+
+        When("^I generate Licence Document$", () -> {
+            world.UIJourneySteps.printLicence();
+        });
+
+        When("^I delete a licence document from table$", () -> {
+            world.UIJourneySteps.deleteLicenceDocument();
+        });
+
+        When("^I delete generated letter above from the table$", () -> {
+            world.UIJourneySteps.deleteLetterDocument();
+        });
+
+        When("^the document should be deleted$", () -> {
+            waitForTextToBePresent("Deleted successfully");
+        });
+
         When("^a caseworker adds a new operating centre out of the traffic area$", () -> {
             world.UIJourneySteps.addNewOperatingCentre();
         });
+
         Then("^the postcode warning message should be displayed on internal$", () -> {
             assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres.", 10));
             click("form-actions[confirm-add]", SelectorType.ID);
