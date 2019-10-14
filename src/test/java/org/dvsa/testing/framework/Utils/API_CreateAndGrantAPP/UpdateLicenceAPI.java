@@ -198,41 +198,44 @@ public class UpdateLicenceAPI extends BaseAPI {
     }
 
     public void updateLicenceType(String licenceId) {
-        Integer version = 1;
         String typeOfLicenceResource = URL.build(env, String.format("variation/%s/type-of-licence", licenceId)).toString();
+        Integer variationApplicationVersion = Integer.parseInt(fetchApplicationInformation(variationApplicationNumber, "version", "1"));
 
-        do {
-            GenericBuilder genericBuilder = new GenericBuilder().withId(variationApplicationNumber).withVersion(version).withLicenceType(String.valueOf(LicenceType.getEnum("standard_national")));
-            apiResponse = RestUtils.put(genericBuilder, typeOfLicenceResource, getHeaders());
-            version++;
-            if (version > 20) {
-                version = 1;
-            }
+        GenericBuilder genericBuilder = new GenericBuilder().withId(variationApplicationNumber).withVersion(variationApplicationVersion).withLicenceType(String.valueOf(LicenceType.getEnum("standard_national")));
+        apiResponse = RestUtils.put(genericBuilder, typeOfLicenceResource, getHeaders());
+
+        if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
+            System.out.println(apiResponse.extract().statusCode());
+            System.out.println(apiResponse.extract().response().asString());
+            throw new HTTPException(apiResponse.extract().statusCode());
         }
-        while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
         Assertions.assertThat(apiResponse.statusCode(HttpStatus.SC_OK));
     }
 
     public void createCase() throws MalformedURLException {
         String caseType = "case_t_lic";
+        String caseResource = URL.build(env, "cases").toString();
+        String description = "Sent through the API";
+
         List<String> categories = new ArrayList<>();
         categories.add("case_cat_compl_conv");
         categories.add("case_cat_compl_proh");
-        String description = "Sent through the API";
+
         List<String> outcomes = new ArrayList<>();
         outcomes.add("case_o_other");
         outcomes.add("case_o_cur");
-        String caseResource = URL.build(env, "cases").toString();
-        do {
-            CaseBuilder caseBuilder = new CaseBuilder().withId(world.createLicence.getLicenceId()).withVersion(version).withCaseType(caseType).
-                    withCategorys(categories).withDescription(description).withOutcomes(outcomes).withApplication(world.createLicence.getApplicationNumber());
-            apiResponse = RestUtils.post(caseBuilder, caseResource, getHeaders());
-            version++;
-            if (version > 20) {
-                version = 1;
-            }
+
+
+        CaseBuilder caseBuilder = new CaseBuilder().withId(world.createLicence.getLicenceId()).withCaseType(caseType).
+                withCategorys(categories).withDescription(description).withOutcomes(outcomes).withApplication(world.createLicence.getApplicationNumber());
+        apiResponse = RestUtils.post(caseBuilder, caseResource, getHeaders());
+
+        if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
+            System.out.println(apiResponse.extract().statusCode());
+            System.out.println(apiResponse.extract().response().asString());
+            throw new HTTPException(apiResponse.extract().statusCode());
         }
-        while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
+
         setCaseId(apiResponse.extract().body().jsonPath().get("id.case"));
         apiResponse.statusCode(HttpStatus.SC_CREATED);
     }
@@ -254,18 +257,14 @@ public class UpdateLicenceAPI extends BaseAPI {
         String isDeclared = "Y";
         String isDealtWith = "Y";
         String takenIntoConsideration = "Y";
+
         String convictionResource = URL.build(env, "conviction").toString();
-        do {
-            CaseConvictionBuilder caseConvictionBuilder = new CaseConvictionBuilder().withCase(caseId).withConvictionCategory(convictionCategory).withConvictionDate(convictionDate).withBirthDate(birthDate).withCategoryText(categoryText).withCosts(costs)
-                    .withCourt(court).withMsi(msi).withPenalty(penalty).withNotes(notes).withTakenIntoConsideration(takenIntoConsideration).withIsDeclared(isDeclared).withIsDealtWith(isDealtWith).withDefendantType(defendantType)
-                    .withPersonFirstname(personFirstname).withPersonLastname(personLastname).withOffenceDate(offenceDate).withVersion(version);
-            apiResponse = RestUtils.post(caseConvictionBuilder, convictionResource, getHeaders());
-            version++;
-            if (version > 20) {
-                version = 1;
-            }
-        }
-        while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
+
+        CaseConvictionBuilder caseConvictionBuilder = new CaseConvictionBuilder().withCase(caseId).withConvictionCategory(convictionCategory).withConvictionDate(convictionDate).withBirthDate(birthDate).withCategoryText(categoryText).withCosts(costs)
+                .withCourt(court).withMsi(msi).withPenalty(penalty).withNotes(notes).withTakenIntoConsideration(takenIntoConsideration).withIsDeclared(isDeclared).withIsDealtWith(isDealtWith).withDefendantType(defendantType)
+                .withPersonFirstname(personFirstname).withPersonLastname(personLastname).withOffenceDate(offenceDate);
+        apiResponse = RestUtils.post(caseConvictionBuilder, convictionResource, getHeaders());
+
         setConvictionId(apiResponse.extract().jsonPath().getInt("id.conviction"));
         apiResponse.statusCode(HttpStatus.SC_CREATED);
     }
@@ -334,36 +333,35 @@ public class UpdateLicenceAPI extends BaseAPI {
     }
 
     public ValidatableResponse variationUpdateOperatingCentre() {
+        if (world.createLicence.getLicenceType().equals("special_restricted")) {
+            throw new IllegalArgumentException("Cannot update operating centre for special_restricted licence");
+        }
         String noOfVehiclesRequired = "5";
         String licenceId = world.createLicence.getLicenceId();
         String updateOperatingCentreResource = URL.build(env, String.format("application/%s/variation-operating-centre/%s", licenceId, variationApplicationNumber)).toString();
         OperatingCentreVariationBuilder updateOperatingCentre = new OperatingCentreVariationBuilder();
 
-        do {
-            if (world.createLicence.getOperatorType().equals("goods") && (!world.createLicence.getLicenceType().equals("special_restricted"))) {
-                updateOperatingCentre.withId(variationApplicationNumber).withApplication(variationApplicationNumber)
-                        .withNoOfVehiclesRequired(noOfVehiclesRequired).withVersion(version);
-            }
-            if (world.createLicence.getOperatorType().equals("public") && (!world.createLicence.getLicenceType().equals("special_restricted"))) {
-                updateOperatingCentre.withId(variationApplicationNumber).withApplication(variationApplicationNumber)
-                        .withNoOfVehiclesRequired(noOfVehiclesRequired).withVersion(version);
-            }
-            if (world.createLicence.getOperatorType().equals("public") && (world.createLicence.getLicenceType().equals("restricted"))) {
-                updateOperatingCentre.withId(variationApplicationNumber).withApplication(variationApplicationNumber)
-                        .withNoOfVehiclesRequired(noOfVehiclesRequired).withVersion(version);
-            }
-            if (!world.createLicence.getLicenceType().equals("special_restricted")) {
-                apiResponse = RestUtils.put(updateOperatingCentre, updateOperatingCentreResource, getHeaders());
-                version++;
-                if (version > 20) {
-                    version = 1;
-                }
-            }
+
+        if (world.createLicence.getOperatorType().equals("goods") && (!world.createLicence.getLicenceType().equals("special_restricted"))) {
+            updateOperatingCentre.withId(variationApplicationNumber).withApplication(variationApplicationNumber)
+                    .withNoOfVehiclesRequired(noOfVehiclesRequired).withVersion(version);
         }
-        while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
+        if (world.createLicence.getOperatorType().equals("public") && (!world.createLicence.getLicenceType().equals("special_restricted"))) {
+            updateOperatingCentre.withId(variationApplicationNumber).withApplication(variationApplicationNumber)
+                    .withNoOfVehiclesRequired(noOfVehiclesRequired).withVersion(version);
+        }
+        if (world.createLicence.getOperatorType().equals("public") && (world.createLicence.getLicenceType().equals("restricted"))) {
+            updateOperatingCentre.withId(variationApplicationNumber).withApplication(variationApplicationNumber)
+                    .withNoOfVehiclesRequired(noOfVehiclesRequired).withVersion(version);
+        }
+        apiResponse = RestUtils.put(updateOperatingCentre, updateOperatingCentreResource, getHeaders());
+
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
+            System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
+            throw new HTTPException(apiResponse.extract().statusCode());
         }
+
         return apiResponse;
     }
 
@@ -559,17 +557,12 @@ public class UpdateLicenceAPI extends BaseAPI {
     public void submitInterimApplication(String application) {
         Headers.getHeaders().put("x-pid", adminApiHeader());
         String interimApplicationResource = URL.build(env, String.format("application/%s/interim/", application)).toString();
+        Integer applicationVersion = Integer.parseInt(fetchApplicationInformation(application, "version", "1"));
 
-        do {
-            InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withAuthVehicles(String.valueOf(world.createLicence.getNoOfVehiclesRequired())).withAuthTrailers(String.valueOf(world.createLicence.getNoOfVehiclesRequired()))
-                    .withRequested("Y").withReason("Interim granted through the API").withStartDate(GenericUtils.getCurrentDate("yyyy-MM-dd")).withEndDate(GenericUtils.getFutureFormattedDate(2, "yyyy-MM-dd"))
-                    .withAction("grant").withId(world.createLicence.getApplicationNumber()).withVersion(version);
-            apiResponse = RestUtils.put(interimApplicationBuilder, interimApplicationResource, getHeaders());
-            version++;
-            if (version > 20) {
-                version = 1;
-            }
-        } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
+        InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withAuthVehicles(String.valueOf(world.createLicence.getNoOfVehiclesRequired())).withAuthTrailers(String.valueOf(world.createLicence.getNoOfVehiclesRequired()))
+                .withRequested("Y").withReason("Interim granted through the API").withStartDate(GenericUtils.getCurrentDate("yyyy-MM-dd")).withEndDate(GenericUtils.getFutureFormattedDate(2, "yyyy-MM-dd"))
+                .withAction("grant").withId(world.createLicence.getApplicationNumber()).withVersion(applicationVersion);
+        apiResponse = RestUtils.put(interimApplicationBuilder, interimApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
