@@ -926,6 +926,7 @@ public class UIJourneySteps extends BasePage {
         enterText("dob_day", String.valueOf(getPastDayOfMonth(5)), SelectorType.ID);
         enterText("dob_month", String.valueOf(getCurrentMonth()), SelectorType.ID);
         enterText("dob_year", String.valueOf(getPastYear(20)), SelectorType.ID);
+        waitForElementToBeClickable("form-actions[send]",SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
         waitForTextToBePresent("Transport Managers");
     }
