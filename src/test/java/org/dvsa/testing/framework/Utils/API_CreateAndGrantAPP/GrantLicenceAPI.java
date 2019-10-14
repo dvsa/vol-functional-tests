@@ -6,6 +6,7 @@ import activesupport.http.RestUtils;
 import activesupport.system.Properties;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
+import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
@@ -22,7 +23,6 @@ import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 public class GrantLicenceAPI {
 
     private ValidatableResponse apiResponse;
-    private int version = 1;
     private List outstandingFeesIds;
     private int feeId;
     private World world;
@@ -34,36 +34,36 @@ public class GrantLicenceAPI {
         this.world = world;
     }
 
+    protected String getOverviewData(String applicationNumber, String jsonPath, String defaultData) {
+        String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
+        Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
+        ValidatableResponse response = RestUtils.get(overviewResource, getHeaders());
+        try {
+            return response.extract().response().jsonPath().getString(jsonPath);
+        } catch (NullPointerException ne) {
+            return defaultData;
+        }
+    }
+
     public void createOverview(String applicationNumber) {
-        int overviewVersion = 1;
+        String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
+        Headers.headers.put("x-pid", world.APIJourneySteps.adminApiHeader());
         String status = "1";
         String overrideOption = "Y";
         String transportArea = "D";
-        String trackingId = "12345";
-        String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
-        Headers.headers.put("x-pid", world.APIJourneySteps.adminApiHeader());
-        int breakCounter = 1;
+        String trackingId = getOverviewData(applicationNumber, "applicationTracking.id", null);
+        int applicationVersion = Integer.parseInt(getOverviewData(applicationNumber, "version", "1"));
+        int applicationTrackingVersion = Integer.parseInt(getOverviewData(applicationNumber, "applicationTracking.version", "1"));
 
-        do {
-            TrackingBuilder tracking = new TrackingBuilder().withId(trackingId).withVersion(overviewVersion).withAddressesStatus(status).withBusinessDetailsStatus(status).withBusinessTypeStatus(status)
-                    .withCommunityLicencesStatus(status).withConditionsUndertakingsStatus(status).withConvictionsPenaltiesStatus(status).withFinancialEvidenceStatus(status)
-                    .withFinancialHistoryStatus(status).withLicenceHistoryStatus(status).withOperatingCentresStatus(status).withPeopleStatus(status).withSafetyStatus(status)
-                    .withTransportManagersStatus(status).withTypeOfLicenceStatus(status).withDeclarationsInternalStatus(status).withVehiclesDeclarationsStatus(status).withVehiclesStatus(status).withVehiclesPsvStatus(status)
-                    .withTaxiPhvStatus(status);
-            OverviewBuilder overview = new OverviewBuilder().withId(applicationNumber).withVersion(version).withLeadTcArea(transportArea).withOverrideOppositionDate(overrideOption)
-                    .withTracking(tracking);
-            apiResponse = RestUtils.put(overview, overviewResource, getHeaders());
-            version++;
-            if (version > 20) {
-                version = 1;
-                breakCounter++;
-                if (breakCounter >= 40) {
-                    System.out.println(apiResponse.extract().statusCode());
-                    System.out.println(apiResponse.extract().response().asString());
-                    throw new HTTPException(apiResponse.extract().statusCode());
-                }
-            }
-        } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
+        TrackingBuilder tracking = new TrackingBuilder().withId(trackingId).withVersion(applicationTrackingVersion).withAddressesStatus(status).withBusinessDetailsStatus(status).withBusinessTypeStatus(status)
+                .withCommunityLicencesStatus(status).withConditionsUndertakingsStatus(status).withConvictionsPenaltiesStatus(status).withFinancialEvidenceStatus(status)
+                .withFinancialHistoryStatus(status).withLicenceHistoryStatus(status).withOperatingCentresStatus(status).withPeopleStatus(status).withSafetyStatus(status)
+                .withTransportManagersStatus(status).withTypeOfLicenceStatus(status).withDeclarationsInternalStatus(status).withVehiclesDeclarationsStatus(status).withVehiclesStatus(status).withVehiclesPsvStatus(status)
+                .withTaxiPhvStatus(status);
+        OverviewBuilder overview = new OverviewBuilder().withId(applicationNumber).withVersion(applicationVersion).withLeadTcArea(transportArea).withOverrideOppositionDate(overrideOption)
+                .withTracking(tracking);
+        apiResponse = RestUtils.put(overview, overviewResource, getHeaders());
+
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
@@ -78,8 +78,7 @@ public class GrantLicenceAPI {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
             throw new HTTPException(apiResponse.extract().statusCode());
-        }
-        else if (!apiResponse.extract().response().body().jsonPath().getList("outstandingFees.id").isEmpty()) {
+        } else if (!apiResponse.extract().response().body().jsonPath().getList("outstandingFees.id").isEmpty()) {
             outstandingFeesIds = apiResponse.extract().response().body().jsonPath().getList("outstandingFees.id");
             List<String> fees = apiResponse.extract().response().body().jsonPath().get("outstandingFees.grossAmount");
             for (String d : fees) {
