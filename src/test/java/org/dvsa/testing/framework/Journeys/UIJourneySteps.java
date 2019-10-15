@@ -684,23 +684,26 @@ public class UIJourneySteps extends BasePage {
 
         autoIt.winWaitActive(window,"Chrome Legacy Window",20);
         Thread.sleep(1000);
-        autoIt.mouseClick("left",1200,210,2,20);
+        autoIt.mouseClick("left",1200,230,2,20);
 
         autoIt.winWaitActive(wordLoginWindow,"",20);
         Thread.sleep(3000);
         if (autoIt.winExists(wordLoginWindow,"")) {
-            autoIt.mouseClick("left", 1000, 610, 2, 1);
+            autoIt.mouseClick("left", 1100, 630, 2, 1);
             autoIt.send(world.updateLicence.getAdminUserLogin());
-            autoIt.mouseClick("left", 1000, 710, 2, 1);
+            autoIt.mouseClick("left", 1100, 720, 2, 1);
             autoIt.send(world.UIJourneySteps.getPassword());
-            autoIt.mouseClick("left", 990, 765, 2, 1);
+            autoIt.mouseClick("left", 990, 780, 2, 1);
         }
+        Thread.sleep(2000);
         focusWindows("OpusApp",null);
         //Document edit and save
         Thread.sleep(3000);
         autoIt.mouseClick("left",955,750,2,1);
         autoIt.send("WebDav Change!");
+        Thread.sleep(500);
         autoIt.mouseClick("left",210,27,2,1);
+        Thread.sleep(500);
         autoIt.mouseClick("left",2240,27,2,1);
 
         saveDocumentInInternal();
