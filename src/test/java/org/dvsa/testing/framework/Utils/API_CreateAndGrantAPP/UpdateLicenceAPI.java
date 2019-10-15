@@ -342,11 +342,11 @@ public class UpdateLicenceAPI extends BaseAPI {
         OperatingCentreVariationBuilder updateOperatingCentre = new OperatingCentreVariationBuilder();
 
 
-        if (world.createLicence.getOperatorType().equals("goods") && (!world.createLicence.getLicenceType().equals("special_restricted"))) {
+        if (world.createLicence.getOperatorType().equals("goods")) {
             updateOperatingCentre.withId(variationApplicationNumber).withApplication(variationApplicationNumber)
                     .withNoOfVehiclesRequired(noOfVehiclesRequired).withVersion(version);
         }
-        if (world.createLicence.getOperatorType().equals("public") && (!world.createLicence.getLicenceType().equals("special_restricted"))) {
+        if (world.createLicence.getOperatorType().equals("public")) {
             updateOperatingCentre.withId(variationApplicationNumber).withApplication(variationApplicationNumber)
                     .withNoOfVehiclesRequired(noOfVehiclesRequired).withVersion(version);
         }
