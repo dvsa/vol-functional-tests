@@ -51,5 +51,7 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 `JDK not installed: keytool -importcert -file <path of extracted cert> -alias nvd-nist-gov -keystore $(/usr/libexec/java_home)/lib/security/cacerts`
 
 ## Refactoring todos
-Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
-CreateOverview - can be mov ed in to util
+- Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
+- Use config to hide pavlov and passwords.
+- Change all passwords from config to use secrets manager.
+- CreateOverview - can be moved in to util

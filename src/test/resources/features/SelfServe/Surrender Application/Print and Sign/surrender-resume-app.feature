@@ -53,6 +53,7 @@ Feature: User should be able to continue where they left off
       | public       | sn          |
       | goods        | si          |
 
+    @lastfew
   Scenario Outline: Leave operator licence page and return back to operator licence page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender

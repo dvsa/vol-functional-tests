@@ -7,12 +7,9 @@ import activesupport.driver.Browser;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.jetbrains.annotations.NotNull;
@@ -282,53 +279,6 @@ public class GenericUtils extends BasePage {
             default:
                 return false;
         }
-    }
-
-    public static boolean checkFileContainsText(String fileLocation, String containsString) throws IOException {
-        boolean isTrue = false;
-        File template = new File(fileLocation);
-
-        BufferedReader br = new BufferedReader(new FileReader(template));
-        String readString;
-
-        while ((readString = br.readLine()) != null) {
-            System.out.println(readString);
-            isTrue = readString.contains(containsString);
-            if (isTrue){
-                break;
-            }
-        }
-        br.close();
-        return isTrue;
-    }
-
-    public static File getDownloadedFile (String downloadDirectory, String filenameRegex) throws FileNotFoundException {
-        Config config = GenericUtils.getConfig();
-        File directory = new File(config.getString(downloadDirectory));
-        File[] files;
-
-        long finish = System.currentTimeMillis() + 10000;
-        do {
-            files = directory.listFiles((FileFilter) new RegexFileFilter(filenameRegex));
-        } while ( files.length == 0 && System.currentTimeMillis() < finish);
-
-        if (files.length == 0) {
-            throw new FileNotFoundException();
-        } else {
-            long lastModified;
-            long prevLastModified;
-
-            do {
-                prevLastModified = files[0].lastModified();
-                lastModified = files[0].lastModified();
-            } while(prevLastModified != lastModified);
-
-            return files[0];
-        }
-    }
-
-    public static Config getConfig() {
-        return ConfigFactory.defaultApplication();
     }
 }
 
