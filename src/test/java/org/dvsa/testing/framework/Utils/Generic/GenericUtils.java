@@ -288,54 +288,6 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public static boolean checkFileContainsText(String fileLocation, String containsString) throws IOException {
-        boolean isTrue = false;
-        File template = new File(fileLocation);
-
-        BufferedReader br = new BufferedReader(new FileReader(template));
-        String readString;
-
-        while ((readString = br.readLine()) != null) {
-            System.out.println(readString);
-            isTrue = readString.contains(containsString);
-            if (isTrue){
-                break;
-            }
-        }
-        br.close();
-        return isTrue;
-    }
-
-    public static File getDownloadedFile (String downloadDirectory, String filenameRegex) throws FileNotFoundException {
-        Config config = GenericUtils.getConfig();
-        File directory = new File(config.getString(downloadDirectory));
-        File[] files;
-
-        long finish = System.currentTimeMillis() + 10000;
-        do {
-            files = directory.listFiles((FileFilter) new RegexFileFilter(filenameRegex));
-        } while ( files.length == 0 && System.currentTimeMillis() < finish);
-
-        if (files.length == 0) {
-            throw new FileNotFoundException();
-        } else {
-            long lastModified;
-            long prevLastModified;
-
-            do {
-                prevLastModified = files[0].lastModified();
-                lastModified = files[0].lastModified();
-            } while(prevLastModified != lastModified);
-
-            return files[0];
-        }
-    }
-
-    public static Config getConfig() {
-        return ConfigFactory.defaultApplication();
-    }
-
-
     public static String retrieveAPIData(String url, String jsonPath, String defaultReturn) {
         Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
         ValidatableResponse response = RestUtils.get(url, Headers.getHeaders());
