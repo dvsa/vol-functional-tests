@@ -230,7 +230,7 @@ public class UpdateLicenceAPI extends BaseAPI {
                 withCategorys(categories).withDescription(description).withOutcomes(outcomes).withApplication(world.createLicence.getApplicationNumber());
         apiResponse = RestUtils.post(caseBuilder, caseResource, getHeaders());
 
-        if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
+        if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
             throw new HTTPException(apiResponse.extract().statusCode());
@@ -264,6 +264,12 @@ public class UpdateLicenceAPI extends BaseAPI {
                 .withCourt(court).withMsi(msi).withPenalty(penalty).withNotes(notes).withTakenIntoConsideration(takenIntoConsideration).withIsDeclared(isDeclared).withIsDealtWith(isDealtWith).withDefendantType(defendantType)
                 .withPersonFirstname(personFirstname).withPersonLastname(personLastname).withOffenceDate(offenceDate);
         apiResponse = RestUtils.post(caseConvictionBuilder, convictionResource, getHeaders());
+
+        if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
+            System.out.println(apiResponse.extract().statusCode());
+            System.out.println(apiResponse.extract().response().asString());
+            throw new HTTPException(apiResponse.extract().statusCode());
+        }
 
         setConvictionId(apiResponse.extract().jsonPath().getInt("id.conviction"));
         apiResponse.statusCode(HttpStatus.SC_CREATED);
