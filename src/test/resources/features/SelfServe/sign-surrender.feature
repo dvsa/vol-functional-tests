@@ -9,7 +9,6 @@ Feature: Sign surrender
     And i choose to surrender my licence
 
   @ss_regression
-    @lastfew
   Scenario: Sign with verify - check that surrender has been created
     When i sign with verify
     Then the post verify success page is displayed

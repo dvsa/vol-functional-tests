@@ -1,6 +1,5 @@
 @INT
 @WebDav
-@int_regression
 Feature: All WebDav functionality tests
 
   Background:
@@ -17,3 +16,18 @@ Feature: All WebDav functionality tests
     Then i generate a letter
     And i make changes to the document with WebDav and save it
     Then the document should contain the changes
+
+  Scenario: Delete a Licence document
+    When I generate Licence Document
+    And I delete a licence document from table
+    Then the document should be deleted
+
+  Scenario: Delete a generated letter
+    When i generate a letter
+    And i save the letter
+    And I delete generated letter above from the table
+    Then the document should be deleted
+
+  Scenario: I update my operating system settings
+    When i update my operating system on internal to "Windows 10"
+    Then the operating system should be updated to "Windows 10"

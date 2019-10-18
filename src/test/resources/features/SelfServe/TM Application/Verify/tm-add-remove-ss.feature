@@ -3,7 +3,6 @@
 @OLCS-19479
 @ss_regression
 @gov-verify
-  @lastfew
 
 Feature: Set and check criteria for triggering automatic letter
 

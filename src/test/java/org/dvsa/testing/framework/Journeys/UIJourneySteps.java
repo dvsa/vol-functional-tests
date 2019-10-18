@@ -251,6 +251,11 @@ public class UIJourneySteps extends BasePage {
         navigate().get(myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s",feeNumber)));
     }
 
+    public void urlSearchAndViewInternalUserAccount(String adminUserId) throws IllegalBrowserException, MalformedURLException {
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
+        navigate().get(myURL.concat(String.format("admin/user-management/users/edit/%s",adminUserId)));
+    }
+
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException, MalformedURLException {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
         waitForTextToBePresent("Create new fee");
@@ -359,7 +364,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("address[searchPostcode][search]", SelectorType.NAME);
         waitAndSelectByIndex("", "//*[@id='fee_payment']/fieldset[2]/fieldset/div[3]/select[@name='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         do {
-            retryingFindClick(By.xpath("//*[@id='form-actions[pay]']"));
+            retryingFindClick(By.xpath("//*[@id='form-actions[pay]']")); // Very flaky. Needs refactoring. Also, doesn't really make sense.
         } while (getAttribute("//*[@name='address[addressLine1]']", SelectorType.XPATH, "value").isEmpty());
         if (!paymentMethod.toLowerCase().trim().equals("card"))
         waitForTextToBePresent("The payment was made successfully");
@@ -732,8 +737,6 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
         waitAndClick("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
-
-
 
     public void removeInternalTransportManager() throws IllegalBrowserException, MalformedURLException {
         assertTrue(isTextPresent("Overview", 60));
