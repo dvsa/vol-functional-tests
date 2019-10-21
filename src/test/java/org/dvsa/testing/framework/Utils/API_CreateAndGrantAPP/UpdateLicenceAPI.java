@@ -16,7 +16,6 @@ import org.assertj.core.api.Assertions;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.hamcrest.Matchers;
@@ -63,8 +62,6 @@ public class UpdateLicenceAPI extends BaseAPI {
     private void setBusinessType(String businessType) {
         this.businessType = businessType;
     }
-
-    public String getAdminUserId() { return adminUserId; }
 
     public String getBusinessType() {
         return businessType;
