@@ -66,5 +66,15 @@ public class WebDav extends BasePage implements En {
             String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, env).toString(),"/");
             Assert.assertTrue(this.autoIt.winExists(wordLoginWindow,""));
         });
+        When("^i update my operating system on internal to \"([^\"]*)\"$", (String operatingSystem) -> {
+            world.UIJourneySteps.urlSearchAndViewInternalUserAccount(world.updateLicence.getAdminUserId());
+            waitForTextToBePresent("Operating System");
+            selectValueFromDropDown("//*[@id='osType']",SelectorType.XPATH,operatingSystem);
+            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        });
+        Then("^the operating system should be updated to \"([^\"]*)\"$", (String operatingSystem) -> {
+            world.UIJourneySteps.urlSearchAndViewInternalUserAccount(world.updateLicence.getAdminUserId());
+            Assert.assertEquals(getText("//*[@id='osType']//*[@selected='selected']",SelectorType.XPATH),operatingSystem);
+        });
     }
 }

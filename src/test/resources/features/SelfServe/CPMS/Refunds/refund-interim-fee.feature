@@ -62,7 +62,6 @@ Feature: Refund fee paid on new application
     Then the interim fee should be refunded
 
   @ss_regression
-    @lastfew
   Scenario: Interim fee has been paid and granted
     Given i have a valid "goods" "si" licence
     And i increase my vehicle authority count

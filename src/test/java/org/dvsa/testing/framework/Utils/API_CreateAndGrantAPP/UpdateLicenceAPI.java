@@ -81,6 +81,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         this.adminUserId = adminUserId;
     }
 
+    public String getAdminUserId() { return this.adminUserId; }
+
     public String getTrafficAreaName() {
         return trafficAreaName;
     }
