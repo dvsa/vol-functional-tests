@@ -18,14 +18,15 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
-
 import javax.xml.ws.http.HTTPException;
 import java.util.HashMap;
+import java.util.Objects;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 
-public class CreateLicenceAPI {
+public class CreateLicenceAPI extends BaseAPI{
 
     private static ValidatableResponse apiResponse;
     private static int version = 1;
@@ -439,19 +440,8 @@ public class CreateLicenceAPI {
         }
     }
 
-    protected String getOverviewData(String jsonPath, String defaultData) {
-        String overviewResource = URL.build(env, String.format("application/%s/overview/", applicationNumber)).toString();
-        Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
-        ValidatableResponse response = RestUtils.get(overviewResource, getHeaders());
-        try {
-            return response.extract().response().jsonPath().getString(jsonPath);
-        } catch (NullPointerException ne) {
-            return defaultData;
-        }
-    }
-
     public void updateBusinessType() {
-        String organisationVersion = getOverviewData("licence.organisation.version", "1");
+        String organisationVersion = fetchApplicationInformation(applicationNumber, "licence.organisation.version", "1");
         String updateBusinessTypeResource = URL.build(env, String.format("organisation/%s/business-type/", getOrganisationId())).toString();
 
         BusinessTypeBuilder businessTypeBuilder = new BusinessTypeBuilder().withBusinessType(String.valueOf(BusinessType.getEnum(getBusinessType()))).withVersion(organisationVersion)
@@ -466,7 +456,7 @@ public class CreateLicenceAPI {
     }
 
     public void updateBusinessDetails() {
-        String organisationVersion = getOverviewData("licence.organisation.version", "1");
+        String organisationVersion = fetchApplicationInformation(applicationNumber, "licence.organisation.version", "1");
         String natureOfBusiness = "apiTesting";
         String updateBusinessDetailsResource = URL.build(env, String.format("organisation/business-details/application/%s", getApplicationNumber())).toString();
 
@@ -552,7 +542,7 @@ public class CreateLicenceAPI {
         }
         String updateOperatingCentreResource = URL.build(env, String.format("application/%s/operating-centres", applicationNumber)).toString();
         OperatingCentreUpdater updateOperatingCentre = new OperatingCentreUpdater();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         if (operatorType.equals("goods")) {
             updateOperatingCentre.withId(applicationNumber).withTotAuthVehicles(noOfVehiclesRequired)
@@ -584,7 +574,7 @@ public class CreateLicenceAPI {
         }
 
         String financialEvidenceResource = URL.build(env, String.format("application/%s/financial-evidence", applicationNumber)).toString();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         FinancialEvidenceBuilder financialEvidenceBuilder = new FinancialEvidenceBuilder().withId(applicationNumber).withVersion(applicationVersion).withFinancialEvidenceUploaded(0);
         apiResponse = RestUtils.put(financialEvidenceBuilder, financialEvidenceResource, getHeaders());
@@ -634,19 +624,14 @@ public class CreateLicenceAPI {
         if (getOperatorType().equals("public") && (getLicenceType().equals("special_restricted"))) {
             return;
         }
-        String applicationNo = getTransportManagerApplicationId();
-        String addTMresp = URL.build(env, String.format("transport-manager-application/%s/update-details/", applicationNo)).toString();
-        do {
-            AddressBuilder Address = new AddressBuilder().withAddressLine1(addressLine1).withPostcode(postcode).withTown(town).withCountryCode(countryCode);
-            TmRespBuilder tmRespBuilder = new TmRespBuilder().withEmail(emailAddress).withPlaceOfBirth(town).withHomeAddress(Address).withWorkAddress(Address).withTmType(tmType).withIsOwner(isOwner)
-                    .withHoursMon(hours).withHoursTue(hours).withHoursWed(hours).withHoursThu(hours).withHoursThu(hours).withHoursFri(hours).withHoursSat(hours).withHoursSun(hours).withDob(birthDate)
-                    .withId(applicationNo).withVersion(version);
-            apiResponse = RestUtils.put(tmRespBuilder, addTMresp, getHeaders());
-            version++;
-            if (version > 20) {
-                version = 1;
-            }
-        } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
+        String tmApplicationNo = getTransportManagerApplicationId();
+        String addTMresp = URL.build(env, String.format("transport-manager-application/%s/update-details/", tmApplicationNo)).toString();
+        int applicationVersion = Integer.parseInt(fetchTMApplicationInformation(tmApplicationNo, "version", "1"));
+        AddressBuilder Address = new AddressBuilder().withAddressLine1(addressLine1).withPostcode(postcode).withTown(town).withCountryCode(countryCode);
+        TmRespBuilder tmRespBuilder = new TmRespBuilder().withEmail(emailAddress).withPlaceOfBirth(town).withHomeAddress(Address).withWorkAddress(Address).withTmType(tmType).withIsOwner(isOwner)
+                .withHoursMon(hours).withHoursTue(hours).withHoursWed(hours).withHoursThu(hours).withHoursThu(hours).withHoursFri(hours).withHoursSat(hours).withHoursSun(hours).withDob(birthDate)
+                .withId(tmApplicationNo).withVersion(applicationVersion);
+        apiResponse = RestUtils.put(tmRespBuilder, addTMresp, getHeaders());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
             LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
@@ -656,23 +641,19 @@ public class CreateLicenceAPI {
 
     public void submitTmResponsibilities() {
         if (getOperatorType().equals("public") && (getLicenceType().equals("special_restricted"))) {
-            // no need to submit details
-        } else {
-            String applicationNo = getTransportManagerApplicationId();
-            String submitTmResp = URL.build(env, String.format("transport-manager-application/%s/submit", applicationNo)).toString();
-            do {
-                GenericBuilder genericBuilder = new GenericBuilder().withId(transportManagerApplicationId).withVersion(version);
-                version++;
-                if (version > 20) {
-                    version = 1;
-                }
-                apiResponse = RestUtils.put(genericBuilder, submitTmResp, getHeaders());
-            } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
-            if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-                LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
-                LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
-                throw new HTTPException(apiResponse.extract().statusCode());
-            }
+            return;
+        }
+        String tmApplicationNo = getTransportManagerApplicationId();
+        String submitTmResp = URL.build(env, String.format("transport-manager-application/%s/submit", tmApplicationNo)).toString();
+        int applicationVersion = Integer.parseInt(fetchTMApplicationInformation(tmApplicationNo, "version", "1"));
+
+        GenericBuilder genericBuilder = new GenericBuilder().withId(transportManagerApplicationId).withVersion(applicationVersion);
+        apiResponse = RestUtils.put(genericBuilder, submitTmResp, getHeaders());
+
+        if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
+            throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
 
@@ -722,7 +703,7 @@ public class CreateLicenceAPI {
         String psvNoLimousineConfirmation = "Y";
         String psvOnlyLimousinesConfirmation = "Y";
         String vehicleDeclarationResource = URL.build(env, String.format(String.format("application/%s/vehicle-declaration", applicationNumber))).toString();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         VehicleDeclarationBuilder vehicleDeclarationBuilder = new VehicleDeclarationBuilder().withId(applicationNumber).withPsvVehicleSize(psvVehicleSize)
                 .withPsvLimousines(psvLimousines).withPsvNoSmallVhlConfirmation(psvNoSmallVhlConfirmation).withPsvOperateSmallVhl(psvOperateSmallVhl).withPsvSmallVhlNotes(psvSmallVhlNotes)
@@ -743,11 +724,11 @@ public class CreateLicenceAPI {
         String financialHistoryAnswer = "N";
         String insolvencyAnswer = "false";
         String financialHistoryResource = URL.build(env, String.format("application/%s/financial-history", applicationNumber)).toString();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         FinancialHistoryBuilder financialHistoryBuilder = new FinancialHistoryBuilder().withId(applicationNumber).withVersion(String.valueOf(applicationVersion)).withBankrupt(financialHistoryAnswer)
-                .withLiquidation(financialHistoryAnswer).withReceivership(financialHistoryAnswer).withAdministration(financialHistoryAnswer).withAdministration(financialHistoryAnswer)
-                .withDisqualified(financialHistoryAnswer).withInsolvencyDetails(insolvencyAnswer).withInsolvencyConfirmation(insolvencyAnswer);
+            .withLiquidation(financialHistoryAnswer).withReceivership(financialHistoryAnswer).withAdministration(financialHistoryAnswer).withAdministration(financialHistoryAnswer)
+            .withDisqualified(financialHistoryAnswer).withInsolvencyDetails(insolvencyAnswer).withInsolvencyConfirmation(insolvencyAnswer);
         apiResponse = RestUtils.put(financialHistoryBuilder, financialHistoryResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
@@ -765,12 +746,12 @@ public class CreateLicenceAPI {
         String safetyInsVaries = "N";
         String safetyConfirmationOption = "Y";
         String applicationSafetyResource = URL.build(env, String.format("application/%s/safety", applicationNumber)).toString();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         LicenceBuilder licence = new LicenceBuilder().withId(licenceNumber).withVersion(version).withSafetyInsVaries(safetyInsVaries).withSafetyInsVehicles(String.valueOf(noOfVehiclesRequired))
-                .withSafetyInsTrailers(String.valueOf(noOfVehiclesRequired)).withTachographIns(tachographIns);
+            .withSafetyInsTrailers(String.valueOf(noOfVehiclesRequired)).withTachographIns(tachographIns);
         ApplicationSafetyBuilder applicationSafetyBuilder = new ApplicationSafetyBuilder().withId(applicationNumber).withVersion(applicationVersion)
-                .withSafetyConfirmation(safetyConfirmationOption).withLicence(licence);
+            .withSafetyConfirmation(safetyConfirmationOption).withLicence(licence);
         apiResponse = RestUtils.put(applicationSafetyBuilder, applicationSafetyResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
@@ -788,7 +769,7 @@ public class CreateLicenceAPI {
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1(addressLine1).withTown(town).withPostcode(postcode).withCountryCode(countryCode);
         ContactDetailsBuilder contactDetailsBuilder = new ContactDetailsBuilder().withFao(foreName).withAddress(addressBuilder);
         SafetyInspectorBuilder safetyInspectorBuilder = new SafetyInspectorBuilder().withApplication(applicationNumber).withLicence(licenceNumber).withIsExternal("N")
-                .withContactDetails(contactDetailsBuilder);
+            .withContactDetails(contactDetailsBuilder);
         apiResponse = RestUtils.post(safetyInspectorBuilder, safetyInspectorResource, getHeaders());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
             LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
@@ -802,7 +783,7 @@ public class CreateLicenceAPI {
             return;
         }
         String previousConvictionsResource = URL.build(env, String.format("application/%s/previous-convictions", applicationNumber)).toString();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         CaseConvictionsPenaltiesBuilder convictionsPenaltiesBuilder = new CaseConvictionsPenaltiesBuilder().withId(applicationNumber).withConvictionsConfirmation("Y")
                 .withPrevConviction("N").withVersion(applicationVersion);
@@ -821,7 +802,7 @@ public class CreateLicenceAPI {
         }
         String optionResponse = "N";
         String licenceHistoryResource = URL.build(env, String.format("application/%s/licence-history", applicationNumber)).toString();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         LicenceHistoryBuilder licenceHistoryBuilder = new LicenceHistoryBuilder().withId(applicationNumber).withPrevHadLicence(optionResponse).withPrevHasLicence(optionResponse)
                 .withPrevBeenAtPi(optionResponse).withPrevBeenDisqualifiedTc(optionResponse).withPrevBeenRefused(optionResponse).withPrevBeenRevoked(optionResponse).withPrevPurchasedAssets(optionResponse)
@@ -857,7 +838,7 @@ public class CreateLicenceAPI {
         String signatureRequired = "sig_physical_signature";
         DeclarationsAndUndertakings undertakings = new DeclarationsAndUndertakings();
         String reviewResource = URL.build(env, String.format("application/%s/declaration/", applicationNumber)).toString();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         if (operatorType.equals("goods") && (getIsInterim().equals("Y"))) {
             undertakings.withId(applicationNumber).withVersion(String.valueOf(applicationVersion)).withInterimRequested(getIsInterim())
@@ -877,7 +858,7 @@ public class CreateLicenceAPI {
 
     public void submitApplication() {
         String submitResource = URL.build(env, String.format("application/%s/submit", applicationNumber)).toString();
-        int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
         GenericBuilder genericBuilder = new GenericBuilder().withId(applicationNumber).withVersion(applicationVersion);
         apiResponse = RestUtils.put(genericBuilder, submitResource, getHeaders());
