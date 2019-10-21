@@ -28,6 +28,11 @@ Feature: All WebDav functionality tests
     And I delete generated letter above from the table
     Then the document should be deleted
 
-  Scenario: I update my operating system settings
-    When i update my operating system on internal to "Windows 10"
-    Then the operating system should be updated to "Windows 10"
+  Scenario Outline: I update my operating system settings
+    When i update my operating system on internal to "<OsType>"
+    Then the operating system should be updated to "<OsType>"
+
+    Examples:
+      | OsType     |
+      | Windows 10 |
+      | Windows 7  |
