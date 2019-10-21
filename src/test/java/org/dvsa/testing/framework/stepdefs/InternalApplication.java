@@ -27,8 +27,16 @@ public class InternalApplication extends BasePage implements En {
             assertNotNull(docStoreLink);
             assertTrue(docStoreLink.contains(".rtf"));
         });
+
         When("^i generate a letter$", () -> {
             world.UIJourneySteps.generateLetter();
+        });
+
+        And("^i save the letter$", () -> {
+            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+            waitForTextToBePresent("Send letter");
+            click("//*[@id='close']",SelectorType.XPATH);
+            waitForTextToBePresent("The document has been saved");
         });
 
         When("^I generate Licence Document$", () -> {
