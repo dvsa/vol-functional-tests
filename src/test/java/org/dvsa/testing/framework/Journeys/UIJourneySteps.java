@@ -10,6 +10,7 @@ import activesupport.string.Str;
 import activesupport.system.Properties;
 import autoitx4java.AutoItX;
 import com.typesafe.config.Config;
+import enums.UserRoles;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -1359,7 +1360,7 @@ public class UIJourneySteps extends BasePage {
             world.createLicence.setLicenceType("standard_national");
         }
         world.createLicence.setOperatorType(operatorType);
-        world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         world.APIJourneySteps.grantLicenceAndPayFees();
@@ -1417,7 +1418,7 @@ public class UIJourneySteps extends BasePage {
         world.createLicence.setTrafficArea("B");
         world.createLicence.setEnforcementArea("EA-B");
         world.createLicence.setOperatorType(operatorType);
-        world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         if (String.valueOf(operatorType).equals("public")) {
