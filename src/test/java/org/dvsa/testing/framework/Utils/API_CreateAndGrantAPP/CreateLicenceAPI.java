@@ -8,6 +8,7 @@ import activesupport.system.Properties;
 import enums.BusinessType;
 import enums.LicenceType;
 import enums.OperatorType;
+import enums.UserRoles;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
 import org.apache.logging.log4j.*;
@@ -404,12 +405,12 @@ public class CreateLicenceAPI extends BaseAPI{
         String userDetailsResource;
         Headers.headers.put("x-pid", header);
 
-        if (userType.equals("selfserve")) {
+        if (userType.equals(UserRoles.EXTERNAL.getUserRoles())) {
             userDetailsResource = URL.build(env, String.format("user/%s/%s", userType, this.userId)).toString();
             apiResponse = RestUtils.get(userDetailsResource, getHeaders());
             setPid(apiResponse.extract().jsonPath().getString("pid"));
             setOrganisationId(apiResponse.extract().jsonPath().prettyPeek().getString("organisationUsers.organisation.id"));
-        } else if (userType.equals("internal")) {
+        } else if (userType.equals(UserRoles.INTERNAL.getUserRoles())) {
             userDetailsResource = URL.build(env, String.format("user/%s/%s", userType, userId)).toString();
             apiResponse = RestUtils.get(userDetailsResource, getHeaders());
         }
