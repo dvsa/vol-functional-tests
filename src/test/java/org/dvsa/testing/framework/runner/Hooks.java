@@ -23,19 +23,19 @@ public class Hooks {
     }
 
 
-//    @Attachment(value = "Screenshot on failure", type = "image/png")
-//    public void attach(Scenario scenario) throws IOException, IllegalBrowserException {
-//        createDirectory();
-//        File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
-//        if (scenario.isFailed()) {
-//            FileOutputStream screenshotStream = new FileOutputStream(screenshot);
-//            byte[] attachment = ((TakesScreenshot) Browser.navigate())
-//                    .getScreenshotAs(OutputType.BYTES);
-//            scenario.embed(attachment, String.valueOf(screenshotStream));
-//            screenshotStream.write(attachment);
-//            screenshotStream.close();
-//        }
-//    }
+    @Attachment(value = "Screenshot on failure", type = "image/png")
+    public void attach(Scenario scenario) throws IOException, IllegalBrowserException {
+        createDirectory();
+        File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
+        if (scenario.isFailed()) {
+            FileOutputStream screenshotStream = new FileOutputStream(screenshot);
+            byte[] attachment = ((TakesScreenshot) Browser.navigate())
+                    .getScreenshotAs(OutputType.BYTES);
+            scenario.embed(attachment, String.valueOf(screenshotStream));
+            screenshotStream.write(attachment);
+            screenshotStream.close();
+        }
+    }
 
     private void deleteDirectory() throws IOException {
         FileUtils.deleteDirectory(directory);
