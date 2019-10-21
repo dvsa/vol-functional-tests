@@ -5,6 +5,7 @@ import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import io.restassured.response.ValidatableResponse;
 import junit.framework.TestCase;
 import org.apache.http.HttpStatus;
@@ -91,7 +92,7 @@ public class Surrenders extends BasePage implements En {
             this.selfServeUserPid = world.createLicence.getPid();
             world.genericUtils = new GenericUtils(world);
             world.createLicence.setOperatorType(arg0);
-            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
             if (String.valueOf(arg0).equals("public")) {

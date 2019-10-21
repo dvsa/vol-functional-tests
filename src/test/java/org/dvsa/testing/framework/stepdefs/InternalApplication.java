@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
@@ -70,10 +71,10 @@ public class InternalApplication extends BasePage implements En {
             world.createLicence.setOperatorType(operator);
             world.createLicence.setLicenceType(licenceType);
             if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
-                world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createSpecialRestrictedLicence();
             } else if (world.createLicence.getApplicationNumber() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createApplication();
 
             }

@@ -5,6 +5,7 @@ import activesupport.aws.s3.S3;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
 import enums.TrafficArea;
+import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
 import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -17,7 +18,7 @@ public class UserResearch extends BasePage implements En {
     public UserResearch(World world) {
 
         Given("^^I have applied for \"([^\"]*)\" \"([^\"]*)\" licences$", (String licenceType, String operator) -> {
-            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.createLicence.setNoOfVehiclesRequired(5);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 for (String ta : trafficAreaList()) {
@@ -37,7 +38,7 @@ public class UserResearch extends BasePage implements En {
 
         Given("^I have applied for \"([^\"]*)\" \"([^\"]*)\" TM application$", (String licenceType, String operator) -> {
             String password;
-            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.createLicence.setNoOfVehiclesRequired(3);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 for (String ta : trafficAreaList()) {

@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -20,7 +21,7 @@ public class TMDetails extends BasePage implements En {
         world.APIJourneySteps = new APIJourneySteps(world);
         world.genericUtils = new GenericUtils(world);
         Given("^I have a new application$", () -> {
-            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createPartialApplication();
         });
         And("^the \"([^\"]*)\" button should not be displayed$", (String button) -> {

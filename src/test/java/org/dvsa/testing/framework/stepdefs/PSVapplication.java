@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 
 public class PSVapplication implements En {
@@ -14,11 +15,11 @@ public class PSVapplication implements En {
             world.createLicence.setOperatorType(operator);
             world.createLicence.setLicenceType(licenceType);
             if(licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)){
-                world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createSpecialRestrictedLicence();
             }
             else if (world.createLicence.getApplicationNumber() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
             }
@@ -29,7 +30,7 @@ public class PSVapplication implements En {
             world.createLicence.setOperatorType(vehicleType);
             world.createLicence.setLicenceType(typeOfLicence);
             if (world.createLicence.getApplicationNumber() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
             }

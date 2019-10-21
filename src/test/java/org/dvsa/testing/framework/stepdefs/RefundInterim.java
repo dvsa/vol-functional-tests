@@ -23,7 +23,7 @@ public class RefundInterim extends BasePage implements En {
             }
             world.createLicence.setIsInterim("Y");
             world.createLicence.setOperatorType(operatorType);
-            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
         });

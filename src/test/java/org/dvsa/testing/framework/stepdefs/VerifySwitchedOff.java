@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import cucumber.api.Scenario;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -21,7 +22,7 @@ public class VerifySwitchedOff extends BasePage implements En {
             if (country.equals("NI")) {
                 world.APIJourneySteps.nIAddressBuilder();
             }
-            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createPartialApplication();
         });
         Then("^Signing options are not displayed on the page$", () -> {
