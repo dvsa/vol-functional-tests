@@ -3,13 +3,16 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
+import activesupport.system.Properties;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import io.restassured.response.ValidatableResponse;
 import junit.framework.TestCase;
 import org.apache.http.HttpStatus;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.hamcrest.Matchers;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
@@ -17,6 +20,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
@@ -88,7 +92,7 @@ public class Surrenders extends BasePage implements En {
             this.selfServeUserPid = world.createLicence.getPid();
             world.genericUtils = new GenericUtils(world);
             world.createLicence.setOperatorType(arg0);
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
             if (String.valueOf(arg0).equals("public")) {
@@ -193,16 +197,16 @@ public class Surrenders extends BasePage implements En {
             world.UIJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
             click("//*[@id='submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+            world.UIJourneySteps.signWithVerify();
         });
         Then("^the internal surrender menu should be displayed$", () -> {
             waitForTextToBePresent(world.createLicence.getLicenceNumber());
         });
         Then("^any open cases should be displayed$", () -> {
-            isLinkPresent(toString(),world.updateLicence.getCaseId());
+            isLinkPresent(toString(), world.updateLicence.getCaseId());
         });
         And("^any open bus registrations should be displayed$", () -> {
-            isLinkPresent("PB2026379/1",5);
+            isLinkPresent("PB2026379/1", 5);
         });
         And("^tick boxes should be displayed$", () -> {
             isTextPresent("Digital signature has been checked", 5);
@@ -225,43 +229,62 @@ public class Surrenders extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.searchAndViewLicence();
-            waitAndClick("menu-licence_surrender",SelectorType.ID);
+            waitAndClick("menu-licence_surrender", SelectorType.ID);
         });
-        And("^i choose to surrender my licence with verify$", () -> {
+
+        And("^i choose to surrender my licence with \"([^\"]*)\"$", (String surrenderMethod) -> {
             world.UIJourneySteps.submitSurrenderUntilChoiceOfVerification();
-            waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
-            world.UIJourneySteps.checkVerifyConfirmation();
+            EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+
+            if (surrenderMethod.equalsIgnoreCase("verify")) {
+                if (GenericUtils.isVerifySupportedPlatform(env.name())) {
+                    waitAndClick("//*[@id='sign']", SelectorType.XPATH);
+                    world.UIJourneySteps.signWithVerify();
+                    world.UIJourneySteps.checkVerifyConfirmation();
+                   } else {
+                    fail("Verify not supported on this platform");
+                }
+            } else {
+                waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+                world.UIJourneySteps.signManually();
+                javaScriptExecutor("location.reload(true)");
+            }
             assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
         });
+
         Then("^the Surrender button should not be clickable$", () -> {
-        if (isElementPresent("//*[contains(@name,'actions[surrender]')]",SelectorType.XPATH)) {
-            isElementEnabled("//*[@id='actions[surrender]']",SelectorType.XPATH);
+            if (isElementPresent("//*[contains(@name,'actions[surrender]')]", SelectorType.XPATH)) {
+                isElementEnabled("//*[@id='actions[surrender]']", SelectorType.XPATH);
             }
         });
         And("^the open case and bus reg is closed$", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewLicence();
+            world.UIJourneySteps.internalDigitalSurrenderMenu();
             world.UIJourneySteps.closeCase();
             world.UIJourneySteps.internalDigitalSurrenderMenu();
             world.UIJourneySteps.closeBusReg();
             world.UIJourneySteps.internalDigitalSurrenderMenu();
         });
-        And("^the tick boxes are checked$", () -> {
-            waitAndClick("//*[contains(text(),'Digital signature')]",SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'ECMS')]",SelectorType.XPATH);
 
+        And("^the tick boxes are checked$", () -> {
+            boolean isDigital = isElementPresent("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
+
+            if (isDigital) {
+                waitAndClick("//*[contains(text(),'Digital signature has been checked')]", SelectorType.XPATH);
+            } else {
+                waitAndClick("//*[contains(text(),'Physical signature has been checked')]", SelectorType.XPATH);
+            }
+            waitForTextToBePresent("Your changes have been successfully saved");
+            waitAndClick("//*[contains(text(),'ECMS has been checked')]", SelectorType.XPATH);
+            waitForTextToBePresent("Your changes have been successfully saved");
         });
         When("^the Surrender button is clicked$", () -> {
-            click("actions[surrender]",SelectorType.ID);
+            click("actions[surrender]", SelectorType.ID);
         });
         Then("^the licence should be surrendered$", () -> {
-            assertTrue(isElementPresent("//*[contains(text(),'Surrendered')]",SelectorType.XPATH));
-        });
-        And("^i choose to surrender my licence with print and sign", () -> {
-            world.UIJourneySteps.submitSurrenderUntilChoiceOfVerification();
-            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            world.UIJourneySteps.signManually();
-            javaScriptExecutor("location.reload(true)");
-            assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+            assertTrue(isElementPresent("//*[contains(text(),'Surrendered')]", SelectorType.XPATH));
         });
     }
 }

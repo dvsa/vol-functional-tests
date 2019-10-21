@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
@@ -11,14 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ApplicationVerifyJourney extends BasePage implements En {
     public ApplicationVerifyJourney(World world) {
         Given("^i have an application in progress$", () -> {
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
             world.UIJourneySteps.navigateToReviewDeclarationsPage("application");
             world.UIJourneySteps.signDeclaration();
         });
         When("^i choose to sign with verify with \"([^\"]*)\"$", (String arg0) -> {
-            world.UIJourneySteps.signWithVerify(arg0,"Password1");
+            world.UIJourneySteps.signWithVerify();
         });
         Then("^the application should be signed with verify$", () -> {
             waitForTextToBePresent("Review and declarations");

@@ -5,6 +5,7 @@ import activesupport.driver.Browser;
 import cucumber.api.DataTable;
 import cucumber.api.java8.En;
 import enums.TrafficArea;
+import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
 import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -25,7 +26,7 @@ public class CreateApplications extends BasePage implements En {
                 Region = "N";
             }
             List<String> trafficAreas = trafficAreaTable.asList(String.class);
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             for (int i = 0; i < trafficAreas.size();) {
                 for (String ta : trafficAreas) {
                     world.createLicence.setNiFlag(Region);

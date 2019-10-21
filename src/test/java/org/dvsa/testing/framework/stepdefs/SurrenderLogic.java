@@ -233,7 +233,7 @@ public class SurrenderLogic extends BasePage implements En {
 
         After((Scenario scenario) -> {
             Hooks hooks = new Hooks();
-            hooks.attach(scenario);
+//            hooks.attach(scenario);
             hooks.tearDown();
         });
         And("^i create and url search for my licence$", () -> {

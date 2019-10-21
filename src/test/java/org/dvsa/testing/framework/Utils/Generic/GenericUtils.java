@@ -4,13 +4,20 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
+import activesupport.http.RestUtils;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
+import io.restassured.response.ValidatableResponse;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
+import org.dvsa.testing.framework.Journeys.APIJourneySteps;
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
+import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
@@ -25,10 +32,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -243,4 +247,55 @@ public class GenericUtils extends BasePage {
     public boolean returnFeeStatus(String searchTerm) throws MalformedURLException, IllegalBrowserException {
         return Browser.navigate().findElements(By.xpath("//*[contains(@class,'status')]")).stream().anyMatch(a -> a.getText().contains(searchTerm.toUpperCase()));
     }
+
+    public static String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))){
+            String line = null;
+            String prevLine = null;
+            int lineCounter = 0;
+            while (lineNumber == -1 ? (line = br.readLine()) != null : lineCounter <= lineNumber) {
+                line = br.readLine();
+                prevLine = line;
+                lineCounter++;
+            }
+            br.close();
+            if (lineNumber == -1){
+                return prevLine;
+            } else {
+                return line;
+            }
+        }
+    }
+
+    public static String readLastLineFromFile(String fileLocation) throws IOException {
+        return readLineFromFile(fileLocation, -1);
+    }
+
+    public void writeLineToFile(String data, String fileLocation) throws IOException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))){
+                bw.append(data);
+                bw.newLine();
+        }
+    }
+
+    public static boolean isVerifySupportedPlatform(String env) {
+        switch (env) {
+            case "QUALITY_ASSURANCE":
+            case "PRODUCTION":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static String retrieveAPIData(String url, String jsonPath, String defaultReturn) {
+        Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
+        ValidatableResponse response = RestUtils.get(url, Headers.getHeaders());
+        try {
+            return response.extract().response().jsonPath().getString(jsonPath);
+        } catch (NullPointerException ne) {
+            return defaultReturn;
+        }
+    }
 }
+

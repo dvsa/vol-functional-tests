@@ -4,7 +4,6 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -131,7 +130,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
             click("form-actions[submit]", SelectorType.ID);
             world.UIJourneySteps.signDeclaration();
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+            world.UIJourneySteps.signWithVerify();
         });
         Then("^the 'Review and declarations' post signature page is displayed$", () -> {
             waitForTextToBePresent("Review and declarations");

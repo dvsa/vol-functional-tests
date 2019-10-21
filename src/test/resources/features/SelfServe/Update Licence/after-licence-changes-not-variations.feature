@@ -1,3 +1,4 @@
+@SS-changes-not-variation
 @ss_regression
 
 Feature: Self Serve users can make changes to their valid licence.

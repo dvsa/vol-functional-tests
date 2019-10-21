@@ -1,15 +1,12 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.driver.Browser;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourneySteps.generateLetter;
 import static org.junit.Assert.assertNotNull;
 
 public class InternalApplication extends BasePage implements En {
@@ -31,12 +28,38 @@ public class InternalApplication extends BasePage implements En {
             assertNotNull(docStoreLink);
             assertTrue(docStoreLink.contains(".rtf"));
         });
-        When("^I generate a letter$", () -> {
-            generateLetter();
+
+        When("^i generate a letter$", () -> {
+            world.UIJourneySteps.generateLetter();
         });
+
+        And("^i save the letter$", () -> {
+            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+            waitForTextToBePresent("Send letter");
+            click("//*[@id='close']",SelectorType.XPATH);
+            waitForTextToBePresent("The document has been saved");
+        });
+
+        When("^I generate Licence Document$", () -> {
+            world.UIJourneySteps.printLicence();
+        });
+
+        When("^I delete a licence document from table$", () -> {
+            world.UIJourneySteps.deleteLicenceDocument();
+        });
+
+        When("^I delete generated letter above from the table$", () -> {
+            world.UIJourneySteps.deleteLetterDocument();
+        });
+
+        When("^the document should be deleted$", () -> {
+            waitForTextToBePresent("Deleted successfully");
+        });
+
         When("^a caseworker adds a new operating centre out of the traffic area$", () -> {
             world.UIJourneySteps.addNewOperatingCentre();
         });
+
         Then("^the postcode warning message should be displayed on internal$", () -> {
             assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres.", 10));
             click("form-actions[confirm-add]", SelectorType.ID);
@@ -48,10 +71,10 @@ public class InternalApplication extends BasePage implements En {
             world.createLicence.setOperatorType(operator);
             world.createLicence.setLicenceType(licenceType);
             if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
-                world.APIJourneySteps.registerAndGetUserDetails();
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createSpecialRestrictedLicence();
             } else if (world.createLicence.getApplicationNumber() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails();
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createApplication();
 
             }
@@ -59,7 +82,7 @@ public class InternalApplication extends BasePage implements En {
         When("^the caseworker completes and submits the application$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            Browser.navigate().get("https://iuap1.olcs.qa.nonprod.dvsa.aws/application/" + world.createLicence.getApplicationNumber());
+            world.UIJourneySteps.urlSearchAndViewApplication();
             click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             javaScriptExecutor("location.reload(true)");
@@ -76,7 +99,8 @@ public class InternalApplication extends BasePage implements En {
             int tableColumns;
             waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
             world.UIJourneySteps.selectFee();
-            world.UIJourneySteps.payFee("209", "cash", null, null, null);
+            String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
+            world.UIJourneySteps.payFee(fee, "cash", null, null, null);
             do {
                 tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
                 javaScriptExecutor("location.reload(true)");

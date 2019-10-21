@@ -2,6 +2,8 @@
 @INT
 @Surrender-int
 @int_regression
+@gov-verify
+
 Feature: Logic for Surrender menu item
 
   Background:

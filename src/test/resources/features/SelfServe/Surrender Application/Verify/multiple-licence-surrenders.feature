@@ -2,6 +2,7 @@
 @SS
 @Surrender
 @ss_regression
+@gov-verify
 
 Feature: Multiple licence holder
 

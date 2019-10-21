@@ -1,5 +1,7 @@
 @SS
 @Surrender
+@gov-verify-1
+
 Feature: Sign surrender
 
   Background:
@@ -12,7 +14,7 @@ Feature: Sign surrender
     Then the post verify success page is displayed
     And the surrender status is "Surrender under consideration"
 
-  Scenario: Print and sign - check that surrender has been created
-    When the user chooses to print and sign
-    Then the surrender print and sign page is displayed
-    And the surrender status is "Surrender under consideration"
+#  Scenario: Print and sign - check that surrender has been created
+#    When the user chooses to print and sign
+#    Then the surrender print and sign page is displayed
+#    And the surrender status is "Surrender under consideration"
