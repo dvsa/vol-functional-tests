@@ -21,7 +21,7 @@ public class VerifySwitchedOff extends BasePage implements En {
             if (country.equals("NI")) {
                 world.APIJourneySteps.nIAddressBuilder();
             }
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             world.APIJourneySteps.createPartialApplication();
         });
         Then("^Signing options are not displayed on the page$", () -> {

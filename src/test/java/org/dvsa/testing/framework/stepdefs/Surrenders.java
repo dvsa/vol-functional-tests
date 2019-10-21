@@ -91,7 +91,7 @@ public class Surrenders extends BasePage implements En {
             this.selfServeUserPid = world.createLicence.getPid();
             world.genericUtils = new GenericUtils(world);
             world.createLicence.setOperatorType(arg0);
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
             if (String.valueOf(arg0).equals("public")) {

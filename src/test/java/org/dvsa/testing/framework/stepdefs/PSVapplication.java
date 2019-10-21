@@ -14,11 +14,11 @@ public class PSVapplication implements En {
             world.createLicence.setOperatorType(operator);
             world.createLicence.setLicenceType(licenceType);
             if(licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)){
-                world.APIJourneySteps.registerAndGetUserDetails();
+                world.APIJourneySteps.registerAndGetUserDetails("selfserve");
                 world.APIJourneySteps.createSpecialRestrictedLicence();
             }
             else if (world.createLicence.getApplicationNumber() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails();
+                world.APIJourneySteps.registerAndGetUserDetails("selfserve");
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
             }
@@ -29,7 +29,7 @@ public class PSVapplication implements En {
             world.createLicence.setOperatorType(vehicleType);
             world.createLicence.setLicenceType(typeOfLicence);
             if (world.createLicence.getApplicationNumber() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails();
+                world.APIJourneySteps.registerAndGetUserDetails("selfserve");
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
             }

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ApplicationVerifyJourney extends BasePage implements En {
     public ApplicationVerifyJourney(World world) {
         Given("^i have an application in progress$", () -> {
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             world.APIJourneySteps.createApplication();
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
             world.UIJourneySteps.navigateToReviewDeclarationsPage("application");

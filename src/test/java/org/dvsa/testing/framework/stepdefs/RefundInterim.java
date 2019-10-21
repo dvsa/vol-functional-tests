@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.driver.Browser;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
@@ -22,7 +23,7 @@ public class RefundInterim extends BasePage implements En {
             }
             world.createLicence.setIsInterim("Y");
             world.createLicence.setOperatorType(operatorType);
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
         });
@@ -34,7 +35,7 @@ public class RefundInterim extends BasePage implements En {
             world.grantLicence.refuse(world.createLicence.getApplicationNumber());
         });
         Then("^the interim fee should be refunded$", () -> {
-            world.updateLicence.createInternalAdminUser();
+            world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
             world.UIJourneySteps.urlSearchAndViewLicence();
             clickByLinkText("Fees");
@@ -51,7 +52,7 @@ public class RefundInterim extends BasePage implements En {
             world.grantLicence.withdraw(world.createLicence.getApplicationNumber());
         });
         Then("^the interim fee should not be refunded$", () -> {
-            world.updateLicence.createInternalAdminUser();
+            world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
             world.UIJourneySteps.urlSearchAndViewLicence();
             clickByLinkText("Fees");

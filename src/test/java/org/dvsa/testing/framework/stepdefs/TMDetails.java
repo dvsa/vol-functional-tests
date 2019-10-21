@@ -1,25 +1,17 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 
-import java.net.MalformedURLException;
-import java.sql.Driver;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TMDetails extends BasePage implements En {
@@ -28,7 +20,7 @@ public class TMDetails extends BasePage implements En {
         world.APIJourneySteps = new APIJourneySteps(world);
         world.genericUtils = new GenericUtils(world);
         Given("^I have a new application$", () -> {
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             world.APIJourneySteps.createPartialApplication();
         });
         And("^the \"([^\"]*)\" button should not be displayed$", (String button) -> {

@@ -28,7 +28,7 @@ public class RemoveTM extends BasePage implements En {
             if (world.createLicence.getOperatorType() == null) {
                 world.createLicence.setOperatorType("public");
             }
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
         });

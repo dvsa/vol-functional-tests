@@ -67,7 +67,7 @@ public class KeyboardAccessibility extends BasePage implements En {
         });
         After((Scenario scenario) -> {
             Hooks hooks = new Hooks();
-            hooks.attach(scenario);
+//            hooks.attach(scenario);
             hooks.tearDown();
         });
         When("^i navigate to self serve application main pages i can skip to main content$", () -> {

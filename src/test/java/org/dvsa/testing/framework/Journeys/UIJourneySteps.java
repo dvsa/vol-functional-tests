@@ -1356,7 +1356,7 @@ public class UIJourneySteps extends BasePage {
             world.createLicence.setLicenceType("standard_national");
         }
         world.createLicence.setOperatorType(operatorType);
-        world.APIJourneySteps.registerAndGetUserDetails();
+        world.APIJourneySteps.registerAndGetUserDetails("selfserve");
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         world.APIJourneySteps.grantLicenceAndPayFees();
@@ -1414,7 +1414,7 @@ public class UIJourneySteps extends BasePage {
         world.createLicence.setTrafficArea("B");
         world.createLicence.setEnforcementArea("EA-B");
         world.createLicence.setOperatorType(operatorType);
-        world.APIJourneySteps.registerAndGetUserDetails();
+        world.APIJourneySteps.registerAndGetUserDetails("selfserve");
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         if (String.valueOf(operatorType).equals("public")) {

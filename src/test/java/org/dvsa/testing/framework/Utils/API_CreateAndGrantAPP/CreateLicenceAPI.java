@@ -10,6 +10,7 @@ import enums.LicenceType;
 import enums.OperatorType;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.*;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
@@ -17,11 +18,10 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
+
 import javax.xml.ws.http.HTTPException;
 import java.util.HashMap;
-import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 
@@ -361,6 +361,8 @@ public class CreateLicenceAPI {
 
     private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
+    private static final Logger LOGGER = LogManager.getLogger(CreateLicenceAPI.class);
+
     public CreateLicenceAPI() throws MissingRequiredArgument {
         if (licenceType == null) {
             operatorType = "goods";
@@ -389,29 +391,34 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.post(selfServeUserRegistrationDetailsBuilder, registerResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         } else {
             userId = apiResponse.extract().jsonPath().getString("id.user");
         }
     }
 
-    public void getUserDetails() {
-        Headers.headers.put("x-pid", adminApiHeader());
+    public ValidatableResponse getUserDetails(String userType, String userId, String header) {
+        String userDetailsResource;
+        Headers.headers.put("x-pid", header);
 
-        String userDetailsResource = URL.build(env, String.format("user/selfserve/%s", userId)).toString();
-        apiResponse = RestUtils.get(userDetailsResource, getHeaders());
+        if (userType.equals("selfserve")) {
+            userDetailsResource = URL.build(env, String.format("user/%s/%s", userType, this.userId)).toString();
+            apiResponse = RestUtils.get(userDetailsResource, getHeaders());
+            setPid(apiResponse.extract().jsonPath().getString("pid"));
+            setOrganisationId(apiResponse.extract().jsonPath().prettyPeek().getString("organisationUsers.organisation.id"));
+        } else if (userType.equals("internal")) {
+            userDetailsResource = URL.build(env, String.format("user/%s/%s", userType, userId)).toString();
+            apiResponse = RestUtils.get(userDetailsResource, getHeaders());
+        }
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
-        } else {
-            setPid(apiResponse.extract().jsonPath().getString("pid"));
-            organisationId = apiResponse.extract().jsonPath().prettyPeek().getString("organisationUsers.organisation.id");
-            setOrganisationId(organisationId);
         }
+        return apiResponse;
     }
 
     public void createApplication() {
@@ -426,8 +433,8 @@ public class CreateLicenceAPI {
         setApplicationNumber(applicationNumber);
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -452,8 +459,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(businessTypeBuilder, updateBusinessTypeResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -465,13 +472,13 @@ public class CreateLicenceAPI {
 
         AddressBuilder address = new AddressBuilder().withAddressLine1(addressLine1).withTown(town).withPostcode(postcode);
         UpdateBusinessDetailsBuilder businessDetails = new UpdateBusinessDetailsBuilder()
-            .withId(getApplicationNumber()).withCompanyNumber(companyNumber).withNatureOfBusiness(natureOfBusiness).withLicence(licenceNumber)
-            .withVersion(organisationVersion).withName(businessName).withAddress(address);
+                .withId(getApplicationNumber()).withCompanyNumber(companyNumber).withNatureOfBusiness(natureOfBusiness).withLicence(licenceNumber)
+                .withVersion(organisationVersion).withName(businessName).withAddress(address);
         apiResponse = RestUtils.put(businessDetails, updateBusinessDetailsResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -487,8 +494,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(addressBuilder, applicationAddressResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
         setBusinessEmailAddress(businessEmail);
@@ -501,8 +508,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.post(addPerson, addPersonResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -533,8 +540,8 @@ public class CreateLicenceAPI {
         }
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -565,8 +572,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(updateOperatingCentre, updateOperatingCentreResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -583,8 +590,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(financialEvidenceBuilder, financialEvidenceResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -603,7 +610,8 @@ public class CreateLicenceAPI {
         setTransportManagerApplicationId(apiResponse.extract().jsonPath().getString("id.transportManagerApplicationId"));
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -616,9 +624,8 @@ public class CreateLicenceAPI {
         GenericBuilder genericBuilder = new GenericBuilder().withId(getTransportManagerApplicationId()).withVersion(1);
         apiResponse = RestUtils.put(genericBuilder, submitTransportManager, getHeaders());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
-            System.out.println(apiResponse.extract().headers().asList());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -641,8 +648,8 @@ public class CreateLicenceAPI {
             }
         } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -662,8 +669,8 @@ public class CreateLicenceAPI {
                 apiResponse = RestUtils.put(genericBuilder, submitTmResp, getHeaders());
             } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
             if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-                System.out.println(apiResponse.extract().statusCode());
-                System.out.println(apiResponse.extract().response().asString());
+                LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+                LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
                 throw new HTTPException(apiResponse.extract().statusCode());
             }
         }
@@ -697,8 +704,8 @@ public class CreateLicenceAPI {
                 || (apiResponse.extract().statusCode() == HttpStatus.SC_UNPROCESSABLE_ENTITY));
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -723,8 +730,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(vehicleDeclarationBuilder, vehicleDeclarationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -739,13 +746,13 @@ public class CreateLicenceAPI {
         int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
 
         FinancialHistoryBuilder financialHistoryBuilder = new FinancialHistoryBuilder().withId(applicationNumber).withVersion(String.valueOf(applicationVersion)).withBankrupt(financialHistoryAnswer)
-            .withLiquidation(financialHistoryAnswer).withReceivership(financialHistoryAnswer).withAdministration(financialHistoryAnswer).withAdministration(financialHistoryAnswer)
-            .withDisqualified(financialHistoryAnswer).withInsolvencyDetails(insolvencyAnswer).withInsolvencyConfirmation(insolvencyAnswer);
+                .withLiquidation(financialHistoryAnswer).withReceivership(financialHistoryAnswer).withAdministration(financialHistoryAnswer).withAdministration(financialHistoryAnswer)
+                .withDisqualified(financialHistoryAnswer).withInsolvencyDetails(insolvencyAnswer).withInsolvencyConfirmation(insolvencyAnswer);
         apiResponse = RestUtils.put(financialHistoryBuilder, financialHistoryResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -761,14 +768,14 @@ public class CreateLicenceAPI {
         int applicationVersion = Integer.parseInt(getOverviewData("version", "1"));
 
         LicenceBuilder licence = new LicenceBuilder().withId(licenceNumber).withVersion(version).withSafetyInsVaries(safetyInsVaries).withSafetyInsVehicles(String.valueOf(noOfVehiclesRequired))
-            .withSafetyInsTrailers(String.valueOf(noOfVehiclesRequired)).withTachographIns(tachographIns);
+                .withSafetyInsTrailers(String.valueOf(noOfVehiclesRequired)).withTachographIns(tachographIns);
         ApplicationSafetyBuilder applicationSafetyBuilder = new ApplicationSafetyBuilder().withId(applicationNumber).withVersion(applicationVersion)
-            .withSafetyConfirmation(safetyConfirmationOption).withLicence(licence);
+                .withSafetyConfirmation(safetyConfirmationOption).withLicence(licence);
         apiResponse = RestUtils.put(applicationSafetyBuilder, applicationSafetyResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -781,11 +788,11 @@ public class CreateLicenceAPI {
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1(addressLine1).withTown(town).withPostcode(postcode).withCountryCode(countryCode);
         ContactDetailsBuilder contactDetailsBuilder = new ContactDetailsBuilder().withFao(foreName).withAddress(addressBuilder);
         SafetyInspectorBuilder safetyInspectorBuilder = new SafetyInspectorBuilder().withApplication(applicationNumber).withLicence(licenceNumber).withIsExternal("N")
-            .withContactDetails(contactDetailsBuilder);
+                .withContactDetails(contactDetailsBuilder);
         apiResponse = RestUtils.post(safetyInspectorBuilder, safetyInspectorResource, getHeaders());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -802,8 +809,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(convictionsPenaltiesBuilder, previousConvictionsResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -822,8 +829,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(licenceHistoryBuilder, licenceHistoryResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -837,8 +844,8 @@ public class CreateLicenceAPI {
             PhvTaxiBuilder taxiBuilder = new PhvTaxiBuilder().withId(applicationNumber).withPrivateHireLicenceNo(phLicenceNumber).withCouncilName(councilName).withLicence(licenceNumber).withAddress(addressBuilder);
             apiResponse = RestUtils.post(taxiBuilder, submitResource, getHeaders());
             if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-                System.out.println(apiResponse.extract().statusCode());
-                System.out.println(apiResponse.extract().response().asString());
+                LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+                LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
                 throw new HTTPException(apiResponse.extract().statusCode());
             }
         }
@@ -862,8 +869,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(undertakings, reviewResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -876,8 +883,8 @@ public class CreateLicenceAPI {
         apiResponse = RestUtils.put(genericBuilder, submitResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -891,8 +898,8 @@ public class CreateLicenceAPI {
         setLicenceNumber(apiResponse.extract().jsonPath().getString("licence.licNo"));
         setApplicationStatus(apiResponse.extract().jsonPath().getString("licenceType.status.olbsKey"));
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }

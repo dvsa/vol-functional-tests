@@ -7,13 +7,17 @@ import activesupport.string.Str;
 import activesupport.system.Properties;
 import enums.LicenceType;
 import enums.OperatorType;
+import enums.UserRoles;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.assertj.core.api.Assertions;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.hamcrest.Matchers;
 
@@ -58,6 +62,8 @@ public class UpdateLicenceAPI extends BasePage {
     private void setBusinessType(String businessType) {
         this.businessType = businessType;
     }
+
+    public String getAdminUserId() { return adminUserId; }
 
     public String getBusinessType() {
         return businessType;
@@ -186,6 +192,7 @@ public class UpdateLicenceAPI extends BasePage {
     }
 
     private static EnvironmentType env;
+    private static final Logger LOGGER = LogManager.getLogger(UpdateLicenceAPI.class);
 
     static {
         try {
@@ -210,7 +217,7 @@ public class UpdateLicenceAPI extends BasePage {
     }
 
     public void updateLicenceType(String licenceId) {
-        Integer version = 1;
+        int version = 1;
         String typeOfLicenceResource = org.dvsa.testing.lib.url.api.URL.build(env, String.format("variation/%s/type-of-licence", licenceId)).toString();
 
         do {
@@ -374,16 +381,35 @@ public class UpdateLicenceAPI extends BasePage {
         }
         while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
         }
         return apiResponse;
     }
 
-    public void createInternalAdminUser() {
-        List<String> roles = new ArrayList<>();
-        roles.add("internal-admin");
+    public ValidatableResponse updateInternalUserODetails(String userId, String osType, String header) {
         String team = "1";
-        String userType = "internal";
+        Headers.headers.put("x-pid", header);
+
+        String internalAdminUserResource = URL.build(env, String.format("user/internal/%s", userId)).toString();
+
+        AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
+        PersonBuilder personBuilder = new PersonBuilder().withForename("Long").withFamilyName("Ash").withBirthDate(getPastYear(30) + "-" + getCurrentMonth() + "-" + getCurrentDayOfMonth());
+
+        ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
+        CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withTeam(team)
+                .withUserType(UserRoles.INTERNAL.getUserRoles()).withVersion("2").withOSType(osType).withId(userId);
+        apiResponse = RestUtils.put(internalAdminUser, internalAdminUserResource, getHeaders());
+
+        if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
+           LOGGER.info("ERROR MESSAGE: " + apiResponse.extract().response().asString());
+        }
+        return apiResponse;
+    }
+
+    public String createInternalUser(String userRole, String userType) {
+        List<String> roles = new ArrayList<>();
+        roles.add(userRole);
+        String team = "1";
         Headers.headers.put("x-pid", adminApiHeader());
         String internalAdminUserResource = org.dvsa.testing.lib.url.api.URL.build(env, "user/internal").toString();
 
@@ -395,12 +421,12 @@ public class UpdateLicenceAPI extends BasePage {
         apiResponse = RestUtils.post(internalAdminUser, internalAdminUserResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println("+++ERROR+++" + apiResponse.extract().response().asString());
+            LOGGER.info("ERROR MESSAGE: " + apiResponse.extract().response().asString());
         } else {
 
             setAdminUserId(apiResponse.extract().response().jsonPath().getString("id.user"));
         }
-
+        return getAdminUserId();
     }
 
     public ValidatableResponse grantVariation(String resource) throws MalformedURLException {
@@ -584,8 +610,8 @@ public class UpdateLicenceAPI extends BasePage {
         } while (apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT);
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(String.valueOf(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }
@@ -599,8 +625,8 @@ public class UpdateLicenceAPI extends BasePage {
         apiResponse = RestUtils.post(interimApplicationBuilder, interimApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
+            LOGGER.info("ERROR CODE: ".concat(String.valueOf(apiResponse.extract().statusCode())));
+            LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }

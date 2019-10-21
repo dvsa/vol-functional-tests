@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.GrantLicenceAPI;
 
@@ -17,7 +18,7 @@ public class APIJourneySteps {
     }
 
     public void createAdminUser() throws MissingRequiredArgument {
-        world.updateLicence.createInternalAdminUser();
+        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
     }
 
     public void nIAddressBuilder() {
@@ -33,7 +34,7 @@ public class APIJourneySteps {
         world.createLicence.setTrafficArea(trafficArea);
         world.createLicence.setEnforcementArea(enforcementArea);
         world.createLicence.setOperatorType("public");
-        world.APIJourneySteps.registerAndGetUserDetails();
+        world.APIJourneySteps.registerAndGetUserDetails("selfserve");
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         world.grantLicence.grantLicence();
@@ -97,9 +98,9 @@ public class APIJourneySteps {
         world.createLicence.addFinancialEvidence();
     }
 
-    public void registerAndGetUserDetails(){
+    public void registerAndGetUserDetails(String userType){
         world.createLicence.registerUser();
-        world.createLicence.getUserDetails();
+        world.createLicence.getUserDetails(userType,null, adminApiHeader());
     }
 
     public void grantLicenceAndPayFees(){

@@ -17,7 +17,7 @@ public class UserResearch extends BasePage implements En {
     public UserResearch(World world) {
 
         Given("^^I have applied for \"([^\"]*)\" \"([^\"]*)\" licences$", (String licenceType, String operator) -> {
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             world.createLicence.setNoOfVehiclesRequired(5);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 for (String ta : trafficAreaList()) {
@@ -37,7 +37,7 @@ public class UserResearch extends BasePage implements En {
 
         Given("^I have applied for \"([^\"]*)\" \"([^\"]*)\" TM application$", (String licenceType, String operator) -> {
             String password;
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             world.createLicence.setNoOfVehiclesRequired(3);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 for (String ta : trafficAreaList()) {

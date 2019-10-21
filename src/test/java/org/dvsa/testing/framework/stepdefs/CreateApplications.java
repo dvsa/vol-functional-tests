@@ -25,7 +25,7 @@ public class CreateApplications extends BasePage implements En {
                 Region = "N";
             }
             List<String> trafficAreas = trafficAreaTable.asList(String.class);
-            world.APIJourneySteps.registerAndGetUserDetails();
+            world.APIJourneySteps.registerAndGetUserDetails("selfserve");
             for (int i = 0; i < trafficAreas.size();) {
                 for (String ta : trafficAreas) {
                     world.createLicence.setNiFlag(Region);

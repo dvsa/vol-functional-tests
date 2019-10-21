@@ -4,14 +4,20 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "contactDetails",
         "userType",
-        "adminUserLogin",
+        "osType",
+        "loginId",
         "team",
-        "roles"
+        "roles",
+        "id",
+        "version"
+
 })
 public class CreateInternalAdminUser {
 
@@ -19,12 +25,18 @@ public class CreateInternalAdminUser {
     private ContactDetailsBuilder contactDetails;
     @JsonProperty("userType")
     private String userType;
+    @JsonProperty("osType")
+    private String osType;
     @JsonProperty("loginId")
     private String loginId;
     @JsonProperty("team")
     private String team;
     @JsonProperty("roles")
     private List<String> roles = null;
+    @JsonProperty("id")
+    private String id;
+    @JsonProperty("version")
+    private String version;
 
     @JsonProperty("contactDetails")
     public ContactDetailsBuilder getContactDetails() {
@@ -53,6 +65,21 @@ public class CreateInternalAdminUser {
 
     public CreateInternalAdminUser withUserType(String userType) {
         this.userType = userType;
+        return this;
+    }
+
+    @JsonProperty("osType")
+    public String getOsType(){
+        return osType;
+    }
+
+    @JsonProperty("osType")
+    public void setOsType(String osType){
+        this.osType = osType;
+    }
+
+    public CreateInternalAdminUser withOSType(String osType){
+        this.osType = osType;
         return this;
     }
 
@@ -101,9 +128,46 @@ public class CreateInternalAdminUser {
         return this;
     }
 
+    @JsonProperty("id")
+    public String getId() {
+        return id;
+    }
+
+    @JsonProperty("id")
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public CreateInternalAdminUser withId(String id) {
+        this.id = id;
+        return this;
+    }
+
+    @JsonProperty("version")
+    public String getVersion() {
+        return version;
+    }
+
+    @JsonProperty("version")
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public CreateInternalAdminUser withVersion(String version) {
+        this.version = version;
+        return this;
+    }
+
     @Override
     public String toString() {
-        return "contactDetails:" + getContactDetails() + "userType:" + getUserType() + "loginId:" + getLoginId() + "team:" + getTeam()
-        + "roles:" + getRoles();
+        return new ToStringBuilder(ToStringStyle.JSON_STYLE)
+        .append("contactDetails", getContactDetails())
+                .append("userType", getUserType())
+                .append("osType",getOsType())
+                .append("loginId", getLoginId())
+                .append("team", getTeam())
+                .append("roles", getRoles())
+                .append("id",getId())
+                .append("version",getVersion()).toString();
     }
 }
