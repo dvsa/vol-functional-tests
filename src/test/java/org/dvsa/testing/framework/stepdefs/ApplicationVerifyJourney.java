@@ -19,7 +19,7 @@ public class ApplicationVerifyJourney extends BasePage implements En {
             world.UIJourneySteps.signDeclaration();
         });
         When("^i choose to sign with verify with \"([^\"]*)\"$", (String arg0) -> {
-            world.UIJourneySteps.signWithVerify(arg0,"Password1");
+            world.UIJourneySteps.signWithVerify();
         });
         Then("^the application should be signed with verify$", () -> {
             waitForTextToBePresent("Review and declarations");

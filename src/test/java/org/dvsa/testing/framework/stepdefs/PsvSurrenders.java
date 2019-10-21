@@ -59,7 +59,7 @@ public class PsvSurrenders extends BasePage implements En {
         });
         Given("^i sign with verify$", () -> {
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+            world.UIJourneySteps.signWithVerify();
         });
         Then("^the post verify success page is displayed$", () -> {
             waitForTextToBePresent("What happens next");

@@ -130,7 +130,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
             click("form-actions[submit]", SelectorType.ID);
             world.UIJourneySteps.signDeclaration();
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+            world.UIJourneySteps.signWithVerify();
         });
         Then("^the 'Review and declarations' post signature page is displayed$", () -> {
             waitForTextToBePresent("Review and declarations");

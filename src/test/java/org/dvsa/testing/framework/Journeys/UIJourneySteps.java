@@ -776,8 +776,12 @@ public class UIJourneySteps extends BasePage {
         click(nameAttribute("button", "form-actions[save]"));
     }
 
-    public void signWithVerify(String verifyUsername, String verifyPassword) throws IllegalBrowserException, MalformedURLException {
+    public void signWithVerify() throws IllegalBrowserException, MalformedURLException {
         setVerifyUsername(verifyUsername);
+        Config config = getConfig();
+        String verifyUsername = config.getString("verifyUsername");
+        String verifyPassword = config.getString("verifyPassword");
+
         waitForTextToBePresent("Sign in with GOV.UK Verify");
         click("//*[@id='start_form_selection_false']", SelectorType.XPATH);
         click("//*[@id='next-button']", SelectorType.XPATH);
@@ -1259,7 +1263,7 @@ public class UIJourneySteps extends BasePage {
         submitSurrenderUntilChoiceOfVerification();
         if (navigate().getCurrentUrl().contains("qa")) {
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+            world.UIJourneySteps.signWithVerify();
             checkVerifyConfirmation();
         } else {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);

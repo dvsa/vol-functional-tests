@@ -197,7 +197,7 @@ public class Surrenders extends BasePage implements En {
             world.UIJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
             click("//*[@id='submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+            world.UIJourneySteps.signWithVerify();
         });
         Then("^the internal surrender menu should be displayed$", () -> {
             waitForTextToBePresent(world.createLicence.getLicenceNumber());
@@ -239,7 +239,7 @@ public class Surrenders extends BasePage implements En {
             if (surrenderMethod.equalsIgnoreCase("verify")) {
                 if (GenericUtils.isVerifySupportedPlatform(env.name())) {
                     waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-                    world.UIJourneySteps.signWithVerify("pavlov", "Password1");
+                    world.UIJourneySteps.signWithVerify();
                     world.UIJourneySteps.checkVerifyConfirmation();
                    } else {
                     fail("Verify not supported on this platform");
