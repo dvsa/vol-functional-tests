@@ -34,7 +34,7 @@ public class APIJourneySteps {
         world.createLicence.setTrafficArea(trafficArea);
         world.createLicence.setEnforcementArea(enforcementArea);
         world.createLicence.setOperatorType("public");
-        world.APIJourneySteps.registerAndGetUserDetails("selfserve");
+        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         world.grantLicence.grantLicence();
