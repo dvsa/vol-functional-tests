@@ -1,4 +1,4 @@
-@WebDavAPI
+@WebDav
 Feature: Check that the OS Version is displayed in the user account details
 
   Scenario Outline: Check that OS Version in returned null
