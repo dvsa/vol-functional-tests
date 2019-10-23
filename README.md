@@ -27,10 +27,15 @@ create by default ``a GB goods standard national limited company licence``
 ``@PSV-LAST-TM-TRIGGER`` test requires access to the Jenkins api and database, so for this test the following properties 
 ``-DJENKINS_USERNAME= -DJENKINS_PASSWORD= -DdbUsername= -DdbPassword=`` need to be set
 
-## Executing with tags
+## Executing 
+
+### Including tags
 ``mvn clean verify {system props e.g. -Denv -Dbrowser} -Dcucumber.options="--tags @tag``
 
+### Excluding tags
+``mvn clean verify {system props e.g. -Denv -Dbrowser} -Dtag.name='(not @tag)' -Dcucumber.options="--tags @tag``
 
+``The following system property -Dtag.name accepts a single tag 'not @tag' or multiple tags '(not @tag and not @tag)'``
 
 ## Reports
 To produce the reports run the following command in your terminal
@@ -52,6 +57,6 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 
 ## Refactoring todos
 - Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
-- Use config to hide pavlov and passwords.
 - Change all passwords from config to use secrets manager.
 - CreateOverview - can be moved in to util
+- Before step for EBSR pre-processing to update xml

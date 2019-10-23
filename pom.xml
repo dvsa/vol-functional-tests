@@ -14,7 +14,7 @@
         <cucumber-java.version>2.4.0</cucumber-java.version>
         <cucumber-junit.version>2.4.0</cucumber-junit.version>
         <junit.version>4.12</junit.version>
-        <active-support.version>1.3.7.8</active-support.version>
+        <active-support.version>1.3.7.9</active-support.version>
         <slf4j.version>2.12.1</slf4j.version>
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
@@ -34,6 +34,8 @@
         <allure-report-version>2.13.0</allure-report-version>
         <apache-commons.version>1.6</apache-commons.version>
         <owasp-dependency-checker.version>5.2.2</owasp-dependency-checker.version>
+        <nexus.releases>http://nexus.shd.ci.nonprod.dvsa.aws/repository/maven-releases</nexus.releases>
+        <nexus.snapshots>http://nexus.shd.ci.nonprod.dvsa.aws/repository/maven-snapshots</nexus.snapshots>
     </properties>
 
     <repositories>
@@ -41,14 +43,19 @@
             <id>devappci-shd-pri-qarepo</id>
             <url>s3://devappci-shd-pri-qarepo</url>
         </repository>
+
+        <repository>
+            <id>maven-releases</id>
+            <url>${nexus.releases}</url>
+        </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
-          <id>yle-public</id>
-          <name>Yle public repository</name>
-          <url>https://maven.yle.fi/release</url>
-          <layout>default</layout>
+            <id>yle-public</id>
+            <name>Yle public repository</name>
+            <url>https://maven.yle.fi/release</url>
+            <layout>default</layout>
         </pluginRepository>
     </pluginRepositories>
 
@@ -121,8 +128,10 @@
                     <!-- Required properties -->
                     <sourceRunnerTemplateFile>src/test/resources/parallel/cucable.template</sourceRunnerTemplateFile>
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
-                    <generatedFeatureDirectory>${project.basedir}/src/test/resources/parallel/features</generatedFeatureDirectory>
+                    <generatedFeatureDirectory>${project.basedir}/src/test/resources/parallel/features
+                    </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
+                    <includeScenarioTags>${tag.name}</includeScenarioTags>
                 </configuration>
             </plugin>
             <plugin>
@@ -154,9 +163,9 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>3</forkCount>
+                            <forkCount>5</forkCount>
                             <reuseForks>true</reuseForks>
-                            <rerunFailingTestsCount>3</rerunFailingTestsCount>
+                            <rerunFailingTestsCount>2</rerunFailingTestsCount>
                         </configuration>
                     </execution>
                 </executions>
