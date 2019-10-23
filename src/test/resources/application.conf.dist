@@ -2,3 +2,5 @@ downloadDirectory =
 internalNewPassword =
 verifyUsername =
 verifyPassword =
+dbUsername =
+dbPassword =
