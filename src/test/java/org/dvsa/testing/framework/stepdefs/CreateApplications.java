@@ -19,15 +19,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateApplications extends BasePage implements En {
     public CreateApplications(World world) {
-        Given("^i have a \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" application in traffic area$", (String operatorType, String licenceType, String Region,DataTable trafficAreaTable) -> {
-            if(Region.equals("NI".toUpperCase())){
+        Given("^i have a \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" application in traffic area$", (String operatorType, String licenceType, String Region, DataTable trafficAreaTable) -> {
+            if (Region.equals("NI".toUpperCase())) {
                 Region = "Y";
-            }else{
+            } else {
                 Region = "N";
             }
             List<String> trafficAreas = trafficAreaTable.asList(String.class);
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            for (int i = 0; i < trafficAreas.size();) {
+            for (int i = 0; i < trafficAreas.size(); ) {
                 for (String ta : trafficAreas) {
                     world.createLicence.setNiFlag(Region);
                     world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta.toUpperCase())));
@@ -57,10 +57,12 @@ public class CreateApplications extends BasePage implements En {
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
-            waitAndClick("submitPay", SelectorType.NAME);
+            world.UIJourneySteps.navigateThroughApplication();
+            click("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
             waitAndClick("form-actions[pay]", SelectorType.NAME);
-            enterText("scp_additionalInformationPage_csc_input","265", SelectorType.ID);
+            enterText("scp_additionalInformationPage_csc_input", "265", SelectorType.ID);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
         });
