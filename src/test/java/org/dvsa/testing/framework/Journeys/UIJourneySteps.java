@@ -1375,13 +1375,7 @@ public class UIJourneySteps extends BasePage {
 
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
         String casePath = String.format("/case/details/%s", String.valueOf(world.updateLicence.getCaseId()));
-
         navigate().get(myURL.concat(casePath));
-
-        /*do {
-            System.out.println("waiting for page to load");
-            javaScriptExecutor("location.reload(true)");
-        } while (!navigate().getCurrentUrl().contains("case/details"));*/
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
         click("form-actions[confirm]", SelectorType.ID);
