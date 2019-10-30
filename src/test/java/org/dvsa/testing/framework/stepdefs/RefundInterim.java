@@ -72,13 +72,13 @@ public class RefundInterim extends BasePage implements En {
             world.UIJourneySteps.payForInterimApp();
         });
         And("^the application has been refused$", () -> {
-            world.grantLicence.refuse(String.valueOf(Integer.parseInt(world.createLicence.getApplicationNumber()) + 1));
+            world.grantLicence.refuse(world.updateLicence.getVariationApplicationNumber());
         });
         And("^the application has been withdrawn$", () -> {
-            world.grantLicence.withdraw(String.valueOf(Integer.parseInt(world.createLicence.getApplicationNumber()) + 1));
+            world.grantLicence.withdraw(world.updateLicence.getVariationApplicationNumber());
         });
         And("^the variation interim is granted$", () -> {
-            world.updateLicence.grantInterimApplication(String.valueOf(Integer.parseInt(world.createLicence.getApplicationNumber()) + 1));
+            world.updateLicence.grantInterimApplication(world.updateLicence.getVariationApplicationNumber());
         });
     }
 }
