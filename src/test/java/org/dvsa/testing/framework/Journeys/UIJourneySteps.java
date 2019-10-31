@@ -268,19 +268,10 @@ public class UIJourneySteps extends BasePage {
     public void payFee(String amount, @NotNull String paymentMethod, String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
         String payment = paymentMethod.toLowerCase().trim();
         waitForTextToBePresent("Pay fee");
-        if (payment.equals("cash") || paymentMethod.toLowerCase().trim().equals("cheque") || paymentMethod.toLowerCase().trim().equals("postal")) {
+        if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
             enterText("details[received]", amount, SelectorType.NAME);
             enterText("details[payer]", "Automation payer", SelectorType.NAME);
             enterText("details[slipNo]", "1234567", SelectorType.NAME);
-        }
-        if (payment.equals("card") && (isTextPresent("Pay fee", 10))) {
-            selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
-            if (isTextPresent("Customer reference", 10)) {
-                enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
-                enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
-                findAddress(paymentMethod);
-                clickPayAndConfirm(paymentMethod);
-            }
         }
         switch (payment) {
             case "cash":
@@ -319,6 +310,15 @@ public class UIJourneySteps extends BasePage {
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
+                if (payment.equals("card") && (isTextPresent("Pay fee", 10))) {
+                    selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
+                    if (isTextPresent("Customer reference", 10)) {
+                        enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
+                        enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
+                        findAddress(paymentMethod);
+                        clickPayAndConfirm(paymentMethod);
+                    }
+                }
                 customerPaymentModule(bankCardNumber, cardExpiryMonth, cardExpiryYear);
                 break;
         }
