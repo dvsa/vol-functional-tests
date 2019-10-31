@@ -1367,10 +1367,10 @@ public class UIJourneySteps extends BasePage {
 
     public void closeCase() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("" + world.updateLicence.getCaseId() + "");
-        do {
-            System.out.println("waiting for page to load");
-            javaScriptExecutor("location.reload(true)");
-        } while (!navigate().getCurrentUrl().contains("case/details"));
+
+        String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
+        String casePath = String.format("/case/details/%s", String.valueOf(world.updateLicence.getCaseId()));
+        navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
         click("form-actions[confirm]", SelectorType.ID);
