@@ -319,7 +319,8 @@ public class UIJourneySteps extends BasePage {
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
-            customerPaymentModule(bankCardNumber, cardExpiryMonth, cardExpiryYear);
+                customerPaymentModule(bankCardNumber, cardExpiryMonth, cardExpiryYear);
+                break;
         }
     }
 
@@ -373,7 +374,7 @@ public class UIJourneySteps extends BasePage {
 
     public void clickPayAndConfirm(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
         long endtime = System.currentTimeMillis() + 10000;
-        while (isTextPresent("Pay fee",5) && System.currentTimeMillis() < endtime) {
+        while (isTextPresent("Pay fee", 5) && System.currentTimeMillis() < endtime) {
             try {
                 click("//*[@id='form-actions[pay]']",SelectorType.XPATH);
             } catch (Exception e) { }
