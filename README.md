@@ -60,3 +60,4 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - Change all passwords from config to use secrets manager.
 - CreateOverview - can be moved in to util
 - Before step for EBSR pre-processing to update xml
+- refactor while loop in clickPayAndConfirm method.

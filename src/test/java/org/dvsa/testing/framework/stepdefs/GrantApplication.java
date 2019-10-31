@@ -24,7 +24,6 @@ public class GrantApplication implements En {
             } else {
                 assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
             }
-            System.out.println("Licence Number: " + world.createLicence.getLicenceNumber());
         });
     }
 }
