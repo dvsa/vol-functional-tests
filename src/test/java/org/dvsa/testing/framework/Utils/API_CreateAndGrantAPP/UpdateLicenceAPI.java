@@ -392,7 +392,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         String team = "1";
         Headers.headers.put("x-pid", header);
 
-        String version = fetchInternalUserApplicationInformation(userId, "version", "1");
+        String version = fetchInternalUserInformation(userId, "version", "1");
 
         String internalAdminUserResource = URL.build(env, String.format("user/internal/%s", userId)).toString();
 
