@@ -3,6 +3,8 @@ package org.dvsa.testing.framework.Utils.API_Builders;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -100,9 +102,14 @@ public class OperatingCentreBuilder {
         return this;
     }
 
+
     @Override
     public String toString() {
-        return "application:" + getApplication() + ",noOfVehiclesRequired:" + getNoOfVehiclesRequired()
-        + ",noOfTrailersRequired:" + getNoOfTrailersRequired() + ",permission:" + getPermission() + ",address:" + getAddress();
+        return  new ToStringBuilder(ToStringStyle.JSON_STYLE)
+                .append("application", getApplication())
+                .append("noOfVehiclesRequired", getNoOfVehiclesRequired())
+                .append("noOfTrailersRequired", getNoOfTrailersRequired())
+                .append("permission", getPermission())
+                .append("address", getAddress()).toString();
     }
 }

@@ -31,4 +31,9 @@ public class BaseAPI {
         String url = URL.build(env, String.format("transport-manager-application/%s", applicationNumber)).toString();
         return GenericUtils.retrieveAPIData(url, jsonPath, defaultReturn);
     }
+
+    protected String fetchInternalUserInformation(String userId, String jsonPath, String defaultReturn){
+        String url = URL.build(env, String.format("user/internal/%s", userId)).toString();
+        return GenericUtils.retrieveAPIData(url, jsonPath, defaultReturn);
+    }
 }
