@@ -34,5 +34,9 @@ public class WebDavAPIStep implements En {
         When("^they attempt to update their OS version to \"([^\"]*)\"$", (String osVersion) -> {
             this.response = world.updateLicence.updateInternalUserODetails(this.userId, osVersion,this.pid);
         });
+        Then("^their new OS Type should be \"([^\"]*)\"$", (String expectedOSVersion) -> {
+            this.response = world.createLicence.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId, APIJourneySteps.adminApiHeader());
+            assertEquals(response.extract().body().jsonPath().get("osType.id"),expectedOSVersion);
+        });
     }
 }

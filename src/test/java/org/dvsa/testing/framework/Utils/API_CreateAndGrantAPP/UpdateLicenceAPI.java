@@ -392,6 +392,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         String team = "1";
         Headers.headers.put("x-pid", header);
 
+        String version = fetchInternalUserInformation(userId, "version", "1");
+
         String internalAdminUserResource = URL.build(env, String.format("user/internal/%s", userId)).toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
@@ -399,7 +401,7 @@ public class UpdateLicenceAPI extends BaseAPI {
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withTeam(team)
-                .withUserType(UserRoles.INTERNAL.getUserRoles()).withVersion("2").withOSType(osType).withId(userId);
+                .withUserType(UserRoles.INTERNAL.getUserRoles()).withVersion(version).withOSType(osType).withId(userId);
         apiResponse = RestUtils.put(internalAdminUser, internalAdminUserResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
@@ -423,6 +425,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         apiResponse = RestUtils.post(internalAdminUser, internalAdminUserResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
+            LOGGER.info("ERROR CODE: ".concat(String.valueOf(apiResponse.extract().statusCode())));
             LOGGER.info("ERROR MESSAGE: " + apiResponse.extract().response().asString());
         } else {
 

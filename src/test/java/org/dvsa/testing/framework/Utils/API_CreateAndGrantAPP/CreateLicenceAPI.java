@@ -547,12 +547,12 @@ public class CreateLicenceAPI extends BaseAPI{
 
         if (operatorType.equals("goods")) {
             updateOperatingCentre.withId(applicationNumber).withTotAuthVehicles(noOfVehiclesRequired)
-                    .withTrafficArea(getTrafficArea()).withEnforcementArea(getEnforcementArea()).withTotCommunityLicences(Integer.parseInt(restrictedVehicles))
+                    .withTrafficArea(getTrafficArea()).withEnforcementArea(getEnforcementArea()).withTotCommunityLicences(1)
                     .withTAuthTrailers(Integer.parseInt(String.valueOf(noOfVehiclesRequired))).withVersion(applicationVersion);
         }
         if (operatorType.equals("public") && (!licenceType.equals("restricted"))) {
             updateOperatingCentre.withId(getApplicationNumber()).withTotAuthVehicles(noOfVehiclesRequired)
-                    .withTrafficArea(getTrafficArea()).withEnforcementArea(getEnforcementArea()).withTotCommunityLicences(noOfVehiclesRequired).withVersion(applicationVersion);
+                    .withTrafficArea(getTrafficArea()).withEnforcementArea(getEnforcementArea()).withTotCommunityLicences(1).withVersion(applicationVersion);
         }
 
         if (operatorType.equals("public") && (licenceType.equals("restricted"))) {

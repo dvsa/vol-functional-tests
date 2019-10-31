@@ -27,7 +27,7 @@
         <allure-cucumber2-jvm>2.13.0</allure-cucumber2-jvm>
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn-version>2.10.0</allure-mvn-version>
-        <cucable-plugin.version>1.5.0</cucable-plugin.version>
+        <cucable-plugin.version>1.5.3</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
         <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
@@ -107,7 +107,7 @@
                 <artifactId>allure-maven</artifactId>
                 <version>${allure-mvn-version}</version>
                 <configuration>
-                    <reportingOutputDirectory>allure-report</reportingOutputDirectory>
+                    <reportingOutputDirectory>${project.basedir}/Reports/allure-report</reportingOutputDirectory>
                     <reportVersion>${allure-report-version}</reportVersion>
                 </configuration>
             </plugin>
@@ -132,6 +132,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
+                    <desiredNumberOfFeaturesPerRunner>5</desiredNumberOfFeaturesPerRunner>
                 </configuration>
             </plugin>
             <plugin>
@@ -277,12 +278,6 @@
             <artifactId>zt-zip</artifactId>
             <version>1.13</version>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
