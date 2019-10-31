@@ -2,16 +2,12 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
-import activesupport.driver.Browser;
-import cucumber.api.Scenario;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.framework.runner.Hooks;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -60,7 +56,7 @@ public class ESBRupload extends BasePage implements En {
             world.UIJourneySteps.uploadAndSubmitESBR("futureDay", Integer.parseInt(arg0));
         });
         Given("^i add a new bus registration$", () -> {
-            world.UIJourneySteps.searchAndViewLicence();
+            world.UIJourneySteps.urlSearchAndViewLicence();
             world.UIJourneySteps.internalSiteAddBusNewReg(5);
             clickByLinkText("Register");
             findSelectAllRadioButtonsByValue("Y");

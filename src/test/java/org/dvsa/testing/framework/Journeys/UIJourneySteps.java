@@ -267,27 +267,21 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void payFee(String amount, @NotNull String paymentMethod, String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
-        if (paymentMethod.toLowerCase().trim().equals("cash") || paymentMethod.toLowerCase().trim().equals("cheque") || paymentMethod.toLowerCase().trim().equals("postal")) {
+        String payment = paymentMethod.toLowerCase().trim();
+        waitForTextToBePresent("Pay fee");
+        if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
             enterText("details[received]", amount, SelectorType.NAME);
             enterText("details[payer]", "Automation payer", SelectorType.NAME);
             enterText("details[slipNo]", "1234567", SelectorType.NAME);
-
         }
-        if (paymentMethod.toLowerCase().trim().equals("card") && (isTextPresent("Pay fee", 10))) {
-            selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
-            if (isTextPresent("Customer reference", 10)) {
-                enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
-                enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
-                findAddress(paymentMethod);
-            }
-        }
-        switch (paymentMethod.toLowerCase().trim()) {
+        switch (payment) {
             case "cash":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
                 if (isTextPresent("Customer reference", 10)) {
                     enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                     enterText("details[customerReference]", "AutomationCashCustomerRef", SelectorType.NAME);
                     findAddress(paymentMethod);
+                    clickPayAndConfirm(paymentMethod);
                 } else {
                     clickByName("form-actions[pay]");
                 }
@@ -303,6 +297,7 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[chequeDate][month]", String.valueOf(getCurrentMonth()), SelectorType.NAME);
                 enterText("details[chequeDate][year]", String.valueOf(getCurrentYear()), SelectorType.NAME);
                 findAddress(paymentMethod);
+                clickPayAndConfirm(paymentMethod);
                 break;
             case "postal":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
@@ -313,8 +308,18 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                 enterText("details[poNo]", "123456", SelectorType.NAME);
                 findAddress(paymentMethod);
+                clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
+                if (payment.equals("card") && (isTextPresent("Pay fee", 10))) {
+                    selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
+                    if (isTextPresent("Customer reference", 10)) {
+                        enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
+                        enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
+                        findAddress(paymentMethod);
+                        clickPayAndConfirm(paymentMethod);
+                    }
+                }
                 customerPaymentModule(bankCardNumber, cardExpiryMonth, cardExpiryYear);
                 break;
         }
@@ -329,7 +334,7 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("50");
         waitAndClick("//*[@value='" + feeNumber + "']", SelectorType.XPATH);
         waitAndClick("//*[@value='Pay']", SelectorType.XPATH);
-        waitForTextToBePresent("Pay fee");
+        waitForTextToBePresent("Payment method");
     }
 
     public void selectFee() throws IllegalBrowserException, MalformedURLException {
@@ -365,9 +370,16 @@ public class UIJourneySteps extends BasePage {
         enterText("address[searchPostcode][postcode]", "NG1 5FW", SelectorType.NAME);
         waitAndClick("address[searchPostcode][search]", SelectorType.NAME);
         waitAndSelectByIndex("", "//*[@id='fee_payment']/fieldset[2]/fieldset/div[3]/select[@name='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
-        do {
-            retryingFindClick(By.xpath("//*[@id='form-actions[pay]']")); // Very flaky. Needs refactoring. Also, doesn't really make sense.
-        } while (getAttribute("//*[@name='address[addressLine1]']", SelectorType.XPATH, "value").isEmpty());
+        waitForPageLoad();
+    }
+
+    public void clickPayAndConfirm(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
+        long endtime = System.currentTimeMillis() + 10000;
+        while (isTextPresent("Pay fee", 5) && System.currentTimeMillis() < endtime) {
+            try {
+                click("//*[@id='form-actions[pay]']",SelectorType.XPATH);
+            } catch (Exception e) { }
+        }
         if (!paymentMethod.toLowerCase().trim().equals("card"))
             waitForTextToBePresent("The payment was made successfully");
     }
