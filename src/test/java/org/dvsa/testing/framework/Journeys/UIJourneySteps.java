@@ -374,12 +374,8 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void clickPayAndConfirm(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
-        long endtime = System.currentTimeMillis() + 10000;
-        while (isTextPresent("Pay fee", 5) && System.currentTimeMillis() < endtime) {
-            try {
-                click("//*[@id='form-actions[pay]']",SelectorType.XPATH);
-            } catch (Exception e) { }
-        }
+        waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']",SelectorType.XPATH);
+        waitAndClick("//*[@id='form-actions[pay]']",SelectorType.XPATH);
         if (!paymentMethod.toLowerCase().trim().equals("card"))
             waitForTextToBePresent("The payment was made successfully");
     }
