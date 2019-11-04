@@ -64,3 +64,15 @@ Feature: Check that the OS Version is displayed in the user account details
       | internal-limited-read-only | windows_10 | windows_7      |
       | internal-read-only         | windows_10 | windows_7      |
       | internal-case-worker       | windows_10 | windows_7      |
+
+  @INT
+  Scenario Outline: I update my operating system settings
+    Given i have a valid "goods" "sn" licence
+    And i have logged in to internal
+    When i update my operating system on internal to "<OsType>"
+    Then the operating system should be updated to "<OsType>"
+
+    Examples:
+      | OsType     |
+      | Windows 10 |
+      | Windows 7  |
