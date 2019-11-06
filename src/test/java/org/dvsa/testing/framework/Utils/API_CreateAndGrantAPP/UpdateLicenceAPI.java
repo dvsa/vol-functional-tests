@@ -27,9 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static activesupport.dates.Dates.*;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
-import static org.dvsa.testing.lib.pages.BasePage.*;
 import static org.junit.Assert.assertThat;
 
 
@@ -602,7 +602,7 @@ public class UpdateLicenceAPI extends BaseAPI {
     public void submitInterimApplication(String application) {
         Headers.getHeaders().put("x-pid", adminApiHeader());
         String interimApplicationResource = URL.build(env, String.format("application/%s/interim/", application)).toString();
-        Integer applicationVersion = Integer.parseInt(fetchApplicationInformation(application, "version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(application, "version", "1"));
 
         InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withAuthVehicles(String.valueOf(world.createLicence.getNoOfVehiclesRequired())).withAuthTrailers(String.valueOf(world.createLicence.getNoOfVehiclesRequired()))
                 .withRequested("Y").withReason("Interim granted through the API").withStartDate(GenericUtils.getCurrentDate("yyyy-MM-dd")).withEndDate(GenericUtils.getFutureFormattedDate(2, "yyyy-MM-dd"))

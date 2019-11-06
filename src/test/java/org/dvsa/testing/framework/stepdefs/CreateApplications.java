@@ -52,7 +52,7 @@ public class CreateApplications extends BasePage implements En {
         });
         When("^i pay for my application$", () -> {
             click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-            world.UIJourneySteps.payFee(null, "card", "4006000000000600", "10", "20");
+            world.UIJourneySteps.customerPaymentModule("4006000000000600", "10", "20");
         });
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");

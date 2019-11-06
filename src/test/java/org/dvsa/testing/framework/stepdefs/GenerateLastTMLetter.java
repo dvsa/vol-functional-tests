@@ -5,10 +5,10 @@ import activesupport.database.DBUnit;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
-import cucumber.api.java.eo.Se;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -17,6 +17,9 @@ import static junit.framework.TestCase.assertEquals;
 import static org.dvsa.testing.framework.stepdefs.RemoveTM.alertHeaderValue;
 
 public class GenerateLastTMLetter extends BasePage implements En {
+
+    EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+
 
     public GenerateLastTMLetter(World world) {
 
