@@ -60,6 +60,5 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - Change all passwords from config to use secrets manager.
 - CreateOverview - can be moved in to util
 - Before step for EBSR pre-processing to update xml
-- Refactor while loop in clickPayAndConfirm method.
 - Need to refactor out getPastDate, getPastMonth, Year, etc. All replaced for new function getPastPreviousOrCurrentdate (possibly renamed) from Active Support.
 - Possibly refactor getCurrentDay/Month/Year to either return strings or add new methods enterText Method to accept int input to parse into a String and run string method.

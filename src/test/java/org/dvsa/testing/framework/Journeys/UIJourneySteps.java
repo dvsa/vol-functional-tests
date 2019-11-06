@@ -168,7 +168,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
         enterDate(getCurrentDayOfMonth(), getCurrentMonth(), getCurrentYear());
-        String[] date = getPastPreviousOrCurrentdate(0,5,0);
+        String[] date = getPastCurrentOrFutureDate(0,5,0);
         enterText("effectiveDate_day", date[0], SelectorType.ID);
         enterText("effectiveDate_month", date[1], SelectorType.ID);
         enterText("effectiveDate_year", date[2], SelectorType.ID);
@@ -388,7 +388,7 @@ public class UIJourneySteps extends BasePage {
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
 
-        String[] directorDate = getPastPreviousOrCurrentdate(-5,0,-20);
+        String[] directorDate = getPastCurrentOrFutureDate(-5,0,-20);
 
         enterText("dob_day", directorDate[0], SelectorType.ID);
         enterText("dob_month", directorDate[1], SelectorType.ID);
@@ -581,7 +581,7 @@ public class UIJourneySteps extends BasePage {
         enterText("data[forename]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
-        String[] convictionDate = getPastPreviousOrCurrentdate(-5,0,-20);
+        String[] convictionDate = getPastCurrentOrFutureDate(-5,0,-20);
 
         enterText("dob_day", String.valueOf(convictionDate[0]), SelectorType.ID);
         enterText("dob_month", String.valueOf(convictionDate[1]), SelectorType.ID);
@@ -820,7 +820,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
-        String[] TMDate = getPastPreviousOrCurrentdate(0,0,25);
+        String[] TMDate = getPastCurrentOrFutureDate(0,0,25);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
@@ -862,7 +862,7 @@ public class UIJourneySteps extends BasePage {
     public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
-        String[] TMDate = getPastPreviousOrCurrentdate(0,0,-25);
+        String[] TMDate = getPastCurrentOrFutureDate(0,0,-25);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
@@ -949,7 +949,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        String[] TMDate = getPastPreviousOrCurrentdate(-5,0,-20);
+        String[] TMDate = getPastCurrentOrFutureDate(-5,0,-20);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
