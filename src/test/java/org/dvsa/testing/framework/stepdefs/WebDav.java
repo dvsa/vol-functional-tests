@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.file.Files.checkFileContainsText;
 import static activesupport.file.Files.getDownloadedFile;
+import static junit.framework.TestCase.assertTrue;
 
 public class WebDav extends BasePage implements En {
 
@@ -36,18 +37,18 @@ public class WebDav extends BasePage implements En {
 
             String fileName = getText("//table//tbody//tr//td", SelectorType.XPATH);
             world.genericUtils.writeLineToFile(
-                    String.format("%s,%s,%s",licenceNumber, fileName, documentLink),
-                    String.format("%s/Reports/WebDavRequiredStorage/%sWebDav.csv", Paths.get("").toAbsolutePath().toString(),env.toString())
+                    String.format("%s,%s,%s", licenceNumber, fileName, documentLink),
+                    String.format("%s/Reports/WebDavRequiredStorage/%sWebDav.csv", Paths.get("").toAbsolutePath().toString(), env.toString())
             );
         });
         And("^the document should contain the changes$", () -> {
 
-            Assert.assertTrue(isTextPresent(templateName,5));
+            Assert.assertTrue(isTextPresent(templateName, 5));
             clickByLinkText(templateName);
 
             String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.createLicence.getLicenceNumber(), templateName);
 
-            File file = getDownloadedFile("downloadDirectory",templateRegex);
+            File file = getDownloadedFile("downloadDirectory", templateRegex);
 
             Assert.assertTrue(checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
         });
@@ -56,25 +57,36 @@ public class WebDav extends BasePage implements En {
             Thread.sleep(1000);
             clickByLinkText("BUS");
 
-            this.autoIt = initiateAutoItX("jacob-1.16","lib/jacob-1.16");
-            this.autoIt.winWaitActive(window,"Chrome Legacy Window");
+            this.autoIt = initiateAutoItX("jacob-1.16", "lib/jacob-1.16");
+            this.autoIt.winWaitActive(window, "Chrome Legacy Window");
             Thread.sleep(1000);
-            this.autoIt.mouseClick("left",1200,195,2,20);
+            this.autoIt.mouseClick("left", 1200, 195, 2, 20);
             Thread.sleep(5000);
         });
         Then("^i should be prompted to login$", () -> {
-            String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, env).toString(),"/");
-            Assert.assertTrue(this.autoIt.winExists(wordLoginWindow,""));
+            String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, env).toString(), "/");
+            Assert.assertTrue(this.autoIt.winExists(wordLoginWindow, ""));
         });
         When("^i update my operating system on internal to \"([^\"]*)\"$", (String operatingSystem) -> {
             world.UIJourneySteps.urlSearchAndViewInternalUserAccount(world.updateLicence.getAdminUserId());
             waitForTextToBePresent("Operating System");
-            selectValueFromDropDown("//*[@id='osType']",SelectorType.XPATH,operatingSystem);
-            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+            selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
+            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         });
         Then("^the operating system should be updated to \"([^\"]*)\"$", (String operatingSystem) -> {
             world.UIJourneySteps.urlSearchAndViewInternalUserAccount(world.updateLicence.getAdminUserId());
-            Assert.assertEquals(getText("//*[@id='osType']//*[@selected='selected']",SelectorType.XPATH),operatingSystem);
+            Assert.assertEquals(getText("//*[@id='osType']//*[@selected='selected']", SelectorType.XPATH), operatingSystem);
+        });
+        And("^upload a document$", () -> {
+            click("//*[@id='upload']", SelectorType.XPATH);
+            waitForTextToBePresent("Upload document");
+            waitAndEnterText("//*[@id='details[description]']",SelectorType.XPATH,"distinctiveName");
+            selectValueFromDropDownByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
+            String fileLocation = String.format("%s/%s",System.getProperty("user.dir"),"testBusTemplate.rtf");
+            Browser.getDriver().findElement(By.xpath("//*[@id='details[file]']")).sendKeys(fileLocation);
+            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
+            assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]",SelectorType.XPATH));
         });
     }
 }

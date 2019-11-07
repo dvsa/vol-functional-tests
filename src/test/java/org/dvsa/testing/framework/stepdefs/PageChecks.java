@@ -21,8 +21,10 @@ public class PageChecks extends BasePage implements En {
             world.UIJourneySteps.navigateToSelfServePage(page,"view");
             assertFalse(isElementPresent("//div//a[text()='Withdraw application']", SelectorType.XPATH));
         });
-        Then("^the \"([^\"]*)\" document is produced automatically$", (String documentType) -> {
-            clickByLinkText("Docs & attachments");
+        Then("^the \"([^\"]*)\" document should be generated$", (String documentType) -> {
+            if (isElementPresent("//a[contains(text(),'Docs & attachments')]",SelectorType.XPATH)) {
+                clickByLinkText("Docs & attachments");
+            }
             assertTrue(checkForPartialMatch(documentType));
         });
     }
