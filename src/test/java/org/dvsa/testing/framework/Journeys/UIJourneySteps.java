@@ -387,9 +387,7 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("//select[@id='title']", SelectorType.XPATH, "Dr");
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
-
         String[] directorDate = getPastCurrentOrFutureDate(-5,0,-20);
-
         enterText("dob_day", directorDate[0], SelectorType.ID);
         enterText("dob_month", directorDate[1], SelectorType.ID);
         enterText("dob_year", directorDate[2], SelectorType.ID);
@@ -582,11 +580,9 @@ public class UIJourneySteps extends BasePage {
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
         String[] convictionDate = getPastCurrentOrFutureDate(-5,0,-20);
-
         enterText("dob_day", String.valueOf(convictionDate[0]), SelectorType.ID);
         enterText("dob_month", String.valueOf(convictionDate[1]), SelectorType.ID);
         enterText("dob_year", String.valueOf(convictionDate[2]), SelectorType.ID);
-
         enterText("data[categoryText]", Str.randomWord(50), SelectorType.NAME);
         enterText("data[courtFpn]", "Clown", SelectorType.NAME);
         enterText("data[penalty]", "Severe", SelectorType.NAME);
