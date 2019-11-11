@@ -5,6 +5,7 @@ import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -96,7 +97,52 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 }
             }
         });
+        When("^i generate \"([^\"]*)\" publications and check their docman link$", (Integer noOfDifferentLicences) -> {
+            String currentPubNo;
+            String linkedPubNo;
+            String publishedDate;
+            int missingLinks = 0;
+            for (int i = 0; i < noOfDifferentLicences; i++) {
+
+                List<WebElement> radioButtons;
+                List<WebElement> publicationNumbers;
+
+                publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr[*]/td[2]");
+                currentPubNo = publicationNumbers.get(i).getText();
+
+                if (Browser.getDriver().findElements(By.linkText(currentPubNo)).size() == 0 || Browser.getDriver().findElements(By.xpath(String.format("//*[contains(text(),%s)]",currentPubNo))).size()>1) {
+
+                    radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                    radioButtons.get(i).click();
+
+                    waitAndClick("//*[@id='generate']", SelectorType.XPATH);
+                    waitForTextToBePresent("Publication was generated, a new publication was also created");
+
+                    radioButtons = show50ResultsAndUpdateWebElementsList("//*[@type='radio']");
+
+                    clickByLinkText(currentPubNo);
+                    waitForTextToBePresent("Open document");
+
+                    if (getText("//*[@id='letter-link']",SelectorType.XPATH).isEmpty()){
+                        missingLinks++;
+                    }
+
+                    click("//*[contains(text(),'Close')]",SelectorType.XPATH);
+
+                    waitForElementToBeClickable("//*[@type='radio']",SelectorType.XPATH);
+                    radioButtons.get(i + 1).click();
+                    waitAndClick("//*[@id='publish']", SelectorType.XPATH);
+                    waitForTextToBePresent("Update successful");
+
+                } else {
+                    noOfDifferentLicences++;
+                    javaScriptExecutor("location.reload(true)");
+                }
+            }
+            Assert.assertEquals(0,missingLinks);
+        });
     }
+
 
     public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath) throws IllegalBrowserException, MalformedURLException {
         List<WebElement> webElements = Browser.getDriver().findElements(By.xpath(webElementsXpath));
