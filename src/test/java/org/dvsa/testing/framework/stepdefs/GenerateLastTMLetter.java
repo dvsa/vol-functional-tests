@@ -8,7 +8,6 @@ import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
-import io.restassured.internal.NoParameterValue;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -32,7 +31,7 @@ public class GenerateLastTMLetter extends BasePage implements En {
         Then("^a flag should be set in the DB$", () -> {
             Config config = new Configuration(env.toString()).getConfig();
             if (config.getString("dbUsername").isEmpty() || config.getString("dbPassword").isEmpty()){
-                throw new Exception("No values for 'dbUsername' and 'dbPassword' from the config file.")
+                throw new Exception("No values for 'dbUsername' and 'dbPassword' from the config file.");
             }
             Properties.set("dbUsername",config.getString("dbUsername"));
             Properties.set("dbPassword",config.getString("dbPassword"));
