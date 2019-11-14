@@ -20,7 +20,6 @@ import java.nio.file.Paths;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.file.Files.checkFileContainsText;
 import static activesupport.file.Files.getDownloadedFile;
-import static junit.framework.TestCase.assertTrue;
 
 public class WebDav extends BasePage implements En {
 
@@ -78,15 +77,7 @@ public class WebDav extends BasePage implements En {
             Assert.assertEquals(getText("//*[@id='osType']//*[@selected='selected']", SelectorType.XPATH), operatingSystem);
         });
         And("^upload a document$", () -> {
-            click("//*[@id='upload']", SelectorType.XPATH);
-            waitForTextToBePresent("Upload document");
-            waitAndEnterText("//*[@id='details[description]']",SelectorType.XPATH,"distinctiveName");
-            selectValueFromDropDownByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
-            String fileLocation = String.format("%s/%s",System.getProperty("user.dir"),"testBusTemplate.rtf");
-            Browser.getDriver().findElement(By.xpath("//*[@id='details[file]']")).sendKeys(fileLocation);
-            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
-            assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]",SelectorType.XPATH));
+            uploadDocument(String.format("%s/%s",System.getProperty("user.dir"),"testBusTemplate.rtf"));
         });
     }
 }
