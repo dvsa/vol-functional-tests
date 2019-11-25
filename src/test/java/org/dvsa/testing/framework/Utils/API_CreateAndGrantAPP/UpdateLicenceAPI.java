@@ -606,7 +606,7 @@ public class UpdateLicenceAPI extends BaseAPI {
 
         InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withAuthVehicles(String.valueOf(world.createLicence.getNoOfVehiclesRequired())).withAuthTrailers(String.valueOf(world.createLicence.getNoOfVehiclesRequired()))
                 .withRequested("Y").withReason("Interim granted through the API").withStartDate(GenericUtils.getCurrentDate("yyyy-MM-dd")).withEndDate(GenericUtils.getFutureFormattedDate(2, "yyyy-MM-dd"))
-                .withAction("grant").withId(world.createLicence.getApplicationNumber()).withVersion(applicationVersion);
+                .withAction("grant").withId(application).withVersion(applicationVersion);
         apiResponse = RestUtils.put(interimApplicationBuilder, interimApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
@@ -621,7 +621,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         Headers.getHeaders().put("x-pid", adminApiHeader());
         String interimApplicationResource = URL.build(env, String.format("application/%s/interim/grant/", application)).toString();
 
-        InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withId(world.createLicence.getApplicationNumber());
+        InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withId(application);
         apiResponse = RestUtils.post(interimApplicationBuilder, interimApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {

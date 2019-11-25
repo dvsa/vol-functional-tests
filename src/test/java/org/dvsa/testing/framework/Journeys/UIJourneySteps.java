@@ -1164,7 +1164,8 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateThroughApplication() throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("Type");
+        waitForTextToBePresent("Apply for a new licence");
+        clickByLinkText("Type of licence");
         waitForTextToBePresent("Type of licence");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTextToBePresent("Business type");

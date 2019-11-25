@@ -57,7 +57,6 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 
 ## Refactoring todos
 - Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
-- Change all passwords from config to use secrets manager.
 - CreateOverview - can be moved in to util
 - Before step for EBSR pre-processing to update xml
 - Need to refactor out getPastDate, getPastMonth, Year, etc. All replaced for new function getPastCurrentOrFutureDate (possibly renamed) from Active Support.
