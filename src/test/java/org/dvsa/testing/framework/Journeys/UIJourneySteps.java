@@ -199,7 +199,7 @@ public class UIJourneySteps extends BasePage {
         world.genericUtils.modifyXML(state, interval);
         GenericUtils.zipFolder();
         navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        clickByLinkText("Bus");
+        clickByLinkText("Bus registrations");
         waitAndClick("//*[@id='main']/div[2]/ul/li[2]/a", SelectorType.XPATH);
         click(nameAttribute("button", "action"));
         String workingDir = System.getProperty("user.dir");
