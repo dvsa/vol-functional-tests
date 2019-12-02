@@ -1670,4 +1670,15 @@ public class UIJourneySteps extends BasePage {
             currentElement = currentElement.findElement(By.xpath(".//.."));
         }
     }
+
+    public void uploadDocument(String filePath) throws IllegalBrowserException, MalformedURLException {
+        click("//*[@id='upload']", SelectorType.XPATH);
+        waitForTextToBePresent("Upload document");
+        waitAndEnterText("//*[@id='details[description]']", SelectorType.XPATH,"distinctiveName");
+        selectValueFromDropDownByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
+        navigate().findElement(By.xpath("//*[@id='details[file]']")).sendKeys(filePath);
+        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
+        assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]",SelectorType.XPATH));
+    }
 }

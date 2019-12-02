@@ -77,7 +77,7 @@ public class WebDav extends BasePage implements En {
             Assert.assertEquals(getText("//*[@id='osType']//*[@selected='selected']", SelectorType.XPATH), operatingSystem);
         });
         And("^upload a document$", () -> {
-            uploadDocument(String.format("%s/%s",System.getProperty("user.dir"),"testBusTemplate.rtf"));
+            world.UIJourneySteps.uploadDocument(String.format("%s/%s",System.getProperty("user.dir"),"testBusTemplate.rtf"));
         });
     }
 }
