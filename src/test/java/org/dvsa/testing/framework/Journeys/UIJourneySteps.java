@@ -43,7 +43,6 @@ import java.util.concurrent.TimeUnit;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.dates.Dates.*;
-import static activesupport.driver.Browser.getDriver;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
 import static junit.framework.TestCase.assertEquals;
@@ -429,7 +428,7 @@ public class UIJourneySteps extends BasePage {
                 break;
             case "application":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
-                applicationStatus = Browser.getDriver().findElement(By.xpath(overviewStatus)).getText();
+                applicationStatus = getText(overviewStatus,SelectorType.XPATH);
                 clickByLinkText(world.createLicence.getApplicationNumber());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply for a new licence");
@@ -439,7 +438,7 @@ public class UIJourneySteps extends BasePage {
                 break;
             case "variation":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.updateLicence.getVariationApplicationNumber());
-                variationApplicationStatus = Browser.getDriver().findElement(By.xpath(overviewStatus)).getText();
+                variationApplicationStatus = getText(overviewStatus,SelectorType.XPATH);
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
                 if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply to change a licence");
@@ -673,7 +672,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void generateLetter() throws IllegalBrowserException, MalformedURLException {
-        getDriver().manage().window().maximize();
+        Browser.navigate().manage().window().maximize();
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
         clickByName("New letter");
@@ -801,8 +800,8 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Verified");
         enterText("username", verifyUsername, SelectorType.NAME);
         enterText("password", verifyPassword, SelectorType.NAME);
-        while (Browser.getDriver().findElements(By.xpath("//*[contains(text(),'Verified ID Login')]")).size() > 0) {
-            Browser.getDriver().findElement(By.xpath("//*[@value='SignIn']")).click();
+        while (size("//*[contains(text(),'Verified ID Login')]",SelectorType.XPATH) > 0) {
+            click("//*[@value='SignIn']",SelectorType.XPATH);
         }
         waitForTextToBePresent("Personal Details");
         click("//*[@id='agree']", SelectorType.XPATH);
@@ -1158,9 +1157,9 @@ public class UIJourneySteps extends BasePage {
     public void signDeclarationForVariation() throws IllegalBrowserException, MalformedURLException {
         navigateToReviewDeclarationsPage("variation");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
-        if (Browser.getDriver().findElements(By.xpath("//*[@id='submitAndPay']")).size() != 0) {
+        if (size("//*[@id='submitAndPay']",SelectorType.XPATH) != 0) {
             click("//*[@id='submitAndPay']", SelectorType.XPATH);
-        } else if (Browser.getDriver().findElements(By.xpath("//*[@id='submit']")).size() != 0)
+        } else if (size("//*[@id='submit']",SelectorType.XPATH) != 0)
             click("//*[@id='submit']", SelectorType.XPATH);
     }
 
@@ -1579,9 +1578,9 @@ public class UIJourneySteps extends BasePage {
                 urlSearchAndViewVariational();
                 break;
         }
-        if (Browser.getDriver().findElement(By.xpath("//*/span[contains(@class,'status')]")).getText().equals("UNDER CONSIDERATION")) {
+        if (getText("//*/span[contains(@class,'status')]",SelectorType.XPATH).equals("UNDER CONSIDERATION")) {
             waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
-        } else if (Browser.getDriver().findElement(By.xpath("//*/span[contains(@class,'status')]")).getText().equals("VALID")) {
+        } else if (getText("//*/span[contains(@class,'status')]",SelectorType.XPATH).equals("VALID")) {
             waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);
         }
         click("//*[@id='add']", SelectorType.XPATH);
@@ -1600,7 +1599,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForPageLoad();
 
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(navigate())
                 .withTimeout(Duration.ofSeconds(30))
                 .pollingEvery(Duration.ofMillis(200))
                 .ignoring(NoSuchElementException.class);
@@ -1613,7 +1612,7 @@ public class UIJourneySteps extends BasePage {
 
         wait.until(expect);
         try {
-            assertTrue(Browser.getDriver().getCurrentUrl().contains("variation"));
+            assertTrue(Browser.navigate().getCurrentUrl().contains("variation"));
         } catch (Exception e) {
             System.out.println("Page URL doesn't contain variation and therefore isn't storing the variationNumber.");
         }
@@ -1637,8 +1636,8 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void removeFirstVehicleOnVehiclePage() throws IllegalBrowserException, MalformedURLException {
-        Browser.getDriver().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
-        Browser.getDriver().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
+        navigate().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
+        navigate().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
@@ -1661,11 +1660,11 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
-    public void skipToMainContentAndCheck() {
-        Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
-        Browser.getDriver().switchTo().activeElement().sendKeys(Keys.RETURN);
-        Browser.getDriver().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
-        WebElement currentElement = getDriver().switchTo().activeElement();
+    public void skipToMainContentAndCheck() throws MalformedURLException, IllegalBrowserException {
+        navigate().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
+        navigate().switchTo().activeElement().sendKeys(Keys.RETURN);
+        navigate().findElement(By.xpath("//body")).sendKeys(Keys.TAB);
+        WebElement currentElement = navigate().switchTo().activeElement();
         while (!currentElement.getTagName().equals("main")) {
             currentElement = currentElement.findElement(By.xpath(".//.."));
         }
