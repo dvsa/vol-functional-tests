@@ -70,6 +70,8 @@ public class UIJourneySteps extends BasePage {
     private String password;
     private String licenceNumber;
 
+    private Dates date;
+
 
     public String getPassword() {
         return password;
@@ -89,6 +91,7 @@ public class UIJourneySteps extends BasePage {
 
     public UIJourneySteps(World world) {
         this.world = world;
+        this.date = new Dates();
     }
 
     public String getOperatorUser() {
@@ -169,10 +172,10 @@ public class UIJourneySteps extends BasePage {
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
         enterDate(getCurrentDayOfMonth(), getCurrentMonth(), getCurrentYear());
-        int[] date = new Dates().getRelativeDate(0,5,0);
-        enterText("effectiveDate_day", date[0], SelectorType.ID);
-        enterText("effectiveDate_month", date[1], SelectorType.ID);
-        enterText("effectiveDate_year", date[2], SelectorType.ID);
+        int[] busRegDate = date.getRelativeDate(0,5,0);
+        enterText("effectiveDate_day", busRegDate[0], SelectorType.ID);
+        enterText("effectiveDate_month", busRegDate[1], SelectorType.ID);
+        enterText("effectiveDate_year", busRegDate[2], SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
         do {
             // Refresh page
@@ -388,7 +391,7 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("//select[@id='title']", SelectorType.XPATH, "Dr");
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
-        int[] directorDate = new Dates().getRelativeDate(-5,0,-20);
+        int[] directorDate = date.getRelativeDate(-5,0,-20);
         enterText("dob_day", directorDate[0], SelectorType.ID);
         enterText("dob_month", directorDate[1], SelectorType.ID);
         enterText("dob_year", directorDate[2], SelectorType.ID);
@@ -817,7 +820,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
-        int[] TMDate = new Dates().getRelativeDate(0,0,25);
+        int[] TMDate = date.getRelativeDate(0,0,25);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
@@ -859,7 +862,7 @@ public class UIJourneySteps extends BasePage {
     public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
-        int[] TMDate = new Dates().getRelativeDate(0,0,-25);
+        int[] TMDate = date.getRelativeDate(0,0,-25);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
@@ -946,7 +949,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        int[] TMDate = new Dates().getRelativeDate(-5,0,-20);
+        int[] TMDate = date.getRelativeDate(-5,0,-20);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
