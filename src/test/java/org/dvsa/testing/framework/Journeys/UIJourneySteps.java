@@ -7,6 +7,7 @@ import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.S3;
 import activesupport.config.Configuration;
 import activesupport.dates.Dates;
+import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
@@ -42,7 +43,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
-import static activesupport.dates.Dates.*;
 import static activesupport.driver.Browser.getDriver;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
@@ -91,7 +91,7 @@ public class UIJourneySteps extends BasePage {
 
     public UIJourneySteps(World world) {
         this.world = world;
-        this.date = new Dates();
+        this.date = new Dates(new LocalDateCalendar());
     }
 
     public String getOperatorUser() {
@@ -171,8 +171,8 @@ public class UIJourneySteps extends BasePage {
         enterText("via", Str.randomWord(5), SelectorType.ID);
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
-        enterDate(getCurrentDayOfMonth(), getCurrentMonth(), getCurrentYear());
-        int[] busRegDate = date.getRelativeDate(0,5,0);
+        int[] busRegDate = date.getRelativeDate(0,0,0);
+        enterDate(busRegDate[0], busRegDate[1], busRegDate[2]);
         enterText("effectiveDate_day", busRegDate[0], SelectorType.ID);
         enterText("effectiveDate_month", busRegDate[1], SelectorType.ID);
         enterText("effectiveDate_year", busRegDate[2], SelectorType.ID);
@@ -298,9 +298,10 @@ public class UIJourneySteps extends BasePage {
                 }
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                enterText("details[chequeDate][day]", String.valueOf(getCurrentDayOfMonth()), SelectorType.NAME);
-                enterText("details[chequeDate][month]", String.valueOf(getCurrentMonth()), SelectorType.NAME);
-                enterText("details[chequeDate][year]", String.valueOf(getCurrentYear()), SelectorType.NAME);
+                int[] chequeDate = date.getRelativeDate(0,0,0);
+                enterText("details[chequeDate][day]", String.valueOf(chequeDate[0]), SelectorType.NAME);
+                enterText("details[chequeDate][month]", String.valueOf(chequeDate[1]), SelectorType.NAME);
+                enterText("details[chequeDate][year]", String.valueOf(chequeDate[2]), SelectorType.NAME);
                 findAddress(paymentMethod);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -583,7 +584,7 @@ public class UIJourneySteps extends BasePage {
         enterText("data[forename]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
-        int[] convictionDate = new Dates().getRelativeDate(-5,0,-20);
+        int[] convictionDate = date.getRelativeDate(-5,0,-20);
         enterText("dob_day", String.valueOf(convictionDate[0]), SelectorType.ID);
         enterText("dob_month", String.valueOf(convictionDate[1]), SelectorType.ID);
         enterText("dob_year", String.valueOf(convictionDate[2]), SelectorType.ID);
