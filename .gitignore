@@ -138,5 +138,5 @@ pom.xml.tag
 Report.html
 /src/test/java/Test.java
 
-src/test/resources/application.conf
+src/test/resources/*.conf
 /LOGS/vol-functional-test.log

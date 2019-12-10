@@ -9,7 +9,7 @@ Feature: Internal User should be able to create an operator account
       When the caseworker completes and submits the application
       And grants the application
       Then the licence is granted in Internal
-      And the "<document>" document is produced automatically
+      And the "<document>" document should be generated
 
       Examples:
       | operator | licence-type           | document    |
