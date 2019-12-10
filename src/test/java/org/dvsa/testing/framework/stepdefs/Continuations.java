@@ -2,9 +2,12 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.dates.Dates;
+import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class Continuations extends BasePage implements En {
     public Continuations(World world) {
@@ -22,17 +25,42 @@ public class Continuations extends BasePage implements En {
             waitForElementToBeClickable("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
             click("//*[@id='menu-admin-dashboard/continuations']", SelectorType.XPATH);
-            waitForTextToBePresent("Generate continuations");
+            waitForElementToBePresent("//*[@id='generate-continuation-type']");
             selectValueFromDropDown("//*[@id='generate-continuation-trafficArea']", SelectorType.XPATH, world.updateLicence.getLicenceTrafficArea());
             click("//*[@id='form-actions[generate]']", SelectorType.XPATH);
             enterText("//*[@id='filters[licenceNo]']", world.createLicence.getLicenceNumber(), SelectorType.XPATH);
             click("//*[@id='main']", SelectorType.XPATH);
-            waitForElementToBeClickable("//*[@id='generate']", SelectorType.XPATH);
-            click("//input[@name='id[]']", SelectorType.XPATH);
+            waitForTextToBePresent("1 licence(s)");
+            waitAndClick("//input[@name='id[]']", SelectorType.XPATH);
             click("//*[@id='generate']", SelectorType.XPATH);
-            wait();
+            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitForTextToBePresent("The selected licence(s) have been queued");
         });
         And("^fill in my continuation details on self serve$", () -> {
+            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.UIJourneySteps.navigateToSelfServePage("licence","view");
+            boolean continuationBoxFound = false;
+            long kickoutTime = System.currentTimeMillis() + 120000;
+            while (!continuationBoxFound && System.currentTimeMillis() < kickoutTime) {
+                javaScriptExecutor("location.reload(true)");
+                continuationBoxFound = isElementPresent("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
+            }
+            click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
+            click("//*[@id='submit']", SelectorType.XPATH);
+            Browser.navigate().findElements(By.xpath("//*[@type='checkbox']")).stream().forEach(WebElement::click);
+            findSelectAllRadioButtonsByValue("Y");
+            click("//*[@id='licenceChecklistConfirmation[yesContent][submit]']", SelectorType.XPATH);
+            String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
+            enterText("//*[@id='averageBalance']", necessaryIncome, SelectorType.XPATH);
+            findSelectAllRadioButtonsByValue("N");
+            click("//*[@id='submit']", SelectorType.XPATH);
+            click("//*[@id='content[signatureOptions]']", SelectorType.XPATH);
+            click("//*[@id='sign']", SelectorType.XPATH);
+            world.UIJourneySteps.signWithVerify();
+            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+            click("//*[@id='submitAndPay']", SelectorType.XPATH);
+            click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+            world.UIJourneySteps.customerPaymentModule( "4006000000000600", "10", "20");
         });
         Then("^the continuation should be approved$", () -> {
         });
