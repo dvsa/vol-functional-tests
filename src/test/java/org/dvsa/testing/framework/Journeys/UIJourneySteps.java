@@ -71,6 +71,7 @@ public class UIJourneySteps extends BasePage {
     private String licenceNumber;
 
     private Dates date;
+    private Config config;
 
 
     public String getPassword() {
@@ -92,6 +93,8 @@ public class UIJourneySteps extends BasePage {
     public UIJourneySteps(World world) {
         this.world = world;
         this.date = new Dates(new LocalDateCalendar());
+        config = new Configuration(env.toString()).getConfig();
+
     }
 
     public String getOperatorUser() {
@@ -595,7 +598,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToInternalAdminUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        Config config = new Configuration(env.toString()).getConfig();
         String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
 
@@ -634,7 +636,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        Config config = new Configuration(env.toString()).getConfig();
         String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
 
@@ -794,7 +795,6 @@ public class UIJourneySteps extends BasePage {
 
     public void signWithVerify() throws IllegalBrowserException, MalformedURLException {
         setVerifyUsername(verifyUsername);
-        Config config = new Configuration(env.toString()).getConfig();
         String verifyUsername = config.getString("verifyUsername");
         String verifyPassword = config.getString("verifyPassword");
 
@@ -1474,7 +1474,6 @@ public class UIJourneySteps extends BasePage {
         enterText("interim[goodsApplicationInterimReason]", "Testing", SelectorType.NAME);
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-        Config config = new Configuration(env.toString()).getConfig();
         customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
     }
 
