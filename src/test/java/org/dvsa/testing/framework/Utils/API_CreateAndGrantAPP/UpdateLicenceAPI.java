@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import activesupport.dates.Dates;
+import activesupport.dates.LocalDateCalendar;
 import activesupport.http.RestUtils;
 import activesupport.string.Str;
 import activesupport.system.Properties;
@@ -29,7 +31,6 @@ import java.util.Map;
 
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
-import static org.dvsa.testing.lib.pages.BasePage.*;
 import static org.junit.Assert.assertThat;
 
 
@@ -55,6 +56,7 @@ public class UpdateLicenceAPI extends BaseAPI {
     private int conditionUndertaking;
     private int submissionsId;
     private int caseId;
+    private Dates date;
 
     private static String variationApplicationNumber;
     private static int version = 1;
@@ -204,6 +206,8 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     public UpdateLicenceAPI(World world) {
         this.world = world;
+        this.date = new Dates(new LocalDateCalendar());
+
     }
 
     public void createVariation(String variationType) {
@@ -397,7 +401,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         String internalAdminUserResource = URL.build(env, String.format("user/internal/%s", userId)).toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Long").withFamilyName("Ash").withBirthDate(getPastYear(30) + "-" + getCurrentMonth() + "-" + getCurrentDayOfMonth());
+        int[] personDOB = date.getRelativeDate(0, 0, -30);
+        PersonBuilder personBuilder = new PersonBuilder().withForename("Long").withFamilyName("Ash").withBirthDate(personDOB[2] + "-" + personDOB[1] + "-" + personDOB[0]);
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withTeam(team)
@@ -418,7 +423,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         String internalAdminUserResource = URL.build(env, "user/internal").toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate(getPastYear(30) + "-" + getCurrentMonth() + "-" + getCurrentDayOfMonth());
+        int[] personDOB = date.getRelativeDate(0, 0, -30);
+        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate(personDOB[2] + "-" + personDOB[1] + "-" + personDOB[0]);
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withRoles(roles).withTeam(team).withUserType(userType);
@@ -602,11 +608,11 @@ public class UpdateLicenceAPI extends BaseAPI {
     public void submitInterimApplication(String application) {
         Headers.getHeaders().put("x-pid", adminApiHeader());
         String interimApplicationResource = URL.build(env, String.format("application/%s/interim/", application)).toString();
-        Integer applicationVersion = Integer.parseInt(fetchApplicationInformation(application, "version", "1"));
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(application, "version", "1"));
 
         InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withAuthVehicles(String.valueOf(world.createLicence.getNoOfVehiclesRequired())).withAuthTrailers(String.valueOf(world.createLicence.getNoOfVehiclesRequired()))
                 .withRequested("Y").withReason("Interim granted through the API").withStartDate(GenericUtils.getCurrentDate("yyyy-MM-dd")).withEndDate(GenericUtils.getFutureFormattedDate(2, "yyyy-MM-dd"))
-                .withAction("grant").withId(world.createLicence.getApplicationNumber()).withVersion(applicationVersion);
+                .withAction("grant").withId(application).withVersion(applicationVersion);
         apiResponse = RestUtils.put(interimApplicationBuilder, interimApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
@@ -621,7 +627,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         Headers.getHeaders().put("x-pid", adminApiHeader());
         String interimApplicationResource = URL.build(env, String.format("application/%s/interim/grant/", application)).toString();
 
-        InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withId(world.createLicence.getApplicationNumber());
+        InterimApplicationBuilder interimApplicationBuilder = new InterimApplicationBuilder().withId(application);
         apiResponse = RestUtils.post(interimApplicationBuilder, interimApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {

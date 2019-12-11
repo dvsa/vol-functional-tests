@@ -6,6 +6,8 @@ import activesupport.MissingDriverException;
 import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.S3;
 import activesupport.config.Configuration;
+import activesupport.dates.Dates;
+import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
@@ -46,7 +48,8 @@ import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
+import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
+import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 
 
 public class UIJourneySteps extends BasePage {
@@ -67,6 +70,9 @@ public class UIJourneySteps extends BasePage {
     private String password;
     private String licenceNumber;
 
+    private Dates date;
+    private Config config;
+
 
     public String getPassword() {
         return password;
@@ -86,6 +92,9 @@ public class UIJourneySteps extends BasePage {
 
     public UIJourneySteps(World world) {
         this.world = world;
+        this.date = new Dates(new LocalDateCalendar());
+        config = new Configuration(env.toString()).getConfig();
+
     }
 
     public String getOperatorUser() {
@@ -165,12 +174,11 @@ public class UIJourneySteps extends BasePage {
         enterText("via", Str.randomWord(5), SelectorType.ID);
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
-        enterDate(getCurrentDayOfMonth(), getCurrentMonth(), getCurrentYear());
-        getFutureDate(month);
-        String[] date = getFutureDate(5).toString().split("-");
-        enterText("effectiveDate_day", date[2], SelectorType.ID);
-        enterText("effectiveDate_month", date[1], SelectorType.ID);
-        enterText("effectiveDate_year", date[0], SelectorType.ID);
+        int[] busRegDate = date.getRelativeDate(0,0,0);
+        enterDate(busRegDate[0], busRegDate[1], busRegDate[2]);
+        enterText("effectiveDate_day", busRegDate[0], SelectorType.ID);
+        enterText("effectiveDate_month", busRegDate[1], SelectorType.ID);
+        enterText("effectiveDate_year", busRegDate[2], SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
         do {
             // Refresh page
@@ -197,7 +205,7 @@ public class UIJourneySteps extends BasePage {
         world.genericUtils.modifyXML(state, interval);
         GenericUtils.zipFolder();
         navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        clickByLinkText("Bus");
+        clickByLinkText("Bus registrations");
         waitAndClick("//*[@id='main']/div[2]/ul/li[2]/a", SelectorType.XPATH);
         click(nameAttribute("button", "action"));
         String workingDir = System.getProperty("user.dir");
@@ -293,9 +301,10 @@ public class UIJourneySteps extends BasePage {
                 }
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                enterText("details[chequeDate][day]", String.valueOf(getCurrentDayOfMonth()), SelectorType.NAME);
-                enterText("details[chequeDate][month]", String.valueOf(getCurrentMonth()), SelectorType.NAME);
-                enterText("details[chequeDate][year]", String.valueOf(getCurrentYear()), SelectorType.NAME);
+                int[] chequeDate = date.getRelativeDate(0,0,0);
+                enterText("details[chequeDate][day]", String.valueOf(chequeDate[0]), SelectorType.NAME);
+                enterText("details[chequeDate][month]", String.valueOf(chequeDate[1]), SelectorType.NAME);
+                enterText("details[chequeDate][year]", String.valueOf(chequeDate[2]), SelectorType.NAME);
                 findAddress(paymentMethod);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -348,7 +357,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Pay fee");
     }
 
-    private void customerPaymentModule(String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
+    public void customerPaymentModule(String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Card Number*");
         enterText("//*[@id='scp_cardPage_cardNumber_input']", bankCardNumber, SelectorType.XPATH);
         enterText("//*[@id='scp_cardPage_expiryDate_input']", cardExpiryMonth, SelectorType.XPATH);
@@ -386,9 +395,10 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("//select[@id='title']", SelectorType.XPATH, "Dr");
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
-        enterText("dob_day", String.valueOf(getPastDayOfMonth(5)), SelectorType.ID);
-        enterText("dob_month", String.valueOf(getCurrentMonth()), SelectorType.ID);
-        enterText("dob_year", String.valueOf(getPastYear(20)), SelectorType.ID);
+        int[] directorDate = date.getRelativeDate(-5,0,-20);
+        enterText("dob_day", directorDate[0], SelectorType.ID);
+        enterText("dob_month", directorDate[1], SelectorType.ID);
+        enterText("dob_year", directorDate[2], SelectorType.ID);
         clickByName("form-actions[saveAndContinue]");
     }
 
@@ -577,9 +587,10 @@ public class UIJourneySteps extends BasePage {
         enterText("data[forename]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
-        enterText("dob_day", String.valueOf(getPastDayOfMonth(5)), SelectorType.ID);
-        enterText("dob_month", String.valueOf(getCurrentMonth()), SelectorType.ID);
-        enterText("dob_year", String.valueOf(getPastYear(20)), SelectorType.ID);
+        int[] convictionDate = date.getRelativeDate(-5,0,-20);
+        enterText("dob_day", String.valueOf(convictionDate[0]), SelectorType.ID);
+        enterText("dob_month", String.valueOf(convictionDate[1]), SelectorType.ID);
+        enterText("dob_year", String.valueOf(convictionDate[2]), SelectorType.ID);
         enterText("data[categoryText]", Str.randomWord(50), SelectorType.NAME);
         enterText("data[courtFpn]", "Clown", SelectorType.NAME);
         enterText("data[penalty]", "Severe", SelectorType.NAME);
@@ -587,7 +598,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToInternalAdminUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        Config config = new Configuration().getConfig();
         String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
 
@@ -626,7 +636,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        Config config = new Configuration().getConfig();
         String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
 
@@ -786,7 +795,6 @@ public class UIJourneySteps extends BasePage {
 
     public void signWithVerify() throws IllegalBrowserException, MalformedURLException {
         setVerifyUsername(verifyUsername);
-        Config config = new Configuration().getConfig();
         String verifyUsername = config.getString("verifyUsername");
         String verifyPassword = config.getString("verifyPassword");
 
@@ -813,10 +821,10 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
-        String[] date = GenericUtils.getPastDate(25).toString().split("-");
-        enterText("dob_day", date[2], SelectorType.ID);
-        enterText("dob_month", date[1], SelectorType.ID);
-        enterText("dob_year", date[0], SelectorType.ID);
+        int[] TMDate = date.getRelativeDate(0,0,25);
+        enterText("dob_day", TMDate[0], SelectorType.ID);
+        enterText("dob_month", TMDate[1], SelectorType.ID);
+        enterText("dob_year", TMDate[2], SelectorType.ID);
         enterText("username", externalTMUser, SelectorType.ID);
         enterText("emailAddress", externalTMEmail, SelectorType.ID);
         enterText("emailConfirm", externalTMEmail, SelectorType.ID);
@@ -855,10 +863,10 @@ public class UIJourneySteps extends BasePage {
     public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
-        String[] date = world.genericUtils.getPastDate(25).toString().split("-");
-        enterText("dob_day", date[2], SelectorType.ID);
-        enterText("dob_month", date[1], SelectorType.ID);
-        enterText("dob_year", date[0], SelectorType.ID);
+        int[] TMDate = date.getRelativeDate(0,0,-25);
+        enterText("dob_day", TMDate[0], SelectorType.ID);
+        enterText("dob_month", TMDate[1], SelectorType.ID);
+        enterText("dob_year", TMDate[2], SelectorType.ID);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -942,9 +950,10 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        enterText("dob_day", String.valueOf(getPastDayOfMonth(5)), SelectorType.ID);
-        enterText("dob_month", String.valueOf(getCurrentMonth()), SelectorType.ID);
-        enterText("dob_year", String.valueOf(getPastYear(20)), SelectorType.ID);
+        int[] TMDate = date.getRelativeDate(-5,0,-20);
+        enterText("dob_day", TMDate[0], SelectorType.ID);
+        enterText("dob_month", TMDate[1], SelectorType.ID);
+        enterText("dob_year", TMDate[2], SelectorType.ID);
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
         waitForTextToBePresent("Transport Managers");
@@ -1160,7 +1169,8 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateThroughApplication() throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("Type");
+        waitForTextToBePresent("Apply for a new licence");
+        clickByLinkText("Type of licence");
         waitForTextToBePresent("Type of licence");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTextToBePresent("Business type");
@@ -1464,7 +1474,7 @@ public class UIJourneySteps extends BasePage {
         enterText("interim[goodsApplicationInterimReason]", "Testing", SelectorType.NAME);
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-        payFee(null, "card", "4006000000000600", "10", "20");
+        customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
     }
 
     public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException {
@@ -1662,5 +1672,16 @@ public class UIJourneySteps extends BasePage {
         while (!currentElement.getTagName().equals("main")) {
             currentElement = currentElement.findElement(By.xpath(".//.."));
         }
+    }
+
+    public void uploadDocument(String filePath) throws IllegalBrowserException, MalformedURLException {
+        click("//*[@id='upload']", SelectorType.XPATH);
+        waitForTextToBePresent("Upload document");
+        waitAndEnterText("//*[@id='details[description]']", SelectorType.XPATH,"distinctiveName");
+        selectValueFromDropDownByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
+        navigate().findElement(By.xpath("//*[@id='details[file]']")).sendKeys(filePath);
+        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
+        assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]",SelectorType.XPATH));
     }
 }
