@@ -20,16 +20,19 @@ import static org.dvsa.testing.framework.stepdefs.RemoveTM.alertHeaderValue;
 
 public class GenerateLastTMLetter extends BasePage implements En {
 
+    private Config config;
+
     public GenerateLastTMLetter(World world) {
 
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+        Config config = new Configuration(env.toString()).getConfig();
+
 
 
         Given("^i have a valid \"([^\"]*)\" \"([^\"]*)\" licence$", (String operatorType, String licenceType) -> {
             world.UIJourneySteps.createLicence(world, operatorType, licenceType);
         });
         Then("^a flag should be set in the DB$", () -> {
-            Config config = new Configuration(env.toString()).getConfig();
             if (config.getString("dbUsername").isEmpty() || config.getString("dbPassword").isEmpty()){
                 throw new Exception("No values for 'dbUsername' and 'dbPassword' from the config file.");
             }

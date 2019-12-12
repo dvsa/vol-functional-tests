@@ -7,6 +7,7 @@ import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.S3;
 import activesupport.config.Configuration;
 import activesupport.dates.Dates;
+import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
 import activesupport.string.Str;
 import activesupport.system.Properties;
@@ -42,7 +43,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
-import static activesupport.dates.Dates.*;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
 import static junit.framework.TestCase.assertEquals;
@@ -69,6 +69,9 @@ public class UIJourneySteps extends BasePage {
     private String password;
     private String licenceNumber;
 
+    private Dates date;
+    private Config config;
+
 
     public String getPassword() {
         return password;
@@ -88,6 +91,9 @@ public class UIJourneySteps extends BasePage {
 
     public UIJourneySteps(World world) {
         this.world = world;
+        this.date = new Dates(new LocalDateCalendar());
+        config = new Configuration(env.toString()).getConfig();
+
     }
 
     public String getOperatorUser() {
@@ -167,11 +173,11 @@ public class UIJourneySteps extends BasePage {
         enterText("via", Str.randomWord(5), SelectorType.ID);
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
-        enterDate(getCurrentDayOfMonth(), getCurrentMonth(), getCurrentYear());
-        int[] date = new Dates().getRelativeDate(0,5,0);
-        enterText("effectiveDate_day", date[0], SelectorType.ID);
-        enterText("effectiveDate_month", date[1], SelectorType.ID);
-        enterText("effectiveDate_year", date[2], SelectorType.ID);
+        int[] busRegDate = date.getRelativeDate(0,0,0);
+        enterDate(busRegDate[0], busRegDate[1], busRegDate[2]);
+        enterText("effectiveDate_day", busRegDate[0], SelectorType.ID);
+        enterText("effectiveDate_month", busRegDate[1], SelectorType.ID);
+        enterText("effectiveDate_year", busRegDate[2], SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
         do {
             // Refresh page
@@ -294,9 +300,10 @@ public class UIJourneySteps extends BasePage {
                 }
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                enterText("details[chequeDate][day]", String.valueOf(getCurrentDayOfMonth()), SelectorType.NAME);
-                enterText("details[chequeDate][month]", String.valueOf(getCurrentMonth()), SelectorType.NAME);
-                enterText("details[chequeDate][year]", String.valueOf(getCurrentYear()), SelectorType.NAME);
+                int[] chequeDate = date.getRelativeDate(0,0,0);
+                enterText("details[chequeDate][day]", String.valueOf(chequeDate[0]), SelectorType.NAME);
+                enterText("details[chequeDate][month]", String.valueOf(chequeDate[1]), SelectorType.NAME);
+                enterText("details[chequeDate][year]", String.valueOf(chequeDate[2]), SelectorType.NAME);
                 findAddress(paymentMethod);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -387,7 +394,7 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("//select[@id='title']", SelectorType.XPATH, "Dr");
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
-        int[] directorDate = new Dates().getRelativeDate(-5,0,-20);
+        int[] directorDate = date.getRelativeDate(-5,0,-20);
         enterText("dob_day", directorDate[0], SelectorType.ID);
         enterText("dob_month", directorDate[1], SelectorType.ID);
         enterText("dob_year", directorDate[2], SelectorType.ID);
@@ -579,7 +586,7 @@ public class UIJourneySteps extends BasePage {
         enterText("data[forename]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
-        int[] convictionDate = new Dates().getRelativeDate(-5,0,-20);
+        int[] convictionDate = date.getRelativeDate(-5,0,-20);
         enterText("dob_day", String.valueOf(convictionDate[0]), SelectorType.ID);
         enterText("dob_month", String.valueOf(convictionDate[1]), SelectorType.ID);
         enterText("dob_year", String.valueOf(convictionDate[2]), SelectorType.ID);
@@ -590,7 +597,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToInternalAdminUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        Config config = new Configuration(env.toString()).getConfig();
         String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
 
@@ -629,7 +635,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        Config config = new Configuration(env.toString()).getConfig();
         String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
 
@@ -637,7 +642,7 @@ public class UIJourneySteps extends BasePage {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         }
-        navigate().get(myURL);
+        get(myURL);
         String password = getTempPassword(emailAddress);
 
         try {
@@ -789,7 +794,6 @@ public class UIJourneySteps extends BasePage {
 
     public void signWithVerify() throws IllegalBrowserException, MalformedURLException {
         setVerifyUsername(verifyUsername);
-        Config config = new Configuration(env.toString()).getConfig();
         String verifyUsername = config.getString("verifyUsername");
         String verifyPassword = config.getString("verifyPassword");
 
@@ -816,7 +820,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
-        int[] TMDate = new Dates().getRelativeDate(0,0,25);
+        int[] TMDate = date.getRelativeDate(0,0,25);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
@@ -858,7 +862,7 @@ public class UIJourneySteps extends BasePage {
     public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
-        int[] TMDate = new Dates().getRelativeDate(0,0,-25);
+        int[] TMDate = date.getRelativeDate(0,0,-25);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
@@ -945,7 +949,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        int[] TMDate = new Dates().getRelativeDate(-5,0,-20);
+        int[] TMDate = date.getRelativeDate(-5,0,-20);
         enterText("dob_day", TMDate[0], SelectorType.ID);
         enterText("dob_month", TMDate[1], SelectorType.ID);
         enterText("dob_year", TMDate[2], SelectorType.ID);
@@ -1203,7 +1207,7 @@ public class UIJourneySteps extends BasePage {
         if (world.createLicence.getLicenceType().equals("standard_international")) {
             addCommunityLicenceDetails();
         }
-        assertTrue(navigate().getCurrentUrl().contains("review"));
+        assertTrue(getCurrentUrl().contains("review"));
         assertTrue(isTextPresent("Review your surrender", 40));
     }
 
@@ -1213,7 +1217,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addDiscInformation(String discToDestroy, String discsLost, String discsStolen) throws IllegalBrowserException, MalformedURLException {
-        assertTrue(navigate().getCurrentUrl().contains("current-discs"));
+        assertTrue(getCurrentUrl().contains("current-discs"));
         click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
         waitForTextToBePresent("Number of discs you will destroy");
         waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, discToDestroy);
@@ -1469,7 +1473,6 @@ public class UIJourneySteps extends BasePage {
         enterText("interim[goodsApplicationInterimReason]", "Testing", SelectorType.NAME);
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-        Config config = new Configuration(env.toString()).getConfig();
         customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
     }
 
@@ -1676,5 +1679,16 @@ public class UIJourneySteps extends BasePage {
         while (!currentElement.getTagName().equals("main")) {
             currentElement = currentElement.findElement(By.xpath(".//.."));
         }
+    }
+
+    public void uploadDocument(String filePath) throws IllegalBrowserException, MalformedURLException {
+        click("//*[@id='upload']", SelectorType.XPATH);
+        waitForTextToBePresent("Upload document");
+        waitAndEnterText("//*[@id='details[description]']", SelectorType.XPATH,"distinctiveName");
+        selectValueFromDropDownByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
+        navigate().findElement(By.xpath("//*[@id='details[file]']")).sendKeys(filePath);
+        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
+        assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]",SelectorType.XPATH));
     }
 }

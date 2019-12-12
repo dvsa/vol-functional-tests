@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import activesupport.dates.Dates;
+import activesupport.dates.LocalDateCalendar;
 import activesupport.http.RestUtils;
 import activesupport.string.Str;
 import activesupport.system.Properties;
@@ -27,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static activesupport.dates.Dates.*;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 import static org.junit.Assert.assertThat;
@@ -55,6 +56,7 @@ public class UpdateLicenceAPI extends BaseAPI {
     private int conditionUndertaking;
     private int submissionsId;
     private int caseId;
+    private Dates date;
 
     private static String variationApplicationNumber;
     private static int version = 1;
@@ -204,6 +206,8 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     public UpdateLicenceAPI(World world) {
         this.world = world;
+        this.date = new Dates(new LocalDateCalendar());
+
     }
 
     public void createVariation(String variationType) {
@@ -397,7 +401,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         String internalAdminUserResource = URL.build(env, String.format("user/internal/%s", userId)).toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Long").withFamilyName("Ash").withBirthDate(getPastYear(30) + "-" + getCurrentMonth() + "-" + getCurrentDayOfMonth());
+        int[] personDOB = date.getRelativeDate(0, 0, -30);
+        PersonBuilder personBuilder = new PersonBuilder().withForename("Long").withFamilyName("Ash").withBirthDate(personDOB[2] + "-" + personDOB[1] + "-" + personDOB[0]);
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withTeam(team)
@@ -418,7 +423,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         String internalAdminUserResource = URL.build(env, "user/internal").toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate(getPastYear(30) + "-" + getCurrentMonth() + "-" + getCurrentDayOfMonth());
+        int[] personDOB = date.getRelativeDate(0, 0, -30);
+        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate(personDOB[2] + "-" + personDOB[1] + "-" + personDOB[0]);
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withRoles(roles).withTeam(team).withUserType(userType);
