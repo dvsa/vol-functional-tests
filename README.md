@@ -64,3 +64,4 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - Refactor db to not take the environment as a variable. Instead, a class to set environment variables that are then pulled into active support from the top level.
 - Add hashmap for dates for clarity of what date is what. I.e. dates[0] is instead dates['day'] or something similar.
 - Place variable in ESBR.xml method to stop it updating and requiring changes in git.
+- use gmail api to get passwords instead of getting passwords from the S3 Bucket.
