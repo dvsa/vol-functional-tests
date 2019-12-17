@@ -174,17 +174,19 @@ public class UIJourneySteps extends BasePage {
         enterText("via", Str.randomWord(5), SelectorType.ID);
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
-        int[] busRegDate = date.getRelativeDate(0,0,0);
+        int[] busRegDate = date.getRelativeDate(0, 0,0);
         enterDate(busRegDate[0], busRegDate[1], busRegDate[2]);
-        enterText("effectiveDate_day", busRegDate[0], SelectorType.ID);
-        enterText("effectiveDate_month", busRegDate[1], SelectorType.ID);
-        enterText("effectiveDate_year", busRegDate[2], SelectorType.ID);
+        int[] busRegEffectiveDate = date.getRelativeDate(0, month, 0);
+        enterText("effectiveDate_day", busRegEffectiveDate[0], SelectorType.ID);
+        enterText("effectiveDate_month", busRegEffectiveDate[1], SelectorType.ID);
+        enterText("effectiveDate_year", busRegEffectiveDate[2], SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
-        do {
-            // Refresh page
-            javaScriptExecutor("location.reload(true)");
-        }
-        while (!isTextPresent("Service details", 2));//condition
+
+//        do {
+//            // Refresh page
+//            javaScriptExecutor("location.reload(true)");
+//        }
+//        while (!isTextPresent("Service details", 2));//condition
     }
 
     private static void enterDate(int day, int month, int year) throws IllegalBrowserException, MalformedURLException {
@@ -338,6 +340,7 @@ public class UIJourneySteps extends BasePage {
         do {
             //nothing
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
+        waitForElementToBeClickable("status", SelectorType.ID);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         waitForTextToBePresent("Outstanding");
         clickByLinkText("50");
@@ -1351,7 +1354,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         untilElementPresent("//*[@id='modal-title']", SelectorType.XPATH);
         waitAndClick("form-actions[submit]", SelectorType.NAME);
-        javaScriptExecutor("location.reload(true)");
+        waitForElementToBeClickable("//*[@value='Remove']", SelectorType.XPATH);
         waitForTextToBePresent("Disc number");
         clickByLinkText("Back");
     }
@@ -1599,7 +1602,12 @@ public class UIJourneySteps extends BasePage {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
         clickByLinkText("change your licence");
-        waitForTextToBePresent("Applying to change a licence");
+        try {
+            waitForTextToBePresent("Applying to change a licence");
+        } catch (Exception e) {
+            clickByLinkText("change your licence");
+            waitForTextToBePresent("Applying to change a licence");
+        }
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForPageLoad();
 

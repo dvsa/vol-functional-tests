@@ -167,7 +167,6 @@ public class SurrenderLogic extends BasePage implements En {
         When("^the caseworker attempts to withdraw the surrender$", () -> {
             world.UIJourneySteps.caseworkManageSurrender();
             waitForTextToBePresent("Surrender details");
-            javaScriptExecutor("location.reload(true)");
             waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
         });
         Then("^a modal box is displayed$", () -> {

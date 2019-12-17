@@ -39,12 +39,15 @@ public class RefundInterim extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
             world.UIJourneySteps.urlSearchAndViewLicence();
             clickByLinkText("Fees");
-            do {
-                waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
-            } while (!isTextPresent("Paid",10));
-            clickByLinkText("Interim Fee");
+            selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
+            waitForTextToBePresent("£68.00");
+            clickByLinkText("Grant Interim Fee for application");
             waitForTextToBePresent("Fee details");
-            assertTrue(Browser.getDriver().findElement(By.xpath("//*//dd//span")).getText().toLowerCase().contains("refund"));
+            long kickoutTime = System.currentTimeMillis() + 15000;
+            do {
+                javaScriptExecutor("location.reload(true)");
+            } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
+            assertFalse(getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("pending"));
             assertFalse(Browser.getDriver().findElement(By.xpath("//*//dd//span")).getText().toLowerCase().contains("cancelled"));
             assertTrue(checkForPartialMatch("£68.00"));
         });
@@ -70,6 +73,7 @@ public class RefundInterim extends BasePage implements En {
         });
         When("^i pay for the interim application$", () -> {
             world.UIJourneySteps.payForInterimApp();
+            waitForTextToBePresent("Application overview");
         });
         And("^the application has been refused$", () -> {
             world.grantLicence.refuse(world.updateLicence.getVariationApplicationNumber());

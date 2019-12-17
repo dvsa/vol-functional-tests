@@ -1,16 +1,9 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -44,12 +37,9 @@ public class PaymentProcessing extends BasePage implements En {
         When("^i add a new \"([^\"]*)\" fee$", (String arg0) -> {
             String amount = "100";
             selectValueFromDropDown("status", SelectorType.ID, "Current");
-            // Refresh page
-            javaScriptExecutor("location.reload(true)");
-            waitForTextToBePresent("Payment Processing");
             String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']/h3", SelectorType.XPATH);
             setCurrentFeeCount(world.genericUtils.stripAlphaCharacters(feeCountBeforeAddingNewFee));
-            findElement("status", SelectorType.ID, 30).getAttribute("value").equals("current");
+            assertTrue(findElement("status", SelectorType.ID, 30).getAttribute("value").equals("current"));
             world.UIJourneySteps.createAdminFee(amount, arg0);
         });
         Then("^the fee should be created$", () -> {

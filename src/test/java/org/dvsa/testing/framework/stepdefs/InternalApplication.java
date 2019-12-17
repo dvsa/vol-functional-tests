@@ -15,16 +15,16 @@ public class InternalApplication extends BasePage implements En {
 
             waitForTextToBePresent("Amend letter");
 
-            String categoryValue = getElementValueByText("//*[@id='generate-document']/div[2]", SelectorType.XPATH);
+            String categoryValue = getText("//*[@id='generate-document']/div[2]", SelectorType.XPATH);
             assertNotNull(categoryValue);
 
-            String subCategoryValue = getElementValueByText("//*[@id='generate-document']/div[3]", SelectorType.XPATH);
+            String subCategoryValue = getText("//*[@id='generate-document']/div[3]", SelectorType.XPATH);
             assertNotNull(subCategoryValue);
 
-            String templateValue = getElementValueByText("//*[@id='generate-document']/div[4]", SelectorType.XPATH);
+            String templateValue = getText("//*[@id='generate-document']/div[4]", SelectorType.XPATH);
             assertNotNull(templateValue);
 
-            String docStoreLink = getElementValueByText("//*[@id='generate-document']/div[4]/div/strong", SelectorType.XPATH);
+            String docStoreLink = getAttribute("//a[contains(@href,'file:////')]", SelectorType.XPATH, "href");
             assertNotNull(docStoreLink);
             assertTrue(docStoreLink.contains(".rtf"));
         });
@@ -85,8 +85,8 @@ public class InternalApplication extends BasePage implements En {
             world.UIJourneySteps.urlSearchAndViewApplication();
             click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            javaScriptExecutor("location.reload(true)");
-            waitForTextToBePresent("Application details");
+
+            waitForTextToBePresent("has been submitted");
 
             world.UIJourneySteps.caseWorkerCompleteConditionsAndUndertakings();
 
@@ -101,10 +101,13 @@ public class InternalApplication extends BasePage implements En {
             world.UIJourneySteps.selectFee();
             String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
             world.UIJourneySteps.payFee(fee, "cash", null, null, null);
+            waitForTextToBePresent("");
+            long kickoutTime = System.currentTimeMillis() + 15000;
+            // Needs  fixing in the future.
             do {
                 tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
                 javaScriptExecutor("location.reload(true)");
-            }while (tableColumns>1);
+            } while (tableColumns > 1 && System.currentTimeMillis() < kickoutTime);
             waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
             click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
