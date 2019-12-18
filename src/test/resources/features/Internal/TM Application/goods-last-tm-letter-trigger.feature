@@ -2,7 +2,7 @@
 @INT-GOODS-LAST-TM-TRIGGER
 @-OLCS-19479
 @int_regression
-Feature: Set and check criteria for triggering automatic letter
+Feature: Set and check criteria for triggering automatic letter for goods
 
   Background:
     Given i have a valid "goods" "sn" licence
