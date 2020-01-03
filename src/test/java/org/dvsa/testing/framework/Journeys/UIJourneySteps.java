@@ -1123,10 +1123,8 @@ public class UIJourneySteps extends BasePage {
 
     public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
         navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        setLicenceNumber(navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().get().getText());
-        navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().ifPresent(WebElement::click);
-        waitForTextToBePresent("Summary");
-        clickByLinkText("Apply to");
+        navigateToSelfServePage("licence", "view");
+        clickByLinkText("Apply to surrender licence");
     }
 
     public void navigateToFinancialEvidencePage(String type) throws IllegalBrowserException, MalformedURLException {
