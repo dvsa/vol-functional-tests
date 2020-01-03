@@ -435,6 +435,7 @@ public class UIJourneySteps extends BasePage {
                 try {
                     waitForTextToBePresent("View and amend your licence");
                 } catch (TimeoutException e) {
+                    javaScriptExecutor("location.reload(true)");
                     waitForTextToBePresent("Select a section to view and change your licence information");
                 }
                 break;
@@ -558,23 +559,6 @@ public class UIJourneySteps extends BasePage {
                 waitForTextToBePresent("Review and declarations");
                 break;
         }
-    }
-
-    public void navigateToDirectorsPage(String type) throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("GOV.UK");
-        switch (type.toLowerCase()) {
-            case "licence":
-                clickByLinkText(world.createLicence.getLicenceNumber());
-                break;
-            case "application":
-                clickByLinkText(world.createLicence.getApplicationNumber());
-                break;
-            case "variation":
-                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                break;
-        }
-        clickByLinkText("Directors");
-        waitForTextToBePresent("Directors");
     }
 
     public void navigateToInternalTask() throws IllegalBrowserException, MalformedURLException {
