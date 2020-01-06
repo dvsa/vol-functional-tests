@@ -1,7 +1,10 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.config.Configuration;
 import activesupport.driver.Browser;
+import activesupport.system.Properties;
+import com.typesafe.config.Config;
 import cucumber.api.DataTable;
 import cucumber.api.java8.En;
 import enums.TrafficArea;
@@ -10,6 +13,7 @@ import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
 import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -19,6 +23,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateApplications extends BasePage implements En {
     public CreateApplications(World world) {
+        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+
         Given("^i have a \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" application in traffic area$", (String operatorType, String licenceType, String Region, DataTable trafficAreaTable) -> {
             if (Region.equals("NI".toUpperCase())) {
                 Region = "Y";
@@ -52,7 +58,8 @@ public class CreateApplications extends BasePage implements En {
         });
         When("^i pay for my application$", () -> {
             click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-            world.UIJourneySteps.payFee(null, "card", "4006000000000600", "10", "20");
+            Config config = new Configuration(env.toString()).getConfig();
+            world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
         });
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");

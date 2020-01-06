@@ -21,3 +21,14 @@ Feature: All WebDav functionality tests
     And i save the letter
     And I delete generated letter above from the table
     Then the document should be deleted
+
+  Scenario: Check link appears in generate letter pop up
+    Then The pop up should contain letter details
+
+  Scenario: Generate letter and check generation
+    When i save the letter
+    Then the "BUS_REG_CANCELLATION" document should be generated
+
+  Scenario: Upload a document
+    When i save the letter
+    And upload a document

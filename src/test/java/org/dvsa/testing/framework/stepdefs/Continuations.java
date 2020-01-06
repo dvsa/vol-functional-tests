@@ -1,19 +1,26 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.config.Configuration;
 import activesupport.dates.Dates;
+import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
+import activesupport.system.Properties;
+import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class Continuations extends BasePage implements En {
     public Continuations(World world) {
+
+        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         When("^i change my continuation date and generate a continuation on internal$", () -> {
             world.UIJourneySteps.urlSearchAndViewLicence();
-            int[] date = new Dates().getRelativeDate(0,0,0);
+            int[] date = new Dates(new LocalDateCalendar()).getRelativeDate(0,0,0);
             waitForTextToBePresent("Continuation date");
             replaceText("//*[@id='details[continuationDate]_day']", String.valueOf(date[0]));
             replaceText("//*[@id='details[continuationDate]_month']", String.valueOf(date[1]));
@@ -60,7 +67,8 @@ public class Continuations extends BasePage implements En {
             waitForTextToBePresent("Declaration signed through GOV.UK Verify");
             click("//*[@id='submitAndPay']", SelectorType.XPATH);
             click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
-            world.UIJourneySteps.customerPaymentModule( "4006000000000600", "10", "20");
+            Config config = new Configuration(env.toString()).getConfig();
+            world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
         });
         Then("^the continuation should be approved$", () -> {
         });

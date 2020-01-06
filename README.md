@@ -57,7 +57,10 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 
 ## Refactoring todos
 - Rename org/dvsa/testing/framework/stepdefs/PSVapplication.java to Application.
-- Change all passwords from config to use secrets manager.
 - CreateOverview - can be moved in to util
 - Before step for EBSR pre-processing to update xml
-- refactor while loop in clickPayAndConfirm method.
+- Need to refactor out getPastDate, getPastMonth, Year, etc. All replaced for new function getPastCurrentOrFutureDate (possibly renamed) from Active Support.
+- Possibly refactor getCurrentDay/Month/Year to either return strings or add new methods enterText Method to accept int input to parse into a String and run string method.
+- Refactor db to not take the environment as a variable. Instead, a class to set environment variables that are then pulled into active support from the top level.
+- Add hashmap for dates for clarity of what date is what. I.e. dates[0] is instead dates['day'] or something similar.
+- Place variable in ESBR.xml method to stop it updating and requiring changes in git.
