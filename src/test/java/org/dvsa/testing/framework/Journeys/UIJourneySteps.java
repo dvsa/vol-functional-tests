@@ -178,12 +178,6 @@ public class UIJourneySteps extends BasePage {
         enterText("effectiveDate_month", busRegEffectiveDate[1], SelectorType.ID);
         enterText("effectiveDate_year", busRegEffectiveDate[2], SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
-
-//        do {
-//            // Refresh page
-//            javaScriptExecutor("location.reload(true)");
-//        }
-//        while (!isTextPresent("Service details", 2));//condition
     }
 
     private static void enterDate(int day, int month, int year) throws IllegalBrowserException, MalformedURLException {
