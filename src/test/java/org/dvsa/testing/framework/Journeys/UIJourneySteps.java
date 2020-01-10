@@ -171,7 +171,7 @@ public class UIJourneySteps extends BasePage {
         enterText("via", Str.randomWord(5), SelectorType.ID);
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
-        int[] busRegDate = date.getRelativeDate(0, 0,0);
+        int[] busRegDate = date.getRelativeDate(0, 0, 0);
         enterDate(busRegDate[0], busRegDate[1], busRegDate[2]);
         int[] busRegEffectiveDate = date.getRelativeDate(0, month, 0);
         enterText("effectiveDate_day", busRegEffectiveDate[0], SelectorType.ID);
