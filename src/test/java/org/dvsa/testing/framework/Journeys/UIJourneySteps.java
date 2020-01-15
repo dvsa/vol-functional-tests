@@ -241,6 +241,14 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText(world.createLicence.getLicenceNumber());
     }
 
+    public void searchAndViewCase() throws IllegalBrowserException, MalformedURLException {
+        selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Case");
+        do {
+            SearchNavBar.search(String.valueOf(world.updateLicence.getCaseId()));
+        } while (!isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 200));
+        clickByLinkText(String.valueOf(world.updateLicence.getCaseId()));
+    }
+
     public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
         navigate().get(myURL.concat(String.format("application/%s", world.createLicence.getApplicationNumber())));

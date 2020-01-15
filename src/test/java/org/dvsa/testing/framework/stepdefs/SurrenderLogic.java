@@ -161,8 +161,8 @@ public class SurrenderLogic extends BasePage implements En {
         And("^the surrender menu should be hidden in internal$", () -> {
             assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender"));
         });
-        And("^the licence details page should display$", () -> {
-            assertTrue(isTextPresent("Licence details", 40));
+        And("^the \"([^\"]*)\" page should display$", (String page) -> {
+            assertTrue(isTextPresent(page, 40));
         });
         When("^the caseworker attempts to withdraw the surrender$", () -> {
             world.UIJourneySteps.caseworkManageSurrender();
@@ -205,7 +205,7 @@ public class SurrenderLogic extends BasePage implements En {
                 assertTrue(isElementNotPresent("//*[contains(@id,'menu-licence-decisions')]", SelectorType.XPATH));
             }
         });
-        When("^i search for my licence$", () -> {
+        When("^i search for and click on my licence$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.searchAndViewLicence();
