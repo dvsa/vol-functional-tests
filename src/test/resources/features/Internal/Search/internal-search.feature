@@ -3,7 +3,7 @@ Feature: Internal Search
 
 
   Background:
-    Given i have a valid "goods" "standard_national" licence
+    Given i have a valid "public" "standard_national" licence
 
   Scenario: Search a Licence on Internal
     When i search for and click on my licence
@@ -19,4 +19,4 @@ Feature: Internal Search
     Then the "Case details" page should display
 
   Scenario: Search a PSV Disc
-
+    And discs have been added to my licence
