@@ -187,7 +187,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void viewESBRInExternal() throws IllegalBrowserException, MalformedURLException {
-        long kickoutTime = System.currentTimeMillis() + 45000;
+        long kickoutTime = System.currentTimeMillis() + 120000;
         do {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
