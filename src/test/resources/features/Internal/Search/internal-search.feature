@@ -18,5 +18,11 @@ Feature: Internal Search
     When i search for and click on my case
     Then the "Case details" page should display
 
-  Scenario: Search a PSV Disc
+  Scenario: Search a PSV Disc on Internal
     And discs have been added to my licence
+    When i search for my psv disc and click on my licence and discs
+    Then the "Licence discs" page should display
+    And the licence discs should be present
+
+  Scenario: Search for Address on Internal
+    When i search for my address and click on my licence and address

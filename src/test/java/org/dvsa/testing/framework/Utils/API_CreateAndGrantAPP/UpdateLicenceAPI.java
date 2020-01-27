@@ -169,7 +169,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         this.goodOrPsv = goodOrPsv;
     }
 
-    private String getStartNumber() {
+    public String getStartNumber() {
         return startNumber;
     }
 

@@ -205,52 +205,10 @@ public class SurrenderLogic extends BasePage implements En {
                 assertTrue(isElementNotPresent("//*[contains(@id,'menu-licence-decisions')]", SelectorType.XPATH));
             }
         });
-        When("^i search for and click on my licence$", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.searchAndViewLicence();
-        });
-        And("^i create admin and url search for my licence$", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
-        });
-        And("^i create admin and url search for my application", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewApplication();
-        });
-        And("^i create admin and url search for my variation", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewVariational();
-        });
         And("^the case worker undoes the surrender$", () -> {
             waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
             waitAndClick("form-actions[submit]", SelectorType.ID);
-        });
-
-        After((Scenario scenario) -> {
-            Hooks hooks = new Hooks();
-//            hooks.attach(scenario);
-            hooks.tearDown();
-        });
-        And("^i create and url search for my licence$", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
-        });
-        And("^i create and url search for my application", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewApplication();
-        });
-        And("^i url search for my licence$", () -> {
-            world.UIJourneySteps.urlSearchAndViewLicence();
-        });
-        And("^i url search for my application", () -> {
-            world.UIJourneySteps.urlSearchAndViewApplication();
         });
         Then("^the change history has the surrender under consideration$", () -> {
             world.UIJourneySteps.navigateToChangeHistory();
@@ -260,6 +218,11 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.navigateToChangeHistory();
             checkForPartialMatch("Surrender Application Withdrawn");
             checkForPartialMatch("Surrender Under Consideration");
+        });
+        After((Scenario scenario) -> {
+            Hooks hooks = new Hooks();
+//            hooks.attach(scenario);
+            hooks.tearDown();
         });
     }
 }

@@ -249,6 +249,26 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText(String.valueOf(world.updateLicence.getCaseId()));
     }
 
+    public void searchAndViewPSVDisc() throws IllegalBrowserException, MalformedURLException {
+        selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Psv Disc");
+        do {
+            SearchNavBar.search(String.valueOf(world.updateLicence.getStartNumber()));
+        } while (!isTextPresent(String.valueOf(world.updateLicence.getStartNumber()), 200));
+        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
+        clickByLinkText(world.createLicence.getLicenceNumber());
+        clickByLinkText("Licence discs");
+    }
+
+    public void searchAndViewAddress() throws IllegalBrowserException, MalformedURLException {
+        selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Address");
+        do {
+            SearchNavBar.search(String.valueOf(world.updateLicence.getStartNumber()));
+        } while (!isTextPresent(String.valueOf(world.updateLicence.getStartNumber()), 200));
+        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
+        clickByLinkText(world.createLicence.getLicenceNumber());
+        clickByLinkText("Licence discs");
+    }
+
     public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
         navigate().get(myURL.concat(String.format("application/%s", world.createLicence.getApplicationNumber())));
