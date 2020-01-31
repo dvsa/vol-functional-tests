@@ -56,6 +56,7 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 `JDK not installed: keytool -importcert -file <path of extracted cert> -alias nvd-nist-gov -keystore $(/usr/libexec/java_home)/lib/security/cacerts`
 
 ## Refactoring todos
+- Rename stepdefs/PSVApplication.java to application.java
 - CreateOverview - can be moved in to util
 - Before step for EBSR pre-processing to update xml
 - Place variable in ESBR.xml method to stop it updating and requiring changes in git.
