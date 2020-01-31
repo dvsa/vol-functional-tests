@@ -122,9 +122,9 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            if(Browser.getDriver().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size()!=0) {
+            if(Browser.navigate().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size()!=0) {
             world.UIJourneySteps.navigateToTransportManagersPage("application");
-            } else if (Browser.getDriver().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationNumber())).size()!=0) {
+            } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationNumber())).size()!=0) {
             world.UIJourneySteps.navigateToTransportManagersPage("variation");
             }
             clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
