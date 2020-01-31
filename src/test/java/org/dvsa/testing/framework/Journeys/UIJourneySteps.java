@@ -191,6 +191,7 @@ public class UIJourneySteps extends BasePage {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
         } while (isTextPresent("processing", 60) && System.currentTimeMillis() < kickoutTime);
+
     }
 
     public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
