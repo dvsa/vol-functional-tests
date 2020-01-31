@@ -1612,9 +1612,8 @@ public class UIJourneySteps extends BasePage {
                 try {
                     return Browser.navigate().getCurrentUrl().contains("variation");
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    return false;
                 }
-                return false;
             }
         };
 
