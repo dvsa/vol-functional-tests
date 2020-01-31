@@ -1607,17 +1607,14 @@ public class UIJourneySteps extends BasePage {
                 .pollingEvery(Duration.ofMillis(200))
                 .ignoring(NoSuchElementException.class);
 
-        final boolean[] containsURL = new boolean[1];
         ExpectedCondition<Boolean> expect = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 try {
-                    containsURL[0] = (Browser.navigate().getCurrentUrl().contains("variation"));
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                } catch (MalformedURLException e) {
+                    return Browser.navigate().getCurrentUrl().contains("variation");
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-                return containsURL[0];
+                return false;
             }
         };
 
