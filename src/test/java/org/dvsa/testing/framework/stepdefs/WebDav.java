@@ -30,7 +30,7 @@ public class WebDav extends BasePage implements En {
     public WebDav(World world) {
         And("^i make changes to the document with WebDav and save it$", () -> {
             String licenceNumber = world.createLicence.getLicenceNumber();
-            String documentLink = Browser.getDriver().findElement(By.id("letter-link")).getText();
+            String documentLink = Browser.navigate().findElement(By.id("letter-link")).getText();
 
             world.UIJourneySteps.editDocumentWithWebDav();
 
