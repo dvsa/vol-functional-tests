@@ -35,6 +35,7 @@ import org.openqa.selenium.support.ui.Wait;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -66,6 +67,7 @@ public class UIJourneySteps extends BasePage {
     private String password;
     private String licenceNumber;
 
+    private HashMap<String, Integer> myDates;
     private Dates date;
     private Config config;
 
@@ -170,12 +172,14 @@ public class UIJourneySteps extends BasePage {
         enterText("via", Str.randomWord(5), SelectorType.ID);
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
-        int[] busRegDate = date.getRelativeDate(0, 0, 0);
-        enterDate(busRegDate[0], busRegDate[1], busRegDate[2]);
-        int[] busRegEffectiveDate = date.getRelativeDate(0, month, 0);
-        enterText("effectiveDate_day", busRegEffectiveDate[0], SelectorType.ID);
-        enterText("effectiveDate_month", busRegEffectiveDate[1], SelectorType.ID);
-        enterText("effectiveDate_year", busRegEffectiveDate[2], SelectorType.ID);
+
+        myDates = date.getDate(0,0,0);
+        enterDate(myDates.get("day"),myDates.get("month"),myDates.get("year"));
+
+        myDates = date.getDate(0,month,0);
+        enterText("effectiveDate_day", myDates.get("day"), SelectorType.ID);
+        enterText("effectiveDate_month", myDates.get("month"), SelectorType.ID);
+        enterText("effectiveDate_year", myDates.get("year"), SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
     }
 
@@ -295,10 +299,12 @@ public class UIJourneySteps extends BasePage {
                 }
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                int[] chequeDate = date.getRelativeDate(0,0,0);
-                enterText("details[chequeDate][day]", String.valueOf(chequeDate[0]), SelectorType.NAME);
-                enterText("details[chequeDate][month]", String.valueOf(chequeDate[1]), SelectorType.NAME);
-                enterText("details[chequeDate][year]", String.valueOf(chequeDate[2]), SelectorType.NAME);
+
+                myDates = date.getDate(0,0,0);
+
+                enterText("details[chequeDate][day]", myDates.get("day").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][month]", myDates.get("month").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][year]", myDates.get("year").toString(), SelectorType.NAME);
                 findAddress(paymentMethod);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -390,10 +396,12 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("//select[@id='title']", SelectorType.XPATH, "Dr");
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
-        int[] directorDate = date.getRelativeDate(-5,0,-20);
-        enterText("dob_day", directorDate[0], SelectorType.ID);
-        enterText("dob_month", directorDate[1], SelectorType.ID);
-        enterText("dob_year", directorDate[2], SelectorType.ID);
+
+        myDates = date.getDate(-5,0,-20);
+
+        enterText("dob_day", myDates.get("day"), SelectorType.ID);
+        enterText("dob_month", myDates.get("month"), SelectorType.ID);
+        enterText("dob_year", myDates.get("year"), SelectorType.ID);
         clickByName("form-actions[saveAndContinue]");
     }
 
@@ -570,10 +578,13 @@ public class UIJourneySteps extends BasePage {
         enterText("data[forename]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
-        int[] convictionDate = date.getRelativeDate(-5,0,-20);
-        enterText("dob_day", String.valueOf(convictionDate[0]), SelectorType.ID);
-        enterText("dob_month", String.valueOf(convictionDate[1]), SelectorType.ID);
-        enterText("dob_year", String.valueOf(convictionDate[2]), SelectorType.ID);
+
+        myDates = date.getDate(-5,0,-20);
+
+        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+
         enterText("data[categoryText]", Str.randomWord(50), SelectorType.NAME);
         enterText("data[courtFpn]", "Clown", SelectorType.NAME);
         enterText("data[penalty]", "Severe", SelectorType.NAME);
@@ -804,10 +815,12 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
-        int[] TMDate = date.getRelativeDate(0,0,25);
-        enterText("dob_day", TMDate[0], SelectorType.ID);
-        enterText("dob_month", TMDate[1], SelectorType.ID);
-        enterText("dob_year", TMDate[2], SelectorType.ID);
+
+        myDates = date.getDate(0,0,25);
+        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+
         enterText("username", externalTMUser, SelectorType.ID);
         enterText("emailAddress", externalTMEmail, SelectorType.ID);
         enterText("emailConfirm", externalTMEmail, SelectorType.ID);
@@ -846,10 +859,12 @@ public class UIJourneySteps extends BasePage {
     public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
-        int[] TMDate = date.getRelativeDate(0,0,-25);
-        enterText("dob_day", TMDate[0], SelectorType.ID);
-        enterText("dob_month", TMDate[1], SelectorType.ID);
-        enterText("dob_year", TMDate[2], SelectorType.ID);
+
+        myDates = date.getDate(0,0,-25);
+
+        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -933,10 +948,12 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        int[] TMDate = date.getRelativeDate(-5,0,-20);
-        enterText("dob_day", TMDate[0], SelectorType.ID);
-        enterText("dob_month", TMDate[1], SelectorType.ID);
-        enterText("dob_year", TMDate[2], SelectorType.ID);
+
+        myDates = date.getDate(-5,0,-20);
+        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
         waitForTextToBePresent("Transport Managers");
