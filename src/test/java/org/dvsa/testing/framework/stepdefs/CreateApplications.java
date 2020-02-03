@@ -54,7 +54,7 @@ public class CreateApplications extends BasePage implements En {
             click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         });
         Then("^the application should be submitted$", () -> {
-            assertTrue(isTextPresent("Thank you, your application has been submitted.", 20));
+            assertTrue(isTextPresent("Thank you, your application has been submitted."));
         });
         When("^i pay for my application$", () -> {
             click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
@@ -64,8 +64,7 @@ public class CreateApplications extends BasePage implements En {
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
-            world.UIJourneySteps.navigateThroughApplication();
-            click("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            world.UIJourneySteps.navigateThroughApplication();click("//*[contains(text(),'Print')]", SelectorType.XPATH);
             click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
             waitAndClick("form-actions[pay]", SelectorType.NAME);

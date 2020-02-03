@@ -41,7 +41,7 @@ public class RefundInterim extends BasePage implements En {
             clickByLinkText("Fees");
             do {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
-            } while (!isTextPresent("Paid",10));
+            } while (!isTextPresent("Paid"));
             clickByLinkText("Interim Fee");
             waitForTextToBePresent("Fee details");
             assertTrue(navigate().findElement(By.xpath("//*//dd//span")).getText().toLowerCase().contains("refund"));
@@ -58,7 +58,7 @@ public class RefundInterim extends BasePage implements En {
             clickByLinkText("Fees");
             do {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
-            } while (!isTextPresent("Paid",10));
+            } while (!isTextPresent("Paid"));
             assertTrue(checkForPartialMatch("£68.00"));
             assertFalse(world.genericUtils.returnFeeStatus("CANCELLED"));
         });

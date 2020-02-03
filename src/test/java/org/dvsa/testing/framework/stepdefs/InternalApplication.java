@@ -61,7 +61,7 @@ public class InternalApplication extends BasePage implements En {
         });
 
         Then("^the postcode warning message should be displayed on internal$", () -> {
-            assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres.", 10));
+            assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres."));
             click("form-actions[confirm-add]", SelectorType.ID);
             click("form-actions[submit]", SelectorType.ID);
             waitForTextToBePresent("Operating centres and authorisation");

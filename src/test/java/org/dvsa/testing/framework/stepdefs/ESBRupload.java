@@ -27,28 +27,28 @@ public class ESBRupload extends BasePage implements En {
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
             world.UIJourneySteps.viewESBRInExternal();
-            assertTrue(isTextPresent("successful", 60));
-            assertTrue(isTextPresent("New", 60));
-            assertTrue(isTextPresent("short notice", 60));
+            assertTrue(isTextPresent("successful"));
+            assertTrue(isTextPresent("New"));
+            assertTrue(isTextPresent("short notice"));
         });
         And("^A short notice tab should be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
-            assertTrue(isTextPresent("Short notice", 60));
+            assertTrue(isTextPresent("Short notice"));
         });
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
             world.UIJourneySteps.viewESBRInExternal();
-            assertTrue(isTextPresent("successful", 60));
-            assertTrue(isTextPresent("New", 60));
-            assertFalse(isTextPresent("short notice", 60));
+            assertTrue(isTextPresent("successful"));
+            assertTrue(isTextPresent("New"));
+            assertFalse(isTextPresent("short notice"));
         });
 
         And("^A short notice tab should not be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
-            assertFalse(isTextPresent("Short notice", 60));
+            assertFalse(isTextPresent("Short notice"));
         });
 
         When("^I upload an esbr file with \"([^\"]*)\" days notice$", (String arg0) -> {
@@ -76,7 +76,7 @@ public class ESBRupload extends BasePage implements En {
             waitAndClick("//*[contains(text(),'Grant')]",SelectorType.XPATH);
         });
         Then("^the bus registration should be granted$", () -> {
-            Assert.assertTrue(isTextPresent("Registered",5));
+            Assert.assertTrue(isTextPresent("Registered"));
         });
         And("^the traffic areas should be displayed on the service details page$", () -> {
             clickByLinkText("Service details");
