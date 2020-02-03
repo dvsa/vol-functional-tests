@@ -230,12 +230,6 @@ public class SurrenderLogic extends BasePage implements En {
             waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
             waitAndClick("form-actions[submit]", SelectorType.ID);
         });
-
-        After((Scenario scenario) -> {
-            Hooks hooks = new Hooks();
-//            hooks.attach(scenario);
-            hooks.tearDown();
-        });
         And("^i create and url search for my licence$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);

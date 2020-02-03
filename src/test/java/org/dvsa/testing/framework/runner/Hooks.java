@@ -42,11 +42,10 @@ public class Hooks {
         FileUtils.deleteDirectory(directory);
     }
 
-    @After
-    public void tearDown() throws IOException {
+    @AfterAll
+    public static void tearDown() throws IOException {
         if (Browser.isBrowserOpen()) {
-//            Browser.closeBrowser();
-            deleteDirectory();
+            Browser.closeBrowser();
         }
     }
 }

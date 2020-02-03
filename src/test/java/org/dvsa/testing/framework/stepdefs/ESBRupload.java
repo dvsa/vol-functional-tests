@@ -39,6 +39,7 @@ public class ESBRupload extends BasePage implements En {
         });
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
             world.UIJourneySteps.viewESBRInExternal();
+            waitForTextToBePresent("successful");
             assertTrue(isTextPresent("successful", 60));
             assertTrue(isTextPresent("New", 60));
             assertFalse(isTextPresent("short notice", 60));
@@ -48,6 +49,7 @@ public class ESBRupload extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
+            waitForTextToBePresent("\"Short notice\"");
             assertFalse(isTextPresent("Short notice", 60));
         });
 
