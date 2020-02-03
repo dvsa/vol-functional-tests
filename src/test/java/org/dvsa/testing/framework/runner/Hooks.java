@@ -44,7 +44,7 @@ public class Hooks {
     @AfterAll
     public void tearDown() throws IOException {
         if (Browser.isBrowserOpen()) {
-            Browser.quit();
+            Browser.closeBrowser();
             deleteDirectory();
         }
     }
