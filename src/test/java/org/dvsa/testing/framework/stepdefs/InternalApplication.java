@@ -101,7 +101,6 @@ public class InternalApplication extends BasePage implements En {
             world.UIJourneySteps.selectFee();
             String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
             world.UIJourneySteps.payFee(fee, "cash", null, null, null);
-            waitForTextToBePresent("");
             long kickoutTime = System.currentTimeMillis() + 15000;
             // Needs  fixing in the future.
             do {
