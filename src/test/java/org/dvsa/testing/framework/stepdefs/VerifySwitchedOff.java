@@ -1,10 +1,8 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import cucumber.api.Scenario;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import enums.UserRoles;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
@@ -70,10 +68,6 @@ public class VerifySwitchedOff extends BasePage implements En {
         });
         Then("^a success message banner should be displayed$", () -> {
             Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager", 10));
-        });
-        After(new String[]{"@SS-Verify-Off"}, (Scenario scenario) -> {
-            if(scenario.isFailed() || !scenario.isFailed())
-            world.updateLicence.enableDisableVerify("0");
         });
         And("^i navigate to the declarations page$", () -> {
             world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");

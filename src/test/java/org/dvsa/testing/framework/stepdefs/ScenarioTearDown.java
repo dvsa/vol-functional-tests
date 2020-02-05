@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import cucumber.api.Scenario;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
+import io.cucumber.java8.Scenario;
 import org.dvsa.testing.framework.runner.Hooks;
 import org.dvsa.testing.lib.pages.BasePage;
 

@@ -1,10 +1,9 @@
 package org.dvsa.testing.framework.runner;
 
 import activesupport.IllegalBrowserException;
-import cucumber.api.Scenario;
+import io.cucumber.java8.Scenario;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -25,14 +24,15 @@ public class Hooks {
 
 
     @Attachment(value = "Screenshot on failure", type = "image/png")
-    public void attach(Scenario scenario) throws IOException, IllegalBrowserException {
+    public void attach(Scenario scenarioStatus) throws IOException, IllegalBrowserException {
         createDirectory();
         File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
-        if (scenario.isFailed()) {
+        if (scenarioStatus.isFailed()) {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
             byte[] attachment = ((TakesScreenshot) Browser.navigate())
                     .getScreenshotAs(OutputType.BYTES);
-            scenario.embed(attachment, String.valueOf(screenshotStream));
+            scenarioStatus
+                    .embed(attachment, String.valueOf(screenshotStream),null);
             screenshotStream.write(attachment);
             screenshotStream.close();
         }
