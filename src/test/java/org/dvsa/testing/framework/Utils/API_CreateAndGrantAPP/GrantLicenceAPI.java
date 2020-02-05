@@ -3,15 +3,13 @@ package org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP;
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.http.RestUtils;
-import activesupport.system.Properties;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.url.api.URL;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.junit.Assert;
 
 import javax.xml.ws.http.HTTPException;
 import java.util.ArrayList;
@@ -108,6 +106,13 @@ public class GrantLicenceAPI extends BaseAPI{
             throw new HTTPException(apiResponse.extract().statusCode());
         } else if (apiResponse.extract().response().asString().contains("fee")) {
             feeId = apiResponse.extract().response().jsonPath().getInt("id.fee");
+            try {
+                Assert.assertTrue(apiResponse.extract().jsonPath().get("messages").toString().contains("Application status updated"));
+                Assert.assertTrue(apiResponse.extract().jsonPath().get("messages").toString().contains("Licence status updated"));
+                Assert.assertTrue(apiResponse.extract().jsonPath().get("messages").toString().contains("CancelAllInterimFees success"));
+            } catch (AssertionError e) {
+                throw new AssertionError("Licence failed to grant through the API.");
+            }
         }
     }
 
