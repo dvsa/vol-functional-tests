@@ -179,6 +179,8 @@ public class UIJourneySteps extends BasePage {
         myDates = date.getDate(0,0,0);
 
         enterDate(myDates.get("day"),myDates.get("month"),myDates.get("year"));
+
+        myDates = date.getDate(0,month,0);
         enterText("effectiveDate_day", myDates.get("day"), SelectorType.ID);
         enterText("effectiveDate_month", myDates.get("month"), SelectorType.ID);
         enterText("effectiveDate_year", myDates.get("year"), SelectorType.ID);
