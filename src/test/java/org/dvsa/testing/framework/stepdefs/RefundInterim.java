@@ -1,14 +1,12 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.driver.Browser;
 import cucumber.api.java8.En;
 import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 
-import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -44,12 +42,14 @@ public class RefundInterim extends BasePage implements En {
             waitForTextToBePresent("£68.00");
             clickByLinkText("Grant Interim Fee for application");
             waitForTextToBePresent("Fee details");
-            long kickoutTime = System.currentTimeMillis() + 15000;
+            long kickoutTime = System.currentTimeMillis() + 30000;
             do {
                 javaScriptExecutor("location.reload(true)");
             } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
-            assertFalse(getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("pending"));
-            assertFalse(Browser.navigate().findElement(By.xpath("//*//dd//span")).getText().toLowerCase().contains("cancelled"));
+            if (System.currentTimeMillis() > kickoutTime) {
+                throw new TimeoutException("Kickout time for expecting the interim fee to be refunded.");
+            }
+            assertTrue(getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded"));
             assertTrue(checkForPartialMatch("£68.00"));
         });
         And("^the licence has been withdrawn$", () -> {
