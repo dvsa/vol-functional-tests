@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.runner;
 
 import activesupport.IllegalBrowserException;
-import io.cucumber.java8.Scenario;
+import cucumber.api.Scenario;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.AfterAll;
@@ -31,8 +31,7 @@ public class Hooks {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
             byte[] attachment = ((TakesScreenshot) Browser.navigate())
                     .getScreenshotAs(OutputType.BYTES);
-            scenarioStatus
-                    .embed(attachment, String.valueOf(screenshotStream),null);
+            scenarioStatus.embed(attachment, String.valueOf(screenshotStream));
             screenshotStream.write(attachment);
             screenshotStream.close();
         }

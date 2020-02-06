@@ -11,9 +11,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.7.0</maven.compiler.version>
-        <cucumber-java.version>5.1.3</cucumber-java.version>
-        <cucumber-junit.version>5.1.3</cucumber-junit.version>
-        <junit.version>5.6.0</junit.version>
+        <cucumber-java.version>2.4.0</cucumber-java.version>
+        <cucumber-junit.version>2.4.0</cucumber-junit.version>
+        <junit.version>4.12</junit.version>
         <active-support.version>1.3.8.4</active-support.version>
         <slf4j.version>2.12.1</slf4j.version>
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
@@ -23,8 +23,8 @@
         <uri-constructor.version>1.5.1</uri-constructor.version>
         <assertj-core-version>3.9.1</assertj-core-version>
         <hamcrest-version>1.3</hamcrest-version>
-        <pico-container-version>5.1.3</pico-container-version>
-        <allure-cucumber4-jvm>2.13.1</allure-cucumber4-jvm>
+        <pico-container-version>2.4.0</pico-container-version>
+        <allure-cucumber2-jvm>2.13.0</allure-cucumber2-jvm>
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn-version>2.10.0</allure-mvn-version>
         <cucable-plugin.version>1.6.0</cucable-plugin.version>
@@ -194,12 +194,6 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
-            <version>2.13.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>javax.xml.ws</groupId>
             <artifactId>jaxws-api</artifactId>
             <version>2.3.1</version>
@@ -228,13 +222,11 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>${cucumber-junit.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <version>${junit.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
@@ -295,8 +287,8 @@
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-cucumber4-jvm</artifactId>
-            <version>${allure-cucumber4-jvm}</version>
+            <artifactId>allure-cucumber2-jvm</artifactId>
+            <version>${allure-cucumber2-jvm}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>

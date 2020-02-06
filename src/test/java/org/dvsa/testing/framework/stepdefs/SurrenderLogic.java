@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import io.cucumber.datatable.DataTable;
-import io.cucumber.java8.En;
+import cucumber.api.DataTable;
+import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 

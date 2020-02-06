@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import io.cucumber.datatable.DataTable;
-import io.cucumber.java8.En;
+import cucumber.api.DataTable;
+import cucumber.api.java8.En;
 import enums.UserRoles;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
@@ -56,7 +56,7 @@ public class TMDetails extends BasePage implements En {
         });
         Then("^the optional wording should not be displayed on the page$", (DataTable arg) -> {
             List<String> sections = arg.asList(String.class);
-            for(String section : sections){
+            for (String section : sections) {
                 assertTrue(Browser.navigate().findElements(By.xpath(String.format("//*[@id=\"%s\"]/div/div", section))).stream().noneMatch(x -> x.getText().contains("(optional)")));
             }
         });
@@ -70,13 +70,13 @@ public class TMDetails extends BasePage implements En {
         });
         And("^the section buttons should not be displayed$", (DataTable table) -> {
             List<String> sections = table.asList(String.class);
-            for(String button : sections){
+            for (String button : sections) {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
             }
         });
         Then("^the section buttons should be displayed$", (DataTable table) -> {
             List<String> sections = table.asList(String.class);
-            for(String button : sections){
+            for (String button : sections) {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
             }
         });
