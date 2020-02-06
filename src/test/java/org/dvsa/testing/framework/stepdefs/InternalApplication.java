@@ -104,11 +104,12 @@ public class InternalApplication extends BasePage implements En {
             world.UIJourneySteps.payFee(fee, "cash", null, null, null);
             waitForTextToBePresent("The payment was made successfully");
             long kickoutTime = System.currentTimeMillis() + 15000;
-            // Needs  fixing in the future.
+
             do {
                 tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
                 javaScriptExecutor("location.reload(true)");
             } while (tableColumns > 1 && System.currentTimeMillis() < kickoutTime);
+
             if (System.currentTimeMillis() > kickoutTime) {
                 throw new TimeoutException("Kickout time for expecting no fee is present when granting a licence exceeded.");
             }
