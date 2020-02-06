@@ -39,7 +39,7 @@ public class PaymentProcessing extends BasePage implements En {
             selectValueFromDropDown("status", SelectorType.ID, "Current");
             String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']/h3", SelectorType.XPATH);
             setCurrentFeeCount(world.genericUtils.stripAlphaCharacters(feeCountBeforeAddingNewFee));
-            assertTrue(findElement("status", SelectorType.ID, 30).getAttribute("value").equals("current"));
+            assertEquals("current", findElement("status", SelectorType.ID, 30).getAttribute("value"));
             world.UIJourneySteps.createAdminFee(amount, arg0);
         });
         Then("^the fee should be created$", () -> {
