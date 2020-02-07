@@ -2,18 +2,18 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.string.Str;
- import cucumber.api.java8.En;
+import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
 public class ResettingPassword extends BasePage implements En {
     public ResettingPassword(World world) {
         Then("^i will receive a message to say my password has changed$", () -> {
-          isTextPresent("We've sent you an email. Follow the link in the email to reset your password", 30);
+          isTextPresent("We've sent you an email. Follow the link in the email to reset your password");
         });
 
         Then("^i will receive an error that username invalid$", () -> {
-            isTextPresent("Failed to reset your password", 30);
+            isTextPresent("Failed to reset your password");
         });
 
         And("^i reset my password$", () -> {
@@ -22,9 +22,9 @@ public class ResettingPassword extends BasePage implements En {
             clickByLinkText("Sign out");
             world.UIJourneySteps.resettingExternalPassword();
             enterField(nameAttribute("input", "username"), world.createLicence.getLoginId());
-            isTextPresent("Failed", 30);
+            isTextPresent("Failed");
             click(nameAttribute("input","submit"), SelectorType.CSS);
-                while (isTextPresent("Failed", 30)) {
+                while (isTextPresent("Failed")) {
                 click(nameAttribute("input","submit"), SelectorType.CSS);
             }
         });
@@ -36,13 +36,13 @@ public class ResettingPassword extends BasePage implements En {
         And("^i then try reset my password$", () -> {
             world.UIJourneySteps.resettingExternalPassword();
             enterField(nameAttribute("input", "username"), world.createLicence.getLoginId());
-            isTextPresent("Failed", 30);
+            isTextPresent("Failed");
             click(nameAttribute("input","submit"), SelectorType.CSS);
-            isTextPresent("Failed", 30);
+            isTextPresent("Failed");
             click(nameAttribute("input","submit"), SelectorType.CSS);
         });
         Then("^i will receive an error for inactive account$", () -> {
-            isTextPresent("It looks like your account isn't active", 30);
+            isTextPresent("It looks like your account isn't active");
         });
     }
 }

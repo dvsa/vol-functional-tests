@@ -5,7 +5,6 @@ import Injectors.World;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
-import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 
 public class SurrendersStartPage extends BasePage implements En {
@@ -20,7 +19,7 @@ public class SurrendersStartPage extends BasePage implements En {
         });
         And("^the correct instructions for \"([^\"]*)\" should be displayed$", (String licenceType) -> {
             if(licenceType.equals("public"))
-                assertTrue(isTextPresent("You will need to cancel all registered bus services.",40));
+                assertTrue(isTextPresent("You will need to cancel all registered bus services."));
         });
         And("^the correct licence number should be displayed$", () -> {
             boolean isTrue = findElement("//h3", SelectorType.XPATH,10).getText().contains(world.createLicence.getLicenceNumber());

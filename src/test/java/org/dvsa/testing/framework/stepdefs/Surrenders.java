@@ -1,32 +1,22 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
-import activesupport.driver.Browser;
 import activesupport.system.Properties;
  import cucumber.api.java8.En;
 import enums.UserRoles;
 import io.restassured.response.ValidatableResponse;
-import junit.framework.TestCase;
 import org.apache.http.HttpStatus;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.hamcrest.Matchers;
-import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertTrue;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
-import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 public class Surrenders extends BasePage implements En {
     ValidatableResponse apiResponse;
@@ -209,8 +199,8 @@ public class Surrenders extends BasePage implements En {
             isLinkPresent("PB2026379/1", 5);
         });
         And("^tick boxes should be displayed$", () -> {
-            isTextPresent("Digital signature has been checked", 5);
-            isTextPresent("ECMS has been checked", 5);
+            isTextPresent("Digital signature has been checked");
+            isTextPresent("ECMS has been checked");
         });
         Then("^the surrender print and sign page is displayed$", () -> {
             world.UIJourneySteps.signManually();

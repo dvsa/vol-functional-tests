@@ -57,7 +57,6 @@ public class UpdateLicenceAPI extends BaseAPI {
     private int submissionsId;
     private int caseId;
 
-    private HashMap<String, Integer> myDate;
     private Dates date;
 
     private static String variationApplicationNumber;
@@ -403,8 +402,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         String internalAdminUserResource = URL.build(env, String.format("user/internal/%s", userId)).toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        myDate = date.getDate(0, 0, -30);
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Long").withFamilyName("Ash").withBirthDate(myDate.get("year") + "-" + myDate.get("month") + "-" + myDate.get("day"));
+        HashMap<String, Integer> internalUserDOB = date.getDate(0, 0, -30);
+        PersonBuilder personBuilder = new PersonBuilder().withForename("Long").withFamilyName("Ash").withBirthDate(internalUserDOB.get("year") + "-" + internalUserDOB.get("month") + "-" + internalUserDOB.get("day"));
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withTeam(team)
@@ -425,8 +424,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         String internalAdminUserResource = URL.build(env, "user/internal").toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        myDate = date.getDate(0, 0, -30);
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate((myDate.get("year") + "-" + myDate.get("month") + "-" + myDate.get("day")));
+        HashMap<String, Integer> internalUserDOB = date.getDate(0, 0, -30);
+        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate((internalUserDOB.get("year") + "-" + internalUserDOB.get("month") + "-" + internalUserDOB.get("day")));
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withRoles(roles).withTeam(team).withUserType(userType);

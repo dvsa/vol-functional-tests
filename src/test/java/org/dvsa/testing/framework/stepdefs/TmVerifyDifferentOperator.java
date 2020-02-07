@@ -31,11 +31,11 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     public TmVerifyDifferentOperator(World world) {
         Then("^the 'Awaiting operator review' post signature page is displayed showing the correct information$", () -> {
             String name = world.createLicence.getForeName() + " " + world.createLicence.getFamilyName();
-            assertTrue(isTextPresent(name, 30));
-            assertTrue(isTextPresent("What happens next", 30));
-            assertTrue(isTextPresent("Awaiting operator review", 30));
-            assertTrue(isTextPresent("Declaration signed through GOV.UK Verify", 30));
-            assertTrue(isTextPresent("You've submitted your details to the operator. We'll let you know once they've been reviewed.", 30));
+            assertTrue(isTextPresent(name));
+            assertTrue(isTextPresent("What happens next"));
+            assertTrue(isTextPresent("Awaiting operator review"));
+            assertTrue(isTextPresent("Declaration signed through GOV.UK Verify"));
+            assertTrue(isTextPresent("You've submitted your details to the operator. We'll let you know once they've been reviewed."));
             assertTrue(isElementPresent("//button[@class='govuk-button']", SelectorType.XPATH));
         });
         And("^the confirmation panel is displaying the correct assets$", () -> {
@@ -52,11 +52,11 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         Then("^the correct information is displayed on the declaration page$", () -> {
             Path fileToRead = getPath(world);
             String data = world.genericUtils.readFileAsString(String.valueOf(fileToRead));
-            assertTrue(isTextPresent(data, 10));
-            assertTrue(isTextPresent(world.createLicence.getForeName() + " " + world.createLicence.getFamilyName(), 10));
-            assertTrue(isTextPresent("How would you like to sign the declaration?", 10));
-            assertTrue(isTextPresent("Sign your declaration online", 10));
-            assertTrue(isTextPresent("Print, sign and return", 10));
+            assertTrue(isTextPresent(data));
+            assertTrue(isTextPresent(world.createLicence.getForeName() + " " + world.createLicence.getFamilyName()));
+            assertTrue(isTextPresent("How would you like to sign the declaration?"));
+            assertTrue(isTextPresent("Sign your declaration online"));
+            assertTrue(isTextPresent("Print, sign and return"));
         });
         When("^the user confirms details on the TM 'Review and submit' page$", () -> {
             Path fileToRead = getPath(world);
@@ -71,21 +71,21 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             Path fileToRead = Paths.get(getClass().getClassLoader()
                     .getResource("verify-declaration.txt").toURI());
             String data = world.genericUtils.readFileAsString(String.valueOf(fileToRead));
-            assertTrue(isTextPresent(data, 20));
-            assertTrue(isTextPresent("I agree - continue", 20));
+            assertTrue(isTextPresent(data));
+            assertTrue(isTextPresent("I agree - continue"));
         });
         Then("^the declaration text and verify button are not displayed$", () -> {
             Path fileToRead = Paths.get(getClass().getClassLoader()
                     .getResource("operator-GB-declaration.txt").toURI());
             String data = world.genericUtils.readFileAsString(String.valueOf(fileToRead));
-            assertTrue(isTextPresent("I agree - continue", 20));
-            assertFalse(isTextPresent(data, 20));
+            assertTrue(isTextPresent("I agree - continue"));
+            assertFalse(isTextPresent(data));
         });
         When("^i add a new transport manager$", () -> {
             clickByLinkText(world.createLicence.getLicenceNumber());
             clickByLinkText("Transport");
             waitForTextToBePresent("Transport Managers");
-            if (isTextPresent("To add a transport manager", 10)) {
+            if (isTextPresent("To add a transport manager")) {
                 clickByLinkText("change");
                 waitForTextToBePresent("Applying to change a licence");
                 click("form-actions[submit]", SelectorType.ID);
@@ -99,7 +99,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         Then("^the download TM(\\d+) for should not be displayed on the details page$", (Integer arg0) -> {
             waitAndClick("//a[contains(text(),'" + forename + " " + familyName + "')]", SelectorType.XPATH);
             waitForTextToBePresent("Details not submitted");
-            assertFalse(isTextPresent("Alternatively they can download a TM1 form (PDF 150KB).", 30));
+            assertFalse(isTextPresent("Alternatively they can download a TM1 form (PDF 150KB)."));
             assertFalse(isLinkPresent("download a TM1 form (PDF 150KB).", 30));
         });
         And("^the user chooses to print and sign$", () -> {
@@ -135,11 +135,11 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         Then("^the 'Review and declarations' post signature page is displayed$", () -> {
             waitForTextToBePresent("Review and declarations");
             Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent("Review and declarations", 10));
+            Assert.assertTrue(isTextPresent("Review and declarations"));
             if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])<10) {
-                Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
+                Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
             } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])>=10){
-                Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")), 20));
+                Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy"))));
             }
         });
         When("^i add an operator as a transport manager$", () -> {

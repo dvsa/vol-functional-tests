@@ -43,7 +43,7 @@ public class ExternalSearch extends BasePage implements En {
         Then("^search results page should only display our licence number$", () -> {
             do {
                 clickByName("submit");
-            } while (!isTextPresent(world.createLicence.getBusinessName(), 30));
+            } while (!isTextPresent(world.createLicence.getBusinessName()));
             assertTrue(checkForFullMatch(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should display names containing our operator name$", () -> {
@@ -58,7 +58,7 @@ public class ExternalSearch extends BasePage implements En {
         Then("^search results page should not display any other licence number$", () -> {
             do {
                 clickByName("submit");
-            } while (!isTextPresent(world.createLicence.getBusinessName(), 30));
+            } while (!isTextPresent(world.createLicence.getBusinessName()));
             assertFalse(checkForFullMatch("OB0000123"));
         });
         Then("^search results page should only display names containing our operator name$", () -> {
