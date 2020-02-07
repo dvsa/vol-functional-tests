@@ -107,9 +107,10 @@ public class GrantLicenceAPI extends BaseAPI{
         } else if (apiResponse.extract().response().asString().contains("fee")) {
             feeId = apiResponse.extract().response().jsonPath().getInt("id.fee");
             try {
-                Assert.assertTrue(apiResponse.extract().jsonPath().get("messages").toString().contains("Application status updated"));
-                Assert.assertTrue(apiResponse.extract().jsonPath().get("messages").toString().contains("Licence status updated"));
-                Assert.assertTrue(apiResponse.extract().jsonPath().get("messages").toString().contains("CancelAllInterimFees success"));
+                String apiMessages = apiResponse.extract().jsonPath().get("messages").toString();
+                Assert.assertTrue(apiMessages.contains("Application status updated"));
+                Assert.assertTrue(apiMessages.contains("Licence status updated"));
+                Assert.assertTrue(apiMessages.contains("CancelAllInterimFees success"));
             } catch (AssertionError e) {
                 throw new AssertionError("Licence failed to grant through the API.");
             }
