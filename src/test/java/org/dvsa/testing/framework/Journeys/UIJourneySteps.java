@@ -67,7 +67,6 @@ public class UIJourneySteps extends BasePage {
     private String password;
     private String licenceNumber;
 
-    private HashMap<String, Integer> myDates;
     private Dates date;
     private Config config;
 
@@ -173,13 +172,13 @@ public class UIJourneySteps extends BasePage {
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
 
-        myDates = date.getDate(0,0,0);
-        enterDate(myDates.get("day"),myDates.get("month"),myDates.get("year"));
+        HashMap<String, Integer> busRegStartDate = date.getDate(0,0,0);
+        enterDate(busRegStartDate.get("day"),busRegStartDate.get("month"),busRegStartDate.get("year"));
 
-        myDates = date.getDate(0,month,0);
-        enterText("effectiveDate_day", myDates.get("day"), SelectorType.ID);
-        enterText("effectiveDate_month", myDates.get("month"), SelectorType.ID);
-        enterText("effectiveDate_year", myDates.get("year"), SelectorType.ID);
+        HashMap<String, Integer> busRegEndDate = date.getDate(0,month,0);
+        enterText("effectiveDate_day", busRegEndDate.get("day"), SelectorType.ID);
+        enterText("effectiveDate_month", busRegEndDate.get("month"), SelectorType.ID);
+        enterText("effectiveDate_year", busRegEndDate.get("year"), SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
     }
 
@@ -304,11 +303,11 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
 
-                myDates = date.getDate(0,0,0);
+                HashMap<String, Integer> paymentDate = date.getDate(0,0,0);
 
-                enterText("details[chequeDate][day]", myDates.get("day").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][month]", myDates.get("month").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][year]", myDates.get("year").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][day]", paymentDate.get("day").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][month]", paymentDate.get("month").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][year]", paymentDate.get("year").toString(), SelectorType.NAME);
                 findAddress(paymentMethod);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -401,11 +400,11 @@ public class UIJourneySteps extends BasePage {
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
 
-        myDates = date.getDate(-5,0,-20);
+        HashMap<String, Integer> directorDOB = date.getDate(-5,0,-20);
 
-        enterText("dob_day", myDates.get("day"), SelectorType.ID);
-        enterText("dob_month", myDates.get("month"), SelectorType.ID);
-        enterText("dob_year", myDates.get("year"), SelectorType.ID);
+        enterText("dob_day", directorDOB.get("day"), SelectorType.ID);
+        enterText("dob_month", directorDOB.get("month"), SelectorType.ID);
+        enterText("dob_year", directorDOB.get("year"), SelectorType.ID);
         clickByName("form-actions[saveAndContinue]");
     }
 
@@ -583,11 +582,11 @@ public class UIJourneySteps extends BasePage {
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
 
-        myDates = date.getDate(-5,0,-20);
+        HashMap<String, Integer> convictionDate = date.getDate(-5,0,-20);
 
-        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+        enterText("dob_day", convictionDate.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", convictionDate.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", convictionDate.get("year").toString(), SelectorType.ID);
 
         enterText("data[categoryText]", Str.randomWord(50), SelectorType.NAME);
         enterText("data[courtFpn]", "Clown", SelectorType.NAME);
@@ -820,10 +819,10 @@ public class UIJourneySteps extends BasePage {
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
 
-        myDates = date.getDate(0,0,25);
-        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+        HashMap<String, Integer> transportManagerDOB = date.getDate(0,0,25);
+        enterText("dob_day", transportManagerDOB.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", transportManagerDOB.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", transportManagerDOB.get("year").toString(), SelectorType.ID);
 
         enterText("username", externalTMUser, SelectorType.ID);
         enterText("emailAddress", externalTMEmail, SelectorType.ID);
@@ -864,11 +863,11 @@ public class UIJourneySteps extends BasePage {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
 
-        myDates = date.getDate(0,0,-25);
+        HashMap<String, Integer> TMDOB = date.getDate(0,0,-25);
 
-        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+        enterText("dob_day", TMDOB.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", TMDOB.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", TMDOB.get("year").toString(), SelectorType.ID);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -953,10 +952,10 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
-        myDates = date.getDate(-5,0,-20);
-        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+        HashMap<String, Integer> TMDOB = date.getDate(-5,0,-20);
+        enterText("dob_day", TMDOB.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", TMDOB.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", TMDOB.get("year").toString(), SelectorType.ID);
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
