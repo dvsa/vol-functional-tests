@@ -27,10 +27,7 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -38,6 +35,7 @@ import org.openqa.selenium.support.ui.Wait;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -173,17 +171,15 @@ public class UIJourneySteps extends BasePage {
         enterText("via", Str.randomWord(5), SelectorType.ID);
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
-        int[] busRegDate = date.getRelativeDate(0,0,0);
-        enterDate(busRegDate[0], busRegDate[1], busRegDate[2]);
-        enterText("effectiveDate_day", busRegDate[0], SelectorType.ID);
-        enterText("effectiveDate_month", busRegDate[1], SelectorType.ID);
-        enterText("effectiveDate_year", busRegDate[2], SelectorType.ID);
+
+        HashMap<String, Integer> busRegStartDate = date.getDate(0,0,0);
+        enterDate(busRegStartDate.get("day"),busRegStartDate.get("month"),busRegStartDate.get("year"));
+
+        HashMap<String, Integer> busRegEndDate = date.getDate(0,month,0);
+        enterText("effectiveDate_day", busRegEndDate.get("day"), SelectorType.ID);
+        enterText("effectiveDate_month", busRegEndDate.get("month"), SelectorType.ID);
+        enterText("effectiveDate_year", busRegEndDate.get("year"), SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
-        do {
-            // Refresh page
-            javaScriptExecutor("location.reload(true)");
-        }
-        while (!isTextPresent("Service details"));//condition
     }
 
     private static void enterDate(int day, int month, int year) throws IllegalBrowserException, MalformedURLException {
@@ -193,10 +189,16 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void viewESBRInExternal() throws IllegalBrowserException, MalformedURLException {
+        long kickoutTime = System.currentTimeMillis() + 60000;
         do {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
-        } while (isTextPresent("processing"));
+        } while (isTextPresent("processing") && System.currentTimeMillis() < kickoutTime);
+        try {
+        Assert.assertFalse(isTextPresent("processing"));
+        } catch (Exception e) {
+            throw new NotFoundException("ESBR is still displaying as 'processing'.");
+        }
     }
 
     public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
@@ -300,10 +302,12 @@ public class UIJourneySteps extends BasePage {
                 }
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                int[] chequeDate = date.getRelativeDate(0,0,0);
-                enterText("details[chequeDate][day]", String.valueOf(chequeDate[0]), SelectorType.NAME);
-                enterText("details[chequeDate][month]", String.valueOf(chequeDate[1]), SelectorType.NAME);
-                enterText("details[chequeDate][year]", String.valueOf(chequeDate[2]), SelectorType.NAME);
+
+                HashMap<String, Integer> paymentDate = date.getDate(0,0,0);
+
+                enterText("details[chequeDate][day]", paymentDate.get("day").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][month]", paymentDate.get("month").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][year]", paymentDate.get("year").toString(), SelectorType.NAME);
                 findAddress(paymentMethod);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -337,6 +341,7 @@ public class UIJourneySteps extends BasePage {
         do {
             //nothing
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
+        waitForElementToBeClickable("status", SelectorType.ID);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         waitForTextToBePresent("Outstanding");
         clickByLinkText("50");
@@ -394,10 +399,12 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("//select[@id='title']", SelectorType.XPATH, "Dr");
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
-        int[] directorDate = date.getRelativeDate(-5,0,-20);
-        enterText("dob_day", directorDate[0], SelectorType.ID);
-        enterText("dob_month", directorDate[1], SelectorType.ID);
-        enterText("dob_year", directorDate[2], SelectorType.ID);
+
+        HashMap<String, Integer> directorDOB = date.getDate(-5,0,-20);
+
+        enterText("dob_day", directorDOB.get("day"), SelectorType.ID);
+        enterText("dob_month", directorDOB.get("month"), SelectorType.ID);
+        enterText("dob_year", directorDOB.get("year"), SelectorType.ID);
         clickByName("form-actions[saveAndContinue]");
     }
 
@@ -431,7 +438,12 @@ public class UIJourneySteps extends BasePage {
         switch (type.toLowerCase()) {
             case "licence":
                 clickByLinkText(world.createLicence.getLicenceNumber());
-                waitForTextToBePresent("View and amend your licence");
+                try {
+                    waitForTextToBePresent("View and amend your licence");
+                } catch (TimeoutException e) {
+                    javaScriptExecutor("location.reload(true)");
+                    waitForTextToBePresent("Select a section to view and change your licence information");
+                }
                 break;
             case "application":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
@@ -555,23 +567,6 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToDirectorsPage(String type) throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("GOV.UK");
-        switch (type.toLowerCase()) {
-            case "licence":
-                clickByLinkText(world.createLicence.getLicenceNumber());
-                break;
-            case "application":
-                clickByLinkText(world.createLicence.getApplicationNumber());
-                break;
-            case "variation":
-                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                break;
-        }
-        clickByLinkText("Directors");
-        waitForTextToBePresent("Directors");
-    }
-
     public void navigateToInternalTask() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
@@ -586,10 +581,13 @@ public class UIJourneySteps extends BasePage {
         enterText("data[forename]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
-        int[] convictionDate = date.getRelativeDate(-5,0,-20);
-        enterText("dob_day", String.valueOf(convictionDate[0]), SelectorType.ID);
-        enterText("dob_month", String.valueOf(convictionDate[1]), SelectorType.ID);
-        enterText("dob_year", String.valueOf(convictionDate[2]), SelectorType.ID);
+
+        HashMap<String, Integer> convictionDate = date.getDate(-5,0,-20);
+
+        enterText("dob_day", convictionDate.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", convictionDate.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", convictionDate.get("year").toString(), SelectorType.ID);
+
         enterText("data[categoryText]", Str.randomWord(50), SelectorType.NAME);
         enterText("data[courtFpn]", "Clown", SelectorType.NAME);
         enterText("data[penalty]", "Severe", SelectorType.NAME);
@@ -820,10 +818,12 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
-        int[] TMDate = date.getRelativeDate(0,0,25);
-        enterText("dob_day", TMDate[0], SelectorType.ID);
-        enterText("dob_month", TMDate[1], SelectorType.ID);
-        enterText("dob_year", TMDate[2], SelectorType.ID);
+
+        HashMap<String, Integer> transportManagerDOB = date.getDate(0,0,25);
+        enterText("dob_day", transportManagerDOB.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", transportManagerDOB.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", transportManagerDOB.get("year").toString(), SelectorType.ID);
+
         enterText("username", externalTMUser, SelectorType.ID);
         enterText("emailAddress", externalTMEmail, SelectorType.ID);
         enterText("emailConfirm", externalTMEmail, SelectorType.ID);
@@ -862,10 +862,12 @@ public class UIJourneySteps extends BasePage {
     public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
-        int[] TMDate = date.getRelativeDate(0,0,-25);
-        enterText("dob_day", TMDate[0], SelectorType.ID);
-        enterText("dob_month", TMDate[1], SelectorType.ID);
-        enterText("dob_year", TMDate[2], SelectorType.ID);
+
+        HashMap<String, Integer> TMDOB = date.getDate(0,0,-25);
+
+        enterText("dob_day", TMDOB.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", TMDOB.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", TMDOB.get("year").toString(), SelectorType.ID);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -949,10 +951,12 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Add Transport Manager");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        int[] TMDate = date.getRelativeDate(-5,0,-20);
-        enterText("dob_day", TMDate[0], SelectorType.ID);
-        enterText("dob_month", TMDate[1], SelectorType.ID);
-        enterText("dob_year", TMDate[2], SelectorType.ID);
+
+        HashMap<String, Integer> TMDOB = date.getDate(-5,0,-20);
+        enterText("dob_day", TMDOB.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", TMDOB.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", TMDOB.get("year").toString(), SelectorType.ID);
+
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
         waitForTextToBePresent("Transport Managers");
@@ -1119,10 +1123,8 @@ public class UIJourneySteps extends BasePage {
 
     public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
         navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        setLicenceNumber(navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().get().getText());
-        navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().ifPresent(WebElement::click);
-        waitForTextToBePresent("Summary");
-        clickByLinkText("Apply to");
+        navigateToSelfServePage("licence", "view");
+        clickByLinkText("Apply to surrender licence");
     }
 
     public void navigateToFinancialEvidencePage(String type) throws IllegalBrowserException, MalformedURLException {
@@ -1350,7 +1352,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         untilElementPresent("//*[@id='modal-title']", SelectorType.XPATH);
         waitAndClick("form-actions[submit]", SelectorType.NAME);
-        javaScriptExecutor("location.reload(true)");
+        waitForElementToBeClickable("//*[@value='Remove']", SelectorType.XPATH);
         waitForTextToBePresent("Disc number");
         clickByLinkText("Back");
     }
@@ -1598,7 +1600,12 @@ public class UIJourneySteps extends BasePage {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("change your licence");
         clickByLinkText("change your licence");
-        waitForTextToBePresent("Applying to change a licence");
+        try {
+            waitForTextToBePresent("Applying to change a licence");
+        } catch (Exception e) {
+            clickByLinkText("change your licence");
+            waitForTextToBePresent("Applying to change a licence");
+        }
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForPageLoad();
 

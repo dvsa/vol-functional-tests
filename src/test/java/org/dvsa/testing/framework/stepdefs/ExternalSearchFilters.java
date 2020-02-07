@@ -12,10 +12,10 @@ public class ExternalSearchFilters extends BasePage implements En {
     public ExternalSearchFilters(World world) {
         And("^i have searched for a licence$", () -> {
             String env = System.getProperty("env");
-            String myURL = org.dvsa.testing.lib.url.webapp.URL.build(ApplicationType.EXTERNAL, env,"/search/find-lorry-bus-operators/").toString();
+            String myURL = org.dvsa.testing.lib.url.webapp.URL.build(ApplicationType.EXTERNAL, env,"search/find-lorry-bus-operators/").toString();
             Browser.navigate().get(myURL);
             findSelectAllRadioButtonsByValue("licence");
-            enterText("search",world.createLicence.getLicenceNumber(),SelectorType.NAME);
+            enterText("search", world.createLicence.getLicenceNumber(),SelectorType.NAME);
             click(nameAttribute("input","submit"));
             do { click(nameAttribute("button","submit"));}
             while(!isElementPresent("//*[@class='table__wrapper']",SelectorType.XPATH));

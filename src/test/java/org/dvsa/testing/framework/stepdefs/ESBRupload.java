@@ -49,6 +49,7 @@ public class ESBRupload extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
             assertFalse(isTextPresent("Short notice"));
+            waitForTextToBePresent("\"Short notice\"");
         });
 
         When("^I upload an esbr file with \"([^\"]*)\" days notice$", (String arg0) -> {

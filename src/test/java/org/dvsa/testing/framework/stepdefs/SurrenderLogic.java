@@ -167,7 +167,6 @@ public class SurrenderLogic extends BasePage implements En {
         When("^the caseworker attempts to withdraw the surrender$", () -> {
             world.UIJourneySteps.caseworkManageSurrender();
             waitForTextToBePresent("Surrender details");
-            javaScriptExecutor("location.reload(true)");
             waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
         });
         Then("^a modal box is displayed$", () -> {
@@ -229,12 +228,7 @@ public class SurrenderLogic extends BasePage implements En {
             waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
             waitAndClick("form-actions[submit]", SelectorType.ID);
-        });
-
-        After((Scenario scenario) -> {
-            Hooks hooks = new Hooks();
-//            hooks.attach(scenario);
-            hooks.tearDown();
+            waitForTextToBePresent("The licence surrender has been undone");
         });
         And("^i create and url search for my licence$", () -> {
             world.APIJourneySteps.createAdminUser();

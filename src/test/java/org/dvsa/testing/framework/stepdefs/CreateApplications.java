@@ -60,6 +60,7 @@ public class CreateApplications extends BasePage implements En {
             click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
             Config config = new Configuration(env.toString()).getConfig();
             world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+            waitForTextToBePresent("Application overview");
         });
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
@@ -72,6 +73,7 @@ public class CreateApplications extends BasePage implements En {
             enterText("scp_additionalInformationPage_csc_input", "265", SelectorType.ID);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
+            waitForTextToBePresent("Application overview");
         });
     }
 }

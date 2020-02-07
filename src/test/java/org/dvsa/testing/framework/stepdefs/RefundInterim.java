@@ -5,9 +5,8 @@ import cucumber.api.java8.En;
 import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 
-import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -39,13 +38,18 @@ public class RefundInterim extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
             world.UIJourneySteps.urlSearchAndViewLicence();
             clickByLinkText("Fees");
-            do {
-                waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
-            } while (!isTextPresent("Paid"));
-            clickByLinkText("Interim Fee");
+            selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
+            waitForTextToBePresent("£68.00");
+            clickByLinkText("Grant Interim Fee for application");
             waitForTextToBePresent("Fee details");
-            assertTrue(navigate().findElement(By.xpath("//*//dd//span")).getText().toLowerCase().contains("refund"));
-            assertFalse(navigate().findElement(By.xpath("//*//dd//span")).getText().toLowerCase().contains("cancelled"));
+            long kickoutTime = System.currentTimeMillis() + 30000;
+            do {
+                javaScriptExecutor("location.reload(true)");
+            } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
+            if (System.currentTimeMillis() > kickoutTime) {
+                throw new TimeoutException("Kickout time for expecting the interim fee to be refunded.");
+            }
+            assertTrue(getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded"));
             assertTrue(checkForPartialMatch("£68.00"));
         });
         And("^the licence has been withdrawn$", () -> {
@@ -70,6 +74,7 @@ public class RefundInterim extends BasePage implements En {
         });
         When("^i pay for the interim application$", () -> {
             world.UIJourneySteps.payForInterimApp();
+            waitForTextToBePresent("Application overview");
         });
         And("^the application has been refused$", () -> {
             world.grantLicence.refuse(world.updateLicence.getVariationApplicationNumber());

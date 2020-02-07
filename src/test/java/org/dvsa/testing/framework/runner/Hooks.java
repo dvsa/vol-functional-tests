@@ -4,6 +4,7 @@ import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
+import org.junit.After;
 import org.junit.jupiter.api.AfterAll;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -42,10 +43,9 @@ public class Hooks {
     }
 
     @AfterAll
-    public void tearDown() throws IOException {
+    public static void tearDown() throws IOException {
         if (Browser.isBrowserOpen()) {
-            Browser.quit();
-            deleteDirectory();
+            Browser.closeBrowser();
         }
     }
 }
