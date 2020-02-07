@@ -164,7 +164,7 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("Bus registrations");
         click(nameAttribute("button", "action"));
         waitForTextToBePresent("Service details");
-        assertTrue(isTextPresent("Service No. & type", 5));
+        assertTrue(isTextPresent("Service No. & type"));
         enterText("serviceNo", "123", SelectorType.ID);
         enterText("startPoint", Str.randomWord(9), SelectorType.ID);
         enterText("finishPoint", Str.randomWord(11), SelectorType.ID);
@@ -193,9 +193,9 @@ public class UIJourneySteps extends BasePage {
         do {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
-        } while (isTextPresent("processing", 60) && System.currentTimeMillis() < kickoutTime);
+        } while (isTextPresent("processing") && System.currentTimeMillis() < kickoutTime);
         try {
-        Assert.assertFalse(isTextPresent("processing", 20));
+        Assert.assertFalse(isTextPresent("processing"));
         } catch (Exception e) {
             throw new NotFoundException("ESBR is still displaying as 'processing'.");
         }
@@ -286,7 +286,7 @@ public class UIJourneySteps extends BasePage {
         switch (payment) {
             case "cash":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
-                if (isTextPresent("Customer reference", 10)) {
+                if (isTextPresent("Customer reference")) {
                     enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                     enterText("details[customerReference]", "AutomationCashCustomerRef", SelectorType.NAME);
                     findAddress(paymentMethod);
@@ -297,7 +297,7 @@ public class UIJourneySteps extends BasePage {
                 break;
             case "cheque":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cheque");
-                if (isTextPresent("Customer reference", 10)) {
+                if (isTextPresent("Customer reference")) {
                     enterText("details[customerReference]", "AutomationChequeCustomerRef", SelectorType.NAME);
                 }
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
@@ -313,7 +313,7 @@ public class UIJourneySteps extends BasePage {
                 break;
             case "postal":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
-                if (isTextPresent("Payer name", 10)) {
+                if (isTextPresent("Payer name")) {
                     enterText("details[payer]", "Jane Doe", SelectorType.NAME);
                 }
                 enterText("details[customerReference]", "AutomationPostalOrderCustomerRef", SelectorType.NAME);
@@ -323,9 +323,9 @@ public class UIJourneySteps extends BasePage {
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
-                if (payment.equals("card") && (isTextPresent("Pay fee", 10))) {
+                if (payment.equals("card") && (isTextPresent("Pay fee"))) {
                     selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
-                    if (isTextPresent("Customer reference", 10)) {
+                    if (isTextPresent("Customer reference")) {
                         enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
                         enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
                         findAddress(paymentMethod);
@@ -611,7 +611,7 @@ public class UIJourneySteps extends BasePage {
             //User is already registered
             signIn(username, getPassword());
         } finally {
-            if (isTextPresent("Current password", 2000)) {
+            if (isTextPresent("Current password")) {
                 enterField(nameAttribute("input", "oldPassword"), password);
                 enterField(nameAttribute("input", "newPassword"), newPassword);
                 enterField(nameAttribute("input", "confirmPassword"), newPassword);
@@ -649,7 +649,7 @@ public class UIJourneySteps extends BasePage {
             //User is already registered
             signIn(username, getPassword());
         } finally {
-            if (isTextPresent("Current password", 60)) {
+            if (isTextPresent("Current password")) {
                 enterField(nameAttribute("input", "oldPassword"), password);
                 enterField(nameAttribute("input", "newPassword"), newPassword);
                 enterField(nameAttribute("input", "confirmPassword"), newPassword);
@@ -754,13 +754,13 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void removeInternalTransportManager() throws IllegalBrowserException, MalformedURLException {
-        assertTrue(isTextPresent("Overview", 60));
-        if (!isLinkPresent("Transport", 60) && isTextPresent("Granted", 60)) {
+        assertTrue(isTextPresent("Overview"));
+        if (!isLinkPresent("Transport", 60) && isTextPresent("Granted")) {
             clickByLinkText(world.createLicence.getLicenceNumber());
             tmCount = returnTableRows("//*[@id='lva-transport-managers']/fieldset/div/div[2]/table/tbody/tr", SelectorType.XPATH);
         }
         clickByLinkText("Transport");
-        isTextPresent("TransPort Managers", 60);
+        isTextPresent("TransPort Managers");
         click("//*[@value='Remove']", SelectorType.XPATH);
     }
 
@@ -1153,9 +1153,9 @@ public class UIJourneySteps extends BasePage {
 
     public void signDeclaration() throws IllegalBrowserException, MalformedURLException {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
-        if (isTextPresent("Review and declarations", 10)) {
+        if (isTextPresent("Review and declarations")) {
             click("//*[@name='form-actions[sign]']", SelectorType.XPATH);
-        } else if (isTextPresent("Declaration", 10)) {
+        } else if (isTextPresent("Declaration")) {
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
     }
@@ -1190,7 +1190,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTextToBePresent("Vehicle details");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        if (isTextPresent("Vehicle declarations", 30)) {
+        if (isTextPresent("Vehicle declarations")) {
             waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         }
         waitForTextToBePresent("Safety and compliance");
@@ -1210,7 +1210,7 @@ public class UIJourneySteps extends BasePage {
             addCommunityLicenceDetails();
         }
         assertTrue(getCurrentUrl().contains("review"));
-        assertTrue(isTextPresent("Review your surrender", 40));
+        assertTrue(isTextPresent("Review your surrender"));
     }
 
     public void startSurrender() throws IllegalBrowserException, MalformedURLException {
@@ -1289,9 +1289,9 @@ public class UIJourneySteps extends BasePage {
     public void checkVerifyConfirmation() throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 10));
-        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
-        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
+        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber())));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 
@@ -1339,7 +1339,7 @@ public class UIJourneySteps extends BasePage {
         do {
             System.out.println("Page not loaded yet");
         }
-        while (!isTextPresent("Licence details", 2));//condition
+        while (!isTextPresent("Licence details"));//condition
         Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), arg0.toUpperCase());
     }
 

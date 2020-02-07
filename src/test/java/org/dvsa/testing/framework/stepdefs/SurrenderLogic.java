@@ -162,7 +162,7 @@ public class SurrenderLogic extends BasePage implements En {
             assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender"));
         });
         And("^the licence details page should display$", () -> {
-            assertTrue(isTextPresent("Licence details", 40));
+            assertTrue(isTextPresent("Licence details"));
         });
         When("^the caseworker attempts to withdraw the surrender$", () -> {
             world.UIJourneySteps.caseworkManageSurrender();
@@ -196,7 +196,7 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.submitSurrender();
         });
         Then("^the quick actions and decision buttons are not displayed for the menu items listed$", (DataTable buttons) -> {
-            assertFalse(isTextPresent("Quick actions", 30));
+            assertFalse(isTextPresent("Quick actions"));
             List<String> section_button = buttons.asList(String.class);
             for (String button : section_button) {
                 clickByLinkText(button);
