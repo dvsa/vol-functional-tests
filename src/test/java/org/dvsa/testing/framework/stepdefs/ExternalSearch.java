@@ -59,6 +59,7 @@ public class ExternalSearch extends BasePage implements En {
             do {
                 clickByName("submit");
             } while (!isTextPresent(world.createLicence.getBusinessName(),30));
+            waitForTextToBePresent("Operator");
             assertFalse(checkForFullMatch("OB0000123"));
         });
         Then("^search results page should only display names containing our operator name$", () -> {

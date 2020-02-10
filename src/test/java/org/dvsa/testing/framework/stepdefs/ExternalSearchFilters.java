@@ -38,6 +38,7 @@ public class ExternalSearchFilters extends BasePage implements En {
             Assert.assertEquals(world.updateLicence.getLicenceTrafficArea(),traffArea);
         });
         Then("^the Goods or PSV filter should be displayed$", () -> {
+            waitForTextToBePresent(world.createLicence.getLicenceNumber());
             String opType = getText(String.format("//*[@id='filter[goodsOrPsvDesc]']/option[2]"), SelectorType.XPATH);
             Assert.assertEquals(world.updateLicence.getOperatorTypeDetails(), opType);
         });
