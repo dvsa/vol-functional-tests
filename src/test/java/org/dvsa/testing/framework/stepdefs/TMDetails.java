@@ -38,7 +38,7 @@ public class TMDetails extends BasePage implements En {
             assertTrue(Browser.navigate().getCurrentUrl().contains(page));
         });
         And("^page title \"([^\"]*)\" should be displayed on page$", (String arg0) -> {
-            isTextPresent(arg0);
+            isTextPresent(arg0,30);
             clickByLinkText("Back");
         });
         When("^the users attempts to save without entering any data$", () -> {
@@ -52,7 +52,7 @@ public class TMDetails extends BasePage implements En {
         });
         Then("^the guidance text should be displayed$", () -> {
             String notDirectorText = findElement("//*[@id='responsibilities']/fieldset[2]/div[2]", SelectorType.XPATH, 10).getText();
-            assertTrue(isTextPresent(notDirectorText));
+            assertTrue(isTextPresent(notDirectorText,30));
         });
         Then("^the optional wording should not be displayed on the page$", (DataTable arg) -> {
             List<String> sections = arg.asList(String.class);

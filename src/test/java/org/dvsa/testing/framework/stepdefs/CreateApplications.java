@@ -54,7 +54,7 @@ public class CreateApplications extends BasePage implements En {
             click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         });
         Then("^the application should be submitted$", () -> {
-            assertTrue(isTextPresent("Thank you, your application has been submitted."));
+            assertTrue(isTextPresent("Thank you, your application has been submitted.",30));
         });
         When("^i pay for my application$", () -> {
             click("//*[@name='form-actions[pay]']", SelectorType.XPATH);

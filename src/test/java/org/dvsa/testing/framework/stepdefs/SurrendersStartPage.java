@@ -19,7 +19,7 @@ public class SurrendersStartPage extends BasePage implements En {
         });
         And("^the correct instructions for \"([^\"]*)\" should be displayed$", (String licenceType) -> {
             if(licenceType.equals("public"))
-                assertTrue(isTextPresent("You will need to cancel all registered bus services."));
+                assertTrue(isTextPresent("You will need to cancel all registered bus services.",30));
         });
         And("^the correct licence number should be displayed$", () -> {
             boolean isTrue = findElement("//h3", SelectorType.XPATH,10).getText().contains(world.createLicence.getLicenceNumber());
