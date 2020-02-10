@@ -54,7 +54,8 @@ public class CreateApplications extends BasePage implements En {
             click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         });
         Then("^the application should be submitted$", () -> {
-            assertTrue(isTextPresent("Thank you, your application has been submitted.",30));
+            waitForTextToBePresent("Application overview");
+            assertTrue(isTextPresent("Your application reference number is",30));
         });
         When("^i pay for my application$", () -> {
             click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
@@ -66,14 +67,15 @@ public class CreateApplications extends BasePage implements En {
             clickByLinkText("Home");
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
             world.UIJourneySteps.navigateThroughApplication();
+            waitForTextToBePresent("Review and declarations");
             click("//*[contains(text(),'Print')]", SelectorType.XPATH);
             click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+            waitForTextToBePresent("Would you like to use a stored card?");
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
             waitAndClick("form-actions[pay]", SelectorType.NAME);
             enterText("scp_additionalInformationPage_csc_input", "265", SelectorType.ID);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
-            waitForTextToBePresent("Application overview");
         });
     }
 }

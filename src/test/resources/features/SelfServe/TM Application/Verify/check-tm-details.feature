@@ -35,10 +35,10 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
 
     Examples:
       | page                           | button                        | page-title              |
-      | add-other-licence-applications | Add other licences            | Add other licence       |
-      | add-employment                 | Add other employment          | Add employment          |
-      | add-previous-conviction        | Add convictions and penalties | Add previous conviction |
-      | add-previous-licence           | Add licences                  | Add previous licence    |
+      | add-other-licence-applications | Add other licences            | Add other licence details     |
+      | add-employment                 | Add other employment          | Add other employment details          |
+      | add-previous-conviction        | Add convictions and penalties | Add Offence|
+      | add-previous-licence           | Add licences                  | Add Details of revoked, curtailed or suspended licences    |
 
   Scenario: validation checks when no radio button has been selected
     When the users attempts to save without entering any data

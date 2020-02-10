@@ -16,7 +16,7 @@ public class CheckCorrespondence extends BasePage implements En {
            click("//a[@href='/correspondence/']", SelectorType.XPATH);
         });
         Then("^all correspondence for the application should be displayed$", () -> {
-            waitForTextToBePresent("1 Documents");
+            waitForElementToBePresent("//table");
             assertTrue(findElement("//table",SelectorType.XPATH,30).getText().contains(world.createLicence.getLicenceNumber()));
         });
     }

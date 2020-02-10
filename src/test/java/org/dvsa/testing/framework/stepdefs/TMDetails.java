@@ -38,7 +38,7 @@ public class TMDetails extends BasePage implements En {
             assertTrue(Browser.navigate().getCurrentUrl().contains(page));
         });
         And("^page title \"([^\"]*)\" should be displayed on page$", (String arg0) -> {
-            isTextPresent(arg0,30);
+            assertTrue(isTextPresent(arg0,30));
             clickByLinkText("Back");
         });
         When("^the users attempts to save without entering any data$", () -> {
