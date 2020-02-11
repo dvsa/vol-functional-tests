@@ -66,9 +66,9 @@ public class CreateApplications extends BasePage implements En {
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
-            clickByLinkText("Review and declarations");
-            click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
             waitForTextToBePresent("Would you like to use a stored card?");
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
             waitAndClick("form-actions[pay]", SelectorType.NAME);
