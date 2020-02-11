@@ -1035,8 +1035,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToVehiclesPage() throws IllegalBrowserException, MalformedURLException {
-//        clickByLinkText("GOV.UK");
-//        clickByLinkText(world.createLicence.getApplicationNumber());
         clickByLinkText("Vehicles");
         waitForTextToBePresent("Vehicle details");
     }

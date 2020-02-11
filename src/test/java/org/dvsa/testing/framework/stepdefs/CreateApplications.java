@@ -49,7 +49,7 @@ public class CreateApplications extends BasePage implements En {
         When("^i choose to print and sign$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);
-            world.UIJourneySteps.navigateThroughApplication();
+            clickByLinkText("Review and declarations");
             click("//*[contains(text(),'Print')]", SelectorType.XPATH);
             click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         });
@@ -66,8 +66,7 @@ public class CreateApplications extends BasePage implements En {
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
-            world.UIJourneySteps.navigateThroughApplication();
-            waitForTextToBePresent("Review and declarations");
+            clickByLinkText("Review and declarations");
             click("//*[contains(text(),'Print')]", SelectorType.XPATH);
             click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
             waitForTextToBePresent("Would you like to use a stored card?");
