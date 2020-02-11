@@ -29,8 +29,8 @@ Feature: Self Serve Apply for licence
     Examples:
       | operatorType | licenceType            |
       | goods        | standard_international |
-      | public       | standard_national      |
 
+  @stored_cards
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | N |
