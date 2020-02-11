@@ -27,6 +27,7 @@ public class ESBRupload extends BasePage implements En {
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
             world.UIJourneySteps.viewESBRInExternal();
+            waitForTextToBePresent("New");
             assertTrue(isTextPresent("successful",30));
             assertTrue(isTextPresent("New",30));
             assertTrue(isTextPresent("short notice",30));
