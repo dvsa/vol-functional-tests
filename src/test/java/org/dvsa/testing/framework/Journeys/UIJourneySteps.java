@@ -201,10 +201,20 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void viewESBRInExternal() throws IllegalBrowserException, MalformedURLException {
+
+        long kickOutTime = System.currentTimeMillis() + 120000;
+
         do {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
-        } while (isTextPresent("processing", 60));
+        } while (isTextPresent("processing", 60) && System.currentTimeMillis() < kickOutTime);
+
+        try {
+            Assert.assertTrue(isTextPresent("Successful", 60));
+        } catch (Exception e) {
+            throw new NotFoundException("ESBR is still displaying as 'processing' when kick out time was reached.");
+        }
+
     }
 
     public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
