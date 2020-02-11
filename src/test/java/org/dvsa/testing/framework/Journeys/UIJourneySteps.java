@@ -802,7 +802,10 @@ public class UIJourneySteps extends BasePage {
 
     public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         click("//*[@id='overview-item__operating_centres']", SelectorType.XPATH);
-        changeLicenceForVariation();
+        waitForTextToBePresent("Traffic area");
+        waitAndClick("//*[contains(text(),'change your')]",SelectorType.XPATH);
+        waitAndClick("form-actions[submit]",SelectorType.NAME);
+        waitForTextToBePresent("Operating centres");
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
@@ -1048,8 +1051,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToVehiclesPage() throws IllegalBrowserException, MalformedURLException {
-//        clickByLinkText("GOV.UK");
-//        clickByLinkText(world.createLicence.getApplicationNumber());
         clickByLinkText("Vehicles");
         waitForTextToBePresent("Vehicle details");
     }
@@ -1630,7 +1631,6 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
         waitForPageLoad();
         waitForElementToBePresent("//*[contains(text(),'change your licence')]");
-        waitAndClick("//*[contains(text(),'change')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'change')]", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);

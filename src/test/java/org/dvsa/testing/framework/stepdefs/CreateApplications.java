@@ -49,16 +49,16 @@ public class CreateApplications extends BasePage implements En {
         When("^i choose to print and sign$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);
-            world.UIJourneySteps.navigateThroughApplication();
-            click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+            clickByLinkText("Review and declarations");
+            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         });
         Then("^the application should be submitted$", () -> {
             waitForTextToBePresent("Application overview");
             assertTrue(isTextPresent("Your application reference number is",30));
         });
         When("^i pay for my application$", () -> {
-            click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+            waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
             Config config = new Configuration(env.toString()).getConfig();
             world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
             waitForTextToBePresent("Application overview");
@@ -66,14 +66,13 @@ public class CreateApplications extends BasePage implements En {
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
-            world.UIJourneySteps.navigateThroughApplication();
-            waitForTextToBePresent("Review and declarations");
-            click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
             waitForTextToBePresent("Would you like to use a stored card?");
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
             waitAndClick("form-actions[pay]", SelectorType.NAME);
-            enterText("scp_additionalInformationPage_csc_input", "265", SelectorType.ID);
+            waitAndEnterText("scp_additionalInformationPage_csc_input",  SelectorType.ID,"265");
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
         });
