@@ -27,10 +27,7 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -184,11 +181,17 @@ public class UIJourneySteps extends BasePage {
         enterText("effectiveDate_month", myDates.get("month"), SelectorType.ID);
         enterText("effectiveDate_year", myDates.get("year"), SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
+
+        long kickOutTime = System.currentTimeMillis() + 60000;
+
         do {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
         }
-        while (!isTextPresent("Service details", 2));//condition
+        while (!isTextPresent("Service details", 2) && System.currentTimeMillis() < kickOutTime);
+        if (System.currentTimeMillis() > kickOutTime) {
+            throw new TimeoutException("Service details page didn't display as expected within the time limit.");
+        }
     }
 
     private static void enterDate(int day, int month, int year) throws IllegalBrowserException, MalformedURLException {
