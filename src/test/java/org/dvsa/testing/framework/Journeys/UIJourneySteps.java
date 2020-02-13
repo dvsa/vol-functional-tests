@@ -577,23 +577,6 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToDirectorsPage(String type) throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("GOV.UK");
-        switch (type.toLowerCase()) {
-            case "licence":
-                clickByLinkText(world.createLicence.getLicenceNumber());
-                break;
-            case "application":
-                clickByLinkText(world.createLicence.getApplicationNumber());
-                break;
-            case "variation":
-                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                break;
-        }
-        clickByLinkText("Directors");
-        waitForTextToBePresent("Directors");
-    }
-
     public void navigateToInternalTask() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
@@ -1150,10 +1133,8 @@ public class UIJourneySteps extends BasePage {
 
     public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
         navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        setLicenceNumber(navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().get().getText());
-        navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().ifPresent(WebElement::click);
-        waitForTextToBePresent("Summary");
-        clickByLinkText("Apply to");
+        navigateToSelfServePage("licence", "view");
+        clickByLinkText("Apply to surrender licence");
     }
 
     public void navigateToFinancialEvidencePage(String type) throws IllegalBrowserException, MalformedURLException {
@@ -1365,10 +1346,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void checkLicenceStatus(String arg0) throws IllegalBrowserException, MalformedURLException {
-        do {
-            System.out.println("Page not loaded yet");
-        }
-        while (!isTextPresent("Licence details", 2));//condition
+        waitForTextToBePresent("Licence details");
         Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), arg0.toUpperCase());
     }
 
