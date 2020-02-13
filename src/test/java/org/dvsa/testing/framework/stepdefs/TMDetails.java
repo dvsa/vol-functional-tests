@@ -38,7 +38,7 @@ public class TMDetails extends BasePage implements En {
             assertTrue(Browser.navigate().getCurrentUrl().contains(page));
         });
         And("^page title \"([^\"]*)\" should be displayed on page$", (String arg0) -> {
-            isTextPresent(arg0);
+            assertTrue(isTextPresent(arg0,30));
             clickByLinkText("Back");
         });
         When("^the users attempts to save without entering any data$", () -> {
@@ -53,11 +53,11 @@ public class TMDetails extends BasePage implements En {
         });
         Then("^the guidance text should be displayed$", () -> {
             String notDirectorText = findElement("//*[@id='responsibilities']/fieldset[2]/div[2]", SelectorType.XPATH, 10).getText();
-            assertTrue(isTextPresent(notDirectorText));
+            assertTrue(isTextPresent(notDirectorText,30));
         });
         Then("^the optional wording should not be displayed on the page$", (DataTable arg) -> {
             List<String> sections = arg.asList(String.class);
-            for(String section : sections){
+            for (String section : sections) {
                 assertTrue(Browser.navigate().findElements(By.xpath(String.format("//*[@id=\"%s\"]/div/div", section))).stream().noneMatch(x -> x.getText().contains("(optional)")));
             }
         });
@@ -71,13 +71,13 @@ public class TMDetails extends BasePage implements En {
         });
         And("^the section buttons should not be displayed$", (DataTable table) -> {
             List<String> sections = table.asList(String.class);
-            for(String button : sections){
+            for (String button : sections) {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
             }
         });
         Then("^the section buttons should be displayed$", (DataTable table) -> {
             List<String> sections = table.asList(String.class);
-            for(String button : sections){
+            for (String button : sections) {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
             }
         });

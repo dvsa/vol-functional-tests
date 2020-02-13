@@ -3,9 +3,7 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
-import cucumber.api.Scenario;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.runner.Hooks;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
@@ -162,11 +160,12 @@ public class SurrenderLogic extends BasePage implements En {
             assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender"));
         });
         And("^the licence details page should display$", () -> {
-            assertTrue(isTextPresent("Licence details"));
+            assertTrue(isTextPresent("Licence details", 40));
         });
         When("^the caseworker attempts to withdraw the surrender$", () -> {
             world.UIJourneySteps.caseworkManageSurrender();
             waitForTextToBePresent("Surrender details");
+            javaScriptExecutor("location.reload(true)");
             waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
         });
         Then("^a modal box is displayed$", () -> {
@@ -196,7 +195,7 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.submitSurrender();
         });
         Then("^the quick actions and decision buttons are not displayed for the menu items listed$", (DataTable buttons) -> {
-            assertFalse(isTextPresent("Quick actions"));
+            assertFalse(isTextPresent("Quick actions",30));
             List<String> section_button = buttons.asList(String.class);
             for (String button : section_button) {
                 clickByLinkText(button);

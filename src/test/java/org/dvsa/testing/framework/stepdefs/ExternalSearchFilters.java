@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -38,6 +38,7 @@ public class ExternalSearchFilters extends BasePage implements En {
             Assert.assertEquals(world.updateLicence.getLicenceTrafficArea(),traffArea);
         });
         Then("^the Goods or PSV filter should be displayed$", () -> {
+            waitForTextToBePresent(world.createLicence.getLicenceNumber());
             String opType = getText(String.format("//*[@id='filter[goodsOrPsvDesc]']/option[2]"), SelectorType.XPATH);
             Assert.assertEquals(world.updateLicence.getOperatorTypeDetails(), opType);
         });

@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.system.Properties;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import enums.UserRoles;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
@@ -199,8 +199,8 @@ public class Surrenders extends BasePage implements En {
             isLinkPresent("PB2026379/1", 5);
         });
         And("^tick boxes should be displayed$", () -> {
-            isTextPresent("Digital signature has been checked");
-            isTextPresent("ECMS has been checked");
+            isTextPresent("Digital signature has been checked",30);
+            isTextPresent("ECMS has been checked",30);
         });
         Then("^the surrender print and sign page is displayed$", () -> {
             world.UIJourneySteps.signManually();
