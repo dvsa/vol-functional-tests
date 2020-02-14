@@ -11,16 +11,22 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.LinkedHashMap;
+
 public class Continuations extends BasePage implements En {
+
+    private LinkedHashMap<String, Integer> continuationDate = new Dates(new LocalDateCalendar());
+
     public Continuations(World world) {
 
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         When("^i change my continuation date and generate a continuation on internal$", () -> {
             world.UIJourneySteps.urlSearchAndViewLicence();
-            int[] date = new Dates(new LocalDateCalendar()).getRelativeDate(0,0,0);
+            .getDate(0,0,0);
             waitForTextToBePresent("Continuation date");
             replaceText("//*[@id='details[continuationDate]_day']", String.valueOf(date[0]));
             replaceText("//*[@id='details[continuationDate]_month']", String.valueOf(date[1]));
@@ -70,7 +76,18 @@ public class Continuations extends BasePage implements En {
             Config config = new Configuration(env.toString()).getConfig();
             world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
         });
-        Then("^the continuation should be approved$", () -> {
+        Then("^the continuation should be approved and a snapshot generated on Internal$", () -> {
+            waitForTextToBePresent("Your licence has been continued");
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewLicence();
+            clickByLinkText("Docs & attachments");
+            try {
+                Assert.assertTrue(isTextPresent("Digital continuation snapshot",10));
+            } catch (Exception e) {
+                throw new Exception("Digital continuation snapshot not visible in Internal Docs and attachments.");
+            }
+
         });
     }
 }

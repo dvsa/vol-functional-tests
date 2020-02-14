@@ -10,4 +10,4 @@ Feature: Continuations journey through internal and self serve
     Given i have logged in to internal
     When i change my continuation date and generate a continuation on internal
     And fill in my continuation details on self serve
-    Then the continuation should be approved
+    Then the continuation should be approved and a snapshot generated on Internal
