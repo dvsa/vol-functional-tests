@@ -174,7 +174,7 @@ public class UIJourneySteps extends BasePage {
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
 
         Dates = date.getDate(0, 0, 0);
-        enterDate(myDates.get("day"),myDates.get("month"),myDates.get("year"));
+        enterDate(Dates.get("day"),Dates.get("month"),Dates.get("year"));
 
         Dates = date.getDate(0,month,0);
         enterText("effectiveDate_day", Dates.get("day"), SelectorType.ID);
