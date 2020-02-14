@@ -578,23 +578,6 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToDirectorsPage(String type) throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("GOV.UK");
-        switch (type.toLowerCase()) {
-            case "licence":
-                clickByLinkText(world.createLicence.getLicenceNumber());
-                break;
-            case "application":
-                clickByLinkText(world.createLicence.getApplicationNumber());
-                break;
-            case "variation":
-                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                break;
-        }
-        clickByLinkText("Directors");
-        waitForTextToBePresent("Directors");
-    }
-
     public void navigateToInternalTask() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
