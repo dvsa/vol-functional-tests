@@ -1,12 +1,11 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.driver.Browser;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.internal.*;
-import org.joda.time.LocalDate;
 import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.pages.internal.InterimPage;
+import org.joda.time.LocalDate;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

@@ -1,13 +1,12 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import activesupport.driver.Browser;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.Color;
 
 public class BetaBannerCheck extends BasePage implements En {

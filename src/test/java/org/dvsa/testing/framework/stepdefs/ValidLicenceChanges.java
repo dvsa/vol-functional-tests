@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
@@ -64,8 +64,8 @@ public class ValidLicenceChanges extends BasePage implements En {
             checkValue("//*[@id='registeredAddress[town]']",SelectorType.XPATH,registeredAddressTown);
             checkValue("//*[@id='registeredAddress[postcode]']",SelectorType.XPATH,registeredAddressPostCode);
             checkValue("//td[1]//input[@type='submit']",SelectorType.XPATH,companyName);
-            Assert.assertEquals(Browser.getDriver().findElement(By.xpath("//td[2]")).getText(),companyNumber);
-            Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
+            Assert.assertEquals(Browser.navigate().findElement(By.xpath("//td[2]")).getText(),companyNumber);
+            Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
         });
         When("^i make changes to the addresses page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","addresses");
@@ -120,8 +120,8 @@ public class ValidLicenceChanges extends BasePage implements En {
             checkValue("//*[@id='establishment_address[addressLine4]']",SelectorType.XPATH,registeredAddress4);
             checkValue("//*[@id='establishment_address[town]']",SelectorType.XPATH,registeredAddressTown);
             checkValue("//*[@id='postcodeOptional']",SelectorType.XPATH,registeredAddressPostCode);
-            Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='consultant[add-transport-consultant]']")).isSelected());
-            Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='written-permission-to-engage']")).isSelected());
+            Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='consultant[add-transport-consultant]']")).isSelected());
+            Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='written-permission-to-engage']")).isSelected());
             checkValue("//*[@id='consultant[transportConsultantName]']",SelectorType.XPATH,transportConsultantName);
             checkValue("//*[@name='consultantAddress[addressLine1]']",SelectorType.XPATH,registeredAddress1);
             checkValue("//*[@id='consultantAddress[addressLine2]']",SelectorType.XPATH,registeredAddress2);
@@ -136,7 +136,7 @@ public class ValidLicenceChanges extends BasePage implements En {
         When("^i make changes to the vehicles page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","vehicles");
             for (int i = 0; i < 3; i++) {
-                if (Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
+                if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
                     click("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
                     waitForTextToBePresent("Are you sure you want to remove these records?");
                     click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
@@ -153,12 +153,12 @@ public class ValidLicenceChanges extends BasePage implements En {
         });
         Then("^the changes to the vehicles page are made$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","vehicles");
-            if (Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
-                Assert.assertEquals(Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
+            if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
+                Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
             } else {
-                Assert.assertEquals(Browser.getDriver().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size(),2);
+                Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size(),2);
             }
-                Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
+                Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
         });
         When("^i make changes to the licence discs page$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","licence discs");
@@ -175,10 +175,10 @@ public class ValidLicenceChanges extends BasePage implements En {
         });
         Then("^the changes to the licence discs page are made$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence","licence discs");
-            Assert.assertEquals(Browser.getDriver().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),4);
+            Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),4);
             click("//*[contains(text(),'More actions')]", SelectorType.XPATH);
             click("//*[@id='ceased-show-hide']",SelectorType.XPATH);
-            Assert.assertEquals(Browser.getDriver().findElements(By.xpath("//tbody//tr")).size(),7);
+            Assert.assertEquals(Browser.navigate().findElements(By.xpath("//tbody//tr")).size(),7);
 
         });
         When("^i make changes to the safety and compliance page$", () -> {
@@ -205,8 +205,8 @@ public class ValidLicenceChanges extends BasePage implements En {
             world.UIJourneySteps.navigateToSelfServePage("licence","safety and compliance");
 
             checkValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH, "6");
-            Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());
-            Assert.assertTrue(Browser.getDriver().findElement(By.xpath("//*[contains(@value,'tach_external')]")).isSelected());
+            Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());
+            Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[contains(@value,'tach_external')]")).isSelected());
             checkValue("//*[@id='licence[tachographInsName]']", SelectorType.XPATH, externalAnalysisBureau);
             checkForFullMatch(safetyInspector);
             checkForFullMatch(registeredAddress1 + ", " + registeredAddressTown);

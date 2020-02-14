@@ -3,9 +3,7 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.driver.Browser;
 import cucumber.api.DataTable;
-import cucumber.api.Scenario;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.runner.Hooks;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
@@ -197,7 +195,7 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.submitSurrender();
         });
         Then("^the quick actions and decision buttons are not displayed for the menu items listed$", (DataTable buttons) -> {
-            assertFalse(isTextPresent("Quick actions", 30));
+            assertFalse(isTextPresent("Quick actions",30));
             List<String> section_button = buttons.asList(String.class);
             for (String button : section_button) {
                 clickByLinkText(button);
@@ -229,12 +227,7 @@ public class SurrenderLogic extends BasePage implements En {
             waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
             waitAndClick("form-actions[submit]", SelectorType.ID);
-        });
-
-        After((Scenario scenario) -> {
-            Hooks hooks = new Hooks();
-//            hooks.attach(scenario);
-            hooks.tearDown();
+            waitForTextToBePresent("The licence surrender has been undone");
         });
         And("^i create and url search for my licence$", () -> {
             world.APIJourneySteps.createAdminUser();

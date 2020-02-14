@@ -3,8 +3,7 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.driver.Browser;
 import com.deque.axe.AXE;
-import cucumber.api.Scenario;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.runner.Hooks;
@@ -13,17 +12,19 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
 
-import static activesupport.driver.Browser.*;
-import static junit.framework.TestCase.*;
+import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.fail;
 
 public class KeyboardAccessibility extends BasePage implements En {
     private static final URL scriptUrl = KeyboardAccessibility.class.getResource("/axe/axe.min.js");
@@ -60,15 +61,10 @@ public class KeyboardAccessibility extends BasePage implements En {
                 bw.close();
                 String reader = new String(Files.readAllBytes(Paths.get(temp.getAbsolutePath())));
                 String newReport = reader.replaceAll("(?:\\d\\))", "<p>").replaceAll("(?:\\w\\))", "<br>");
-                writeToFile(newReport, getDriver().getCurrentUrl());
+                writeToFile(newReport, getCurrentUrl());
                 fail();
             }
 
-        });
-        After((Scenario scenario) -> {
-            Hooks hooks = new Hooks();
-            hooks.attach(scenario);
-            hooks.tearDown();
         });
         When("^i navigate to self serve application main pages i can skip to main content$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());

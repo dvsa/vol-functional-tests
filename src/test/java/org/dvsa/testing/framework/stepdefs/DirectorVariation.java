@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.string.Str;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.UIJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -27,7 +27,7 @@ public class DirectorVariation extends BasePage implements En {
         world.UIJourneySteps = new UIJourneySteps(world);
 
         When("^i add a new person$", () -> {
-            world.UIJourneySteps.navigateToDirectorsPage("licence");
+            world.UIJourneySteps.navigateToSelfServePage("licence", "directors");
             world.UIJourneySteps.addPerson(firstName, lastName);
         });
         Then("^a new director should be added to my licence$", () -> {
@@ -107,7 +107,7 @@ public class DirectorVariation extends BasePage implements En {
 
         When("^i remove a the last director$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToDirectorsPage("licence");
+            world.UIJourneySteps.navigateToSelfServePage("licence", "directors");
             world.UIJourneySteps.removeDirector();
         });
 

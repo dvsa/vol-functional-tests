@@ -1,18 +1,14 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import cucumber.api.Scenario;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import enums.UserRoles;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class VerifySwitchedOff extends BasePage implements En {
 
@@ -27,7 +23,7 @@ public class VerifySwitchedOff extends BasePage implements En {
         });
         Then("^Signing options are not displayed on the page$", () -> {
             assertFalse(isElementPresent("//*[@type='radio']", SelectorType.XPATH));
-            assertFalse(isTextPresent("How would you like to sign the declaration?", 20));
+            assertFalse(isTextPresent("How would you like to sign the declaration?",30));
         });
         And("^submit to operator button is displayed$", () -> {
             String buttonName = findElement("form-actions[submit]", SelectorType.ID, 10).getText();
@@ -51,29 +47,25 @@ public class VerifySwitchedOff extends BasePage implements En {
             click("form-actions[submit]", SelectorType.ID);
         });
         Then("^the print and sign page is displayed$", () -> {
-            Assert.assertTrue(isTextPresent("Transport Manager details approved", 10));
-            Assert.assertTrue(isTextPresent("Print, sign and return", 10));
+            Assert.assertTrue(isTextPresent("Transport Manager details approved",30));
+            Assert.assertTrue(isTextPresent("Print, sign and return",30));
         });
-        And("^the application status is \"([^\"]*)\"$", (String arg0) -> {
+        And("^the application status is \"([^\"]*)\"$", (String status) -> {
             clickByLinkText("Back to Transport");
             waitForTextToBePresent("Transport Managers");
-            Assert.assertTrue(isTextPresent(arg0, 10));
+            Assert.assertTrue(isTextPresent(status,30));
         });
         Then("^the 'Awaiting operator review' post signature page is displayed$", () -> {
             waitForTextToBePresent("What happens next?");
             assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            assertTrue(isTextPresent("Awaiting operator review", 10));
-            assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s",getCurrentDate("d MMM yyyy")),20));
+            assertTrue(isTextPresent("Awaiting operator review",30));
+            assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")),30));
         });
         When("^i am on the the TM landing page$", () -> {
             world.UIJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
         });
         Then("^a success message banner should be displayed$", () -> {
-            Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager", 10));
-        });
-        After(new String[]{"@SS-Verify-Off"}, (Scenario scenario) -> {
-            if(scenario.isFailed() || !scenario.isFailed())
-            world.updateLicence.enableDisableVerify("0");
+            Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager",30));
         });
         And("^i navigate to the declarations page$", () -> {
             world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
@@ -86,7 +78,7 @@ public class VerifySwitchedOff extends BasePage implements En {
           }
         });
         Then("^the 'Awaiting operator review' verify off page is displayed$", () -> {
-            assertTrue(isTextPresent("Awaiting operator review", 10));
+            assertTrue(isTextPresent("Awaiting operator review",30));
         });
     }
 }

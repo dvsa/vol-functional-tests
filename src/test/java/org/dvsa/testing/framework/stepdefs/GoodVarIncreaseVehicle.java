@@ -30,7 +30,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
             world.UIJourneySteps.changeVehicleReq("+6");
         });
         Then("^An error message should appear$", () -> {
-            isTextPresent("//*[@id=\"OperatingCentre\"]/fieldset[2]/div[1]/div/p",  20);
+            isTextPresent("//*[@id=\"OperatingCentre\"]/fieldset[2]/div[1]/div/p",30);
         });
 
         When("^A selfserve user increases the vehicle authority by invalid charecters$", () -> {
@@ -40,7 +40,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
             world.UIJourneySteps.changeVehicleAuth("+6");
         });
         Then("^An error should appear$", () -> {
-            isTextPresent("//*[@id=\"OperatingCentres\"]/fieldset[3]/div[1]/div/p",  20);
+            isTextPresent("//*[@id=\"OperatingCentres\"]/fieldset[3]/div[1]/div/p",30);
         });
         When("^a selfserve user creates a variation and increases the vehicle authority count$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());

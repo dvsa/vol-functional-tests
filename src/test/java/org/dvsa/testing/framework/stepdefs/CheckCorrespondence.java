@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
@@ -16,6 +16,7 @@ public class CheckCorrespondence extends BasePage implements En {
            click("//a[@href='/correspondence/']", SelectorType.XPATH);
         });
         Then("^all correspondence for the application should be displayed$", () -> {
+            waitForElementToBePresent("//table");
             assertTrue(findElement("//table",SelectorType.XPATH,30).getText().contains(world.createLicence.getLicenceNumber()));
         });
     }

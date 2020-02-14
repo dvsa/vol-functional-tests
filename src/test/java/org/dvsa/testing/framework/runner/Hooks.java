@@ -24,14 +24,14 @@ public class Hooks {
 
 
     @Attachment(value = "Screenshot on failure", type = "image/png")
-    public void attach(Scenario scenario) throws IOException, IllegalBrowserException {
+    public void attach(Scenario scenarioStatus) throws IOException, IllegalBrowserException {
         createDirectory();
         File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
-        if (scenario.isFailed()) {
+        if (scenarioStatus.isFailed()) {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
             byte[] attachment = ((TakesScreenshot) Browser.navigate())
                     .getScreenshotAs(OutputType.BYTES);
-            scenario.embed(attachment, String.valueOf(screenshotStream));
+            scenarioStatus.embed(attachment, String.valueOf(screenshotStream));
             screenshotStream.write(attachment);
             screenshotStream.close();
         }
@@ -42,10 +42,9 @@ public class Hooks {
     }
 
     @AfterAll
-    public void tearDown() throws IOException {
+    public static void tearDown() throws IOException {
         if (Browser.isBrowserOpen()) {
-            Browser.quit();
-            deleteDirectory();
+            Browser.closeBrowser();
         }
     }
 }
