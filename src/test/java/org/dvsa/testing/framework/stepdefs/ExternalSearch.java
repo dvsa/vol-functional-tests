@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
- import cucumber.api.java8.En;
+import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 
@@ -43,11 +43,11 @@ public class ExternalSearch extends BasePage implements En {
         Then("^search results page should only display our licence number$", () -> {
             do {
                 clickByName("submit");
-            } while (!isTextPresent(world.createLicence.getBusinessName(),30));
+            } while (!isTextPresent(world.createLicence.getBusinessName(), 30));
             assertTrue(checkForFullMatch(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should display names containing our operator name$", () -> {
-//            assertTrue(checkForPartialMatch(world.createLicence.getFamilyName().toUpperCase(),"//table/tbody/tr[*]"));
+            assertTrue(checkForPartialMatch(world.createLicence.getFamilyName().toUpperCase()));
         });
         Then("^search results page should not display addresses which were not searched for$", () -> {
             assertFalse(checkForFullMatch("Swansea"));
@@ -58,8 +58,7 @@ public class ExternalSearch extends BasePage implements En {
         Then("^search results page should not display any other licence number$", () -> {
             do {
                 clickByName("submit");
-            } while (!isTextPresent(world.createLicence.getBusinessName(),30));
-            waitForTextToBePresent("Operator");
+            } while (!isTextPresent(world.createLicence.getBusinessName(), 30));
             assertFalse(checkForFullMatch("OB0000123"));
         });
         Then("^search results page should only display names containing our operator name$", () -> {

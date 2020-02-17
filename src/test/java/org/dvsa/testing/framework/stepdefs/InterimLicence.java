@@ -56,17 +56,17 @@ public class InterimLicence extends BasePage implements En {
 
         Then("^I should get an error when i save the application$", () -> {
             InterimPage.save();
-            assertTrue(isTextPresent(VehicleErrorMessage,30));
+            assertTrue(isTextPresent(VehicleErrorMessage, 60));
         });
 
         Then("^I should be able to save the application without any errors$", () -> {
             InterimPage.save();
-            assertFalse(isTextPresent(VehicleErrorMessage,30));
+            assertFalse(isTextPresent(VehicleErrorMessage, 60));
         });
 
         Then("^I should not error when i save the application$", () -> {
             InterimPage.save();
-            assertFalse(isTextPresent(noDatesErrorMessage,30));
+            assertFalse(isTextPresent(noDatesErrorMessage, 60));
         });
 
         Then("^I should error when i attempt to grant the application$", () -> {
@@ -74,7 +74,7 @@ public class InterimLicence extends BasePage implements En {
             clickByLinkText("Interim details");
             waitForTextToBePresent("Interim application");
             InterimPage.grant();
-            isTextPresent(noDatesErrorMessage,30);
+            isTextPresent(noDatesErrorMessage, 60);
         });
         And("^i have logged in to internal$", () -> {
             world.APIJourneySteps.createAdminUser();

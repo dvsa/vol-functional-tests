@@ -67,7 +67,7 @@ public class UIJourneySteps extends BasePage {
     private String password;
     private String licenceNumber;
 
-    private HashMap<String, Integer> myDates;
+    private HashMap<String, Integer> Dates;
     private Dates date;
     private Config config;
 
@@ -173,13 +173,13 @@ public class UIJourneySteps extends BasePage {
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
 
-        myDates = date.getDate(0, 0, 0);
-        enterDate(myDates.get("day"),myDates.get("month"),myDates.get("year"));
+        Dates = date.getDate(0, 0, 0);
+        enterDate(Dates.get("day"),Dates.get("month"),Dates.get("year"));
 
-        myDates = date.getDate(0,month,0);
-        enterText("effectiveDate_day", myDates.get("day"), SelectorType.ID);
-        enterText("effectiveDate_month", myDates.get("month"), SelectorType.ID);
-        enterText("effectiveDate_year", myDates.get("year"), SelectorType.ID);
+        Dates = date.getDate(0,month,0);
+        enterText("effectiveDate_day", Dates.get("day"), SelectorType.ID);
+        enterText("effectiveDate_month", Dates.get("month"), SelectorType.ID);
+        enterText("effectiveDate_year", Dates.get("year"), SelectorType.ID);
         click(nameAttribute("button", "form-actions[submit]"));
 
         long kickOutTime = System.currentTimeMillis() + 60000;
@@ -319,11 +319,11 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
 
-                myDates = date.getDate(0, 0, 0);
+                Dates = date.getDate(0, 0, 0);
 
-                enterText("details[chequeDate][day]", myDates.get("day").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][month]", myDates.get("month").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][year]", myDates.get("year").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][day]", Dates.get("day").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][month]", Dates.get("month").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][year]", Dates.get("year").toString(), SelectorType.NAME);
                 findAddress(paymentMethod);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -357,6 +357,7 @@ public class UIJourneySteps extends BasePage {
         do {
             //nothing
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
+        waitForElementToBeClickable("status", SelectorType.ID);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         waitForTextToBePresent("Outstanding");
         clickByLinkText("50");
@@ -415,11 +416,11 @@ public class UIJourneySteps extends BasePage {
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
 
-        myDates = date.getDate(-5, 0, -20);
+        Dates = date.getDate(-5, 0, -20);
 
-        enterText("dob_day", myDates.get("day"), SelectorType.ID);
-        enterText("dob_month", myDates.get("month"), SelectorType.ID);
-        enterText("dob_year", myDates.get("year"), SelectorType.ID);
+        enterText("dob_day", Dates.get("day"), SelectorType.ID);
+        enterText("dob_month", Dates.get("month"), SelectorType.ID);
+        enterText("dob_year", Dates.get("year"), SelectorType.ID);
         clickByName("form-actions[saveAndContinue]");
     }
 
@@ -592,11 +593,11 @@ public class UIJourneySteps extends BasePage {
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
 
-        myDates = date.getDate(-5, 0, -20);
+        Dates = date.getDate(-5, 0, -20);
 
-        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
 
         enterText("data[categoryText]", Str.randomWord(50), SelectorType.NAME);
         enterText("data[courtFpn]", "Clown", SelectorType.NAME);
@@ -785,7 +786,10 @@ public class UIJourneySteps extends BasePage {
 
     public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         click("//*[@id='overview-item__operating_centres']", SelectorType.XPATH);
-        changeLicenceForVariation();
+        waitForTextToBePresent("Traffic area");
+        waitAndClick("//*[contains(text(),'change your')]",SelectorType.XPATH);
+        waitAndClick("form-actions[submit]",SelectorType.NAME);
+        waitForTextToBePresent("Operating centres");
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
@@ -829,10 +833,10 @@ public class UIJourneySteps extends BasePage {
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
 
-        myDates = date.getDate(0, 0, 25);
-        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+        Dates = date.getDate(0, 0, 25);
+        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
 
         enterText("username", externalTMUser, SelectorType.ID);
         enterText("emailAddress", externalTMEmail, SelectorType.ID);
@@ -873,11 +877,11 @@ public class UIJourneySteps extends BasePage {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
 
-        myDates = date.getDate(0, 0, -25);
+        Dates = date.getDate(0, 0, -25);
 
-        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -962,10 +966,10 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
-        myDates = date.getDate(-5, 0, -20);
-        enterText("dob_day", myDates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", myDates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", myDates.get("year").toString(), SelectorType.ID);
+        Dates = date.getDate(-5,0,-20);
+        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
@@ -1031,8 +1035,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateToVehiclesPage() throws IllegalBrowserException, MalformedURLException {
-//        clickByLinkText("GOV.UK");
-//        clickByLinkText(world.createLicence.getApplicationNumber());
         clickByLinkText("Vehicles");
         waitForTextToBePresent("Vehicle details");
     }
@@ -1608,7 +1610,6 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
         waitForPageLoad();
         waitForElementToBePresent("//*[contains(text(),'change your licence')]");
-        waitAndClick("//*[contains(text(),'change')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'change')]", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);

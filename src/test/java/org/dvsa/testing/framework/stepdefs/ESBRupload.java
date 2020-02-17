@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
- import cucumber.api.java8.En;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -27,6 +27,7 @@ public class ESBRupload extends BasePage implements En {
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
             world.UIJourneySteps.viewESBRInExternal();
+            waitForTextToBePresent("New");
             assertTrue(isTextPresent("successful",30));
             assertTrue(isTextPresent("New",30));
             assertTrue(isTextPresent("short notice",30));
@@ -39,17 +40,18 @@ public class ESBRupload extends BasePage implements En {
         });
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
             world.UIJourneySteps.viewESBRInExternal();
-            assertTrue(isTextPresent("successful",30));
-            assertTrue(isTextPresent("New",30));
-            assertFalse(isTextPresent("short notice",30));
+            waitForTextToBePresent("successful");
+            assertTrue(isTextPresent("successful", 60));
+            assertTrue(isTextPresent("New", 60));
+            assertFalse(isTextPresent("short notice", 60));
         });
 
         And("^A short notice tab should not be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
-            assertFalse(isTextPresent("Short notice",30));
             waitForTextToBePresent("Short notice");
+            assertFalse(isTextPresent("Short notice", 60));
         });
 
         When("^I upload an esbr file with \"([^\"]*)\" days notice$", (String arg0) -> {

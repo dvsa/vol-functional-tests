@@ -160,11 +160,12 @@ public class SurrenderLogic extends BasePage implements En {
             assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender"));
         });
         And("^the licence details page should display$", () -> {
-            assertTrue(isTextPresent("Licence details",30));
+            assertTrue(isTextPresent("Licence details", 40));
         });
         When("^the caseworker attempts to withdraw the surrender$", () -> {
             world.UIJourneySteps.caseworkManageSurrender();
             waitForTextToBePresent("Surrender details");
+            javaScriptExecutor("location.reload(true)");
             waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
         });
         Then("^a modal box is displayed$", () -> {

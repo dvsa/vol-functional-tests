@@ -49,6 +49,7 @@ public class TMDetails extends BasePage implements En {
         });
         When("^I click the no radio button for the \"([^\"]*)\" question$", (String arg0) -> {
             click("//*[@id=\"responsibilities\"]//input[@value='N']", SelectorType.XPATH);
+
         });
         Then("^the guidance text should be displayed$", () -> {
             String notDirectorText = findElement("//*[@id='responsibilities']/fieldset[2]/div[2]", SelectorType.XPATH, 10).getText();
