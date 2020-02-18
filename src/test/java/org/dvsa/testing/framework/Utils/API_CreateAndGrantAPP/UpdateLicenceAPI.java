@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
+import activesupport.faker.FakerUtils;
 import activesupport.http.RestUtils;
 import activesupport.string.Str;
 import activesupport.system.Properties;
@@ -37,10 +38,12 @@ import static org.junit.Assert.assertThat;
 public class UpdateLicenceAPI extends BaseAPI {
     private ValidatableResponse apiResponse;
     private World world;
+    private Dates date = new Dates(new LocalDateCalendar());
+    private FakerUtils faker = new FakerUtils();
 
     private String goodOrPsv;
     private String trafficAreaName;
-    public String adminUserEmailAddress = "adminUser@dvsavol.org";
+    public String adminUserEmailAddress = String.format("%s%sTheAdminUser@dvsavol.org", faker.generateFirstName(), faker.generateLastName());
     public String adminUserLogin = String.format("vol" + "%s", Str.randomWord(10));
     private String adminUserId;
     private String licenceStatus;
@@ -56,8 +59,6 @@ public class UpdateLicenceAPI extends BaseAPI {
     private int conditionUndertaking;
     private int submissionsId;
     private int caseId;
-
-    private Dates date;
 
     private static String variationApplicationNumber;
     private static int version = 1;
@@ -207,7 +208,6 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     public UpdateLicenceAPI(World world) {
         this.world = world;
-        this.date = new Dates(new LocalDateCalendar());
 
     }
 

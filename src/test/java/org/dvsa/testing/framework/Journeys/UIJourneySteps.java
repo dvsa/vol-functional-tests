@@ -52,7 +52,9 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNum
 public class UIJourneySteps extends BasePage {
 
     private World world;
-    EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+    private Dates date = new Dates(new LocalDateCalendar());
+    private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+    private Config config = new Configuration(env.toString()).getConfig();
     private String localUser = Properties.get("localUser", false);
     private String localDefaultPassword = Properties.get("localDefaultPassword", false);
     static int tmCount;
@@ -68,8 +70,6 @@ public class UIJourneySteps extends BasePage {
     private String licenceNumber;
 
     private HashMap<String, Integer> Dates;
-    private Dates date;
-    private Config config;
 
 
     public String getPassword() {
@@ -90,9 +90,6 @@ public class UIJourneySteps extends BasePage {
 
     public UIJourneySteps(World world) {
         this.world = world;
-        this.date = new Dates(new LocalDateCalendar());
-        config = new Configuration(env.toString()).getConfig();
-
     }
 
     public String getOperatorUser() {
