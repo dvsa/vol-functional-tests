@@ -27,18 +27,20 @@ public class ESBRupload extends BasePage implements En {
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
             world.UIJourneySteps.viewESBRInExternal();
-            assertTrue(isTextPresent("successful", 60));
-            assertTrue(isTextPresent("New", 60));
-            assertTrue(isTextPresent("short notice", 60));
+            waitForTextToBePresent("New");
+            assertTrue(isTextPresent("successful",30));
+            assertTrue(isTextPresent("New",30));
+            assertTrue(isTextPresent("short notice",30));
         });
         And("^A short notice tab should be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
-            assertTrue(isTextPresent("Short notice", 60));
+            assertTrue(isTextPresent("Short notice",30));
         });
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
             world.UIJourneySteps.viewESBRInExternal();
+            waitForTextToBePresent("successful");
             assertTrue(isTextPresent("successful", 60));
             assertTrue(isTextPresent("New", 60));
             assertFalse(isTextPresent("short notice", 60));
@@ -48,6 +50,7 @@ public class ESBRupload extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
+            waitForTextToBePresent("Short notice");
             assertFalse(isTextPresent("Short notice", 60));
         });
 
@@ -76,7 +79,7 @@ public class ESBRupload extends BasePage implements En {
             waitAndClick("//*[contains(text(),'Grant')]",SelectorType.XPATH);
         });
         Then("^the bus registration should be granted$", () -> {
-            Assert.assertTrue(isTextPresent("Registered",5));
+            Assert.assertTrue(isTextPresent("Registered",30));
         });
         And("^the traffic areas should be displayed on the service details page$", () -> {
             clickByLinkText("Service details");

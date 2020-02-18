@@ -11,8 +11,8 @@ import enums.OperatorType;
 import enums.UserRoles;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
-import org.apache.logging.log4j.*;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
@@ -21,9 +21,7 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
 import javax.xml.ws.http.HTTPException;
 import java.util.HashMap;
-import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.adminApiHeader;
 import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 
@@ -665,6 +663,8 @@ public class CreateLicenceAPI extends BaseAPI{
         String vehiclesResource = null;
         String vrm;
 
+        int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
+
         if (getOperatorType().equals("goods")) {
             vehiclesResource = URL.build(env, String.format("application/%s/goods-vehicles", getApplicationNumber())).toString();
         }
@@ -676,7 +676,7 @@ public class CreateLicenceAPI extends BaseAPI{
                 vrm = Str.randomWord(2).concat(String.valueOf(GenericUtils.getRandomNumberInts(99, 99)).concat(Str.randomWord(3)))
                         .toLowerCase();
                 VehiclesBuilder vehiclesDetails = new VehiclesBuilder().withId(getApplicationNumber()).withApplication(getApplicationNumber()).withHasEnteredReg("Y").withVrm(vrm)
-                        .withPlatedWeight(String.valueOf(GenericUtils.getRandomNumberInts(0, 9999))).withVersion(version);
+                        .withPlatedWeight(String.valueOf(GenericUtils.getRandomNumberInts(0, 9999))).withVersion(applicationVersion);
                 assert vehiclesResource != null;
                 apiResponse = RestUtils.post(vehiclesDetails, vehiclesResource, getHeaders());
                 System.out.println("This is the VRM: ".concat(vrm));

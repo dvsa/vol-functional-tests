@@ -4,7 +4,7 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import autoitx4java.AutoItX;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -30,7 +30,7 @@ public class WebDav extends BasePage implements En {
     public WebDav(World world) {
         And("^i make changes to the document with WebDav and save it$", () -> {
             String licenceNumber = world.createLicence.getLicenceNumber();
-            String documentLink = Browser.getDriver().findElement(By.id("letter-link")).getText();
+            String documentLink = Browser.navigate().findElement(By.id("letter-link")).getText();
 
             world.UIJourneySteps.editDocumentWithWebDav();
 
@@ -42,7 +42,7 @@ public class WebDav extends BasePage implements En {
         });
         And("^the document should contain the changes$", () -> {
 
-            Assert.assertTrue(isTextPresent(templateName, 5));
+            Assert.assertTrue(isTextPresent(templateName,30));
             clickByLinkText(templateName);
 
             String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.createLicence.getLicenceNumber(), templateName);

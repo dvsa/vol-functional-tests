@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
-import cucumber.api.java8.En;
+ import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
@@ -33,16 +33,16 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr[*]/td[2]");
                     currentPubNo = publicationNumbers.get(i).getText();
 
-                if (Browser.getDriver().findElements(By.linkText(currentPubNo)).size() == 0 || Browser.getDriver().findElements(By.xpath(String.format("//*[contains(text(),%s)]",currentPubNo))).size()>1) {
+                if (Browser.navigate().findElements(By.linkText(currentPubNo)).size() == 0 || Browser.navigate().findElements(By.xpath(String.format("//*[contains(text(),%s)]",currentPubNo))).size()>1) {
 
-                    radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                    radioButtons = Browser.navigate().findElements(By.xpath("//*[@type='radio']"));
                     radioButtons.get(i).click();
 
                     waitAndClick("//*[@id='generate']", SelectorType.XPATH);
                     waitForTextToBePresent("Publication was generated, a new publication was also created");
 
                     radioButtons = show50ResultsAndUpdateWebElementsList("//*[@type='radio']");
-                    List<WebElement> publicationDates = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[5]"));
+                    List<WebElement> publicationDates = Browser.navigate().findElements(By.xpath("//table/tbody/tr/td[5]"));
 
                     publishedDate = publicationDates.get(i + 1).getText();
                     radioButtons.get(i + 1).click();
@@ -68,7 +68,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     //Start looping over pages here
                     while (kickOut) {
                         // Storing numbers
-                        publicationNumbers = Browser.getDriver().findElements(By.xpath("//table/tbody/tr/td[2]"));
+                        publicationNumbers = Browser.navigate().findElements(By.xpath("//table/tbody/tr/td[2]"));
 
                         // Changing into an array with the element's text
                         List<String> textList = new ArrayList<>(publicationNumbers.size());
@@ -77,7 +77,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                         }
 
                         if (textList.contains(currentPubNo)) {
-                            assertTrue(Browser.getDriver().findElements(By.linkText(currentPubNo)).size() != 0);
+                            assertTrue(Browser.navigate().findElements(By.linkText(currentPubNo)).size() != 0);
                             kickOut = false;
                         } else {
                             pageNumber++;
@@ -110,9 +110,9 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr[*]/td[2]");
                 currentPubNo = publicationNumbers.get(i).getText();
 
-                if (Browser.getDriver().findElements(By.linkText(currentPubNo)).size() == 0 || Browser.getDriver().findElements(By.xpath(String.format("//*[contains(text(),%s)]",currentPubNo))).size()>1) {
+                if (Browser.navigate().findElements(By.linkText(currentPubNo)).size() == 0 || Browser.navigate().findElements(By.xpath(String.format("//*[contains(text(),%s)]",currentPubNo))).size()>1) {
 
-                    radioButtons = Browser.getDriver().findElements(By.xpath("//*[@type='radio']"));
+                    radioButtons = Browser.navigate().findElements(By.xpath("//*[@type='radio']"));
                     radioButtons.get(i).click();
 
                     waitAndClick("//*[@id='generate']", SelectorType.XPATH);
@@ -145,12 +145,12 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
 
     public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath) throws IllegalBrowserException, MalformedURLException {
-        List<WebElement> webElements = Browser.getDriver().findElements(By.xpath(webElementsXpath));
-        if (Browser.getDriver().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
+        List<WebElement> webElements = Browser.navigate().findElements(By.xpath(webElementsXpath));
+        if (Browser.navigate().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
             click("//li//a[contains(text(),'50')]", SelectorType.XPATH);
-            webElements = Browser.getDriver().findElements(By.xpath(webElementsXpath));
+            webElements = Browser.navigate().findElements(By.xpath(webElementsXpath));
             while (webElements.size()<=10) {
-                webElements = Browser.getDriver().findElements(By.xpath(webElementsXpath));
+                webElements = Browser.navigate().findElements(By.xpath(webElementsXpath));
             }
         }
         return webElements;

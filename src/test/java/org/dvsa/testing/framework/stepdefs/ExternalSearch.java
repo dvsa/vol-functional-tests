@@ -47,7 +47,7 @@ public class ExternalSearch extends BasePage implements En {
             assertTrue(checkForFullMatch(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should display names containing our operator name$", () -> {
-//            assertTrue(checkForPartialMatch(world.createLicence.getFamilyName().toUpperCase(),"//table/tbody/tr[*]"));
+            assertTrue(checkForPartialMatch(world.createLicence.getFamilyName().toUpperCase()));
         });
         Then("^search results page should not display addresses which were not searched for$", () -> {
             assertFalse(checkForFullMatch("Swansea"));
