@@ -6,7 +6,6 @@ import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import activesupport.faker.FakerUtils;
 import activesupport.http.RestUtils;
-import activesupport.string.Str;
 import activesupport.system.Properties;
 import enums.LicenceType;
 import enums.OperatorType;
@@ -43,8 +42,8 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     private String goodOrPsv;
     private String trafficAreaName;
-    public String adminUserEmailAddress = String.format("%s%sTheAdminUser@dvsavol.org", faker.generateFirstName(), faker.generateLastName());
-    public String adminUserLogin = String.format("vol" + "%s", Str.randomWord(10));
+    public String adminUserEmailAddress = String.format("featuring%s_%sAsTheAdminUser@dvsavol.org", faker.generateFirstName(), faker.generateLastName());
+    public String adminUserLogin = String.format("%s_%s", faker.generateFirstName(), faker.generateLastName());
     private String adminUserId;
     private String licenceStatus;
     private String businessType;
@@ -266,8 +265,8 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     public void addConviction() throws MalformedURLException {
         String defendantType = "def_t_dir";
-        String personFirstname = "API";
-        String personLastname = "Director";
+        String personFirstname = faker.generateFirstName();
+        String personLastname = faker.generateLastName();
         String birthDate = "99-6-10";
         String convictionCategory = "conv_c_cat_1065";
         String categoryText = "Driver correcting entry in driver's record book in wrong fashion";
@@ -308,8 +307,8 @@ public class UpdateLicenceAPI extends BaseAPI {
         String complaintDate = "18-4-1";
         String infringementDate = "17-4-1";
         String description = "Driver correcting entry in driver's record book in wrong fashion";
-        String driverForename = "Skish";
-        String driverFamilyName = "Dotell";
+        String driverForename = faker.generateFirstName();
+        String driverFamilyName = faker.generateLastName();
         String complaintResource = URL.build(env, "complaint").toString();
         CaseComplaintBuilder complaintBuilder = new CaseComplaintBuilder().withCase(caseId).withComplainantForename(complainantForename).withComplainantFamilyName(complainantFamilyName).withComplaintType(complaintType).withStatus(status).withIsCompliance(isCompliance)
                 .withComplaintDate(complaintDate).withInfringementDate(infringementDate).withDescription(description).withDriverForename(driverForename).withDriverFamilyName(driverFamilyName);

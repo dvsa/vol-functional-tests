@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import activesupport.faker.FakerUtils;
 import activesupport.http.RestUtils;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
@@ -24,6 +25,7 @@ public class GrantLicenceAPI extends BaseAPI{
     private List outstandingFeesIds;
     private int feeId;
     private World world;
+    private FakerUtils faker = new FakerUtils();
 
     private List<Double> feesToPay = new ArrayList<>();
 
@@ -80,7 +82,7 @@ public class GrantLicenceAPI extends BaseAPI{
     }
 
     public void payOutstandingFees(String organisationId, String applicationNumber) {
-        String payer = "apiUser";
+        String payer = faker.generateFirstName() + faker.generateLastName();
         String paymentMethod = "fpm_cash";
         String slipNo = "123456";
 
@@ -118,7 +120,7 @@ public class GrantLicenceAPI extends BaseAPI{
     }
 
     public ValidatableResponse payGrantFees() {
-        String payer = "apiUser";
+        String payer = faker.generateFirstName() + faker.generateLastName();
         Double grantFees = 401.00;
         String paymentMethod = "fpm_cash";
         String slipNo = "123456";
