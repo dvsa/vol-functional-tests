@@ -40,11 +40,6 @@
 
     <repositories>
         <repository>
-            <id>devappci-shd-pri-qarepo</id>
-            <url>s3://devappci-shd-pri-qarepo</url>
-        </repository>
-
-        <repository>
             <id>maven-releases</id>
             <url>${nexus.releases}</url>
         </repository>
@@ -59,12 +54,6 @@
         </pluginRepository>
     </pluginRepositories>
 
-    <distributionManagement>
-        <repository>
-            <id>devappci-shd-pri-qarepo</id>
-            <url>s3://devappci-shd-pri-qarepo</url>
-        </repository>
-    </distributionManagement>
 
     <build>
         <extensions>

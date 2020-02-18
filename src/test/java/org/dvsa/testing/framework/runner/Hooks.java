@@ -4,8 +4,9 @@ import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.After;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.TakesScreenshot;
 import activesupport.driver.Browser;
 
@@ -41,10 +42,12 @@ public class Hooks {
         FileUtils.deleteDirectory(directory);
     }
 
-    @AfterAll
-    public static void tearDown() throws IOException {
-        if (Browser.isBrowserOpen()) {
-            Browser.closeBrowser();
+    @After
+    public void tearDown() throws IOException {
+        try {
+            Browser.navigate().close();
+            Browser.navigate().quit();
+        } catch (SessionNotCreatedException | IllegalBrowserException e) {
         }
     }
 }
