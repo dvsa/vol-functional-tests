@@ -387,7 +387,7 @@ public class CreateLicenceAPI extends BaseAPI{
         setFamilyName(faker.generateLastName());
         String registerResource = URL.build(env, "user/selfserve/register").toString();
         Headers.headers.put("api", "dvsa");
-        setLoginId(Str.randomWord(8));
+        setLoginId(String.format("%s.%s%s", getForeName(), getFamilyName(), Int.random(1000,9999)));
 
         PersonBuilder personBuilder = new PersonBuilder().withTitle(getTitle()).withForename(getForeName()).withFamilyName(getFamilyName()).withBirthDate(getBirthDate());
         ContactDetailsBuilder contactDetailsBuilder = new ContactDetailsBuilder().withEmailAddress(getEmailAddress()).withPerson(personBuilder);
@@ -520,22 +520,23 @@ public class CreateLicenceAPI extends BaseAPI{
         String operatingCentreAddressLine2 = operatingCentreAddress.get("addressLine2");
         String operatingCentreAddressLine3 = operatingCentreAddress.get("addressLine3");
         String operatingCentreAddressLine4 = operatingCentreAddress.get("addressLine4");
+        String operatingCentreAddressTown = operatingCentreAddress.get("town");
         OperatingCentreBuilder operatingCentreBuilder = new OperatingCentreBuilder();
 
         if (operatorType.equals("goods")) {
             AddressBuilder address = new AddressBuilder().withAddressLine1(operatingCentreAddressLine1).withAddressLine2(operatingCentreAddressLine2).
-                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(town).withPostcode(getPostcode()).withCountryCode(countryCode);
+                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreAddressTown).withPostcode(getPostcode()).withCountryCode(countryCode);
             operatingCentreBuilder.withApplication(getApplicationNumber()).withNoOfVehiclesRequired(String.valueOf(getNoOfVehiclesRequired()))
                     .withNoOfTrailersRequired(String.valueOf(getNoOfVehiclesRequired())).withPermission(permissionOption).withAddress(address);
         }
         if (operatorType.equals("public") && (!licenceType.equals("special_restricted"))) {
             AddressBuilder address = new AddressBuilder().withAddressLine1(operatingCentreAddressLine1).withAddressLine2(operatingCentreAddressLine2).
-                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(town).withPostcode(getPostcode()).withCountryCode(countryCode);
+                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreAddressTown).withPostcode(getPostcode()).withCountryCode(countryCode);
             operatingCentreBuilder.withApplication(applicationNumber).withNoOfVehiclesRequired(String.valueOf(noOfVehiclesRequired)).withPermission(permissionOption).withAddress(address);
         }
         if (operatorType.equals("public") && (licenceType.equals("restricted"))) {
             AddressBuilder address = new AddressBuilder().withAddressLine1(operatingCentreAddressLine1).withAddressLine2(operatingCentreAddressLine2).
-                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(town).withPostcode(getPostcode()).withCountryCode(countryCode);
+                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreAddressTown).withPostcode(getPostcode()).withCountryCode(countryCode);
             operatingCentreBuilder.withApplication(getApplicationNumber()).withNoOfVehiclesRequired(String.valueOf(restrictedVehicles)).withPermission(permissionOption).withAddress(address);
         }
         if (!licenceType.equals("special_restricted")) {
@@ -603,8 +604,7 @@ public class CreateLicenceAPI extends BaseAPI{
         if (operatorType.equals("public") && (licenceType.equals("special_restricted"))) {
             return;
         }
-        int randNumber = Int.random(0, 2000);
-        tmUserName = "apiTM".concat(getLoginId()).concat(String.valueOf(randNumber));
+        tmUserName = String.format("%s.%s%s", faker.generateFirstName(), faker.generateLastName(), Int.random(1000, 9999));
         String hasEmail = "Y";
         String addTransportManager = URL.build(env, "transport-manager/create-new-user/").toString();
         TransportManagerBuilder transportManagerBuilder = new TransportManagerBuilder().withApplication(getApplicationNumber()).withFirstName(getForeName())
@@ -640,9 +640,17 @@ public class CreateLicenceAPI extends BaseAPI{
         String tmApplicationNo = getTransportManagerApplicationId();
         String addTMresp = URL.build(env, String.format("transport-manager-application/%s/update-details/", tmApplicationNo)).toString();
         int applicationVersion = Integer.parseInt(fetchTMApplicationInformation(tmApplicationNo, "version", "1"));
-        AddressBuilder Address = new AddressBuilder().withAddressLine1(addressLine1).withAddressLine2(addressLine2).withAddressLine3(addressLine3)
-                .withAddressLine4(addressLine4).withPostcode(postcode).withTown(town).withCountryCode(countryCode);
-        TmRespBuilder tmRespBuilder = new TmRespBuilder().withEmail(emailAddress).withPlaceOfBirth(town).withHomeAddress(Address).withWorkAddress(Address).withTmType(tmType).withIsOwner(isOwner)
+
+        LinkedHashMap<String, String> TMAddress = faker.generateAddress();
+        String TMAddressLine1 = TMAddress.get("addressLine1");
+        String TMAddressLine2 = TMAddress.get("addressLine2");
+        String TMAddressLine3 = TMAddress.get("addressLine3");
+        String TMAddressLine4 = TMAddress.get("addressLine4");
+        String TMAddressTown = TMAddress.get("town");
+
+        AddressBuilder Address = new AddressBuilder().withAddressLine1(TMAddressLine1).withAddressLine2(TMAddressLine2).withAddressLine3(TMAddressLine3)
+                .withAddressLine4(TMAddressLine4).withPostcode(postcode).withTown(TMAddressTown).withCountryCode(countryCode);
+        TmRespBuilder tmRespBuilder = new TmRespBuilder().withEmail(emailAddress).withPlaceOfBirth(TMAddressTown).withHomeAddress(Address).withWorkAddress(Address).withTmType(tmType).withIsOwner(isOwner)
                 .withHoursMon(hours).withHoursTue(hours).withHoursWed(hours).withHoursThu(hours).withHoursThu(hours).withHoursFri(hours).withHoursSat(hours).withHoursSun(hours).withDob(birthDate)
                 .withId(tmApplicationNo).withVersion(applicationVersion);
         apiResponse = RestUtils.put(tmRespBuilder, addTMresp, getHeaders());
@@ -694,7 +702,6 @@ public class CreateLicenceAPI extends BaseAPI{
                         .withPlatedWeight(String.valueOf(GenericUtils.getRandomNumberInts(0, 9999))).withVersion(applicationVersion);
                 assert vehiclesResource != null;
                 apiResponse = RestUtils.post(vehiclesDetails, vehiclesResource, getHeaders());
-                System.out.println("This is the VRM: ".concat(vrm));
             }
         }
         while ((apiResponse.extract().statusCode() == HttpStatus.SC_CONFLICT) || (apiResponse.extract().statusCode() == HttpStatus.SC_BAD_REQUEST)
@@ -781,9 +788,17 @@ public class CreateLicenceAPI extends BaseAPI{
         if (operatorType.equals("public") && (licenceType.equals("special_restricted"))) {
             return;
         }
+
+        LinkedHashMap<String, String> safetyInspectorAddress = faker.generateAddress();
+        String safetyInspectorAddressLine1 = safetyInspectorAddress.get("addressLine1");
+        String safetyInspectorAddressLine2 = safetyInspectorAddress.get("addressLine2");
+        String safetyInspectorAddressLine3 = safetyInspectorAddress.get("addressLine3");
+        String safetyInspectorAddressLine4 = safetyInspectorAddress.get("addressLine4");
+        String safetyInspectorAddressTown = safetyInspectorAddress.get("town");
+
         String safetyInspectorResource = URL.build(env, String.format("application/%s/workshop", applicationNumber)).toString();
-        AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1(addressLine1).withAddressLine2(addressLine2).withAddressLine3(addressLine3)
-                .withAddressLine4(addressLine4).withTown(town).withPostcode(postcode).withCountryCode(countryCode);
+        AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1(safetyInspectorAddressLine1).withAddressLine2(safetyInspectorAddressLine2).withAddressLine3(safetyInspectorAddressLine3)
+                .withAddressLine4(safetyInspectorAddressLine4).withTown(safetyInspectorAddressTown).withPostcode(postcode).withCountryCode(countryCode);
         ContactDetailsBuilder contactDetailsBuilder = new ContactDetailsBuilder().withFao(foreName).withAddress(addressBuilder);
         SafetyInspectorBuilder safetyInspectorBuilder = new SafetyInspectorBuilder().withApplication(applicationNumber).withLicence(licenceNumber).withIsExternal("N")
             .withContactDetails(contactDetailsBuilder);
@@ -836,10 +851,18 @@ public class CreateLicenceAPI extends BaseAPI{
     public void submitTaxiPhv() {
         String phLicenceNumber = "phv123456";
         String councilName = "nottinghamshire";
+
+        LinkedHashMap<String, String> taxiPhvAddress = faker.generateAddress();
+        String taxiPhvAddressLine1 = taxiPhvAddress.get("addressLine1");
+        String taxiPhvAddressLine2 = taxiPhvAddress.get("addressLine2");
+        String taxiPhvAddressLine3 = taxiPhvAddress.get("addressLine3");
+        String taxiPhvAddressLine4 = taxiPhvAddress.get("addressLine4");
+        String taxiPhvAddressTown = taxiPhvAddress.get("town");
+
         if (operatorType.equals("public") && (licenceType.equals("special_restricted"))) {
             String submitResource = URL.build(env, String.format("application/%s/taxi-phv", applicationNumber)).toString();
-            AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1(addressLine1).withAddressLine2(addressLine2).withAddressLine3(addressLine3)
-                    .withAddressLine4(addressLine4).withTown(town).withPostcode(postcode).withCountryCode(countryCode);
+            AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1(taxiPhvAddressLine1).withAddressLine2(taxiPhvAddressLine2).withAddressLine3(taxiPhvAddressLine3)
+                    .withAddressLine4(taxiPhvAddressLine4).withTown(taxiPhvAddressTown).withPostcode(postcode).withCountryCode(countryCode);
             PhvTaxiBuilder taxiBuilder = new PhvTaxiBuilder().withId(applicationNumber).withPrivateHireLicenceNo(phLicenceNumber).withCouncilName(councilName).withLicence(licenceNumber).withAddress(addressBuilder);
             apiResponse = RestUtils.post(taxiBuilder, submitResource, getHeaders());
             if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {

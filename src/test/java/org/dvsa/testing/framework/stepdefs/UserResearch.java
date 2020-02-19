@@ -2,18 +2,18 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.aws.s3.S3;
-import activesupport.string.Str;
- import cucumber.api.java8.En;
+import activesupport.faker.FakerUtils;
+import activesupport.number.Int;
+import cucumber.api.java8.En;
 import enums.TrafficArea;
 import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
 import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.dvsa.testing.lib.pages.BasePage;
 
-import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getRandomNumberInts;
-
 public class UserResearch extends BasePage implements En {
     String fileName = "src/test/resources/";
+    FakerUtils faker = new FakerUtils();
 
     public UserResearch(World world) {
 
@@ -48,13 +48,14 @@ public class UserResearch extends BasePage implements En {
                     world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
                     world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
                     world.APIJourneySteps.createApplication();
-                    String randWord = Str.randomWord(4);
-                    String externalTmUserName;
-                    externalTmUserName = "apiTM".concat(randWord);
-                    world.createLicence.setForeName("External");
-                    world.createLicence.setFamilyName("TM");
+                    String externalFirstName = faker.generateFirstName();
+                    String externalLastName = faker.generateLastName();
+                    String randomInt = String.valueOf(Int.random(1000, 9999));
+                    String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
+                    world.createLicence.setForeName(externalFirstName);
+                    world.createLicence.setFamilyName(externalLastName);
                     world.createLicence.setTmUserName(externalTmUserName);
-                    world.createLicence.setTransManEmailAddress("externalTM".concat(String.valueOf(getRandomNumberInts(0, 99999))).concat("@vol.org"));
+                    world.createLicence.setTransManEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
                     world.createLicence.addTransportManager();
                     password = S3.getTempPassword(world.createLicence.getTransManEmailAddress());
                     world.genericUtils.writeToFile(world.createLicence.getTmUserName(), password, fileName.concat("TM.csv"));
@@ -65,9 +66,6 @@ public class UserResearch extends BasePage implements En {
         });
         Then("^the licence should be created and granted$", () -> {
             world.genericUtils.writeToFile(world.createLicence.getLoginId(), world.UIJourneySteps.getPassword(), fileName.concat("Operator.csv"));
-        });
-        Then("^accounts should be created$", () -> {
-
         });
     }
     private String[] trafficAreaList() {
