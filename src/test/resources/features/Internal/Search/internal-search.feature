@@ -25,4 +25,5 @@ Feature: Internal Search
     And the licence discs should be present
 
   Scenario: Search for Address on Internal
-    When i search for my address and click on my licence and address
+    When i search for my address and click on my licence and addresses
+    Then the "Correspondence address" page should display

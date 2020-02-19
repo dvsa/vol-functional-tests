@@ -276,11 +276,11 @@ public class UIJourneySteps extends BasePage {
     public void searchAndViewAddress() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Address");
         do {
-            SearchNavBar.search(String.valueOf(world.updateLicence.getStartNumber()));
-        } while (!isTextPresent(String.valueOf(world.updateLicence.getStartNumber()), 200));
+            SearchNavBar.search(String.format("%s, %s, %s, %s, %s", world.createLicence.getAddressLine1(), world.createLicence.getAddressLine2(), world.createLicence.getAddressLine3(), world.createLicence.getAddressLine4(), world.createLicence.getTown()));
+        } while (!isTextPresent(String.format("%s, %s, %s, %s, %s", world.createLicence.getAddressLine1(), world.createLicence.getAddressLine2(), world.createLicence.getAddressLine3(), world.createLicence.getAddressLine4(), world.createLicence.getTown()), 200));
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.createLicence.getLicenceNumber());
-        clickByLinkText("Licence discs");
+        clickByLinkText("Addresses");
     }
 
     public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
