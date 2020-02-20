@@ -47,7 +47,7 @@ public class Hooks {
         try {
             Browser.navigate().close();
             Browser.navigate().quit();
-        } catch (SessionNotCreatedException | IllegalBrowserException e) {
+        } catch (SessionNotCreatedException | IllegalBrowserException ignored) {
         }
     }
 }
