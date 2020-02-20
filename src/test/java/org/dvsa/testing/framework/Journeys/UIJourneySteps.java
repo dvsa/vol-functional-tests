@@ -667,6 +667,8 @@ public class UIJourneySteps extends BasePage {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+                waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
         }
 
         get(myURL);
