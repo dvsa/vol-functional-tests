@@ -153,8 +153,8 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>6</forkCount>
-                            <reuseForks>false</reuseForks>
+                            <forkCount>5</forkCount>
+                            <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>2</rerunFailingTestsCount>
                         </configuration>
                     </execution>
