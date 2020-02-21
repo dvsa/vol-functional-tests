@@ -299,8 +299,8 @@ public class UpdateLicenceAPI extends BaseAPI {
     }
 
     public void addComplaint() {
-        String complainantForename = "123456";
-        String complainantFamilyName = "503";
+        String complainantForename = faker.generateFirstName();
+        String complainantFamilyName = faker.generateLastName();
         String complaintType = "ct_cov";
         String status = "cs_yst";
         String isCompliance = "true";
@@ -424,7 +424,7 @@ public class UpdateLicenceAPI extends BaseAPI {
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
         HashMap<String, Integer> internalUserDOB = date.getDate(0, 0, -30);
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate((internalUserDOB.get("year") + "-" + internalUserDOB.get("month") + "-" + internalUserDOB.get("day")));
+        PersonBuilder personBuilder = new PersonBuilder().withForename(faker.generateFirstName()).withFamilyName(faker.generateLastName()).withBirthDate((internalUserDOB.get("year") + "-" + internalUserDOB.get("month") + "-" + internalUserDOB.get("day")));
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withRoles(roles).withTeam(team).withUserType(userType);

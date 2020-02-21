@@ -34,8 +34,8 @@ public class CreateLicenceAPI extends BaseAPI{
     private FakerUtils faker = new FakerUtils();
 
     private String title;
-    private String foreName;
-    private String familyName;
+    private String foreName = faker.generateFirstName();
+    private String familyName = faker.generateLastName();
     private String birthDate = Int.random(1900, 2018) + "-" + Int.random(1, 12) + "-" + Int.random(1, 28);
     private LinkedHashMap<String, String> address = faker.generateAddress();
     private String addressLine1 = address.get("addressLine1");
@@ -46,11 +46,13 @@ public class CreateLicenceAPI extends BaseAPI{
     private String postcode = "NG23HX";
     private String countryCode = "GB";
     private String organisationName = faker.generateCompanyName();
-    private String emailAddress = String.format("%s_%s.tester@dvsa.com", faker.generateFirstName(), faker.generateLastName());
-    private String transManEmailAddress = String.format("%s_%s.TheTransportManager@dvsa.com", faker.generateFirstName(), faker.generateLastName());
+    private String emailAddress = String.format("%s_%s.tester@dvsa.com", getForeName(), getFamilyName());
+    private String tmForeName;
+    private String tmFamilyName;
+    private String tmUserName;
+    private String transManEmailAddress;
     private String applicationNumber;
     private String userId;
-    private String tmUserName;
     private String username;
     private String loginId;
     private String pid;
@@ -119,6 +121,22 @@ public class CreateLicenceAPI extends BaseAPI{
 
     private void setLicenceNumber(String licenceNumber) {
         this.licenceNumber = licenceNumber;
+    }
+
+    public String getTmForeName() {
+        return tmForeName;
+    }
+
+    public void setTMForeName(String tmForeName) {
+        this.tmForeName = tmForeName;
+    }
+
+    public String getTmFamilyName() {
+        return tmFamilyName;
+    }
+
+    public void setTMFamilyName(String tmFamilyName) {
+        this.tmFamilyName = tmFamilyName;
     }
 
     public String getTransManEmailAddress() {
@@ -389,8 +407,6 @@ public class CreateLicenceAPI extends BaseAPI{
 
     public void registerUser() {
         setTitle("title_mr");
-        setForeName(faker.generateFirstName());
-        setFamilyName(faker.generateLastName());
         String registerResource = URL.build(env, "user/selfserve/register").toString();
         Headers.headers.put("api", "dvsa");
         setLoginId(String.format("%s.%s%s", getForeName(), getFamilyName(), Int.random(1000,9999)));
@@ -469,7 +485,7 @@ public class CreateLicenceAPI extends BaseAPI{
 
     public void updateBusinessDetails() {
         String organisationVersion = fetchApplicationInformation(applicationNumber, "licence.organisation.version", "1");
-        String natureOfBusiness = "apiTesting";
+        String natureOfBusiness = faker.generateNatureOfBusiness();
         String updateBusinessDetailsResource = URL.build(env, String.format("organisation/business-details/application/%s", getApplicationNumber())).toString();
 
         AddressBuilder address = new AddressBuilder().withAddressLine1(addressLine1).withAddressLine2(addressLine2).withAddressLine3(addressLine3)
@@ -610,7 +626,10 @@ public class CreateLicenceAPI extends BaseAPI{
         if (operatorType.equals("public") && (licenceType.equals("special_restricted"))) {
             return;
         }
-        tmUserName = String.format("%s.%s%s", faker.generateFirstName(), faker.generateLastName(), Int.random(1000, 9999));
+        setTMForeName(faker.generateFirstName());
+        setTMFamilyName(faker.generateLastName());
+        setTmUserName(String.format("%s.%s%s", getTmForeName(), getTmFamilyName(), Int.random(1000, 9999)));
+        setTransManEmailAddress(String.format("%s_%s.TheTransportManager@dvsa.com", getTmForeName(), getTmFamilyName()));
         String hasEmail = "Y";
         String addTransportManager = URL.build(env, "transport-manager/create-new-user/").toString();
         TransportManagerBuilder transportManagerBuilder = new TransportManagerBuilder().withApplication(getApplicationNumber()).withFirstName(getForeName())
