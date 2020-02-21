@@ -24,11 +24,11 @@ public class AddressBuilder {
     @JsonProperty("addressLine1")
     private String addressLine1;
     @JsonProperty("addressLine2")
-    private String addressLine3;
-    @JsonProperty("addressLine3")
-    private String addressLine4;
-    @JsonProperty("addressLine4")
     private String addressLine2;
+    @JsonProperty("addressLine3")
+    private String addressLine3;
+    @JsonProperty("addressLine4")
+    private String addressLine4;
     @JsonProperty("town")
     private String town;
     @JsonProperty("postcode")
