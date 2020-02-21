@@ -67,6 +67,12 @@ public class CreateLicenceAPI extends BaseAPI{
     private String trafficArea = "D";
     private String enforcementArea = "EA-D";
     private String restrictedVehicles = "2";
+    private LinkedHashMap<String, String> operatingCentreAddress = faker.generateAddress();
+    private String operatingCentreAddressLine1 = operatingCentreAddress.get("addressLine1");
+    private String operatingCentreAddressLine2 = operatingCentreAddress.get("addressLine2");
+    private String operatingCentreAddressLine3 = operatingCentreAddress.get("addressLine3");
+    private String operatingCentreAddressLine4 = operatingCentreAddress.get("addressLine4");
+    private String operatingCentreTown = operatingCentreAddress.get("town");
     private String applicationStatus;
     private String licenceId;
     private String businessName = faker.generateCompanyName();
@@ -174,6 +180,28 @@ public class CreateLicenceAPI extends BaseAPI{
     public String getTown() { return town; }
 
     public void setTown(String town) { this.town = town; }
+
+    public String getOperatingCentreAddressLine1() {
+        return operatingCentreAddressLine1;
+    }
+
+    public void setOperatingCentreAddressLine1(String operatingCentreAddressLine1) { this.operatingCentreAddressLine1 = operatingCentreAddressLine1; }
+
+    public String getOperatingCentreAddressLine2() { return operatingCentreAddressLine2; }
+
+    public void setOperatingCentreAddressLine2(String operatingCentreAddressLine2) { this.operatingCentreAddressLine2 = operatingCentreAddressLine2; }
+
+    public String getOperatingCentreAddressLine3() { return operatingCentreAddressLine3; }
+
+    public void setOperatingCentreAddressLine3(String operatingCentreAddressLine3) { this.operatingCentreAddressLine3 = operatingCentreAddressLine3; }
+
+    public String getOperatingCentreAddressLine4() { return operatingCentreAddressLine4; }
+
+    public void setOperatingCentreAddressLine4(String operatingCentreAddressLine4) { this.operatingCentreAddressLine4 = operatingCentreAddressLine4; }
+
+    public String getOperatingCentreTown() { return operatingCentreTown; }
+
+    public void setOperatingCentreTown(String operatingCentreTown) { this.operatingCentreTown = operatingCentreTown; }
 
     public void setTransManEmailAddress(String transManEmailAddress) { this.transManEmailAddress = transManEmailAddress; }
 
@@ -537,28 +565,22 @@ public class CreateLicenceAPI extends BaseAPI{
     public void addOperatingCentre() {
         String operatingCentreResource = URL.build(env, String.format("application/%s/operating-centre/", applicationNumber)).toString();
         String permissionOption = "Y";
-        LinkedHashMap<String, String> operatingCentreAddress = faker.generateAddress();
-        String operatingCentreAddressLine1 = operatingCentreAddress.get("addressLine1");
-        String operatingCentreAddressLine2 = operatingCentreAddress.get("addressLine2");
-        String operatingCentreAddressLine3 = operatingCentreAddress.get("addressLine3");
-        String operatingCentreAddressLine4 = operatingCentreAddress.get("addressLine4");
-        String operatingCentreAddressTown = operatingCentreAddress.get("town");
         OperatingCentreBuilder operatingCentreBuilder = new OperatingCentreBuilder();
 
         if (operatorType.equals("goods")) {
             AddressBuilder address = new AddressBuilder().withAddressLine1(operatingCentreAddressLine1).withAddressLine2(operatingCentreAddressLine2).
-                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreAddressTown).withPostcode(getPostcode()).withCountryCode(countryCode);
+                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreTown).withPostcode(getPostcode()).withCountryCode(countryCode);
             operatingCentreBuilder.withApplication(getApplicationNumber()).withNoOfVehiclesRequired(String.valueOf(getNoOfVehiclesRequired()))
                     .withNoOfTrailersRequired(String.valueOf(getNoOfVehiclesRequired())).withPermission(permissionOption).withAddress(address);
         }
         if (operatorType.equals("public") && (!licenceType.equals("special_restricted"))) {
             AddressBuilder address = new AddressBuilder().withAddressLine1(operatingCentreAddressLine1).withAddressLine2(operatingCentreAddressLine2).
-                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreAddressTown).withPostcode(getPostcode()).withCountryCode(countryCode);
+                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreTown).withPostcode(getPostcode()).withCountryCode(countryCode);
             operatingCentreBuilder.withApplication(applicationNumber).withNoOfVehiclesRequired(String.valueOf(noOfVehiclesRequired)).withPermission(permissionOption).withAddress(address);
         }
         if (operatorType.equals("public") && (licenceType.equals("restricted"))) {
             AddressBuilder address = new AddressBuilder().withAddressLine1(operatingCentreAddressLine1).withAddressLine2(operatingCentreAddressLine2).
-                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreAddressTown).withPostcode(getPostcode()).withCountryCode(countryCode);
+                    withAddressLine3(operatingCentreAddressLine3).withAddressLine4(operatingCentreAddressLine4).withTown(operatingCentreTown).withPostcode(getPostcode()).withCountryCode(countryCode);
             operatingCentreBuilder.withApplication(getApplicationNumber()).withNoOfVehiclesRequired(String.valueOf(restrictedVehicles)).withPermission(permissionOption).withAddress(address);
         }
         if (!licenceType.equals("special_restricted")) {

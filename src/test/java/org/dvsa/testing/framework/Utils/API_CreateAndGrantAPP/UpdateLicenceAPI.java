@@ -42,8 +42,8 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     private String goodOrPsv;
     private String trafficAreaName;
-    public String adminUserEmailAddress = String.format("featuring%s_%sAsTheAdminUser@dvsavol.org", faker.generateFirstName(), faker.generateLastName());
-    public String adminUserLogin = String.format("%s_%s", faker.generateFirstName(), faker.generateLastName());
+    public String adminUserEmailAddress = String.format("%s%sAsTheAdminUser@dvsavol.org", faker.generateFirstName(), faker.generateLastName());
+    public String adminUserLogin = String.format("%s%s", faker.generateFirstName(), faker.generateLastName());
     private String adminUserId;
     private String licenceStatus;
     private String businessType;
