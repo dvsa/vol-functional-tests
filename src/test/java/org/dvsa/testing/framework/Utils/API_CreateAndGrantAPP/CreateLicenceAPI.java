@@ -45,6 +45,7 @@ public class CreateLicenceAPI extends BaseAPI{
     private String town = faker.generateAddress().get("town");
     private String postcode = "NG23HX";
     private String countryCode = "GB";
+    private String organisationId;
     private String organisationName = faker.generateCompanyName();
     private String emailAddress = String.format("%s_%s.tester@dvsa.com", getForeName(), getFamilyName());
     private String tmForeName;
@@ -56,7 +57,6 @@ public class CreateLicenceAPI extends BaseAPI{
     private String username;
     private String loginId;
     private String pid;
-    private String organisationId;
     private String licenceNumber;
     private String transportManagerApplicationId;
     private String companyNumber = String.valueOf(Int.random(00000000, 99999999));
@@ -75,7 +75,6 @@ public class CreateLicenceAPI extends BaseAPI{
     private String operatingCentreTown = operatingCentreAddress.get("town");
     private String applicationStatus;
     private String licenceId;
-    private String businessName = faker.generateCompanyName();
     private String isInterim;
     private String isOwner;
     private String tmType = "tm_t_i";
@@ -386,14 +385,6 @@ public class CreateLicenceAPI extends BaseAPI{
         this.organisationName = organisationName;
     }
 
-    public String getBusinessName() {
-        return businessName;
-    }
-
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
-    }
-
     public String getIsInterim() {
         return isInterim;
     }
@@ -520,7 +511,7 @@ public class CreateLicenceAPI extends BaseAPI{
                 .withAddressLine4(addressLine4).withTown(town).withPostcode(postcode);
         UpdateBusinessDetailsBuilder businessDetails = new UpdateBusinessDetailsBuilder()
                 .withId(getApplicationNumber()).withCompanyNumber(companyNumber).withNatureOfBusiness(natureOfBusiness).withLicence(licenceNumber)
-                .withVersion(organisationVersion).withName(businessName).withAddress(address);
+                .withVersion(organisationVersion).withName(organisationName).withAddress(address);
         apiResponse = RestUtils.put(businessDetails, updateBusinessDetailsResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
