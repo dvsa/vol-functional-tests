@@ -45,6 +45,12 @@ public class CreateLicenceAPI extends BaseAPI{
     private String town = faker.generateAddress().get("town");
     private String postcode = "NG23HX";
     private String countryCode = "GB";
+    private LinkedHashMap<String, String> establishmentAddress = faker.generateAddress();
+    private String establishmentAddressLine1 = establishmentAddress.get("addressLine1");
+    private String establishmentAddressLine2 = establishmentAddress.get("addressLine2");
+    private String establishmentAddressLine3 = establishmentAddress.get("addressLine3");
+    private String establishmentAddressLine4 = establishmentAddress.get("addressLine4");
+    private String establishmentTown = faker.generateAddress().get("town");
     private String organisationId;
     private String organisationName = faker.generateCompanyName();
     private String emailAddress = String.format("%s_%s.tester@dvsa.com", getForeName(), getFamilyName());
@@ -525,11 +531,13 @@ public class CreateLicenceAPI extends BaseAPI{
         String phoneNumber = "0712345678";
         String businessEmail = String.format("%s.volBusiness@dvsa.com", organisationName.replaceAll(" ", "_"));
         String applicationAddressResource = URL.build(env, String.format("application/%s/addresses/", applicationNumber)).toString();
-        AddressBuilder address = new AddressBuilder().withAddressLine1(addressLine1).withAddressLine2(addressLine2).withAddressLine3(addressLine3)
+        AddressBuilder correspondenceAddress = new AddressBuilder().withAddressLine1(addressLine1).withAddressLine2(addressLine2).withAddressLine3(addressLine3)
                 .withAddressLine4(addressLine4).withTown(town).withPostcode(postcode).withCountryCode(countryCode);
+        AddressBuilder establishmentAddress = new AddressBuilder().withAddressLine1(establishmentAddressLine1).withAddressLine2(establishmentAddressLine2).withAddressLine3(establishmentAddressLine3)
+                .withAddressLine4(establishmentAddressLine4).withTown(establishmentTown).withPostcode(postcode).withCountryCode(countryCode);
         ContactDetailsBuilder contactDetailsBuilder = new ContactDetailsBuilder().withPhoneNumber(phoneNumber).withEmailAddress(businessEmail);
         ApplicationAddressBuilder addressBuilder = new ApplicationAddressBuilder().withId(applicationNumber).withConsultant("Consult").withContact(contactDetailsBuilder)
-                .withCorrespondenceAddress(address).withEstablishmentAddress(address);
+                .withCorrespondenceAddress(correspondenceAddress).withEstablishmentAddress(establishmentAddress);
         apiResponse = RestUtils.put(addressBuilder, applicationAddressResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
