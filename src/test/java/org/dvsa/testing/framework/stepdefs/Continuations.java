@@ -30,8 +30,8 @@ public class Continuations extends BasePage implements En {
             replaceText("//*[@id='details[reviewDate]_day']", String.valueOf(continuationDates.get("day")));
             replaceText("//*[@id='details[reviewDate]_month']", String.valueOf(continuationDates.get("month")));
             replaceText("//*[@id='details[reviewDate]_year']", String.valueOf(continuationDates.get("year")));
-            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            waitForElementToBeClickable("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            click("form-actions[submit]", SelectorType.ID);
+            waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
             world.UIJourneySteps.continueALicenceOnInternal(world.createLicence.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea());
         });
         And("^fill in my continuation details on self serve$", () -> {

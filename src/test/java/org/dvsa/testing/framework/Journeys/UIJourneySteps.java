@@ -1714,27 +1714,27 @@ public class UIJourneySteps extends BasePage {
 
     public void continueALicenceOnInternal(String licenceNo, String licenceTrafficArea) throws IllegalBrowserException, MalformedURLException {
         click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
-        click("//*[@id='menu-admin-dashboard/continuations']", SelectorType.XPATH);
+        click("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='generate-continuation-type']");
-        selectValueFromDropDown("//*[@id='generate-continuation-trafficArea']", SelectorType.XPATH, licenceTrafficArea);
-        click("//*[@id='form-actions[generate]']", SelectorType.XPATH);
-        enterText("//*[@id='filters[licenceNo]']", licenceNo,  SelectorType.XPATH);
-        click("//*[@id='main']", SelectorType.XPATH);
+        selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
+        click("form-actions[generate]", SelectorType.ID);
+        enterText("filters[licenceNo]", licenceNo,  SelectorType.ID);
+        click("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
-        waitAndClick("//input[@name='id[]']", SelectorType.XPATH);
-        click("//*[@id='generate']", SelectorType.XPATH);
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndClick("id[]", SelectorType.NAME);
+        click("generate", SelectorType.ID);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
     public void continueLicenceWithVerifyAndPay() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.completeContinuationUntilVerify();
-        click("//*[@id='content[signatureOptions]']", SelectorType.XPATH);
-        click("//*[@id='sign']", SelectorType.XPATH);
+        click("content[signatureOptions]", SelectorType.ID);
+        click("sign", SelectorType.ID);
         world.UIJourneySteps.signWithVerify();
         waitForTextToBePresent("Declaration signed through GOV.UK Verify");
-        click("//*[@id='submitAndPay']", SelectorType.XPATH);
-        click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+        click("submitAndPay", SelectorType.ID);
+        click("form-actions[pay]", SelectorType.ID);
         Config config = new Configuration(env.toString()).getConfig();
         world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
         waitForTextToBePresent("Your licence has been continued");
@@ -1750,13 +1750,13 @@ public class UIJourneySteps extends BasePage {
             continuationBoxFound = isElementPresent("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
         }
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
-        click("//*[@id='submit']", SelectorType.XPATH);
+        click("submit", SelectorType.ID);
         Browser.navigate().findElements(By.xpath("//*[@type='checkbox']")).stream().forEach(WebElement::click);
         findSelectAllRadioButtonsByValue("Y");
-        click("//*[@id='licenceChecklistConfirmation[yesContent][submit]']", SelectorType.XPATH);
+        click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
         String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
-        enterText("//*[@id='averageBalance']", necessaryIncome, SelectorType.XPATH);
+        enterText("averageBalance", necessaryIncome, SelectorType.ID);
         findSelectAllRadioButtonsByValue("N");
-        click("//*[@id='submit']", SelectorType.XPATH);
+        click("submit", SelectorType.ID);
     }
 }
