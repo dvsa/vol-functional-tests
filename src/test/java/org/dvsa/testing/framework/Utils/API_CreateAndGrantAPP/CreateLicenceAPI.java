@@ -37,6 +37,12 @@ public class CreateLicenceAPI extends BaseAPI{
     private String foreName = faker.generateFirstName();
     private String familyName = faker.generateLastName();
     private String birthDate = Int.random(1900, 2018) + "-" + Int.random(1, 12) + "-" + Int.random(1, 28);
+    private LinkedHashMap<String, String> registeredAddress = faker.generateAddress();
+    private String registeredAddressLine1 = registeredAddress.get("addressLine1");
+    private String registeredAddressLine2 = registeredAddress.get("addressLine2");
+    private String registeredAddressLine3 = registeredAddress.get("addressLine3");
+    private String registeredAddressLine4 = registeredAddress.get("addressLine4");
+    private String registeredTown = faker.generateAddress().get("town");
     private LinkedHashMap<String, String> address = faker.generateAddress();
     private String addressLine1 = address.get("addressLine1");
     private String addressLine2 = address.get("addressLine2");
@@ -513,8 +519,8 @@ public class CreateLicenceAPI extends BaseAPI{
         String natureOfBusiness = faker.generateNatureOfBusiness();
         String updateBusinessDetailsResource = URL.build(env, String.format("organisation/business-details/application/%s", getApplicationNumber())).toString();
 
-        AddressBuilder address = new AddressBuilder().withAddressLine1(addressLine1).withAddressLine2(addressLine2).withAddressLine3(addressLine3)
-                .withAddressLine4(addressLine4).withTown(town).withPostcode(postcode);
+        AddressBuilder address = new AddressBuilder().withAddressLine1(registeredAddressLine1).withAddressLine2(registeredAddressLine2).withAddressLine3(registeredAddressLine3)
+                .withAddressLine4(registeredAddressLine4).withTown(registeredTown).withPostcode(postcode);
         UpdateBusinessDetailsBuilder businessDetails = new UpdateBusinessDetailsBuilder()
                 .withId(getApplicationNumber()).withCompanyNumber(companyNumber).withNatureOfBusiness(natureOfBusiness).withLicence(licenceNumber)
                 .withVersion(organisationVersion).withName(organisationName).withAddress(address);
