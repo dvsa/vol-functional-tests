@@ -1,7 +1,6 @@
 @SS
 @SS-LAST-TM-TRIGGER
 @OLCS-19479
-@ss_regression
 @gov-verify
 
 Feature: Set and check criteria for triggering automatic letter
@@ -9,9 +8,10 @@ Feature: Set and check criteria for triggering automatic letter
   Background:
     Given i have a valid "public" "si" licence
 
+  @ss_regression
   Scenario: Generate letter for valid licence when ss removes last TM
     When a self-serve user removes the last TM
-    Then a flag should be set in the DB
+    Then a pop up should be displayed advising the user that they are about to remove the last TM
 
   Scenario: TM verifies variational not as operator
     When i add an existing person as a transport manager who is not the operator on "variation"

@@ -3,6 +3,7 @@
 @ss_regression
 Feature: ESBR for English, Welsh and Scottish Areas
 
+  @short
   Scenario Outline: Short notice ESBR in self-serve
     Given I have a psv application with traffic area "<TrafficArea>" and enforcement area "<EnforcementArea>" which has been granted
     When I upload an esbr file with "<Days>" days notice

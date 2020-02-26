@@ -9,11 +9,11 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 public class ResettingPassword extends BasePage implements En {
     public ResettingPassword(World world) {
         Then("^i will receive a message to say my password has changed$", () -> {
-          isTextPresent("We've sent you an email. Follow the link in the email to reset your password");
+          isTextPresent("We've sent you an email. Follow the link in the email to reset your password",30);
         });
 
         Then("^i will receive an error that username invalid$", () -> {
-            isTextPresent("Failed to reset your password");
+            isTextPresent("Failed to reset your password",30);
         });
 
         And("^i reset my password$", () -> {
@@ -22,9 +22,9 @@ public class ResettingPassword extends BasePage implements En {
             clickByLinkText("Sign out");
             world.UIJourneySteps.resettingExternalPassword();
             enterField(nameAttribute("input", "username"), world.createLicence.getLoginId());
-            isTextPresent("Failed");
+            isTextPresent("Failed",30);
             click(nameAttribute("input","submit"), SelectorType.CSS);
-                while (isTextPresent("Failed")) {
+                while (isTextPresent("Failed",30)) {
                 click(nameAttribute("input","submit"), SelectorType.CSS);
             }
         });
@@ -36,13 +36,13 @@ public class ResettingPassword extends BasePage implements En {
         And("^i then try reset my password$", () -> {
             world.UIJourneySteps.resettingExternalPassword();
             enterField(nameAttribute("input", "username"), world.createLicence.getLoginId());
-            isTextPresent("Failed");
+            isTextPresent("Failed",30);
             click(nameAttribute("input","submit"), SelectorType.CSS);
-            isTextPresent("Failed");
+            isTextPresent("Failed",30);
             click(nameAttribute("input","submit"), SelectorType.CSS);
         });
         Then("^i will receive an error for inactive account$", () -> {
-            isTextPresent("It looks like your account isn't active");
+            isTextPresent("It looks like your account isn't active",30);
         });
     }
 }
