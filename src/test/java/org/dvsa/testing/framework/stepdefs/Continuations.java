@@ -40,6 +40,10 @@ public class Continuations extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewLicence();
             clickByLinkText("Docs & attachments");
+            long kickoutTime = System.currentTimeMillis() + 120000;
+            do {
+                javaScriptExecutor("location.reload(true)");
+            } while (!isTextPresent("Digital continuation snapshot", 10) && System.currentTimeMillis() < kickoutTime);
             Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
         });
     }
