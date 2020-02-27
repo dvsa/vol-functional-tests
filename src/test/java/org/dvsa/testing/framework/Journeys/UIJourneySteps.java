@@ -1712,10 +1712,11 @@ public class UIJourneySteps extends BasePage {
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
     }
 
-    public void continueALicenceOnInternal(String licenceNo, String licenceTrafficArea) throws IllegalBrowserException, MalformedURLException {
+    public void continueALicenceOnInternal(String licenceNo, String licenceTrafficArea, int month) throws IllegalBrowserException, MalformedURLException {
         click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         click("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='generate-continuation-type']");
+        selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, month - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
         click("form-actions[generate]", SelectorType.ID);
         enterText("filters[licenceNo]", licenceNo,  SelectorType.ID);
@@ -1751,7 +1752,7 @@ public class UIJourneySteps extends BasePage {
         }
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
         click("submit", SelectorType.ID);
-        Browser.navigate().findElements(By.xpath("//*[@type='checkbox']")).stream().forEach(WebElement::click);
+        clickAllCheckboxes();
         findSelectAllRadioButtonsByValue("Y");
         click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
         String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
