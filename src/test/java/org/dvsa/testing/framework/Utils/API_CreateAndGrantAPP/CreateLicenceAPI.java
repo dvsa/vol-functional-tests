@@ -57,6 +57,12 @@ public class CreateLicenceAPI extends BaseAPI{
     private String establishmentAddressLine3 = establishmentAddress.get("addressLine3");
     private String establishmentAddressLine4 = establishmentAddress.get("addressLine4");
     private String establishmentTown = faker.generateAddress().get("town");
+    private LinkedHashMap<String, String> transportConsultantAddress = faker.generateAddress();
+    private String transportConsultantAddressLine1 = transportConsultantAddress.get("addressLine1");
+    private String transportConsultantAddressLine2 = transportConsultantAddress.get("addressLine2");
+    private String transportConsultantAddressLine3 = transportConsultantAddress.get("addressLine3");
+    private String transportConsultantAddressLine4 = transportConsultantAddress.get("addressLine4");
+    private String transportConsultantTown = faker.generateAddress().get("town");
     private String organisationId;
     private String organisationName = faker.generateCompanyName();
     private String emailAddress = String.format("%s_%s.tester@dvsa.com", getForeName(), getFamilyName());
@@ -535,13 +541,17 @@ public class CreateLicenceAPI extends BaseAPI{
 
     public void addAddressDetails() {
         String phoneNumber = "0712345678";
-        String businessEmail = String.format("%s.volBusiness@dvsa.com", organisationName.replaceAll(" ", "_"));
+        String businessEmail = String.format("%s.volBusiness@dvsa.com", organisationName.replace(" ", "_").replace(",", ""));
         String applicationAddressResource = URL.build(env, String.format("application/%s/addresses/", applicationNumber)).toString();
         AddressBuilder correspondenceAddress = new AddressBuilder().withAddressLine1(addressLine1).withAddressLine2(addressLine2).withAddressLine3(addressLine3)
                 .withAddressLine4(addressLine4).withTown(town).withPostcode(postcode).withCountryCode(countryCode);
         AddressBuilder establishmentAddress = new AddressBuilder().withAddressLine1(establishmentAddressLine1).withAddressLine2(establishmentAddressLine2).withAddressLine3(establishmentAddressLine3)
                 .withAddressLine4(establishmentAddressLine4).withTown(establishmentTown).withPostcode(postcode).withCountryCode(countryCode);
         ContactDetailsBuilder contactDetailsBuilder = new ContactDetailsBuilder().withPhoneNumber(phoneNumber).withEmailAddress(businessEmail);
+
+        AddressBuilder transportConsultantAddress = new AddressBuilder().withAddressLine1(transportConsultantAddressLine1).withAddressLine2(transportConsultantAddressLine2).withAddressLine3(transportConsultantAddressLine3)
+                .withAddressLine4(transportConsultantAddressLine4).withTown(transportConsultantTown).withPostcode(postcode).withCountryCode(countryCode);
+
         ApplicationAddressBuilder addressBuilder = new ApplicationAddressBuilder().withId(applicationNumber).withConsultant("Consult").withContact(contactDetailsBuilder)
                 .withCorrespondenceAddress(correspondenceAddress).withEstablishmentAddress(establishmentAddress);
         apiResponse = RestUtils.put(addressBuilder, applicationAddressResource, getHeaders());

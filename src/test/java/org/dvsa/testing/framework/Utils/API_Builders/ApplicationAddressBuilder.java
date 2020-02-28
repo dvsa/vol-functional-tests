@@ -11,7 +11,9 @@ import org.junit.platform.commons.util.ToStringBuilder;
         "id",
         "consultant",
         "contact",
-        "correspondenceAddress"
+        "correspondenceAddress",
+        "establishmentAddress",
+        "consultant"
 })
 public class ApplicationAddressBuilder {
 
@@ -108,8 +110,9 @@ public class ApplicationAddressBuilder {
         .append("id",getId())
                 .append("contact", getContact())
                 .append("consultant",getConsultant())
-                .append("correspondenceAddress",getCorrespondenceAddress())
-                .append("establishmentAddress",getEstablishmentAddress())
+                .append("correspondenceAddress", getCorrespondenceAddress())
+                .append("establishmentAddress", getEstablishmentAddress())
+                .append("consultant", getConsultant())
                 .toString();
     }
 }
