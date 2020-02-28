@@ -552,8 +552,15 @@ public class CreateLicenceAPI extends BaseAPI{
         AddressBuilder transportConsultantAddress = new AddressBuilder().withAddressLine1(transportConsultantAddressLine1).withAddressLine2(transportConsultantAddressLine2).withAddressLine3(transportConsultantAddressLine3)
                 .withAddressLine4(transportConsultantAddressLine4).withTown(transportConsultantTown).withPostcode(postcode).withCountryCode(countryCode);
 
-        ApplicationAddressBuilder addressBuilder = new ApplicationAddressBuilder().withId(applicationNumber).withConsultant("Consult").withContact(contactDetailsBuilder)
+        String transportConsultantPhone = "07987654321";
+        String transportConsultantName = String.format("%s %s", faker.generateFirstName(), faker.generateLastName());
+        String transportConsultantEmail = String.format("%s.volTConsultant@dvsa.com", transportConsultantName.replace(" ", "_").replace(",", ""));
+        ContactDetailsBuilder transportConsultantContact = new ContactDetailsBuilder().withPhoneNumber(transportConsultantPhone).withEmailAddress(transportConsultantEmail);
+        TransportConsultantBuilder transportConsultant = new TransportConsultantBuilder().withConfirmation("Y").withAddress(transportConsultantAddress).withName(transportConsultantName)
+                .withWrittenPermissionToEngage("Y").withContact(transportConsultantContact);
+        ApplicationAddressBuilder addressBuilder = new ApplicationAddressBuilder().withId(applicationNumber).withConsultant(transportConsultant).withContact(contactDetailsBuilder)
                 .withCorrespondenceAddress(correspondenceAddress).withEstablishmentAddress(establishmentAddress);
+
         apiResponse = RestUtils.put(addressBuilder, applicationAddressResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {

@@ -20,7 +20,7 @@ public class ApplicationAddressBuilder {
     @JsonProperty("id")
     private String id;
     @JsonProperty("consultant")
-    private String consultant;
+    private TransportConsultantBuilder consultant;
     @JsonProperty("contact")
     private ContactDetailsBuilder contact;
     @JsonProperty("correspondenceAddress")
@@ -44,16 +44,16 @@ public class ApplicationAddressBuilder {
     }
 
     @JsonProperty("consultant")
-    public String getConsultant() {
+    public TransportConsultantBuilder getConsultant() {
         return consultant;
     }
 
     @JsonProperty("consultant")
-    public void setConsultant(String consultant) {
+    public void setConsultant(TransportConsultantBuilder consultant) {
         this.consultant = consultant;
     }
 
-    public ApplicationAddressBuilder withConsultant(String consultant) {
+    public ApplicationAddressBuilder withConsultant(TransportConsultantBuilder consultant) {
         this.consultant = consultant;
         return this;
     }
