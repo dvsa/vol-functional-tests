@@ -7,7 +7,7 @@ Feature: Public enquiry added and published and deletion of case notes
     Given i have a valid "goods" "sn" licence
     And I create a new case
     And i have logged in to internal
-    When i search for and click on my licence
+    When i url search for my licence
 
   Scenario: Publish public inquiry
     And i add a new public inquiry

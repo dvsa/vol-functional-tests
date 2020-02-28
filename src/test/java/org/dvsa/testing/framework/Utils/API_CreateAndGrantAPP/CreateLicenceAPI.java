@@ -684,6 +684,7 @@ public class CreateLicenceAPI extends BaseAPI{
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
             LOGGER.info("ERROR CODE: ".concat(Integer.toString(apiResponse.extract().statusCode())));
             LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
+            LOGGER.info("EMAIL: ".concat(String.format("%s_%s.TheTransportManager@dvsa.com", getTmForeName(), getTmFamilyName())));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
     }

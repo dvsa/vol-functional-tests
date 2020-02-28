@@ -433,6 +433,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
             LOGGER.info("ERROR CODE: ".concat(String.valueOf(apiResponse.extract().statusCode())));
             LOGGER.info("ERROR MESSAGE: " + apiResponse.extract().response().asString());
+            LOGGER.info("EMAIL: " + adminUserEmailAddress);
         } else {
 
             setAdminUserId(apiResponse.extract().response().jsonPath().getString("id.user"));
