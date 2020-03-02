@@ -228,7 +228,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void searchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
-        selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Applications");
+        selectValueFromDropDown("search-select", SelectorType.ID, "Applications");
 
         String variationApplicationNumber = world.updateLicence.getVariationApplicationNumber();
         long kickOut = System.currentTimeMillis() + 120000;
@@ -249,7 +249,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void searchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
-        selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Licence");
+        selectValueFromDropDown("search-select", SelectorType.ID, "Licence");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.valueOf(world.createLicence.getLicenceNumber()));
@@ -258,7 +258,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void searchAndViewCase() throws IllegalBrowserException, MalformedURLException {
-        selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Case");
+        selectValueFromDropDown("search-select", SelectorType.ID, "Case");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.valueOf(world.updateLicence.getCaseId()));
@@ -267,7 +267,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void searchAndViewPSVDisc() throws IllegalBrowserException, MalformedURLException {
-        selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Psv Disc");
+        selectValueFromDropDown("search-select", SelectorType.ID, "Psv Disc");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.valueOf(world.updateLicence.getStartNumber()));
@@ -278,7 +278,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void searchAndViewAddress() throws IllegalBrowserException, MalformedURLException {
-        selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Address");
+        selectValueFromDropDown("search-select", SelectorType.ID, "Address");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.format("%s, %s, %s, %s, %s", world.createLicence.getOperatingCentreAddressLine1(), world.createLicence.getOperatingCentreAddressLine2(),
