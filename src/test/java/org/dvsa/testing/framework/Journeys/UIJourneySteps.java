@@ -231,16 +231,17 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Applications");
 
         String variationApplicationNumber = world.updateLicence.getVariationApplicationNumber();
+        long kickOut = System.currentTimeMillis() + 120000;
         if (variationApplicationNumber != null) {
             do {
                 SearchNavBar.search(variationApplicationNumber);
-            } while (!isLinkPresent(variationApplicationNumber, 60));
+            } while (!isLinkPresent(variationApplicationNumber, 60) && System.currentTimeMillis() < kickOut);
             clickByLinkText(variationApplicationNumber);
             assertTrue(Boolean.parseBoolean(String.valueOf(navigate().getCurrentUrl().contains("variation"))));
         } else {
             do {
                 SearchNavBar.search(String.valueOf(world.createLicence.getApplicationNumber()));
-            } while (!isLinkPresent(world.createLicence.getApplicationNumber(), 200));
+            } while (!isLinkPresent(world.createLicence.getApplicationNumber(), 200) && System.currentTimeMillis() < kickOut);
             clickByLinkText(world.createLicence.getApplicationNumber());
             if (isLinkPresent("Interim", 60))
                 clickByLinkText("Interim ");
@@ -249,25 +250,28 @@ public class UIJourneySteps extends BasePage {
 
     public void searchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Licence");
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.valueOf(world.createLicence.getLicenceNumber()));
-        } while (!isLinkPresent(world.createLicence.getLicenceNumber(), 200));
+        } while (!isLinkPresent(world.createLicence.getLicenceNumber(), 200) && System.currentTimeMillis() < kickOut);
         clickByLinkText(world.createLicence.getLicenceNumber());
     }
 
     public void searchAndViewCase() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Case");
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.valueOf(world.updateLicence.getCaseId()));
-        } while (!isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 200));
+        } while (!isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 200) && System.currentTimeMillis() < kickOut);
         clickByLinkText(String.valueOf(world.updateLicence.getCaseId()));
     }
 
     public void searchAndViewPSVDisc() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Psv Disc");
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.valueOf(world.updateLicence.getStartNumber()));
-        } while (!isTextPresent(String.valueOf(world.updateLicence.getStartNumber()), 200));
+        } while (!isTextPresent(String.valueOf(world.updateLicence.getStartNumber()), 200) && System.currentTimeMillis() < kickOut);
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.createLicence.getLicenceNumber());
         clickByLinkText("Licence discs");
@@ -275,11 +279,13 @@ public class UIJourneySteps extends BasePage {
 
     public void searchAndViewAddress() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("//select[@id='search-select']", SelectorType.XPATH, "Address");
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.format("%s, %s, %s, %s, %s", world.createLicence.getOperatingCentreAddressLine1(), world.createLicence.getOperatingCentreAddressLine2(),
                     world.createLicence.getOperatingCentreAddressLine3(), world.createLicence.getOperatingCentreAddressLine4(), world.createLicence.getOperatingCentreTown()));
         } while (!isTextPresent(String.format("%s, %s, %s, %s, %s", world.createLicence.getOperatingCentreAddressLine1(), world.createLicence.getOperatingCentreAddressLine2(),
-                world.createLicence.getOperatingCentreAddressLine3(), world.createLicence.getOperatingCentreAddressLine4(), world.createLicence.getOperatingCentreTown()), 200));
+                world.createLicence.getOperatingCentreAddressLine3(), world.createLicence.getOperatingCentreAddressLine4(), world.createLicence.getOperatingCentreTown()), 200)
+                && System.currentTimeMillis() < kickOut);
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.createLicence.getLicenceNumber());
         clickByLinkText("Addresses");
