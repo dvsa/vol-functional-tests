@@ -153,8 +153,8 @@ public class SurrenderLogic extends BasePage implements En {
             javaScriptExecutor("location.reload(true)");
             waitAndClick("actions[surrender]", SelectorType.ID);
         });
-        Then("^the licence status should be \"([^\"]*)\"$", (String arg0) -> {
-            world.UIJourneySteps.checkLicenceStatus(arg0);
+        Then("^the licence status should be \"([^\"]*)\"$", (String status) -> {
+            world.UIJourneySteps.checkLicenceStatus(status);
         });
         And("^the surrender menu should be hidden in internal$", () -> {
             assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender"));
@@ -189,7 +189,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^the licence should not displayed in selfserve$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            assertFalse(isLinkPresent(world.UIJourneySteps.getLicenceNumber(), 30));
+            assertFalse(isLinkPresent(world.createLicence.getLicenceNumber(), 30));
         });
         And("^the user should be able to re apply for a surrender in internal$", () -> {
             world.UIJourneySteps.submitSurrender();
