@@ -140,3 +140,5 @@ Report.html
 
 src/test/resources/*.conf
 /LOGS/vol-functional-test.log
+
+mockApiData
