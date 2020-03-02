@@ -171,9 +171,9 @@ public class UIJourneySteps extends BasePage {
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
 
         Dates = date.getDate(0, 0, 0);
-        enterDate(Dates.get("day"),Dates.get("month"),Dates.get("year"));
+        enterDate(Dates.get("day"), Dates.get("month"), Dates.get("year"));
 
-        Dates = date.getDate(0,month,0);
+        Dates = date.getDate(0, month, 0);
         enterText("effectiveDate_day", Dates.get("day"), SelectorType.ID);
         enterText("effectiveDate_month", Dates.get("month"), SelectorType.ID);
         enterText("effectiveDate_year", Dates.get("year"), SelectorType.ID);
@@ -694,9 +694,15 @@ public class UIJourneySteps extends BasePage {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+                waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
         }
+
         get(myURL);
         String password = getTempPassword(emailAddress);
+
+        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
 
         try {
             signIn(username, password);
@@ -831,8 +837,8 @@ public class UIJourneySteps extends BasePage {
     public void changeVehicleReq(String noOfVehicles) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         click("//*[@id='overview-item__operating_centres']", SelectorType.XPATH);
         waitForTextToBePresent("Traffic area");
-        waitAndClick("//*[contains(text(),'change your')]",SelectorType.XPATH);
-        waitAndClick("form-actions[submit]",SelectorType.NAME);
+        waitAndClick("//*[contains(text(),'change your')]", SelectorType.XPATH);
+        waitAndClick("form-actions[submit]", SelectorType.NAME);
         waitForTextToBePresent("Operating centres");
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
@@ -1010,7 +1016,7 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
-        Dates = date.getDate(-5,0,-20);
+        Dates = date.getDate(-5, 0, -20);
         enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
         enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
         enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
