@@ -270,8 +270,9 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("search-select", SelectorType.ID, "Psv Disc");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
-            SearchNavBar.search(String.valueOf(world.updateLicence.getStartNumber()));
-        } while (!isTextPresent(String.valueOf(world.updateLicence.getStartNumber()), 200) && System.currentTimeMillis() < kickOut);
+            // - 5 is required because the set start number is for all licences that need printing, not just this licence, and so taking the end number and scaling back makes more sense.
+            SearchNavBar.search(String.valueOf(Integer.parseInt(world.updateLicence.getEndNumber()) - 5));
+        } while (!isTextPresent(String.valueOf(Integer.parseInt(world.updateLicence.getEndNumber()) - 5), 200) && System.currentTimeMillis() < kickOut);
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.createLicence.getLicenceNumber());
         clickByLinkText("Licence discs");
