@@ -676,8 +676,8 @@ public class CreateLicenceAPI extends BaseAPI{
         setTransManEmailAddress(String.format("%s_%s.TheTransportManager@dvsa.com", getTmForeName(), getTmFamilyName()));
         String hasEmail = "Y";
         String addTransportManager = URL.build(env, "transport-manager/create-new-user/").toString();
-        TransportManagerBuilder transportManagerBuilder = new TransportManagerBuilder().withApplication(getApplicationNumber()).withFirstName(getForeName())
-                .withFamilyName(getFamilyName()).withHasEmail(hasEmail).withUsername(getTmUserName()).withEmailAddress(getTransManEmailAddress()).withBirthDate(birthDate);
+        TransportManagerBuilder transportManagerBuilder = new TransportManagerBuilder().withApplication(getApplicationNumber()).withFirstName(getTmForeName())
+                .withFamilyName(getTmFamilyName()).withHasEmail(hasEmail).withUsername(getTmUserName()).withEmailAddress(getTransManEmailAddress()).withBirthDate(birthDate);
         apiResponse = RestUtils.post(transportManagerBuilder, addTransportManager, getHeaders());
         setTransportManagerApplicationId(apiResponse.extract().jsonPath().getString("id.transportManagerApplicationId"));
 
@@ -686,7 +686,7 @@ public class CreateLicenceAPI extends BaseAPI{
             LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             LOGGER.info("EMAIL: ".concat(String.format("%s_%s.TheTransportManager@dvsa.com", getTmForeName(), getTmFamilyName())));
             throw new HTTPException(apiResponse.extract().statusCode());
-        }
+        } // LOOK INTO WHY OPERATOR AND TM ARE GETTING USERNAMES BUT SAME NAME AND EMAILS.
     }
 
     public void submitTransport() {
