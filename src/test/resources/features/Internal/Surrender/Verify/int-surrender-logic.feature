@@ -16,7 +16,6 @@ Feature: Logic for Surrender menu item
     And the surrender menu should be hidden in internal
     And the licence should not displayed in selfserve
 
-    @wondy
   Scenario: Attempt to Withdraw surrender
     And my application to surrender is under consideration
     When the caseworker attempts to withdraw the surrender

@@ -612,23 +612,6 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToDirectorsPage(String type) throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("GOV.UK");
-        switch (type.toLowerCase()) {
-            case "licence":
-                clickByLinkText(world.createLicence.getLicenceNumber());
-                break;
-            case "application":
-                clickByLinkText(world.createLicence.getApplicationNumber());
-                break;
-            case "variation":
-                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                break;
-        }
-        clickByLinkText("Directors");
-        waitForTextToBePresent("Directors");
-    }
-
     public void navigateToInternalTask() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
@@ -1192,10 +1175,8 @@ public class UIJourneySteps extends BasePage {
 
     public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
         navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        setLicenceNumber(navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().get().getText());
-        navigate().findElements(By.xpath("//tr/td[1]")).stream().findFirst().ifPresent(WebElement::click);
-        waitForTextToBePresent("Summary");
-        clickByLinkText("Apply to");
+        navigateToSelfServePage("licence", "view");
+        clickByLinkText("Apply to surrender licence");
     }
 
     public void navigateToFinancialEvidencePage(String type) throws IllegalBrowserException, MalformedURLException {
@@ -1407,10 +1388,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void checkLicenceStatus(String arg0) throws IllegalBrowserException, MalformedURLException {
-        do {
-            System.out.println("Page not loaded yet");
-        }
-        while (!isTextPresent("Licence details", 2));//condition
+        waitForTextToBePresent("Licence details");
         Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), arg0.toUpperCase());
     }
 
@@ -1761,5 +1739,54 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
+    }
+
+    public void continueALicenceOnInternal(String licenceNo, String licenceTrafficArea, int month) throws IllegalBrowserException, MalformedURLException {
+        click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
+        click("menu-admin-dashboard/continuations", SelectorType.ID);
+        waitForElementToBePresent("//*[@id='generate-continuation-type']");
+        selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, month - 1); // Minus one in the month because of indexing.
+        selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
+        click("form-actions[generate]", SelectorType.ID);
+        enterText("filters[licenceNo]", licenceNo,  SelectorType.ID);
+        click("main", SelectorType.ID);
+        waitForTextToBePresent("1 licence(s)");
+        waitAndClick("id[]", SelectorType.NAME);
+        click("generate", SelectorType.ID);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitForTextToBePresent("The selected licence(s) have been queued");
+    }
+
+    public void continueLicenceWithVerifyAndPay() throws IllegalBrowserException, MalformedURLException {
+        world.UIJourneySteps.completeContinuationUntilVerify();
+        click("content[signatureOptions]", SelectorType.ID);
+        click("sign", SelectorType.ID);
+        world.UIJourneySteps.signWithVerify();
+        waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+        click("submitAndPay", SelectorType.ID);
+        click("form-actions[pay]", SelectorType.ID);
+        Config config = new Configuration(env.toString()).getConfig();
+        world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+        waitForTextToBePresent("Your licence has been continued");
+    }
+
+    public void completeContinuationUntilVerify() throws IllegalBrowserException, MalformedURLException {
+        world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+        world.UIJourneySteps.navigateToSelfServePage("licence","view");
+        boolean continuationBoxFound = false;
+        long kickoutTime = System.currentTimeMillis() + 120000;
+        while (!continuationBoxFound && System.currentTimeMillis() < kickoutTime) {
+            javaScriptExecutor("location.reload(true)");
+            continuationBoxFound = isElementPresent("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
+        }
+        click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
+        click("submit", SelectorType.ID);
+        clickAllCheckboxes();
+        findSelectAllRadioButtonsByValue("Y");
+        click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
+        String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
+        enterText("averageBalance", necessaryIncome, SelectorType.ID);
+        findSelectAllRadioButtonsByValue("N");
+        click("submit", SelectorType.ID);
     }
 }
