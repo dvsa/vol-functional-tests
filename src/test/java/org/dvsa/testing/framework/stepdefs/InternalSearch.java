@@ -55,23 +55,12 @@ public class InternalSearch extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewVariational();
         });
-        And("^i create and url search for my licence$", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
-        });
-
 
         And("^i url search for my licence$", () -> {
             world.UIJourneySteps.urlSearchAndViewLicence();
         });
         And("^i url search for my application", () -> {
             world.UIJourneySteps.urlSearchAndViewApplication();
-        });
-        When("^i search for and click on my address$", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.searchAndViewCase();
         });
     }
 }

@@ -146,9 +146,7 @@ public class CreateLicenceAPI extends BaseAPI{
         this.licenceNumber = licenceNumber;
     }
 
-    public String getTmForeName() {
-        return tmForeName;
-    }
+    public String getTmForeName() { return tmForeName; }
 
     public void setTMForeName(String tmForeName) {
         this.tmForeName = tmForeName;
@@ -158,13 +156,11 @@ public class CreateLicenceAPI extends BaseAPI{
         return tmFamilyName;
     }
 
-    public void setTMFamilyName(String tmFamilyName) {
-        this.tmFamilyName = tmFamilyName;
-    }
+    public void setTMFamilyName(String tmFamilyName) { this.tmFamilyName = tmFamilyName; }
 
-    public String getTransManEmailAddress() {
-        return transManEmailAddress;
-    }
+    public String getTransManEmailAddress() { return transManEmailAddress; }
+
+    public void setTransManEmailAddress(String transManEmailAddress) { this.transManEmailAddress = transManEmailAddress; }
 
     public String getBirthDate() {
         return birthDate;
@@ -219,8 +215,6 @@ public class CreateLicenceAPI extends BaseAPI{
     public String getOperatingCentreTown() { return operatingCentreTown; }
 
     public void setOperatingCentreTown(String operatingCentreTown) { this.operatingCentreTown = operatingCentreTown; }
-
-    public void setTransManEmailAddress(String transManEmailAddress) { this.transManEmailAddress = transManEmailAddress; }
 
     public String getLicenceNumber() {
         return licenceNumber;
@@ -548,10 +542,8 @@ public class CreateLicenceAPI extends BaseAPI{
         AddressBuilder establishmentAddress = new AddressBuilder().withAddressLine1(establishmentAddressLine1).withAddressLine2(establishmentAddressLine2).withAddressLine3(establishmentAddressLine3)
                 .withAddressLine4(establishmentAddressLine4).withTown(establishmentTown).withPostcode(postcode).withCountryCode(countryCode);
         ContactDetailsBuilder contactDetailsBuilder = new ContactDetailsBuilder().withPhoneNumber(phoneNumber).withEmailAddress(businessEmail);
-
         AddressBuilder transportConsultantAddress = new AddressBuilder().withAddressLine1(transportConsultantAddressLine1).withAddressLine2(transportConsultantAddressLine2).withAddressLine3(transportConsultantAddressLine3)
                 .withAddressLine4(transportConsultantAddressLine4).withTown(transportConsultantTown).withPostcode(postcode).withCountryCode(countryCode);
-
         String transportConsultantPhone = "07987654321";
         String transportConsultantName = String.format("%s %s", faker.generateFirstName(), faker.generateLastName());
         String transportConsultantEmail = String.format("%s.volTConsultant@dvsa.com", transportConsultantName.replace(" ", "_").replace(",", ""));
@@ -686,7 +678,7 @@ public class CreateLicenceAPI extends BaseAPI{
             LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             LOGGER.info("EMAIL: ".concat(String.format("%s_%s.TheTransportManager@dvsa.com", getTmForeName(), getTmFamilyName())));
             throw new HTTPException(apiResponse.extract().statusCode());
-        } // LOOK INTO WHY OPERATOR AND TM ARE GETTING USERNAMES BUT SAME NAME AND EMAILS.
+        }
     }
 
     public void submitTransport() {
@@ -710,17 +702,15 @@ public class CreateLicenceAPI extends BaseAPI{
         String tmApplicationNo = getTransportManagerApplicationId();
         String addTMresp = URL.build(env, String.format("transport-manager-application/%s/update-details/", tmApplicationNo)).toString();
         int applicationVersion = Integer.parseInt(fetchTMApplicationInformation(tmApplicationNo, "version", "1"));
-
         LinkedHashMap<String, String> TMAddress = faker.generateAddress();
         String TMAddressLine1 = TMAddress.get("addressLine1");
         String TMAddressLine2 = TMAddress.get("addressLine2");
         String TMAddressLine3 = TMAddress.get("addressLine3");
         String TMAddressLine4 = TMAddress.get("addressLine4");
         String TMAddressTown = TMAddress.get("town");
-
         AddressBuilder Address = new AddressBuilder().withAddressLine1(TMAddressLine1).withAddressLine2(TMAddressLine2).withAddressLine3(TMAddressLine3)
                 .withAddressLine4(TMAddressLine4).withPostcode(postcode).withTown(TMAddressTown).withCountryCode(countryCode);
-        TmRespBuilder tmRespBuilder = new TmRespBuilder().withEmail(emailAddress).withPlaceOfBirth(TMAddressTown).withHomeAddress(Address).withWorkAddress(Address).withTmType(tmType).withIsOwner(isOwner)
+        TmRespBuilder tmRespBuilder = new TmRespBuilder().withEmail(getTransManEmailAddress()).withPlaceOfBirth(TMAddressTown).withHomeAddress(Address).withWorkAddress(Address).withTmType(tmType).withIsOwner(isOwner)
                 .withHoursMon(hours).withHoursTue(hours).withHoursWed(hours).withHoursThu(hours).withHoursThu(hours).withHoursFri(hours).withHoursSat(hours).withHoursSun(hours).withDob(birthDate)
                 .withId(tmApplicationNo).withVersion(applicationVersion);
         apiResponse = RestUtils.put(tmRespBuilder, addTMresp, getHeaders());

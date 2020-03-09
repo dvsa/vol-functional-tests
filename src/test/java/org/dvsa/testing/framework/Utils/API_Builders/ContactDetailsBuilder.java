@@ -3,9 +3,7 @@ package org.dvsa.testing.framework.Utils.API_Builders;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-/*
- I CHANGED EMAILADDRESS TO EMAIL ON A COUPLE BECAUSE THEY DIDN'T MATCH AND THE JSON WAS GENERATING EXTRA DUPLICATE SECTIONS. IS THIS OKAY OR WAS THERE A REASON WHY WE NEEDED THE DUPLICATE UNDER A DIFFERENT KEY?!!
-*/
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "email",
