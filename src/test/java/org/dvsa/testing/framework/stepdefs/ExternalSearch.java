@@ -38,7 +38,7 @@ public class ExternalSearch extends BasePage implements En {
         });
 
         Then("^search results page should display operator names containing our business name$", () -> {
-            assertTrue(checkForFullMatch(world.createLicence.getOrganisationName().toUpperCase()));
+            assertTrue(checkForFullMatch(world.createLicence.getOrganisationName()));
         });
         Then("^search results page should only display our licence number$", () -> {
             do {
