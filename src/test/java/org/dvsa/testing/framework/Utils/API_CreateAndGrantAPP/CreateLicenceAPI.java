@@ -65,7 +65,7 @@ public class CreateLicenceAPI extends BaseAPI{
     private String transportConsultantTown = faker.generateAddress().get("town");
     private String organisationId;
     private String organisationName = faker.generateCompanyName();
-    private String emailAddress = String.format("%s_%s.tester@dvsa.com", getForeName(), getFamilyName());
+    private String emailAddress = String.format("%s_%s%s.tester@dvsa.com", getForeName(), getFamilyName(), Int.random(10000, 99999));
     private String tmForeName;
     private String tmFamilyName;
     private String tmUserName;
