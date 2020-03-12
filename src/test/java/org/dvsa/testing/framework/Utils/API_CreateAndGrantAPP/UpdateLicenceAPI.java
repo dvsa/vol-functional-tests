@@ -59,6 +59,9 @@ public class UpdateLicenceAPI extends BaseAPI {
     private int submissionsId;
     private int caseId;
 
+    private String driverForename = faker.generateFirstName();
+    private String driverFamilyName = faker.generateLastName();
+
     private static String variationApplicationNumber;
     private static int version = 1;
 
@@ -194,6 +197,14 @@ public class UpdateLicenceAPI extends BaseAPI {
         this.queueId = queueId;
     }
 
+    public String getDriverForename() { return driverForename; }
+
+    public void setDriverForename(String driverForename) { this.driverForename = driverForename; }
+
+    public String getDriverFamilyName() { return driverFamilyName; }
+
+    public void setDriverFamilyName(String driverFamilyName) { this.driverFamilyName = driverFamilyName; }
+
     private static EnvironmentType env;
     private static final Logger LOGGER = LogManager.getLogger(UpdateLicenceAPI.class);
 
@@ -307,11 +318,10 @@ public class UpdateLicenceAPI extends BaseAPI {
         String complaintDate = "18-4-1";
         String infringementDate = "17-4-1";
         String description = "Driver correcting entry in driver's record book in wrong fashion";
-        String driverForename = faker.generateFirstName();
-        String driverFamilyName = faker.generateLastName();
+
         String complaintResource = URL.build(env, "complaint").toString();
         CaseComplaintBuilder complaintBuilder = new CaseComplaintBuilder().withCase(caseId).withComplainantForename(complainantForename).withComplainantFamilyName(complainantFamilyName).withComplaintType(complaintType).withStatus(status).withIsCompliance(isCompliance)
-                .withComplaintDate(complaintDate).withInfringementDate(infringementDate).withDescription(description).withDriverForename(driverForename).withDriverFamilyName(driverFamilyName);
+                .withComplaintDate(complaintDate).withInfringementDate(infringementDate).withDescription(description).withDriverForename(getDriverForename()).withDriverFamilyName(getDriverFamilyName());
         apiResponse = RestUtils.post(complaintBuilder, complaintResource, getHeaders());
 
         Assertions.assertThat(apiResponse.statusCode(HttpStatus.SC_CREATED));

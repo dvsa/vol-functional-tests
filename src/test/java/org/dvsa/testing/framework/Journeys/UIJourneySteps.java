@@ -14,6 +14,7 @@ import activesupport.system.Properties;
 import autoitx4java.AutoItX;
 import com.typesafe.config.Config;
 import enums.UserRoles;
+import groovyjarjarcommonscli.MissingArgumentException;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -43,6 +44,7 @@ import java.util.concurrent.TimeUnit;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
@@ -214,7 +216,7 @@ public class UIJourneySteps extends BasePage {
 
     }
 
-    public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
+    public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException, MissingArgumentException {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.genericUtils.modifyXML(state, interval);
         GenericUtils.zipFolder();
@@ -612,7 +614,7 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToInternalTask() throws IllegalBrowserException, MalformedURLException {
+    public void navigateToInternalTask() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
         urlSearchAndViewApplication();
@@ -639,7 +641,7 @@ public class UIJourneySteps extends BasePage {
         clickByName("form-actions[submit]");
     }
 
-    public void navigateToInternalAdminUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
+    public void navigateToInternalAdminUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException, MissingArgumentException {
         String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.INTERNAL, env).toString();
 
@@ -648,7 +650,13 @@ public class UIJourneySteps extends BasePage {
             navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         }
         navigate().get(myURL);
-        String password = S3.getTempPassword(emailAddress, getBucketName());
+        String password = null;
+        try {
+            password = S3.getTempPassword(emailAddress, getBucketName());
+        } catch (Exception e) {
+            LOGGER.info("EMAIL: ".concat(emailAddress));
+            throw new MissingArgumentException("S3 Password retrieval failed.");
+        }
 
         try {
             signIn(username, password);
@@ -666,18 +674,25 @@ public class UIJourneySteps extends BasePage {
         }
     }
 
-    private String getTempPassword(String emailAddress) {
+    private String getTempPassword(String emailAddress) throws MissingArgumentException {
         if (env == EnvironmentType.LOCAL) {
             return localDefaultPassword;
         }
-        return S3.getTempPassword(emailAddress, getBucketName());
+        String password = null;
+        try {
+             password = S3.getTempPassword(emailAddress, getBucketName());
+        } catch (Exception e) {
+            LOGGER.info("EMAIL: ".concat(emailAddress));
+            throw new MissingArgumentException("S3 Password retrieval failed.");
+        }
+        return password;
     }
 
     private String getBucketName() {
         return "devapp-olcs-pri-olcs-autotest-s3";
     }
 
-    public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
+    public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException, MissingArgumentException {
         String newPassword = config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.EXTERNAL, env).toString();
 
@@ -899,7 +914,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void internalUserNavigateToDocsTable() throws IllegalBrowserException, MalformedURLException {
+    public void internalUserNavigateToDocsTable() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
         urlSearchAndViewApplication();
@@ -1138,7 +1153,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Declaration");
     }
 
-    public void addOperatorUserAsTransportManager(int user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
+    public void addOperatorUserAsTransportManager(int user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException, MissingArgumentException {
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         navigateToExternalUserLogin(getOperatorUser(), getOperatorUserEmail());
         if (applicationOrNot) {
@@ -1157,7 +1172,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void addInternalAdmin() throws IllegalBrowserException, MalformedURLException {
+    public void addInternalAdmin() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         operatorUser = Str.randomWord(3);
         operatorUserEmail = "operator".concat(Str.randomWord(2)).concat("@dvsa.com");
         operatorForeName = "OperatorUser";
@@ -1173,7 +1188,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
+    public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
         navigateToSelfServePage("licence", "view");
         clickByLinkText("Apply to surrender licence");
@@ -1303,13 +1318,12 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Declaration");
     }
 
-    public void updateContactDetails(String addressLine1, String addressLine2, String contactNumber) throws IllegalBrowserException, MalformedURLException {
-        findElement("addressLine1", SelectorType.ID, 10).clear();
-        enterText("addressLine1", addressLine1, SelectorType.ID);
-        findElement("correspondence_address[addressLine2]", SelectorType.ID, 10).clear();
-        enterText("correspondence_address[addressLine2]", addressLine2, SelectorType.ID);
-        findElement("phone_primary", SelectorType.ID, 10).clear();
-        enterText("phone_primary", contactNumber, SelectorType.ID);
+    public void updateContactDetails(String addressLine1, String addressLine2, String addressLine3, String addressLine4, String contactNumber) throws IllegalBrowserException, MalformedURLException {
+        replaceText("addressLine1", SelectorType.ID, addressLine1);
+        replaceText("correspondence_address[addressLine2]", SelectorType.ID, addressLine2);
+        replaceText("correspondence_address[addressLine3]", SelectorType.ID, addressLine3);
+        replaceText("correspondence_address[addressLine4]", SelectorType.ID, addressLine4);
+        replaceText("phone_primary", SelectorType.ID, contactNumber);
         waitAndClick("form-actions[save]", SelectorType.ID);
     }
 
@@ -1325,7 +1339,7 @@ public class UIJourneySteps extends BasePage {
         return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
     }
 
-    public void submitSurrender() throws MalformedURLException, IllegalBrowserException {
+    public void submitSurrender() throws MalformedURLException, IllegalBrowserException, MissingArgumentException {
         submitSurrenderUntilChoiceOfVerification();
         if (navigate().getCurrentUrl().contains("qa")) {
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
@@ -1347,7 +1361,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 
-    public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, MalformedURLException {
+    public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         navigateToSurrendersStartPage();
         startSurrender();
         waitAndClick("form-actions[submit]", SelectorType.ID);
@@ -1361,7 +1375,7 @@ public class UIJourneySteps extends BasePage {
         acknowledgeDestroyPage();
     }
 
-    public void caseworkManageSurrender() throws MalformedURLException, IllegalBrowserException {
+    public void caseworkManageSurrender() throws MalformedURLException, IllegalBrowserException, MissingArgumentException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
         searchAndViewLicence();
@@ -1388,7 +1402,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void checkLicenceStatus(String arg0) throws IllegalBrowserException, MalformedURLException {
-        waitForTextToBePresent("Licence details");
+        waitForTextToBePresent("The surrender has been withdrawn");
         Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), arg0.toUpperCase());
     }
 
@@ -1402,7 +1416,7 @@ public class UIJourneySteps extends BasePage {
         untilElementPresent("//*[@id='modal-title']", SelectorType.XPATH);
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         javaScriptExecutor("location.reload(true)");
-        waitForTextToBePresent("Disc number");
+        waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
         clickByLinkText("Back");
     }
 
@@ -1474,7 +1488,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException, InterruptedException, MissingArgumentException {
         if (licenceType.equals("si")) {
             world.createLicence.setLicenceType("standard_international");
         } else if (licenceType.equals("sn")) {
@@ -1527,7 +1541,7 @@ public class UIJourneySteps extends BasePage {
         customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
     }
 
-    public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException {
+    public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
         searchAndViewLicence();
@@ -1757,7 +1771,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
-    public void continueLicenceWithVerifyAndPay() throws IllegalBrowserException, MalformedURLException {
+    public void continueLicenceWithVerifyAndPay() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         world.UIJourneySteps.completeContinuationUntilVerify();
         click("content[signatureOptions]", SelectorType.ID);
         click("sign", SelectorType.ID);
@@ -1770,7 +1784,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Your licence has been continued");
     }
 
-    public void completeContinuationUntilVerify() throws IllegalBrowserException, MalformedURLException {
+    public void completeContinuationUntilVerify() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
         world.UIJourneySteps.navigateToSelfServePage("licence","view");
         boolean continuationBoxFound = false;

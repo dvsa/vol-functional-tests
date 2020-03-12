@@ -17,8 +17,10 @@ public class SurrenderLogic extends BasePage implements En {
     private String discLost = "2";
     private String discDestroyed = "2";
     private String discStolen = "1";
-    private String addressLine1 = "Surrender";
-    private String addressLine2 = "Premises";
+    private String addressLine1 = "Change";
+    private String addressLine2 = "For";
+    private String addressLine3 = "Surrender";
+    private String addressLine4 = "Premises";
     private String contactNumber = "07123465976";
 
 
@@ -32,7 +34,7 @@ public class SurrenderLogic extends BasePage implements En {
             clickByLinkText("Home");
             clickByLinkText(world.createLicence.getLicenceNumber());
             clickByLinkText("Addresses");
-            world.UIJourneySteps.updateContactDetails(addressLine1, addressLine2, contactNumber);
+            world.UIJourneySteps.updateContactDetails(addressLine1, addressLine2, addressLine3, addressLine4, contactNumber);
         });
         Then("^continue with application link is displayed$", () -> {
             assertFalse(isLinkPresent("Apply to surrender licence", 30));
@@ -51,7 +53,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^the new correspondence details are displayed on correspondence page$", () -> {
             click("//*[contains(text(),'Review')]", SelectorType.XPATH);
-            assertEquals(world.UIJourneySteps.getSurrenderAddressLine1(), addressLine1 + "\n" + addressLine2);
+            assertEquals(world.UIJourneySteps.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s", addressLine1, addressLine2, addressLine3, addressLine4));
         });
         Given("^i add a disc to my licence$", () -> {
             world.UIJourneySteps.addDisc();
@@ -66,8 +68,7 @@ public class SurrenderLogic extends BasePage implements En {
         And("^user is taken to review contact page on clicking continue application$", () -> {
             clickByLinkText("Continue");
             assertTrue(Browser.navigate().getCurrentUrl().contains("review-contact-details"));
-            assertEquals(world.UIJourneySteps.getSurrenderAddressLine1(), world.createLicence.getAddressLine1());
-            assertEquals(world.UIJourneySteps.getSurrenderTown(), world.createLicence.getTown());
+            assertEquals(world.UIJourneySteps.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s", world.createLicence.getAddressLine1(), world.createLicence.getAddressLine2(), world.createLicence.getAddressLine3(), world.createLicence.getAddressLine4()));
         });
         Given("^i am on the surrenders current discs page$", () -> {
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
@@ -164,8 +165,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         When("^the caseworker attempts to withdraw the surrender$", () -> {
             world.UIJourneySteps.caseworkManageSurrender();
-            waitForTextToBePresent("Surrender details");
-            javaScriptExecutor("location.reload(true)");
+            waitForTextToBePresent("Your changes have been successfully saved");
             waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
         });
         Then("^a modal box is displayed$", () -> {
