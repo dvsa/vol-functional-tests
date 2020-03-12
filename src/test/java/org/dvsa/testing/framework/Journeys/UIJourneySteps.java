@@ -654,13 +654,7 @@ public class UIJourneySteps extends BasePage {
             navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         }
         navigate().get(myURL);
-        String password = null;
-        try {
-            password = S3.getTempPassword(emailAddress, getBucketName());
-        } catch (Exception e) {
-            LOGGER.info("EMAIL: ".concat(emailAddress));
-            throw new MissingArgumentException("S3 Password retrieval failed.");
-        }
+        String password = S3.getTempPassword(emailAddress, getBucketName());
 
         try {
             signIn(username, password);
@@ -682,14 +676,7 @@ public class UIJourneySteps extends BasePage {
         if (env == EnvironmentType.LOCAL) {
             return localDefaultPassword;
         }
-        String password = null;
-        try {
-             password = S3.getTempPassword(emailAddress, getBucketName());
-        } catch (Exception e) {
-            LOGGER.info("EMAIL: ".concat(emailAddress));
-            throw new MissingArgumentException("S3 Password retrieval failed.");
-        }
-        return password;
+        return S3.getTempPassword(emailAddress, getBucketName());
     }
 
     private String getBucketName() {
@@ -1382,7 +1369,7 @@ public class UIJourneySteps extends BasePage {
     public void caseworkManageSurrender() throws MalformedURLException, IllegalBrowserException, MissingArgumentException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-        searchAndViewLicence();
+        urlSearchAndViewLicence();
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
@@ -1406,7 +1393,8 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void checkLicenceStatus(String arg0) throws IllegalBrowserException, MalformedURLException {
-        waitForTextToBePresent("The surrender has been withdrawn");
+        waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
+        waitForTextToBePresent("Licence details");
         Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), arg0.toUpperCase());
     }
 
@@ -1548,7 +1536,7 @@ public class UIJourneySteps extends BasePage {
     public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException, MissingArgumentException {
         world.APIJourneySteps.createAdminUser();
         navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-        searchAndViewLicence();
+        urlSearchAndViewLicence();
         clickByLinkText("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
         enterText("//*[@id='postcodeInput1']", "FK10 1AA", SelectorType.XPATH);
