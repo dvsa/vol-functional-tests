@@ -16,6 +16,9 @@ import com.typesafe.config.Config;
 import enums.UserRoles;
 import groovyjarjarcommonscli.MissingArgumentException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.LoginPage;
@@ -44,7 +47,6 @@ import java.util.concurrent.TimeUnit;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
@@ -70,6 +72,8 @@ public class UIJourneySteps extends BasePage {
     private String externalTMEmail;
     private String password;
     private String licenceNumber;
+    private static final Logger LOGGER = LogManager.getLogger(CreateLicenceAPI.class);
+
 
     private HashMap<String, Integer> Dates;
 
