@@ -1,4 +1,5 @@
 @INT-SEARCH
+@int_regression
 Feature: Internal Search
 
 
