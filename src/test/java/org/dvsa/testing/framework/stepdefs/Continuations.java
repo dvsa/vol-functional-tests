@@ -42,10 +42,7 @@ public class Continuations extends BasePage implements En {
             world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewLicence();
             clickByLinkText("Docs & attachments");
-            long kickoutTime = System.currentTimeMillis() + 120000;
-            do {
-                javaScriptExecutor("location.reload(true)");
-            } while (!isTextPresent("Digital continuation snapshot", 10) && System.currentTimeMillis() < kickoutTime);
+            refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
             Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
         });
         And("^the users of ss should display on the continuation review details page$", () -> {
@@ -75,6 +72,28 @@ public class Continuations extends BasePage implements En {
                 Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
                 Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
             }
+        });
+        Then("^the continuation for a \"([^\"]*)\" \"([^\"]*)\" conditions and undertaking page should display the right text$", (String opType, String licType) -> {
+            world.UIJourneySteps.navigateToNavBarPage("manage users");
+            world.UIJourneySteps.navigateToSelfServePage("licence","view");
+            refreshPageUntilElementAppears("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
+            click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
+            click("submit", SelectorType.ID);
+            clickAllCheckboxes();
+            findSelectAllRadioButtonsByValue("Y");
+            click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
+            if (opType == "public" && licType == "restricted") {
+                waitForTextToBePresent("Conditions and undertakings");
+                Assert.assertTrue(isTextPresent("The Public Passenger Vehicles Act of 1981 states that the operation of public service vehicles cannot be your main occupation. Your PSV Restricted licence was originally granted on the basis that you meet the relevant main occupation criteria.  This must remain the case for you to retain your licence.\n" +
+                        "\n" +
+                        "A traffic commissioner can request evidence to prove that you still meet the criteria at any time. You are required to keep documents so you can prove that if asked.  The type of evidence can include, accounts, tax returns, P60, bank statements and financial records that separate PSV operation income and expenditure from income from your main occupation. You should also be able to demonstrate the time that you devote to both roles. \n" +
+                        "\n" +
+                        "If you fail to continue to meet the criteria, you must either apply for a standard licence, or surrender your restricted licence. The failure to notify of a change in your circumstances regarding the main occupation could impact on an operator's good repute", 10));
+                Assert.assertTrue(isTextPresent("The operator shall, during the life of the restricted licence, keep separate records of all time spent and the gross and net income earned monthly by them from all occupations ( with supporting detailed records from which these sums are derived)  to enable the main occupation to be determined by the Traffic Commissioner at any time.  Records shall be supported by primary evidence such as payslips, P60 documents, booking diaries, invoices and tachograph records.  Copies of the records shall be made available to the DVSA or OTC officers on request. \n" +
+                        "\n" +
+                        "Should the operator no longer meet the requirements to hold a restricted licence then they will either surrender it or apply for standard licence.", 10));
+            }
+            clickAllCheckboxes();
         });
     }
 }
