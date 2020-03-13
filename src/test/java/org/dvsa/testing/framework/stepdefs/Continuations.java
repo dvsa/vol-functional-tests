@@ -9,8 +9,10 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class Continuations extends BasePage implements En {
 
@@ -45,6 +47,34 @@ public class Continuations extends BasePage implements En {
                 javaScriptExecutor("location.reload(true)");
             } while (!isTextPresent("Digital continuation snapshot", 10) && System.currentTimeMillis() < kickoutTime);
             Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
+        });
+        And("^the users of ss should display on the continuation review details page$", () -> {
+            world.UIJourneySteps.navigateToNavBarPage("manage users");
+            List<WebElement> userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
+            List<WebElement> userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
+            List<WebElement> userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
+            String[] userNames = new String[0];
+            String[] userEmails = new String[0];
+            String[] userPermissions = new String[0];
+            for (int i = 0; i < userNamesElements.size(); i++){
+                userNames[i] = userNamesElements.get(i).getText();
+                userEmails[i] = userEmailElements.get(i).getText();
+                userPermissions[i] = userPermissionElements.get(i).getText();
+            }
+            world.UIJourneySteps.navigateToSelfServePage("licence","view");
+            refreshPageUntilElementAppears("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
+            click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
+            click("submit", SelectorType.ID);
+            clickAllCheckboxes();
+            Assert.assertTrue(isTextPresent("User access",20));
+            userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
+            userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
+            userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
+            for (int i = 0; i < userNamesElements.size(); i++){
+                Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
+                Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
+                Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
+            }
         });
     }
 }

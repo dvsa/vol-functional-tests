@@ -1739,12 +1739,7 @@ public class UIJourneySteps extends BasePage {
     public void completeContinuationUntilVerify() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
         world.UIJourneySteps.navigateToSelfServePage("licence","view");
-        boolean continuationBoxFound = false;
-        long kickoutTime = System.currentTimeMillis() + 120000;
-        while (!continuationBoxFound && System.currentTimeMillis() < kickoutTime) {
-            javaScriptExecutor("location.reload(true)");
-            continuationBoxFound = isElementPresent("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
-        }
+        refreshPageUntilElementAppears("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
         click("submit", SelectorType.ID);
         clickAllCheckboxes();
