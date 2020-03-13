@@ -94,6 +94,7 @@ public class Continuations extends BasePage implements En {
                         "Should the operator no longer meet the requirements to hold a restricted licence then they will either surrender it or apply for standard licence.", 10));
             }
             clickAllCheckboxes();
+            // Need to add check for licences who don't have this page or do have the page but the text isn't the same.
         });
     }
 }
