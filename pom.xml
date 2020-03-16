@@ -18,6 +18,7 @@
         <slf4j.version>2.12.1</slf4j.version>
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
+        <axe-scanner-version>1.0</axe-scanner-version>
         <page-objects.version>0.6.9.0</page-objects.version>
         <page-action.version>0.2</page-action.version>
         <uri-constructor.version>1.5.1</uri-constructor.version>
@@ -221,6 +222,11 @@
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>active-support</artifactId>
             <version>${active-support.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.dvsa.testing.lib</groupId>
+            <artifactId>accessibility-library</artifactId>
+            <version>${axe-scanner-version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>

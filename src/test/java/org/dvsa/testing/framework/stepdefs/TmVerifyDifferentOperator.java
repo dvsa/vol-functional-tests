@@ -109,7 +109,9 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             world.createLicence.setIsOwner("N");
         });
         And("^i add an existing person as a transport manager who is not the operator on \"([^\"]*)\"$", (String applicationType) -> {
-            world.UIJourneySteps.addInternalAdmin();
+            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.UIJourneySteps.addUser(Str.randomWord(3),"operator".concat(Str.randomWord(2)).concat("@dvsa.com"),
+                    "OperatorUser","API" );
             boolean applicationOrNot;
             if (applicationType.equals("application")) {
                 applicationOrNot = true;
