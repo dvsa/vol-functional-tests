@@ -31,9 +31,9 @@ public class ManageUsersPage extends BasePage implements En {
         });
         And("^i scan for accessibility violations$", () -> {
             this.scanner = new AXEScanner();
+            this.scanner.scan();
         });
         Then("^no issues should be present on the page$", () -> {
-            this.scanner.scan();
             Assert.assertEquals(0, scanner.axeFindings().length());
             FileUtils.writeStringToFile(new File("Findings.txt"), scanner.axeFindings());
         });
