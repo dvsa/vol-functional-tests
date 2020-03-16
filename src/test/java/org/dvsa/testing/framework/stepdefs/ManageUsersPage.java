@@ -34,7 +34,8 @@ public class ManageUsersPage extends BasePage implements En {
         });
         Then("^no issues should be present on the page$", () -> {
             this.scanner.scan();
-            FileUtils.writeStringToFile(new File("test.txt"), scanner.axeFindings());
+            Assert.assertEquals(0, scanner.axeFindings().length());
+            FileUtils.writeStringToFile(new File("Findings.txt"), scanner.axeFindings());
         });
         Then("^name of button should be 'Add a user'$", () -> {
             Assert.assertEquals("Add a user", getAttribute("action", SelectorType.NAME, "value"));
