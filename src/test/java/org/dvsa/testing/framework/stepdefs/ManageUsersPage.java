@@ -41,11 +41,11 @@ public class ManageUsersPage extends BasePage implements En {
             Assert.assertEquals("Add a user", getAttribute("action", SelectorType.NAME, "value"));
         });
         Then("^colour of the 'Add a user' button should be green$", () -> {
-            String buttonColour = Color.fromString(getCssValue("action", SelectorType.NAME, "background-colo")).asHex();
+            String buttonColour = Color.fromString(getCssValue("action", SelectorType.NAME, "background-color")).asHex();
             Assert.assertEquals("#00823B", buttonColour);
         });
         Then("^remove button column should be named 'Action'$", () -> {
-            findElements(".//tr/th[4]",SelectorType.XPATH).stream().forEach(
+            findElements(".//tr/th[4]",SelectorType.XPATH).forEach(
                     title -> Assert.assertTrue(title.getText().contains("Action")));
         });
         When("^i add a user$", () -> {
