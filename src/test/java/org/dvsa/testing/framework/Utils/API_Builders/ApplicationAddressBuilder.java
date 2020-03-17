@@ -107,9 +107,9 @@ public class ApplicationAddressBuilder {
     @Override
     public String toString() {
         return new ToStringBuilder(ToStringStyle.JSON_STYLE)
-        .append("id",getId())
+        .append("id", getId())
                 .append("contact", getContact())
-                .append("consultant",getConsultant())
+                .append("consultant", getConsultant())
                 .append("correspondenceAddress", getCorrespondenceAddress())
                 .append("establishmentAddress", getEstablishmentAddress())
                 .append("consultant", getConsultant())

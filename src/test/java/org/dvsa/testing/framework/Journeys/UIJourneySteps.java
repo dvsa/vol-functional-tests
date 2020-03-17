@@ -15,7 +15,6 @@ import autoitx4java.AutoItX;
 import com.typesafe.config.Config;
 import enums.UserRoles;
 import org.apache.commons.lang.StringUtils;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.LoginPage;
@@ -285,10 +284,18 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDown("search-select", SelectorType.ID, "Address");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
-            SearchNavBar.search(String.format("%s, %s, %s, %s, %s", world.createLicence.getOperatingCentreAddressLine1(), world.createLicence.getOperatingCentreAddressLine2(),
-                    world.createLicence.getOperatingCentreAddressLine3(), world.createLicence.getOperatingCentreAddressLine4(), world.createLicence.getOperatingCentreTown()));
-        } while (!isTextPresent(String.format("%s, %s, %s, %s, %s", world.createLicence.getOperatingCentreAddressLine1(), world.createLicence.getOperatingCentreAddressLine2(),
-                world.createLicence.getOperatingCentreAddressLine3(), world.createLicence.getOperatingCentreAddressLine4(), world.createLicence.getOperatingCentreTown()), 200)
+            SearchNavBar.search(String.format("%s, %s, %s, %s, %s",
+                    world.createLicence.getOperatingCentreAddressLine1(),
+                    world.createLicence.getOperatingCentreAddressLine2(),
+                    world.createLicence.getOperatingCentreAddressLine3(),
+                    world.createLicence.getOperatingCentreAddressLine4(),
+                    world.createLicence.getOperatingCentreTown()));
+        } while (!isTextPresent(String.format("%s, %s, %s, %s, %s",
+                world.createLicence.getOperatingCentreAddressLine1(),
+                world.createLicence.getOperatingCentreAddressLine2(),
+                world.createLicence.getOperatingCentreAddressLine3(),
+                world.createLicence.getOperatingCentreAddressLine4(),
+                world.createLicence.getOperatingCentreTown()), 200)
                 && System.currentTimeMillis() < kickOut);
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.createLicence.getLicenceNumber());

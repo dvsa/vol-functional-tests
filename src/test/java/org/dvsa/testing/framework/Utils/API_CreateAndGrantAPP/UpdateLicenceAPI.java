@@ -6,6 +6,7 @@ import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import activesupport.faker.FakerUtils;
 import activesupport.http.RestUtils;
+import activesupport.number.Int;
 import activesupport.system.Properties;
 import enums.LicenceType;
 import enums.OperatorType;
@@ -42,8 +43,9 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     private String goodOrPsv;
     private String trafficAreaName;
-    public String adminUserEmailAddress = String.format("%s%sAsTheAdminUser@dvsavol.org", faker.generateFirstName(), faker.generateLastName());
-    public String adminUserLogin = String.format("%s%s", faker.generateFirstName(), faker.generateLastName());
+    private int randomInt = Int.random(10000, 99999);
+    public String adminUserEmailAddress = String.format("%s%s%sAsTheAdminUser@dvsavol.org", faker.generateFirstName(), faker.generateLastName(), randomInt);
+    public String adminUserLogin = String.format("%s%s%s", faker.generateFirstName(), faker.generateLastName(), randomInt);
     private String adminUserId;
     private String licenceStatus;
     private String businessType;
@@ -443,7 +445,6 @@ public class UpdateLicenceAPI extends BaseAPI {
         if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED) {
             LOGGER.info("ERROR CODE: ".concat(String.valueOf(apiResponse.extract().statusCode())));
             LOGGER.info("ERROR MESSAGE: " + apiResponse.extract().response().asString());
-            LOGGER.info("EMAIL: " + adminUserEmailAddress);
         } else {
 
             setAdminUserId(apiResponse.extract().response().jsonPath().getString("id.user"));

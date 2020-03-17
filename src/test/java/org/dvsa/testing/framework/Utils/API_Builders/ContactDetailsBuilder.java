@@ -3,6 +3,8 @@ package org.dvsa.testing.framework.Utils.API_Builders;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+import org.junit.platform.commons.util.ToStringBuilder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -102,7 +104,12 @@ public class ContactDetailsBuilder {
 
     @Override
     public String toString() {
-        return "email:" + getEmailAddress() + ",fao:" + getFao() + ",phone_primary:" + getPhoneNumber() + ",person:" + getPersonBuilder()
-                + ",address:" + getAddress();
+        return new ToStringBuilder(ToStringStyle.JSON_STYLE)
+                .append("email", getEmailAddress())
+                .append("fao", getFao())
+                .append("phone_primary", getPhoneNumber())
+                .append("person", getPersonBuilder())
+                .append("address", getAddress())
+                .toString();
     }
 }
