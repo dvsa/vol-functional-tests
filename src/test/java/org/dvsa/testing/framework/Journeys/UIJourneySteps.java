@@ -386,7 +386,7 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
         enterText("//*[@id='scp_additionalInformationPage_cardholderName_input']", "Mr Regression Test", SelectorType.XPATH);
         click("//*[@id='scp_additionalInformationPage_buttons_continue_button']", SelectorType.XPATH);
-        waitForTextToBePresent("Online Payments");
+        waitForTextToBePresent("Payment Confirmation Page");
         click("//*[@id='scp_confirmationPage_buttons_payment_button']", SelectorType.XPATH);
         if (isElementPresent("//*[@id='scp_storeCardConfirmationPage_buttons_back_button']", SelectorType.XPATH)) {
             waitForTextToBePresent("Online Payments");
