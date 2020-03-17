@@ -75,6 +75,7 @@ public class Continuations extends BasePage implements En {
                 Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
                 Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
             }
+            // DO it so it checks for all valid things. I.e., type of licence, business type, op centres etc.
         });
     }
 }
