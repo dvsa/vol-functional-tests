@@ -15,8 +15,6 @@ import autoitx4java.AutoItX;
 import com.typesafe.config.Config;
 import enums.UserRoles;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -71,7 +69,6 @@ public class UIJourneySteps extends BasePage {
     private String externalTMEmail;
     private String password;
     private String licenceNumber;
-    private static final Logger LOGGER = LogManager.getLogger(CreateLicenceAPI.class);
 
 
     private HashMap<String, Integer> Dates;
