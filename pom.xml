@@ -18,8 +18,12 @@
         <slf4j.version>2.12.1</slf4j.version>
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
+<<<<<<< HEAD
         <axe-scanner-version>1.0</axe-scanner-version>
         <page-objects.version>0.6.9.0</page-objects.version>
+=======
+        <page-objects.version>0.6.9.2</page-objects.version>
+>>>>>>> 87d8e275f98c069ac5c3dcf3f30ec84176db544e
         <page-action.version>0.2</page-action.version>
         <uri-constructor.version>1.5.1</uri-constructor.version>
         <assertj-core-version>3.9.1</assertj-core-version>
