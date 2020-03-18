@@ -140,5 +140,5 @@ Report.html
 
 src/test/resources/*.conf
 /LOGS/vol-functional-test.log
-!/LICENSE.txt
-!/test.txt
+/LICENSE.txt
+/test.txt
