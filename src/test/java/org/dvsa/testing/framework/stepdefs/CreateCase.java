@@ -1,18 +1,12 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
-import cucumber.api.java.eo.Se;
- import cucumber.api.java8.En;
+import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.UpdateLicenceAPI;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.hamcrest.Matchers;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-
-import java.net.MalformedURLException;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -38,7 +32,7 @@ public class CreateCase extends BasePage implements En {
         });
         Then("^Complaint should be created$", () -> {
             response = world.updateLicence.getCaseDetails("complaint",world.updateLicence.getComplaintId());
-            assertThat(response.body("driverFamilyName", Matchers.equalTo("Dotell"),
+            assertThat(response.body("driverFamilyName", Matchers.equalTo(world.updateLicence.getDriverFamilyName()),
                     "complaintType.id",  Matchers.equalTo("ct_cov")));
         });
         When("^I add conviction details$", () -> {

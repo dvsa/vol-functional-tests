@@ -11,14 +11,16 @@ import org.junit.platform.commons.util.ToStringBuilder;
         "id",
         "consultant",
         "contact",
-        "correspondenceAddress"
+        "correspondenceAddress",
+        "establishmentAddress",
+        "consultant"
 })
 public class ApplicationAddressBuilder {
 
     @JsonProperty("id")
     private String id;
     @JsonProperty("consultant")
-    private String consultant;
+    private TransportConsultantBuilder consultant;
     @JsonProperty("contact")
     private ContactDetailsBuilder contact;
     @JsonProperty("correspondenceAddress")
@@ -42,16 +44,16 @@ public class ApplicationAddressBuilder {
     }
 
     @JsonProperty("consultant")
-    public String getConsultant() {
+    public TransportConsultantBuilder getConsultant() {
         return consultant;
     }
 
     @JsonProperty("consultant")
-    public void setConsultant(String consultant) {
+    public void setConsultant(TransportConsultantBuilder consultant) {
         this.consultant = consultant;
     }
 
-    public ApplicationAddressBuilder withConsultant(String consultant) {
+    public ApplicationAddressBuilder withConsultant(TransportConsultantBuilder consultant) {
         this.consultant = consultant;
         return this;
     }
@@ -105,11 +107,12 @@ public class ApplicationAddressBuilder {
     @Override
     public String toString() {
         return new ToStringBuilder(ToStringStyle.JSON_STYLE)
-        .append("id",getId())
+        .append("id", getId())
                 .append("contact", getContact())
-                .append("consultant",getConsultant())
-                .append("correspondenceAddress",getCorrespondenceAddress())
-                .append("establishmentAddress",getEstablishmentAddress())
+                .append("consultant", getConsultant())
+                .append("correspondenceAddress", getCorrespondenceAddress())
+                .append("establishmentAddress", getEstablishmentAddress())
+                .append("consultant", getConsultant())
                 .toString();
     }
 }

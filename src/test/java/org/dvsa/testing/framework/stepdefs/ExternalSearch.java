@@ -22,7 +22,7 @@ public class ExternalSearch extends BasePage implements En {
                     enterText("search", world.createLicence.getPostcode(), SelectorType.NAME);
                     break;
                 case "business":
-                    enterText("search", world.createLicence.getBusinessName(), SelectorType.NAME);
+                    enterText("search", world.createLicence.getOrganisationName(), SelectorType.NAME);
                     break;
                 case "licence":
                     enterText("search", world.createLicence.getLicenceNumber(), SelectorType.NAME);
@@ -38,12 +38,12 @@ public class ExternalSearch extends BasePage implements En {
         });
 
         Then("^search results page should display operator names containing our business name$", () -> {
-            assertTrue(checkForFullMatch(world.createLicence.getBusinessName().toUpperCase()));
+            assertTrue(checkForFullMatch(world.createLicence.getOrganisationName()));
         });
         Then("^search results page should only display our licence number$", () -> {
             do {
                 clickByName("submit");
-            } while (!isTextPresent(world.createLicence.getBusinessName(), 30));
+            } while (!isTextPresent(world.createLicence.getOrganisationName(), 30));
             assertTrue(checkForFullMatch(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should display names containing our operator name$", () -> {
@@ -58,7 +58,7 @@ public class ExternalSearch extends BasePage implements En {
         Then("^search results page should not display any other licence number$", () -> {
             do {
                 clickByName("submit");
-            } while (!isTextPresent(world.createLicence.getBusinessName(), 30));
+            } while (!isTextPresent(world.createLicence.getOrganisationName(), 30));
             assertFalse(checkForFullMatch("OB0000123"));
         });
         Then("^search results page should only display names containing our operator name$", () -> {
