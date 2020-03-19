@@ -50,9 +50,9 @@ public class Continuations extends BasePage implements En {
             List<WebElement> userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
             List<WebElement> userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
             List<WebElement> userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
-            String[] userNames = new String[0];
-            String[] userEmails = new String[0];
-            String[] userPermissions = new String[0];
+            String[] userNames = new String[userNamesElements.size()];
+            String[] userEmails = new String[userEmailElements.size()];
+            String[] userPermissions = new String[userPermissionElements.size()];
             for (int i = 0; i < userNamesElements.size(); i++){
                 userNames[i] = userNamesElements.get(i).getText();
                 userEmails[i] = userEmailElements.get(i).getText();
@@ -63,7 +63,6 @@ public class Continuations extends BasePage implements En {
             click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
             click("submit", SelectorType.ID);
             clickAllCheckboxes();
-            Assert.assertTrue(isTextPresent("User access",20));
             userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
             userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
             userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
@@ -72,6 +71,18 @@ public class Continuations extends BasePage implements En {
                 Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
                 Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
             }
+            Assert.assertTrue(isTextPresent("Type of licence", 10));
+            Assert.assertTrue(isTextPresent("Business type", 10));
+            Assert.assertTrue(isTextPresent("Business details", 10));
+            Assert.assertTrue(isTextPresent("Business details", 10));
+            Assert.assertTrue(isTextPresent("Addresses", 10));
+            Assert.assertTrue(isTextPresent("Directors", 10));
+            Assert.assertTrue(isTextPresent("Operating centres and authorisation", 10));
+            Assert.assertTrue(isTextPresent("Transport managers", 10));
+            // Selenium is struggling to target Vehicle title.
+            Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
+            Assert.assertTrue(isTextPresent("Safety and compliance", 10));
+            Assert.assertTrue(isTextPresent("User access",10));
         });
         Then("^the continuation for a \"([^\"]*)\" \"([^\"]*)\" conditions and undertaking page should display the right text$", (String opType, String licType) -> {
             world.UIJourneySteps.navigateToNavBarPage("manage users");
