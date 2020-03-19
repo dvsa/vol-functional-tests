@@ -79,7 +79,7 @@ Feature: Logic for Surrender menu item
 
   Scenario: Check links are hidden
     And my application to surrender is under consideration
-    When i search for my licence
+    When i create an admin and url search for my licence
     Then the quick actions and decision buttons are not displayed for the menu items listed
       | Cases           |
       | IRHP            |

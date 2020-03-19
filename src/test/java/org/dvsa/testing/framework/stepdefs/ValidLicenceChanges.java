@@ -87,9 +87,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             replaceText("//*[@id='establishment_address[town]']",registeredAddressTown);
             replaceText("//*[@id='postcodeOptional']",registeredAddressPostCode);
             click("//*[@id='consultant[add-transport-consultant]']",SelectorType.XPATH);
-            click("//*[@id='written-permission-to-engage']",SelectorType.XPATH);
             replaceText("//*[@id='consultant[transportConsultantName]']",transportConsultantName);
-            clickByLinkText("Enter the address yourself");
             replaceText("//*[@name='consultantAddress[addressLine1]']",registeredAddress1);
             replaceText("//*[@id='consultantAddress[addressLine2]']",registeredAddress2);
             replaceText("//*[@id='consultantAddress[addressLine3]']",registeredAddress3);

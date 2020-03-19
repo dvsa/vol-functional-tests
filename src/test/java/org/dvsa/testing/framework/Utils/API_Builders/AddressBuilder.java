@@ -11,6 +11,8 @@ import org.junit.platform.commons.util.ToStringBuilder;
         "version",
         "addressLine1",
         "addressLine2",
+        "addressLine3",
+        "addressLine4",
         "town",
         "postcode",
         "countryCode"})
@@ -23,6 +25,10 @@ public class AddressBuilder {
     private String addressLine1;
     @JsonProperty("addressLine2")
     private String addressLine2;
+    @JsonProperty("addressLine3")
+    private String addressLine3;
+    @JsonProperty("addressLine4")
+    private String addressLine4;
     @JsonProperty("town")
     private String town;
     @JsonProperty("postcode")
@@ -73,6 +79,32 @@ public class AddressBuilder {
         return this;
     }
 
+    public String getAddressLine3() {
+        return addressLine3;
+    }
+
+    public void setAddressLine3(String addressLine3) {
+        this.addressLine3 = addressLine3;
+    }
+
+    public AddressBuilder withAddressLine3(String addressLine3) {
+        this.addressLine3 = addressLine3;
+        return this;
+    }
+
+    public String getAddressLine4() {
+        return addressLine4;
+    }
+
+    public void setAddressLine4(String addressLine4) {
+        this.addressLine4 = addressLine4;
+    }
+
+    public AddressBuilder withAddressLine4(String addressLine4) {
+        this.addressLine4 = addressLine4;
+        return this;
+    }
+
     public String getTown() {
         return town;
     }
@@ -118,6 +150,8 @@ public class AddressBuilder {
                 .append("version:", getVersion())
                 .append("addressLine1", getAddressLine1())
                 .append("addressLine2", getAddressLine2())
+                .append("addressLine3", getAddressLine3())
+                .append("addressLine4", getAddressLine4())
                 .append("town", getTown())
                 .append("postcode", getPostcode())
                 .append("countryCode", getCountryCode())

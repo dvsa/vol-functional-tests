@@ -4,8 +4,9 @@ import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
+import activesupport.faker.FakerUtils;
 import activesupport.http.RestUtils;
-import activesupport.string.Str;
+import activesupport.number.Int;
 import activesupport.system.Properties;
 import enums.LicenceType;
 import enums.OperatorType;
@@ -37,11 +38,14 @@ import static org.junit.Assert.assertThat;
 public class UpdateLicenceAPI extends BaseAPI {
     private ValidatableResponse apiResponse;
     private World world;
+    private Dates date = new Dates(new LocalDateCalendar());
+    private FakerUtils faker = new FakerUtils();
 
     private String goodOrPsv;
     private String trafficAreaName;
-    public String adminUserEmailAddress = "adminUser@dvsavol.org";
-    public String adminUserLogin = String.format("vol" + "%s", Str.randomWord(10));
+    private int randomInt = Int.random(10000, 99999);
+    public String adminUserEmailAddress = String.format("%s%s%sAsTheAdminUser@dvsavol.org", faker.generateFirstName(), faker.generateLastName(), randomInt);
+    public String adminUserLogin = String.format("%s%s%s", faker.generateFirstName(), faker.generateLastName(), randomInt);
     private String adminUserId;
     private String licenceStatus;
     private String businessType;
@@ -57,7 +61,8 @@ public class UpdateLicenceAPI extends BaseAPI {
     private int submissionsId;
     private int caseId;
 
-    private Dates date;
+    private String driverForename = faker.generateFirstName();
+    private String driverFamilyName = faker.generateLastName();
 
     private static String variationApplicationNumber;
     private static int version = 1;
@@ -170,7 +175,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         this.goodOrPsv = goodOrPsv;
     }
 
-    private String getStartNumber() {
+    public String getStartNumber() {
         return startNumber;
     }
 
@@ -194,6 +199,14 @@ public class UpdateLicenceAPI extends BaseAPI {
         this.queueId = queueId;
     }
 
+    public String getDriverForename() { return driverForename; }
+
+    public void setDriverForename(String driverForename) { this.driverForename = driverForename; }
+
+    public String getDriverFamilyName() { return driverFamilyName; }
+
+    public void setDriverFamilyName(String driverFamilyName) { this.driverFamilyName = driverFamilyName; }
+
     private static EnvironmentType env;
     private static final Logger LOGGER = LogManager.getLogger(UpdateLicenceAPI.class);
 
@@ -207,7 +220,6 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     public UpdateLicenceAPI(World world) {
         this.world = world;
-        this.date = new Dates(new LocalDateCalendar());
 
     }
 
@@ -266,8 +278,8 @@ public class UpdateLicenceAPI extends BaseAPI {
 
     public void addConviction() throws MalformedURLException {
         String defendantType = "def_t_dir";
-        String personFirstname = "API";
-        String personLastname = "Director";
+        String personFirstname = faker.generateFirstName();
+        String personLastname = faker.generateLastName();
         String birthDate = "99-6-10";
         String convictionCategory = "conv_c_cat_1065";
         String categoryText = "Driver correcting entry in driver's record book in wrong fashion";
@@ -300,19 +312,18 @@ public class UpdateLicenceAPI extends BaseAPI {
     }
 
     public void addComplaint() {
-        String complainantForename = "123456";
-        String complainantFamilyName = "503";
+        String complainantForename = faker.generateFirstName();
+        String complainantFamilyName = faker.generateLastName();
         String complaintType = "ct_cov";
         String status = "cs_yst";
         String isCompliance = "true";
         String complaintDate = "18-4-1";
         String infringementDate = "17-4-1";
         String description = "Driver correcting entry in driver's record book in wrong fashion";
-        String driverForename = "Skish";
-        String driverFamilyName = "Dotell";
+
         String complaintResource = URL.build(env, "complaint").toString();
         CaseComplaintBuilder complaintBuilder = new CaseComplaintBuilder().withCase(caseId).withComplainantForename(complainantForename).withComplainantFamilyName(complainantFamilyName).withComplaintType(complaintType).withStatus(status).withIsCompliance(isCompliance)
-                .withComplaintDate(complaintDate).withInfringementDate(infringementDate).withDescription(description).withDriverForename(driverForename).withDriverFamilyName(driverFamilyName);
+                .withComplaintDate(complaintDate).withInfringementDate(infringementDate).withDescription(description).withDriverForename(getDriverForename()).withDriverFamilyName(getDriverFamilyName());
         apiResponse = RestUtils.post(complaintBuilder, complaintResource, getHeaders());
 
         Assertions.assertThat(apiResponse.statusCode(HttpStatus.SC_CREATED));
@@ -425,7 +436,7 @@ public class UpdateLicenceAPI extends BaseAPI {
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
         HashMap<String, Integer> internalUserDOB = date.getDate(0, 0, -30);
-        PersonBuilder personBuilder = new PersonBuilder().withForename("Kish").withFamilyName("Ann").withBirthDate((internalUserDOB.get("year") + "-" + internalUserDOB.get("month") + "-" + internalUserDOB.get("day")));
+        PersonBuilder personBuilder = new PersonBuilder().withForename(faker.generateFirstName()).withFamilyName(faker.generateLastName()).withBirthDate((internalUserDOB.get("year") + "-" + internalUserDOB.get("month") + "-" + internalUserDOB.get("day")));
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
         CreateInternalAdminUser internalAdminUser = new CreateInternalAdminUser().withContactDetails(contactDetails).withLoginId(adminUserLogin).withRoles(roles).withTeam(team).withUserType(userType);

@@ -5,7 +5,7 @@ Feature: Change Date Validation On Interim Applications
 
   Background:
     Given i have a valid "goods" "sn" licence
-    And i create admin and url search for my licence
+    And i create an admin and url search for my licence
     And i create a variation in internal
 
   Scenario: Date not required when creating an interim application
