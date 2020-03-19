@@ -20,7 +20,7 @@ Feature: Continuations journey through internal and self serve
     Then the users of ss should display on the continuation review details page
 
   Scenario Outline: The conditions and undertaking page on a continuation displays the right text
-    Given i have a valid "goods" "standard_national" licence
+    Given i have a valid "<operatorType>" "<licenceType>" licence
     And i have logged in to internal
     When i change my continuation date
     And i generate a continuation
