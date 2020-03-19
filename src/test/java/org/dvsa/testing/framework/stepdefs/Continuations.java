@@ -84,8 +84,8 @@ public class Continuations extends BasePage implements En {
             Assert.assertTrue(isTextPresent("Transport managers", 10));
             // Selenium is struggling to target Vehicle title.
             Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
-            Assert.assertTrue(isTextPresent("User access",10));
             Assert.assertTrue(isTextPresent("Safety and compliance", 10));
+            Assert.assertTrue(isTextPresent("User access",10));
         });
     }
 }
