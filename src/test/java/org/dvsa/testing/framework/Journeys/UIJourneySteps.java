@@ -1126,7 +1126,7 @@ public class UIJourneySteps extends BasePage {
     public void addUser(String operatorUser, String operatorUserEmail, String operatorForeName,
     String operatorFamilyName) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Manage");
-        click("//*[@id='add']", SelectorType.XPATH);
+        click("//*[@id='addUser']", SelectorType.XPATH);
         enterText("username", operatorUser, SelectorType.ID);
         enterText("forename", operatorForeName, SelectorType.ID);
         enterText("familyName", operatorFamilyName, SelectorType.ID);

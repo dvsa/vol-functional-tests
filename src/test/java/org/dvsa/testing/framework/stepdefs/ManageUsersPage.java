@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.support.Color;
+import org.opentest4j.AssertionFailedError;
 import scanner.AXEScanner;
 
 import java.io.File;
@@ -34,15 +35,19 @@ public class ManageUsersPage extends BasePage implements En {
             this.scanner.scan();
         });
         Then("^no issues should be present on the page$", () -> {
-            Assert.assertEquals(0, scanner.axeFindings().length());
-            FileUtils.writeStringToFile(new File("Findings.txt"), scanner.axeFindings());
+            if(scanner.axeFindings().length() != 0) {
+                FileUtils.writeStringToFile(new File("Findings.txt"), scanner.axeFindings());
+                Assert.fail("Violation findings found");
+            }else{
+                Assert.assertEquals(0, scanner.axeFindings().length());
+            }
         });
         Then("^name of button should be 'Add a user'$", () -> {
-            Assert.assertEquals("Add a user", getAttribute("action", SelectorType.NAME, "value"));
+            Assert.assertEquals("Add a user", getAttribute("action", SelectorType.NAME, "data-label"));
         });
         Then("^colour of the 'Add a user' button should be green$", () -> {
             String buttonColour = Color.fromString(getCssValue("action", SelectorType.NAME, "background-color")).asHex();
-            Assert.assertEquals("#00823B", buttonColour);
+            Assert.assertEquals("#00823b", buttonColour);
         });
         Then("^remove button column should be named 'Action'$", () -> {
             findElements(".//tr/th[4]",SelectorType.XPATH).forEach(
@@ -58,7 +63,7 @@ public class ManageUsersPage extends BasePage implements En {
                     faker.name().firstName(), faker.name().lastName());
         });
         Then("^user text should displaying current users$", () -> {
-            Assert.assertEquals("2 current users", getText("h3", SelectorType.CSS));
+            Assert.assertEquals("2 current users", getText("h2", SelectorType.CSS));
         });
     }
 }
