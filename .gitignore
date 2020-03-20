@@ -147,3 +147,4 @@ src/test/resources/*.conf
 
 mockApiData
 
+!/Findings.txt
