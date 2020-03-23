@@ -1,16 +1,21 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.config.Configuration;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
+import activesupport.driver.Browser;
 import activesupport.system.Properties;
+import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -45,7 +50,7 @@ public class Continuations extends BasePage implements En {
             refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
             Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
         });
-        And("^the users of ss should display on the continuation review details page$", () -> {
+        And("^the users of ss should display on the continuation review details page and the snapshot$", () -> {
             world.UIJourneySteps.navigateToNavBarPage("manage users");
             List<WebElement> userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
             List<WebElement> userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
@@ -74,6 +79,47 @@ public class Continuations extends BasePage implements En {
             Assert.assertTrue(isTextPresent("Type of licence", 10));
             Assert.assertTrue(isTextPresent("Business type", 10));
             Assert.assertTrue(isTextPresent("Business details", 10));
+            Assert.assertTrue(isTextPresent("Addresses", 10));
+            Assert.assertTrue(isTextPresent("Directors", 10));
+            if (!world.createLicence.getOperatorType().equals("public") && !world.createLicence.getLicenceType().equals("special_restricted")) {
+                Assert.assertTrue(isTextPresent("Operating centres and authorisation", 10));
+                Assert.assertTrue(isTextPresent("Transport managers", 10));
+                // Selenium is struggling to target Vehicle title.
+                Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
+                Assert.assertTrue(isTextPresent("Safety and compliance", 10));
+            }
+            Assert.assertTrue(isTextPresent("User access",10));
+            findSelectAllRadioButtonsByValue("Y");
+            click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
+            String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
+            enterText("averageBalance", necessaryIncome, SelectorType.ID);
+            findSelectAllRadioButtonsByValue("N");
+            click("submit", SelectorType.ID);
+            click("content[signatureOptions]", SelectorType.ID);
+            click("sign", SelectorType.ID);
+            world.UIJourneySteps.signWithVerify();
+            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+            click("submitAndPay", SelectorType.ID);
+            click("form-actions[pay]", SelectorType.ID);
+            Config config = new Configuration(env.toString()).getConfig();
+            world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+            waitForTextToBePresent("Your licence has been continued");
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.UIJourneySteps.urlSearchAndViewApplication();
+            clickByLinkText("Docs & attachments");
+            refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
+            Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
+            clickByLinkText("Digital continuation snapshot");
+            ArrayList<String> tabs2 = new ArrayList<String> (getWindowHandles());
+            switchToWindow(tabs2.get(1));
+            for (int i = 0; i < userNamesElements.size(); i++){
+                Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
+                Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
+                Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
+            }
+            Assert.assertTrue(isTextPresent("Type of licence", 10));
+            Assert.assertTrue(isTextPresent("Business type", 10));
+            Assert.assertTrue(isTextPresent("Business details", 10));
             Assert.assertTrue(isTextPresent("Business details", 10));
             Assert.assertTrue(isTextPresent("Addresses", 10));
             Assert.assertTrue(isTextPresent("Directors", 10));
@@ -83,6 +129,8 @@ public class Continuations extends BasePage implements En {
             Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
             Assert.assertTrue(isTextPresent("Safety and compliance", 10));
             Assert.assertTrue(isTextPresent("User access",10));
+            wait();
+
         });
         Then("^the continuation for a \"([^\"]*)\" \"([^\"]*)\" conditions and undertaking page should display the right text$", (String opType, String licType) -> {
             world.UIJourneySteps.navigateToNavBarPage("manage users");

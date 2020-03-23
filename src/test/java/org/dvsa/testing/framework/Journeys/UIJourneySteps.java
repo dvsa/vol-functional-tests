@@ -1435,7 +1435,7 @@ public class UIJourneySteps extends BasePage {
             world.createLicence.setLicenceType("standard_national");
         } else {
             world.createLicence.setLicenceType("standard_national");
-        }
+        } // Overwrites the licence type regardless. Needs changing allow special and restricted licences.
         world.createLicence.setOperatorType(operatorType);
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
@@ -1789,6 +1789,10 @@ public class UIJourneySteps extends BasePage {
         clickAllCheckboxes();
         findSelectAllRadioButtonsByValue("Y");
         click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
+        if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")) {
+            clickAllCheckboxes();
+            click("submit", SelectorType.ID);
+        }
         String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
         enterText("averageBalance", necessaryIncome, SelectorType.ID);
         findSelectAllRadioButtonsByValue("N");
