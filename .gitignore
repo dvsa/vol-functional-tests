@@ -141,4 +141,8 @@ Report.html
 src/test/resources/*.conf
 /LOGS/vol-functional-test.log
 
+/LICENSE.txt
+
 mockApiData
+
+/Findings.txt

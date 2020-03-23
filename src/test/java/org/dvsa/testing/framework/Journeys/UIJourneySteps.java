@@ -1167,19 +1167,15 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void addInternalAdmin() throws IllegalBrowserException, MalformedURLException {
-        operatorUser = Str.randomWord(3);
-        operatorUserEmail = "operator".concat(Str.randomWord(2)).concat("@dvsa.com");
-        operatorForeName = "OperatorUser";
-        operatorFamilyName = "API";
-        navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+    public void addUser(String operatorUser, String operatorUserEmail, String operatorForeName,
+    String operatorFamilyName) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Manage");
-        click("//*[@id='add']", SelectorType.XPATH);
-        enterText("username", getOperatorUser(), SelectorType.ID);
-        enterText("forename", getOperatorForeName(), SelectorType.ID);
-        enterText("familyName", getOperatorFamilyName(), SelectorType.ID);
-        enterText("main[emailAddress]", getOperatorUserEmail(), SelectorType.ID);
-        enterText("main[emailConfirm]", getOperatorUserEmail(), SelectorType.ID);
+        click("//*[@id='addUser']", SelectorType.XPATH);
+        enterText("username", operatorUser, SelectorType.ID);
+        enterText("forename", operatorForeName, SelectorType.ID);
+        enterText("familyName", operatorFamilyName, SelectorType.ID);
+        enterText("main[emailAddress]", operatorUserEmail, SelectorType.ID);
+        enterText("main[emailConfirm]", operatorUserEmail, SelectorType.ID);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
