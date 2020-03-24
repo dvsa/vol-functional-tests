@@ -63,7 +63,7 @@ public class ManageUsersPage extends BasePage implements En {
                     faker.name().firstName(), faker.name().lastName());
         });
         Then("^user text should displaying current users$", () -> {
-            Assert.assertEquals("2 current users", getText("h2", SelectorType.CSS));
+            Assert.assertEquals("2 Current users", getText("h2", SelectorType.CSS));
         });
     }
 }
