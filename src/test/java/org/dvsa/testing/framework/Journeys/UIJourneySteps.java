@@ -35,9 +35,8 @@ import org.openqa.selenium.support.ui.Wait;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
-import java.util.HashMap;
+import java.util.*;
 import java.util.NoSuchElementException;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
@@ -1773,18 +1772,20 @@ public class UIJourneySteps extends BasePage {
         click("sign", SelectorType.ID);
         world.UIJourneySteps.signWithVerify();
         waitForTextToBePresent("Declaration signed through GOV.UK Verify");
-        click("submitAndPay", SelectorType.ID);
-        click("form-actions[pay]", SelectorType.ID);
-        Config config = new Configuration(env.toString()).getConfig();
+        if(world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
+            click("submitAndPay", SelectorType.ID);
+            click("form-actions[pay]", SelectorType.ID);
+            Config config = new Configuration(env.toString()).getConfig();
         world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+        } else {
+            click("submit", SelectorType.ID);
+        }
         waitForTextToBePresent("Your licence has been continued");
     }
 
     public void completeContinuationUntilVerify() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-        world.UIJourneySteps.navigateToSelfServePage("licence","view");
-        refreshPageUntilElementAppears("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
-        click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
+        clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         clickAllCheckboxes();
         findSelectAllRadioButtonsByValue("Y");
@@ -1793,9 +1794,40 @@ public class UIJourneySteps extends BasePage {
             clickAllCheckboxes();
             click("submit", SelectorType.ID);
         }
+        if (!(world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("special_restricted"))) {
+            completeContinuationFinancesPage();
+        }
+    }
+
+    public void clickContinueLicenceOnSelfServe() throws IllegalBrowserException, MalformedURLException {
+        world.UIJourneySteps.navigateToSelfServePage("licence", "view");
+        refreshPageUntilElementAppears("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
+        click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
+    }
+
+    public void completeContinuationFinancesPage() throws IllegalBrowserException, MalformedURLException {
         String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
         enterText("averageBalance", necessaryIncome, SelectorType.ID);
         findSelectAllRadioButtonsByValue("N");
         click("submit", SelectorType.ID);
+    }
+
+    public void viewContinuationSnapshotOnInternal(World world) throws IllegalBrowserException, MalformedURLException {
+        world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+        world.UIJourneySteps.urlSearchAndViewApplication();
+        clickByLinkText("Docs & attachments");
+        refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
+        Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
+        clickByLinkText("Digital continuation snapshot");
+        ArrayList<String> tabs2 = new ArrayList<String> (getWindowHandles());
+        switchToWindow(tabs2.get(1));
+    }
+
+    public void replaceContinuationAndReviewDates(LinkedHashMap<String, Integer> continuationDates) throws IllegalBrowserException, MalformedURLException {
+        waitForTextToBePresent("Continuation date");
+        replaceDateById("details[continuationDate]", continuationDates);
+        replaceDateById("details[reviewDate]", continuationDates);
+        click("form-actions[submit]", SelectorType.ID);
+        waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
     }
 }
