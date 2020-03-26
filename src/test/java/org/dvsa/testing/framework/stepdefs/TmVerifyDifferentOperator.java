@@ -118,7 +118,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             } else {
                 applicationOrNot = false;
             }
-            world.UIJourneySteps.addOperatorUserAsTransportManager(1, "N", applicationOrNot);
+            world.UIJourneySteps.addOperatorUserAsTransportManager(2, "N", applicationOrNot);
         });
         And("^the operator countersigns digitally$", () -> {
             waitForTextToBePresent("What happens next?");

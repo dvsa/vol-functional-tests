@@ -1017,9 +1017,12 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
         Dates = date.getDate(-5, 0, -20);
-        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
+
+        if(findElement("dob_day",SelectorType.ID).getAttribute("value").isEmpty()) {
+            waitAndEnterText("dob_day", SelectorType.ID, Dates.get("day").toString());
+            waitAndEnterText("dob_month", SelectorType.ID, Dates.get("month").toString());
+            waitAndEnterText("dob_year", SelectorType.ID, Dates.get("year").toString());
+        }
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
@@ -1169,6 +1172,11 @@ public class UIJourneySteps extends BasePage {
 
     public void addUser(String operatorUser, String operatorUserEmail, String operatorForeName,
     String operatorFamilyName) throws IllegalBrowserException, MalformedURLException {
+        this.operatorUser = operatorUser;
+        this.operatorUserEmail = operatorUserEmail;
+        this.operatorForeName = operatorForeName;
+        this.operatorFamilyName = operatorFamilyName;
+
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
         enterText("username", operatorUser, SelectorType.ID);
