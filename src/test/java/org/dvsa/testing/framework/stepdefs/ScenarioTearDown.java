@@ -12,7 +12,6 @@ public class ScenarioTearDown extends BasePage implements En {
         After((Scenario scenario) -> {
             Hooks hooks = new Hooks();
             hooks.attach(scenario);
-            hooks.tearDown();
         });
     }
 }

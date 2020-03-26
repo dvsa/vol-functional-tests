@@ -1,5 +1,5 @@
 @VOL-273
-
+@ss_regression
 Feature: Manage users page should comply to the WCAG 2.1 AA accessibility standards
 
   Background: Create an account
@@ -11,7 +11,6 @@ Feature: Manage users page should comply to the WCAG 2.1 AA accessibility standa
     When i scan for accessibility violations
     Then no issues should be present on the page
 
-    @button
   Scenario: Check button name
     Then name of button should be 'Add a user'
 
