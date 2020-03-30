@@ -35,8 +35,8 @@ import org.openqa.selenium.support.ui.Wait;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
-import java.util.*;
 import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
@@ -919,7 +919,7 @@ public class UIJourneySteps extends BasePage {
         LoginPage.email(emailAddress);
         LoginPage.password(password);
         LoginPage.submit();
-        LoginPage.untilNotOnPage(2);
+        LoginPage.untilNotOnPage(5);
     }
 
     public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
@@ -1790,9 +1790,12 @@ public class UIJourneySteps extends BasePage {
         clickAllCheckboxes();
         findSelectAllRadioButtonsByValue("Y");
         click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
-        if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")) {
-            clickAllCheckboxes();
-            click("submit", SelectorType.ID);
+        if (!world.createLicence.getLicenceType().equals("special_restricted")) {
+            if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")
+                    || (world.createLicence.getOperatorType().equals("public") && !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
+                clickAllCheckboxes();
+                click("submit", SelectorType.ID);
+            }
         }
         if (!(world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("special_restricted"))) {
             completeContinuationFinancesPage();
@@ -1812,15 +1815,16 @@ public class UIJourneySteps extends BasePage {
         click("submit", SelectorType.ID);
     }
 
-    public void viewContinuationSnapshotOnInternal(World world) throws IllegalBrowserException, MalformedURLException {
+    public void viewContinuationSnapshotOnInternal() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
         world.UIJourneySteps.urlSearchAndViewApplication();
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
         Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
         clickByLinkText("Digital continuation snapshot");
-        ArrayList<String> tabs2 = new ArrayList<String> (getWindowHandles());
-        switchToWindow(tabs2.get(1));
+        waitForTabsToLoad(2, 60);
+        ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
+        switchToWindow(tabs.get(1));
     }
 
     public void replaceContinuationAndReviewDates(LinkedHashMap<String, Integer> continuationDates) throws IllegalBrowserException, MalformedURLException {

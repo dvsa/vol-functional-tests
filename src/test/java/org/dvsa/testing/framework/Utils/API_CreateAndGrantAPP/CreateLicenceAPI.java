@@ -99,6 +99,7 @@ public class CreateLicenceAPI extends BaseAPI{
     private String hours = "2.0";
     private String phoneNumber;
     private String businessEmailAddress;
+    private String psvVehicleSize;
 
     private int noOfVehiclesRequired = 5;
 
@@ -417,9 +418,11 @@ public class CreateLicenceAPI extends BaseAPI{
         return businessEmailAddress;
     }
 
-    public void setBusinessEmailAddress(String businessEmailAddress) {
-        this.businessEmailAddress = businessEmailAddress;
-    }
+    public void setBusinessEmailAddress(String businessEmailAddress) { this.businessEmailAddress = businessEmailAddress; }
+
+    public String getPsvVehicleSize() { return psvVehicleSize; }
+
+    private void setPsvVehicleSize(String psvVehicleSize) { this.psvVehicleSize = psvVehicleSize; }
 
     private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
@@ -777,7 +780,7 @@ public class CreateLicenceAPI extends BaseAPI{
         if (licenceType.equals("special_restricted")) {
             return;
         }
-        String psvVehicleSize = "psvvs_both";
+        setPsvVehicleSize("psvvs_both");
         String psvNoSmallVhlConfirmation = "Y";
         String psvOperateSmallVhl = "Y";
         String psvSmallVhlNotes = "submitted through the API";
@@ -787,7 +790,7 @@ public class CreateLicenceAPI extends BaseAPI{
         String vehicleDeclarationResource = URL.build(env, String.format(String.format("application/%s/vehicle-declaration", applicationNumber))).toString();
         int applicationVersion = Integer.parseInt(fetchApplicationInformation(applicationNumber, "version", "1"));
 
-        VehicleDeclarationBuilder vehicleDeclarationBuilder = new VehicleDeclarationBuilder().withId(applicationNumber).withPsvVehicleSize(psvVehicleSize)
+        VehicleDeclarationBuilder vehicleDeclarationBuilder = new VehicleDeclarationBuilder().withId(applicationNumber).withPsvVehicleSize(getPsvVehicleSize())
                 .withPsvLimousines(psvLimousines).withPsvNoSmallVhlConfirmation(psvNoSmallVhlConfirmation).withPsvOperateSmallVhl(psvOperateSmallVhl).withPsvSmallVhlNotes(psvSmallVhlNotes)
                 .withPsvNoLimousineConfirmation(psvNoLimousineConfirmation).withPsvOnlyLimousinesConfirmation(psvOnlyLimousinesConfirmation).withVersion(applicationVersion);
         apiResponse = RestUtils.put(vehicleDeclarationBuilder, vehicleDeclarationResource, getHeaders());
