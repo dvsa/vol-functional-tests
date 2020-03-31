@@ -41,7 +41,7 @@ Feature: Continuations journey through internal and self serve
         | public       | special_restricted     |
 
   Scenario Outline: The correct checks should display when reviewing a continuation and snapshot
-    Given I have applied for a "goods" "standard_national" licence
+    Given I have applied for a "<operatorType>" "<licenceType>" licence
     When I grant licence
     Then the licence should be granted
     And i have logged in to internal

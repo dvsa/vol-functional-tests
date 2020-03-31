@@ -103,10 +103,6 @@ public class Continuations extends BasePage implements En {
                 Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
             }
             closeTab();
-            ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
-            switchToWindow(tabs.get(0));
-            Fix this in the morning. Focus back on the original tab.
-
         });
         Then("^the continuation conditions and undertaking page and snapshot should display the right text$", () -> {
             world.UIJourneySteps.navigateToNavBarPage("manage users");
@@ -162,6 +158,8 @@ public class Continuations extends BasePage implements En {
                         "Should the operator no longer meet the requirements to hold a restricted licence then they will either surrender it or apply for standard licence.", 10));
             }
             closeTab();
+            ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
+            switchToWindow(tabs.get(0));
         });
         Then("^the correct checks should display on the continuation review details page and continuation snapshot$", () -> {
             world.UIJourneySteps.clickContinueLicenceOnSelfServe();
@@ -171,14 +169,63 @@ public class Continuations extends BasePage implements En {
             Assert.assertTrue(isTextPresent("Business details", 10));
             Assert.assertTrue(isTextPresent("Addresses", 10));
             Assert.assertTrue(isTextPresent("Directors", 10));
-            if (!world.createLicence.getOperatorType().equals("public") && !world.createLicence.getLicenceType().equals("special_restricted")) {
+            if (!world.createLicence.getLicenceType().equals("special_restricted")){
                 Assert.assertTrue(isTextPresent("Operating centres and authorisation", 10));
-                Assert.assertTrue(isTextPresent("Transport managers", 10));
-                // Selenium is struggling to target Vehicle title.
-                Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
                 Assert.assertTrue(isTextPresent("Safety and compliance", 10));
+                if (!world.createLicence.getLicenceType().equals("restricted")) {
+                    Assert.assertTrue(isTextPresent("Transport managers", 10));
+                }
+                if (!world.createLicence.getOperatorType().equals("public")) {
+                    // Selenium is struggling to target Vehicle title.
+                    Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
+                }
+            }
+            Assert.assertTrue(isTextPresent("User access",10));
+            clickAllCheckboxes();
+            findSelectAllRadioButtonsByValue("Y");
+            click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
+            if (!world.createLicence.getLicenceType().equals("special_restricted")) {
+                if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")
+                        || (world.createLicence.getOperatorType().equals("public") && !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
+                    clickAllCheckboxes();
+                    click("submit", SelectorType.ID);
+                }
+            }
+            if (!(world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("special_restricted"))) {
+                world.UIJourneySteps.completeContinuationFinancesPage();
+            }
+            click("content[signatureOptions]", SelectorType.ID);
+            click("sign", SelectorType.ID);
+            world.UIJourneySteps.signWithVerify();
+            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+            if(world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
+                click("submitAndPay", SelectorType.ID);
+                click("form-actions[pay]", SelectorType.ID);
+                Config config = new Configuration(env.toString()).getConfig();
+                world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+            } else {
+                click("submit", SelectorType.ID);
+            }
+            waitForTextToBePresent("Your licence has been continued");
+            world.UIJourneySteps.viewContinuationSnapshotOnInternal();
+            Assert.assertTrue(isTextPresent("Type of licence", 10));
+            Assert.assertTrue(isTextPresent("Business type", 10));
+            Assert.assertTrue(isTextPresent("Business details", 10));
+            Assert.assertTrue(isTextPresent("Addresses", 10));
+            Assert.assertTrue(isTextPresent("Directors", 10));
+            if (!world.createLicence.getLicenceType().equals("special_restricted")){
+                Assert.assertTrue(isTextPresent("Operating centres and authorisation", 10));
+                Assert.assertTrue(isTextPresent("Safety and compliance", 10));
+                if (!world.createLicence.getLicenceType().equals("restricted")) {
+                    Assert.assertTrue(isTextPresent("Transport managers", 10));
+                }
+                if (!world.createLicence.getOperatorType().equals("public")) {
+                    // Selenium is struggling to target Vehicle title.
+                    Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
+                }
             }
             Assert.assertTrue(isTextPresent("User access",10));
         });
     }
 }
+fix issues with closing tab.
