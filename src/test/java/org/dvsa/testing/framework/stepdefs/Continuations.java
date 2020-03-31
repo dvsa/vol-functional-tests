@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.config.Configuration;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
@@ -13,6 +14,7 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,11 +27,10 @@ public class Continuations extends BasePage implements En {
     public Continuations(World world) {
 
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        When("^i change my continuation date$", () -> {
+        When("^i change my continuation and review date$", () -> {
             world.UIJourneySteps.urlSearchAndViewLicence();
             continuationDates = dates.getDate(10, 0, 0);
             world.UIJourneySteps.replaceContinuationAndReviewDates(continuationDates);
-
             // PUT A CHECK IN TO MAKE SURE IT DOES THIS!
         });
         And("^i generate a continuation$", () -> {
@@ -73,29 +74,10 @@ public class Continuations extends BasePage implements En {
             }
             findSelectAllRadioButtonsByValue("Y");
             click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
-            if (!world.createLicence.getLicenceType().equals("special_restricted")) {
-                if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")
-                        || (world.createLicence.getOperatorType().equals("public") && !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
-                    clickAllCheckboxes();
-                    click("submit", SelectorType.ID);
-                }
-            }
-            if (!(world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("special_restricted"))) {
-                world.UIJourneySteps.completeContinuationFinancesPage();
-            }
-            click("content[signatureOptions]", SelectorType.ID);
-            click("sign", SelectorType.ID);
-            world.UIJourneySteps.signWithVerify();
-            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
-            if(world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
-                click("submitAndPay", SelectorType.ID);
-                click("form-actions[pay]", SelectorType.ID);
-                Config config = new Configuration(env.toString()).getConfig();
-                world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
-            } else {
-                click("submit", SelectorType.ID);
-            }
-            waitForTextToBePresent("Your licence has been continued");
+            world.UIJourneySteps.completeContinuationConditionsAndUndertakingsPage();
+            world.UIJourneySteps.completeContinuationFinancesPage();
+            world.UIJourneySteps.completeContinuationsSignPage();
+            world.UIJourneySteps.completeContinuationPayOrSubmit();
             world.UIJourneySteps.viewContinuationSnapshotOnInternal();
             for (int i = 0; i < userNamesElements.size(); i++){
                 Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
@@ -108,54 +90,25 @@ public class Continuations extends BasePage implements En {
             world.UIJourneySteps.navigateToNavBarPage("manage users");
             world.UIJourneySteps.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
-            clickAllCheckboxes();
-            findSelectAllRadioButtonsByValue("Y");
-            click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
+            world.UIJourneySteps.completeContinuationsReviewPage();
             if (!world.createLicence.getLicenceType().equals("special_restricted")) {
-                if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")
-                        || (world.createLicence.getOperatorType().equals("public") && !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
-                    if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")) {
-                        waitForTextToBePresent("Conditions and undertakings");
-                        Assert.assertTrue(isTextPresent("The Public Passenger Vehicles Act of 1981 states that the operation of public service vehicles cannot be your main occupation. Your PSV Restricted licence was originally granted on the basis that you meet the relevant main occupation criteria.  This must remain the case for you to retain your licence.\n" +
-                                "\n" +
-                                "A traffic commissioner can request evidence to prove that you still meet the criteria at any time. You are required to keep documents so you can prove that if asked.  The type of evidence can include, accounts, tax returns, P60, bank statements and financial records that separate PSV operation income and expenditure from income from your main occupation. You should also be able to demonstrate the time that you devote to both roles. \n" +
-                                "\n" +
-                                "If you fail to continue to meet the criteria, you must either apply for a standard licence, or surrender your restricted licence. The failure to notify of a change in your circumstances regarding the main occupation could impact on an operator's good repute", 10));
-                        Assert.assertTrue(isTextPresent("The operator shall, during the life of the restricted licence, keep separate records of all time spent and the gross and net income earned monthly by them from all occupations ( with supporting detailed records from which these sums are derived)  to enable the main occupation to be determined by the Traffic Commissioner at any time.  Records shall be supported by primary evidence such as payslips, P60 documents, booking diaries, invoices and tachograph records.  Copies of the records shall be made available to the DVSA or OTC officers on request. \n" +
-                                "\n" +
-                                "Should the operator no longer meet the requirements to hold a restricted licence then they will either surrender it or apply for standard licence.", 10));
+                if (world.createLicence.getOperatorType().equals("public") &&
+                        (world.createLicence.getLicenceType().equals("restricted") || !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
+                    waitForTextToBePresent("Conditions and undertakings");
+                    if (world.createLicence.getLicenceType().equals("restricted")) {
+                        world.UIJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
                     }
                     clickAllCheckboxes();
                     click("submit", SelectorType.ID);
                 }
             }
-            if (!(world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("special_restricted"))) {
-                world.UIJourneySteps.completeContinuationFinancesPage();
-            }
-            click("content[signatureOptions]", SelectorType.ID);
-            click("sign", SelectorType.ID);
-            world.UIJourneySteps.signWithVerify();
-            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
-            if(world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
-                click("submitAndPay", SelectorType.ID);
-                click("form-actions[pay]", SelectorType.ID);
-                Config config = new Configuration(env.toString()).getConfig();
-                world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
-            } else {
-                click("submit", SelectorType.ID);
-            }
-            waitForTextToBePresent("Your licence has been continued");
+            world.UIJourneySteps.completeContinuationFinancesPage();
+            world.UIJourneySteps.completeContinuationsSignPage();
+            world.UIJourneySteps.completeContinuationPayOrSubmit();
             world.UIJourneySteps.viewContinuationSnapshotOnInternal();
             if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")) {
                 waitForTextToBePresent("Conditions and undertakings");
-                Assert.assertTrue(isTextPresent("The Public Passenger Vehicles Act of 1981 states that the operation of public service vehicles cannot be your main occupation. Your PSV Restricted licence was originally granted on the basis that you meet the relevant main occupation criteria.  This must remain the case for you to retain your licence.\n" +
-                        "\n" +
-                        "A traffic commissioner can request evidence to prove that you still meet the criteria at any time. You are required to keep documents so you can prove that if asked.  The type of evidence can include, accounts, tax returns, P60, bank statements and financial records that separate PSV operation income and expenditure from income from your main occupation. You should also be able to demonstrate the time that you devote to both roles. \n" +
-                        "\n" +
-                        "If you fail to continue to meet the criteria, you must either apply for a standard licence, or surrender your restricted licence. The failure to notify of a change in your circumstances regarding the main occupation could impact on an operator's good repute", 10));
-                Assert.assertTrue(isTextPresent("The operator shall, during the life of the restricted licence, keep separate records of all time spent and the gross and net income earned monthly by them from all occupations ( with supporting detailed records from which these sums are derived)  to enable the main occupation to be determined by the Traffic Commissioner at any time.  Records shall be supported by primary evidence such as payslips, P60 documents, booking diaries, invoices and tachograph records.  Copies of the records shall be made available to the DVSA or OTC officers on request. \n" +
-                        "\n" +
-                        "Should the operator no longer meet the requirements to hold a restricted licence then they will either surrender it or apply for standard licence.", 10));
+                world.UIJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
             }
             closeTab();
             ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
@@ -164,67 +117,14 @@ public class Continuations extends BasePage implements En {
         Then("^the correct checks should display on the continuation review details page and continuation snapshot$", () -> {
             world.UIJourneySteps.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
-            Assert.assertTrue(isTextPresent("Type of licence", 10));
-            Assert.assertTrue(isTextPresent("Business type", 10));
-            Assert.assertTrue(isTextPresent("Business details", 10));
-            Assert.assertTrue(isTextPresent("Addresses", 10));
-            Assert.assertTrue(isTextPresent("Directors", 10));
-            if (!world.createLicence.getLicenceType().equals("special_restricted")){
-                Assert.assertTrue(isTextPresent("Operating centres and authorisation", 10));
-                Assert.assertTrue(isTextPresent("Safety and compliance", 10));
-                if (!world.createLicence.getLicenceType().equals("restricted")) {
-                    Assert.assertTrue(isTextPresent("Transport managers", 10));
-                }
-                if (!world.createLicence.getOperatorType().equals("public")) {
-                    // Selenium is struggling to target Vehicle title.
-                    Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
-                }
-            }
-            Assert.assertTrue(isTextPresent("User access",10));
-            clickAllCheckboxes();
-            findSelectAllRadioButtonsByValue("Y");
-            click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
-            if (!world.createLicence.getLicenceType().equals("special_restricted")) {
-                if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")
-                        || (world.createLicence.getOperatorType().equals("public") && !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
-                    clickAllCheckboxes();
-                    click("submit", SelectorType.ID);
-                }
-            }
-            if (!(world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("special_restricted"))) {
-                world.UIJourneySteps.completeContinuationFinancesPage();
-            }
-            click("content[signatureOptions]", SelectorType.ID);
-            click("sign", SelectorType.ID);
-            world.UIJourneySteps.signWithVerify();
-            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
-            if(world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
-                click("submitAndPay", SelectorType.ID);
-                click("form-actions[pay]", SelectorType.ID);
-                Config config = new Configuration(env.toString()).getConfig();
-                world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
-            } else {
-                click("submit", SelectorType.ID);
-            }
-            waitForTextToBePresent("Your licence has been continued");
+            world.UIJourneySteps.checkContinuationReviewSections();
+            world.UIJourneySteps.completeContinuationsReviewPage();
+            world.UIJourneySteps.completeContinuationConditionsAndUndertakingsPage();
+            world.UIJourneySteps.completeContinuationFinancesPage();
+            world.UIJourneySteps.completeContinuationsSignPage();
+            world.UIJourneySteps.completeContinuationPayOrSubmit();
             world.UIJourneySteps.viewContinuationSnapshotOnInternal();
-            Assert.assertTrue(isTextPresent("Type of licence", 10));
-            Assert.assertTrue(isTextPresent("Business type", 10));
-            Assert.assertTrue(isTextPresent("Business details", 10));
-            Assert.assertTrue(isTextPresent("Addresses", 10));
-            Assert.assertTrue(isTextPresent("Directors", 10));
-            if (!world.createLicence.getLicenceType().equals("special_restricted")){
-                Assert.assertTrue(isTextPresent("Operating centres and authorisation", 10));
-                Assert.assertTrue(isTextPresent("Safety and compliance", 10));
-                if (!world.createLicence.getLicenceType().equals("restricted")) {
-                    Assert.assertTrue(isTextPresent("Transport managers", 10));
-                }
-                if (!world.createLicence.getOperatorType().equals("public")) {
-                    // Selenium is struggling to target Vehicle title.
-                    Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
-                }
-            }
-            Assert.assertTrue(isTextPresent("User access",10));
+            world.UIJourneySteps.checkContinuationReviewSections();
         });
     }
 }
