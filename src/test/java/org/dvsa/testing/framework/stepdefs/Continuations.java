@@ -2,11 +2,9 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
-import activesupport.config.Configuration;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import activesupport.system.Properties;
-import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -84,7 +82,7 @@ public class Continuations extends BasePage implements En {
                 Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
                 Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
             }
-            closeTab();
+            closeTabAndFocusFirstTab();
         });
         Then("^the continuation conditions and undertaking page and snapshot should display the right text$", () -> {
             world.UIJourneySteps.navigateToNavBarPage("manage users");
@@ -94,7 +92,7 @@ public class Continuations extends BasePage implements En {
             if (!world.createLicence.getLicenceType().equals("special_restricted")) {
                 if (world.createLicence.getOperatorType().equals("public") &&
                         (world.createLicence.getLicenceType().equals("restricted") || !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
-                    waitForTextToBePresent("Conditions and undertakings");
+                    waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
                     if (world.createLicence.getLicenceType().equals("restricted")) {
                         world.UIJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
                     }
@@ -110,9 +108,7 @@ public class Continuations extends BasePage implements En {
                 waitForTextToBePresent("Conditions and undertakings");
                 world.UIJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
             }
-            closeTab();
-            ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
-            switchToWindow(tabs.get(0));
+            closeTabAndFocusFirstTab();
         });
         Then("^the correct checks should display on the continuation review details page and continuation snapshot$", () -> {
             world.UIJourneySteps.clickContinueLicenceOnSelfServe();
@@ -125,7 +121,13 @@ public class Continuations extends BasePage implements En {
             world.UIJourneySteps.completeContinuationPayOrSubmit();
             world.UIJourneySteps.viewContinuationSnapshotOnInternal();
             world.UIJourneySteps.checkContinuationReviewSections();
+            closeTabAndFocusFirstTab();
         });
     }
+
+    public void closeTabAndFocusFirstTab() throws IllegalBrowserException, MalformedURLException {
+        closeTab();
+        ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
+        switchToWindow(tabs.get(0));
+    }
 }
-fix issues with closing tab.

@@ -1841,7 +1841,7 @@ public class UIJourneySteps extends BasePage {
         if (!world.createLicence.getLicenceType().equals("special_restricted")) {
             if (world.createLicence.getOperatorType().equals("public") &&
                     (world.createLicence.getLicenceType().equals("restricted") || !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
-                waitForTextToBePresent("Conditions and undertakings");
+                waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
                 clickAllCheckboxes();
                 click("submit", SelectorType.ID);
             }
@@ -1859,7 +1859,7 @@ public class UIJourneySteps extends BasePage {
                 "Should the operator no longer meet the requirements to hold a restricted licence then they will either surrender it or apply for standard licence.", 10));
     }
 
-    public void checkContinuationReviewSections() {
+    public void checkContinuationReviewSections() throws MalformedURLException, IllegalBrowserException {
         Assert.assertTrue(isTextPresent("Type of licence", 10));
         Assert.assertTrue(isTextPresent("Business type", 10));
         Assert.assertTrue(isTextPresent("Business details", 10));
@@ -1873,11 +1873,14 @@ public class UIJourneySteps extends BasePage {
             }
         }
         if (world.createLicence.getOperatorType().equals("goods")) {
-            // Selenium is struggling to target Vehicle title.
-            Assert.assertTrue(isTextPresent("Vehicle registration mark", 10));
+            // 'Vehicle' targeting is fine on snapshot.
+            if (isTextPresent("Print this page", 10)) {
+                Assert.assertTrue(isTextPresent("Vehicles", 10));
+            } else {
+                // Selenium is struggling to target Vehicle title on Self Serve.
+                Assert.assertTrue(isElementPresent("vehiclesCheckbox", SelectorType.ID));
+            }
         }
         Assert.assertTrue(isTextPresent("User access",10));
     }
-
-    move all this to continuationJourneySteps
 }
