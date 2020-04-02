@@ -65,3 +65,4 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - Look at Google accessibility for method to check that tab skipped to main content for skipToMainContentAndCheck function. Maybe look at using Axe.
 - Separate UIJourneySteps into a few smaller classes for specific methods. I.e. Search methods.
 - Create new methods for true and false statements. I.e. world.createLicence.getLicenceType().equals("restricted") -> isLicenceRestricted().
+- Fix page action dependencies.

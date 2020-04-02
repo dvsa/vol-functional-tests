@@ -5,8 +5,6 @@ import activesupport.driver.Browser;
 import cucumber.api.DataTable;
 import cucumber.api.java8.En;
 import enums.UserRoles;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.By;
@@ -18,8 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TMDetails extends BasePage implements En {
 
     public TMDetails(World world) {
-        world.APIJourneySteps = new APIJourneySteps(world);
-        world.genericUtils = new GenericUtils(world);
         Given("^I have a new application$", () -> {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createPartialApplication();
