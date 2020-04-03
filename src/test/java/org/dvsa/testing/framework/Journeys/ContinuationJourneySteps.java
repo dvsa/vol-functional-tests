@@ -134,7 +134,7 @@ public class ContinuationJourneySteps extends BasePage {
                 "Should the operator no longer meet the requirements to hold a restricted licence then they will either surrender it or apply for standard licence.", 10));
     }
 
-    public void checkContinuationReviewSections() throws MalformedURLException, IllegalBrowserException {
+    public void checkContinuationReviewSections() throws IllegalBrowserException {
         Assert.assertTrue(isTextPresent("Type of licence", 10));
         Assert.assertTrue(isTextPresent("Business type", 10));
         Assert.assertTrue(isTextPresent("Business details", 10));
