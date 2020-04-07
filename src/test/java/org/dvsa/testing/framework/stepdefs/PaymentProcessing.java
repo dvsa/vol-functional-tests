@@ -61,12 +61,9 @@ public class PaymentProcessing extends BasePage implements En {
             setFeeNumber(world.genericUtils.stripAlphaCharacters(String.valueOf(findElement("//*/tbody/tr[1]/td[1]", SelectorType.XPATH, 10).getText())));
             world.UIJourneySteps.selectFeeById(feeNumber);
             if (arg0.equals("card")) {
-                String bankCardNumber = "4006000000000600";
-                String cardExpiryMonth = "10";
-                String cardExpiryYear = "50";
-                world.UIJourneySteps.payFee(null, arg0, bankCardNumber, cardExpiryMonth, cardExpiryYear);
+                world.UIJourneySteps.payFee(null, arg0);
             } else {
-                world.UIJourneySteps.payFee(feeAmount, arg0, null, null, null);
+                world.UIJourneySteps.payFee(feeAmount, arg0);
             }
         });
     }

@@ -2,10 +2,8 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
-import activesupport.config.Configuration;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
-import com.typesafe.config.Config;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -91,8 +89,7 @@ public class ContinuationJourneySteps extends BasePage {
         if (world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
             click("submitAndPay", SelectorType.ID);
             click("form-actions[pay]", SelectorType.ID);
-            Config config = new Configuration(env.toString()).getConfig();
-            world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+            world.UIJourneySteps.customerPaymentModule();
         } else {
             click("submit", SelectorType.ID);
         }

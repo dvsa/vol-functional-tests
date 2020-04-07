@@ -334,7 +334,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void payFee(String amount, @NotNull String paymentMethod, String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
+    public void payFee(String amount, @NotNull String paymentMethod) throws IllegalBrowserException, MalformedURLException {
         String payment = paymentMethod.toLowerCase().trim();
         waitForTextToBePresent("Pay fee");
         if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
@@ -382,7 +382,7 @@ public class UIJourneySteps extends BasePage {
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
-                if (payment.equals("card") && (isTextPresent("Pay fee", 10))) {
+                if (isTextPresent("Pay fee", 10)) {
                     selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
                     if (isTextPresent("Customer reference", 10)) {
                         enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
@@ -391,7 +391,7 @@ public class UIJourneySteps extends BasePage {
                         clickPayAndConfirm(paymentMethod);
                     }
                 }
-                customerPaymentModule(bankCardNumber, cardExpiryMonth, cardExpiryYear);
+                customerPaymentModule();
                 break;
         }
     }
@@ -420,11 +420,12 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Pay fee");
     }
 
-    public void customerPaymentModule(String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
+    public void customerPaymentModule() throws IllegalBrowserException, MalformedURLException {
+        Config config = new Configuration(env.toString()).getConfig();
         waitForTextToBePresent("Card Number*");
-        enterText("//*[@id='scp_cardPage_cardNumber_input']", bankCardNumber, SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_expiryDate_input']", cardExpiryMonth, SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_expiryDate_input2']", cardExpiryYear, SelectorType.XPATH);
+        enterText("//*[@id='scp_cardPage_cardNumber_input']", config.getString("cardNumber"), SelectorType.XPATH);
+        enterText("//*[@id='scp_cardPage_expiryDate_input']", config.getString("cardExpiryMonth"), SelectorType.XPATH);
+        enterText("//*[@id='scp_cardPage_expiryDate_input2']", config.getString("cardExpiryYear"), SelectorType.XPATH);
         enterText("//*[@id='scp_cardPage_csc_input']", "123", SelectorType.XPATH);
         click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
         enterText("//*[@id='scp_additionalInformationPage_cardholderName_input']", "Mr Regression Test", SelectorType.XPATH);
@@ -1461,7 +1462,7 @@ public class UIJourneySteps extends BasePage {
     public void payFeesAndGrantNewBusReg() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Fees");
         selectFee();
-        payFee("60", "cash", null, null, null);
+        payFee("60", "cash");
         do {
             System.out.println("link not present");
             javaScriptExecutor("location.reload(true)");
@@ -1529,7 +1530,7 @@ public class UIJourneySteps extends BasePage {
         enterText("interim[goodsApplicationInterimReason]", "Testing", SelectorType.NAME);
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-        customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+        customerPaymentModule();
     }
 
     public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException {
