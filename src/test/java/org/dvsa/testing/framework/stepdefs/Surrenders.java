@@ -90,7 +90,7 @@ public class Surrenders extends BasePage implements En {
                 System.out.println("Licence: " + world.createLicence.getLicenceNumber());
             } else {
                 world.APIJourneySteps.grantLicenceAndPayFees();
-                world.APIJourneySteps.grantLicence().payGrantFees();
+                world.grantLicence.payGrantFees();
                 System.out.println("Licence: " + world.createLicence.getLicenceNumber());
             }
         });

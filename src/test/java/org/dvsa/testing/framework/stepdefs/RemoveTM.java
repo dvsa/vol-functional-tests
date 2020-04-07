@@ -73,7 +73,7 @@ public class RemoveTM extends BasePage implements En {
         });
         Given("^the licence has been granted$", () -> {
             world.grantLicence.grantLicence();
-            world.APIJourneySteps.grantLicence().payGrantFees();
+            world.grantLicence.payGrantFees();
         });
         When("^i create a variation$", () -> {
             world.updateLicence.createVariation(null);
