@@ -66,3 +66,4 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - Separate UIJourneySteps into a few smaller classes for specific methods. I.e. Search methods.
 - Create new methods for true and false statements. I.e. world.createLicence.getLicenceType().equals("restricted") -> isLicenceRestricted().
 - Fix page action dependencies.
+- Add Internal class for internal methods so the methods don't require 'in Internal' in the name.
