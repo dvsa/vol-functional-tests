@@ -25,7 +25,7 @@ public class ContinuationJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void continueALicenceOnInternal(String licenceNo, String licenceTrafficArea, int month) throws IllegalBrowserException, MalformedURLException {
+    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, int month) throws IllegalBrowserException, MalformedURLException {
         click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         click("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='generate-continuation-type']");
@@ -54,13 +54,13 @@ public class ContinuationJourneySteps extends BasePage {
 
     public void clickContinueLicenceOnSelfServe() throws IllegalBrowserException, MalformedURLException {
         world.UIJourneySteps.navigateToSelfServePage("licence", "view");
-        refreshPageUntilElementAppears("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
+        refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
     }
 
     public void completeContinuationFinancesPage() throws IllegalBrowserException, MalformedURLException {
         if (!(world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("special_restricted"))) {
-            String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
+            String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]","");
             enterText("averageBalance", necessaryIncome, SelectorType.ID);
             findSelectAllRadioButtonsByValue("N");
             click("submit", SelectorType.ID);
@@ -79,10 +79,10 @@ public class ContinuationJourneySteps extends BasePage {
         switchToWindow(tabs.get(1));
     }
 
-    public void replaceContinuationAndReviewDates(LinkedHashMap<String, Integer> continuationDates) throws IllegalBrowserException, MalformedURLException {
+    public void replaceContinuationAndReviewDates(LinkedHashMap<String, Integer> continuationDates, LinkedHashMap<String, Integer> reviewDates) throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Continuation date");
         replaceDateById("details[continuationDate]", continuationDates);
-        replaceDateById("details[reviewDate]", continuationDates);
+        replaceDateById("details[reviewDate]", reviewDates);
         click("form-actions[submit]", SelectorType.ID);
         waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
     }

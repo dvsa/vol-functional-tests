@@ -15,17 +15,17 @@ import java.util.List;
 public class Continuations extends BasePage implements En {
 
     private Dates dates = new Dates(new LocalDateCalendar());
-    private LinkedHashMap<String, Integer> continuationDates;
+    private LinkedHashMap<String, Integer> continuationDate;
 
     public Continuations(World world) {
 
         When("^i change my continuation and review date$", () -> {
             world.UIJourneySteps.urlSearchAndViewLicence();
-            continuationDates = dates.getDate(10, 0, 0);
-            world.continuationJourneySteps.replaceContinuationAndReviewDates(continuationDates);
+            continuationDate = dates.getDate(10, 0, 0);
+            world.continuationJourneySteps.replaceContinuationAndReviewDates(continuationDate, continuationDate);
         });
         And("^i generate a continuation$", () -> {
-            world.continuationJourneySteps.continueALicenceOnInternal(world.createLicence.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDates.get("month"));
+            world.continuationJourneySteps.generateContinuationOnInternal(world.createLicence.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDate.get("month"));
         });
         And("^fill in my continuation details on self serve$", () -> {
             world.continuationJourneySteps.continueLicenceWithVerifyAndPay();

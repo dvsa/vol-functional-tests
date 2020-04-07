@@ -4,7 +4,7 @@
 Feature: Continuations journey through internal and self serve
 
   Scenario: Continue a licence that has expired
-    Given I have applied for a "public" "special_restricted" licence
+    Given I have applied for a "goods" "standard_national" licence
     When I grant licence
     Then the licence should be granted
     And i have logged in to internal
