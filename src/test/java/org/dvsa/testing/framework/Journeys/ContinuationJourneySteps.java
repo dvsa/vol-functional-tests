@@ -3,13 +3,16 @@ package org.dvsa.testing.framework.Journeys;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
+import activesupport.file.TestFileReader;
 import activesupport.system.Properties;
+import com.typesafe.config.Config;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -120,11 +123,13 @@ public class ContinuationJourneySteps extends BasePage {
         }
     }
 
-    public void checkPSVRestrictedConditionsAndUndertakingsText() {
-
-        Assert.assertTrue(isTextPresent("", 10));
-
-        Assert.assertTrue(isTextPresent("", 10));
+    public void checkPSVRestrictedConditionsAndUndertakingsText() throws FileNotFoundException {
+        Config testFile = new TestFileReader("testResources/PSV/PSVRestrictedConditionsAndUndertakings.properties").getFile();
+        Assert.assertTrue(isTextPresent(testFile.getString("conditionsOne"), 10));
+        Assert.assertTrue(isTextPresent(testFile.getString("conditionsTwo"), 10));
+        Assert.assertTrue(isTextPresent(testFile.getString("conditionsThree"), 10));
+        Assert.assertTrue(isTextPresent(testFile.getString("undertakingsOne"), 10));
+        Assert.assertTrue(isTextPresent(testFile.getString("undertakingsTwo"), 10));
     }
 
     public void checkContinuationReviewSections() throws IllegalBrowserException {
