@@ -2,12 +2,8 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
-import org.dvsa.testing.framework.Journeys.ContinuationJourneySteps;
-import org.dvsa.testing.framework.Journeys.UIJourneySteps;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.GrantLicenceAPI;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.UpdateLicenceAPI;
+import org.dvsa.testing.framework.Journeys.*;
+import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.*;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 
