@@ -5,7 +5,7 @@
 Feature: Review Discs and Documentation Page
 
   Background:
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
     When i choose to surrender my licence
     And i am on the review discs and documentation page
 

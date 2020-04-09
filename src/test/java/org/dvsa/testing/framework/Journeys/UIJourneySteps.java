@@ -1427,18 +1427,20 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void createLicence(World world, String operatorType, String licenceType) {
-        if (licenceType.equals("si")) {
-            world.createLicence.setLicenceType("standard_international");
-        } else if (licenceType.equals("sn")) {
-            world.createLicence.setLicenceType("standard_national");
-        } else {
-            world.createLicence.setLicenceType("standard_national");
-        } // Overwrites the licence type regardless. Needs changing allow special and restricted licences.
         world.createLicence.setOperatorType(operatorType);
+        world.createLicence.setLicenceType(licenceType);
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-        world.APIJourneySteps.createApplication();
-        world.APIJourneySteps.submitApplication();
-        world.APIJourneySteps.grantLicenceAndPayFees();
+        if(licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)){
+            world.APIJourneySteps.createSpecialRestrictedLicence();
+        }
+        else if (world.createLicence.getApplicationNumber() == null) {
+            world.APIJourneySteps.createApplication();
+            world.APIJourneySteps.submitApplication();
+        }
+        world.grantLicence.grantLicence();
+        if (world.createLicence.getOperatorType().equals("goods")) {
+            world.grantLicence.payGrantFees();
+        }
     }
 
     public void closeCase() throws IllegalBrowserException, MalformedURLException {

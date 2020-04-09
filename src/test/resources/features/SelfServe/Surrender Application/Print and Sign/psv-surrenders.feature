@@ -3,7 +3,7 @@
 Feature:Digital Surrender - PSV Surrender licence
 
   Background:
-    Given i have a valid "public" "si" licence
+    Given i have a valid "public" "standard_international" licence
     And i choose to surrender my licence
     When i am on the surrenders review contact details page
 

@@ -5,7 +5,7 @@
 Feature: Sign surrender
 
   Background:
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
     And i choose to surrender my licence
 
   @ss_regression

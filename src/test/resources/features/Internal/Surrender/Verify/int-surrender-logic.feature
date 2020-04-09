@@ -7,7 +7,7 @@
 Feature: Logic for Surrender menu item
 
   Background:
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
 
   Scenario: Surrender Licence
     And my application to surrender is under consideration

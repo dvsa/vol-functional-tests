@@ -10,7 +10,7 @@ Feature: SS user ability to withdraw application removed
     Then on self serve the withdraw application link is not present on "application"
 
   Scenario: SS user ability to withdraw application removed for variation
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
     And i create a variation
     And on self serve the withdraw application link is present on "variation"
     And i add a case in internal on the "variation" page

@@ -64,10 +64,10 @@ Feature: User should be able to continue where they left off
     Examples:
       | OperatorType | LicenceType |
       | public       | sn          |
-      | goods        | si          |
+      | goods        | standard_international |
 
   Scenario:  Leave community licence page and return back to community licence page
-    Given i have a valid "goods" "si" licence
+    Given i have a valid "goods" "standard_international" licence
     When i have started a surrender
     And i am on the community licence page
     When i leave the surrenders journey
