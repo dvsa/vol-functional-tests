@@ -110,11 +110,11 @@ public class KeyboardAccessibility extends BasePage implements En {
         });
         When("^i navigate to self serve licence nav bar pages i can skip to main content$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToNavBarPage("home");
+            world.UIJourneySteps.navigateToNavBarPage("Home");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToNavBarPage("manage users");
+            world.UIJourneySteps.navigateToNavBarPage("Manage users");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToNavBarPage("your account");
+            world.UIJourneySteps.navigateToNavBarPage("Your account");
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence surrender pages i can skip to main content$", () -> {
