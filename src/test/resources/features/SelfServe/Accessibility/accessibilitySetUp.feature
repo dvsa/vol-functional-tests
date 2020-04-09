@@ -10,7 +10,7 @@ Feature: Set up users for accessibility testing
     Examples:
       | LicenceType            | OperatorType |
       | standard_national      | goods        |
-      | standard_international | public       |
+#      | standard_international | public       |
 
   @tm_accounts
   Scenario Outline: PSV account with 16 different licences with external tm
