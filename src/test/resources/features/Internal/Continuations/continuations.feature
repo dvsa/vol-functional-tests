@@ -54,7 +54,7 @@ Feature: Continuations journey through internal and self serve
         | public       | restricted             |
         | public       | special_restricted     |
 
-  @ss_regression
+  @int_regression
   Scenario Outline: The correct checks should display when reviewing a continuation and snapshot
     Given i have a valid "<operatorType>" "<licenceType>" licence
     And i have logged in to internal
