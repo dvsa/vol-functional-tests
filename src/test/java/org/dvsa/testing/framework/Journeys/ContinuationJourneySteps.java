@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.Journeys;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
-import activesupport.file.TestFileReader;
+import activesupport.file.TestResourceReader;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -124,7 +124,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void checkPSVRestrictedConditionsAndUndertakingsText() throws FileNotFoundException {
-        Config testFile = new TestFileReader("testResources/PSV/PSVRestrictedConditionsAndUndertakings.properties").getFile();
+        Config testFile = new TestResourceReader("testResources/PSV/PSVRestrictedConditionsAndUndertakings.properties").getFile();
         Assert.assertTrue(isTextPresent(testFile.getString("conditionsOne"), 10));
         Assert.assertTrue(isTextPresent(testFile.getString("conditionsTwo"), 10));
         Assert.assertTrue(isTextPresent(testFile.getString("conditionsThree"), 10));
