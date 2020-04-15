@@ -13,13 +13,16 @@ public class Initialisation extends BasePage implements En {
 
     public Initialisation (World world) {
         this.world = world;
+        world.configuration = new Configuration();
         world.createLicence = new CreateLicenceAPI();
         world.grantLicence = new GrantLicenceAPI(world);
         world.updateLicence = new UpdateLicenceAPI(world);
         world.genericUtils = new GenericUtils(world);
         world.APIJourneySteps = new APIJourneySteps(world);
         world.continuationJourneySteps = new ContinuationJourneySteps(world);
+        world.internalSearch = new InternalSearchJourneySteps(world);
+        world.internalNavigation = new InternalNavigationalJourneySteps(world);
+        world.selfServeNavigation = new SelfServeNavigationalJourneySteps(world);
         world.UIJourneySteps = new UIJourneySteps(world);
     }
-
 }

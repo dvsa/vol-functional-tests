@@ -11,55 +11,55 @@ public class InternalSearch extends BasePage implements En {
 
         When("^i search for and click on my licence$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.searchAndViewLicence();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalSearch.searchAndViewLicence();
         });
         And("^i search for and click on my application", () -> {
             if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
-                world.UIJourneySteps.searchAndViewApplication();
+                world.internalSearch.searchAndViewApplication();
             } else {
                 world.APIJourneySteps.createAdminUser();
-                world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-                world.UIJourneySteps.searchAndViewApplication();
+                world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+                world.internalSearch.searchAndViewApplication();
             }
         });
         When("^i search for and click on my case", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.searchAndViewCase();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalSearch.searchAndViewCase();
         });
         When("^i search for my psv disc and click on my licence and discs$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.searchAndViewPSVDisc();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalSearch.searchAndViewPSVDisc();
         });
         When("^i search for my address and click on my licence and addresses$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.searchAndViewAddress();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalSearch.searchAndViewAddress();
         });
 
         And("^i create an admin and url search for my licence$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewLicence();
         });
         And("^i create an admin and url search for my application", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewApplication();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewApplication();
         });
         And("^i create an admin and url search for my variation", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewVariational();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewVariational();
         });
 
         And("^i url search for my licence$", () -> {
-            world.UIJourneySteps.urlSearchAndViewLicence();
+            world.internalNavigation.urlSearchAndViewLicence();
         });
         And("^i url search for my application", () -> {
-            world.UIJourneySteps.urlSearchAndViewApplication();
+            world.internalNavigation.urlSearchAndViewApplication();
         });
     }
 }

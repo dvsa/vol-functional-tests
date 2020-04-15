@@ -1,8 +1,6 @@
 package Injectors;
 
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
-import org.dvsa.testing.framework.Journeys.ContinuationJourneySteps;
-import org.dvsa.testing.framework.Journeys.UIJourneySteps;
+import org.dvsa.testing.framework.Journeys.*;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.GrantLicenceAPI;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.UpdateLicenceAPI;
@@ -13,7 +11,11 @@ public class World {
     public GrantLicenceAPI grantLicence;
     public GenericUtils genericUtils;
     public UpdateLicenceAPI updateLicence;
-    public UIJourneySteps UIJourneySteps;
-    public ContinuationJourneySteps continuationJourneySteps;
     public APIJourneySteps APIJourneySteps;
+    public ContinuationJourneySteps continuationJourneySteps;
+    public InternalSearchJourneySteps internalSearch;
+    public InternalNavigationalJourneySteps internalNavigation;
+    public SelfServeNavigationalJourneySteps selfServeNavigation;
+    public UIJourneySteps UIJourneySteps;
+    public Configuration configuration;
 }

@@ -11,7 +11,6 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.support.Color;
-import org.opentest4j.AssertionFailedError;
 import scanner.AXEScanner;
 
 import java.io.File;
@@ -26,7 +25,7 @@ public class ManageUsersPage extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         });
         When("^i navigate to the manage users page$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             waitAndClick("//*[contains(text(),'Manage users')]", SelectorType.XPATH);
             Assert.assertEquals("Manage users", getText("h1", SelectorType.CSS));
         });

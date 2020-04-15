@@ -45,7 +45,7 @@ public class CreateApplications extends BasePage implements En {
             }
         });
         When("^i choose to print and sign$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);
             clickByLinkText("Review and declarations");
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);

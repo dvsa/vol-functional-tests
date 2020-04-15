@@ -31,7 +31,7 @@ public class ESBRupload extends BasePage implements En {
         });
         And("^A short notice tab should be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
             assertTrue(isTextPresent("Short notice",30));
         });
@@ -45,7 +45,7 @@ public class ESBRupload extends BasePage implements En {
 
         And("^A short notice tab should not be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.internalSearchForBusReg();
             waitForTextToBePresent("Short notice");
             assertFalse(isTextPresent("Short notice", 60));
@@ -56,7 +56,7 @@ public class ESBRupload extends BasePage implements En {
             world.UIJourneySteps.uploadAndSubmitESBR("futureDay", Integer.parseInt(arg0));
         });
         Given("^i add a new bus registration$", () -> {
-            world.UIJourneySteps.urlSearchAndViewLicence();
+            world.internalNavigation.urlSearchAndViewLicence();
             world.UIJourneySteps.internalSiteAddBusNewReg(5);
             clickByLinkText("Register");
             findSelectAllRadioButtonsByValue("Y");

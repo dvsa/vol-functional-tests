@@ -21,8 +21,8 @@ public class Continuations extends BasePage implements En {
 
         When("^i change my continuation and review date on Internal$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewLicence();
             continuationDate = dates.getDate(10, 0, 0);
             world.continuationJourneySteps.replaceContinuationAndReviewDates(continuationDate, continuationDate);
         });
@@ -34,14 +34,14 @@ public class Continuations extends BasePage implements En {
         });
         Then("^the continuation should be approved and a snapshot generated on Internal$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
+            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Docs & attachments");
             refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
             Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
         });
         And("^the users of ss should display on the continuation review details page and on the snapshot$", () -> {
-            world.UIJourneySteps.navigateToNavBarPage("manage users");
+            world.selfServeNavigation.navigateToNavBarPage("manage users");
             List<WebElement> userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
             List<WebElement> userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
             List<WebElement> userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
@@ -80,7 +80,7 @@ public class Continuations extends BasePage implements En {
             closeTabAndFocusTab(0);
         });
         Then("^the continuation conditions and undertaking page and snapshot should display the right text$", () -> {
-            world.UIJourneySteps.navigateToNavBarPage("manage users");
+            world.selfServeNavigation.navigateToNavBarPage("manage users");
             world.continuationJourneySteps.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
             world.continuationJourneySteps.completeContinuationsReviewPage();

@@ -18,7 +18,7 @@ public class ResettingPassword extends BasePage implements En {
 
         And("^i reset my password$", () -> {
             String env = System.getProperty("env");
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
             clickByLinkText("Sign out");
             world.UIJourneySteps.resettingExternalPassword();
             enterField(nameAttribute("input", "username"), world.createLicence.getLoginId());
