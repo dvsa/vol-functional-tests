@@ -19,7 +19,9 @@ public class Continuations extends BasePage implements En {
 
     public Continuations(World world) {
 
-        When("^i change my continuation and review date$", () -> {
+        When("^i change my continuation and review date on Internal$", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.urlSearchAndViewLicence();
             continuationDate = dates.getDate(10, 0, 0);
             world.continuationJourneySteps.replaceContinuationAndReviewDates(continuationDate, continuationDate);
