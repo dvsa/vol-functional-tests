@@ -36,7 +36,6 @@ public class APIJourneySteps {
         world.grantLicence.grantLicence();
         world.grantLicence.payGrantFees();
         world.updateLicence.getLicenceTrafficArea();
-        System.out.println("--Licence-Number: " + world.createLicence.getLicenceNumber() + "--");
     }
 
     public void createApplication(){
