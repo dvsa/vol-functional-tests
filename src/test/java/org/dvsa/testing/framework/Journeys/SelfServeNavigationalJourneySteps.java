@@ -3,13 +3,10 @@ package org.dvsa.testing.framework.Journeys;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
-import activesupport.aws.s3.S3;
 import activesupport.driver.Browser;
-import activesupport.system.Properties;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +19,6 @@ import static activesupport.driver.Browser.navigate;
 public class SelfServeNavigationalJourneySteps extends BasePage {
 
     public World world;
-    private String localDefaultPassword = Properties.get("localDefaultPassword", false);
     private String password;
 
     public SelfServeNavigationalJourneySteps(World world) {
@@ -40,8 +36,6 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
 
     public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
         String newPassword = world.configuration.config.getString("internalNewPassword");
-
-
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env).toString();
 
         if (Browser.isBrowserOpen()) {
@@ -52,7 +46,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         }
 
         get(myURL);
-        String password = getTempPassword(emailAddress);
+        String password = world.configuration.getTempPassword(emailAddress);
 
         if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
@@ -239,16 +233,5 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         LoginPage.password(password);
         LoginPage.submit();
         LoginPage.untilNotOnPage(5);
-    }
-
-    private String getBucketName() {
-        return "devapp-olcs-pri-olcs-autotest-s3";
-    }
-
-    private String getTempPassword(String emailAddress) {
-        if (world.configuration.env == EnvironmentType.LOCAL) {
-            return localDefaultPassword;
-        }
-        return S3.getTempPassword(emailAddress, getBucketName());
     }
 }

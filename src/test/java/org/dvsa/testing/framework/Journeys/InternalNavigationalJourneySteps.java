@@ -5,11 +5,9 @@ import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.aws.s3.S3;
 import activesupport.driver.Browser;
-import activesupport.system.Properties;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +20,6 @@ import static activesupport.driver.Browser.navigate;
 public class InternalNavigationalJourneySteps extends BasePage {
 
     private World world;
-    private String localDefaultPassword = Properties.get("localDefaultPassword", false);
     private String password;
 
     public String getPassword() {
@@ -46,7 +43,7 @@ public class InternalNavigationalJourneySteps extends BasePage {
             navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         }
         navigate().get(myURL);
-        String password = S3.getTempPassword(emailAddress, getBucketName());
+        String password = S3.getTempPassword(emailAddress, world.configuration.getBucketName());
 
         try {
             signIn(username, password);
@@ -111,16 +108,4 @@ public class InternalNavigationalJourneySteps extends BasePage {
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
         navigate().get(myURL.concat(String.format("admin/user-management/users/edit/%s", adminUserId)));
     }
-
-    private String getBucketName() {
-        return "devapp-olcs-pri-olcs-autotest-s3";
-    }
-
-    private String getTempPassword(String emailAddress) {
-        if (world.configuration.env == EnvironmentType.LOCAL) {
-            return localDefaultPassword;
-        }
-        return S3.getTempPassword(emailAddress, getBucketName());
-    }
-
 }
