@@ -11,9 +11,9 @@ Feature: Refund fee paid on new application
     Then the interim fee should be refunded
 
     Examples:
-      | OperatorType | LicenceType |
-      | goods        | si          |
-      | goods        | sn          |
+      | OperatorType | LicenceType            |
+      | goods        | standard_international |
+      | goods        | standard_national      |
 
   Scenario Outline: Interim fee has been paid and licence has been withdrawn
     Given i have an interim "<OperatorType>" "<LicenceType>" application
@@ -22,8 +22,8 @@ Feature: Refund fee paid on new application
     Then the interim fee should be refunded
 
     Examples:
-      | OperatorType | LicenceType |
-      | goods        | sn          |
+      | OperatorType | LicenceType       |
+      | goods        | standard_national |
 
   @CPMS_tests
   Scenario Outline: Interim fee has been paid and licence has been granted
@@ -33,8 +33,8 @@ Feature: Refund fee paid on new application
     Then the interim fee should be refunded
 
     Examples:
-      | OperatorType | LicenceType |
-      | goods        | sn          |
+      | OperatorType | LicenceType       |
+      | goods        | standard_national |
 
   Scenario Outline: Interim fee has been paid and granted and licence has been granted
     Given i have an interim "<OperatorType>" "<LicenceType>" application
@@ -44,18 +44,18 @@ Feature: Refund fee paid on new application
     Then the interim fee should not be refunded
 
     Examples:
-      | OperatorType | LicenceType |
-      | goods        | sn          |
+      | OperatorType | LicenceType       |
+      | goods        | standard_national |
 
   Scenario: Interim fee has been paid and variation application has been refused
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
     And i increase my vehicle authority count
     When i pay for the interim application
     And the application has been refused
     Then the interim fee should be refunded
 
   Scenario: Interim fee has been paid and variation application has been withdrawn
-    Given i have a valid "goods" "si" licence
+    Given i have a valid "goods" "standard_international" licence
     And i increase my vehicle authority count
     When i pay for the interim application
     And the application has been withdrawn
@@ -63,7 +63,7 @@ Feature: Refund fee paid on new application
 
   @ss_regression
   Scenario: Interim fee has been paid and granted
-    Given i have a valid "goods" "si" licence
+    Given i have a valid "goods" "standard_international" licence
     And i increase my vehicle authority count
     When i pay for the interim application
     And the variation interim is granted

@@ -35,10 +35,11 @@ import org.openqa.selenium.support.ui.Wait;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.Set;
+
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
@@ -335,7 +336,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void payFee(String amount, @NotNull String paymentMethod, String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
+    public void payFee(String amount, @NotNull String paymentMethod) throws IllegalBrowserException, MalformedURLException {
         String payment = paymentMethod.toLowerCase().trim();
         waitForTextToBePresent("Pay fee");
         if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
@@ -383,7 +384,7 @@ public class UIJourneySteps extends BasePage {
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
-                if (payment.equals("card") && (isTextPresent("Pay fee", 10))) {
+                if (isTextPresent("Pay fee", 10)) {
                     selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
                     if (isTextPresent("Customer reference", 10)) {
                         enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
@@ -392,7 +393,7 @@ public class UIJourneySteps extends BasePage {
                         clickPayAndConfirm(paymentMethod);
                     }
                 }
-                customerPaymentModule(bankCardNumber, cardExpiryMonth, cardExpiryYear);
+                customerPaymentModule();
                 break;
         }
     }
@@ -421,11 +422,12 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Pay fee");
     }
 
-    public void customerPaymentModule(String bankCardNumber, String cardExpiryMonth, String cardExpiryYear) throws IllegalBrowserException, MalformedURLException {
+    public void customerPaymentModule() throws IllegalBrowserException, MalformedURLException {
+        Config config = new Configuration(env.toString()).getConfig();
         waitForTextToBePresent("Card Number*");
-        enterText("//*[@id='scp_cardPage_cardNumber_input']", bankCardNumber, SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_expiryDate_input']", cardExpiryMonth, SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_expiryDate_input2']", cardExpiryYear, SelectorType.XPATH);
+        enterText("//*[@id='scp_cardPage_cardNumber_input']", config.getString("cardNumber"), SelectorType.XPATH);
+        enterText("//*[@id='scp_cardPage_expiryDate_input']", config.getString("cardExpiryMonth"), SelectorType.XPATH);
+        enterText("//*[@id='scp_cardPage_expiryDate_input2']", config.getString("cardExpiryYear"), SelectorType.XPATH);
         enterText("//*[@id='scp_cardPage_csc_input']", "123", SelectorType.XPATH);
         click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
         enterText("//*[@id='scp_additionalInformationPage_cardholderName_input']", "Mr Regression Test", SelectorType.XPATH);
@@ -920,7 +922,7 @@ public class UIJourneySteps extends BasePage {
         LoginPage.email(emailAddress);
         LoginPage.password(password);
         LoginPage.submit();
-        LoginPage.untilNotOnPage(2);
+        LoginPage.untilNotOnPage(5);
     }
 
     public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
@@ -1425,18 +1427,20 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void createLicence(World world, String operatorType, String licenceType) {
-        if (licenceType.equals("si")) {
-            world.createLicence.setLicenceType("standard_international");
-        } else if (licenceType.equals("sn")) {
-            world.createLicence.setLicenceType("standard_national");
-        } else {
-            world.createLicence.setLicenceType("standard_national");
-        }
         world.createLicence.setOperatorType(operatorType);
+        world.createLicence.setLicenceType(licenceType);
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-        world.APIJourneySteps.createApplication();
-        world.APIJourneySteps.submitApplication();
-        world.APIJourneySteps.grantLicenceAndPayFees();
+        if(licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)){
+            world.APIJourneySteps.createSpecialRestrictedLicence();
+        }
+        else if (world.createLicence.getApplicationNumber() == null) {
+            world.APIJourneySteps.createApplication();
+            world.APIJourneySteps.submitApplication();
+        }
+        world.grantLicence.grantLicence();
+        if (world.createLicence.getOperatorType().equals("goods")) {
+            world.grantLicence.payGrantFees();
+        }
     }
 
     public void closeCase() throws IllegalBrowserException, MalformedURLException {
@@ -1462,7 +1466,7 @@ public class UIJourneySteps extends BasePage {
     public void payFeesAndGrantNewBusReg() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Fees");
         selectFee();
-        payFee("60", "cash", null, null, null);
+        payFee("60", "cash");
         do {
             System.out.println("link not present");
             javaScriptExecutor("location.reload(true)");
@@ -1530,7 +1534,7 @@ public class UIJourneySteps extends BasePage {
         enterText("interim[goodsApplicationInterimReason]", "Testing", SelectorType.NAME);
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-        customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+        customerPaymentModule();
     }
 
     public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException {
@@ -1745,54 +1749,5 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
-    }
-
-    public void continueALicenceOnInternal(String licenceNo, String licenceTrafficArea, int month) throws IllegalBrowserException, MalformedURLException {
-        click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
-        click("menu-admin-dashboard/continuations", SelectorType.ID);
-        waitForElementToBePresent("//*[@id='generate-continuation-type']");
-        selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, month - 1); // Minus one in the month because of indexing.
-        selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
-        click("form-actions[generate]", SelectorType.ID);
-        enterText("filters[licenceNo]", licenceNo,  SelectorType.ID);
-        click("main", SelectorType.ID);
-        waitForTextToBePresent("1 licence(s)");
-        waitAndClick("id[]", SelectorType.NAME);
-        click("generate", SelectorType.ID);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
-        waitForTextToBePresent("The selected licence(s) have been queued");
-    }
-
-    public void continueLicenceWithVerifyAndPay() throws IllegalBrowserException, MalformedURLException {
-        world.UIJourneySteps.completeContinuationUntilVerify();
-        click("content[signatureOptions]", SelectorType.ID);
-        click("sign", SelectorType.ID);
-        world.UIJourneySteps.signWithVerify();
-        waitForTextToBePresent("Declaration signed through GOV.UK Verify");
-        click("submitAndPay", SelectorType.ID);
-        click("form-actions[pay]", SelectorType.ID);
-        Config config = new Configuration(env.toString()).getConfig();
-        world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
-        waitForTextToBePresent("Your licence has been continued");
-    }
-
-    public void completeContinuationUntilVerify() throws IllegalBrowserException, MalformedURLException {
-        world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-        world.UIJourneySteps.navigateToSelfServePage("licence","view");
-        boolean continuationBoxFound = false;
-        long kickoutTime = System.currentTimeMillis() + 120000;
-        while (!continuationBoxFound && System.currentTimeMillis() < kickoutTime) {
-            javaScriptExecutor("location.reload(true)");
-            continuationBoxFound = isElementPresent("//*[contains(@class,'info-box--pink')]", SelectorType.XPATH);
-        }
-        click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
-        click("submit", SelectorType.ID);
-        clickAllCheckboxes();
-        findSelectAllRadioButtonsByValue("Y");
-        click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
-        String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replace("£","").replace(",","");
-        enterText("averageBalance", necessaryIncome, SelectorType.ID);
-        findSelectAllRadioButtonsByValue("N");
-        click("submit", SelectorType.ID);
     }
 }

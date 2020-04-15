@@ -64,4 +64,7 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - use gmail api to get passwords instead of getting passwords from the S3 Bucket.
 - Look at Google accessibility for method to check that tab skipped to main content for skipToMainContentAndCheck function. Maybe look at using Axe.
 - Separate UIJourneySteps into a few smaller classes for specific methods. I.e. Search methods.
-- 
+- Create new methods for true and false statements. I.e. world.createLicence.getLicenceType().equals("restricted") -> isLicenceRestricted().
+- Fix page action dependencies.
+- Add Internal class for internal methods so the methods don't require 'in Internal' in the name.
+- Get rid of si and sn and refactor to be able to create all licence types. Check what extra steps/ not needed steps for different licence types.

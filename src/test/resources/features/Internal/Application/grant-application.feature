@@ -6,7 +6,7 @@ Feature: Grant under consideration application
     Given I have a "<vehicle_type>" "<type_of_licence>" application which is under consideration
     When I grant licence
     Then the licence should be granted
-    And i create admin and url search for my application
+    And i create an admin and url search for my application
     And the "<document_type>" document should be generated
     Examples:
       | vehicle_type | type_of_licence        | document_type |

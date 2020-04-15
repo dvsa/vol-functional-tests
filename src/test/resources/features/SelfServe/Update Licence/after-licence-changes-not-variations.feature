@@ -4,7 +4,7 @@
 Feature: Self Serve users can make changes to their valid licence.
 
   Background:
-    Given i have a valid "public" "sn" licence
+    Given i have a valid "public" "standard_national" licence
     And i have logged in to self serve
 
   Scenario: A self serve user changes their business details

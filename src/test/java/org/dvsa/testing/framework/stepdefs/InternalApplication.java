@@ -101,7 +101,7 @@ public class InternalApplication extends BasePage implements En {
             waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
             world.UIJourneySteps.selectFee();
             String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
-            world.UIJourneySteps.payFee(fee, "cash", null, null, null);
+            world.UIJourneySteps.payFee(fee, "cash");
             waitForTextToBePresent("The payment was made successfully");
             long kickoutTime = System.currentTimeMillis() + 15000;
 

@@ -80,7 +80,6 @@ public class Surrenders extends BasePage implements En {
         });
         Given("^as a selfserve user i apply for a \"([^\"]*)\" licence$", (String arg0) -> {
             this.selfServeUserPid = world.createLicence.getPid();
-            world.genericUtils = new GenericUtils(world);
             world.createLicence.setOperatorType(arg0);
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
@@ -91,7 +90,7 @@ public class Surrenders extends BasePage implements En {
                 System.out.println("Licence: " + world.createLicence.getLicenceNumber());
             } else {
                 world.APIJourneySteps.grantLicenceAndPayFees();
-                world.APIJourneySteps.grantLicence().payGrantFees();
+                world.grantLicence.payGrantFees();
                 System.out.println("Licence: " + world.createLicence.getLicenceNumber());
             }
         });

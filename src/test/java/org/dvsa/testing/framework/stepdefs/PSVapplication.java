@@ -1,15 +1,13 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
- import cucumber.api.java8.En;
+import cucumber.api.java8.En;
 import enums.UserRoles;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 
 public class PSVapplication implements En {
     private World world;
 
     public PSVapplication(World world) {
-        world.APIJourneySteps = new APIJourneySteps(world);
 
         Given("^I have applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
             world.createLicence.setOperatorType(operator);

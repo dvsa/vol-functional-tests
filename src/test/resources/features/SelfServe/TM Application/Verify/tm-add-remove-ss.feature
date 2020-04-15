@@ -6,7 +6,7 @@
 Feature: Set and check criteria for triggering automatic letter
 
   Background:
-    Given i have a valid "public" "si" licence
+    Given i have a valid "public" "standard_international" licence
 
   @ss_regression
   Scenario: Generate letter for valid licence when ss removes last TM

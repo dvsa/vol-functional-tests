@@ -5,7 +5,7 @@
 Feature: Change Validation On Interim Vehicle Authority
 
   Background:
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
     And i create an admin and url search for my licence
     And i create a variation in internal
 

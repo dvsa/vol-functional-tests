@@ -2,8 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.string.Str;
- import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.UIJourneySteps;
+import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.hamcrest.MatcherAssert;
@@ -24,7 +23,6 @@ public class DirectorVariation extends BasePage implements En {
 
     public DirectorVariation(World world) {
         this.world = world;
-        world.UIJourneySteps = new UIJourneySteps(world);
 
         When("^i add a new person$", () -> {
             world.UIJourneySteps.navigateToSelfServePage("licence", "directors");
