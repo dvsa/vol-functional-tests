@@ -58,8 +58,8 @@ public class TMDetails extends BasePage implements En {
             }
         });
         And("^i navigate to the transport managers details page$", () -> {
-            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToTransportManagersPage("application");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("application", "transport managers");
             click("//*[@name='table[action]']", SelectorType.XPATH);
             waitForTextToBePresent("Add Transport Manager");
             selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);

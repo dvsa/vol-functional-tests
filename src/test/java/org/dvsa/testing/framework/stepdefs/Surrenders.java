@@ -216,7 +216,7 @@ public class Surrenders extends BasePage implements En {
         });
         When("^a caseworker views the surrender details$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalSearch.searchAndViewLicence();
             waitAndClick("menu-licence_surrender", SelectorType.ID);
         });
@@ -248,7 +248,7 @@ public class Surrenders extends BasePage implements En {
         });
         And("^the open case and bus reg is closed$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalNavigation.urlSearchAndViewLicence();
             world.UIJourneySteps.internalDigitalSurrenderMenu();
             world.UIJourneySteps.closeCase();

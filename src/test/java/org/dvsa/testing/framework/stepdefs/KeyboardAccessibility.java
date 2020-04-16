@@ -32,7 +32,7 @@ public class KeyboardAccessibility extends BasePage implements En {
 
     public KeyboardAccessibility(World world) {
         When("^i am on the vehicle details page$", () -> {
-            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);
             clickByLinkText("Vehicles");
             waitForTextToBePresent("Vehicle details");
@@ -66,50 +66,50 @@ public class KeyboardAccessibility extends BasePage implements En {
 
         });
         When("^i navigate to self serve application main pages i can skip to main content$", () -> {
-            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.selfServeNavigation.navigateToSelfServePage("application","addresses");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("application","addresses");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("application","financial evidence");
+            world.selfServeNavigation.navigateToPage("application","financial evidence");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("application","vehicle declarations");
+            world.selfServeNavigation.navigateToPage("application","vehicle declarations");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("application","financial history");
+            world.selfServeNavigation.navigateToPage("application","financial history");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("application","licence history");
+            world.selfServeNavigation.navigateToPage("application","licence history");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("application","convictions and penalties");
+            world.selfServeNavigation.navigateToPage("application","convictions and penalties");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("application","review and declarations");
+            world.selfServeNavigation.navigateToPage("application","review and declarations");
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence main pages i can skip to main content$", () -> {
             world.UIJourneySteps.CheckSkipToMainContentOnExternalUserLogin();
-            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.selfServeNavigation.navigateToSelfServePage("licence","view");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("licence","view");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","type of licence");
+            world.selfServeNavigation.navigateToPage("licence","type of licence");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","business type");
+            world.selfServeNavigation.navigateToPage("licence","business type");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","business details");
+            world.selfServeNavigation.navigateToPage("licence","business details");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","address");
+            world.selfServeNavigation.navigateToPage("licence","address");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","directors");
+            world.selfServeNavigation.navigateToPage("licence","directors");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","operating centers");
+            world.selfServeNavigation.navigateToPage("licence","operating centers");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","transport managers");
+            world.selfServeNavigation.navigateToPage("licence","transport managers");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","vehicles");
+            world.selfServeNavigation.navigateToPage("licence","vehicles");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","trailers");
+            world.selfServeNavigation.navigateToPage("licence","trailers");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToSelfServePage("licence","safety and compliance");
+            world.selfServeNavigation.navigateToPage("licence","safety and compliance");
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence nav bar pages i can skip to main content$", () -> {
-            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.selfServeNavigation.navigateToNavBarPage("Home");
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.selfServeNavigation.navigateToNavBarPage("Manage users");

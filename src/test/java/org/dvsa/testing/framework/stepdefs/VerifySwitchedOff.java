@@ -34,14 +34,14 @@ public class VerifySwitchedOff extends BasePage implements En {
             assertEquals("Submit", buttonName);
         });
         And("^i add a transport manager$", () -> {
-            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.UIJourneySteps.nominateOperatorUserAsTransportManager(1, true);
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.transportManagerJourneySteps.nominateOperatorUserAsTransportManager(1, true);
         });
         When("^the transport manager is the owner$", () -> {
-            world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
+            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         });
         And("^the transport manager is not the owner$", () -> {
-            world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
+            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         When("^i submit the application$", () -> {
             click("form-actions[submit]", SelectorType.ID);
@@ -62,13 +62,13 @@ public class VerifySwitchedOff extends BasePage implements En {
             assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")),30));
         });
         When("^i am on the the TM landing page$", () -> {
-            world.UIJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
+            world.transportManagerJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
         });
         Then("^a success message banner should be displayed$", () -> {
             Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager",30));
         });
         And("^i navigate to the declarations page$", () -> {
-            world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
+            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         Given("^verify has been switched \"([^\"]*)\"$", (String arg0) -> {
           if (arg0.toLowerCase().equals("on")){

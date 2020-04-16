@@ -25,7 +25,7 @@ public class ManageUsersPage extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         });
         When("^i navigate to the manage users page$", () -> {
-            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             waitAndClick("//*[contains(text(),'Manage users')]", SelectorType.XPATH);
             Assert.assertEquals("Manage users", getText("h1", SelectorType.CSS));
         });

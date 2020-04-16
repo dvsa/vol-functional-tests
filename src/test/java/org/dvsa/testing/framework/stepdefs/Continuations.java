@@ -21,7 +21,7 @@ public class Continuations extends BasePage implements En {
 
         When("^i change my continuation and review date on Internal$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalNavigation.urlSearchAndViewLicence();
             continuationDate = dates.getDate(10, 0, 0);
             world.continuationJourneySteps.replaceContinuationAndReviewDates(continuationDate, continuationDate);
@@ -34,7 +34,7 @@ public class Continuations extends BasePage implements En {
         });
         Then("^the continuation should be approved and a snapshot generated on Internal$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Docs & attachments");
             refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);

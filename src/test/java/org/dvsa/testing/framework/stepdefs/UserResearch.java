@@ -65,7 +65,7 @@ public class UserResearch extends BasePage implements En {
             }
         });
         Then("^the licence should be created and granted$", () -> {
-            world.genericUtils.writeToFile(world.createLicence.getLoginId(), world.UIJourneySteps.getPassword(), fileName.concat("Operator.csv"));
+            world.genericUtils.writeToFile(world.createLicence.getLoginId(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
         });
     }
     private String[] trafficAreaList() {

@@ -2,78 +2,34 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
-import activesupport.MissingRequiredArgument;
-import activesupport.driver.Browser;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.jetbrains.annotations.NotNull;
 
 import java.net.MalformedURLException;
-import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
 
 public class SelfServeNavigationalJourneySteps extends BasePage {
 
     public World world;
-    private String password;
 
     public SelfServeNavigationalJourneySteps(World world) {
         this.world = world;
     }
 
-    public String getPassword() {
-        return password;
+    public void navigateToLogin(String username, String emailAddress) throws MalformedURLException, IllegalBrowserException {
+        world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.EXTERNAL);
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public void navigateToExternalUserLogin(String username, String emailAddress) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        String newPassword = world.configuration.config.getString("internalNewPassword");
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env).toString();
-
-        if (Browser.isBrowserOpen()) {
-            navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-            if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-                waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
-        }
-
-        get(myURL);
-        String password = world.configuration.getTempPassword(emailAddress);
-
-        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
-
-        try {
-            signIn(username, password);
-        } catch (Exception e) {
-            //User is already registered
-            signIn(username, getPassword());
-        } finally {
-            if (isTextPresent("Current password", 60)) {
-                enterField(nameAttribute("input", "oldPassword"), password);
-                enterField(nameAttribute("input", "newPassword"), newPassword);
-                enterField(nameAttribute("input", "confirmPassword"), newPassword);
-                click(nameAttribute("input", "submit"));
-                setPassword(newPassword);
-            }
-        }
-    }
-
-    public void navigateToExternalSearch() throws IllegalBrowserException, MalformedURLException {
+    public void navigateToSearch() throws IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-lorry-bus-operators/").toString();
         navigate().get(myURL);
     }
 
 
-    public void navigateToSelfServePage(String type, String page) throws IllegalBrowserException, MalformedURLException {
+    public void navigateToPage(String type, String page) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
         String applicationStatus = null;
@@ -206,7 +162,6 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         }
     }
 
-
     public void navigateToNavBarPage(String page) throws IllegalBrowserException, MalformedURLException {
         switch (page.toLowerCase()) {
             case "home":
@@ -226,12 +181,5 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 waitForTextToBePresent("Thank you");
                 break;
         }
-    }
-
-    private static void signIn(@NotNull String emailAddress, @NotNull String password) throws IllegalBrowserException, MalformedURLException {
-        LoginPage.email(emailAddress);
-        LoginPage.password(password);
-        LoginPage.submit();
-        LoginPage.untilNotOnPage(5);
     }
 }

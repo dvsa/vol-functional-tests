@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Global.Configuration;
+import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.*;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.*;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
@@ -14,6 +16,7 @@ public class Initialisation extends BasePage implements En {
     public Initialisation (World world) {
         this.world = world;
         world.configuration = new Configuration();
+        world.globalMethods = new GlobalMethods(world);
         world.createLicence = new CreateLicenceAPI();
         world.grantLicence = new GrantLicenceAPI(world);
         world.updateLicence = new UpdateLicenceAPI(world);
@@ -23,6 +26,7 @@ public class Initialisation extends BasePage implements En {
         world.internalSearch = new InternalSearchJourneySteps(world);
         world.internalNavigation = new InternalNavigationalJourneySteps(world);
         world.selfServeNavigation = new SelfServeNavigationalJourneySteps(world);
+        world.transportManagerJourneySteps = new TransportManagerJourneySteps(world);
         world.UIJourneySteps = new UIJourneySteps(world);
     }
 }

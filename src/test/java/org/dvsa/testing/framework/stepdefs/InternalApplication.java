@@ -82,7 +82,7 @@ public class InternalApplication extends BasePage implements En {
         });
         When("^the caseworker completes and submits the application$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalNavigation.urlSearchAndViewApplication();
             click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);

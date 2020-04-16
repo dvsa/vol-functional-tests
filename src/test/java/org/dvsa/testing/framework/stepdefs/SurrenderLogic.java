@@ -188,7 +188,7 @@ public class SurrenderLogic extends BasePage implements En {
             assertTrue(isLinkPresent("Surrender", 30));
         });
         And("^the licence should not displayed in selfserve$", () -> {
-            world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             assertFalse(isLinkPresent(world.createLicence.getLicenceNumber(), 30));
         });
         And("^the user should be able to re apply for a surrender in internal$", () -> {

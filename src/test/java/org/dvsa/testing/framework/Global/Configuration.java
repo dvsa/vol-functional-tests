@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.Journeys;
+package org.dvsa.testing.framework.Global;
 
 import activesupport.aws.s3.S3;
 import activesupport.system.Properties;
@@ -11,7 +11,7 @@ public class Configuration {
     public String localDefaultPassword = Properties.get("localDefaultPassword", false);
 
     public String getBucketName() {
-        return "devapp-olcs-pri-olcs-autotest-s3";
+        return config.getString("bucketName");
     }
 
     public String getTempPassword(String emailAddress) {

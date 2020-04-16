@@ -43,7 +43,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void continueLicenceWithVerifyAndPay() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+        world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
         clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         completeContinuationsReviewPage();
@@ -54,7 +54,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void clickContinueLicenceOnSelfServe() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToSelfServePage("licence", "view");
+        world.selfServeNavigation.navigateToPage("licence", "view");
         refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
     }
@@ -69,7 +69,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void viewContinuationSnapshotOnInternal() throws IllegalBrowserException, MalformedURLException {
-        world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+        world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
         world.internalNavigation.urlSearchAndViewApplication();
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);

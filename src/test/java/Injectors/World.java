@@ -1,5 +1,7 @@
 package Injectors;
 
+import org.dvsa.testing.framework.Global.Configuration;
+import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.*;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.GrantLicenceAPI;
@@ -16,6 +18,8 @@ public class World {
     public InternalSearchJourneySteps internalSearch;
     public InternalNavigationalJourneySteps internalNavigation;
     public SelfServeNavigationalJourneySteps selfServeNavigation;
+    public TransportManagerJourneySteps transportManagerJourneySteps;
     public UIJourneySteps UIJourneySteps;
     public Configuration configuration;
+    public GlobalMethods globalMethods;
 }

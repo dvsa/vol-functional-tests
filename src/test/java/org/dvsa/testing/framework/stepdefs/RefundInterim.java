@@ -37,7 +37,7 @@ public class RefundInterim extends BasePage implements En {
         });
         Then("^the interim fee should be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
-            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
+            world.internalNavigation.navigateToLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Fees");
             selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
@@ -59,7 +59,7 @@ public class RefundInterim extends BasePage implements En {
         });
         Then("^the interim fee should not be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
-            world.internalNavigation.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
+            world.internalNavigation.navigateToLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Fees");
             do {
