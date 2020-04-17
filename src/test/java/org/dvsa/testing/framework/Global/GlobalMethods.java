@@ -62,7 +62,7 @@ public class GlobalMethods extends BasePage {
                 enterField(nameAttribute("input", "newPassword"), newPassword);
                 enterField(nameAttribute("input", "confirmPassword"), newPassword);
                 click(nameAttribute("input", "submit"));
-                setLoginPassword(newPassword); // probably needs refactoring to do self serve and internal passwords separately.
+                setLoginPassword(newPassword);
             }
         }
     }

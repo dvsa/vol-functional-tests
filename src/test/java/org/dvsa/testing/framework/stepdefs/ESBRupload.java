@@ -23,7 +23,7 @@ public class ESBRupload extends BasePage implements En {
         });
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
-            world.UIJourneySteps.viewESBRInExternal();
+            world.busRegistrationJourneySteps.viewESBRInExternal();
             waitForTextToBePresent("New");
             assertTrue(isTextPresent("successful",30));
             assertTrue(isTextPresent("New",30));
@@ -32,11 +32,11 @@ public class ESBRupload extends BasePage implements En {
         And("^A short notice tab should be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.internalSearchForBusReg();
+            world.busRegistrationJourneySteps.internalSearchForBusReg();
             assertTrue(isTextPresent("Short notice",30));
         });
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
-            world.UIJourneySteps.viewESBRInExternal();
+            world.busRegistrationJourneySteps.viewESBRInExternal();
             waitForTextToBePresent("successful");
             assertTrue(isTextPresent("successful", 60));
             assertTrue(isTextPresent("New", 60));
@@ -46,18 +46,18 @@ public class ESBRupload extends BasePage implements En {
         And("^A short notice tab should not be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.internalSearchForBusReg();
+            world.busRegistrationJourneySteps.internalSearchForBusReg();
             waitForTextToBePresent("Short notice");
             assertFalse(isTextPresent("Short notice", 60));
         });
 
         When("^I upload an esbr file with \"([^\"]*)\" days notice$", (String arg0) -> {
             // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-            world.UIJourneySteps.uploadAndSubmitESBR("futureDay", Integer.parseInt(arg0));
+            world.busRegistrationJourneySteps.uploadAndSubmitESBR("futureDay", Integer.parseInt(arg0));
         });
         Given("^i add a new bus registration$", () -> {
             world.internalNavigation.urlSearchAndViewLicence();
-            world.UIJourneySteps.internalSiteAddBusNewReg(5);
+            world.busRegistrationJourneySteps.internalSiteAddBusNewReg(5);
             clickByLinkText("Register");
             findSelectAllRadioButtonsByValue("Y");
             clickByName("form-actions[submit]");

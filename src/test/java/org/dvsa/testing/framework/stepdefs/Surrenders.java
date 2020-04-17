@@ -208,11 +208,11 @@ public class Surrenders extends BasePage implements En {
             world.surrenderJourneySteps.caseworkManageSurrender();
         });
         And("^an open case and bus reg are created$", () -> {
-            world.UIJourneySteps.internalSiteAddBusNewReg(5);
+            world.busRegistrationJourneySteps.internalSiteAddBusNewReg(5);
             world.updateLicence.createCase();
         });
         Given("^i have a valid \"([^\"]*)\" \"([^\"]*)\" licence with an open case and bus reg$", (String operatorType, String licenceType) -> {
-            world.UIJourneySteps.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
+            world.busRegistrationJourneySteps.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
         });
         When("^a caseworker views the surrender details$", () -> {
             world.APIJourneySteps.createAdminUser();
@@ -253,7 +253,7 @@ public class Surrenders extends BasePage implements En {
             world.surrenderJourneySteps.internalDigitalSurrenderMenu();
             world.UIJourneySteps.closeCase();
             world.surrenderJourneySteps.internalDigitalSurrenderMenu();
-            world.UIJourneySteps.closeBusReg();
+            world.busRegistrationJourneySteps.closeBusReg();
             world.surrenderJourneySteps.internalDigitalSurrenderMenu();
         });
 

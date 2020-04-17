@@ -9,16 +9,16 @@ import autoitx4java.AutoItX;
 import com.typesafe.config.Config;
 import enums.UserRoles;
 import org.apache.commons.lang.StringUtils;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.internal.SearchNavBar;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -40,117 +40,9 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNum
 public class UIJourneySteps extends BasePage {
 
     private World world;
-    private static final String zipFilePath = "/src/test/resources/ESBR.zip";
-    private String verifyUsername;
-    private String password;
-    private String licenceNumber;
-
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getVerifyUsername() {
-        return verifyUsername;
-    }
-
-    private void setVerifyUsername(String verifyUsername) {
-        this.verifyUsername = verifyUsername;
-    }
 
     public UIJourneySteps(World world) {
         this.world = world;
-    }
-
-    public String getLicenceNumber() {
-        return licenceNumber;
-    }
-
-    public void setLicenceNumber(String licenceNumber) {
-        this.licenceNumber = licenceNumber;
-    }
-
-    public void internalSearchForBusReg() throws IllegalBrowserException, MalformedURLException {
-        selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Bus registrations");
-        do {
-            SearchNavBar.search(world.createLicence.getLicenceNumber());
-        } while (!isLinkPresent(world.createLicence.getLicenceNumber(), 60));
-        clickByLinkText(world.createLicence.getLicenceNumber());
-    }
-
-    public void internalSiteAddBusNewReg(int month) throws IllegalBrowserException, MalformedURLException {
-        waitForTextToBePresent("Overview");
-        clickByLinkText("Bus registrations");
-        click(nameAttribute("button", "action"));
-        waitForTextToBePresent("Service details");
-        assertTrue(isTextPresent("Service No. & type", 5));
-        enterText("serviceNo", "123", SelectorType.ID);
-        enterText("startPoint", Str.randomWord(9), SelectorType.ID);
-        enterText("finishPoint", Str.randomWord(11), SelectorType.ID);
-        enterText("via", Str.randomWord(5), SelectorType.ID);
-        click("//*[@class='chosen-choices']", SelectorType.XPATH);
-        clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
-
-        HashMap<String, Integer> Dates;
-        Dates = world.globalMethods.date.getDate(0, 0, 0);
-        enterDate(Dates.get("day"), Dates.get("month"), Dates.get("year"));
-
-        Dates = world.globalMethods.date.getDate(0, month, 0);
-        enterText("effectiveDate_day", Dates.get("day"), SelectorType.ID);
-        enterText("effectiveDate_month", Dates.get("month"), SelectorType.ID);
-        enterText("effectiveDate_year", Dates.get("year"), SelectorType.ID);
-        click(nameAttribute("button", "form-actions[submit]"));
-
-        long kickOutTime = System.currentTimeMillis() + 60000;
-
-        do {
-            // Refresh page
-            javaScriptExecutor("location.reload(true)");
-        }
-        while (!isTextPresent("Service details", 2) && System.currentTimeMillis() < kickOutTime);
-        if (System.currentTimeMillis() > kickOutTime) {
-            throw new TimeoutException("Service details page didn't display as expected within the time limit.");
-        }
-    }
-
-    private static void enterDate(int day, int month, int year) throws IllegalBrowserException, MalformedURLException {
-        enterText("receivedDate_day", String.valueOf(day), SelectorType.ID);
-        enterText("receivedDate_month", String.valueOf(month), SelectorType.ID);
-        enterText("receivedDate_year", String.valueOf(year), SelectorType.ID);
-    }
-
-    public void viewESBRInExternal() throws IllegalBrowserException, MalformedURLException {
-
-        long kickOutTime = System.currentTimeMillis() + 120000;
-
-        do {
-            // Refresh page
-            javaScriptExecutor("location.reload(true)");
-        } while (isTextPresent("processing", 60) && System.currentTimeMillis() < kickOutTime);
-
-        try {
-            Assert.assertTrue(isTextPresent("Successful", 60));
-        } catch (Exception e) {
-            throw new NotFoundException("ESBR is still displaying as 'processing' when kick out time was reached.");
-        }
-    }
-
-    public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
-        // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-        world.genericUtils.modifyXML(state, interval);
-        GenericUtils.zipFolder();
-        world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-
-        clickByLinkText("Bus registrations");
-        waitAndClick("//*[@id='main']/div[2]/ul/li[2]/a", SelectorType.XPATH);
-        click(nameAttribute("button", "action"));
-        String workingDir = System.getProperty("user.dir");
-        uploadFile("//*[@id='fields[files][file]']", workingDir + zipFilePath, "document.getElementById('fields[files][file]').style.left = 0", SelectorType.XPATH);
-        waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
 
     public void createAdminFee(String amount, String feeType) throws IllegalBrowserException, MalformedURLException {
@@ -189,12 +81,12 @@ public class UIJourneySteps extends BasePage {
                 enterText("details[chequeNo]", "12345", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
 
-                HashMap<String, Integer> Dates;
-                Dates = world.globalMethods.date.getDate(0, 0, 0);
+                HashMap<String, Integer> dates;
+                dates = world.globalMethods.date.getDate(0, 0, 0);
 
-                enterText("details[chequeDate][day]", Dates.get("day").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][month]", Dates.get("month").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][year]", Dates.get("year").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][day]", dates.get("day").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][month]", dates.get("month").toString(), SelectorType.NAME);
+                enterText("details[chequeDate][year]", dates.get("year").toString(), SelectorType.NAME);
                 findAddress(paymentMethod);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -286,12 +178,12 @@ public class UIJourneySteps extends BasePage {
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
 
-        HashMap<String, Integer> Dates;
-        Dates = world.globalMethods.date.getDate(-5, 0, -20);
+        HashMap<String, Integer> dates;
+        dates = world.globalMethods.date.getDate(-5, 0, -20);
 
-        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
+        enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
 
         enterText("data[categoryText]", Str.randomWord(50), SelectorType.NAME);
         enterText("data[courtFpn]", "Clown", SelectorType.NAME);
@@ -409,7 +301,6 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void signWithVerify() throws IllegalBrowserException, MalformedURLException {
-        setVerifyUsername(verifyUsername);
         String verifyUsername = world.configuration.config.getString("verifyUsername");
         String verifyPassword = world.configuration.config.getString("verifyPassword");
 
@@ -575,64 +466,6 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
         click("form-actions[confirm]", SelectorType.ID);
-    }
-
-    public void closeBusReg() throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("" + world.createLicence.getLicenceNumber() + "");
-        click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
-        waitForTextToBePresent("Update status");
-        enterText("fields[reason]", "Mistake", SelectorType.ID);
-        click("form-actions[submit]", SelectorType.ID);
-    }
-
-    public void payFeesAndGrantNewBusReg() throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("Fees");
-        selectFee();
-        payFee("60", "cash");
-        do {
-            System.out.println("link not present");
-            javaScriptExecutor("location.reload(true)");
-        } while (!isLinkPresent("Register service", 5));
-        clickByLinkText("Register service");
-        findSelectAllRadioButtonsByValue("Y");
-        clickByName("form-actions[submit]");
-        clickByLinkText("Service details");
-        clickByLinkText("TA's");
-        click("//*[@class='chosen-choices']", SelectorType.XPATH);
-        selectFirstValueInList("//*[@class=\"active-result\"]");
-        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
-        selectFirstValueInList("//*[@class=\"active-result group-option\"]");
-        clickByName("form-actions[submit]");
-        waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
-    }
-
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException {
-        if (licenceType.equals("si")) {
-            world.createLicence.setLicenceType("standard_international");
-        } else if (licenceType.equals("sn")) {
-            world.createLicence.setLicenceType("standard_national");
-        } else {
-            world.createLicence.setLicenceType("standard_national");
-        }
-        world.createLicence.setTrafficArea("B");
-        world.createLicence.setEnforcementArea("EA-B");
-        world.createLicence.setOperatorType(operatorType);
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-        world.APIJourneySteps.createApplication();
-        world.APIJourneySteps.submitApplication();
-        if (String.valueOf(operatorType).equals("public")) {
-            world.APIJourneySteps.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.createLicence.getLicenceNumber());
-        } else {
-            world.APIJourneySteps.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.createLicence.getLicenceNumber());
-        }
-        world.APIJourneySteps.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-        world.internalNavigation.urlSearchAndViewLicence();
-        internalSiteAddBusNewReg(5);
-        payFeesAndGrantNewBusReg();
-        world.updateLicence.createCase();
     }
 
     public void payForInterimApp() throws IllegalBrowserException, MalformedURLException {

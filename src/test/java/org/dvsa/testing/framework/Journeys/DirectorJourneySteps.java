@@ -50,12 +50,12 @@ public class DirectorJourneySteps extends BasePage {
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);
 
-        HashMap<String, Integer> Dates;
-        Dates = world.globalMethods.date.getDate(-5, 0, -20);
+        HashMap<String, Integer> dates;
+        dates = world.globalMethods.date.getDate(-5, 0, -20);
 
-        enterText("dob_day", Dates.get("day"), SelectorType.ID);
-        enterText("dob_month", Dates.get("month"), SelectorType.ID);
-        enterText("dob_year", Dates.get("year"), SelectorType.ID);
+        enterText("dob_day", dates.get("day"), SelectorType.ID);
+        enterText("dob_month", dates.get("month"), SelectorType.ID);
+        enterText("dob_year", dates.get("year"), SelectorType.ID);
         clickByName("form-actions[saveAndContinue]");
     }
 }

@@ -23,6 +23,7 @@ public class Initialisation extends BasePage implements En {
         world.genericUtils = new GenericUtils(world);
         world.APIJourneySteps = new APIJourneySteps(world);
         world.continuationJourneySteps = new ContinuationJourneySteps(world);
+        world.busRegistrationJourneySteps = new BusRegistrationJourneySteps(world);
         world.directorJourneySteps = new DirectorJourneySteps(world);
         world.internalSearch = new InternalSearchJourneySteps(world);
         world.internalNavigation = new InternalNavigationalJourneySteps(world);

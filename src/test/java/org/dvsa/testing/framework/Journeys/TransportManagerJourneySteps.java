@@ -94,11 +94,11 @@ public class TransportManagerJourneySteps extends BasePage {
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
 
-        HashMap<String, Integer> Dates;
-        Dates = world.globalMethods.date.getDate(0, 0, 25);
-        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
+        HashMap<String, Integer> dates;
+        dates = world.globalMethods.date.getDate(0, 0, 25);
+        enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
 
         enterText("username", getExternalTMUser(), SelectorType.ID);
         enterText("emailAddress", getExternalTMEmail(), SelectorType.ID);
@@ -111,12 +111,12 @@ public class TransportManagerJourneySteps extends BasePage {
         String birthPlace = world.createLicence.getTown();
         String postCode = world.createLicence.getPostcode();
 
-        HashMap<String, Integer> Dates;
-        Dates = world.globalMethods.date.getDate(0, 0, -25);
+        HashMap<String, Integer> dates;
+        dates = world.globalMethods.date.getDate(0, 0, -25);
 
-        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
+        enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -208,11 +208,11 @@ public class TransportManagerJourneySteps extends BasePage {
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
-        HashMap<String, Integer> Dates;
-        Dates = world.globalMethods.date.getDate(-5, 0, -20);
-        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
+        HashMap<String, Integer> dates;
+        dates = world.globalMethods.date.getDate(-5, 0, -20);
+        enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
+        enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
+        enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
