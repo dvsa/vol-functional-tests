@@ -118,20 +118,20 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence surrender pages i can skip to main content$", () -> {
-            world.UIJourneySteps.navigateToSurrendersStartPage();
+            world.surrenderJourneySteps.navigateToSurrendersStartPage();
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.startSurrender();
+            world.surrenderJourneySteps.startSurrender();
             world.UIJourneySteps.skipToMainContentAndCheck();
             waitAndClick("form-actions[submit]",SelectorType.ID);
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
             waitForTextToBePresent("In your possession");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.addOperatorLicenceDetails();
+            world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createLicence.getLicenceType().equals("standard_international")) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
                 world.UIJourneySteps.skipToMainContentAndCheck();
-                world.UIJourneySteps.addCommunityLicenceDetails();
+                world.surrenderJourneySteps.addCommunityLicenceDetails();
             }
             world.UIJourneySteps.skipToMainContentAndCheck();
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);

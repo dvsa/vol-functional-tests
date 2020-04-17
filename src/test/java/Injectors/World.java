@@ -15,9 +15,11 @@ public class World {
     public UpdateLicenceAPI updateLicence;
     public APIJourneySteps APIJourneySteps;
     public ContinuationJourneySteps continuationJourneySteps;
+    public DirectorJourneySteps directorJourneySteps;
     public InternalSearchJourneySteps internalSearch;
     public InternalNavigationalJourneySteps internalNavigation;
     public SelfServeNavigationalJourneySteps selfServeNavigation;
+    public SurrenderJourneySteps surrenderJourneySteps;
     public TransportManagerJourneySteps transportManagerJourneySteps;
     public UIJourneySteps UIJourneySteps;
     public Configuration configuration;
