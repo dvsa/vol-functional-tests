@@ -4,7 +4,7 @@
 Feature: Goods Variation decrease vehicle count for an OC
 
   Background:
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
 
   Scenario: Create a variation and decrease vehicle count
     When A selfserve user decreases the vehicle authority count

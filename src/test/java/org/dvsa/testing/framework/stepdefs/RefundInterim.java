@@ -13,18 +13,20 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class RefundInterim extends BasePage implements En {
     public RefundInterim(World world) {
         Given("^i have an interim \"([^\"]*)\" \"([^\"]*)\" application$", (String operatorType, String licenceType) -> {
-            if (licenceType.equals("si")) {
-                world.createLicence.setLicenceType("standard_international");
-            } else if (licenceType.equals("sn")) {
-                world.createLicence.setLicenceType("standard_national");
-            } else {
-                world.createLicence.setLicenceType("standard_national");
+            if (operatorType.equals("public")){
+                throw new Exception("PSV licences cannot have interim applications.");
             }
-            world.createLicence.setIsInterim("Y");
             world.createLicence.setOperatorType(operatorType);
+            world.createLicence.setLicenceType(licenceType);
+            world.createLicence.setIsInterim("Y");
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
+            if(licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)){
+                world.APIJourneySteps.createSpecialRestrictedLicence();
+            }
+            else if (world.createLicence.getApplicationNumber() == null) {
+                world.APIJourneySteps.createApplication();
+                world.APIJourneySteps.submitApplication();
+            }
         });
         When("^the interim fee has been paid$", () -> {
             world.grantLicence.getOutstandingFees(world.createLicence.getApplicationNumber());

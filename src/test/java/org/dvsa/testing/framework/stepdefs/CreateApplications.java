@@ -1,10 +1,8 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.config.Configuration;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
-import com.typesafe.config.Config;
 import cucumber.api.DataTable;
 import cucumber.api.java8.En;
 import enums.TrafficArea;
@@ -59,8 +57,7 @@ public class CreateApplications extends BasePage implements En {
         });
         When("^i pay for my application$", () -> {
             waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-            Config config = new Configuration(env.toString()).getConfig();
-            world.UIJourneySteps.customerPaymentModule(config.getString("cardNumber"), config.getString("cardExpiryMonth"), config.getString("cardExpiryYear"));
+            world.UIJourneySteps.customerPaymentModule();
             waitForTextToBePresent("Application overview");
         });
         And("^i choose to pay my second application with my saved card details$", () -> {

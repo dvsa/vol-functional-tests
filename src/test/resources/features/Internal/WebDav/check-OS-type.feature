@@ -68,7 +68,7 @@ Feature: Check that the OS Version is displayed in the user account details
 
   @INT
   Scenario Outline: I update my operating system settings
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
     And i have logged in to internal
     When i update my operating system on internal to "<OsType>"
     Then the operating system should be updated to "<OsType>"

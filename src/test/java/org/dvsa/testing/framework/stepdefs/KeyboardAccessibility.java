@@ -3,10 +3,9 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.driver.Browser;
 import com.deque.axe.AXE;
- import cucumber.api.java8.En;
+import cucumber.api.java8.En;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.framework.runner.Hooks;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.json.JSONArray;
@@ -113,9 +112,9 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.UIJourneySteps.navigateToNavBarPage("Home");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToNavBarPage("manage users");
+            world.UIJourneySteps.navigateToNavBarPage("Manage users");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToNavBarPage("your account");
+            world.UIJourneySteps.navigateToNavBarPage("Your account");
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence surrender pages i can skip to main content$", () -> {

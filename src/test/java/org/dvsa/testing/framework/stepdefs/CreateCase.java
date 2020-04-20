@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.UpdateLicenceAPI;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.hamcrest.Matchers;
@@ -17,7 +16,6 @@ public class CreateCase extends BasePage implements En {
 
     public CreateCase(World world) {
         this.world = world;
-        world.updateLicence = new UpdateLicenceAPI(world);
 
         When("^I create a new case$", () -> {
             world.updateLicence.createCase();

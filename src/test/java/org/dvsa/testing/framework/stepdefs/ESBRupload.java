@@ -3,8 +3,6 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
@@ -18,8 +16,7 @@ public class ESBRupload extends BasePage implements En {
 
     public ESBRupload(World world) throws MissingRequiredArgument {
         this.world = world;
-        world.APIJourneySteps = new APIJourneySteps(world);
-        world.genericUtils = new GenericUtils(world);
+
 
         Given("^I have a psv application with traffic area \"([^\"]*)\" and enforcement area \"([^\"]*)\" which has been granted$", (String arg0, String arg1) -> {
             world.APIJourneySteps.generateAndGrantPsvApplicationPerTrafficArea(arg0, arg1);
@@ -75,7 +72,7 @@ public class ESBRupload extends BasePage implements En {
         And("^it has been paid and granted$", () -> {
             clickByLinkText("Fees");
             world.UIJourneySteps.selectFee();
-            world.UIJourneySteps.payFee("60", "cash", null, null, null);
+            world.UIJourneySteps.payFee("60", "cash");
             waitAndClick("//*[contains(text(),'Grant')]",SelectorType.XPATH);
         });
         Then("^the bus registration should be granted$", () -> {

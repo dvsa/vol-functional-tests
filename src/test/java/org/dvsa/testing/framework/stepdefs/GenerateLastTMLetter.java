@@ -1,21 +1,16 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.config.Configuration;
-import activesupport.database.DBUnit;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;
- import cucumber.api.java8.En;
+import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
-import java.sql.ResultSet;
 import java.util.HashMap;
 
-import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.stepdefs.RemoveTM.alertHeaderValue;
 
@@ -24,11 +19,6 @@ public class GenerateLastTMLetter extends BasePage implements En {
     private Config config;
 
     public GenerateLastTMLetter(World world) {
-
-        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        Config config = new Configuration(env.toString()).getConfig();
-
-
 
         Given("^i have a valid \"([^\"]*)\" \"([^\"]*)\" licence$", (String operatorType, String licenceType) -> {
             world.UIJourneySteps.createLicence(world, operatorType, licenceType);
@@ -56,7 +46,7 @@ public class GenerateLastTMLetter extends BasePage implements En {
             clickByLinkText(world.createLicence.getApplicationNumber());
             clickByLinkText("Review and declarations");
             waitAndClick("//*[@id='label-declarationConfirmation']", SelectorType.XPATH);
-            click("//*[@id='submit']",SelectorType.XPATH);
+            click("//*[@id='submit']", SelectorType.XPATH);
         });
     }
 }

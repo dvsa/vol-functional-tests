@@ -6,7 +6,7 @@
 Feature: View Surrender Menu and details on Internal
 
   Background:
-    Given i have a valid "public" "sn" licence with an open case and bus reg
+    Given i have a valid "public" "standard_national" licence with an open case and bus reg
 
 
   Scenario: Surrender details should be displayed appropriately on Internal

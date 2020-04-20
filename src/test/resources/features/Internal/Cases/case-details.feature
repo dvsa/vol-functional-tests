@@ -4,7 +4,7 @@
 Feature: Add case details
 
   Background:
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
     And I create a new case
 
   @Complaint

@@ -3,8 +3,6 @@ package org.dvsa.testing.framework.Journeys;
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import enums.UserRoles;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.GrantLicenceAPI;
 
 public class APIJourneySteps {
 
@@ -13,8 +11,6 @@ public class APIJourneySteps {
 
     public APIJourneySteps(World world) throws MissingRequiredArgument {
         this.world = world;
-        world.createLicence = new CreateLicenceAPI();
-        world.grantLicence = new GrantLicenceAPI(world);
     }
 
     public void createAdminUser() throws MissingRequiredArgument {
@@ -40,11 +36,6 @@ public class APIJourneySteps {
         world.grantLicence.grantLicence();
         world.grantLicence.payGrantFees();
         world.updateLicence.getLicenceTrafficArea();
-        System.out.println("--Licence-Number: " + world.createLicence.getLicenceNumber() + "--");
-    }
-
-    public GrantLicenceAPI grantLicence() throws MissingRequiredArgument {
-        return new GrantLicenceAPI(world);
     }
 
     public void createApplication(){

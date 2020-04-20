@@ -37,7 +37,7 @@ public class PaymentProcessing extends BasePage implements En {
         When("^i add a new \"([^\"]*)\" fee$", (String arg0) -> {
             String amount = "100";
             selectValueFromDropDown("status", SelectorType.ID, "Current");
-            String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']/h3", SelectorType.XPATH);
+            String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']/h2git ", SelectorType.XPATH);
             setCurrentFeeCount(world.genericUtils.stripAlphaCharacters(feeCountBeforeAddingNewFee));
             assertEquals("current", findElement("status", SelectorType.ID, 30).getAttribute("value"));
             world.UIJourneySteps.createAdminFee(amount, arg0);
@@ -61,12 +61,9 @@ public class PaymentProcessing extends BasePage implements En {
             setFeeNumber(world.genericUtils.stripAlphaCharacters(String.valueOf(findElement("//*/tbody/tr[1]/td[1]", SelectorType.XPATH, 10).getText())));
             world.UIJourneySteps.selectFeeById(feeNumber);
             if (arg0.equals("card")) {
-                String bankCardNumber = "4006000000000600";
-                String cardExpiryMonth = "10";
-                String cardExpiryYear = "50";
-                world.UIJourneySteps.payFee(null, arg0, bankCardNumber, cardExpiryMonth, cardExpiryYear);
+                world.UIJourneySteps.payFee(null, arg0);
             } else {
-                world.UIJourneySteps.payFee(feeAmount, arg0, null, null, null);
+                world.UIJourneySteps.payFee(feeAmount, arg0);
             }
         });
     }

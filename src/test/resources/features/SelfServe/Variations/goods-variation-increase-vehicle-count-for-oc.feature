@@ -5,7 +5,7 @@
 Feature: Goods Variation increase vehicle count for an OC
 
   Background:
-    Given i have a valid "goods" "sn" licence
+    Given i have a valid "goods" "standard_national" licence
 
   Scenario: Create a variation and increase vehicle count
     When i increase my vehicle authority count
@@ -24,12 +24,12 @@ Feature: Goods Variation increase vehicle count for an OC
   Scenario: Create a variation and increase authorisation count
     And a selfserve user creates a variation and increases the vehicle authority count
     And i pay for my application
-    And i create admin and url search for my variation
+    And i create an admin and url search for my variation
     Then the "Variation Fee for application" fee should be paid
   #new feature file?
   @CPMS_tests
   Scenario: Create a variation and add operating centre
     And a selfserve user creates a variation and adds an operating centre
     And i pay for my application
-    And i create admin and url search for my variation
+    And i create an admin and url search for my variation
     Then the "Variation Fee for application" fee should be paid
