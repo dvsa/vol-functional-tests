@@ -5,6 +5,7 @@
 
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
+#  All these tests needed refactoring to ensure the right licence is being found.
   Background:
     Given i have a valid "goods" "standard_national" licence
     And I am on the external search page
