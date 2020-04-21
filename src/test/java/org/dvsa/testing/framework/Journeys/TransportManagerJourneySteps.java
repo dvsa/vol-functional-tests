@@ -222,7 +222,6 @@ public class TransportManagerJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
-
     public void addOperatorAdminAsTransportManager(String user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
         world.selfServeNavigation.navigateToPage("application", "transport managers");
         click("//*[@name='table[action]']", SelectorType.XPATH);
