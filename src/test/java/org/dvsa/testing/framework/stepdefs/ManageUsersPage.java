@@ -11,7 +11,6 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.support.Color;
-import org.opentest4j.AssertionFailedError;
 import scanner.AXEScanner;
 
 import java.io.File;
@@ -59,8 +58,8 @@ public class ManageUsersPage extends BasePage implements En {
 
             Faker faker = new Faker();
 
-            world.UIJourneySteps.addUser(faker.name().username(), fakeValuesService.bothify("????##@dvsa.org"),
-                    faker.name().firstName(), faker.name().lastName());
+            world.UIJourneySteps.addUser(faker.name().username(),
+                    faker.name().firstName(), faker.name().lastName(), fakeValuesService.bothify("????##@dvsa.org"));
         });
         Then("^user text should displaying current users$", () -> {
             Assert.assertEquals("2 Current users", getText("h2", SelectorType.CSS));

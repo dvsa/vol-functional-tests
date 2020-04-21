@@ -33,9 +33,14 @@ public class VerifySwitchedOff extends BasePage implements En {
             String buttonName = findElement("form-actions[submit]", SelectorType.ID, 10).getText();
             assertEquals("Submit", buttonName);
         });
-        And("^i add a transport manager$", () -> {
+        And("^i select a transport manager to add$", () -> {
             world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.UIJourneySteps.nominateOperatorUserAsTransportManager(1, true);
+            world.UIJourneySteps.navigateToSelfServePage("application", "transport managers");
+            waitForTextToBePresent("Transport Managers");
+            waitAndClick("//*[@id='add']", SelectorType.XPATH);
+            waitForTextToBePresent("Add Transport Manager");
+            selectValueFromDropDown("data[registeredUser]", SelectorType.ID, String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()));
+            click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
         });
         When("^the transport manager is the owner$", () -> {
             world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
