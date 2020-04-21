@@ -87,7 +87,7 @@ public class InternalSearchJourneySteps extends BasePage {
                 world.createLicence.getOperatingCentreAddressLine4(),
                 world.createLicence.getOperatingCentreTown()), 200)
                 && System.currentTimeMillis() < kickOut);
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
+        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", world.createLicence.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.createLicence.getLicenceNumber());
         clickByLinkText("Addresses");
     }

@@ -327,15 +327,19 @@ public class UIJourneySteps extends BasePage {
         clickByLinkText("Forgotten your password?");
     }
 
-    public void addUser(String operatorUser, String operatorUserEmail, String operatorForeName,
-    String operatorFamilyName) throws IllegalBrowserException, MalformedURLException {
+    public void addUser(String operatorUser, String operatorForeName, String operatorFamilyName,
+                        String operatorUserEmail) throws IllegalBrowserException, MalformedURLException {
+        world.transportManagerJourneySteps.setOperatorUser(operatorUser);
+        world.transportManagerJourneySteps.setOperatorForeName(operatorForeName);
+        world.transportManagerJourneySteps.setOperatorFamilyName(operatorFamilyName);
+        world.transportManagerJourneySteps.setOperatorUserEmail(operatorUserEmail);
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", operatorUser, SelectorType.ID);
-        enterText("forename", operatorForeName, SelectorType.ID);
-        enterText("familyName", operatorFamilyName, SelectorType.ID);
-        enterText("main[emailAddress]", operatorUserEmail, SelectorType.ID);
-        enterText("main[emailConfirm]", operatorUserEmail, SelectorType.ID);
+        enterText("username", world.transportManagerJourneySteps.getOperatorUser(), SelectorType.ID);
+        enterText("forename", world.transportManagerJourneySteps.getOperatorForeName(), SelectorType.ID);
+        enterText("familyName", world.transportManagerJourneySteps.getOperatorFamilyName(), SelectorType.ID);
+        enterText("main[emailAddress]", world.transportManagerJourneySteps.getOperatorUserEmail(), SelectorType.ID);
+        enterText("main[emailConfirm]", world.transportManagerJourneySteps.getOperatorUserEmail(), SelectorType.ID);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 

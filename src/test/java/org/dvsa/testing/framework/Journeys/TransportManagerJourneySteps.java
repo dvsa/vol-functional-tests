@@ -195,7 +195,7 @@ public class TransportManagerJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void nominateOperatorUserAsTransportManager(int user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", "transport managers");
         } else {
@@ -205,14 +205,17 @@ public class TransportManagerJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
-        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
+        selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
         HashMap<String, Integer> dates;
         dates = world.globalMethods.date.getDate(-5, 0, -20);
-        enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
+
+        if(findElement("dob_day", SelectorType.ID).getAttribute("value").isEmpty()) {
+            waitAndEnterText("dob_day", SelectorType.ID, dates.get("day").toString());
+            waitAndEnterText("dob_month", SelectorType.ID, dates.get("month").toString());
+            waitAndEnterText("dob_year", SelectorType.ID, dates.get("year").toString());
+        }
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
@@ -220,11 +223,11 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
 
-    public void addOperatorAdminAsTransportManager(int user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
+    public void addOperatorAdminAsTransportManager(String user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
         world.selfServeNavigation.navigateToPage("application", "transport managers");
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
-        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
+        selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
@@ -261,7 +264,7 @@ public class TransportManagerJourneySteps extends BasePage {
         waitForTextToBePresent("Declaration");
     }
 
-    public void addOperatorUserAsTransportManager(int user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
+    public void addOperatorUserAsTransportManager(String user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
         if (applicationOrNot) {

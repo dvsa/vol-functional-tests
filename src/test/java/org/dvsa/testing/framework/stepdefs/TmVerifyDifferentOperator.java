@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import activesupport.faker.FakerUtils;
+import activesupport.number.Int;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
@@ -109,16 +111,20 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             world.createLicence.setIsOwner("N");
         });
         And("^i add an existing person as a transport manager who is not the operator on \"([^\"]*)\"$", (String applicationType) -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.addUser(Str.randomWord(3),"operator".concat(Str.randomWord(2)).concat("@dvsa.com"),
-                    "OperatorUser","API" );
             boolean applicationOrNot;
+            FakerUtils faker = new FakerUtils();
+            String operatorFirstName = faker.generateFirstName();
+            String operatorLastName = faker.generateLastName();
+            String operatorUserName = String.format("%s.%s%s", operatorFirstName, operatorLastName, String.valueOf(Int.random(1000, 9999)));
+            String operatorEmail = operatorUserName.concat("@dvsaUser.com");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.UIJourneySteps.addUser(operatorUserName, operatorFirstName, operatorLastName, operatorEmail);
             if (applicationType.equals("application")) {
                 applicationOrNot = true;
             } else {
                 applicationOrNot = false;
             }
-            world.transportManagerJourneySteps.addOperatorUserAsTransportManager(1, "N", applicationOrNot);
+            world.transportManagerJourneySteps.addOperatorUserAsTransportManager(String.format("%s %s", operatorFirstName, operatorLastName), "N", applicationOrNot);
         });
         And("^the operator countersigns digitally$", () -> {
             waitForTextToBePresent("What happens next?");
@@ -146,7 +152,9 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         When("^i add an operator as a transport manager$", () -> {
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.transportManagerJourneySteps.addOperatorAdminAsTransportManager(1);
+            world.transportManagerJourneySteps.addOperatorAdminAsTransportManager(
+                    String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()));
+
         });
         And("^i sign the declaration$", () -> {
             world.UIJourneySteps.signDeclaration();
