@@ -298,7 +298,7 @@ public class UIJourneySteps extends BasePage {
                 world.createLicence.getOperatingCentreAddressLine4(),
                 world.createLicence.getOperatingCentreTown()), 200)
                 && System.currentTimeMillis() < kickOut);
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
+        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", world.createLicence.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.createLicence.getLicenceNumber());
         clickByLinkText("Addresses");
     }
@@ -1005,7 +1005,7 @@ public class UIJourneySteps extends BasePage {
         selectValueFromDropDownByIndex("workAddress[searchPostcode][addresses]", SelectorType.ID, 1);
     }
 
-    public void nominateOperatorUserAsTransportManager(int user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         if (applicationOrNot) {
             navigateToTransportManagersPage("application");
         } else {
@@ -1015,24 +1015,27 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
-        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
+        selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
         Dates = date.getDate(-5, 0, -20);
-        enterText("dob_day", Dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", Dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", Dates.get("year").toString(), SelectorType.ID);
+
+        if(findElement("dob_day", SelectorType.ID).getAttribute("value").isEmpty()) {
+            waitAndEnterText("dob_day", SelectorType.ID, Dates.get("day").toString());
+            waitAndEnterText("dob_month", SelectorType.ID, Dates.get("month").toString());
+            waitAndEnterText("dob_year", SelectorType.ID, Dates.get("year").toString());
+        }
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void addOperatorAdminAsTransportManager(int user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
+    public void addOperatorAdminAsTransportManager(String user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
         navigateToTransportManagersPage("application");
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTextToBePresent("Add Transport Manager");
-        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, user);
+        selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
@@ -1150,7 +1153,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Declaration");
     }
 
-    public void addOperatorUserAsTransportManager(int user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
+    public void addOperatorUserAsTransportManager(String user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         navigateToExternalUserLogin(getOperatorUser(), getOperatorUserEmail());
         if (applicationOrNot) {
@@ -1169,15 +1172,20 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void addUser(String operatorUser, String operatorUserEmail, String operatorForeName,
-    String operatorFamilyName) throws IllegalBrowserException, MalformedURLException {
+    public void addUser(String operatorUser, String operatorForeName,
+    String operatorFamilyName, String operatorUserEmail) throws IllegalBrowserException, MalformedURLException {
+        setOperatorUser(operatorUser);
+        setOperatorForeName(operatorForeName);
+        setOperatorFamilyName(operatorFamilyName);
+        setOperatorUserEmail(operatorUserEmail);
+
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", operatorUser, SelectorType.ID);
-        enterText("forename", operatorForeName, SelectorType.ID);
-        enterText("familyName", operatorFamilyName, SelectorType.ID);
-        enterText("main[emailAddress]", operatorUserEmail, SelectorType.ID);
-        enterText("main[emailConfirm]", operatorUserEmail, SelectorType.ID);
+        enterText("username", getOperatorUser(), SelectorType.ID);
+        enterText("forename", getOperatorForeName(), SelectorType.ID);
+        enterText("familyName", getOperatorFamilyName(), SelectorType.ID);
+        enterText("main[emailAddress]", getOperatorUserEmail(), SelectorType.ID);
+        enterText("main[emailConfirm]", getOperatorUserEmail(), SelectorType.ID);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 

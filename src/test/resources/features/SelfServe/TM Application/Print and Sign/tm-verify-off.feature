@@ -4,7 +4,7 @@ Feature: Countersigning declaration page for the operator (Verify switched off)
   Background:
     Given verify has been switched "off"
     When i have a "goods" "GB" partial application
-    And i add a transport manager
+    And i select a transport manager to add
 
   @OLCS-21374
   Scenario: Verify switched off operator same as TM
