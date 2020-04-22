@@ -151,6 +151,16 @@ public class GrantLicenceAPI extends BaseAPI{
             world.grantLicence.payOutstandingFees(world.createLicence.getOrganisationId(), world.createLicence.getApplicationNumber());
             world.grantLicence.grant(world.createLicence.getApplicationNumber());
         }
+
+        ArrayList messages = apiResponse.extract().jsonPath().get("messages");
+        if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED
+                && !messages.contains("Application status updated")
+                && !messages.contains("Licence status updated"))
+        {
+            System.out.println(apiResponse.extract().statusCode());
+            System.out.println(apiResponse.extract().response().asString());
+            throw new HTTPException(apiResponse.extract().statusCode());
+        }
         return apiResponse;
     }
 
