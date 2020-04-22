@@ -102,6 +102,8 @@ public class GrantLicenceAPI extends BaseAPI{
         GrantApplicationBuilder grantApplication = new GrantApplicationBuilder().withId(applicationNumber).withDuePeriod("9").withCaseworkerNotes("This notes are from the API");
         apiResponse = RestUtils.put(grantApplication, grantApplicationResource, getHeaders());
 
+        System.out.println(apiResponse.extract().statusCode());
+        System.out.println(apiResponse.extract().response().asString());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
@@ -112,7 +114,6 @@ public class GrantLicenceAPI extends BaseAPI{
                 String apiMessages = apiResponse.extract().jsonPath().get("messages").toString();
                 Assert.assertTrue(apiMessages.contains("Application status updated"));
                 Assert.assertTrue(apiMessages.contains("Licence status updated"));
-                Assert.assertTrue(apiMessages.contains("CancelAllInterimFees success"));
             } catch (AssertionError e) {
                 throw new AssertionError("Licence failed to grant through the API.");
             }
@@ -150,16 +151,6 @@ public class GrantLicenceAPI extends BaseAPI{
             world.grantLicence.getOutstandingFees(world.createLicence.getApplicationNumber());
             world.grantLicence.payOutstandingFees(world.createLicence.getOrganisationId(), world.createLicence.getApplicationNumber());
             world.grantLicence.grant(world.createLicence.getApplicationNumber());
-        }
-
-        ArrayList messages = apiResponse.extract().jsonPath().get("messages");
-        if (apiResponse.extract().statusCode() != HttpStatus.SC_CREATED
-                && !messages.contains("Application status updated")
-                && !messages.contains("Licence status updated"))
-        {
-            System.out.println(apiResponse.extract().statusCode());
-            System.out.println(apiResponse.extract().response().asString());
-            throw new HTTPException(apiResponse.extract().statusCode());
         }
         return apiResponse;
     }
