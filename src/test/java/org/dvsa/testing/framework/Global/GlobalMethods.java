@@ -11,14 +11,13 @@ import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.jetbrains.annotations.NotNull;
 
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
 
-public class GlobalMethods extends BasePage {
+public class GlobalMethods extends BasePage{
 
     private World world;
     private String loginPassword;
@@ -52,10 +51,10 @@ public class GlobalMethods extends BasePage {
             waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
 
         try {
-            signIn(username, password);
+            LoginPage.signIn(username, password);
         } catch (Exception e) {
             //User is already registered
-            signIn(username, getLoginPassword());
+            LoginPage.signIn(username, getLoginPassword());
         } finally {
             if (isTextPresent("Current password", 60)) {
                 enterField(nameAttribute("input", "oldPassword"), password);
@@ -65,12 +64,5 @@ public class GlobalMethods extends BasePage {
                 setLoginPassword(newPassword);
             }
         }
-    }
-
-    private static void signIn(@NotNull String emailAddress, @NotNull String password) throws IllegalBrowserException, MalformedURLException {
-        LoginPage.email(emailAddress);
-        LoginPage.password(password);
-        LoginPage.submit();
-        LoginPage.untilNotOnPage(5);
     }
 }
