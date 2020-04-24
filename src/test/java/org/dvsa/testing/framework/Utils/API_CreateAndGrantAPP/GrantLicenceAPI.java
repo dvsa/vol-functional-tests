@@ -159,6 +159,7 @@ public class GrantLicenceAPI extends BaseAPI{
         String grantApplicationResource = URL.build(env, String.format("variation/%s/grant/", applicationNumber)).toString();
         GenericBuilder grantVariationBuilder = new GenericBuilder().withId(applicationNumber);
         apiResponse = RestUtils.put(grantVariationBuilder, grantApplicationResource, getHeaders());
+        apiResponse = RestUtils.put(grantVariationBuilder, grantApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());

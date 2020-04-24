@@ -1,9 +1,8 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
+import activesupport.faker.FakerUtils;
+import activesupport.number.Int;
 import cucumber.api.java8.En;
 import enums.UserRoles;
 import org.apache.commons.io.FileUtils;
@@ -14,7 +13,6 @@ import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;
 
 import java.io.File;
-import java.util.Locale;
 
 
 public class ManageUsersPage extends BasePage implements En {
@@ -53,14 +51,11 @@ public class ManageUsersPage extends BasePage implements En {
                     title -> Assert.assertTrue(title.getText().contains("Action")));
         });
         When("^i add a user$", () -> {
-            FakeValuesService fakeValuesService = new FakeValuesService(
-                    new Locale("en-GB"), new RandomService());
-
-            Faker faker = new Faker();
-
-            world.UIJourneySteps.addUser(faker.name().username(),
-                    faker.name().firstName(), faker.name().lastName(),
-                    fakeValuesService.bothify("????##@dvsa.org"));
+            FakerUtils faker = new FakerUtils();
+            String foreName = faker.generateFirstName();
+            String familyName = faker.generateLastName();
+            String userName = String.format("%s.%s%s", foreName, familyName, Int.random(1000, 9999));
+            world.UIJourneySteps.addUser(userName, foreName, familyName, userName.concat("@dvsa.org"));
         });
         Then("^user text should displaying current users$", () -> {
             Assert.assertEquals("2 Current users", getText("h2", SelectorType.CSS));
