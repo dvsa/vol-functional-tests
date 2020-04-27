@@ -25,8 +25,8 @@ public class DirectorVariation extends BasePage implements En {
         this.world = world;
 
         When("^i add a new person$", () -> {
-            world.UIJourneySteps.navigateToSelfServePage("licence", "directors");
-            world.UIJourneySteps.addPerson(firstName, lastName);
+            world.selfServeNavigation.navigateToPage("licence", "directors");
+            world.directorJourneySteps.addPerson(firstName, lastName);
         });
         Then("^a new director should be added to my licence$", () -> {
             waitForTextToBePresent("Directors");
@@ -36,7 +36,7 @@ public class DirectorVariation extends BasePage implements En {
             assertTrue(director.stream().anyMatch(d -> d.getAttribute("value").contains(firstName)));
         });
         And("^a non urgent task is created in internal$", () -> {
-            world.UIJourneySteps.navigateToInternalTask();
+            world.internalNavigation.logInAndNavigateToTask();
             clickByLinkText("Add director(s)");
             waitForTextToBePresent("Linked to");
             String isSelected = findElement("//div[4]/label", SelectorType.XPATH, 30).getAttribute("class");
@@ -55,7 +55,7 @@ public class DirectorVariation extends BasePage implements En {
             clickByName("form-actions[saveAndContinue]");
         });
         And("^an urgent task is created in internal$", () -> {
-            world.UIJourneySteps.navigateToInternalTask();
+            world.internalNavigation.logInAndNavigateToTask();
             clickByLinkText("Add director(s)");
             waitForTextToBePresent("Linked to");
             String isSelected = findElement("//div[4]/label", SelectorType.XPATH, 30).getAttribute("class");
@@ -73,16 +73,16 @@ public class DirectorVariation extends BasePage implements En {
             clickByName("form-actions[saveAndContinue]");
         });
         Then("^a snapshot should be created in internal$", () -> {
-            world.UIJourneySteps.internalUserNavigateToDocsTable();
+            world.internalNavigation.logInAndNavigateToDocsTable();
             List<WebElement> docsAttach = listOfWebElements("//tbody/tr[*]/td[2]", SelectorType.XPATH);
             assertTrue(docsAttach.stream().anyMatch(d -> d.getText().contains("Application")));
         });
         When("^a new director has been added$", () -> {
-            world.UIJourneySteps.addDirectorWithoutConvictions(firstName, lastName);
+            world.directorJourneySteps.addDirectorWithoutConvictions(firstName, lastName);
         });
         Given("^i add a director$", () -> {
-            world.UIJourneySteps.navigateToSelfServePage("licence","directors");
-            world.UIJourneySteps.addDirector(firstName, lastName);
+            world.selfServeNavigation.navigateToPage("licence","directors");
+            world.directorJourneySteps.addDirector(firstName, lastName);
         });
         Then("^i should have multiple directors on my application$", () -> {
             waitForTextToBePresent("Directors");
@@ -92,30 +92,30 @@ public class DirectorVariation extends BasePage implements En {
             assertTrue(director.stream().anyMatch(d -> d.getAttribute("value").contains(firstName)));
         });
         When("^i add a new director$", () -> {
-            world.UIJourneySteps.addDirector(firstName, lastName);
+            world.directorJourneySteps.addDirector(firstName, lastName);
         });
         When("^i remove a director$", () -> {
-            world.UIJourneySteps.removeDirector();
+            world.directorJourneySteps.removeDirector();
         });
         Then("^a task should not be created in internal$", () -> {
-            world.UIJourneySteps.navigateToInternalTask();
+            world.internalNavigation.logInAndNavigateToTask();
             List<WebElement> director = listOfWebElements("//tbody", SelectorType.XPATH);
             assertFalse(director.stream().anyMatch(d -> d.getText().contains("Last director removed")));
         });
 
         When("^i remove a the last director$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToSelfServePage("licence", "directors");
-            world.UIJourneySteps.removeDirector();
+            world.selfServeNavigation.navigateToPage("licence", "directors");
+            world.directorJourneySteps.removeDirector();
         });
 
         Then("^a task should be created in internal$", () -> {
-           world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.searchAndViewApplication();
+           world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
+           world.internalSearch.searchAndViewApplication();
         });
 
         Then("^a task is created in internal$", () -> {
-            world.UIJourneySteps.navigateToInternalTask();
+            world.internalNavigation.logInAndNavigateToTask();
             List<WebElement> director = listOfWebElements("//tbody", SelectorType.XPATH);
             assertTrue(director.stream().anyMatch(d -> d.getText().contains("Last director removed")));
         });

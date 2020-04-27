@@ -17,17 +17,17 @@ public class PsvSurrenders extends BasePage implements En {
 
     public PsvSurrenders(World world) {
         And("^i choose to surrender my licence$", () -> {
-            world.UIJourneySteps.navigateToSurrendersStartPage();
-            world.UIJourneySteps.startSurrender();
+            world.surrenderJourneySteps.navigateToSurrendersStartPage();
+            world.surrenderJourneySteps.startSurrender();
             waitAndClick("form-actions[submit]",SelectorType.ID);
-            world.UIJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
             waitForTextToBePresent("In your possession");
-            world.UIJourneySteps.addOperatorLicenceDetails();
+            world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createLicence.getLicenceType().equals("standard_international")) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
-                world.UIJourneySteps.addCommunityLicenceDetails();
+                world.surrenderJourneySteps.addCommunityLicenceDetails();
             }
-            world.UIJourneySteps.acknowledgeDestroyPage();
+            world.surrenderJourneySteps.acknowledgeDestroyPage();
         });
 
         Then("^the correct licence details should be displayed$", () -> {
@@ -35,8 +35,8 @@ public class PsvSurrenders extends BasePage implements En {
             Assert.assertEquals(world.createLicence.getLicenceNumber(), licenceNumber);
         });
         And("^the correct correspondence details should be displayed$", () -> {
-            Assertions.assertEquals(world.UIJourneySteps.getSurrenderAddressLine1(), world.createLicence.getAddressLine1());
-            Assertions.assertEquals(world.UIJourneySteps.getSurrenderTown(), world.createLicence.getTown());
+            Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(), world.createLicence.getAddressLine1());
+            Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderTown(), world.createLicence.getTown());
         });
         And("^the correct contact details should be displayed$", () -> {
             String contactNumber = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
@@ -85,7 +85,7 @@ public class PsvSurrenders extends BasePage implements En {
         And("^i navigate to the review page$", () -> {
             world.updateLicence.printLicenceDiscs();
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            world.UIJourneySteps.navigateToSurrenderReviewPage("2", "2", "1");
+            world.surrenderJourneySteps.navigateToSurrenderReviewPage("2", "2", "1");
         });
     }
 }

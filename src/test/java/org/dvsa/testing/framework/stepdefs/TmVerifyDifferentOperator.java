@@ -93,7 +93,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
                 click("form-actions[submit]", SelectorType.ID);
             }
             String emailAddress = "tme".concat(Str.randomWord(2)).concat("externalTM@vol.gov");
-            world.UIJourneySteps.addNewPersonAsTransportManager(forename, familyName, emailAddress);
+            world.transportManagerJourneySteps.addNewPersonAsTransportManager(forename, familyName, emailAddress);
         });
         Then("^a transport manager has been created banner is displayed$", () -> {
             findElement("//p[@role]",SelectorType.XPATH,10).getText().contains("The transport manager's user account has been created and a link sent to them");
@@ -117,25 +117,25 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             String operatorLastName = faker.generateLastName();
             String operatorUserName = String.format("%s.%s%s", operatorFirstName, operatorLastName, String.valueOf(Int.random(1000, 9999)));
             String operatorEmail = operatorUserName.concat("@dvsaUser.com");
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.UIJourneySteps.addUser(operatorUserName, operatorFirstName, operatorLastName, operatorEmail);
             if (applicationType.equals("application")) {
                 applicationOrNot = true;
             } else {
                 applicationOrNot = false;
             }
-            world.UIJourneySteps.addOperatorUserAsTransportManager(String.format("%s %s", operatorFirstName, operatorLastName), "N", applicationOrNot);
+            world.transportManagerJourneySteps.addOperatorUserAsTransportManager(String.format("%s %s", operatorFirstName, operatorLastName), "N", applicationOrNot);
         });
         And("^the operator countersigns digitally$", () -> {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             if(Browser.navigate().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size()!=0) {
-            world.UIJourneySteps.navigateToTransportManagersPage("application");
+                world.selfServeNavigation.navigateToPage("application", "transport managers");
             } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationNumber())).size()!=0) {
-            world.UIJourneySteps.navigateToTransportManagersPage("variation");
+                world.selfServeNavigation.navigateToPage("variation", "transport managers");
             }
-            clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
+            clickByLinkText(world.transportManagerJourneySteps.getOperatorForeName() + " " + world.transportManagerJourneySteps.getOperatorFamilyName());
             click("form-actions[submit]", SelectorType.ID);
             world.UIJourneySteps.signDeclaration();
             world.UIJourneySteps.signWithVerify();
@@ -151,9 +151,10 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             }
         });
         When("^i add an operator as a transport manager$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.addOperatorAdminAsTransportManager(
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.transportManagerJourneySteps.addOperatorAdminAsTransportManager(
                     String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()));
+
         });
         And("^i sign the declaration$", () -> {
             world.UIJourneySteps.signDeclaration();
@@ -161,11 +162,11 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         And("^the operator countersigns by print and sign$", () -> {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             clickByLinkText(world.createLicence.getApplicationNumber());
             waitForTextToBePresent("Apply for a new licence");
             clickByLinkText("Transport");
-            clickByLinkText(world.UIJourneySteps.getOperatorForeName() + " " + world.UIJourneySteps.getOperatorFamilyName());
+            clickByLinkText(world.transportManagerJourneySteps.getOperatorForeName() + " " + world.transportManagerJourneySteps.getOperatorFamilyName());
             click("form-actions[submit]", SelectorType.ID);
             click("//*[contains(text(),'Print')]",SelectorType.XPATH);
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);

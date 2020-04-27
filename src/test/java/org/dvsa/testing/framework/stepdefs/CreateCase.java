@@ -83,7 +83,7 @@ public class CreateCase extends BasePage implements En {
         });
         And("^i add a case in internal on the \"([^\"]*)\" page$", (String page) -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.UIJourneySteps.createCaseUI(page);
         });
     }

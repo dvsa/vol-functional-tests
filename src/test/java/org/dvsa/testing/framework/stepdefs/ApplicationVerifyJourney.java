@@ -13,8 +13,8 @@ public class ApplicationVerifyJourney extends BasePage implements En {
         Given("^i have an application in progress$", () -> {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
-            world.UIJourneySteps.navigateToExternalUserLogin( world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToReviewDeclarationsPage("application");
+            world.selfServeNavigation.navigateToLogin( world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("application", "review and declarations");
             world.UIJourneySteps.signDeclaration();
         });
         When("^i choose to sign with verify with \"([^\"]*)\"$", (String arg0) -> {

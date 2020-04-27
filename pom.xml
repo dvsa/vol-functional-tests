@@ -19,7 +19,7 @@
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <axe-scanner-version>1.0</axe-scanner-version>
-        <page-objects.version>0.6.9.3</page-objects.version>
+        <page-objects.version>0.6.9.4</page-objects.version>
         <page-action.version>0.2</page-action.version>
         <uri-constructor.version>1.5.1</uri-constructor.version>
         <assertj-core-version>3.9.1</assertj-core-version>
@@ -156,7 +156,7 @@
                         <configuration>
                             <forkCount>4</forkCount>
                             <reuseForks>true</reuseForks>
-                            <rerunFailingTestsCount>2</rerunFailingTestsCount>
+                            <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
                 </executions>

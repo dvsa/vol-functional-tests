@@ -34,19 +34,20 @@ public class VerifySwitchedOff extends BasePage implements En {
             assertEquals("Submit", buttonName);
         });
         And("^i select a transport manager to add$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToSelfServePage("application", "transport managers");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("application", "transport managers");
             waitForTextToBePresent("Transport Managers");
             waitAndClick("//*[@id='add']", SelectorType.XPATH);
             waitForTextToBePresent("Add Transport Manager");
             selectValueFromDropDown("data[registeredUser]", SelectorType.ID, String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()));
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+
         });
         When("^the transport manager is the owner$", () -> {
-            world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
+            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         });
         And("^the transport manager is not the owner$", () -> {
-            world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
+            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         When("^i submit the application$", () -> {
             click("form-actions[submit]", SelectorType.ID);
@@ -67,13 +68,13 @@ public class VerifySwitchedOff extends BasePage implements En {
             assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")),30));
         });
         When("^i am on the the TM landing page$", () -> {
-            world.UIJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
+            world.transportManagerJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
         });
         Then("^a success message banner should be displayed$", () -> {
             Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager",30));
         });
         And("^i navigate to the declarations page$", () -> {
-            world.UIJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
+            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         Given("^verify has been switched \"([^\"]*)\"$", (String arg0) -> {
           if (arg0.toLowerCase().equals("on")){

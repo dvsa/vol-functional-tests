@@ -145,7 +145,7 @@ public class Surrenders extends BasePage implements En {
             click("//*[@id='submit']", SelectorType.XPATH);
             waitForTextToBePresent("Review your contact information");
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            world.UIJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
+            world.surrenderJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
         });
         Then("^the correct destroyed disc details should be displayed$", () -> {
             String destroyedDiscs = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
@@ -180,10 +180,10 @@ public class Surrenders extends BasePage implements En {
             this.discsLost = "2";
             this.discsToDestroy = "2";
             this.discsStolen = "1";
-            world.UIJourneySteps.navigateToSurrendersStartPage();
+            world.surrenderJourneySteps.navigateToSurrendersStartPage();
             click("//*[@id='submit']", SelectorType.XPATH);
             waitForTextToBePresent("Review your contact information");
-            world.UIJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
+            world.surrenderJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
             click("//*[@id='submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
             world.UIJourneySteps.signWithVerify();
@@ -205,31 +205,31 @@ public class Surrenders extends BasePage implements En {
             world.UIJourneySteps.signManually();
         });
         When("^a caseworker views the surrender$", () -> {
-            world.UIJourneySteps.caseworkManageSurrender();
+            world.surrenderJourneySteps.caseworkManageSurrender();
         });
         And("^an open case and bus reg are created$", () -> {
-            world.UIJourneySteps.internalSiteAddBusNewReg(5);
+            world.busRegistrationJourneySteps.internalSiteAddBusNewReg(5);
             world.updateLicence.createCase();
         });
         Given("^i have a valid \"([^\"]*)\" \"([^\"]*)\" licence with an open case and bus reg$", (String operatorType, String licenceType) -> {
-            world.UIJourneySteps.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
+            world.busRegistrationJourneySteps.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
         });
         When("^a caseworker views the surrender details$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.searchAndViewLicence();
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalSearch.searchAndViewLicence();
             waitAndClick("menu-licence_surrender", SelectorType.ID);
         });
 
         And("^i choose to surrender my licence with \"([^\"]*)\"$", (String surrenderMethod) -> {
-            world.UIJourneySteps.submitSurrenderUntilChoiceOfVerification();
+            world.surrenderJourneySteps.submitSurrenderUntilChoiceOfVerification();
             EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
             if (surrenderMethod.equalsIgnoreCase("verify")) {
                 if (GenericUtils.isVerifySupportedPlatform(env.name())) {
                     waitAndClick("//*[@id='sign']", SelectorType.XPATH);
                     world.UIJourneySteps.signWithVerify();
-                    world.UIJourneySteps.checkVerifyConfirmation();
+                    world.surrenderJourneySteps.checkVerifyConfirmation();
                    } else {
                     fail("Verify not supported on this platform");
                 }
@@ -248,13 +248,13 @@ public class Surrenders extends BasePage implements En {
         });
         And("^the open case and bus reg is closed$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
-            world.UIJourneySteps.internalDigitalSurrenderMenu();
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewLicence();
+            world.surrenderJourneySteps.internalDigitalSurrenderMenu();
             world.UIJourneySteps.closeCase();
-            world.UIJourneySteps.internalDigitalSurrenderMenu();
-            world.UIJourneySteps.closeBusReg();
-            world.UIJourneySteps.internalDigitalSurrenderMenu();
+            world.surrenderJourneySteps.internalDigitalSurrenderMenu();
+            world.busRegistrationJourneySteps.closeBusReg();
+            world.surrenderJourneySteps.internalDigitalSurrenderMenu();
         });
 
         And("^the tick boxes are checked$", () -> {

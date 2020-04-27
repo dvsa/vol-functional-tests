@@ -102,6 +102,8 @@ public class GrantLicenceAPI extends BaseAPI{
         GrantApplicationBuilder grantApplication = new GrantApplicationBuilder().withId(applicationNumber).withDuePeriod("9").withCaseworkerNotes("This notes are from the API");
         apiResponse = RestUtils.put(grantApplication, grantApplicationResource, getHeaders());
 
+        System.out.println(apiResponse.extract().statusCode());
+        System.out.println(apiResponse.extract().response().asString());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
@@ -112,7 +114,6 @@ public class GrantLicenceAPI extends BaseAPI{
                 String apiMessages = apiResponse.extract().jsonPath().get("messages").toString();
                 Assert.assertTrue(apiMessages.contains("Application status updated"));
                 Assert.assertTrue(apiMessages.contains("Licence status updated"));
-                Assert.assertTrue(apiMessages.contains("CancelAllInterimFees success"));
             } catch (AssertionError e) {
                 throw new AssertionError("Licence failed to grant through the API.");
             }
@@ -157,6 +158,7 @@ public class GrantLicenceAPI extends BaseAPI{
     private void variationGrant(String applicationNumber) {
         String grantApplicationResource = URL.build(env, String.format("variation/%s/grant/", applicationNumber)).toString();
         GenericBuilder grantVariationBuilder = new GenericBuilder().withId(applicationNumber);
+        apiResponse = RestUtils.put(grantVariationBuilder, grantApplicationResource, getHeaders());
         apiResponse = RestUtils.put(grantVariationBuilder, grantApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {

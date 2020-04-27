@@ -35,9 +35,9 @@ public class RemoveTM extends BasePage implements En {
         });
         When("^the transport manager has been removed by an internal user$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.UIJourneySteps.urlSearchAndViewLicence();
-            world.UIJourneySteps.removeInternalTransportManager();
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewLicence();
+            world.transportManagerJourneySteps.removeInternalTransportManager();
         });
         Then("^a pop up message should be displayed$", () -> {
             waitForTextToBePresent(alertHeaderValue);
@@ -67,8 +67,8 @@ public class RemoveTM extends BasePage implements En {
             }
         });
         Given("^a self-serve user removes the last TM$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToTransportManagersPage("licence");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("licence", "transport managers");
             click("//*[@value='Remove']", SelectorType.XPATH);
         });
         Given("^the licence has been granted$", () -> {

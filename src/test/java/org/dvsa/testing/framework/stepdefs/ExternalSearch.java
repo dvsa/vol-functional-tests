@@ -13,7 +13,7 @@ public class ExternalSearch extends BasePage implements En {
 
     public ExternalSearch(World world) {
         Given("^I am on the external search page$", () -> {
-            world.UIJourneySteps.navigateToExternalSearch();
+            world.selfServeNavigation.navigateToSearch();
         });
         When("^I search for a lorry and bus operator by \"([^\"]*)\"$", (String arg0) -> {
             findSelectAllRadioButtonsByValue(arg0);

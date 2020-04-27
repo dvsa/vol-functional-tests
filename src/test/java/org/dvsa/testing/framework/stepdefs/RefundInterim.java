@@ -37,8 +37,8 @@ public class RefundInterim extends BasePage implements En {
         });
         Then("^the interim fee should be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
-            world.UIJourneySteps.urlSearchAndViewLicence();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
+            world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Fees");
             selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
             waitForTextToBePresent("£68.00");
@@ -59,8 +59,8 @@ public class RefundInterim extends BasePage implements En {
         });
         Then("^the interim fee should not be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
-            world.UIJourneySteps.navigateToInternalAdminUserLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
-            world.UIJourneySteps.urlSearchAndViewLicence();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
+            world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Fees");
             do {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);

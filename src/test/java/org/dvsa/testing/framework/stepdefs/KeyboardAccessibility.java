@@ -32,7 +32,7 @@ public class KeyboardAccessibility extends BasePage implements En {
 
     public KeyboardAccessibility(World world) {
         When("^i am on the vehicle details page$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);
             clickByLinkText("Vehicles");
             waitForTextToBePresent("Vehicle details");
@@ -66,72 +66,72 @@ public class KeyboardAccessibility extends BasePage implements En {
 
         });
         When("^i navigate to self serve application main pages i can skip to main content$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToSelfServePage("application","addresses");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("application","addresses");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("application","financial evidence");
+            world.selfServeNavigation.navigateToPage("application","financial evidence");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("application","vehicle declarations");
+            world.selfServeNavigation.navigateToPage("application","vehicle declarations");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("application","financial history");
+            world.selfServeNavigation.navigateToPage("application","financial history");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("application","licence history");
+            world.selfServeNavigation.navigateToPage("application","licence history");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("application","convictions and penalties");
+            world.selfServeNavigation.navigateToPage("application","convictions and penalties");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("application","review and declarations");
+            world.selfServeNavigation.navigateToPage("application","review and declarations");
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence main pages i can skip to main content$", () -> {
             world.UIJourneySteps.CheckSkipToMainContentOnExternalUserLogin();
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToSelfServePage("licence","view");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("licence","view");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","type of licence");
+            world.selfServeNavigation.navigateToPage("licence","type of licence");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","business type");
+            world.selfServeNavigation.navigateToPage("licence","business type");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","business details");
+            world.selfServeNavigation.navigateToPage("licence","business details");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","address");
+            world.selfServeNavigation.navigateToPage("licence","address");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","directors");
+            world.selfServeNavigation.navigateToPage("licence","directors");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","operating centers");
+            world.selfServeNavigation.navigateToPage("licence","operating centers");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","transport managers");
+            world.selfServeNavigation.navigateToPage("licence","transport managers");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","vehicles");
+            world.selfServeNavigation.navigateToPage("licence","vehicles");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","trailers");
+            world.selfServeNavigation.navigateToPage("licence","trailers");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToSelfServePage("licence","safety and compliance");
+            world.selfServeNavigation.navigateToPage("licence","safety and compliance");
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence nav bar pages i can skip to main content$", () -> {
-            world.UIJourneySteps.navigateToExternalUserLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.navigateToNavBarPage("Home");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToNavBarPage("Home");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToNavBarPage("Manage users");
+            world.selfServeNavigation.navigateToNavBarPage("Manage users");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.navigateToNavBarPage("Your account");
+            world.selfServeNavigation.navigateToNavBarPage("Your account");
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence surrender pages i can skip to main content$", () -> {
-            world.UIJourneySteps.navigateToSurrendersStartPage();
+            world.surrenderJourneySteps.navigateToSurrendersStartPage();
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.startSurrender();
+            world.surrenderJourneySteps.startSurrender();
             world.UIJourneySteps.skipToMainContentAndCheck();
             waitAndClick("form-actions[submit]",SelectorType.ID);
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
             waitForTextToBePresent("In your possession");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.UIJourneySteps.addOperatorLicenceDetails();
+            world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createLicence.getLicenceType().equals("standard_international")) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
                 world.UIJourneySteps.skipToMainContentAndCheck();
-                world.UIJourneySteps.addCommunityLicenceDetails();
+                world.surrenderJourneySteps.addCommunityLicenceDetails();
             }
             world.UIJourneySteps.skipToMainContentAndCheck();
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
