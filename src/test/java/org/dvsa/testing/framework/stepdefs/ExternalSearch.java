@@ -4,14 +4,17 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 public class ExternalSearch extends BasePage implements En {
-    World world = new World();
+    private World world;
 
     public ExternalSearch(World world) {
+        this.world = world;
+
         Given("^I am on the external search page$", () -> {
             world.selfServeNavigation.navigateToSearch();
         });
@@ -34,7 +37,34 @@ public class ExternalSearch extends BasePage implements En {
             clickByName("submit");
         });
         Then("^search results page addresses should only display address belonging to our post code$", () -> {
-            assertTrue(checkForFullMatch(world.createLicence.getPostcode().toUpperCase()));
+            boolean correspondenceAddressNotFound = true;
+            long kickOut = System.currentTimeMillis() + 240000;
+            String fullCorrespondenceAddress = String.format("%s, %s, %s, %s",
+                    world.createLicence.getAddressLine3(),
+                    world.createLicence.getAddressLine4(),
+                    world.createLicence.getTown(),
+                    world.createLicence.getPostcode()
+            );
+            String fullOperatingCentreAddress = String.format("%s, %s, %s, %s",
+                    world.createLicence.getOperatingCentreAddressLine3(),
+                    world.createLicence.getOperatingCentreAddressLine4(),
+                    world.createLicence.getOperatingCentreTown(),
+                    world.createLicence.getPostcode()
+            );
+            while (correspondenceAddressNotFound && System.currentTimeMillis() < kickOut) {
+                correspondenceAddressNotFound = !isTextPresent(fullCorrespondenceAddress, 10);
+                click("submit", SelectorType.ID);
+                waitForPageLoad();
+            }
+//            if (kickOut > System.currentTimeMillis()){
+//                throw new Exception("KickOut reached. Postcode external search failed.");
+//            }
+            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", fullCorrespondenceAddress) , SelectorType.XPATH);
+            assertTrue(tableRow.getText().contains(world.createLicence.getOrganisationName()));
+            assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
+            tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", fullOperatingCentreAddress) , SelectorType.XPATH);
+            assertTrue(tableRow.getText().contains(world.createLicence.getOrganisationName()));
+            assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
 
         Then("^search results page should display operator names containing our business name$", () -> {

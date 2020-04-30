@@ -49,7 +49,7 @@ public class CreateLicenceAPI extends BaseAPI{
     private String addressLine3 = address.get("addressLine3");
     private String addressLine4 = address.get("addressLine4");
     private String town = faker.generateAddress().get("town");
-    private String postcode = "NG23HX";
+    private String postcode = faker.getRandomRealUKPostcode();
     private String countryCode = "GB";
     private LinkedHashMap<String, String> establishmentAddress = faker.generateAddress();
     private String establishmentAddressLine1 = establishmentAddress.get("addressLine1");
