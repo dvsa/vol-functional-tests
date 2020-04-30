@@ -157,7 +157,7 @@
                             <forkCount>4</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                            <skipAfterFailureCount>1</skipAfterFailureCount>
+                            <skipAfterFailureCount>20</skipAfterFailureCount>
                         </configuration>
                     </execution>
                 </executions>
