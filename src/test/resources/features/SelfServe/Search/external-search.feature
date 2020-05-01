@@ -25,15 +25,3 @@ Feature: External user search by Address, Business name, Licence Number and Pers
   Scenario: [Positive]Search for lorry and bus operators by Person's name
     When I search for a lorry and bus operator by "person"
     Then search results page should display names containing our operator name
-
-  Scenario: [Negative]Search for lorry and bus operators by Address
-    When I search for a lorry and bus operator by "address"
-    Then search results page should not display addresses which were not searched for
-
-  Scenario: [Negative]Search for lorry and bus operators by Business name
-    When I search for a lorry and bus operator by "business"
-    Then search results page should only display operator names containing our business name
-
-  Scenario: [Negative]Search for lorry and bus operators by Person's name
-    When I search for a lorry and bus operator by "person"
-    Then search results page should only display names containing our operator name
