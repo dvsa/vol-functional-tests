@@ -1,10 +1,15 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
+
+import java.net.MalformedURLException;
+import java.time.Duration;
 
 import static org.junit.Assert.assertTrue;
 
@@ -36,8 +41,6 @@ public class ExternalSearch extends BasePage implements En {
             clickByName("submit");
         });
         Then("^search results page addresses should only display address belonging to our post code$", () -> {
-            boolean correspondenceAddressNotFound = true;
-            long kickOut = System.currentTimeMillis() + 240000;
             String clippedCorrespondenceAddress = String.format("%s, %s, %s, %s",
                     world.createLicence.getAddressLine3(),
                     world.createLicence.getAddressLine4(),
@@ -50,14 +53,7 @@ public class ExternalSearch extends BasePage implements En {
                     world.createLicence.getOperatingCentreTown(),
                     world.createLicence.getPostcode()
             );
-            while (correspondenceAddressNotFound) {
-                correspondenceAddressNotFound = !isTextPresent(clippedCorrespondenceAddress, 10);
-                click("submit", SelectorType.ID);
-                waitForPageLoad();
-                if (System.currentTimeMillis() > kickOut) {
-                    throw new Exception("KickOut reached. Correspondence and operating centre address external search failed.");
-                }
-            }
+            clickSearchWhileCheckingTextPresent(clippedCorrespondenceAddress, 240, "KickOut reached. Correspondence and operating centre address external search failed.");
             WebElement tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", clippedCorrespondenceAddress), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.createLicence.getOrganisationName()));
             assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
@@ -66,48 +62,34 @@ public class ExternalSearch extends BasePage implements En {
             assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should display operator names containing our business name$", () -> {
-            boolean operatorNameNotFound = true;
-            long kickOut = System.currentTimeMillis() + 240000;
-            while (operatorNameNotFound) {
-                operatorNameNotFound = !isTextPresent(world.createLicence.getOrganisationName(), 10);
-                click("submit", SelectorType.ID);
-                waitForPageLoad();
-                if (System.currentTimeMillis() > kickOut) {
-                    throw new Exception("KickOut reached. Operator name external search failed.");
-                }
-            }
+            clickSearchWhileCheckingTextPresent(world.createLicence.getOrganisationName(), 240, "KickOut reached. Operator name external search failed.");
             WebElement tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", world.createLicence.getOrganisationName()), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should only display our licence number$", () -> {
-            boolean licenceNumberNotFound = true;
-            long kickOut = System.currentTimeMillis() + 240000;
-            while (licenceNumberNotFound) {
-                licenceNumberNotFound = !isTextPresent(world.createLicence.getLicenceNumber(), 10);
-                click("submit", SelectorType.ID);
-                waitForPageLoad();
-                if (System.currentTimeMillis() > kickOut) {
-                    throw new Exception("KickOut reached. Licence number external search failed.");
-                }
-            }
+            clickSearchWhileCheckingTextPresent(world.createLicence.getLicenceNumber(), 240, "KickOut reached. Licence number external search failed.");
             WebElement tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", world.createLicence.getOrganisationName()), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should display names containing our operator name$", () -> {
-            boolean operatorNameNotFound = true;
             String operatorName = String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName());
-            long kickOut = System.currentTimeMillis() + 300000;
-            while (operatorNameNotFound) {
-                operatorNameNotFound = !isTextPresent(operatorName, 10);
-                click("submit", SelectorType.ID);
-                waitForPageLoad();
-                if (System.currentTimeMillis() > kickOut) {
-                    throw new Exception("KickOut reached. Operator name external search failed.");
-                }
-            }
+            clickSearchWhileCheckingTextPresent(operatorName, 300, "KickOut reached. Operator name external search failed.");
             WebElement tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", operatorName), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.createLicence.getOrganisationName()));
             assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
+    }
+
+    public void clickSearchWhileCheckingTextPresent(String text, int seconds, String exceptionMessage) throws IllegalBrowserException, MalformedURLException {
+        boolean conditionNotTrue = true;
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
+        while (conditionNotTrue) {
+            conditionNotTrue = !isTextPresent(text, 10);
+            click("submit", SelectorType.ID);
+            waitForPageLoad();
+            if (System.currentTimeMillis() > kickOut) {
+                throw new TimeoutException(exceptionMessage);
+            }
+        }
     }
 }

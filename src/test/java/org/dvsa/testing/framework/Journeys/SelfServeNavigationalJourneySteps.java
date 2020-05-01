@@ -28,7 +28,6 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         navigate().get(myURL);
     }
 
-
     public void navigateToPage(String type, String page) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");

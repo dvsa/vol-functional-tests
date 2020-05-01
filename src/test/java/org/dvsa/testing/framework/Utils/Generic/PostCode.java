@@ -1,7 +1,12 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
+import activesupport.number.Int;
 import enums.TrafficArea;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class PostCode {
 
@@ -46,5 +51,21 @@ public class PostCode {
                 postCode = "NG23HX";
         }
         return postCode;
+    }
+
+    public static String getRandomRealNottinghamPostcode() {
+        String postcodeFile = System.getProperty("user.dir").concat("/src/test/resources/testResources/nottinghamPostcodes.csv");
+        String line = "";
+        String[] postcodes = new String[0];
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(postcodeFile));
+            while ((line = br.readLine()) != null) {
+                postcodes = line.split(",");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return postcodes[Int.random(0, postcodes.length - 1)];
     }
 }
