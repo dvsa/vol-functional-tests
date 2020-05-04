@@ -194,7 +194,7 @@ public class GenericUtils extends BasePage {
         Browser.navigate().switchTo().window(tabs.get(tab));
     }
 
-    public String readFileAsString(String fileName) throws Exception {
+    public String readFileAsString(String fileName) throws IOException {
         String data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
     }

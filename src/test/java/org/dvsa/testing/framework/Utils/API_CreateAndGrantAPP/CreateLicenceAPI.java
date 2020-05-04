@@ -33,7 +33,6 @@ public class CreateLicenceAPI extends BaseAPI{
     private static ValidatableResponse apiResponse;
     private static int version = 1;
     private FakerUtils faker = new FakerUtils();
-
     private String title;
     private String foreName = faker.generateFirstName();
     private String familyName = faker.generateLastName();
