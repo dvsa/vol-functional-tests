@@ -19,7 +19,6 @@ Feature: Internal Search
     When i search for and click on my case
     Then the "Case details" page should display
 
-    # Test needs fixing. Very difficult to get the correct licence discs while other tests run in tandem and other licences are created.
   Scenario: Search a PSV Disc on Internal
     And discs have been added to my licence
     When i search for my psv disc and click on my licence and discs
