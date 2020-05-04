@@ -6,8 +6,10 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.TimeoutException;
 
 import java.net.MalformedURLException;
+import java.time.Duration;
 
 import static activesupport.driver.Browser.navigate;
 
@@ -179,6 +181,19 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 clickByLinkText("Sign out");
                 waitForTextToBePresent("Thank you");
                 break;
+        }
+    }
+
+    public void clickSearchWhileCheckingTextPresent(String text, int seconds, String exceptionMessage) throws IllegalBrowserException, MalformedURLException {
+        boolean conditionNotTrue = true;
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
+        while (conditionNotTrue) {
+            conditionNotTrue = !isTextPresent(text, 10);
+            click("submit", SelectorType.ID);
+            waitForPageLoad();
+            if (System.currentTimeMillis() > kickOut) {
+                throw new TimeoutException(exceptionMessage);
+            }
         }
     }
 }
