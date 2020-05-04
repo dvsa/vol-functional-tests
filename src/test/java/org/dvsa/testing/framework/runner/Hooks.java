@@ -43,11 +43,11 @@ public class Hooks {
     }
 
     @After
-    public void tearDown() throws IOException {
+    public void tearDown() {
         try {
-            Browser.navigate().close();
-            Browser.navigate().quit();
-        } catch (SessionNotCreatedException | IllegalBrowserException ignored) {
+            if(Browser.isBrowserOpen())
+            Browser.closeBrowser();
+        } catch (SessionNotCreatedException ignored) {
         }
     }
 }
