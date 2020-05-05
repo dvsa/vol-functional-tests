@@ -122,8 +122,8 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfRunners>12</desiredNumberOfRunners>
-<!--                    <desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>-->
+                    <desiredNumberOfRunners>10</desiredNumberOfRunners>
+                    <desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>
                 </configuration>
             </plugin>
             <plugin>
