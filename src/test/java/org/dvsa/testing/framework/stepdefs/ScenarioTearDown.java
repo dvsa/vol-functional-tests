@@ -20,9 +20,4 @@ public class ScenarioTearDown extends BasePage implements En {
             hooks.attach(scenario);
         });
     }
-    
-    @After
-    public void afterScenario() throws MalformedURLException, IllegalBrowserException {
-        Browser.navigate().close();
-    }
 }
