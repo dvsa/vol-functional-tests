@@ -17,7 +17,7 @@ import java.time.Instant;
 
 public class Hooks {
 
-    private static File directory = new File("/target/img");
+    private static File directory = new File(System.getProperty("user.dir") + "/target/img");
 
     private void createDirectory() throws IOException {
         FileUtils.forceMkdir(directory);
@@ -39,7 +39,7 @@ public class Hooks {
     }
 
     @After
-    public void tearDown() throws IOException {
+    public void tearDown(){
         try {
             if(Browser.isBrowserOpen())
             Browser.closeBrowser();
