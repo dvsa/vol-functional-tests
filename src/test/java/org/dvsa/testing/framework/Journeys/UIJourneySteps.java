@@ -308,9 +308,9 @@ public class UIJourneySteps extends BasePage {
             waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
         } else {
             waitForTextToBePresent("Sign in with GOV.UK Verify");
-            waitAndClick("//*[@id='start_form_selection_false']", SelectorType.XPATH);
-            waitAndClick("//*[@id='next-button']", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Select Post')]", SelectorType.XPATH);
+            click("//*[@id='start_form_selection_false']", SelectorType.XPATH);
+            click("//*[@id='next-button']", SelectorType.XPATH);
+            click("//*[contains(text(),'Select Post')]", SelectorType.XPATH);
         }
         waitForTextToBePresent("Verified");
         enterText("username", verifyUsername, SelectorType.NAME);
