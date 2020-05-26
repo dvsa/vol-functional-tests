@@ -17,7 +17,7 @@ public class CheckCorrespondence extends BasePage implements En {
         });
         Then("^all correspondence for the application should be displayed$", () -> {
             waitForElementToBePresent("//table");
-            assertTrue(findElement("//table",SelectorType.XPATH,30).getText().contains(world.createLicence.getLicenceNumber()));
+            assertTrue(findElement("//table",SelectorType.XPATH,300).getText().contains(world.createLicence.getLicenceNumber()));
         });
     }
 }
