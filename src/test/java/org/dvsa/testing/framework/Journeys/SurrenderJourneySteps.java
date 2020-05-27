@@ -161,5 +161,4 @@ public class SurrenderJourneySteps extends BasePage {
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
         clickByLinkText("Back");
     }
-
 }
