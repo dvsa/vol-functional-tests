@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.runner;
 
 import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.AfterAll;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.TakesScreenshot;
@@ -38,8 +38,8 @@ public class Hooks {
         }
     }
 
-    @After
-    public void tearDown(){
+    @AfterAll
+    public static void tearDown(){
         try {
             if(Browser.isBrowserOpen())
             Browser.closeBrowser();
