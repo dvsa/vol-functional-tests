@@ -34,8 +34,8 @@ public class CreateLicenceAPI extends BaseAPI{
     private static int version = 1;
     private FakerUtils faker = new FakerUtils();
     private String title;
-    private String foreName = faker.generateFirstName();
-    private String familyName = faker.generateLastName();
+    private String foreName = faker.generateFirstName().concat(String.valueOf(Int.random(100,999)));
+    private String familyName = faker.generateLastName().concat(String.valueOf(Int.random(100,999)));
     private String birthDate = Int.random(1900, 2018) + "-" + Int.random(1, 12) + "-" + Int.random(1, 28);
     private LinkedHashMap<String, String> registeredAddress = faker.generateAddress();
     private String registeredAddressLine1 = registeredAddress.get("addressLine1");
