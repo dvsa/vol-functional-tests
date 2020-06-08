@@ -2,7 +2,7 @@ package runners;
 
  import org.openqa.selenium.SessionNotCreatedException;
  import activesupport.driver.Browser;
- import org.junit.AfterClass;
+ import org.junit.jupiter.api.AfterAll;
  import cucumber.api.CucumberOptions;
  import cucumber.api.junit.Cucumber;
  import org.junit.runner.RunWith;
@@ -14,7 +14,7 @@ package runners;
  )
  public class [CUCABLE:RUNNER] {
 
-   @AfterClass
+   @AfterAll
     public static void tearDown(){
          try {
              if(Browser.isBrowserOpen())
