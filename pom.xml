@@ -6,7 +6,7 @@
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,7 +28,7 @@
         <allure-cucumber2-jvm>2.13.0</allure-cucumber2-jvm>
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn-version>2.10.0</allure-mvn-version>
-        <cucable-plugin.version>1.6.0</cucable-plugin.version>
+        <cucable-plugin.version>1.7.2</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
         <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
@@ -122,7 +122,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>
+                    <desiredNumberOfRunners>10</desiredNumberOfRunners>
                 </configuration>
             </plugin>
             <plugin>

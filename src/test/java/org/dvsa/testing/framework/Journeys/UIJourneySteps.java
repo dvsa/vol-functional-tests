@@ -304,10 +304,14 @@ public class UIJourneySteps extends BasePage {
         String verifyUsername = world.configuration.config.getString("verifyUsername");
         String verifyPassword = world.configuration.config.getString("verifyPassword");
 
-        waitForTextToBePresent("Sign in with GOV.UK Verify");
-        click("//*[@id='start_form_selection_false']", SelectorType.XPATH);
-        click("//*[@id='next-button']", SelectorType.XPATH);
-        click("//*[contains(text(),'Select Post')]", SelectorType.XPATH);
+        if (isTextPresent("The last company selected on this device was Post Office Stub.", 70)) {
+            waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
+        } else {
+            waitForTextToBePresent("Sign in with GOV.UK Verify");
+            click("//*[@id='start_form_selection_false']", SelectorType.XPATH);
+            click("//*[@id='next-button']", SelectorType.XPATH);
+            click("//*[contains(text(),'Select Post')]", SelectorType.XPATH);
+        }
         waitForTextToBePresent("Verified");
         enterText("username", verifyUsername, SelectorType.NAME);
         enterText("password", verifyPassword, SelectorType.NAME);
@@ -403,7 +407,8 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
-    public void updateContactDetails(String addressLine1, String addressLine2, String addressLine3, String addressLine4, String contactNumber) throws IllegalBrowserException, MalformedURLException {
+    public void updateContactDetails(String addressLine1, String addressLine2, String addressLine3, String
+            addressLine4, String contactNumber) throws IllegalBrowserException, MalformedURLException {
         replaceText("addressLine1", SelectorType.ID, addressLine1);
         replaceText("correspondence_address[addressLine2]", SelectorType.ID, addressLine2);
         replaceText("correspondence_address[addressLine3]", SelectorType.ID, addressLine3);
@@ -448,10 +453,9 @@ public class UIJourneySteps extends BasePage {
         world.createLicence.setOperatorType(operatorType);
         world.createLicence.setLicenceType(licenceType);
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-        if(licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)){
+        if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
             world.APIJourneySteps.createSpecialRestrictedLicence();
-        }
-        else if (world.createLicence.getApplicationNumber() == null) {
+        } else if (world.createLicence.getApplicationNumber() == null) {
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
         }
@@ -603,7 +607,8 @@ public class UIJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void changeLicenceForVariation() throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void changeLicenceForVariation() throws
+            IllegalBrowserException, MalformedURLException, InterruptedException {
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("Transport Managers");
         waitForPageLoad();
@@ -645,7 +650,8 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void addNewOperatingCentreSelfServe(String postcode, int vehicles, int trailers) throws IllegalBrowserException, MalformedURLException {
+    public void addNewOperatingCentreSelfServe(String postcode, int vehicles, int trailers) throws
+            IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Operating centres");
         click("//*[@id='add']", SelectorType.XPATH);
         enterText("//*[@id='postcodeInput1']", postcode, SelectorType.XPATH);
