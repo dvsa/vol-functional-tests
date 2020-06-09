@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import com.sun.istack.NotNull;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -183,8 +184,11 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 break;
         }
     }
-
-    public void clickSearchWhileCheckingTextPresent(String text, int seconds, String exceptionMessage) throws IllegalBrowserException, MalformedURLException {
+/***
+    @exceptionMessage an example of this should be: "KickOut reached. Operator name external search failed."
+    This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
+ */
+    public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage) throws IllegalBrowserException, MalformedURLException {
         boolean conditionNotTrue = true;
         long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
         while (conditionNotTrue) {
