@@ -159,6 +159,5 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
-        clickByLinkText("Back");
     }
 }

@@ -25,7 +25,6 @@ Feature: Internal Search
     Then the "Licence discs" page should display
     And the licence discs should be present
 
-    # Should work, but doesn't for some reason. May be a time out issue. Needs looking into
   Scenario: Search for Address on Internal
     When i search for my address and click on my licence and addresses
     Then the "Correspondence address" page should display
