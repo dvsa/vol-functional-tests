@@ -4,7 +4,7 @@ import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
+import org.junit.jupiter.api.AfterAll;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.TakesScreenshot;
@@ -17,15 +17,15 @@ import java.time.Instant;
 
 public class Hooks {
 
-    private static File directory = new File("img");
+    private static File directory = new File(System.getProperty("user.dir") + "/target/img");
 
     private void createDirectory() throws IOException {
         FileUtils.forceMkdir(directory);
     }
 
-
     @Attachment(value = "Screenshot on failure", type = "image/png")
     public void attach(Scenario scenarioStatus) throws IOException, IllegalBrowserException {
+      if(scenarioStatus.isFailed())
         createDirectory();
         File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
         if (scenarioStatus.isFailed()) {
@@ -38,16 +38,11 @@ public class Hooks {
         }
     }
 
-    private void deleteDirectory() throws IOException {
-        FileUtils.deleteDirectory(directory);
-    }
-
-    @After
-    public void tearDown() throws IOException {
+    @AfterAll
+    public static void tearDown(){
         try {
-            Browser.navigate().close();
-            Browser.navigate().quit();
-        } catch (SessionNotCreatedException | IllegalBrowserException ignored) {
-        }
+            if(Browser.isBrowserOpen())
+            Browser.closeBrowser();
+        } catch (SessionNotCreatedException ignored) { }
     }
 }

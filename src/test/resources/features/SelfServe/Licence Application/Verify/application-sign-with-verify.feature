@@ -2,6 +2,7 @@
 @SS-Verify-On
 @ss_regression
 @gov-verify
+@browser-test
 
 Feature: Operator signs with verify
 
