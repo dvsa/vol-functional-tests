@@ -4,3 +4,7 @@ verifyUsername =
 verifyPassword =
 dbUsername =
 dbPassword =
+cardNumber =
+cardExpiryMonth =
+cardExpiryYear =
+bucketName =
