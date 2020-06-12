@@ -13,7 +13,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Journeys.APIJourneySteps;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.CreateLicenceAPI;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.jetbrains.annotations.NotNull;
@@ -55,7 +54,6 @@ public class GenericUtils extends BasePage {
 
     public GenericUtils(World world) throws MissingRequiredArgument {
         this.world = world;
-        world.createLicence = new CreateLicenceAPI();
     }
 
     public void modifyXML(String dateState, int months) {
@@ -196,7 +194,7 @@ public class GenericUtils extends BasePage {
         Browser.navigate().switchTo().window(tabs.get(tab));
     }
 
-    public String readFileAsString(String fileName) throws Exception {
+    public String readFileAsString(String fileName) throws IOException {
         String data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
     }

@@ -4,14 +4,16 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.WebElement;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 public class ExternalSearch extends BasePage implements En {
-    World world = new World();
+    private World world;
 
     public ExternalSearch(World world) {
+        this.world = world;
+
         Given("^I am on the external search page$", () -> {
             world.selfServeNavigation.navigateToSearch();
         });
@@ -28,41 +30,48 @@ public class ExternalSearch extends BasePage implements En {
                     enterText("search", world.createLicence.getLicenceNumber(), SelectorType.NAME);
                     break;
                 case "person":
-                    enterText("search", world.createLicence.getFamilyName(), SelectorType.NAME);
+                    enterText("search", String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()), SelectorType.NAME);
                     break;
             }
             clickByName("submit");
         });
         Then("^search results page addresses should only display address belonging to our post code$", () -> {
-            assertTrue(checkForFullMatch(world.createLicence.getPostcode().toUpperCase()));
+            String clippedCorrespondenceAddress = String.format("%s, %s, %s, %s",
+                    world.createLicence.getAddressLine3(),
+                    world.createLicence.getAddressLine4(),
+                    world.createLicence.getTown(),
+                    world.createLicence.getPostcode()
+            );
+            String clippedOperatingCentreAddress = String.format("%s, %s, %s, %s",
+                    world.createLicence.getOperatingCentreAddressLine3(),
+                    world.createLicence.getOperatingCentreAddressLine4(),
+                    world.createLicence.getOperatingCentreTown(),
+                    world.createLicence.getPostcode()
+            );
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(clippedCorrespondenceAddress, 240, "KickOut reached. Correspondence and operating centre address external search failed.");
+            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", clippedCorrespondenceAddress), SelectorType.XPATH);
+            assertTrue(tableRow.getText().contains(world.createLicence.getOrganisationName()));
+            assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
+            tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", clippedOperatingCentreAddress), SelectorType.XPATH);
+            assertTrue(tableRow.getText().contains(world.createLicence.getOrganisationName()));
+            assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
-
         Then("^search results page should display operator names containing our business name$", () -> {
-            assertTrue(checkForFullMatch(world.createLicence.getOrganisationName()));
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createLicence.getOrganisationName(), 240, "KickOut reached. Operator name external search failed.");
+            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createLicence.getOrganisationName()), SelectorType.XPATH);
+            assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should only display our licence number$", () -> {
-            do {
-                clickByName("submit");
-            } while (!isTextPresent(world.createLicence.getOrganisationName(), 30));
-            assertTrue(checkForFullMatch(world.createLicence.getLicenceNumber()));
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createLicence.getLicenceNumber(), 240, "KickOut reached. Licence number external search failed.");
+            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createLicence.getOrganisationName()), SelectorType.XPATH);
+            assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
         Then("^search results page should display names containing our operator name$", () -> {
-            assertTrue(checkForPartialMatch(world.createLicence.getFamilyName().toUpperCase()));
-        });
-        Then("^search results page should not display addresses which were not searched for$", () -> {
-            assertFalse(checkForFullMatch("Swansea"));
-        });
-        Then("^search results page should only display operator names containing our business name$", () -> {
-            assertFalse(checkForFullMatch("Jones-Made-Up"));
-        });
-        Then("^search results page should not display any other licence number$", () -> {
-            do {
-                clickByName("submit");
-            } while (!isTextPresent(world.createLicence.getOrganisationName(), 30));
-            assertFalse(checkForFullMatch("OB0000123"));
-        });
-        Then("^search results page should only display names containing our operator name$", () -> {
-            assertFalse(checkForFullMatch("DVSA"));
+            String operatorName = String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName());
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(operatorName, 300, "KickOut reached. Operator name external search failed.");
+            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", operatorName), SelectorType.XPATH);
+            assertTrue(tableRow.getText().contains(world.createLicence.getOrganisationName()));
+            assertTrue(tableRow.getText().contains(world.createLicence.getLicenceNumber()));
         });
     }
 }

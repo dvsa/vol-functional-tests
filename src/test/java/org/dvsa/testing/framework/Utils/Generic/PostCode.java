@@ -1,11 +1,22 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
+import Injectors.World;
+import activesupport.number.Int;
 import enums.TrafficArea;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class PostCode {
 
+    private World world;
     private String area;
+
+    public PostCode(World world){
+        this.world = world;
+    }
 
     public String getArea() {
         return area;
@@ -46,5 +57,17 @@ public class PostCode {
                 postCode = "NG23HX";
         }
         return postCode;
+    }
+
+    public static String getRandomRealNottinghamPostcode() {
+        String postcodeFile = System.getProperty("user.dir").concat("/src/test/resources/testResources/nottinghamPostcodes.csv");
+        String file = null;
+        try {
+            file = new String(Files.readAllBytes(Paths.get(postcodeFile)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] postcodes = file.split(",\n");
+        return postcodes[Int.random(0, postcodes.length - 1)];
     }
 }

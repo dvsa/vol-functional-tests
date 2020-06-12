@@ -2,12 +2,15 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import com.sun.istack.NotNull;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.TimeoutException;
 
 import java.net.MalformedURLException;
+import java.time.Duration;
 
 import static activesupport.driver.Browser.navigate;
 
@@ -27,7 +30,6 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-lorry-bus-operators/").toString();
         navigate().get(myURL);
     }
-
 
     public void navigateToPage(String type, String page) throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("GOV.UK");
@@ -180,6 +182,22 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 clickByLinkText("Sign out");
                 waitForTextToBePresent("Thank you");
                 break;
+        }
+    }
+/***
+    @exceptionMessage an example of this should be: "KickOut reached. Operator name external search failed."
+    This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
+ */
+    public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage) throws IllegalBrowserException, MalformedURLException {
+        boolean conditionNotTrue = true;
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
+        while (conditionNotTrue) {
+            conditionNotTrue = !isTextPresent(text, 10);
+            click("submit", SelectorType.ID);
+            waitForPageLoad();
+            if (System.currentTimeMillis() > kickOut) {
+                throw new TimeoutException(exceptionMessage);
+            }
         }
     }
 }

@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
@@ -32,10 +33,9 @@ public class CreateLicenceAPI extends BaseAPI{
     private static ValidatableResponse apiResponse;
     private static int version = 1;
     private FakerUtils faker = new FakerUtils();
-
     private String title;
-    private String foreName = faker.generateFirstName();
-    private String familyName = faker.generateLastName();
+    private String foreName = faker.generateFirstName().concat(String.valueOf(Int.random(100,999)));
+    private String familyName = faker.generateLastName().concat(String.valueOf(Int.random(100,999)));
     private String birthDate = Int.random(1900, 2018) + "-" + Int.random(1, 12) + "-" + Int.random(1, 28);
     private LinkedHashMap<String, String> registeredAddress = faker.generateAddress();
     private String registeredAddressLine1 = registeredAddress.get("addressLine1");
@@ -49,7 +49,7 @@ public class CreateLicenceAPI extends BaseAPI{
     private String addressLine3 = address.get("addressLine3");
     private String addressLine4 = address.get("addressLine4");
     private String town = faker.generateAddress().get("town");
-    private String postcode = "NG23HX";
+    private String postcode = PostCode.getRandomRealNottinghamPostcode();
     private String countryCode = "GB";
     private LinkedHashMap<String, String> establishmentAddress = faker.generateAddress();
     private String establishmentAddressLine1 = establishmentAddress.get("addressLine1");
