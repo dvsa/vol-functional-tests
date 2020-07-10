@@ -6,7 +6,7 @@ import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import activesupport.string.Str;
 import activesupport.system.Properties;
-import cucumber.api.java8.En;
+import cucumber.api.java8.En;;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;

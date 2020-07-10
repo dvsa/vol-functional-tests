@@ -2,6 +2,7 @@
 @SS
 @Surrenders-resume
 @ss_regression
+  @here
 Feature: User should be able to continue where they left off
 
   Scenario Outline: Update correspondence address and resume surrender journey
@@ -16,16 +17,16 @@ Feature: User should be able to continue where they left off
       | OperatorType | LicenceType            |
       | public       | standard_international |
 
-  Scenario Outline: Remove disc from licence and resume surrender journey
-    Given i have a valid "<OperatorType>" "<LicenceType>" licence
-    When i have started a surrender
-    And i remove a disc to my licence
-    Then continue with application link is displayed
-    And user is taken to information change page on clicking continue application
-
-    Examples:
-      | OperatorType | LicenceType            |
-      | public       | standard_international |
+#  Scenario Outline: Remove disc from licence and resume surrender journey
+#    Given i have a valid "<OperatorType>" "<LicenceType>" licence
+#    When i have started a surrender
+#    And i remove a disc to my licence
+#    Then continue with application link is displayed
+#    And user is taken to information change page on clicking continue application
+#
+#    Examples:
+#      | OperatorType | LicenceType            |
+#      | public       | standard_international |
 
   Scenario Outline: Leave correspondence page back to correspondence page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
