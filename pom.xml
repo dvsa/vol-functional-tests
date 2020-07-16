@@ -34,7 +34,7 @@
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <allure-report-version>2.13.0</allure-report-version>
         <apache-commons.version>1.6</apache-commons.version>
-        <owasp-dependency-checker.version>5.2.2</owasp-dependency-checker.version>
+        <owasp-dependency-checker.version>5.2.1</owasp-dependency-checker.version>
         <nexus.releases>http://nexus.shd.ci.nonprod.dvsa.aws/repository/maven-releases</nexus.releases>
         <nexus.snapshots>http://nexus.shd.ci.nonprod.dvsa.aws/repository/maven-snapshots</nexus.snapshots>
     </properties>
