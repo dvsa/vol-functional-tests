@@ -14,7 +14,7 @@
         <cucumber-java.version>2.4.0</cucumber-java.version>
         <cucumber-junit.version>2.4.0</cucumber-junit.version>
         <junit.version>4.12</junit.version>
-        <active-support.version>1.3.8.9</active-support.version>
+        <active-support.version>1.3.8.10</active-support.version>
         <slf4j.version>2.12.1</slf4j.version>
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
@@ -34,7 +34,7 @@
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <allure-report-version>2.13.0</allure-report-version>
         <apache-commons.version>1.6</apache-commons.version>
-        <owasp-dependency-checker.version>5.2.2</owasp-dependency-checker.version>
+        <owasp-dependency-checker.version>5.2.1</owasp-dependency-checker.version>
         <nexus.releases>http://nexus.shd.ci.nonprod.dvsa.aws/repository/maven-releases</nexus.releases>
         <nexus.snapshots>http://nexus.shd.ci.nonprod.dvsa.aws/repository/maven-snapshots</nexus.snapshots>
     </properties>
