@@ -58,6 +58,7 @@ public class GlobalMethods extends BasePage{
             LoginPage.signIn(username, getLoginPassword());
         } finally {
             if (isTextPresent("Current password", 60)) {
+                waitForTextToBePresent("Re-enter new password");
                 enterField(nameAttribute("input", "oldPassword"), password);
                 enterField(nameAttribute("input", "newPassword"), newPassword);
                 enterField(nameAttribute("input", "confirmPassword"), newPassword);
@@ -65,5 +66,6 @@ public class GlobalMethods extends BasePage{
                 setLoginPassword(newPassword);
             }
         }
+        // Place in error to throw if licence is not granted. If the licence is submitted, then click on it and see if "What to do next is present"
     }
 }
