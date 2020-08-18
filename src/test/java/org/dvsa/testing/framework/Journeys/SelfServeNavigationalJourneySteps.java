@@ -40,7 +40,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         switch (type.toLowerCase()) {
             case "licence":
                 clickByLinkText(world.createLicence.getLicenceNumber());
-                waitForTextToBePresent("View and amend your licence");
+                waitForTextToBePresent("View and amend your licence                ");
                 break;
             case "application":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
@@ -115,7 +115,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 break;
             case "transport managers":
                 clickByLinkText("Transport Managers");
-                waitForTextToBePresent("Transport Managers");
+                waitForTextToBePresent("Transport Managers                ");
                 break;
             case "vehicles":
                 clickByLinkText("Vehicles");
