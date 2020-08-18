@@ -65,11 +65,5 @@ public class GlobalMethods extends BasePage{
                 setLoginPassword(newPassword);
             }
         }
-        clickByLinkText(world.createLicence.getLicenceNumber());
-        if (isTextPresent("What you need to do next", 10)){
-            throw new MalformedURLException("Licence did not grant");
-        } else {
-            clickByLinkText("GOV.UK");
-        }
     }
 }
