@@ -32,7 +32,7 @@
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
         <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
-        <allure-report-version>2.13.0</allure-report-version>
+        <allure-report-version>2.13.5</allure-report-version>
         <apache-commons.version>1.6</apache-commons.version>
         <owasp-dependency-checker.version>5.2.2</owasp-dependency-checker.version>
         <nexus.releases>http://nexus.shd.ci.nonprod.dvsa.aws/repository/maven-releases</nexus.releases>
