@@ -80,7 +80,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                         if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
                             waitForTextToBePresent("Apply to change a licence                ");
                         } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
-                            waitForTextToBePresent("What happens next?                ");
+                            waitForTextToBePresent("What happens next?");
                         }
                         break;
                 }

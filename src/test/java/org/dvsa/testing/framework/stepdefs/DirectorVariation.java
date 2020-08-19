@@ -29,7 +29,7 @@ public class DirectorVariation extends BasePage implements En {
             world.directorJourneySteps.addPerson(firstName, lastName);
         });
         Then("^a new director should be added to my licence$", () -> {
-            waitForTextToBePresent("Directors");
+            waitForTextToBePresent("Directors                ");
             List<WebElement> director = listOfWebElements("//*/tbody/tr[*]/td[1]/input", SelectorType.XPATH);
             long directors = director.size();
             assertEquals(directors, 2);
@@ -85,7 +85,7 @@ public class DirectorVariation extends BasePage implements En {
             world.directorJourneySteps.addDirector(firstName, lastName);
         });
         Then("^i should have multiple directors on my application$", () -> {
-            waitForTextToBePresent("Directors");
+            waitForTextToBePresent("Directors                ");
             List<WebElement> director = listOfWebElements("//*/tbody/tr[*]/td[1]/input", SelectorType.XPATH);
             long directors = director.size();
             MatcherAssert.assertThat(directors, greaterThan(1L));
