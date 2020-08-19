@@ -67,51 +67,51 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
             case "view":
                 switch (type.toLowerCase()) {
                     case "licence":
-                        waitForTextToBePresent("View and amend your licence");
+                        waitForTextToBePresent("View and amend your licence                ");
                         break;
                     case "application":
                         if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                            waitForTextToBePresent("Apply for a new licence");
+                            waitForTextToBePresent("Apply for a new licence                ");
                         } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                            waitForTextToBePresent("What you need to do next");
+                            waitForTextToBePresent("What you need to do next                ");
                         }
                         break;
                     case "variation":
                         if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
-                            waitForTextToBePresent("Apply to change a licence");
+                            waitForTextToBePresent("Apply to change a licence                ");
                         } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
-                            waitForTextToBePresent("What happens next?");
+                            waitForTextToBePresent("What happens next?                ");
                         }
                         break;
                 }
                 break;
             case "type of licence":
                 clickByLinkText("Type of licence");
-                waitForTextToBePresent("Operator location");
+                waitForTextToBePresent("Operator location                ");
                 break;
             case "business type":
                 clickByLinkText("Business type");
-                waitForTextToBePresent("Business type");
+                waitForTextToBePresent("Business type                ");
                 break;
             case "business details":
                 clickByLinkText("Business details");
-                waitForTextToBePresent("Business details");
+                waitForTextToBePresent("Business details                ");
                 break;
             case "address":
                 clickByLinkText("Address");
-                waitForTextToBePresent("Address");
+                waitForTextToBePresent("Address                ");
                 break;
             case "addresses":
                 clickByLinkText("Addresses");
-                waitForTextToBePresent("Addresses");
+                waitForTextToBePresent("Addresses                ");
                 break;
             case "directors":
                 clickByLinkText("Directors");
-                waitForTextToBePresent("Directors");
+                waitForTextToBePresent("Directors                ");
                 break;
             case "operating centres":
                 clickByLinkText("Operating centres and authorisation");
-                waitForTextToBePresent("Operating centres and authorisation");
+                waitForTextToBePresent("Operating centres and authorisation                ");
                 break;
             case "transport managers":
                 clickByLinkText("Transport Managers");
@@ -119,47 +119,47 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 break;
             case "vehicles":
                 clickByLinkText("Vehicles");
-                waitForTextToBePresent("Vehicle details");
+                waitForTextToBePresent("Vehicle details                ");
                 break;
             case "vehicle declarations":
                 clickByLinkText("Vehicle declarations");
-                waitForTextToBePresent("Vehicle declarations");
+                waitForTextToBePresent("Vehicle declarations                ");
                 break;
             case "trailers":
                 clickByLinkText("Trailers");
-                waitForTextToBePresent("Trailers");
+                waitForTextToBePresent("Trailers                ");
                 break;
             case "licence discs":
                 clickByLinkText("Licence discs");
-                waitForTextToBePresent("Licence discs");
+                waitForTextToBePresent("Licence discs                ");
                 break;
             case "safety and compliance":
                 clickByLinkText("Safety and compliance");
-                waitForTextToBePresent("Safety and compliance");
+                waitForTextToBePresent("Safety and compliance                ");
                 break;
             case "conditions and undertakings":
                 clickByLinkText("Conditions and undertakings");
-                waitForTextToBePresent("Conditions and undertakings");
+                waitForTextToBePresent("Conditions and undertakings                ");
                 break;
             case "financial history":
                 clickByLinkText("Financial history");
-                waitForTextToBePresent("Financial history");
+                waitForTextToBePresent("Financial history                ");
                 break;
             case "financial evidence":
                 clickByLinkText("Financial evidence");
-                waitForTextToBePresent("Financial evidence");
+                waitForTextToBePresent("Financial evidence                ");
                 break;
             case "licence history":
                 clickByLinkText("Licence history");
-                waitForTextToBePresent("Licence history");
+                waitForTextToBePresent("Licence history                ");
                 break;
             case "convictions and penalties":
                 clickByLinkText("Convictions and penalties");
-                waitForTextToBePresent("Convictions and Penalties");
+                waitForTextToBePresent("Convictions and Penalties                ");
                 break;
             case "review and declarations":
                 clickByLinkText("Review and declarations");
-                waitForTextToBePresent("Review and declarations");
+                waitForTextToBePresent("Review and declarations                ");
                 break;
         }
     }

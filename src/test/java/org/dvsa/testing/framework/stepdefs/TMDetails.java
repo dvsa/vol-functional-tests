@@ -61,7 +61,7 @@ public class TMDetails extends BasePage implements En {
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", "transport managers");
             click("//*[@name='table[action]']", SelectorType.XPATH);
-            waitForTextToBePresent("Add Transport Manager");
+            waitForTextToBePresent("Add Transport Manager                ");
             selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
         });
