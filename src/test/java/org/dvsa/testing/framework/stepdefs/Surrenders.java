@@ -143,7 +143,7 @@ public class Surrenders extends BasePage implements En {
             this.discsToDestroy = "2";
             this.discsStolen = "1";
             click("//*[@id='submit']", SelectorType.XPATH);
-            waitForTextToBePresent("Review your contact information");
+            waitForTextToBePresent("Review your contact information                ");
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             world.surrenderJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
         });
@@ -182,7 +182,7 @@ public class Surrenders extends BasePage implements En {
             this.discsStolen = "1";
             world.surrenderJourneySteps.navigateToSurrendersStartPage();
             click("//*[@id='submit']", SelectorType.XPATH);
-            waitForTextToBePresent("Review your contact information");
+            waitForTextToBePresent("Review your contact information                ");
             world.surrenderJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
             click("//*[@id='submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);

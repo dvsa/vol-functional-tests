@@ -30,7 +30,7 @@ public class SurrenderJourneySteps extends BasePage {
 
     public void startSurrender() throws IllegalBrowserException, MalformedURLException {
         click("//*[@id='submit']", SelectorType.XPATH);
-        waitForTextToBePresent("Review your contact information");
+        waitForTextToBePresent("Review your contact information                ");
     }
 
     public void navigateToSurrenderReviewPage(String discToDestroy, String discsLost, String discsStolen) throws IllegalBrowserException, MalformedURLException {
@@ -120,7 +120,7 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Securely destroy");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForTextToBePresent("Declaration");
+        waitForTextToBePresent("Declaration                ");
     }
 
     public void internalDigitalSurrenderMenu() throws IllegalBrowserException, MalformedURLException {

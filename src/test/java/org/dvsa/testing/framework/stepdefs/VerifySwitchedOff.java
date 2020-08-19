@@ -36,9 +36,9 @@ public class VerifySwitchedOff extends BasePage implements En {
         And("^i select a transport manager to add$", () -> {
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", "transport managers");
-            waitForTextToBePresent("Transport Managers");
+            waitForTextToBePresent("Transport Managers                ");
             waitAndClick("//*[@id='add']", SelectorType.XPATH);
-            waitForTextToBePresent("Add Transport Manager");
+            waitForTextToBePresent("Add Transport Manager                ");
             selectValueFromDropDown("data[registeredUser]", SelectorType.ID, String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()));
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
@@ -58,7 +58,7 @@ public class VerifySwitchedOff extends BasePage implements En {
         });
         And("^the application status is \"([^\"]*)\"$", (String status) -> {
             clickByLinkText("Back to Transport");
-            waitForTextToBePresent("Transport Managers");
+            waitForTextToBePresent("Transport Managers                ");
             Assert.assertTrue(isTextPresent(status,30));
         });
         Then("^the 'Awaiting operator review' post signature page is displayed$", () -> {

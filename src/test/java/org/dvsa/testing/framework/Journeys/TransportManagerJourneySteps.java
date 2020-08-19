@@ -87,9 +87,9 @@ public class TransportManagerJourneySteps extends BasePage {
     public void addNewPersonAsTransportManager(String forename, String familyName, String emailAddress) throws IllegalBrowserException, MalformedURLException {
         setExternalTMEmail(emailAddress);
         setExternalTMUser("TM".concat(Str.randomWord(3)));
-        waitForTextToBePresent("Transport Managers");
+        waitForTextToBePresent("Transport Managers                ");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
-        waitForTextToBePresent("Add Transport Manager");
+        waitForTextToBePresent("Add Transport Manager                ");
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", forename, SelectorType.ID);
         enterText("familyName", familyName, SelectorType.ID);
@@ -182,7 +182,7 @@ public class TransportManagerJourneySteps extends BasePage {
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
     public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
-        waitForTextToBePresent("Add Transport Manager");
+        waitForTextToBePresent("Add Transport Manager                ");
         click("//*[@id='add']", SelectorType.XPATH);
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
@@ -202,9 +202,9 @@ public class TransportManagerJourneySteps extends BasePage {
             world.selfServeNavigation.navigateToPage("licence", "transport managers");
             world.UIJourneySteps.changeLicenceForVariation(); // If licence already created then this creates variational
         }
-        waitForTextToBePresent("Transport Managers");
+        waitForTextToBePresent("Transport Managers                ");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
-        waitForTextToBePresent("Add Transport Manager");
+        waitForTextToBePresent("Add Transport Manager                ");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
@@ -219,13 +219,13 @@ public class TransportManagerJourneySteps extends BasePage {
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
-        waitForTextToBePresent("Transport Managers");
+        waitForTextToBePresent("Transport Managers                ");
     }
 
     public void addOperatorAdminAsTransportManager(String user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
         world.selfServeNavigation.navigateToPage("application", "transport managers");
         click("//*[@name='table[action]']", SelectorType.XPATH);
-        waitForTextToBePresent("Add Transport Manager");
+        waitForTextToBePresent("Add Transport Manager                ");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");

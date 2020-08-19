@@ -49,7 +49,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply for a new licence");
                 } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                    waitForTextToBePresent("Application overview");
+                    waitForTextToBePresent("Application overview                ");
                 }
                 break;
             case "variation":
@@ -59,7 +59,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply to change a licence");
                 } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
-                    waitForTextToBePresent("Application overview");
+                    waitForTextToBePresent("Application overview                ");
                 }
                 break;
         }
@@ -73,7 +73,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                         if (applicationStatus.equals("NOT YET SUBMITTED")) {
                             waitForTextToBePresent("Apply for a new licence                ");
                         } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                            waitForTextToBePresent("What you need to do next                ");
+                            waitForTextToBePresent("What you need to do next");
                         }
                         break;
                     case "variation":

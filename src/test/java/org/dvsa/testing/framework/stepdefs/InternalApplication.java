@@ -65,7 +65,7 @@ public class InternalApplication extends BasePage implements En {
             assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres.",30));
             click("form-actions[confirm-add]", SelectorType.ID);
             click("form-actions[submit]", SelectorType.ID);
-            waitForTextToBePresent("Operating centres and authorisation");
+            waitForTextToBePresent("Operating centres and authorisation                ");
             assertTrue(isElementPresent("//*[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
         });
         Given("^I have partially applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {

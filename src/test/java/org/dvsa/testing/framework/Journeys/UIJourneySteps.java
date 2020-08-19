@@ -285,7 +285,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Traffic area");
         waitAndClick("//*[contains(text(),'change your')]", SelectorType.XPATH);
         waitAndClick("form-actions[submit]", SelectorType.NAME);
-        waitForTextToBePresent("Operating centres");
+        waitForTextToBePresent("Operating centres and authorisation                ");
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
@@ -390,7 +390,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTextToBePresent("Financial evidence");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Transport Managers");
+        waitForTextToBePresent("Transport Managers                ");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTextToBePresent("Vehicle details");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);

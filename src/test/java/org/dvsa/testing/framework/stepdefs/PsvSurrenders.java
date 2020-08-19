@@ -51,7 +51,7 @@ public class PsvSurrenders extends BasePage implements En {
             findElement("addressTown", SelectorType.ID, 5).clear();
             enterText("addressTown", this.town, SelectorType.ID);
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
-            waitForTextToBePresent("Review your contact information");
+            waitForTextToBePresent("Review your contact information                ");
         });
         Then("^the new correspondence details should be displayed on the review page$", () -> {
             String licenceTown = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][2]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
