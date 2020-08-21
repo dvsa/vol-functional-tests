@@ -247,12 +247,14 @@ public class TransportManagerJourneySteps extends BasePage {
         waitAndEnterText("birthPlace", SelectorType.ID, "Nottingham");
         waitAndEnterText("postcodeInput1", SelectorType.ID, "NG23HX");
         clickByName("homeAddress[searchPostcode][search]");
-        untilElementPresent("//*[@id='homeAddress[searchPostcode][addresses]']", SelectorType.XPATH);
-        selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
+        waitForElementToBeClickable("//*[@name='homeAddress[searchPostcode][search]']", SelectorType.XPATH);
+        untilElementPresent("//*[@name='homeAddress[searchPostcode][addresses]']", SelectorType.XPATH);
+        selectValueFromDropDownByIndex("//*[@name='homeAddress[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         waitAndEnterText("postcodeInput2", SelectorType.ID, "NG23HX");
         waitAndClick("//*[@id='workAddress[searchPostcode][search]']", SelectorType.XPATH);
-        untilElementPresent("//*[@id='workAddress[searchPostcode][addresses]']", SelectorType.XPATH);
-        selectValueFromDropDownByIndex("workAddress[searchPostcode][addresses]", SelectorType.ID, 1);
+        waitForElementToBeClickable("//*[@id='workAddress[searchPostcode][search]']", SelectorType.XPATH);
+        untilElementPresent("//*[@name='workAddress[searchPostcode][addresses]']", SelectorType.XPATH);
+        selectValueFromDropDownByIndex("//*[@name='workAddress[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursTue]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursWed]", SelectorType.ID, hours);
