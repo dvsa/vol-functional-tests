@@ -9,9 +9,9 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     Given i have a valid "goods" "standard_national" licence
     And I am on the external search page
 
-#  Scenario: [Positive]Search for lorry and bus operators by Address
-#    When I search for a lorry and bus operator by "address"
-#    Then search results page addresses should only display address belonging to our post code
+  Scenario: [Positive]Search for lorry and bus operators by Address
+    When I search for a lorry and bus operator by "address"
+    Then search results page addresses should only display address belonging to our post code
 
   Scenario: [Positive]Search for lorry and bus operators by Business name
     When I search for a lorry and bus operator by "business"
@@ -21,6 +21,6 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     When I search for a lorry and bus operator by "licence"
     Then search results page should only display our licence number
 
-#  Scenario: [Positive]Search for lorry and bus operators by Person's name
-#    When I search for a lorry and bus operator by "person"
-#    Then search results page should display names containing our operator name
+  Scenario: [Positive]Search for lorry and bus operators by Person's name
+    When I search for a lorry and bus operator by "person"
+    Then search results page should display names containing our operator name
