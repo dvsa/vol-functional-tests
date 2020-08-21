@@ -357,9 +357,9 @@ public class UIJourneySteps extends BasePage {
 
     public void signDeclaration() throws IllegalBrowserException, MalformedURLException {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
-        if (isTextPresent("Review and declarations", 10)) {
+        if (isTextPresent("Review and declarations                ", 10)) {
             click("//*[@name='form-actions[sign]']", SelectorType.XPATH);
-        } else if (isTextPresent("Declaration", 10)) {
+        } else if (isTextPresent("Declaration                ", 10)) {
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
     }
