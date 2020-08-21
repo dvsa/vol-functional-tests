@@ -106,7 +106,6 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
     }
 
-
     public void checkVerifyConfirmation() throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));

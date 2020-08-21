@@ -146,7 +146,6 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^my application to surrender is under consideration$", () -> {
             world.updateLicence.printLicenceDiscs();
-            world.updateLicence.printLicenceDiscs();
             world.surrenderJourneySteps.submitSurrender();
         });
         When("^the caseworker approves the surrender$", () -> {
