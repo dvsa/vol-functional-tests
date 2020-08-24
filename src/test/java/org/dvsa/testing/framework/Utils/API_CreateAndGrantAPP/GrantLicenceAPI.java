@@ -55,6 +55,7 @@ public class GrantLicenceAPI extends BaseAPI{
 
         System.out.println(apiResponse.extract().statusCode());
         System.out.println(apiResponse.extract().response().asString());
+        System.out.println("look here");
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
