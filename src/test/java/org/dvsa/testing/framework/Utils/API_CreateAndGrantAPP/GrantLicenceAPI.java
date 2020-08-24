@@ -53,6 +53,8 @@ public class GrantLicenceAPI extends BaseAPI{
                 .withTracking(tracking);
         apiResponse = RestUtils.put(overview, overviewResource, getHeaders());
 
+        System.out.println(apiResponse.extract().statusCode());
+        System.out.println(apiResponse.extract().response().asString());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
