@@ -76,7 +76,7 @@ public class RefundInterim extends BasePage implements En {
         });
         When("^i pay for the interim application$", () -> {
             world.UIJourneySteps.payForInterimApp();
-            waitForTextToBePresent("Application overview                ");
+            waitForTitleToBePresent("Application overview");
         });
         And("^the application has been refused$", () -> {
             world.grantLicence.refuse(world.updateLicence.getVariationApplicationNumber());

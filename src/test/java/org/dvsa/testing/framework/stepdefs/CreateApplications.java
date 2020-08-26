@@ -52,13 +52,13 @@ public class CreateApplications extends BasePage implements En {
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
         });
         Then("^the application should be submitted$", () -> {
-            waitForTextToBePresent("Application overview                ");
+            waitForTitleToBePresent("Application overview");
             assertTrue(isTextPresent("Your application reference number is",30));
         });
         When("^i pay for my application$", () -> {
             waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
             world.UIJourneySteps.customerPaymentModule();
-            waitForTextToBePresent("Application overview                ");
+            waitForTitleToBePresent("Application overview");
         });
         And("^i choose to pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
@@ -72,7 +72,7 @@ public class CreateApplications extends BasePage implements En {
             waitAndEnterText("scp_additionalInformationPage_csc_input",  SelectorType.ID,"265");
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
             waitAndClick("//*[@type='submit']", SelectorType.XPATH);
-            waitForTextToBePresent("Application overview                ");
+            waitForTitleToBePresent("Application overview");
         });
     }
 }

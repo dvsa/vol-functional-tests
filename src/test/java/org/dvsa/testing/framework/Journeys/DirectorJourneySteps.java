@@ -45,7 +45,7 @@ public class DirectorJourneySteps extends BasePage {
 
     public void addPerson(String firstName, String lastName) throws IllegalBrowserException, MalformedURLException {
         clickByName("add");
-        waitForTextToBePresent("Add a director                ");
+        waitForTitleToBePresent("Add a director");
         selectValueFromDropDown("//select[@id='title']", SelectorType.XPATH, "Dr");
         enterText("forename", firstName, SelectorType.ID);
         enterText("familyname", lastName, SelectorType.ID);

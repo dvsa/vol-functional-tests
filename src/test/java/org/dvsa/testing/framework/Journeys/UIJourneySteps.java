@@ -285,7 +285,7 @@ public class UIJourneySteps extends BasePage {
         waitForTextToBePresent("Traffic area");
         waitAndClick("//*[contains(text(),'change your')]", SelectorType.XPATH);
         waitAndClick("form-actions[submit]", SelectorType.NAME);
-        waitForTextToBePresent("Operating centres and authorisation                ");
+        waitForTitleToBePresent("Operating centres and authorisation");
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
         world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
@@ -357,9 +357,9 @@ public class UIJourneySteps extends BasePage {
 
     public void signDeclaration() throws IllegalBrowserException, MalformedURLException {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
-        if (isTextPresent("Review and declarations                ", 10)) {
+        if (isTitlePresent("Review and declarations", 10)) {
             click("//*[@name='form-actions[sign]']", SelectorType.XPATH);
-        } else if (isTextPresent("Declaration                ", 10)) {
+        } else if (isTitlePresent("Declaration", 10)) {
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         }
     }
@@ -374,36 +374,36 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void navigateThroughApplication() throws IllegalBrowserException, MalformedURLException {
-        waitForTextToBePresent("Apply for a new licence");
+        waitForTitleToBePresent("Apply for a new licence");
         clickByLinkText("Type of licence");
-        waitForTextToBePresent("Type of licence");
+        waitForTitleToBePresent("Type of licence");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Business type");
+        waitForTitleToBePresent("Business type");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Business details");
+        waitForTitleToBePresent("Business details");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Addresses");
+        waitForTitleToBePresent("Addresses");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Directors");
+        waitForTitleToBePresent("Directors");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Operating centres and authorisation");
+        waitForTitleToBePresent("Operating centres and authorisation");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Financial evidence");
+        waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Transport Managers                ");
+        waitForTitleToBePresent("Transport Managers");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Vehicle details");
+        waitForTitleToBePresent("Vehicle details");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        if (isTextPresent("Vehicle declarations", 30)) {
+        if (isTitlePresent("Vehicle declarations", 30)) {
             waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         }
-        waitForTextToBePresent("Safety and compliance");
+        waitForTitleToBePresent("Safety and compliance");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Financial history");
+        waitForTitleToBePresent("Financial history");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Licence history");
+        waitForTitleToBePresent("Licence history");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTextToBePresent("Convictions and Penalties");
+        waitForTitleToBePresent("Convictions and Penalties");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
