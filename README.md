@@ -30,7 +30,7 @@ create by default ``a GB goods standard national limited company licence``
 ## Executing 
 
 ### Including tags
-``mvn clean verify {system props e.g. -Denv -Dbrowser} -Dcucumber.filter.tags="@tag``
+``mvn clean verify {system props e.g. -Denv -Dbrowser} -Dcucumber.options="--tags @tag``
 
 ### Excluding tags
 ``mvn clean verify {system props e.g. -Denv -Dbrowser} -Dtag.name='(not @tag)' -Dcucumber.options="--tags @tag``
