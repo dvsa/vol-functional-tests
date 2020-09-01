@@ -102,8 +102,6 @@ public class GrantLicenceAPI extends BaseAPI{
         GrantApplicationBuilder grantApplication = new GrantApplicationBuilder().withId(applicationNumber).withDuePeriod("9").withCaseworkerNotes("This notes are from the API");
         apiResponse = RestUtils.put(grantApplication, grantApplicationResource, getHeaders());
 
-        System.out.println(apiResponse.extract().statusCode());
-        System.out.println(apiResponse.extract().response().asString());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
