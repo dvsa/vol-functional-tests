@@ -123,7 +123,9 @@ public class UIJourneySteps extends BasePage {
         waitForElementToBeClickable("status", SelectorType.ID);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         waitForTextToBePresent("Outstanding");
-        clickByLinkText("50");
+        if (isTextPresent("50", 10)){
+            clickByLinkText("50");
+        }
         waitAndClick("//*[@value='" + feeNumber + "']", SelectorType.XPATH);
         waitAndClick("//*[@value='Pay']", SelectorType.XPATH);
         waitForTextToBePresent("Payment method");
@@ -161,7 +163,7 @@ public class UIJourneySteps extends BasePage {
     private void findAddress(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
         enterText("address[searchPostcode][postcode]", "NG1 5FW", SelectorType.NAME);
         waitAndClick("address[searchPostcode][search]", SelectorType.NAME);
-        waitAndSelectByIndex("", "//*[@id='fee_payment']/fieldset[2]/fieldset/div[3]/select[@name='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("", "//*[@name='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         waitForPageLoad();
     }
 

@@ -58,12 +58,19 @@ public class GlobalMethods extends BasePage{
             LoginPage.signIn(username, getLoginPassword());
         } finally {
             if (isTextPresent("Current password", 60)) {
+                waitForTextToBePresent("Re-enter new password");
                 enterField(nameAttribute("input", "oldPassword"), password);
                 enterField(nameAttribute("input", "newPassword"), newPassword);
                 enterField(nameAttribute("input", "confirmPassword"), newPassword);
                 click(nameAttribute("input", "submit"));
                 setLoginPassword(newPassword);
             }
+        }
+        clickByLinkText(world.createLicence.getLicenceNumber());
+        if (isTextPresent("What you need to do next", 10)){
+            throw new MalformedURLException("Licence did not grant");
+        } else {
+            clickByLinkText("GOV.UK");
         }
     }
 }
