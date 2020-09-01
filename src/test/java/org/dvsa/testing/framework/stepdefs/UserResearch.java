@@ -4,7 +4,7 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import cucumber.api.java8.En;;
+import cucumber.api.java8.En;
 import enums.TrafficArea;
 import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;

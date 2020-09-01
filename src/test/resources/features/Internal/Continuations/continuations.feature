@@ -60,10 +60,10 @@ Feature: Continuations journey through internal and self serve
     Then the correct checks should display on the continuation review details page and continuation snapshot
       Examples:
         | operatorType | licenceType            |
-#        | goods        | standard_national      |
-#        | goods        | standard_international |
-#        | goods        | restricted             |
-#        | public       | standard_national      |
-#        | public       | standard_international |
+        | goods        | standard_national      |
+        | goods        | standard_international |
+        | goods        | restricted             |
+        | public       | standard_national      |
+        | public       | standard_international |
         | public       | restricted             |
         | public       | special_restricted     |

@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import cucumber.api.java8.En;;
+import cucumber.api.java8.En;
 import enums.UserRoles;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.lib.pages.BasePage;

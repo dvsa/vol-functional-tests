@@ -17,7 +17,6 @@ Feature: Self Serve Apply for licence
       | public       | standard_national      |
 
   @stored_cards
-    @tests
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | b |

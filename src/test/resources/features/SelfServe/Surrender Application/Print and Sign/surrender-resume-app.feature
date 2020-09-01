@@ -2,7 +2,6 @@
 @SS
 @Surrenders-resume
 @ss_regression
-  @here
 Feature: User should be able to continue where they left off
 
   Scenario Outline: Update correspondence address and resume surrender journey

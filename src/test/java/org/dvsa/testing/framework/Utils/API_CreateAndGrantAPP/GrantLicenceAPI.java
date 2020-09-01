@@ -53,9 +53,6 @@ public class GrantLicenceAPI extends BaseAPI{
                 .withTracking(tracking);
         apiResponse = RestUtils.put(overview, overviewResource, getHeaders());
 
-        System.out.println(apiResponse.extract().statusCode());
-        System.out.println(apiResponse.extract().response().asString());
-        System.out.println("look here");
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
@@ -146,19 +143,10 @@ public class GrantLicenceAPI extends BaseAPI{
     }
 
     public ValidatableResponse grantLicence() {
-//        if (world.updateLicence.getVariationApplicationNumber() != null) {
-//            System.out.println("Is variation");
-//            world.grantLicence.createOverview(world.updateLicence.getVariationApplicationNumber());
-//            world.grantLicence.variationGrant(world.updateLicence.getVariationApplicationNumber());
-//        } else {
-            System.out.println("Is not variation");
             world.grantLicence.createOverview(world.createLicence.getApplicationNumber());
             world.grantLicence.getOutstandingFees(world.createLicence.getApplicationNumber());
             world.grantLicence.payOutstandingFees(world.createLicence.getOrganisationId(), world.createLicence.getApplicationNumber());
             world.grantLicence.grant(world.createLicence.getApplicationNumber());
-//        }
-        System.out.println(apiResponse.extract().statusCode());
-        System.out.println(apiResponse.extract().response().asString());
         return apiResponse;
     }
 

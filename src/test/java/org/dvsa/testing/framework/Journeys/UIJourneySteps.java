@@ -461,9 +461,7 @@ public class UIJourneySteps extends BasePage {
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
         }
-        System.out.println("before grant");
         world.grantLicence.grantLicence();
-        System.out.println("after grant");
         if (world.createLicence.getOperatorType().equals("goods")) {
             world.grantLicence.payGrantFees();
         }

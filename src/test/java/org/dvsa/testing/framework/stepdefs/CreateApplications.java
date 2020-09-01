@@ -4,7 +4,7 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import io.cucumber.datatable.DataTable;
-import cucumber.api.java8.En;;
+import cucumber.api.java8.En;
 import enums.TrafficArea;
 import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;

@@ -609,8 +609,6 @@ public class CreateLicenceAPI extends BaseAPI{
             LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
-        System.out.println(apiResponse.extract().statusCode());
-        System.out.println(apiResponse.extract().response().asString());
     }
 
     public void updateOperatingCentre() {
@@ -643,8 +641,6 @@ public class CreateLicenceAPI extends BaseAPI{
             LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
-        System.out.println(apiResponse.extract().statusCode());
-        System.out.println(apiResponse.extract().response().asString());
     }
 
     public void addFinancialEvidence() {
@@ -663,8 +659,6 @@ public class CreateLicenceAPI extends BaseAPI{
             LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
-        System.out.println(apiResponse.extract().statusCode());
-        System.out.println(apiResponse.extract().response().asString());
     }
 
     public void addTransportManager() {
@@ -992,7 +986,5 @@ public class CreateLicenceAPI extends BaseAPI{
             LOGGER.info("RESPONSE MESSAGE: ".concat(apiResponse.extract().response().asString()));
             throw new HTTPException(apiResponse.extract().statusCode());
         }
-        System.out.println(apiResponse.extract().statusCode());
-        System.out.println(apiResponse.extract().response().asString());
     }
 }

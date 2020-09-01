@@ -101,7 +101,6 @@
                     <reportVersion>${allure-report-version}</reportVersion>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>com.trivago.rta</groupId>
                 <artifactId>cucable-plugin</artifactId>
