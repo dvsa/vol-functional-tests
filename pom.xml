@@ -122,7 +122,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfRunners>11</desiredNumberOfRunners>
+                    <desiredNumberOfRunners>6</desiredNumberOfRunners>
                 </configuration>
             </plugin>
             <plugin>
@@ -154,7 +154,7 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>5</forkCount>
+                            <forkCount>4</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
