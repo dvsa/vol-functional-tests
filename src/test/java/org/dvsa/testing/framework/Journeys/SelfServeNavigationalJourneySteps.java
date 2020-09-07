@@ -63,8 +63,8 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 }
                 break;
         }
-        switch (page.toLowerCase()) {
-            case "view":
+        switch (page) {
+            case "View":
                 switch (type.toLowerCase()) {
                     case "licence":
                         waitForTitleToBePresent("View and amend your licence");
@@ -85,81 +85,9 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                         break;
                 }
                 break;
-            case "type of licence":
-                clickByLinkText("Type of licence");
-                waitForTitleToBePresent("Type of licence");
-                break;
-            case "business type":
-                clickByLinkText("Business type");
-                waitForTitleToBePresent("Business type");
-                break;
-            case "business details":
-                clickByLinkText("Business details");
-                waitForTitleToBePresent("Business details");
-                break;
-            case "address":
-                clickByLinkText("Address");
-                waitForTitleToBePresent("Address");
-                break;
-            case "addresses":
-                clickByLinkText("Addresses");
-                waitForTitleToBePresent("Addresses");
-                break;
-            case "directors":
-                clickByLinkText("Directors");
-                waitForTitleToBePresent("Directors");
-                break;
-            case "operating centres and authorisation":
-                clickByLinkText("Operating centres and authorisation");
-                waitForTitleToBePresent("Operating centres and authorisation");
-                break;
-            case "transport managers":
-                clickByLinkText("Transport Managers");
-                waitForTitleToBePresent("Transport Managers");
-                break;
-            case "vehicles":
-                clickByLinkText("Vehicles");
-                waitForTitleToBePresent("Vehicle details");
-                break;
-            case "vehicle declarations":
-                clickByLinkText("Vehicle declarations");
-                waitForTitleToBePresent("Vehicle declarations");
-                break;
-            case "trailers":
-                clickByLinkText("Trailers");
-                waitForTitleToBePresent("Trailers");
-                break;
-            case "licence discs":
-                clickByLinkText("Licence discs");
-                waitForTitleToBePresent("Licence discs");
-                break;
-            case "safety and compliance":
-                clickByLinkText("Safety and compliance");
-                waitForTitleToBePresent("Safety and compliance");
-                break;
-            case "conditions and undertakings":
-                clickByLinkText("Conditions and undertakings");
-                waitForTitleToBePresent("Conditions and undertakings");
-                break;
-            case "financial history":
-                clickByLinkText("Financial history");
-                waitForTitleToBePresent("Financial history");
-                break;
-            case "financial evidence":
-                clickByLinkText("Financial evidence");
-                waitForTitleToBePresent("Financial evidence");
-                break;
-            case "licence history":
-                clickByLinkText("Licence history");
-                waitForTitleToBePresent("Licence history");
-                break;
-            case "convictions and penalties":
-                clickByLinkText("Convictions and penalties");
-                waitForTitleToBePresent("Convictions and Penalties");
-                break;
-            case "review and declarations":
-                clickByLinkText("Review and declarations");
-                waitForTitleToBePresent("Review and declarations");
+            default:
+                clickByLinkText(page);
+                waitForTitleToBePresent(page);
                 break;
         }
     }

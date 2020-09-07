@@ -351,7 +351,7 @@ public class UIJourneySteps extends BasePage {
 
 
     public void updateFinancialInformation() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("variation", "financial evidence");
+        world.selfServeNavigation.navigateToPage("variation", "Financial evidence");
         javaScriptExecutor("location.reload(true)");
         click("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
         click("//*[@id='form-actions[save]']", SelectorType.XPATH);
@@ -367,7 +367,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void signDeclarationForVariation() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("variation", "review and declarations");
+        world.selfServeNavigation.navigateToPage("variation", "Review and declarations");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (size("//*[@id='submitAndPay']", SelectorType.XPATH) != 0) {
             click("//*[@id='submitAndPay']", SelectorType.XPATH);

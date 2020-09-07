@@ -24,7 +24,7 @@ public class SurrenderJourneySteps extends BasePage {
 
     public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
         world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "view");
+        world.selfServeNavigation.navigateToPage("licence", "View");
         clickByLinkText("Apply to surrender licence");
     }
 
