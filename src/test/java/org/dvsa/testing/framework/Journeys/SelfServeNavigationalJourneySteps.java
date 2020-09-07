@@ -35,7 +35,6 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
         String applicationStatus = null;
-        String variationApplicationStatus = null;
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
@@ -54,11 +53,11 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 break;
             case "variation":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.updateLicence.getVariationApplicationNumber());
-                variationApplicationStatus = getText(overviewStatus, SelectorType.XPATH);
+                applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
+                if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply to change a licence");
-                } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
+                } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
                     waitForTitleToBePresent("Application overview");
                 }
                 break;
@@ -77,9 +76,9 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                         }
                         break;
                     case "variation":
-                        if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
+                        if (applicationStatus.equals("NOT YET SUBMITTED")) {
                             waitForTitleToBePresent("Apply to change a licence");
-                        } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
+                        } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
                             waitForTextToBePresent("What happens next?");
                         }
                         break;
