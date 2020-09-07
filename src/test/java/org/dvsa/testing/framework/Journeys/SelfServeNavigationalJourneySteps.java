@@ -87,7 +87,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 break;
             case "type of licence":
                 clickByLinkText("Type of licence");
-                waitForTitleToBePresent("Operator location");
+                waitForTitleToBePresent("Type of licence");
                 break;
             case "business type":
                 clickByLinkText("Business type");
@@ -109,7 +109,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 clickByLinkText("Directors");
                 waitForTitleToBePresent("Directors");
                 break;
-            case "operating centres":
+            case "operating centres and authorisation":
                 clickByLinkText("Operating centres and authorisation");
                 waitForTitleToBePresent("Operating centres and authorisation");
                 break;
