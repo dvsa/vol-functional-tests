@@ -40,7 +40,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         switch (type.toLowerCase()) {
             case "licence":
                 clickByLinkText(world.createLicence.getLicenceNumber());
-                waitForTextToBePresent("View and amend your licence");
+                waitForTitleToBePresent("View and amend your licence");
                 break;
             case "application":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
@@ -49,7 +49,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply for a new licence");
                 } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                    waitForTextToBePresent("Application overview");
+                    waitForTitleToBePresent("Application overview");
                 }
                 break;
             case "variation":
@@ -59,7 +59,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply to change a licence");
                 } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
-                    waitForTextToBePresent("Application overview");
+                    waitForTitleToBePresent("Application overview");
                 }
                 break;
         }
@@ -67,18 +67,18 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
             case "view":
                 switch (type.toLowerCase()) {
                     case "licence":
-                        waitForTextToBePresent("View and amend your licence");
+                        waitForTitleToBePresent("View and amend your licence");
                         break;
                     case "application":
                         if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                            waitForTextToBePresent("Apply for a new licence");
+                            waitForTitleToBePresent("Apply for a new licence");
                         } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
                             waitForTextToBePresent("What you need to do next");
                         }
                         break;
                     case "variation":
                         if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
-                            waitForTextToBePresent("Apply to change a licence");
+                            waitForTitleToBePresent("Apply to change a licence");
                         } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
                             waitForTextToBePresent("What happens next?");
                         }
@@ -87,79 +87,79 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 break;
             case "type of licence":
                 clickByLinkText("Type of licence");
-                waitForTextToBePresent("Operator location");
+                waitForTitleToBePresent("Type of licence");
                 break;
             case "business type":
                 clickByLinkText("Business type");
-                waitForTextToBePresent("Business type");
+                waitForTitleToBePresent("Business type");
                 break;
             case "business details":
                 clickByLinkText("Business details");
-                waitForTextToBePresent("Business details");
+                waitForTitleToBePresent("Business details");
                 break;
             case "address":
                 clickByLinkText("Address");
-                waitForTextToBePresent("Address");
+                waitForTitleToBePresent("Address");
                 break;
             case "addresses":
                 clickByLinkText("Addresses");
-                waitForTextToBePresent("Addresses");
+                waitForTitleToBePresent("Addresses");
                 break;
             case "directors":
                 clickByLinkText("Directors");
-                waitForTextToBePresent("Directors");
+                waitForTitleToBePresent("Directors");
                 break;
-            case "operating centres":
+            case "operating centres and authorisation":
                 clickByLinkText("Operating centres and authorisation");
-                waitForTextToBePresent("Operating centres and authorisation");
+                waitForTitleToBePresent("Operating centres and authorisation");
                 break;
             case "transport managers":
                 clickByLinkText("Transport Managers");
-                waitForTextToBePresent("Transport Managers");
+                waitForTitleToBePresent("Transport Managers");
                 break;
             case "vehicles":
                 clickByLinkText("Vehicles");
-                waitForTextToBePresent("Vehicle details");
+                waitForTitleToBePresent("Vehicle details");
                 break;
             case "vehicle declarations":
                 clickByLinkText("Vehicle declarations");
-                waitForTextToBePresent("Vehicle declarations");
+                waitForTitleToBePresent("Vehicle declarations");
                 break;
             case "trailers":
                 clickByLinkText("Trailers");
-                waitForTextToBePresent("Trailers");
+                waitForTitleToBePresent("Trailers");
                 break;
             case "licence discs":
                 clickByLinkText("Licence discs");
-                waitForTextToBePresent("Licence discs");
+                waitForTitleToBePresent("Licence discs");
                 break;
             case "safety and compliance":
                 clickByLinkText("Safety and compliance");
-                waitForTextToBePresent("Safety and compliance");
+                waitForTitleToBePresent("Safety and compliance");
                 break;
             case "conditions and undertakings":
                 clickByLinkText("Conditions and undertakings");
-                waitForTextToBePresent("Conditions and undertakings");
+                waitForTitleToBePresent("Conditions and undertakings");
                 break;
             case "financial history":
                 clickByLinkText("Financial history");
-                waitForTextToBePresent("Financial history");
+                waitForTitleToBePresent("Financial history");
                 break;
             case "financial evidence":
                 clickByLinkText("Financial evidence");
-                waitForTextToBePresent("Financial evidence");
+                waitForTitleToBePresent("Financial evidence");
                 break;
             case "licence history":
                 clickByLinkText("Licence history");
-                waitForTextToBePresent("Licence history");
+                waitForTitleToBePresent("Licence history");
                 break;
             case "convictions and penalties":
                 clickByLinkText("Convictions and penalties");
-                waitForTextToBePresent("Convictions and Penalties");
+                waitForTitleToBePresent("Convictions and Penalties");
                 break;
             case "review and declarations":
                 clickByLinkText("Review and declarations");
-                waitForTextToBePresent("Review and declarations");
+                waitForTitleToBePresent("Review and declarations");
                 break;
         }
     }

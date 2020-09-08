@@ -30,7 +30,7 @@ public class SurrenderJourneySteps extends BasePage {
 
     public void startSurrender() throws IllegalBrowserException, MalformedURLException {
         click("//*[@id='submit']", SelectorType.XPATH);
-        waitForTextToBePresent("Review your contact information");
+        waitForTitleToBePresent("Review your contact information");
     }
 
     public void navigateToSurrenderReviewPage(String discToDestroy, String discsLost, String discsStolen) throws IllegalBrowserException, MalformedURLException {
@@ -106,7 +106,6 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
     }
 
-
     public void checkVerifyConfirmation() throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
@@ -120,7 +119,7 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Securely destroy");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForTextToBePresent("Declaration");
+        waitForTitleToBePresent("Declaration");
     }
 
     public void internalDigitalSurrenderMenu() throws IllegalBrowserException, MalformedURLException {

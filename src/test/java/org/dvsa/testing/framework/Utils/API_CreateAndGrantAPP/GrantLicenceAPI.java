@@ -102,8 +102,6 @@ public class GrantLicenceAPI extends BaseAPI{
         GrantApplicationBuilder grantApplication = new GrantApplicationBuilder().withId(applicationNumber).withDuePeriod("9").withCaseworkerNotes("This notes are from the API");
         apiResponse = RestUtils.put(grantApplication, grantApplicationResource, getHeaders());
 
-        System.out.println(apiResponse.extract().statusCode());
-        System.out.println(apiResponse.extract().response().asString());
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
             System.out.println(apiResponse.extract().statusCode());
             System.out.println(apiResponse.extract().response().asString());
@@ -143,15 +141,10 @@ public class GrantLicenceAPI extends BaseAPI{
     }
 
     public ValidatableResponse grantLicence() {
-        if (world.updateLicence.getVariationApplicationNumber() != null) {
-            world.grantLicence.createOverview(world.updateLicence.getVariationApplicationNumber());
-            world.grantLicence.variationGrant(world.updateLicence.getVariationApplicationNumber());
-        } else {
             world.grantLicence.createOverview(world.createLicence.getApplicationNumber());
             world.grantLicence.getOutstandingFees(world.createLicence.getApplicationNumber());
             world.grantLicence.payOutstandingFees(world.createLicence.getOrganisationId(), world.createLicence.getApplicationNumber());
             world.grantLicence.grant(world.createLicence.getApplicationNumber());
-        }
         return apiResponse;
     }
 

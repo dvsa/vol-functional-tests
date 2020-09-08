@@ -52,7 +52,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         });
         And("^a selfserve user creates a variation and adds an operating centre$", () -> {
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.selfServeNavigation.navigateToPage("licence", "operating centres");
+            world.selfServeNavigation.navigateToPage("licence", "operating centres and authorisation");
             world.UIJourneySteps.changeLicenceForVariation();
             world.UIJourneySteps.addNewOperatingCentreSelfServe("B988QF",7,7);
             world.UIJourneySteps.updateFinancialInformation();
