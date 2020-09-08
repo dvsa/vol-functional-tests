@@ -13,9 +13,14 @@ public class Initialisation extends BasePage implements En {
 
     private World world;
 
+    /***
+     * World variable passed through to all classes regardless for instantiation purposes.
+     * I.e. variable initialisations that requires other values from other classes.
+     */
+
     public Initialisation (World world) {
         this.world = world;
-        world.configuration = new Configuration();
+        world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);
         world.createLicence = new CreateLicenceAPI();
         world.grantLicence = new GrantLicenceAPI(world);
