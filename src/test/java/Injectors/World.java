@@ -25,4 +25,5 @@ public class World {
     public UIJourneySteps UIJourneySteps;
     public Configuration configuration;
     public GlobalMethods globalMethods;
+    public FeeAndPaymentJourneySteps feeAndPaymentJourneySteps;
 }

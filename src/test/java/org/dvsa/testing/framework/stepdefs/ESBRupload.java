@@ -71,8 +71,8 @@ public class ESBRupload extends BasePage implements En {
         });
         And("^it has been paid and granted$", () -> {
             clickByLinkText("Fees");
-            world.UIJourneySteps.selectFee();
-            world.UIJourneySteps.payFee("60", "cash");
+            world.feeAndPaymentJourneySteps.selectFee();
+            world.feeAndPaymentJourneySteps.payFee("60", "cash");
             waitAndClick("//*[contains(text(),'Grant')]",SelectorType.XPATH);
         });
         Then("^the bus registration should be granted$", () -> {

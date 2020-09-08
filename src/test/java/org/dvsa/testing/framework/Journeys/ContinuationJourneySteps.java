@@ -92,7 +92,7 @@ public class ContinuationJourneySteps extends BasePage {
         if (world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
             click("submitAndPay", SelectorType.ID);
             click("form-actions[pay]", SelectorType.ID);
-            world.UIJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
         } else {
             click("submit", SelectorType.ID);
         }

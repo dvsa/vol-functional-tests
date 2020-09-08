@@ -99,9 +99,9 @@ public class InternalApplication extends BasePage implements En {
         And("^grants the application$", () -> {
             int tableColumns;
             waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
-            world.UIJourneySteps.selectFee();
+            world.feeAndPaymentJourneySteps.selectFee();
             String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
-            world.UIJourneySteps.payFee(fee, "cash");
+            world.feeAndPaymentJourneySteps.payFee(fee, "cash");
             waitForTextToBePresent("The payment was made successfully");
             long kickoutTime = System.currentTimeMillis() + 15000;
 
