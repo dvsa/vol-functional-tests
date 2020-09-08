@@ -14,6 +14,7 @@ import static activesupport.driver.Browser.navigate;
 public class InternalNavigationalJourneySteps extends BasePage {
 
     private World world;
+    private String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
 
     public InternalNavigationalJourneySteps(World world) {
         this.world = world;
@@ -40,27 +41,22 @@ public class InternalNavigationalJourneySteps extends BasePage {
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
     public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        navigate().get(myURL.concat(String.format("application/%s", world.createLicence.getApplicationNumber())));
+        navigate().get(this.myURL.concat(String.format("application/%s", world.createLicence.getApplicationNumber())));
     }
 
     public void urlSearchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        navigate().get(myURL.concat(String.format("licence/%s", world.createLicence.getLicenceId())));
+        navigate().get(this.myURL.concat(String.format("licence/%s", world.createLicence.getLicenceId())));
     }
 
     public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        navigate().get(myURL.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationNumber())));
+        navigate().get(this.myURL.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationNumber())));
     }
 
     public void urlSearchAndViewEditFee(String feeNumber) throws IllegalBrowserException, MalformedURLException {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        navigate().get(myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
+        navigate().get(this.myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
     }
 
     public void urlSearchAndViewInternalUserAccount(String adminUserId) throws IllegalBrowserException, MalformedURLException {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        navigate().get(myURL.concat(String.format("admin/user-management/users/edit/%s", adminUserId)));
+        navigate().get(this.myURL.concat(String.format("admin/user-management/users/edit/%s", adminUserId)));
     }
 }
