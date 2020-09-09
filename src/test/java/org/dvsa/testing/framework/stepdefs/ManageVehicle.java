@@ -28,7 +28,7 @@ public class ManageVehicle {
     @When("I navigate to manage vehicle page")
     public void iNavigateToManageVehiclePage() throws MalformedURLException, IllegalBrowserException {
         world.selfServeNavigation.navigateToLogin( world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("application", "review and declarations");
+        world.selfServeNavigation.navigateToPage("application", "vehicles");
     }
 
     @Then("the add vehicle page should display licence number")
