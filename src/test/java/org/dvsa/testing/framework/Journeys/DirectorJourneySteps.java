@@ -18,7 +18,7 @@ public class DirectorJourneySteps extends BasePage {
 
 
     public void addDirectorWithoutConvictions(String firstName, String lastName) throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("licence", "directors");
+        world.selfServeNavigation.navigateToPage("licence", "Directors");
         addPerson(firstName, lastName);
         findSelectAllRadioButtonsByValue("N");
         clickByName("form-actions[saveAndContinue]");

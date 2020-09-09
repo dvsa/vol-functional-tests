@@ -351,7 +351,7 @@ public class UIJourneySteps extends BasePage {
 
 
     public void updateFinancialInformation() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("variation", "financial evidence");
+        world.selfServeNavigation.navigateToPage("variation", "Financial evidence");
         javaScriptExecutor("location.reload(true)");
         click("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
         click("//*[@id='form-actions[save]']", SelectorType.XPATH);
@@ -367,46 +367,12 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void signDeclarationForVariation() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("variation", "review and declarations");
+        world.selfServeNavigation.navigateToPage("variation", "Review and declarations");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (size("//*[@id='submitAndPay']", SelectorType.XPATH) != 0) {
             click("//*[@id='submitAndPay']", SelectorType.XPATH);
         } else if (size("//*[@id='submit']", SelectorType.XPATH) != 0)
             click("//*[@id='submit']", SelectorType.XPATH);
-    }
-
-    public void navigateThroughApplication() throws IllegalBrowserException, MalformedURLException {
-        waitForTitleToBePresent("Apply for a new licence");
-        clickByLinkText("Type of licence");
-        waitForTitleToBePresent("Type of licence");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Business type");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Business details");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Addresses");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Directors");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Operating centres and authorisation");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Transport Managers");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Vehicle details");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        if (isTitlePresent("Vehicle declarations", 30)) {
-            waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        }
-        waitForTitleToBePresent("Safety and compliance");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Financial history");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Licence history");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Convictions and Penalties");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
     public void updateContactDetails(String addressLine1, String addressLine2, String addressLine3, String

@@ -25,7 +25,7 @@ public class DirectorVariation extends BasePage implements En {
         this.world = world;
 
         When("^i add a new person$", () -> {
-            world.selfServeNavigation.navigateToPage("licence", "directors");
+            world.selfServeNavigation.navigateToPage("licence", "Directors");
             world.directorJourneySteps.addPerson(firstName, lastName);
         });
         Then("^a new director should be added to my licence$", () -> {
@@ -81,7 +81,7 @@ public class DirectorVariation extends BasePage implements En {
             world.directorJourneySteps.addDirectorWithoutConvictions(firstName, lastName);
         });
         Given("^i add a director$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","directors");
+            world.selfServeNavigation.navigateToPage("licence", "Directors");
             world.directorJourneySteps.addDirector(firstName, lastName);
         });
         Then("^i should have multiple directors on my application$", () -> {
@@ -105,7 +105,7 @@ public class DirectorVariation extends BasePage implements En {
 
         When("^i remove a the last director$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.selfServeNavigation.navigateToPage("licence", "directors");
+            world.selfServeNavigation.navigateToPage("licence", "Directors");
             world.directorJourneySteps.removeDirector();
         });
 

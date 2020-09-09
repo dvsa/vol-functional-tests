@@ -54,7 +54,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void clickContinueLicenceOnSelfServe() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("licence", "view");
+        world.selfServeNavigation.navigateToPage("licence", "View");
         refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
     }

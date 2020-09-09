@@ -197,9 +197,9 @@ public class TransportManagerJourneySteps extends BasePage {
 
     public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         if (applicationOrNot) {
-            world.selfServeNavigation.navigateToPage("application", "transport managers");
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
-            world.selfServeNavigation.navigateToPage("licence", "transport managers");
+            world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
             world.UIJourneySteps.changeLicenceForVariation(); // If licence already created then this creates variational
         }
         waitForTitleToBePresent("Transport Managers");
@@ -223,7 +223,7 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
     public void addOperatorAdminAsTransportManager(String user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("application", "transport managers");
+        world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
@@ -269,9 +269,9 @@ public class TransportManagerJourneySteps extends BasePage {
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
         if (applicationOrNot) {
-            world.selfServeNavigation.navigateToPage("application", "transport managers");
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
-            world.selfServeNavigation.navigateToPage("variation", "transport managers");
+            world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
         }
         clickByLinkText(getOperatorForeName() + " " + getOperatorFamilyName());
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
