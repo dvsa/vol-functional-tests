@@ -68,6 +68,7 @@ public class InternalApplication extends BasePage implements En {
             waitForTextToBePresent("Operating centres and authorisation");
             assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
         });
+
         Given("^I have partially applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
             world.createLicence.setOperatorType(operator);
             world.createLicence.setLicenceType(licenceType);
@@ -80,6 +81,7 @@ public class InternalApplication extends BasePage implements En {
 
             }
         });
+
         When("^the caseworker completes and submits the application$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
@@ -117,6 +119,7 @@ public class InternalApplication extends BasePage implements En {
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
             click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
         });
+
         Then("^the licence is granted in Internal$", () -> {
             waitForTextToBePresent("Overview");
             world.UIJourneySteps.checkLicenceStatus("Granted");
