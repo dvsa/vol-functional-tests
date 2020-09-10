@@ -11,4 +11,3 @@ Feature: Search and add a vehicle
       | Operator |
       | goods    |
       | public   |
-

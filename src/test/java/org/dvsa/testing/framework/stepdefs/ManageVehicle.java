@@ -8,10 +8,13 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import enums.OperatorType;
 import enums.UserRoles;
+import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.junit.Assert;
 
 import java.net.MalformedURLException;
 
-public class ManageVehicle {
+public class ManageVehicle extends BasePage {
     World world;
 
     public ManageVehicle(World world){
@@ -32,17 +35,17 @@ public class ManageVehicle {
     }
 
     @Then("the add vehicle page should display licence number")
-    public void theAddVehiclePageShouldDisplayLicenceNumber() {
-
+    public void theAddVehiclePageShouldDisplayLicenceNumber() throws MalformedURLException, IllegalBrowserException {
+        Assert.assertEquals(world.createLicence.getLicenceNumber(),getText("licence",SelectorType.ID));
     }
 
     @And("choose to add a vehicle")
-    public void chooseToAddAVehicle() {
-        System.out.println("EXAMPLE");
-
+    public void chooseToAddAVehicle() throws MalformedURLException, IllegalBrowserException {
+        world.UIJourneySteps.addAVehicle();
     }
 
     @And("{string} heading")
-    public void heading(String arg0) {
+    public void heading(String heading) throws MalformedURLException, IllegalBrowserException {
+        Assert.assertEquals(heading, getText("h1", SelectorType.CSS));
     }
 }

@@ -692,4 +692,9 @@ public class UIJourneySteps extends BasePage {
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
     }
+
+    public void addAVehicle() throws MalformedURLException, IllegalBrowserException {
+        waitAndClick("manage-your-vehicle",SelectorType.ID);
+        waitAndClick("manage-button",SelectorType.ID);
+    }
 }
