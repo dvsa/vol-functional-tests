@@ -48,7 +48,8 @@ public class UIJourneySteps extends BasePage {
     public void searchAndSelectAddress(String addressSelector, String postcode, int index) throws MalformedURLException, IllegalBrowserException {
         enterText(addressSelector, postcode, SelectorType.ID);
         click("address[searchPostcode][search]", SelectorType.ID);
-        waitAndSelectByIndex("", "address[searchPostcode][addresses]", SelectorType.ID, index);
+        waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.NAME);
+        selectValueFromDropDownByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
         waitForPageLoad();
     }
 

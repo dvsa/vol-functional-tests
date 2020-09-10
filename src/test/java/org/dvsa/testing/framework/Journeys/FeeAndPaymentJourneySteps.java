@@ -38,7 +38,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 if (isTextPresent("Customer reference", 10)) {
                     enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                     enterText("details[customerReference]", "AutomationCashCustomerRef", SelectorType.NAME);
-                    world.UIJourneySteps.searchAndSelectAddress("address[searchPostcode][postcode]", "NG1 5FW", 1);
+                    world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     clickPayAndConfirm(paymentMethod);
                 } else {
                     clickByName("form-actions[pay]");
@@ -58,7 +58,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 enterText("details[chequeDate][day]", dates.get("day").toString(), SelectorType.NAME);
                 enterText("details[chequeDate][month]", dates.get("month").toString(), SelectorType.NAME);
                 enterText("details[chequeDate][year]", dates.get("year").toString(), SelectorType.NAME);
-                world.UIJourneySteps.searchAndSelectAddress("address[searchPostcode][postcode]", "NG1 5FW", 1);
+                world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "postal":
@@ -69,7 +69,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 enterText("details[customerReference]", "AutomationPostalOrderCustomerRef", SelectorType.NAME);
                 enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
                 enterText("details[poNo]", "123456", SelectorType.NAME);
-                world.UIJourneySteps.searchAndSelectAddress("address[searchPostcode][postcode]", "NG1 5FW", 1);
+                world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
@@ -78,7 +78,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                     if (isTextPresent("Customer reference", 10)) {
                         enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
                         enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
-                        world.UIJourneySteps.searchAndSelectAddress("address[searchPostcode][postcode]", "NG1 5FW", 1);
+                        world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                         clickPayAndConfirm(paymentMethod);
                     }
                 }
