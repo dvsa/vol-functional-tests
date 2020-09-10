@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import cucumber.api.DataTable;
+import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
 import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -59,9 +59,9 @@ public class TMDetails extends BasePage implements En {
         });
         And("^i navigate to the transport managers details page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.selfServeNavigation.navigateToPage("application", "transport managers");
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
             click("//*[@name='table[action]']", SelectorType.XPATH);
-            waitForTextToBePresent("Add Transport Manager");
+            waitForTitleToBePresent("Add Transport Manager");
             selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
         });

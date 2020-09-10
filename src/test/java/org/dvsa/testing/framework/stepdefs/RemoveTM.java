@@ -68,7 +68,7 @@ public class RemoveTM extends BasePage implements En {
         });
         Given("^a self-serve user removes the last TM$", () -> {
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            world.selfServeNavigation.navigateToPage("licence", "transport managers");
+            world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
             click("//*[@value='Remove']", SelectorType.XPATH);
         });
         Given("^the licence has been granted$", () -> {
