@@ -48,4 +48,14 @@ public class ManageVehicle extends BasePage {
     public void heading(String heading) throws MalformedURLException, IllegalBrowserException {
         Assert.assertEquals(heading, getText("h1", SelectorType.CSS));
     }
+
+    @And("I search without entering a registration number")
+    public void iSearchWithoutEnteringARegistrationNumber() throws MalformedURLException, IllegalBrowserException {
+        click("//*[contains(text(),'Find vehicle')]",SelectorType.XPATH);
+    }
+
+    @Then("An error message should be displayed")
+    public void anErrorMessageShouldBeDisplayed() throws MalformedURLException, IllegalBrowserException {
+        isElementPresent("//div[@class=\"govuk-error-summary\"]",SelectorType.XPATH);
+    }
 }

@@ -11,3 +11,9 @@ Feature: Search and add a vehicle
       | Operator |
       | goods    |
       | public   |
+
+  Scenario: Check error messages
+    Given I have a new "<Operator>" application
+    When I navigate to manage vehicle page
+    And I search without entering a registration number
+    Then An error message should be displayed
