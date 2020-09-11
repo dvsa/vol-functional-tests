@@ -57,5 +57,6 @@ public class ManageVehicle extends BasePage {
     @Then("An error message should be displayed")
     public void anErrorMessageShouldBeDisplayed() throws MalformedURLException, IllegalBrowserException {
         isElementPresent("//div[@class=\"govuk-error-summary\"]",SelectorType.XPATH);
+        isTextPresent("Enter a Vehicle Registration Mark",60);
     }
 }
