@@ -1,3 +1,6 @@
+# https://jira.dvsacloud.uk/browse/VOL-147
+
+@VOL-147
 @VOL-147
 Feature: Search and add a vehicle
 
@@ -7,7 +10,6 @@ Feature: Search and add a vehicle
     And choose to add a vehicle
     Then the add vehicle page should display licence number
     And "Add a vehicle" heading
-
     Examples:
       | Operator |
       | goods    |
@@ -18,7 +20,6 @@ Feature: Search and add a vehicle
     When I navigate to manage vehicle page
     And I search without entering a registration number
     Then An error message should be displayed
-
     Examples:
       | Operator |
       | goods    |
@@ -32,8 +33,8 @@ Feature: Search and add a vehicle
     When I navigate to manage vehicle page
     When I search for a valid "<vrm>" registration
     Examples:
-      | vrm |
-      |     |
+      | vrm      |
+      | VR4 5DFG |
     Then the vehicle details should be displayed on the page:
       | Vehicle information       |
       | Vehicle Registration Mark |
