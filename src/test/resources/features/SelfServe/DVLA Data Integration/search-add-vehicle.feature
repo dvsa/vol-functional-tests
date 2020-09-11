@@ -12,8 +12,26 @@ Feature: Search and add a vehicle
       | goods    |
       | public   |
 
-  Scenario: Check error messages
+  Scenario Outline: Check error messages
     Given I have a new "<Operator>" application
     When I navigate to manage vehicle page
     And I search without entering a registration number
     Then An error message should be displayed
+
+    Examples:
+      | Operator |
+      | goods    |
+      | public   |
+
+  Scenario Outline:
+    Given I have a new "<Operator>" application
+    When I navigate to manage vehicle page
+    When I search for a valid "<vrm>" registration
+    Examples:
+      | vrm |
+      |     |
+    Then the vehicle details should be displayed on the page:
+      | Vehicle information       |
+      | Vehicle Registration Mark |
+      | Gross plated weight in kg |
+      | Make                      |

@@ -13,9 +13,12 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 
 import java.net.MalformedURLException;
+import java.nio.channels.Selector;
+import java.util.List;
 
 public class ManageVehicle extends BasePage {
     World world;
+    String vrm;
 
     public ManageVehicle(World world){
          this.world = world;
@@ -58,5 +61,19 @@ public class ManageVehicle extends BasePage {
     public void anErrorMessageShouldBeDisplayed() throws MalformedURLException, IllegalBrowserException {
         isElementPresent("//div[@class=\"govuk-error-summary\"]",SelectorType.XPATH);
         isTextPresent("Enter a Vehicle Registration Mark",60);
+    }
+
+    @When("I search for a valid {string} registration")
+    public void iSearchForAValidRegistration(String vrm) throws MalformedURLException, IllegalBrowserException {
+        this.vrm = vrm;
+        enterText("registration-mark",vrm,SelectorType.ID);
+    }
+
+    @Then("the vehicle details should be displayed on the page:")
+    public void theVehicleDetailsShouldBeDisplayedOnThePage(List<String> table) {
+        isTextPresent(String.format("A vehicle has been found with registration %s",this.vrm), 60);
+        for(String columns : table){
+            isTextPresent(columns,60);
+        }
     }
 }
