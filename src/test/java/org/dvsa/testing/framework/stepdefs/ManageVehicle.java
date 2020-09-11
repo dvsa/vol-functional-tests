@@ -11,9 +11,9 @@ import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
-import java.nio.channels.Selector;
 import java.util.List;
 
 public class ManageVehicle extends BasePage {
@@ -69,11 +69,19 @@ public class ManageVehicle extends BasePage {
         enterText("registration-mark",vrm,SelectorType.ID);
     }
 
-    @Then("the vehicle details should be displayed on the page:")
-    public void theVehicleDetailsShouldBeDisplayedOnThePage(List<String> table) {
+    @Then("the vehicle summary should be displayed on the page:")
+    public void theVehicleSummaryShouldBeDisplayedOnThePage(List<String> table) throws MalformedURLException, IllegalBrowserException {
         isTextPresent(String.format("A vehicle has been found with registration %s",this.vrm), 60);
-        for(String columns : table){
-            isTextPresent(columns,60);
+        for(String columns : table) {
+            isTextPresent(columns, 60);
         }
+    }
+
+    @And("the vehicle details should not be empty")
+    public void theVehicleDetailsShouldNotBeEmpty() throws MalformedURLException, IllegalBrowserException {
+        List<WebElement> vehicleDetails =
+                findElements("//*[@class='govuk-table']//tbody[@class='govuk-table__body']//ancestor::tr[@class='govuk-table__row']//following-sibling::td",SelectorType.XPATH);
+        for(WebElement element : vehicleDetails)
+            Assert.assertNotNull(element.getText());
     }
 }

@@ -1,6 +1,5 @@
-# https://jira.dvsacloud.uk/browse/VOL-147
+#https://jira.dvsacloud.uk/browse/VOL-147
 
-@VOL-147
 @VOL-147
 Feature: Search and add a vehicle
 
@@ -29,11 +28,12 @@ Feature: Search and add a vehicle
     Given I have a new "<Operator>" application
     When I navigate to manage vehicle page
     When I search for a valid "<vrm>" registration
-    Then the vehicle details should be displayed on the page:
+    Then the vehicle summary should be displayed on the page:
       | Vehicle information       |
       | Vehicle Registration Mark |
       | Gross plated weight in kg |
       | Make                      |
+    And the vehicle details should not be empty
 
     Examples:
       | Operator | vrm      |
