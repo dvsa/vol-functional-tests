@@ -25,18 +25,16 @@ Feature: Search and add a vehicle
       | goods    |
       | public   |
 
-#  Scenario Outline:
-#    Given I have a new "<Operator>" application
-#    Examples:
-#      | Operator |
-#      | goods    |
-#    When I navigate to manage vehicle page
-#    When I search for a valid "<vrm>" registration
-#    Examples:
-#      | vrm      |
-#      | VR4 5DFG |
-#    Then the vehicle details should be displayed on the page:
-#      | Vehicle information       |
-#      | Vehicle Registration Mark |
-#      | Gross plated weight in kg |
-#      | Make                      |
+  Scenario Outline: Search for a vehicle registration mark
+    Given I have a new "<Operator>" application
+    When I navigate to manage vehicle page
+    When I search for a valid "<vrm>" registration
+    Then the vehicle details should be displayed on the page:
+      | Vehicle information       |
+      | Vehicle Registration Mark |
+      | Gross plated weight in kg |
+      | Make                      |
+
+    Examples:
+      | Operator | vrm      |
+      | goods    | VR4 5DFG |
