@@ -25,6 +25,9 @@ Feature: Search and add a vehicle
 
   Scenario Outline:
     Given I have a new "<Operator>" application
+    Examples:
+      | Operator |
+      | goods    |
     When I navigate to manage vehicle page
     When I search for a valid "<vrm>" registration
     Examples:
