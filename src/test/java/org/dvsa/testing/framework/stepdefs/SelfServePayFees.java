@@ -13,7 +13,7 @@ public class SelfServePayFees extends BasePage implements En {
     public SelfServePayFees(World world) {
         When("^I pay fees on self serve$", () -> {
             click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
-            world.UIJourneySteps.payFee(null, "card");
+            world.feeAndPaymentJourneySteps.payFee(null, "card");
         });
         And("^an internal user has granted my application$", () -> {
             world.grantLicence.grant(world.createLicence.getApplicationNumber());

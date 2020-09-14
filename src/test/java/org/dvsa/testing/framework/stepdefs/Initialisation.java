@@ -31,6 +31,7 @@ public class Initialisation extends BasePage implements En {
         world.busRegistrationJourneySteps = new BusRegistrationJourneySteps(world);
         world.directorJourneySteps = new DirectorJourneySteps(world);
         world.internalSearch = new InternalSearchJourneySteps(world);
+        world.feeAndPaymentJourneySteps = new FeeAndPaymentJourneySteps(world);
         world.internalNavigation = new InternalNavigationalJourneySteps(world);
         world.selfServeNavigation = new SelfServeNavigationalJourneySteps(world);
         world.surrenderJourneySteps = new SurrenderJourneySteps(world);

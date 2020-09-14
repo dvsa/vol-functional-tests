@@ -80,8 +80,8 @@ public class BusRegistrationJourneySteps extends BasePage {
 
     public void payFeesAndGrantNewBusReg() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Fees");
-        world.UIJourneySteps.selectFee();
-        world.UIJourneySteps.payFee("60", "cash");
+        world.feeAndPaymentJourneySteps.selectFee();
+        world.feeAndPaymentJourneySteps.payFee("60", "cash");
         do {
             System.out.println("link not present");
             javaScriptExecutor("location.reload(true)");

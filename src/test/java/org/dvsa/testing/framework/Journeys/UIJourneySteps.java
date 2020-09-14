@@ -45,133 +45,12 @@ public class UIJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void createAdminFee(String amount, String feeType) throws IllegalBrowserException, MalformedURLException {
-        waitAndClick("//button[@id='new']", SelectorType.XPATH);
-        waitForTextToBePresent("Create new fee");
-        selectValueFromDropDown("fee-details[feeType]", SelectorType.NAME, feeType);
-        waitAndEnterText("amount", SelectorType.ID, amount);
-        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
-    }
-
-    public void payFee(String amount, @NotNull String paymentMethod) throws IllegalBrowserException, MalformedURLException {
-        String payment = paymentMethod.toLowerCase().trim();
-        waitForTextToBePresent("Pay fee");
-        if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
-            enterText("details[received]", amount, SelectorType.NAME);
-            enterText("details[payer]", "Automation payer", SelectorType.NAME);
-            enterText("details[slipNo]", "1234567", SelectorType.NAME);
-        }
-        switch (payment) {
-            case "cash":
-                selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
-                if (isTextPresent("Customer reference", 10)) {
-                    enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                    enterText("details[customerReference]", "AutomationCashCustomerRef", SelectorType.NAME);
-                    findAddress(paymentMethod);
-                    clickPayAndConfirm(paymentMethod);
-                } else {
-                    clickByName("form-actions[pay]");
-                }
-                break;
-            case "cheque":
-                selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cheque");
-                if (isTextPresent("Customer reference", 10)) {
-                    enterText("details[customerReference]", "AutomationChequeCustomerRef", SelectorType.NAME);
-                }
-                enterText("details[chequeNo]", "12345", SelectorType.NAME);
-                enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-
-                HashMap<String, Integer> dates;
-                dates = world.globalMethods.date.getDate(0, 0, 0);
-
-                enterText("details[chequeDate][day]", dates.get("day").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][month]", dates.get("month").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][year]", dates.get("year").toString(), SelectorType.NAME);
-                findAddress(paymentMethod);
-                clickPayAndConfirm(paymentMethod);
-                break;
-            case "postal":
-                selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
-                if (isTextPresent("Payer name", 10)) {
-                    enterText("details[payer]", "Jane Doe", SelectorType.NAME);
-                }
-                enterText("details[customerReference]", "AutomationPostalOrderCustomerRef", SelectorType.NAME);
-                enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                enterText("details[poNo]", "123456", SelectorType.NAME);
-                findAddress(paymentMethod);
-                clickPayAndConfirm(paymentMethod);
-                break;
-            case "card":
-                if (isTextPresent("Pay fee", 10)) {
-                    selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
-                    if (isTextPresent("Customer reference", 10)) {
-                        enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
-                        enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
-                        findAddress(paymentMethod);
-                        clickPayAndConfirm(paymentMethod);
-                    }
-                }
-                customerPaymentModule();
-                break;
-        }
-    }
-
-    public void selectFeeById(String feeNumber) throws IllegalBrowserException, MalformedURLException {
-        do {
-            //nothing
-        } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
-        waitForElementToBeClickable("status", SelectorType.ID);
-        selectValueFromDropDown("status", SelectorType.ID, "Current");
-        waitForTextToBePresent("Outstanding");
-        if (isTextPresent("50", 10)){
-            clickByLinkText("50");
-        }
-        waitAndClick("//*[@value='" + feeNumber + "']", SelectorType.XPATH);
-        waitAndClick("//*[@value='Pay']", SelectorType.XPATH);
-        waitForTextToBePresent("Payment method");
-    }
-
-    public void selectFee() throws IllegalBrowserException, MalformedURLException {
-        do {
-            //nothing
-        } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
-        selectValueFromDropDown("status", SelectorType.ID, "Current");
-        isElementEnabled("//tbody", SelectorType.XPATH);
-        waitAndClick("//tbody/tr/td[7]/input", SelectorType.XPATH);
-        waitAndClick("//*[@value='Pay']", SelectorType.XPATH);
-        waitForTextToBePresent("Pay fee");
-    }
-
-    public void customerPaymentModule() throws IllegalBrowserException, MalformedURLException {
-        Config config = world.configuration.config;
-        waitForTextToBePresent("Card Number*");
-        enterText("//*[@id='scp_cardPage_cardNumber_input']", config.getString("cardNumber"), SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_expiryDate_input']", config.getString("cardExpiryMonth"), SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_expiryDate_input2']", config.getString("cardExpiryYear"), SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_csc_input']", "123", SelectorType.XPATH);
-        click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
-        enterText("//*[@id='scp_additionalInformationPage_cardholderName_input']", "Mr Regression Test", SelectorType.XPATH);
-        click("//*[@id='scp_additionalInformationPage_buttons_continue_button']", SelectorType.XPATH);
-        waitForTextToBePresent("Payment Confirmation Page");
-        click("//*[@id='scp_confirmationPage_buttons_payment_button']", SelectorType.XPATH);
-        if (isElementPresent("//*[@id='scp_storeCardConfirmationPage_buttons_back_button']", SelectorType.XPATH)) {
-            waitForTextToBePresent("Online Payments");
-            click("//*[@value='Save']", SelectorType.XPATH);
-        }
-    }
-
-    private void findAddress(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
-        enterText("address[searchPostcode][postcode]", "NG1 5FW", SelectorType.NAME);
-        waitAndClick("address[searchPostcode][search]", SelectorType.NAME);
-        waitAndSelectByIndex("", "//*[@name='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
+    public void searchAndSelectAddress(String addressSelector, String postcode, int index) throws MalformedURLException, IllegalBrowserException {
+        enterText(addressSelector, postcode, SelectorType.ID);
+        click("address[searchPostcode][search]", SelectorType.ID);
+        waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.NAME);
+        selectValueFromDropDownByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
         waitForPageLoad();
-    }
-
-    public void clickPayAndConfirm(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
-        waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
-        waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
-        if (!paymentMethod.toLowerCase().trim().equals("card"))
-            waitForTextToBePresent("The payment was made successfully");
     }
 
     public void addPreviousConviction() throws IllegalBrowserException, MalformedURLException {
@@ -454,7 +333,7 @@ public class UIJourneySteps extends BasePage {
         enterText("interim[goodsApplicationInterimReason]", "Testing", SelectorType.NAME);
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-        customerPaymentModule();
+        world.feeAndPaymentJourneySteps.customerPaymentModule();
     }
 
     public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException {
@@ -463,10 +342,7 @@ public class UIJourneySteps extends BasePage {
         world.internalNavigation.urlSearchAndViewLicence();
         clickByLinkText("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
-        enterText("//*[@id='postcodeInput1']", "FK10 1AA", SelectorType.XPATH);
-        click("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
-        waitForTextToBePresent("Please select");
-        selectValueFromDropDownByIndex("address[searchPostcode][addresses]", SelectorType.ID, 1);
+        searchAndSelectAddress("postcodeInput1", "FK10 1AA", 1);
         waitForTextToBePresent("Total number of vehicles");
         assertTrue(isElementPresent("//*[@id='noOfVehiclesRequired']", SelectorType.XPATH));
         waitAndEnterText("noOfVehiclesRequired", SelectorType.ID, "1");
@@ -622,10 +498,7 @@ public class UIJourneySteps extends BasePage {
             IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Operating centres");
         click("//*[@id='add']", SelectorType.XPATH);
-        enterText("//*[@id='postcodeInput1']", postcode, SelectorType.XPATH);
-        click("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
-        waitForElementToBeClickable("//*[@id='address[searchPostcode][addresses]']", SelectorType.XPATH);
-        selectValueFromDropDownByIndex("//*[@id='address[searchPostcode][addresses]']", SelectorType.XPATH, 1);
+        searchAndSelectAddress("postcodeInput1", postcode, 1);
         waitForElementToBeClickable("//*[@id='addressLine1']", SelectorType.XPATH);
         enterText("//*[@id='noOfVehiclesRequired']", Integer.toString(vehicles), SelectorType.XPATH);
         enterText("//*[@id='noOfTrailersRequired']", Integer.toString(trailers), SelectorType.XPATH);

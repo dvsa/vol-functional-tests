@@ -132,7 +132,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             checkValue("//*[@id='consultantContact[email]']",SelectorType.XPATH,email);
         });
         When("^i make changes to the vehicles page$", () -> {
-            world.selfServeNavigation.navigateToPage("licence", "Vehicles");
+            world.selfServeNavigation.navigateToPage("licence", "Vehicle");
             for (int i = 0; i < 3; i++) {
                 if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
                     click("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
@@ -150,7 +150,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
         });
         Then("^the changes to the vehicles page are made$", () -> {
-            world.selfServeNavigation.navigateToPage("licence", "Vehicles");
+            world.selfServeNavigation.navigateToPage("licence", "Vehicle");
             if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
                 Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
             } else {
