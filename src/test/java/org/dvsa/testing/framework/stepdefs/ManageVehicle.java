@@ -86,12 +86,4 @@ public class ManageVehicle extends BasePage {
         for(WebElement element : vehicleDetails)
             Assert.assertNotNull(element.getText());
     }
-
-
-    @Given("I am on some site")
-    public void iAmOnSomeSite() throws MalformedURLException, IllegalBrowserException {
-        System.setProperty("browser","chrome");
-        System.setProperty("browser","firefox");
-        Browser.navigate().get("https://www.bbc.co.uk");
-    }
 }
