@@ -25,4 +25,5 @@ public class World {
     public TransportManagerJourneySteps transportManagerJourneySteps;
     public UIJourneySteps UIJourneySteps;
     public GlobalMethods globalMethods;
+    public FeeAndPaymentJourneySteps feeAndPaymentJourneySteps;
 }
