@@ -37,4 +37,7 @@ Feature: Search and add a vehicle
 
     Examples:
       | Operator | vrm      |
-      | goods    | VR4 5DFG |
+      | goods    | F95 JGE  |
+
+    Scenario: Test
+      Given I am on some site

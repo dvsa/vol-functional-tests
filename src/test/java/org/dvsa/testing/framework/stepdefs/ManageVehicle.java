@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import activesupport.driver.Browser;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -11,6 +12,7 @@ import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
+import org.junit.Before;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
@@ -83,5 +85,13 @@ public class ManageVehicle extends BasePage {
                 findElements("//*[@class='govuk-table']//tbody[@class='govuk-table__body']//ancestor::tr[@class='govuk-table__row']//following-sibling::td",SelectorType.XPATH);
         for(WebElement element : vehicleDetails)
             Assert.assertNotNull(element.getText());
+    }
+
+
+    @Given("I am on some site")
+    public void iAmOnSomeSite() throws MalformedURLException, IllegalBrowserException {
+        System.setProperty("browser","chrome");
+        System.setProperty("browser","firefox");
+        Browser.navigate().get("https://www.bbc.co.uk");
     }
 }
