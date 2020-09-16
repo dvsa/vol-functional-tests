@@ -186,8 +186,22 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
             world.transportManagerJourneySteps.nominateOperatorUserAsTransportManager(TMName, dob, true);
         });
-        Then("^a TM DOB error should display$", () -> {
-            assertTrue(isTextPresent("Your date of birth can't be in the future", 10));
+        Then("^two TM DOB error should display$", () -> {
+            assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
+            assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
+        });
+        When("^i add an operator as a transport manager with a future DOB$", () -> {
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+            click("//*[@name='table[action]']", SelectorType.XPATH);
+            waitForTitleToBePresent("Add Transport Manager");
+            String user = String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName());
+            selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
+            click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+            HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
+            replaceDateById("dob", dob);
+            click("form-actions[submit]", SelectorType.ID);
+            waitForPageLoad();
         });
     }
 
