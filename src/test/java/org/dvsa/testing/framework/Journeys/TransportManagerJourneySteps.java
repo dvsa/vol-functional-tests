@@ -192,7 +192,7 @@ public class TransportManagerJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void nominateOperatorUserAsTransportManager(String user, HashMap<String, Integer> dob, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
@@ -205,18 +205,14 @@ public class TransportManagerJourneySteps extends BasePage {
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
-        HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(-5, 0, -20);
-
         if(findElement("dob_day", SelectorType.ID).getAttribute("value").isEmpty()) {
-            waitAndEnterText("dob_day", SelectorType.ID, dates.get("day").toString());
-            waitAndEnterText("dob_month", SelectorType.ID, dates.get("month").toString());
-            waitAndEnterText("dob_year", SelectorType.ID, dates.get("year").toString());
+            waitAndEnterText("dob_day", SelectorType.ID, dob.get("day").toString());
+            waitAndEnterText("dob_month", SelectorType.ID, dob.get("month").toString());
+            waitAndEnterText("dob_year", SelectorType.ID, dob.get("year").toString());
         }
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
-        waitForTitleToBePresent("Transport Managers");
     }
 
     public void addOperatorAdminAsTransportManager(String user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
@@ -263,7 +259,8 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
     public void addOperatorUserAsTransportManager(String user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
-        nominateOperatorUserAsTransportManager(user, applicationOrNot);
+        HashMap<String, Integer> dob = world.globalMethods.date.getDate(-5, 0, -20);
+        nominateOperatorUserAsTransportManager(user, dob, applicationOrNot);
         world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");

@@ -19,6 +19,7 @@ import org.openqa.selenium.support.Color;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -172,6 +173,21 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             click("form-actions[submit]", SelectorType.ID);
             click("//*[contains(text(),'Print')]",SelectorType.XPATH);
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        });
+        When("^create a user and add them as a tm with a future DOB$", () -> {
+            FakerUtils faker = new FakerUtils();
+            String operatorFirstName = faker.generateFirstName();
+            String operatorLastName = faker.generateLastName();
+            String operatorUserName = String.format("%s.%s%s", operatorFirstName, operatorLastName, Int.random(1000, 9999));
+            String operatorEmail = operatorUserName.concat("@dvsaUser.com");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.UIJourneySteps.addUser(operatorUserName, operatorFirstName, operatorLastName, operatorEmail);
+            String TMName = String.format("%s %s", operatorFirstName, operatorLastName);
+            HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
+            world.transportManagerJourneySteps.nominateOperatorUserAsTransportManager(TMName, dob, true);
+        });
+        Then("^a TM DOB error should display$", () -> {
+            assertTrue(isTextPresent("Your date of birth can't be in the future", 10));
         });
     }
 
