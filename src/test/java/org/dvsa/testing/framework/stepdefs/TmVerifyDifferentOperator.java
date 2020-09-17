@@ -186,7 +186,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
             world.transportManagerJourneySteps.nominateOperatorUserAsTransportManager(TMName, dob, true);
         });
-        Then("^two TM DOB error should display$", () -> {
+        Then("^two TM DOB errors should display$", () -> {
             assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
         });
@@ -202,6 +202,21 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             replaceDateById("dob", dob);
             click("form-actions[submit]", SelectorType.ID);
             waitForPageLoad();
+        });
+        When("^i add an operator as a transport manager with a no hours worked$", () -> {
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+            click("//*[@name='table[action]']", SelectorType.XPATH);
+            waitForTitleToBePresent("Add Transport Manager");
+            String user = String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName());
+            selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
+            click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+            click("form-actions[submit]", SelectorType.ID);
+            waitForPageLoad();
+        });
+        Then("^two worked hours errors should display$", () -> {
+            assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
+            assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
         });
     }
 

@@ -178,20 +178,6 @@ public class TransportManagerJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
-    public void addTransportManagerOnTMPage() throws IllegalBrowserException, MalformedURLException, InterruptedException {
-        waitForTitleToBePresent("Add Transport Manager");
-        click("//*[@id='add']", SelectorType.XPATH);
-        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        String url = navigate().getCurrentUrl();
-        String applicationNumber = GenericUtils.returnNthNumberSequenceInString(url, 2);
-        world.createLicence.setApplicationNumber(applicationNumber);
-        addTransportManagerDetails();
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForTextToBePresent("Revoked, curtailed or suspended Licences");
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-    }
-
     public void nominateOperatorUserAsTransportManager(String user, HashMap<String, Integer> dob, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
@@ -205,11 +191,7 @@ public class TransportManagerJourneySteps extends BasePage {
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
 
-        if(findElement("dob_day", SelectorType.ID).getAttribute("value").isEmpty()) {
-            waitAndEnterText("dob_day", SelectorType.ID, dob.get("day").toString());
-            waitAndEnterText("dob_month", SelectorType.ID, dob.get("month").toString());
-            waitAndEnterText("dob_year", SelectorType.ID, dob.get("year").toString());
-        }
+        replaceDateById("dob", dob);
 
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
