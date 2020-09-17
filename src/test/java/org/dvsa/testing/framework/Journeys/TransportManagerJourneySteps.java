@@ -106,17 +106,14 @@ public class TransportManagerJourneySteps extends BasePage {
         waitAndClick("form-actions[continue]", SelectorType.ID);
     }
 
-    public void addTransportManagerDetails() throws IllegalBrowserException, InterruptedException, MalformedURLException {
+    public void addTransportManagerDetails() throws IllegalBrowserException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
         String postCode = world.createLicence.getPostcode();
 
-        HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(0, 0, -25);
-
-        enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
+        HashMap<String, Integer> dob;
+        dob = world.globalMethods.date.getDate(0, 0, -25);
+        replaceDateById("dob", dob);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
