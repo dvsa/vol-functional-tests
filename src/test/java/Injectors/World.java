@@ -22,7 +22,7 @@ public class World {
     public InternalNavigationalJourneySteps internalNavigation;
     public SelfServeNavigationalJourneySteps selfServeNavigation;
     public SurrenderJourneySteps surrenderJourneySteps;
-    public TransportManagerJourneySteps transportManagerJourneySteps;
+    public TransportManagerJourneySteps TMJourneySteps;
     public UIJourneySteps UIJourneySteps;
     public GlobalMethods globalMethods;
     public FeeAndPaymentJourneySteps feeAndPaymentJourneySteps;

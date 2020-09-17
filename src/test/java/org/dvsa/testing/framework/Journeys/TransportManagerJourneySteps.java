@@ -178,32 +178,45 @@ public class TransportManagerJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
-    public void nominateOperatorUserAsTransportManager(String user, HashMap<String, Integer> dob, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void addOperatorUserAsTransportManager(HashMap<String, Integer> dob, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+        String user = String.format("%s %s", getOperatorForeName(), getOperatorFamilyName());
+        nominateOperatorUserAsTransportManager(user, applicationOrNot);
+        replaceDateById("dob", dob);
+        waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
+        click("form-actions[send]", SelectorType.ID);
+    }
+
+    public void addOperatorAdminAsTransportManager() throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
+        String user = String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName());
+        nominateOperatorUserAsTransportManager(user, true);
+        updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
+    }
+
+    public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
             world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
-            world.UIJourneySteps.changeLicenceForVariation(); // If licence already created then this creates variational
+            world.UIJourneySteps.changeLicenceForVariation();
         }
         waitForTitleToBePresent("Transport Managers");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-
-        replaceDateById("dob", dob);
-
-        waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
-        click("form-actions[send]", SelectorType.ID);
     }
 
-    public void addOperatorAdminAsTransportManager(String user) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("application", "Transport Managers");
-        click("//*[@name='table[action]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Add Transport Manager");
-        selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
-        updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
+    public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
+        HashMap<String, Integer> dob = world.globalMethods.date.getDate(-5, 0, -20);
+        addOperatorUserAsTransportManager(dob, applicationOrNot);
+        world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
+        if (applicationOrNot) {
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+        } else {
+            world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
+        }
+        clickByLinkText(getOperatorForeName() + " " + getOperatorFamilyName());
+        updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
     public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
@@ -238,19 +251,6 @@ public class TransportManagerJourneySteps extends BasePage {
         waitForTextToBePresent("Check your answers");
         click("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Declaration");
-    }
-
-    public void addOperatorUserAsTransportManager(String user, String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
-        HashMap<String, Integer> dob = world.globalMethods.date.getDate(-5, 0, -20);
-        nominateOperatorUserAsTransportManager(user, dob, applicationOrNot);
-        world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
-        if (applicationOrNot) {
-            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
-        } else {
-            world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
-        }
-        clickByLinkText(getOperatorForeName() + " " + getOperatorFamilyName());
-        updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
     public void submitTMApplicationAndNavigateToTMLandingPage() throws ElementDidNotAppearWithinSpecifiedTimeException, IllegalBrowserException, MalformedURLException {

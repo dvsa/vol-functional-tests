@@ -6,14 +6,12 @@ import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
 import activesupport.string.Str;
 import autoitx4java.AutoItX;
-import com.typesafe.config.Config;
 import enums.UserRoles;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -214,17 +212,17 @@ public class UIJourneySteps extends BasePage {
 
     public void addUser(String operatorUser, String operatorForeName, String operatorFamilyName,
                         String operatorUserEmail) throws IllegalBrowserException, MalformedURLException {
-        world.transportManagerJourneySteps.setOperatorUser(operatorUser);
-        world.transportManagerJourneySteps.setOperatorForeName(operatorForeName);
-        world.transportManagerJourneySteps.setOperatorFamilyName(operatorFamilyName);
-        world.transportManagerJourneySteps.setOperatorUserEmail(operatorUserEmail);
+        world.TMJourneySteps.setOperatorUser(operatorUser);
+        world.TMJourneySteps.setOperatorForeName(operatorForeName);
+        world.TMJourneySteps.setOperatorFamilyName(operatorFamilyName);
+        world.TMJourneySteps.setOperatorUserEmail(operatorUserEmail);
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", world.transportManagerJourneySteps.getOperatorUser(), SelectorType.ID);
-        enterText("forename", world.transportManagerJourneySteps.getOperatorForeName(), SelectorType.ID);
-        enterText("familyName", world.transportManagerJourneySteps.getOperatorFamilyName(), SelectorType.ID);
-        enterText("main[emailAddress]", world.transportManagerJourneySteps.getOperatorUserEmail(), SelectorType.ID);
-        enterText("main[emailConfirm]", world.transportManagerJourneySteps.getOperatorUserEmail(), SelectorType.ID);
+        enterText("username", world.TMJourneySteps.getOperatorUser(), SelectorType.ID);
+        enterText("forename", world.TMJourneySteps.getOperatorForeName(), SelectorType.ID);
+        enterText("familyName", world.TMJourneySteps.getOperatorFamilyName(), SelectorType.ID);
+        enterText("main[emailAddress]", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
+        enterText("main[emailConfirm]", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
