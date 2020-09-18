@@ -178,10 +178,13 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             FakerUtils faker = new FakerUtils();
             world.TMJourneySteps.setOperatorForeName(faker.generateFirstName());
             world.TMJourneySteps.setOperatorFamilyName(faker.generateLastName());
-            world.TMJourneySteps.setOperatorUser(
-                    String.format("%s.%s%s", world.TMJourneySteps.getOperatorForeName(),
-                            world.TMJourneySteps.getOperatorFamilyName(), Int.random(1000, 9999)));
-            world.TMJourneySteps.setOperatorUserEmail(world.TMJourneySteps.getOperatorUser().concat("@dvsaUser.com"));
+            world.TMJourneySteps.setOperatorUser(String.format("%s.%s%s",
+                            world.TMJourneySteps.getOperatorForeName(),
+                            world.TMJourneySteps.getOperatorFamilyName(), Int.random(1000, 9999))
+            );
+            world.TMJourneySteps.setOperatorUserEmail(
+                    world.TMJourneySteps.getOperatorUser().concat("@dvsaUser.com")
+            );
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.UIJourneySteps.addUser(
                     world.TMJourneySteps.getOperatorUser(),
