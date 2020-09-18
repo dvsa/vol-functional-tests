@@ -2,13 +2,24 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import activesupport.http.RestUtils;
+import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import enums.UserRoles;
+import io.restassured.response.ValidatableResponse;
+import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.BaseAPI;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.url.api.URL;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import static activesupport.database.DBUnit.*;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.*;
+import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -92,6 +103,25 @@ public class RemoveTM extends BasePage implements En {
 
         And("^i update the licence type$", () -> {
             world.updateLicence.updateLicenceType(world.createLicence.getLicenceId());
+        });
+        And("^the removal date is changed to (\\d+) hours into the future$", (Integer arg0) -> {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime futureDate = LocalDateTime.now().plusDays(2);
+            String dateAndTime = dtf.format(futureDate);
+            BaseAPI baseapi = new BaseAPI();
+            String homeCdId = baseapi.fetchTMApplicationInformation(world.createLicence.getTransportManagerApplicationId(), "transportManager.homeCd.id", "1");
+            String sqlStatement = String.format(
+                    "UPDATE `OLCS_RDS_OLCSDB`.`transport_manager` SET `removed_date` = '%s' WHERE (`home_cd_id` = '%s');",
+                    dateAndTime,
+                    homeCdId
+            );
+            Properties.set("dbUsername", world.configuration.config.getString("dbUsername"));
+            Properties.set("dbPassword", world.configuration.config.getString("dbPassword"));
+
+            executeUpdateSQL(sqlStatement);
+        });
+        Then("^the TM email should be generated and letter attached$", () -> {
+
         });
     }
 }
