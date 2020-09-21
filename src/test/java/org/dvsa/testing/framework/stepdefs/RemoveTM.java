@@ -2,24 +2,22 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import activesupport.http.RestUtils;
+import activesupport.jenkins.Jenkins;
 import activesupport.system.Properties;
+import activesupport.aws.s3.S3;
 import cucumber.api.java8.En;
 import enums.UserRoles;
-import io.restassured.response.ValidatableResponse;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.BaseAPI;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.url.api.URL;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.junit.Assert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 import static activesupport.database.DBUnit.*;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.*;
-import static org.dvsa.testing.framework.Utils.API_Headers.Headers.getHeaders;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -43,6 +41,12 @@ public class RemoveTM extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
+        });
+        When("^the internal user goes to remove the last transport manager$", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewLicence();
+            world.transportManagerJourneySteps.promptRemovalOfInternalTransportManager();
         });
         When("^the transport manager has been removed by an internal user$", () -> {
             world.APIJourneySteps.createAdminUser();
@@ -108,19 +112,20 @@ public class RemoveTM extends BasePage implements En {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime futureDate = LocalDateTime.now().plusDays(2);
             String dateAndTime = dtf.format(futureDate);
-            BaseAPI baseapi = new BaseAPI();
-            String homeCdId = baseapi.fetchTMApplicationInformation(world.createLicence.getTransportManagerApplicationId(), "transportManager.homeCd.id", "1");
             String sqlStatement = String.format(
-                    "UPDATE `OLCS_RDS_OLCSDB`.`transport_manager` SET `removed_date` = '%s' WHERE (`home_cd_id` = '%s');",
+                    "UPDATE `OLCS_RDS_OLCSDB`.`transport_manager_licence` SET `deleted_date` = '%s' WHERE (`licence_id` = '%s')",
                     dateAndTime,
-                    homeCdId
+                    world.createLicence.getLicenceId()
             );
             Properties.set("dbUsername", world.configuration.config.getString("dbUsername"));
             Properties.set("dbPassword", world.configuration.config.getString("dbPassword"));
-
             executeUpdateSQL(sqlStatement);
         });
         Then("^the TM email should be generated and letter attached$", () -> {
+            String email = world.createLicence.getBusinessEmailAddress();
+            String licenceNo = world.createLicence.getLicenceNumber();
+            boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
+            Assert.assertTrue(letterExists);
 
         });
     }

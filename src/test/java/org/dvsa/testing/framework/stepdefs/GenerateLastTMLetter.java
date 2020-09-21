@@ -34,7 +34,9 @@ public class GenerateLastTMLetter extends BasePage implements En {
             findSelectAllRadioButtonsByValue("Y");
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         });
-        And("^the batch job has run$", () -> {
+        And("^the last tm letter batch job has run$", () -> {
+            Properties.set("JENKINS_USERNAME", world.configuration.config.getString("JENKINS_USERNAME"));
+            Properties.set("JENKINS_PASSWORD", world.configuration.config.getString("JENKINS_PASSWORD"));
             HashMap<String, String> jenkinsParams = new HashMap<>();
             jenkinsParams.put(JenkinsParameterKey.NODE.toString(), String.format("%s&&api&&olcs", Properties.get("env", true)));
             jenkinsParams.put(JenkinsParameterKey.COMMAND.toString(), "last-tm-letter");
