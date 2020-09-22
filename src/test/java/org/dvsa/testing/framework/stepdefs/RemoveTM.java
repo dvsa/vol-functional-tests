@@ -128,7 +128,6 @@ public class RemoveTM extends BasePage implements En {
             sleep(10000);
             boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
             Assert.assertTrue(letterExists);
-
         });
     }
 }
