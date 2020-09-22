@@ -41,7 +41,7 @@ public class GenerateLastTMLetter extends BasePage implements En {
             jenkinsParams.put(JenkinsParameterKey.NODE.toString(), String.format("%s&&api&&olcs", Properties.get("env", true)));
             jenkinsParams.put(JenkinsParameterKey.COMMAND.toString(), "last-tm-letter");
 
-            Jenkins.trigger(Jenkins.Job.BATCH_RUN_CLI, jenkinsParams);
+            Jenkins.triggerBuild(Jenkins.Job.BATCH_RUN_CLI, jenkinsParams);
         });
         And("^i navigate to the review and declarations page and submit the application$", () -> {
             clickByLinkText("GOV.UK");

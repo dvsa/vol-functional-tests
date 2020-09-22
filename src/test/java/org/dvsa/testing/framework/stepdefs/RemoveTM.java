@@ -16,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 import static activesupport.database.DBUnit.*;
+import static java.lang.Thread.sleep;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.APIJourneySteps.*;
 import static org.junit.Assert.assertEquals;
@@ -110,7 +111,7 @@ public class RemoveTM extends BasePage implements En {
         });
         And("^the removal date is changed to (\\d+) hours into the future$", (Integer arg0) -> {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            LocalDateTime futureDate = LocalDateTime.now().plusDays(2);
+            LocalDateTime futureDate = LocalDateTime.now().minusDays(2);
             String dateAndTime = dtf.format(futureDate);
             String sqlStatement = String.format(
                     "UPDATE `OLCS_RDS_OLCSDB`.`transport_manager_licence` SET `deleted_date` = '%s' WHERE (`licence_id` = '%s')",
@@ -124,6 +125,7 @@ public class RemoveTM extends BasePage implements En {
         Then("^the TM email should be generated and letter attached$", () -> {
             String email = world.createLicence.getBusinessEmailAddress();
             String licenceNo = world.createLicence.getLicenceNumber();
+            sleep(10000);
             boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
             Assert.assertTrue(letterExists);
 
