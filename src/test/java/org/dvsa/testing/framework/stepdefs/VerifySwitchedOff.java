@@ -76,13 +76,6 @@ public class VerifySwitchedOff extends BasePage implements En {
         And("^i navigate to the declarations page$", () -> {
             world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
-        Given("^verify has been switched \"([^\"]*)\"$", (String arg0) -> {
-          if (arg0.toLowerCase().equals("on")){
-              world.updateLicence.enableDisableVerify("0");
-          } else {
-              world.updateLicence.enableDisableVerify("1");
-          }
-        });
         Then("^the 'Awaiting operator review' verify off page is displayed$", () -> {
             assertTrue(isTextPresent("Awaiting operator review",30));
         });
