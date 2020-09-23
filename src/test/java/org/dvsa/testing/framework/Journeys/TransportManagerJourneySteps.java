@@ -272,4 +272,13 @@ public class TransportManagerJourneySteps extends BasePage {
         );
     }
 
+    public void generateAndOperatorUser() throws MalformedURLException, IllegalBrowserException {
+        world.TMJourneySteps.generateOperatorValues();
+        world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+        world.UIJourneySteps.addUser(
+                world.TMJourneySteps.getOperatorUser(),
+                world.TMJourneySteps.getOperatorForeName(),
+                world.TMJourneySteps.getOperatorFamilyName(),
+                world.TMJourneySteps.getOperatorUserEmail());
+    }
 }

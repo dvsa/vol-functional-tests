@@ -113,13 +113,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         And("^i add an existing person as a transport manager who is not the operator on \"([^\"]*)\"$", (String applicationType) -> {
             boolean applicationOrNot = applicationType.equals("application");
-            world.TMJourneySteps.generateOperatorValues();
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.addUser(
-                    world.TMJourneySteps.getOperatorUser(),
-                    world.TMJourneySteps.getOperatorForeName(),
-                    world.TMJourneySteps.getOperatorFamilyName(),
-                    world.TMJourneySteps.getOperatorUserEmail());
+            world.TMJourneySteps.generateAndOperatorUser();
             world.TMJourneySteps.addAndCompleteOperatorUserAsTransportManager("N", applicationOrNot);
         });
         And("^the operator countersigns digitally$", () -> {
@@ -166,13 +160,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         });
         When("^create a user and add them as a tm with a future DOB$", () -> {
-            world.TMJourneySteps.generateOperatorValues();
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.UIJourneySteps.addUser(
-                    world.TMJourneySteps.getOperatorUser(),
-                    world.TMJourneySteps.getOperatorForeName(),
-                    world.TMJourneySteps.getOperatorFamilyName(),
-                    world.TMJourneySteps.getOperatorUserEmail());
+            world.TMJourneySteps.generateAndOperatorUser();
             HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
             world.TMJourneySteps.addOperatorUserAsTransportManager(dob, true);
         });
