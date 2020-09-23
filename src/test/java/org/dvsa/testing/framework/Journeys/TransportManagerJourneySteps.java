@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import activesupport.faker.FakerUtils;
+import activesupport.number.Int;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -255,6 +257,19 @@ public class TransportManagerJourneySteps extends BasePage {
         click("form-actions[submit]", SelectorType.ID);
         clickByLinkText("Back to Transport");
         waitForTextToBePresent("Transport Managers");
+    }
+
+    public void generateOperatorValues() {
+        FakerUtils faker = new FakerUtils();
+        setOperatorForeName(faker.generateFirstName());
+        setOperatorFamilyName(faker.generateLastName());
+        setOperatorUser(String.format("%s.%s%s",
+                getOperatorForeName(),
+                getOperatorFamilyName(), Int.random(1000, 9999))
+        );
+        setOperatorUserEmail(
+                getOperatorUser().concat("@dvsaUser.com")
+        );
     }
 
 }

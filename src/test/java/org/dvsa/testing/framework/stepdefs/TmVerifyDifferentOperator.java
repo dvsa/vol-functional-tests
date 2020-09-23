@@ -113,16 +113,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         And("^i add an existing person as a transport manager who is not the operator on \"([^\"]*)\"$", (String applicationType) -> {
             boolean applicationOrNot = applicationType.equals("application");
-            FakerUtils faker = new FakerUtils();
-            world.TMJourneySteps.setOperatorForeName(faker.generateFirstName());
-            world.TMJourneySteps.setOperatorFamilyName(faker.generateLastName());
-            world.TMJourneySteps.setOperatorUser(String.format("%s.%s%s",
-                    world.TMJourneySteps.getOperatorForeName(),
-                    world.TMJourneySteps.getOperatorFamilyName(), Int.random(1000, 9999))
-            );
-            world.TMJourneySteps.setOperatorUserEmail(
-                    world.TMJourneySteps.getOperatorUser().concat("@dvsaUser.com")
-            );
+            world.TMJourneySteps.generateOperatorValues();
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.UIJourneySteps.addUser(
                     world.TMJourneySteps.getOperatorUser(),
@@ -175,16 +166,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         });
         When("^create a user and add them as a tm with a future DOB$", () -> {
-            FakerUtils faker = new FakerUtils();
-            world.TMJourneySteps.setOperatorForeName(faker.generateFirstName());
-            world.TMJourneySteps.setOperatorFamilyName(faker.generateLastName());
-            world.TMJourneySteps.setOperatorUser(String.format("%s.%s%s",
-                            world.TMJourneySteps.getOperatorForeName(),
-                            world.TMJourneySteps.getOperatorFamilyName(), Int.random(1000, 9999))
-            );
-            world.TMJourneySteps.setOperatorUserEmail(
-                    world.TMJourneySteps.getOperatorUser().concat("@dvsaUser.com")
-            );
+            world.TMJourneySteps.generateOperatorValues();
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.UIJourneySteps.addUser(
                     world.TMJourneySteps.getOperatorUser(),
