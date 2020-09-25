@@ -6,7 +6,6 @@
 Feature: TM signs through verify
 
   Background:
-    Given verify has been switched "On"
     And I am the operator and not the transport manager
     And i have a "goods" "GB" partial application
 

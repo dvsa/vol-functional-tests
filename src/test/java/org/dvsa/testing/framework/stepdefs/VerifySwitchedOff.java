@@ -44,10 +44,10 @@ public class VerifySwitchedOff extends BasePage implements En {
 
         });
         When("^the transport manager is the owner$", () -> {
-            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
+            world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         });
         And("^the transport manager is not the owner$", () -> {
-            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
+            world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         When("^i submit the application$", () -> {
             click("form-actions[submit]", SelectorType.ID);
@@ -68,20 +68,13 @@ public class VerifySwitchedOff extends BasePage implements En {
             assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")),30));
         });
         When("^i am on the the TM landing page$", () -> {
-            world.transportManagerJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
+            world.TMJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
         });
         Then("^a success message banner should be displayed$", () -> {
             Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager",30));
         });
         And("^i navigate to the declarations page$", () -> {
-            world.transportManagerJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
-        });
-        Given("^verify has been switched \"([^\"]*)\"$", (String arg0) -> {
-          if (arg0.toLowerCase().equals("on")){
-              world.updateLicence.enableDisableVerify("0");
-          } else {
-              world.updateLicence.enableDisableVerify("1");
-          }
+            world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         Then("^the 'Awaiting operator review' verify off page is displayed$", () -> {
             assertTrue(isTextPresent("Awaiting operator review",30));
