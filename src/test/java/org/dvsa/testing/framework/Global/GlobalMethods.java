@@ -38,7 +38,7 @@ public class GlobalMethods extends BasePage{
 
     public void navigateToLogin(String username, String emailAddress, ApplicationType applicationType) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
         String newPassword = world.configuration.config.getString("internalNewPassword");
-        String myURL = URL.build(applicationType, world.configuration.env).toString();
+        String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
 
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();

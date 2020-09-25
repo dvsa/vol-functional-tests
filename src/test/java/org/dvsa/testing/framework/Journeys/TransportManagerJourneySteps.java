@@ -71,8 +71,7 @@ public class TransportManagerJourneySteps extends BasePage {
         this.operatorUserEmail = operatorUserEmail;
     }
 
-
-    public void removeInternalTransportManager() throws IllegalBrowserException, MalformedURLException {
+    public void promptRemovalOfInternalTransportManager() throws MalformedURLException, IllegalBrowserException {
         assertTrue(isTextPresent("Overview", 60));
         if (!isLinkPresent("Transport", 60) && isTextPresent("Granted", 60)) {
             clickByLinkText(world.createLicence.getLicenceNumber());
@@ -81,6 +80,13 @@ public class TransportManagerJourneySteps extends BasePage {
         clickByLinkText("Transport");
         isTextPresent("TransPort Managers", 60);
         click("//*[@value='Remove']", SelectorType.XPATH);
+    }
+
+    public void removeInternalTransportManager() throws IllegalBrowserException, MalformedURLException {
+        promptRemovalOfInternalTransportManager();
+        waitForTitleToBePresent("Are you sure you want to remove this Transport Manager?");
+        findSelectAllRadioButtonsByValue("Y");
+        waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
 
