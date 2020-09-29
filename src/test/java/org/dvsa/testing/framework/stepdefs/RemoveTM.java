@@ -47,7 +47,7 @@ public class RemoveTM extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalNavigation.urlSearchAndViewLicence();
-            world.transportManagerJourneySteps.promptRemovalOfInternalTransportManager();
+            world.TMJourneySteps.promptRemovalOfInternalTransportManager();
         });
         When("^the transport manager has been removed by an internal user$", () -> {
             world.APIJourneySteps.createAdminUser();
