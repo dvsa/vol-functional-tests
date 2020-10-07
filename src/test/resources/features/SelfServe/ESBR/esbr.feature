@@ -11,10 +11,10 @@ Feature: ESBR for English, Welsh and Scottish Areas
     Examples:
       | TrafficArea | EnforcementArea | Days |
       | B           | EA-B            | 41   |
-      | M           | EA-A            | 41   |
-      | G           | EA-E            | 55   |
-      | F           | EA-F            | 41   |
-      | H           | EA-H            | 41   |
+#      | M           | EA-A            | 41   |
+#      | G           | EA-E            | 55   |
+#      | F           | EA-F            | 41   |
+#      | H           | EA-H            | 41   |
 
   Scenario Outline: ESBR in self-serve
     Given I have a psv application with traffic area "<TrafficArea>" and enforcement area "<EnforcementArea>" which has been granted
