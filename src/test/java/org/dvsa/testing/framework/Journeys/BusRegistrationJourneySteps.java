@@ -151,7 +151,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
 
         clickByLinkText("Bus registrations");
-        waitAndClick("//*[@id='main']/div[2]/ul/li[2]/a", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"));
         String workingDir = System.getProperty("user.dir");
         uploadFile("//*[@id='fields[files][file]']", workingDir + zipFilePath, "document.getElementById('fields[files][file]').style.left = 0", SelectorType.XPATH);

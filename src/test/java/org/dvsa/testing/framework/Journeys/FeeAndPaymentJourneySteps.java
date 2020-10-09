@@ -28,16 +28,16 @@ public class FeeAndPaymentJourneySteps extends BasePage {
         String payment = paymentMethod.toLowerCase().trim();
         waitForTextToBePresent("Pay fee");
         if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
-            enterText("details[received]", amount, SelectorType.NAME);
-            enterText("details[payer]", "Automation payer", SelectorType.NAME);
-            enterText("details[slipNo]", "1234567", SelectorType.NAME);
+            waitAndEnterText("details[received]",SelectorType.NAME,amount);
+            waitAndEnterText("details[payer]",SelectorType.NAME,"Automation payer");
+            waitAndEnterText("details[slipNo]",SelectorType.NAME,"1234567");
         }
         switch (payment) {
             case "cash":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
                 if (isTextPresent("Customer reference", 10)) {
-                    enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                    enterText("details[customerReference]", "AutomationCashCustomerRef", SelectorType.NAME);
+                    waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
+                    waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationCashCustomerRef");
                     world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     clickPayAndConfirm(paymentMethod);
                 } else {
@@ -47,28 +47,28 @@ public class FeeAndPaymentJourneySteps extends BasePage {
             case "cheque":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cheque");
                 if (isTextPresent("Customer reference", 10)) {
-                    enterText("details[customerReference]", "AutomationChequeCustomerRef", SelectorType.NAME);
+                    waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationChequeCustomerRef");
                 }
-                enterText("details[chequeNo]", "12345", SelectorType.NAME);
-                enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
+                waitAndEnterText("details[chequeNo]", SelectorType.NAME, "12345");
+                waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
 
                 HashMap<String, Integer> dates;
                 dates = world.globalMethods.date.getDate(0, 0, 0);
 
-                enterText("details[chequeDate][day]", dates.get("day").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][month]", dates.get("month").toString(), SelectorType.NAME);
-                enterText("details[chequeDate][year]", dates.get("year").toString(), SelectorType.NAME);
+                waitAndEnterText("details[chequeDate][day]",SelectorType.NAME, dates.get("day").toString());
+                waitAndEnterText("details[chequeDate][month]",SelectorType.NAME, dates.get("month").toString());
+                waitAndEnterText("details[chequeDate][year]",SelectorType.NAME, dates.get("year").toString());
                 world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "postal":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
                 if (isTextPresent("Payer name", 10)) {
-                    enterText("details[payer]", "Jane Doe", SelectorType.NAME);
+                    waitAndEnterText("details[payer]",SelectorType.NAME, "Jane Doe");
                 }
-                enterText("details[customerReference]", "AutomationPostalOrderCustomerRef", SelectorType.NAME);
-                enterText("details[customerName]", "Jane Doe", SelectorType.NAME);
-                enterText("details[poNo]", "123456", SelectorType.NAME);
+                waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationPostalOrderCustomerRef");
+                waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
+                waitAndEnterText("details[poNo]",SelectorType.NAME, "123456");
                 world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 clickPayAndConfirm(paymentMethod);
                 break;
@@ -76,8 +76,8 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 if (isTextPresent("Pay fee", 10)) {
                     selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
                     if (isTextPresent("Customer reference", 10)) {
-                        enterText("details[customerName]", "Veena Skish", SelectorType.NAME);
-                        enterText("details[customerReference]", "AutomationCardCustomerRef", SelectorType.NAME);
+                        waitAndEnterText("details[customerName]",SelectorType.NAME, "Veena Skish");
+                        waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCardCustomerRef");
                         world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                         clickPayAndConfirm(paymentMethod);
                     }
