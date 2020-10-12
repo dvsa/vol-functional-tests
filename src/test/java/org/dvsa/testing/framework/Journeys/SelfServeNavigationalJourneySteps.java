@@ -35,7 +35,6 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
         String applicationStatus = null;
-        String variationApplicationStatus = null;
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
@@ -54,17 +53,17 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 break;
             case "variation":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.updateLicence.getVariationApplicationNumber());
-                variationApplicationStatus = getText(overviewStatus, SelectorType.XPATH);
+                applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.updateLicence.getVariationApplicationNumber());
-                if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
+                if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply to change a licence");
-                } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
+                } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
                     waitForTitleToBePresent("Application overview");
                 }
                 break;
         }
-        switch (page.toLowerCase()) {
-            case "view":
+        switch (page) {
+            case "View":
                 switch (type.toLowerCase()) {
                     case "licence":
                         waitForTitleToBePresent("View and amend your licence");
@@ -77,89 +76,16 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                         }
                         break;
                     case "variation":
-                        if (variationApplicationStatus.equals("NOT YET SUBMITTED")) {
+                        if (applicationStatus.equals("NOT YET SUBMITTED")) {
                             waitForTitleToBePresent("Apply to change a licence");
-                        } else if (variationApplicationStatus.equals("UNDER CONSIDERATION")) {
+                        } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
                             waitForTextToBePresent("What happens next?");
                         }
                         break;
                 }
                 break;
-            case "type of licence":
-                clickByLinkText("Type of licence");
-                waitForTitleToBePresent("Type of licence");
-                break;
-            case "business type":
-                clickByLinkText("Business type");
-                waitForTitleToBePresent("Business type");
-                break;
-            case "business details":
-                clickByLinkText("Business details");
-                waitForTitleToBePresent("Business details");
-                break;
-            case "address":
-                clickByLinkText("Address");
-                waitForTitleToBePresent("Address");
-                break;
-            case "addresses":
-                clickByLinkText("Addresses");
-                waitForTitleToBePresent("Addresses");
-                break;
-            case "directors":
-                clickByLinkText("Directors");
-                waitForTitleToBePresent("Directors");
-                break;
-            case "operating centres and authorisation":
-                clickByLinkText("Operating centres and authorisation");
-                waitForTitleToBePresent("Operating centres and authorisation");
-                break;
-            case "transport managers":
-                clickByLinkText("Transport Managers");
-                waitForTitleToBePresent("Transport Managers");
-                break;
-            case "vehicles":
-                clickByLinkText("Vehicles");
-                waitForTitleToBePresent("Vehicle details");
-                break;
-            case "vehicle declarations":
-                clickByLinkText("Vehicle declarations");
-                waitForTitleToBePresent("Vehicle declarations");
-                break;
-            case "trailers":
-                clickByLinkText("Trailers");
-                waitForTitleToBePresent("Trailers");
-                break;
-            case "licence discs":
-                clickByLinkText("Licence discs");
-                waitForTitleToBePresent("Licence discs");
-                break;
-            case "safety and compliance":
-                clickByLinkText("Safety and compliance");
-                waitForTitleToBePresent("Safety and compliance");
-                break;
-            case "conditions and undertakings":
-                clickByLinkText("Conditions and undertakings");
-                waitForTitleToBePresent("Conditions and undertakings");
-                break;
-            case "financial history":
-                clickByLinkText("Financial history");
-                waitForTitleToBePresent("Financial history");
-                break;
-            case "financial evidence":
-                clickByLinkText("Financial evidence");
-                waitForTitleToBePresent("Financial evidence");
-                break;
-            case "licence history":
-                clickByLinkText("Licence history");
-                waitForTitleToBePresent("Licence history");
-                break;
-            case "convictions and penalties":
-                clickByLinkText("Convictions and penalties");
-                waitForTitleToBePresent("Convictions and Penalties");
-                break;
-            case "review and declarations":
-                clickByLinkText("Review and declarations");
-                waitForTitleToBePresent("Review and declarations");
+            default:
+                clickByLinkText(page);
                 break;
         }
     }
@@ -199,5 +125,39 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 throw new TimeoutException(exceptionMessage);
             }
         }
+    }
+
+    public void navigateThroughApplication() throws IllegalBrowserException, MalformedURLException {
+        waitForTitleToBePresent("Apply for a new licence");
+        clickByLinkText("Type of licence");
+        waitForTitleToBePresent("Type of licence");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Business type");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Business details");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Addresses");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Directors");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Operating centres and authorisation");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Financial evidence");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Transport Managers");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Vehicle details");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        if (isTitlePresent("Vehicle declarations", 30)) {
+            waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        }
+        waitForTitleToBePresent("Safety and compliance");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Financial history");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Licence history");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitForTitleToBePresent("Convictions and Penalties");
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 }

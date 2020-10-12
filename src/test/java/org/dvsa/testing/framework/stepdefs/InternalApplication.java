@@ -65,9 +65,10 @@ public class InternalApplication extends BasePage implements En {
             assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres.",30));
             click("form-actions[confirm-add]", SelectorType.ID);
             click("form-actions[submit]", SelectorType.ID);
-            waitForTitleToBePresent("Operating centres and authorisation");
-            assertTrue(isElementPresent("//*[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
+            waitForTextToBePresent("Operating centres and authorisation");
+            assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
         });
+
         Given("^I have partially applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
             world.createLicence.setOperatorType(operator);
             world.createLicence.setLicenceType(licenceType);
@@ -80,6 +81,7 @@ public class InternalApplication extends BasePage implements En {
 
             }
         });
+
         When("^the caseworker completes and submits the application$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
@@ -99,9 +101,9 @@ public class InternalApplication extends BasePage implements En {
         And("^grants the application$", () -> {
             int tableColumns;
             waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
-            world.UIJourneySteps.selectFee();
+            world.feeAndPaymentJourneySteps.selectFee();
             String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
-            world.UIJourneySteps.payFee(fee, "cash");
+            world.feeAndPaymentJourneySteps.payFee(fee, "cash");
             waitForTextToBePresent("The payment was made successfully");
             long kickoutTime = System.currentTimeMillis() + 15000;
 
@@ -117,6 +119,7 @@ public class InternalApplication extends BasePage implements En {
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
             click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
         });
+
         Then("^the licence is granted in Internal$", () -> {
             waitForTextToBePresent("Overview");
             world.UIJourneySteps.checkLicenceStatus("Granted");

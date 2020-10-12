@@ -9,7 +9,7 @@ Feature: Remove last Transport Manager (TM) pop up
 
   Scenario: Pop up should be displayed when last TM is removed
     Given the licence has been granted
-    When the transport manager has been removed by an internal user
+    When the internal user goes to remove the last transport manager
     Then a pop up message should be displayed
 
   Scenario: Pop up should display new warning message when a self-serve user removes a TM
@@ -19,12 +19,12 @@ Feature: Remove last Transport Manager (TM) pop up
 
   Scenario: Pop up should display new warning message when the last TM is removed from an application
     And the licence has been granted
-    When the transport manager has been removed by an internal user
+    When the internal user goes to remove the last transport manager
     Then the remove TM popup should not be displaying new TM remove text
 
   Scenario: Error message should be displayed if no option is chosen
     Given the licence has been granted
-    When the transport manager has been removed by an internal user
+    When the internal user goes to remove the last transport manager
     And user attempts to remove the last TM without selecting an option
     Then an error message should be displayed
 
@@ -32,5 +32,12 @@ Feature: Remove last Transport Manager (TM) pop up
     Given the licence has been granted
     When i create a variation
     And i update the licence type
-    And the transport manager has been removed by an internal user
+    And the internal user goes to remove the last transport manager
     Then the remove TM popup should not be displaying new TM remove text
+
+  Scenario: Letter trigger when caseworker removes last TM
+    And the licence has been granted
+    When the transport manager has been removed by an internal user
+    And the removal date is changed to 48 hours into the future
+    And the last tm letter batch job has run
+    Then the TM email should be generated and letter attached

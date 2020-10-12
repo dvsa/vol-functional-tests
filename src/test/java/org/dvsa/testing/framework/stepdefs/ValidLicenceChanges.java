@@ -34,7 +34,7 @@ public class ValidLicenceChanges extends BasePage implements En {
 
     public ValidLicenceChanges(World world) {
         When("^i make changes to the business details page$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","business details");
+            world.selfServeNavigation.navigateToPage("licence", "Business details");
             enterText("//*[@id='data[tradingNames][0][name]']",tradingName,SelectorType.XPATH);
             click("//a[@class='add-another-trigger']",SelectorType.XPATH);
             enterText("//*[@id='data[tradingNames][1][name]']",tradingName2,SelectorType.XPATH);
@@ -53,7 +53,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             click("//*[@id='form-actions[save]']",SelectorType.XPATH);
         });
         Then("^the changes to the business details page are made$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","business details");
+            world.selfServeNavigation.navigateToPage("licence", "Business details");
             checkValue("//*[@id='data[tradingNames][0][name]']",SelectorType.XPATH,tradingName);
             checkValue("//*[@id='data[tradingNames][1][name]']",SelectorType.XPATH,tradingName2);
             checkValue("//*[@id='natureOfBusiness']",SelectorType.XPATH,natureOfBusiness);
@@ -68,7 +68,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
         });
         When("^i make changes to the addresses page$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","addresses");
+            world.selfServeNavigation.navigateToPage("licence", "Addresses");
             replaceText("//*[@id='correspondence[fao]']",forAttentionOf);
             replaceText("//*[@id='addressLine1']",registeredAddress1);
             replaceText("//*[@id='correspondence_address[addressLine2]']",registeredAddress2);
@@ -101,7 +101,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             click("//*[@id='form-actions[save]']",SelectorType.XPATH);
         });
         Then("^the changes to the addresses page are made$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","addresses");
+            world.selfServeNavigation.navigateToPage("licence", "Addresses");
             checkValue("//*[@id='correspondence[fao]']",SelectorType.XPATH,forAttentionOf);
             checkValue("//*[@id='addressLine1']",SelectorType.XPATH,registeredAddress1);
             checkValue("//*[@id='correspondence_address[addressLine2]']",SelectorType.XPATH,registeredAddress2);
@@ -132,7 +132,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             checkValue("//*[@id='consultantContact[email]']",SelectorType.XPATH,email);
         });
         When("^i make changes to the vehicles page$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","vehicles");
+            world.selfServeNavigation.navigateToPage("licence", "Vehicle");
             for (int i = 0; i < 3; i++) {
                 if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
                     click("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
@@ -150,7 +150,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
         });
         Then("^the changes to the vehicles page are made$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","vehicles");
+            world.selfServeNavigation.navigateToPage("licence", "Vehicle");
             if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
                 Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
             } else {
@@ -159,7 +159,7 @@ public class ValidLicenceChanges extends BasePage implements En {
                 Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
         });
         When("^i make changes to the licence discs page$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","licence discs");
+            world.selfServeNavigation.navigateToPage("licence", "Licence discs");
             for (int i = 0; i < 3; i++) {
                 click("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you would like to void these discs?");
@@ -172,7 +172,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         });
         Then("^the changes to the licence discs page are made$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","licence discs");
+            world.selfServeNavigation.navigateToPage("licence", "Licence discs");
             Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),4);
             click("//*[contains(text(),'More actions')]", SelectorType.XPATH);
             click("//*[@id='ceased-show-hide']",SelectorType.XPATH);
@@ -180,7 +180,7 @@ public class ValidLicenceChanges extends BasePage implements En {
 
         });
         When("^i make changes to the safety and compliance page$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","safety and compliance");
+            world.selfServeNavigation.navigateToPage("licence", "Safety and compliance");
             replaceText("//*[@id='licence[safetyInsVehicles]']", "6");
             click("//*[@id='licence[safetyInsVaries]']", SelectorType.XPATH);
             click("//*[contains(@value,'tach_external')]", SelectorType.XPATH);
@@ -200,7 +200,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
         });
         Then("^the changes to the safety and compliance page are made$", () -> {
-            world.selfServeNavigation.navigateToPage("licence","safety and compliance");
+            world.selfServeNavigation.navigateToPage("licence", "Safety and compliance");
 
             checkValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH, "6");
             Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());

@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.UpdateLicenceAPI;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 
 public class World {
+    public Configuration configuration;
     public CreateLicenceAPI createLicence;
     public GrantLicenceAPI grantLicence;
     public GenericUtils genericUtils;
@@ -21,8 +22,8 @@ public class World {
     public InternalNavigationalJourneySteps internalNavigation;
     public SelfServeNavigationalJourneySteps selfServeNavigation;
     public SurrenderJourneySteps surrenderJourneySteps;
-    public TransportManagerJourneySteps transportManagerJourneySteps;
+    public TransportManagerJourneySteps TMJourneySteps;
     public UIJourneySteps UIJourneySteps;
-    public Configuration configuration;
     public GlobalMethods globalMethods;
+    public FeeAndPaymentJourneySteps feeAndPaymentJourneySteps;
 }

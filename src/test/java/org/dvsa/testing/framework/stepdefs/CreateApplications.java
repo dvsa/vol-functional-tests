@@ -57,7 +57,7 @@ public class CreateApplications extends BasePage implements En {
         });
         When("^i pay for my application$", () -> {
             waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-            world.UIJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             waitForTitleToBePresent("Application overview");
         });
         And("^i choose to pay my second application with my saved card details$", () -> {

@@ -36,7 +36,7 @@ public class ManageVehicle extends BasePage {
     @When("I navigate to manage vehicle page")
     public void iNavigateToManageVehiclePage() throws MalformedURLException, IllegalBrowserException {
         world.selfServeNavigation.navigateToLogin( world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "vehicles");
+        world.selfServeNavigation.navigateToPage("licence", "Vehicles");
         String URL = Browser.navigate().getCurrentUrl();
         String newURL = URL.substring(0, URL.length()-2);
         Browser.navigate().get(newURL);
@@ -49,7 +49,7 @@ public class ManageVehicle extends BasePage {
 
     @And("choose to add a vehicle")
     public void chooseToAddAVehicle() throws MalformedURLException, IllegalBrowserException {
-        world.UIJourneySteps.addAVehicle();
+        world.UIJourneySteps.addAVehicle("PX57DXA");
     }
 
     @And("{string} heading")

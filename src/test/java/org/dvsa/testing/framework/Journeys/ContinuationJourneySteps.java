@@ -54,7 +54,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void clickContinueLicenceOnSelfServe() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToPage("licence", "view");
+        world.selfServeNavigation.navigateToPage("licence", "View");
         refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
     }
@@ -92,7 +92,7 @@ public class ContinuationJourneySteps extends BasePage {
         if (world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
             click("submitAndPay", SelectorType.ID);
             click("form-actions[pay]", SelectorType.ID);
-            world.UIJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
         } else {
             click("submit", SelectorType.ID);
         }

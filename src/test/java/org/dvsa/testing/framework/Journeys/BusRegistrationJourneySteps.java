@@ -80,8 +80,8 @@ public class BusRegistrationJourneySteps extends BasePage {
 
     public void payFeesAndGrantNewBusReg() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Fees");
-        world.UIJourneySteps.selectFee();
-        world.UIJourneySteps.payFee("60", "cash");
+        world.feeAndPaymentJourneySteps.selectFee();
+        world.feeAndPaymentJourneySteps.payFee("60", "cash");
         do {
             System.out.println("link not present");
             javaScriptExecutor("location.reload(true)");
@@ -151,7 +151,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
 
         clickByLinkText("Bus registrations");
-        waitAndClick("//*[@id='main']/div[2]/ul/li[2]/a", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"));
         String workingDir = System.getProperty("user.dir");
         uploadFile("//*[@id='fields[files][file]']", workingDir + zipFilePath, "document.getElementById('fields[files][file]').style.left = 0", SelectorType.XPATH);
