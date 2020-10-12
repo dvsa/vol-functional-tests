@@ -14,6 +14,7 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -22,12 +23,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import scanner.AXEScanner;
+import scanner.ReportGenerator;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.Set;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
@@ -694,7 +699,21 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void addAVehicle() throws MalformedURLException, IllegalBrowserException {
-        waitAndClick("manage-your-vehicle",SelectorType.ID);
-        waitAndClick("manage-button",SelectorType.ID);
+        findSelectAllRadioButtonsByValue("add");
+        waitAndClick("next",SelectorType.ID);
+    }
+
+    public void scanPageForAccessibilityViolations(String URL, AXEScanner scanner) throws IOException, URISyntaxException {
+        AXEScanner axeScanner;
+        ReportGenerator reportGenerator = new ReportGenerator();
+        axeScanner = scanner;
+        if(scanner.axeFindings().length() != 0) {
+            reportGenerator.urlScannedReportSection(URL);
+            reportGenerator.violationDetailsReportSection(URL, axeScanner);
+            reportGenerator.createReport(axeScanner);
+            Assert.fail("Violation findings found");
+        }else{
+            Assert.assertEquals(0, scanner.axeFindings().length());
+        }
     }
 }

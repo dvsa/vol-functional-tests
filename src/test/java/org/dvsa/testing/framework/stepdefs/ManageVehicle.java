@@ -36,7 +36,10 @@ public class ManageVehicle extends BasePage {
     @When("I navigate to manage vehicle page")
     public void iNavigateToManageVehiclePage() throws MalformedURLException, IllegalBrowserException {
         world.selfServeNavigation.navigateToLogin( world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("application", "vehicles");
+        world.selfServeNavigation.navigateToPage("licence", "vehicles");
+        String URL = Browser.navigate().getCurrentUrl();
+        String newURL = URL.substring(0, URL.length()-2);
+        Browser.navigate().get(newURL);
     }
 
     @Then("the add vehicle page should display licence number")
