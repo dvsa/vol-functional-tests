@@ -3,15 +3,17 @@
 @VOL-147
 Feature: Search and add a vehicle
 
-  Scenario Outline: Check page contents
-    Given I have applied for a "<Operator>" "<LicenceType>" licence
+  Background:
+    Given I have applied for a "goods" "standard_national" licence
+    When I grant licence
+    Then the licence should be granted
+
+  Scenario: Check page contents
     When I navigate to manage vehicle page
     And choose to add a vehicle
     Then the add vehicle page should display licence number
     And "Add a vehicle" heading
-    Examples:
-      | Operator | LicenceType       |
-      | goods    | standard_national |
+
 
   Scenario Outline: Check error messages
     Given I have applied for a "<Operator>" "<LicenceType>" licence

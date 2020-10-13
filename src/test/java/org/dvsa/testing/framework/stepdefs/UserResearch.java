@@ -19,7 +19,7 @@ public class UserResearch extends BasePage implements En {
 
         Given("^^I have applied for \"([^\"]*)\" \"([^\"]*)\" licences$", (String licenceType, String operator) -> {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.createLicence.setNoOfVehiclesRequired(5);
+            world.createLicence.setNoOfVehiclesRequired(6);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 for (String ta : trafficAreaList()) {
                     world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
