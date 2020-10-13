@@ -1,22 +1,16 @@
 #https://jira.dvsacloud.uk/browse/VOL-147
 
 @VOL-147
-Feature: Search and add a vehicle
+Feature: Search and add a vehicle for a multi licence holder
 
   Background:
-    Given I have applied for a "goods" "standard_national" licence
-    When I grant licence
-    Then the licence should be granted
+    Given I have applied for "goods" "standard_national" licences
 
-  Scenario Outline: Check page contents
+  @VOL-933
+  Scenario: Check page contents for Single Licence holder
     When I navigate to manage vehicle page
-    And choose to add a "<VRM>" vehicle
-    Then the add vehicle page should display licence number
-    And "Add a vehicle" heading
-
-    Examples:
-      | VRM    |
-      | Y23WSH |
+    Then the following should be displayed:
+      | Transfer vehicles |
 
   Scenario: Check error messages
     When I navigate to manage vehicle page
@@ -36,3 +30,6 @@ Feature: Search and add a vehicle
     Examples:
       | VRM     |
       | F95 JGE |
+
+    Scenario: Add an a vehicle belonging to another licence
+

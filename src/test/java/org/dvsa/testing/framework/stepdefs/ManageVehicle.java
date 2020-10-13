@@ -12,7 +12,6 @@ import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
-import org.junit.Before;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
@@ -47,9 +46,9 @@ public class ManageVehicle extends BasePage {
         Assert.assertEquals(world.createLicence.getLicenceNumber(),getText("licence",SelectorType.ID));
     }
 
-    @And("choose to add a vehicle")
-    public void chooseToAddAVehicle() throws MalformedURLException, IllegalBrowserException {
-        world.UIJourneySteps.addAVehicle("PX57DXA");
+    @And("choose to add a {string} vehicle")
+    public void chooseToAddAVehicle(String VRM) throws MalformedURLException, IllegalBrowserException {
+        world.UIJourneySteps.addAVehicle(VRM);
     }
 
     @And("{string} heading")
@@ -75,7 +74,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @Then("the vehicle summary should be displayed on the page:")
-    public void theVehicleSummaryShouldBeDisplayedOnThePage(List<String> table) throws MalformedURLException, IllegalBrowserException {
+    public void theVehicleSummaryShouldBeDisplayedOnThePage(List<String> table) {
         isTextPresent(String.format("A vehicle has been found with registration %s",this.vrm), 60);
         for(String columns : table) {
             isTextPresent(columns, 60);
@@ -88,5 +87,9 @@ public class ManageVehicle extends BasePage {
                 findElements("//*[@class='govuk-table']//tbody[@class='govuk-table__body']//ancestor::tr[@class='govuk-table__row']//following-sibling::td",SelectorType.XPATH);
         for(WebElement element : vehicleDetails)
             Assert.assertNotNull(element.getText());
+    }
+
+    @Then("the following should be displayed:")
+    public void theFollowingShouldBeDisplayed(List<String>) {
     }
 }

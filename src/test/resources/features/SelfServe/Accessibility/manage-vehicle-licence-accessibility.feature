@@ -10,8 +10,12 @@ Feature: Check that manage vehicle journey is accessible
     And i scan for accessibility violations
     Then no issues should be present on the page
 
-  Scenario: Check Add Vehicle page is accessible
+  Scenario Outline: Check Add Vehicle page is accessible
     When I navigate to manage vehicle page
-    And choose to add a vehicle
+    And choose to add a "<VRM>" vehicle
     And i scan for accessibility violations
     Then no issues should be present on the page
+
+    Examples:
+      | VRM     |
+      | PX57DXA |
