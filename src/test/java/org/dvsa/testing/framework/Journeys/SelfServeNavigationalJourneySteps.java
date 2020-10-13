@@ -84,6 +84,10 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                         break;
                 }
                 break;
+            case "Vehicle":
+                clickByLinkText("Vehicles");
+                waitForTitleToBePresent("Vehicle details");
+                break;
             default:
                 clickByLinkText(page);
                 waitForTitleToBePresent(page);
