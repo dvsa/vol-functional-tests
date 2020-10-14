@@ -68,7 +68,7 @@ public class WebDav extends BasePage implements En {
         });
         When("^i update my operating system on internal to \"([^\"]*)\"$", (String operatingSystem) -> {
             world.internalNavigation.urlSearchAndViewInternalUserAccount(world.updateLicence.getAdminUserId());
-            waitForTextToBePresent("Operating System");
+            waitForTextToBePresent("User type");
             selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         });
