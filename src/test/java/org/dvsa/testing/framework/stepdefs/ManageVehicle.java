@@ -90,6 +90,9 @@ public class ManageVehicle extends BasePage {
     }
 
     @Then("the following should be displayed:")
-    public void theFollowingShouldBeDisplayed(List<String>) {
+    public void theFollowingShouldBeDisplayed(List<String> headers) {
+        for(String header : headers){
+            isTextPresent(header,60);
+        }
     }
 }
