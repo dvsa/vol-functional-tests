@@ -122,7 +122,9 @@ public class FeeAndPaymentJourneySteps extends BasePage {
         enterText("//*[@id='scp_cardPage_expiryDate_input']", config.getString("cardExpiryMonth"), SelectorType.XPATH);
         enterText("//*[@id='scp_cardPage_expiryDate_input2']", config.getString("cardExpiryYear"), SelectorType.XPATH);
         enterText("//*[@id='scp_cardPage_csc_input']", "123", SelectorType.XPATH);
-        click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
+        if (isElementPresent("scp_cardPage_storedCard_payment_input", SelectorType.ID)) {
+            click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
+        }
         click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
         enterText("//*[@id='scp_additionalInformationPage_cardholderName_input']", "Mr Regression Test", SelectorType.XPATH);
         click("//*[@id='scp_additionalInformationPage_buttons_continue_button']", SelectorType.XPATH);

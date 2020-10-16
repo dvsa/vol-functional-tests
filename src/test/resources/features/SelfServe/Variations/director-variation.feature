@@ -42,6 +42,6 @@ Feature: Add a director variation
     And i remove a director
     Then a task should not be created in internal
 
-  Scenario: Task should be created in internal when last TM is removed
+  Scenario: Task should be created in internal when last director is removed
     When i remove a the last director
     Then a task is created in internal
