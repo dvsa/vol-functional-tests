@@ -35,7 +35,7 @@ Feature: Remove last Transport Manager (TM) pop up
     And the internal user goes to remove the last transport manager
     Then the remove TM popup should not be displaying new TM remove text
 
-  Scenario: Letter trigger when caseworker removes last TM
+  Scenario: Letter trigger when caseworker removes last TM on Internal
     And the licence has been granted
     When the transport manager has been removed by an internal user
     And the removal date is changed to 48 hours into the future
