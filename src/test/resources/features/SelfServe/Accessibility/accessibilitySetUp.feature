@@ -1,3 +1,4 @@
+@SS
 @user
 Feature: Set up users for accessibility testing
 

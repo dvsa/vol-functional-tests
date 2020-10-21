@@ -1,3 +1,4 @@
+@INT
 @continuations
 
 Feature: Continuations journey through internal and self serve
