@@ -74,7 +74,7 @@ Feature: Logic for Surrender menu item
 
     Examples:
       | licence_status | licence     |
-      | suspend        | Surrendered |
+#      | suspend        | Surrendered |
       | curtail        | Surrendered |
 
   Scenario: Check links are hidden

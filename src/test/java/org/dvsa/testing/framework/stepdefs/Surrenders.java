@@ -250,11 +250,13 @@ public class Surrenders extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalNavigation.urlSearchAndViewLicence();
-            world.surrenderJourneySteps.internalDigitalSurrenderMenu();
+            clickByLinkText("Cases");
             world.UIJourneySteps.closeCase();
-            world.surrenderJourneySteps.internalDigitalSurrenderMenu();
+            waitForTextToBePresent("Case closed");
+            world.internalNavigation.urlSearchAndViewLicence();
+            clickByLinkText("Bus registrations");
             world.busRegistrationJourneySteps.closeBusReg();
-            world.surrenderJourneySteps.internalDigitalSurrenderMenu();
+
         });
 
         And("^the tick boxes are checked$", () -> {

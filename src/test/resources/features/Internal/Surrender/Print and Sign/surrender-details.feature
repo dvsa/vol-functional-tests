@@ -17,7 +17,7 @@ Feature: View Surrender Menu and details on Internal
     And the change history has the surrender under consideration
 
 
-  Scenario: Surrender after closing cases & bus Reg
+  Scenario: Surrender after closing cases & bus Reg print & sign
     Given the open case and bus reg is closed
     And a caseworker views the surrender details
     And the tick boxes are checked
