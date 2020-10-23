@@ -1,4 +1,4 @@
-@INT
+#@INT
 @Docman
   
 Feature: All docman functionality tests
