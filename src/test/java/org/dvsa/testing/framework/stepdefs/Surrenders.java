@@ -11,6 +11,8 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
+import org.openqa.selenium.WebElement;
 
 import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertTrue;
@@ -217,7 +219,7 @@ public class Surrenders extends BasePage implements En {
         When("^a caseworker views the surrender details$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
-            world.internalSearch.searchAndViewLicence();
+            world.internalNavigation.urlSearchAndViewLicence();
             waitAndClick("menu-licence_surrender", SelectorType.ID);
         });
 
@@ -247,8 +249,6 @@ public class Surrenders extends BasePage implements En {
             }
         });
         And("^the open case and bus reg is closed$", () -> {
-            world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Cases");
             world.UIJourneySteps.closeCase();
@@ -276,6 +276,22 @@ public class Surrenders extends BasePage implements En {
         });
         Then("^the licence should be surrendered$", () -> {
             assertTrue(isElementPresent("//*[contains(text(),'Surrendered')]", SelectorType.XPATH));
+        });
+        When("^the caseworker checks the case and bus reg is visible in surrenders$", () -> {
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.urlSearchAndViewLicence();
+            waitForTextToBePresent("Overview");
+            if (isTextPresent("Surrender", 10)){
+                clickByLinkText("Surrender");
+                waitForTextToBePresent("Summary: Application to surrender an operator licence");
+                Assert.assertTrue(isTextPresent("open cases associated with this licence", 10));
+                Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
+                Assert.assertTrue(isTextPresent("active bus registrations associated with this licence.", 10));
+                Assert.assertTrue(isLinkPresent(String.valueOf(world.createLicence.getLicenceNumber()),10));
+                WebElement surrenderButton = findElement("//*[@id='actions[surrender]']", SelectorType.XPATH);
+                Assert.assertTrue(surrenderButton.getAttribute("class").contains("disabled"));
+            }
         });
     }
 }
