@@ -1,4 +1,3 @@
-#@INT
 @WebDav
 @WebDavCheckOSType
 Feature: Check that the OS Version is displayed in the user account details

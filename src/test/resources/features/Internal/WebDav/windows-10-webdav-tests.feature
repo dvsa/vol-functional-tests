@@ -1,4 +1,3 @@
-#@INT
 @WebDav
 @WebDavUI
 Feature: All WebDav functionality tests

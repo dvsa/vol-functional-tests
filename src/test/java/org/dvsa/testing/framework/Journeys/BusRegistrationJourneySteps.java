@@ -84,7 +84,6 @@ public class BusRegistrationJourneySteps extends BasePage {
         world.feeAndPaymentJourneySteps.payFee("60", "cash");
         long kickOutTime = System.currentTimeMillis() + 60000;
         do {
-            System.out.println("link not present");
             javaScriptExecutor("location.reload(true)");
         } while (!isLinkPresent("Register service", 5) && System.currentTimeMillis() < kickOutTime);
         clickByLinkText("Register service");
