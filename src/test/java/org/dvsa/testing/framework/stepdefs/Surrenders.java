@@ -194,10 +194,12 @@ public class Surrenders extends BasePage implements En {
             waitForTextToBePresent(world.createLicence.getLicenceNumber());
         });
         Then("^any open cases should be displayed$", () -> {
-            isLinkPresent(toString(), world.updateLicence.getCaseId());
+            Assert.assertTrue(isTextPresent("open cases associated with this licence", 10));
+            Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
         });
         And("^any open bus registrations should be displayed$", () -> {
-            isLinkPresent("PB2026379/1", 5);
+            Assert.assertTrue(isTextPresent("active bus registrations associated with this licence.", 10));
+            Assert.assertTrue(isLinkPresent(String.valueOf(world.createLicence.getLicenceNumber()),10));
         });
         And("^tick boxes should be displayed$", () -> {
             isTextPresent("Digital signature has been checked",30);
