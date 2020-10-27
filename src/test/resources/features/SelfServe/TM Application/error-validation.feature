@@ -1,3 +1,4 @@
+@SS
 Feature: Error Validation for TM Application
 
   Background:

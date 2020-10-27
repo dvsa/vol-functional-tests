@@ -1,3 +1,4 @@
+@SS
 @SS-PASSWORD-RESET
 Feature: resetting password with valid/invalid user
 

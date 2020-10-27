@@ -1,3 +1,4 @@
+@SS
 Feature: Various accessibility Rules Checks
 
   Scenario: Keyboard - Reach all links (text or image), form controls and page functions with keyboard

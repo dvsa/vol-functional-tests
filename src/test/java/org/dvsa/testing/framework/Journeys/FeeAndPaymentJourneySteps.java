@@ -105,9 +105,10 @@ public class FeeAndPaymentJourneySteps extends BasePage {
 
 
     public void selectFee() throws IllegalBrowserException, MalformedURLException {
+        long kickOut = System.currentTimeMillis() + 60000;
         do {
             //nothing
-        } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
+        } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH) && System.currentTimeMillis() < kickOut);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         isElementEnabled("//tbody", SelectorType.XPATH);
         waitAndClick("//tbody/tr/td[7]/input", SelectorType.XPATH);
