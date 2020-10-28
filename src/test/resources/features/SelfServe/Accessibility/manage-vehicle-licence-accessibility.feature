@@ -5,27 +5,23 @@ Feature: Check that manage vehicle journey is accessible
     When I grant licence
     Then the licence should be granted
 
-#  Scenario: Check that Manage Vehicle page is accessible
-#    When I navigate to manage vehicle page
-#    And i scan for accessibility violations
-#    Then no issues should be present on the page
-#
-#  Scenario Outline: Check Add Vehicle page is accessible
-#    When I navigate to manage vehicle page
-#    And choose to add a "<VRM>" vehicle
-#    And i scan for accessibility violations
-#    Then no issues should be present on the page
-#
-#    Examples:
-#      | VRM     |
-#      | PX57DXA |
+  Scenario: Check that Manage Vehicle page is accessible
+    When I navigate to manage vehicle page
+    And i scan for accessibility violations
+    Then no issues should be present on the page
+
+  Scenario Outline: Check Add Vehicle page is accessible
+    When I navigate to manage vehicle page
+    And choose to add a "<VRM>" vehicle
+    And i scan for accessibility violations
+    Then no issues should be present on the page
+
+    Examples:
+      | VRM     |
+      | PX57DXA |
 
   Scenario: Remove vehicle journey
     When I navigate to manage vehicle page
     And I choose to remove a vehicle
     And i scan for accessibility violations
     Then no issues should be present on the page
-
-#    When I navigate to manage vehicle page
-#    And I add a vehicle belonging to another licence
-#    Then I should be prompted that vehicle belongs to another licence
