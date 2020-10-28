@@ -543,6 +543,11 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("vehicle-search[submit]",SelectorType.ID);
     }
 
+    public void removeVehicle() throws MalformedURLException, IllegalBrowserException {
+        findSelectAllRadioButtonsByValue("remove");
+        waitAndClick("next",SelectorType.ID);
+    }
+
     public void scanPageForAccessibilityViolations(String URL, AXEScanner scanner) throws IOException, URISyntaxException {
         AXEScanner axeScanner;
         ReportGenerator reportGenerator = new ReportGenerator();

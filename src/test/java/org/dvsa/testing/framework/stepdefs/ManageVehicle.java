@@ -10,6 +10,7 @@ import cucumber.api.java.en.When;
 import enums.OperatorType;
 import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
@@ -94,5 +95,28 @@ public class ManageVehicle extends BasePage {
         for(String header : headers){
             isTextPresent(header,60);
         }
+    }
+
+    @And("I add a vehicle belonging to another licence")
+    public void iAddAVehicleBelongingToAnotherLicence() {
+        System.out.println("this is it");
+    }
+
+    @Then("I should be prompted that vehicle belongs to another licence")
+    public void iShouldBePromptedThatVehicleBelongsToAnotherLicence() {
+    }
+
+    @When("I navigate to add existing vehicle page")
+    public void iNavigateToAddExistingVehiclePage() throws MalformedURLException, IllegalBrowserException {
+        Browser.navigate().get("https://ssap1.da.olcs.dev-dvsacloud.uk/licence/545765/vehicle/add/");
+        LoginPage.signIn("James289.Witherspoon6212144", "BunDog=336MixZoo");
+        waitAndEnterText("vehicle-search[search-value]",SelectorType.ID,"F95 JGE");
+        waitAndClick("vehicle-search[submit]",SelectorType.ID);
+        waitAndClick("confirm",SelectorType.ID);
+    }
+
+    @And("I choose to remove a vehicle")
+    public void iChooseToRemoveAVehicle() throws MalformedURLException, IllegalBrowserException {
+        world.UIJourneySteps.removeVehicle();
     }
 }

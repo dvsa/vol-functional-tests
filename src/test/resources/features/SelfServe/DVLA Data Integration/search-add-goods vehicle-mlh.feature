@@ -4,7 +4,7 @@
 Feature: Search and add a vehicle for a multi licence holder
 
   Background:
-    Given I have applied for "goods" "standard_national" licences
+    Given I have applied for "standard_national" "goods" licences
 
   @VOL-933
   Scenario: Check page contents for Single Licence holder
@@ -32,4 +32,7 @@ Feature: Search and add a vehicle for a multi licence holder
       | F95 JGE |
 
     Scenario: Add an a vehicle belonging to another licence
+      When I navigate to manage vehicle page
+      And I add a vehicle belonging to another licence
+      Then I should be prompted that vehicle belongs to another licence
 
