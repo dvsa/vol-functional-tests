@@ -122,17 +122,6 @@ public class SurrenderJourneySteps extends BasePage {
         waitForTitleToBePresent("Declaration");
     }
 
-    public void internalDigitalSurrenderMenu() throws IllegalBrowserException, MalformedURLException {
-        if (!isElementPresent("menu-licence_surrender", SelectorType.ID)) {
-            do {
-                System.out.println("waiting for page to load");
-                javaScriptExecutor("location.reload(true)");
-            } while (!isLinkPresent("" + world.createLicence.getLicenceNumber() + "", 10));
-            clickByLinkText("" + world.createLicence.getLicenceNumber() + "");
-        }
-        click("menu-licence_surrender", SelectorType.ID);
-    }
-
     public void addDiscInformation(String discToDestroy, String discsLost, String discsStolen) throws IllegalBrowserException, MalformedURLException {
         assertTrue(getCurrentUrl().contains("current-discs"));
         click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
