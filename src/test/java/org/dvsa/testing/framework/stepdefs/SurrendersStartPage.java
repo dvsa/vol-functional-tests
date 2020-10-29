@@ -9,6 +9,9 @@ import static junit.framework.TestCase.assertTrue;
 
 public class SurrendersStartPage extends BasePage implements En {
     public SurrendersStartPage(World world) {
+        When("^i click on apply to surrender licence$", () -> {
+            world.surrenderJourneySteps.navigateToSurrendersStartPage();
+        });
         Then("^the correct page heading for \"([^\"]*)\" should be displayed$", (String licenceType) -> {
             if(licenceType.equals("public"))
             {
@@ -18,15 +21,13 @@ public class SurrendersStartPage extends BasePage implements En {
             }
         });
         And("^the correct instructions for \"([^\"]*)\" should be displayed$", (String licenceType) -> {
-            if(licenceType.equals("public"))
+            if(licenceType.equals("public")) {
                 assertTrue(isTextPresent("You will need to cancel all registered bus services.",40));
+            }
         });
         And("^the correct licence number should be displayed$", () -> {
             boolean isTrue = findElement("//h3", SelectorType.XPATH,10).getText().contains(world.createLicence.getLicenceNumber());
             assertTrue(isTrue);
-        });
-        When("^i click on the surrenders tab$", () -> {
-
         });
     }
 }
