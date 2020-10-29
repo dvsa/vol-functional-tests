@@ -1,11 +1,14 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.aws.s3.S3;
+import activesupport.dates.Dates;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import activesupport.string.Str;
 import activesupport.system.Properties;
+import com.amazonaws.services.s3.model.S3Object;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -20,7 +23,9 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.Scanner;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.Assert.assertFalse;
@@ -145,10 +150,8 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getApplicationNumber());
-            waitForTextToBePresent("Apply for a new licence");
-            clickByLinkText("Transport");
-            clickByLinkText(world.TMJourneySteps.getOperatorForeName() + " " + world.TMJourneySteps.getOperatorFamilyName());
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+            clickByLinkText(String.format("%s %s", world.TMJourneySteps.getOperatorForeName(), world.TMJourneySteps.getOperatorFamilyName()));
             click("form-actions[submit]", SelectorType.ID);
             click("//*[contains(text(),'Print')]",SelectorType.XPATH);
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
@@ -179,6 +182,34 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         Then("^two worked hours errors should display$", () -> {
             assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
+        });
+        When("^i add new person as a transport manager$", () -> {
+            world.TMJourneySteps.generateOperatorValues();
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.TMJourneySteps.nominateNewPersonAsTransportManager();
+            world.selfServeNavigation.navigateToLogin(world.TMJourneySteps.getOperatorUser(), world.TMJourneySteps.getOperatorUserEmail());
+            clickByLinkText("Provide details");
+            world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
+        });
+        And("^the operator rejects the transport managers details$", () -> {
+            waitForTextToBePresent("What happens next?");
+            clickByLinkText("Home");
+            world.TMJourneySteps.assertTMDetailsWithOperator();
+            clickByLinkText("Sign out");
+            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+            clickByLinkText(String.format("%s %s", world.TMJourneySteps.getOperatorForeName(), world.TMJourneySteps.getOperatorFamilyName()));
+            click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
+            waitForElementToBePresent("//*[@id='emailAddress']");
+            click("submit", SelectorType.ID);
+            waitForTextToBePresent("The link has been e-mailed");
+        });
+        And("^the TM has got the reset link email$", () -> {
+//            Needs writing. Since maildev is soon to be implemented, makes no sense to add s3 method yet.
+        });
+        And("^the TM should see the incomplete label and provide details link$", () -> {
+            world.selfServeNavigation.navigateToLogin(world.TMJourneySteps.getOperatorUser(), world.TMJourneySteps.getOperatorUserEmail());
+            world.TMJourneySteps.assertTMDetailsIncomplete();
         });
     }
 

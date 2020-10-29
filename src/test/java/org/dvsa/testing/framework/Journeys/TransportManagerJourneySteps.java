@@ -9,9 +9,11 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
+import org.junit.Assert;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertTrue;
@@ -225,7 +227,6 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
     public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
-        String tmEmailAddress = "externalTM@vol.com";
         String hours = "8";
         findElement("//*[@value='" + OtherLicence + "'][@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + isOwner + "'][@name='responsibilities[isOwner]']", SelectorType.XPATH, 30).click();
@@ -233,9 +234,8 @@ public class TransportManagerJourneySteps extends BasePage {
         findElement("//*[@value='" + hasConvictions + "'][@name='previousHistory[hasConvictions]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + hasPreviousLicences + "'][@name='previousHistory[hasPreviousLicences]']", SelectorType.XPATH, 30).click();
         findElement("//*[@id='responsibilities']//*[contains(text(),'Internal')]", SelectorType.XPATH, 30).click();
-        findElement("emailAddress", SelectorType.ID, 10).clear();
-        if (findElement("emailAddress", SelectorType.ID, 10).getText().isEmpty()) {
-            waitAndEnterText("emailAddress", SelectorType.ID, tmEmailAddress);
+        if (findElement("emailAddress", SelectorType.ID, 10).getAttribute("value").isEmpty()) {
+            waitAndEnterText("emailAddress", SelectorType.ID, getOperatorUserEmail());
         }
         waitAndEnterText("birthPlace", SelectorType.ID, "Nottingham");
         waitAndEnterText("postcodeInput1", SelectorType.ID, "NG23HX");
@@ -286,5 +286,30 @@ public class TransportManagerJourneySteps extends BasePage {
                 world.TMJourneySteps.getOperatorForeName(),
                 world.TMJourneySteps.getOperatorFamilyName(),
                 world.TMJourneySteps.getOperatorUserEmail());
+    }
+
+    public void nominateNewPersonAsTransportManager() throws MalformedURLException, IllegalBrowserException {
+        world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+        click("add", SelectorType.ID);
+        waitAndClick("addUser", SelectorType.ID);
+        enterText("forename", world.TMJourneySteps.getOperatorForeName(), SelectorType.ID);
+        enterText("familyName", world.TMJourneySteps.getOperatorFamilyName(), SelectorType.ID);
+        LinkedHashMap<String, Integer> dob = world.globalMethods.date.getDate(0, 0, -20);
+        replaceDateById("dob", dob);
+        enterText("username", world.TMJourneySteps.getOperatorUser(), SelectorType.ID);
+        enterText("emailAddress", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
+        enterText("emailConfirm", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
+        click("form-actions[continue]", SelectorType.ID);
+        waitForTextToBePresent("user account has been created and a link sent to them");
+    }
+
+    public void assertTMDetailsWithOperator() throws IllegalBrowserException {
+        Assert.assertTrue(isElementPresent("//span[contains(text(),'With operator')]",SelectorType.XPATH));
+        Assert.assertTrue(isLinkPresent("View details", 10));
+    }
+
+    public void assertTMDetailsIncomplete() throws IllegalBrowserException {
+        Assert.assertTrue(isElementPresent("//span[contains(text(),'Incomplete')]", SelectorType.XPATH));
+        Assert.assertTrue(isLinkPresent("Provide details", 10));
     }
 }
