@@ -93,29 +93,6 @@ public class TransportManagerJourneySteps extends BasePage {
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
-
-    public void addNewPersonAsTransportManager(String forename, String familyName, String emailAddress) throws IllegalBrowserException, MalformedURLException {
-        setExternalTMEmail(emailAddress);
-        setExternalTMUser("TM".concat(Str.randomWord(3)));
-        waitForTitleToBePresent("Transport Managers");
-        waitAndClick("//*[@id='add']", SelectorType.XPATH);
-        waitForTitleToBePresent("Add Transport Manager");
-        waitAndClick("addUser", SelectorType.ID);
-        enterText("forename", forename, SelectorType.ID);
-        enterText("familyName", familyName, SelectorType.ID);
-
-        HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(0, 0, 25);
-        enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
-
-        enterText("username", getExternalTMUser(), SelectorType.ID);
-        enterText("emailAddress", getExternalTMEmail(), SelectorType.ID);
-        enterText("emailConfirm", getExternalTMEmail(), SelectorType.ID);
-        waitAndClick("form-actions[continue]", SelectorType.ID);
-    }
-
     public void addTransportManagerDetails() throws IllegalBrowserException, MalformedURLException {
         //Add Personal Details
         String birthPlace = world.createLicence.getTown();
@@ -278,7 +255,7 @@ public class TransportManagerJourneySteps extends BasePage {
         );
     }
 
-    public void generateAndOperatorUser() throws MalformedURLException, IllegalBrowserException {
+    public void generateAndAddOperatorUser() throws MalformedURLException, IllegalBrowserException {
         world.TMJourneySteps.generateOperatorValues();
         world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
         world.UIJourneySteps.addUser(
@@ -288,8 +265,8 @@ public class TransportManagerJourneySteps extends BasePage {
                 world.TMJourneySteps.getOperatorUserEmail());
     }
 
-    public void nominateNewPersonAsTransportManager() throws MalformedURLException, IllegalBrowserException {
-        world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+    public void addNewPersonAsTransportManager(String licenceType) throws MalformedURLException, IllegalBrowserException {
+        world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
         click("add", SelectorType.ID);
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", world.TMJourneySteps.getOperatorForeName(), SelectorType.ID);

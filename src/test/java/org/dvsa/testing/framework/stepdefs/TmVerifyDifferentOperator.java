@@ -1,14 +1,8 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.aws.s3.S3;
-import activesupport.dates.Dates;
 import activesupport.driver.Browser;
-import activesupport.faker.FakerUtils;
-import activesupport.number.Int;
-import activesupport.string.Str;
 import activesupport.system.Properties;
-import com.amazonaws.services.s3.model.S3Object;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -23,9 +17,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Objects;
-import java.util.Scanner;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.Assert.assertFalse;
@@ -92,15 +84,15 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         When("^i add a new transport manager$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
             world.UIJourneySteps.changeLicenceForVariation();
-            String emailAddress = "tme".concat(Str.randomWord(2)).concat("externalTM@vol.gov");
-            world.TMJourneySteps.addNewPersonAsTransportManager(forename, familyName, emailAddress);
+            world.TMJourneySteps.generateOperatorValues();
+            world.TMJourneySteps.addNewPersonAsTransportManager("variation");
         });
         Then("^a transport manager has been created banner is displayed$", () -> {
             findElement("//p[@role]",SelectorType.XPATH,10).getText().contains("The transport manager's user account has been created and a link sent to them");
         });
         Then("^the download TM(\\d+) for should not be displayed on the details page$", (Integer arg0) -> {
-            waitAndClick("//a[contains(text(),'" + forename + " " + familyName + "')]", SelectorType.XPATH);
-            waitForTextToBePresent("Details not submitted");
+            waitAndClick(String.format("//a[contains(text(),'%s %s')]", world.TMJourneySteps.getOperatorForeName(), world.TMJourneySteps.getOperatorFamilyName()), SelectorType.XPATH);
+            waitForTitleToBePresent("Details not submitted");
             assertFalse(isTextPresent("Alternatively they can download a TM1 form (PDF 150KB).",30));
             assertFalse(isLinkPresent("download a TM1 form (PDF 150KB).", 30));
         });
@@ -112,7 +104,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         And("^i add an existing person as a transport manager who is not the operator on \"([^\"]*)\"$", (String applicationType) -> {
             boolean applicationOrNot = applicationType.equals("application");
-            world.TMJourneySteps.generateAndOperatorUser();
+            world.TMJourneySteps.generateAndAddOperatorUser();
             world.TMJourneySteps.addAndCompleteOperatorUserAsTransportManager("N", applicationOrNot);
         });
         And("^the operator countersigns digitally$", () -> {
@@ -157,7 +149,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         });
         When("^create a user and add them as a tm with a future DOB$", () -> {
-            world.TMJourneySteps.generateAndOperatorUser();
+            world.TMJourneySteps.generateAndAddOperatorUser();
             HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
             world.TMJourneySteps.addOperatorUserAsTransportManager(dob, true);
         });
@@ -183,10 +175,10 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             assertTrue(isElementPresent("//*[@class='validation-summary']//a[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'You must enter the hours per week you will spend on your duties')]", SelectorType.XPATH));
         });
-        When("^i add new person as a transport manager$", () -> {
+        When("^i add new person as a transport manager and they fill out their details$", () -> {
             world.TMJourneySteps.generateOperatorValues();
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.TMJourneySteps.nominateNewPersonAsTransportManager();
+            world.TMJourneySteps.addNewPersonAsTransportManager("application");
             world.selfServeNavigation.navigateToLogin(world.TMJourneySteps.getOperatorUser(), world.TMJourneySteps.getOperatorUserEmail());
             clickByLinkText("Provide details");
             world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
