@@ -452,7 +452,6 @@ public class UIJourneySteps extends BasePage {
     public void changeLicenceForVariation() throws
             IllegalBrowserException, MalformedURLException, InterruptedException {
         javaScriptExecutor("location.reload(true)");
-        waitForTextToBePresent("Transport Managers");
         waitForPageLoad();
         waitForElementToBePresent("//*[contains(text(),'change your licence')]");
         waitAndClick("//*[contains(text(),'change')]", SelectorType.XPATH);

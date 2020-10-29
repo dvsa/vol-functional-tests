@@ -85,14 +85,8 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             assertFalse(isTextPresent(data,30));
         });
         When("^i add a new transport manager$", () -> {
-            clickByLinkText(world.createLicence.getLicenceNumber());
-            clickByLinkText("Transport");
-            waitForTextToBePresent("Transport Managers");
-            if (isTextPresent("To add a transport manager",30)) {
-                clickByLinkText("change");
-                waitForTextToBePresent("Applying to change a licence");
-                click("form-actions[submit]", SelectorType.ID);
-            }
+            world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
+            world.UIJourneySteps.changeLicenceForVariation();
             String emailAddress = "tme".concat(Str.randomWord(2)).concat("externalTM@vol.gov");
             world.TMJourneySteps.addNewPersonAsTransportManager(forename, familyName, emailAddress);
         });
