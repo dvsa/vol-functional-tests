@@ -548,6 +548,13 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("next",SelectorType.ID);
     }
 
+
+    public void vehicleRemovalConfirmationPage() throws MalformedURLException, IllegalBrowserException {
+        removeVehicle();
+        waitAndClick("//*[@name='table[id][]'][1]",SelectorType.XPATH);
+        waitAndClick("formActions[action]",SelectorType.ID);
+    }
+
     public void scanPageForAccessibilityViolations(String URL, AXEScanner scanner) throws IOException, URISyntaxException {
         AXEScanner axeScanner;
         ReportGenerator reportGenerator = new ReportGenerator();

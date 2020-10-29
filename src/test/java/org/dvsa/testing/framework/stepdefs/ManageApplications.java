@@ -22,6 +22,7 @@ public class ManageApplications {
 
     @Given("I have applied for a {string} {string} licence")
     public void iHaveAppliedForALicence(String operator, String licenceType) {
+        world.createLicence.setNoOfVehiclesRequired(13);
         world.createLicence.setOperatorType(operator);
         world.createLicence.setLicenceType(licenceType);
         if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {

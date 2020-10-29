@@ -25,3 +25,9 @@ Feature: Check that manage vehicle journey is accessible
     And I choose to remove a vehicle
     And i scan for accessibility violations
     Then no issues should be present on the page
+
+  Scenario: Confirm vehicle removal
+    When I navigate to manage vehicle page
+    And I want to confirm a vehicle removal
+    And i scan for accessibility violations
+    Then no issues should be present on the page
