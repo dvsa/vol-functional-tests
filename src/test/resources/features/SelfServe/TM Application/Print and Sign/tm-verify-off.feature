@@ -3,6 +3,7 @@
 Feature: Countersigning declaration page for the operator (Verify switched off)
 
   Background:
+    Given verify has been switched "off"
     When i have a "goods" "GB" partial application
     And i select a transport manager to add
 

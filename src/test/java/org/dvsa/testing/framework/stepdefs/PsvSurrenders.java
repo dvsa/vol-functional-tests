@@ -35,7 +35,12 @@ public class PsvSurrenders extends BasePage implements En {
             Assert.assertEquals(world.createLicence.getLicenceNumber(), licenceNumber);
         });
         And("^the correct correspondence details should be displayed$", () -> {
-            Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(), world.createLicence.getAddressLine1());
+            Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(),
+                    String.format("%s\n%s\n%s\n%s",
+                            world.createLicence.getAddressLine1(),
+                            world.createLicence.getAddressLine2(),
+                            world.createLicence.getAddressLine3(),
+                            world.createLicence.getAddressLine4()));
             Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderTown(), world.createLicence.getTown());
         });
         And("^the correct contact details should be displayed$", () -> {
@@ -47,7 +52,7 @@ public class PsvSurrenders extends BasePage implements En {
         And("^i update my correspondence address$", () -> {
             this.town = "Leicester";
             click("//a[contains(text(),'Change')][1]", SelectorType.XPATH);
-            waitForTextToBePresent("Addresses");
+            waitForTitleToBePresent("Addresses");
             findElement("addressTown", SelectorType.ID, 5).clear();
             enterText("addressTown", this.town, SelectorType.ID);
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
