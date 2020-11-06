@@ -21,3 +21,5 @@ Feature: Digital Surrender - PSV Surrender licence
     And discs have been added to my licence
     And i navigate to the current discs page
     Then the number of disc should match the vehicles registered on the licence
+
+#    Need to add checks for Disc & Document Details page as in the review discs and documentationSI pages?

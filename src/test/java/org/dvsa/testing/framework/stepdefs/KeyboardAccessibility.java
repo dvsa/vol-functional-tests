@@ -124,7 +124,7 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.UIJourneySteps.skipToMainContentAndCheck();
             waitAndClick("form-actions[submit]",SelectorType.ID);
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.surrenderJourneySteps.addOperatorLicenceDetails();

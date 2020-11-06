@@ -14,9 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SurrenderLogic extends BasePage implements En {
-    private String discLost = "2";
-    private String discDestroyed = "2";
-    private String discStolen = "1";
     private String addressLine1 = "Change";
     private String addressLine2 = "For";
     private String addressLine3 = "Surrender";
@@ -49,7 +46,7 @@ public class SurrenderLogic extends BasePage implements En {
             assertEquals(expectedChangedText, actualChangeText);
         });
         Given("^i remove a disc to my licence$", () -> {
-            world.surrenderJourneySteps.removeDisc(discDestroyed, discLost, discStolen);
+            world.surrenderJourneySteps.removeDisc();
         });
         And("^the new correspondence details are displayed on correspondence page$", () -> {
             click("//*[contains(text(),'Review')]", SelectorType.XPATH);
@@ -80,7 +77,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the operator licence page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation(discDestroyed, discLost, discStolen);
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
         });
@@ -91,7 +88,7 @@ public class SurrenderLogic extends BasePage implements En {
         And("^i am on the community licence page$", () -> {
             if (world.createLicence.getLicenceType().equals("standard_international")) {
                 waitAndClick("form-actions[submit]", SelectorType.ID);
-                world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+                world.surrenderJourneySteps.addDiscInformation();
                 waitForTextToBePresent("In your possession");
                 world.surrenderJourneySteps.addOperatorLicenceDetails();
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
@@ -106,7 +103,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the disc and doc review page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createLicence.getLicenceType().equals("standard_international")) {
@@ -121,7 +118,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the destroy disc page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createLicence.getLicenceType().equals("standard_international")) {
@@ -133,7 +130,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the declaration page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createLicence.getLicenceType().equals("standard_international")) {
