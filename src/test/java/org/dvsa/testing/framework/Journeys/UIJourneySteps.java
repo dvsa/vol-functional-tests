@@ -454,7 +454,7 @@ public class UIJourneySteps extends BasePage {
         javaScriptExecutor("location.reload(true)");
         waitForPageLoad();
         waitForElementToBePresent("//*[contains(text(),'change your licence')]");
-        waitAndClick("//*[contains(text(),'change')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForPageLoad();
@@ -493,7 +493,7 @@ public class UIJourneySteps extends BasePage {
 
     public void addNewOperatingCentreSelfServe(String postcode, int vehicles, int trailers) throws
             IllegalBrowserException, MalformedURLException {
-        waitForTextToBePresent("Operating centres");
+        waitForTitleToBePresent("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
         searchAndSelectAddress("postcodeInput1", postcode, 1);
         waitForElementToBeClickable("//*[@id='addressLine1']", SelectorType.XPATH);
