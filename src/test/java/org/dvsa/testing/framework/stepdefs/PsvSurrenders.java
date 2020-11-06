@@ -79,7 +79,8 @@ public class PsvSurrenders extends BasePage implements En {
             Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), status.toUpperCase());
         });
         Then("^the number of disc should match the vehicles registered on the licence$", () -> {
-            assertEquals(getText("//*[@id=\"main\"]/div/div/div[2]/div/p[2]/strong", SelectorType.XPATH), String.valueOf(world.createLicence.getNoOfVehiclesRequired()));
+            String heading = findElements("//h2[@class = 'govuk-heading-m']", SelectorType.XPATH).get(0).getText();
+            Assert.assertTrue(heading.contains(String.valueOf(world.createLicence.getNoOfVehiclesRequired())));
         });
         And("^discs have been added to my licence$", () -> {
             world.updateLicence.printLicenceDiscs();
