@@ -1,6 +1,8 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import apiCalls.actions.GetUserDetails;
+import apiCalls.actions.RegisterUser;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
@@ -20,6 +22,8 @@ public class Initialisation extends BasePage implements En {
 
     public Initialisation (World world) {
         this.world = world;
+        world.registerUser = new RegisterUser();
+        world.getUserDetails = new GetUserDetails();
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);
         world.createLicence = new CreateLicenceAPI();

@@ -4,6 +4,8 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.actions.RegisterUser;
+import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import enums.TrafficArea;
@@ -62,19 +64,34 @@ public class ManageApplications {
 
     @Given("I have applied for {string} {string} licences")
     public void iHaveAppliedForLicences(String licenceType, String operator) {
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-        world.createLicence.setNoOfVehiclesRequired(6);
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setNoOfVehiclesRequired(6);
+//        world.createLicence.setNoOfVehiclesRequired(6);
         for (int i = 0; i < trafficAreaList().length - 1; ) {
             for (String ta : trafficAreaList()) {
-                world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
-                world.createLicence.setOperatorType(operator);
-                world.createLicence.setLicenceType(licenceType);
-                world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
-                world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
+                world.createApplication.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
+                world.createApplication.setOperatorType(operator);
+                world.createApplication.setLicenceType(licenceType);
+                world.createApplication.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
+                world.createApplication.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
+
+                world.createApplication.startApplication();
+
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
                 world.APIJourneySteps.grantLicenceAndPayFees();
                 world.createLicence.setApplicationNumber(null);
+
+
+//                world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
+//                world.createLicence.setOperatorType(operator);
+//                world.createLicence.setLicenceType(licenceType);
+//                world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
+//                world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
+//                world.APIJourneySteps.createApplication();
+//                world.APIJourneySteps.submitApplication();
+//                world.APIJourneySteps.grantLicenceAndPayFees();
+//                world.createLicence.setApplicationNumber(null);
                 i++;
             }
         }

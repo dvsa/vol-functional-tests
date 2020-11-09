@@ -90,8 +90,8 @@ public class APIJourneySteps {
     }
 
     public void registerAndGetUserDetails(String userType){
-        world.createLicence.registerUser();
-        world.createLicence.getUserDetails(userType,null, adminApiHeader());
+        world.registerUser.registerUser();
+        world.getUserDetails.getUserDetails(userType,world.registerUser.getUserId(), adminApiHeader());
     }
 
     public void grantLicenceAndPayFees(){
