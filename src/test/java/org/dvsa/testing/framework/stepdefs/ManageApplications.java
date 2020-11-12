@@ -5,6 +5,8 @@ import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.actions.RegisterUser;
+import apiCalls.enums.LicenceType;
+import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -66,21 +68,19 @@ public class ManageApplications {
     public void iHaveAppliedForLicences(String licenceType, String operator) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfVehiclesRequired(6);
-//        world.createLicence.setNoOfVehiclesRequired(6);
         for (int i = 0; i < trafficAreaList().length - 1; ) {
             for (String ta : trafficAreaList()) {
-                world.createApplication.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
-                world.createApplication.setOperatorType(operator);
-                world.createApplication.setLicenceType(licenceType);
-                world.createApplication.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
-                world.createApplication.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
-
-                world.createApplication.startApplication();
+                world.createApplication.setPostcode((ta));
+                world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
+                world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
+                world.createApplication.setTrafficArea(ta);
+                world.createApplication.setEnforcementArea(ta);
+                world.createApplication.setOrganisationId(world.getUserDetails.getOrganisationId());
+                world.createApplication.setPid(world.getUserDetails.getPid());
 
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
                 world.APIJourneySteps.grantLicenceAndPayFees();
-                world.createLicence.setApplicationNumber(null);
 
 
 //                world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
@@ -133,6 +133,9 @@ public class ManageApplications {
     }
 
     private String[] trafficAreaList() {
-        return new String[]{"B", "C", "D", "F", "G", "H", "K", "M"};
+        return new String[]{apiCalls.enums.TrafficArea.NORTH_EAST.asString(), apiCalls.enums.TrafficArea.NORTH_WEST.asString(),
+                apiCalls.enums.TrafficArea.MIDLANDS.asString(),apiCalls.enums.TrafficArea.EAST.asString(),apiCalls.enums.TrafficArea.WALES.asString(),
+                apiCalls.enums.TrafficArea.WEST.asString(),apiCalls.enums.TrafficArea.LONDON.asString(),apiCalls.enums.TrafficArea.SCOTLAND.asString(),
+                apiCalls.enums.TrafficArea.NORTHERN_IRELAND.asString() };
     }
 }

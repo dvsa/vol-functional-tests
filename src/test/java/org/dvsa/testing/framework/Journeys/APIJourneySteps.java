@@ -14,7 +14,7 @@ public class APIJourneySteps {
     }
 
     public void createAdminUser() throws MissingRequiredArgument {
-        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
+        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
     }
 
     public void nIAddressBuilder() {
@@ -38,31 +38,30 @@ public class APIJourneySteps {
         world.updateLicence.getLicenceTrafficArea();
     }
 
-    public void createApplication(){
-            world.createLicence.createApplication();
-            world.createLicence.updateBusinessType();
-            world.createLicence.updateBusinessDetails();
-            world.createLicence.addAddressDetails();
-            world.createLicence.addPartners();
-            world.createLicence.submitTaxiPhv();
-            world.createLicence.addOperatingCentre();
-            world.createLicence.updateOperatingCentre();
-            world.createLicence.addFinancialEvidence();
-            world.createLicence.addTransportManager();
-            world.createLicence.submitTransport();
-            world.createLicence.addTmResponsibilities();
-            world.createLicence.submitTmResponsibilities();
-            world.createLicence.addVehicleDetails();
-            world.createLicence.submitVehicleDeclaration();
-            world.createLicence.addFinancialHistory();
-            world.createLicence.addApplicationSafetyAndComplianceDetails();
-            world.createLicence.addSafetyInspector();
-            world.createLicence.addConvictionsDetails();
-            world.createLicence.addLicenceHistory();
-            world.createLicence.applicationReviewAndDeclare();
+    public void createApplication() {
+        world.createApplication.startApplication();
+        world.createApplication.addBusinessDetails();
+        world.createApplication.addAddressDetails();
+        world.createApplication.addPartners();
+        world.createApplication.submitTaxiPhv();
+        world.createApplication.addOperatingCentre();
+        world.createApplication.updateOperatingCentre();
+        world.createApplication.addFinancialEvidence();
+        world.createApplication.addTransportManager();
+        world.createApplication.submitTransport();
+        world.createApplication.addTmResponsibilities();
+        world.createApplication.submitTmResponsibilities();
+        world.createApplication.addVehicleDetails();
+        world.createApplication.submitVehicleDeclaration();
+        world.createApplication.addFinancialHistory();
+        world.createApplication.addApplicationSafetyAndComplianceDetails();
+        world.createApplication.addSafetyInspector();
+        world.createApplication.addConvictionsDetails();
+        world.createApplication.addLicenceHistory();
+        world.createApplication.applicationReviewAndDeclare();
     }
 
-    public void createSpecialRestrictedLicence(){
+    public void createSpecialRestrictedLicence() {
         world.createLicence.createApplication();
         world.createLicence.updateBusinessType();
         world.createLicence.updateBusinessDetails();
@@ -73,9 +72,11 @@ public class APIJourneySteps {
         world.createLicence.getApplicationLicenceDetails();
     }
 
-    public void submitApplication(){
-        world.createLicence.submitApplication();
-        world.createLicence.getApplicationLicenceDetails();
+    public void submitApplication() {
+        world.createApplication.submitApplication();
+
+//        world.createLicence.submitApplication();
+//        world.createLicence.getApplicationLicenceDetails();
     }
 
     public void createPartialApplication() {
@@ -89,18 +90,18 @@ public class APIJourneySteps {
         world.createLicence.addFinancialEvidence();
     }
 
-    public void registerAndGetUserDetails(String userType){
+    public void registerAndGetUserDetails(String userType) {
         world.registerUser.registerUser();
-        world.getUserDetails.getUserDetails(userType,world.registerUser.getUserId(), adminApiHeader());
+        world.getUserDetails.getUserDetails(userType, world.registerUser.getUserId(), adminApiHeader());
     }
 
-    public void grantLicenceAndPayFees(){
+    public void grantLicenceAndPayFees() {
         world.grantLicence.grantLicence();
         world.grantLicence.payGrantFees();
     }
 
 
-    public static String adminApiHeader(){
+    public static String adminApiHeader() {
         return "e91f1a255e01e20021507465a845e7c24b3a1dc951a277b874c3bcd73dec97a1";
     }
 }
