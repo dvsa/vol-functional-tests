@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import apiCalls.Utils.generic.Headers;
 import enums.UserRoles;
 
 public class APIJourneySteps {
@@ -11,11 +12,14 @@ public class APIJourneySteps {
 
     public APIJourneySteps(World world) throws MissingRequiredArgument {
         this.world = world;
+        Headers.setAPI_HEADER(adminApiHeader());
     }
 
     public void createAdminUser() throws MissingRequiredArgument {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
     }
+
+
 
     public void nIAddressBuilder() {
         world.createLicence.setEnforcementArea("EA-N");
@@ -40,6 +44,7 @@ public class APIJourneySteps {
 
     public void createApplication() {
         world.createApplication.startApplication();
+        world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
         world.createApplication.addAddressDetails();
         world.createApplication.addPartners();
@@ -73,10 +78,9 @@ public class APIJourneySteps {
     }
 
     public void submitApplication() {
+        world.applicationDetails.setApplicationNumber(world.createApplication.getApplicationNumber());
         world.createApplication.submitApplication();
-
-//        world.createLicence.submitApplication();
-//        world.createLicence.getApplicationLicenceDetails();
+        world.applicationDetails.getApplicationLicenceDetails();
     }
 
     public void createPartialApplication() {
@@ -92,14 +96,13 @@ public class APIJourneySteps {
 
     public void registerAndGetUserDetails(String userType) {
         world.registerUser.registerUser();
-        world.getUserDetails.getUserDetails(userType, world.registerUser.getUserId(), adminApiHeader());
+        world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), adminApiHeader());
     }
 
     public void grantLicenceAndPayFees() {
         world.grantLicence.grantLicence();
         world.grantLicence.payGrantFees();
     }
-
 
     public static String adminApiHeader() {
         return "e91f1a255e01e20021507465a845e7c24b3a1dc951a277b874c3bcd73dec97a1";

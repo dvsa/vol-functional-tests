@@ -4,7 +4,6 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import apiCalls.actions.RegisterUser;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
@@ -70,17 +69,17 @@ public class ManageApplications {
         world.createApplication.setNoOfVehiclesRequired(6);
         for (int i = 0; i < trafficAreaList().length - 1; ) {
             for (String ta : trafficAreaList()) {
-                world.createApplication.setPostcode((ta));
+                world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
                 world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
                 world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
-                world.createApplication.setTrafficArea(ta);
-                world.createApplication.setEnforcementArea(ta);
-                world.createApplication.setOrganisationId(world.getUserDetails.getOrganisationId());
-                world.createApplication.setPid(world.getUserDetails.getPid());
+                world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
+                world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
+                world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
+                world.createApplication.setPid(world.userDetails.getPid());
+                world.createApplication.setLicenceId(world.registerUser.getLoginId());
 
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
-                world.APIJourneySteps.grantLicenceAndPayFees();
 
 
 //                world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
@@ -133,9 +132,9 @@ public class ManageApplications {
     }
 
     private String[] trafficAreaList() {
-        return new String[]{apiCalls.enums.TrafficArea.NORTH_EAST.asString(), apiCalls.enums.TrafficArea.NORTH_WEST.asString(),
-                apiCalls.enums.TrafficArea.MIDLANDS.asString(),apiCalls.enums.TrafficArea.EAST.asString(),apiCalls.enums.TrafficArea.WALES.asString(),
-                apiCalls.enums.TrafficArea.WEST.asString(),apiCalls.enums.TrafficArea.LONDON.asString(),apiCalls.enums.TrafficArea.SCOTLAND.asString(),
-                apiCalls.enums.TrafficArea.NORTHERN_IRELAND.asString() };
+        return new String[]{apiCalls.enums.TrafficArea.NORTH_EAST.name(), apiCalls.enums.TrafficArea.NORTH_WEST.name(),
+                apiCalls.enums.TrafficArea.MIDLANDS.name(), apiCalls.enums.TrafficArea.EAST.name(), apiCalls.enums.TrafficArea.WALES.name(),
+                apiCalls.enums.TrafficArea.WEST.name(), apiCalls.enums.TrafficArea.LONDON.name(), apiCalls.enums.TrafficArea.SCOTLAND.name(),
+                apiCalls.enums.TrafficArea.NORTHERN_IRELAND.name()};
     }
 }

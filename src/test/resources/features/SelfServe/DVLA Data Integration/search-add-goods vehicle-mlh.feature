@@ -9,8 +9,8 @@ Feature: Search and add a vehicle for a multi licence holder
   @VOL-933
   Scenario: Check page contents for Single Licence holder
     When I navigate to manage vehicle page
-    Then the following should be displayed:
-      | Transfer vehicles |
+#    Then the following should be displayed:
+#      | Transfer vehicles |
 
 #  Scenario: Check error messages
 #    When I navigate to manage vehicle page
