@@ -1,9 +1,6 @@
 package Injectors;
 
-import apiCalls.actions.CreateApplication;
-import apiCalls.actions.GetApplicationDetails;
-import apiCalls.actions.GetUserDetails;
-import apiCalls.actions.RegisterUser;
+import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.*;
@@ -22,6 +19,7 @@ public class World {
     public ContinuationJourneySteps continuationJourneySteps;
     public RegisterUser registerUser;
     public GetUserDetails userDetails;
+    public GrantLicence grantApplication;
     public GrantLicenceAPI grantLicence;
     public GenericUtils genericUtils;
     public UpdateLicenceAPI updateLicence;

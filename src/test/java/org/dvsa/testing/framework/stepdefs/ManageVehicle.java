@@ -99,11 +99,12 @@ public class ManageVehicle extends BasePage {
 
     @And("I add a vehicle belonging to another licence")
     public void iAddAVehicleBelongingToAnotherLicence() {
-        System.out.println("this is it");
+        //Todo
     }
 
     @Then("I should be prompted that vehicle belongs to another licence")
     public void iShouldBePromptedThatVehicleBelongsToAnotherLicence() {
+        //Todo
     }
 
     @When("I navigate to add existing vehicle page")

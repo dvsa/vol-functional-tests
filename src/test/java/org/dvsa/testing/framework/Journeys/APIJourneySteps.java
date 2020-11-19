@@ -2,8 +2,11 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import activesupport.dates.DateState;
 import apiCalls.Utils.generic.Headers;
 import enums.UserRoles;
+
+import static activesupport.dates.DateState.getDates;
 
 public class APIJourneySteps {
 
@@ -18,7 +21,6 @@ public class APIJourneySteps {
     public void createAdminUser() throws MissingRequiredArgument {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
     }
-
 
 
     public void nIAddressBuilder() {
@@ -43,6 +45,7 @@ public class APIJourneySteps {
     }
 
     public void createApplication() {
+        world.createApplication.setPid(world.userDetails.getPid());
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -100,8 +103,11 @@ public class APIJourneySteps {
     }
 
     public void grantLicenceAndPayFees() {
-        world.grantLicence.grantLicence();
-        world.grantLicence.payGrantFees();
+        world.grantApplication.setApplicationNumber(world.createApplication.getApplicationNumber());
+        world.grantApplication.setOrganisationId(world.createApplication.getOrganisationId());
+        world.grantApplication.setDateState(DateState.getDates("current",0));
+        world.grantApplication.grantLicence();
+        world.grantApplication.payGrantFees();
     }
 
     public static String adminApiHeader() {

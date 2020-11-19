@@ -72,7 +72,10 @@ public class ManageApplications {
                 world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
                 world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
                 world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
+
+                world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
                 world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
+
                 world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
                 world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
                 world.createApplication.setPid(world.userDetails.getPid());
@@ -80,17 +83,7 @@ public class ManageApplications {
 
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
-
-
-//                world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
-//                world.createLicence.setOperatorType(operator);
-//                world.createLicence.setLicenceType(licenceType);
-//                world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
-//                world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
-//                world.APIJourneySteps.createApplication();
-//                world.APIJourneySteps.submitApplication();
-//                world.APIJourneySteps.grantLicenceAndPayFees();
-//                world.createLicence.setApplicationNumber(null);
+                world.APIJourneySteps.grantLicenceAndPayFees();
                 i++;
             }
         }
