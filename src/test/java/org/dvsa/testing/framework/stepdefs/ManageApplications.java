@@ -37,6 +37,7 @@ public class ManageApplications {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
+            world.createApplication.getApplicationLicenceDetails();
         }
     }
 
@@ -49,6 +50,7 @@ public class ManageApplications {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
+            world.createApplication.getApplicationLicenceDetails();
         }
     }
 
@@ -84,6 +86,7 @@ public class ManageApplications {
 
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
+            world.createApplication.getApplicationLicenceDetails();
             world.APIJourneySteps.grantLicenceAndPayFees();
         }
     }
@@ -112,6 +115,7 @@ public class ManageApplications {
 
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
+            world.createApplication.getApplicationLicenceDetails();
             world.APIJourneySteps.grantLicenceAndPayFees();
         }
     }
