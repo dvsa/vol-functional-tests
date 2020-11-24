@@ -4,7 +4,25 @@
 @VOL-91
 Feature: Transfer a vehicle
 
-  Background:
+  Scenario: Transfer vehicles for dual licence holder
+    Given I have applied for "5" "standard_national" "goods" licences
+    And I navigate to manage vehicle page
+    When i transfer vehicles for an assumed licence
+
+  Scenario: Transfer vehicles for multiple licence holder
     Given I have applied for "standard_national" "goods" licences
-    When I navigate to manage vehicle page
-    And choose to transfer a vehicle
+    And I navigate to manage vehicle page
+    When i transfer vehicles to a specified licence
+
+  Scenario: Transfer all vehicles from licence
+    Given I have applied for "standard_national" "goods" licences
+    And I navigate to manage vehicle page
+    When i transfer all the vehicles from my licence
+    Then the confirmation banner should
+
+  Scenario: I transfer vehicles to a full licence
+    Given I have applied for "standard_national" "goods" licences
+    And I navigate to manage vehicle page
+    When i transfer vehicles for an assumed licence
+    Then an transfer vehicles error banner should appear
+    Then a "value" error banner should appear

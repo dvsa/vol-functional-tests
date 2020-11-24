@@ -7,12 +7,14 @@ import activesupport.number.Int;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
+import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import enums.TrafficArea;
 import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
 import org.dvsa.testing.framework.Utils.Generic.PostCode;
+import org.openqa.selenium.InvalidArgumentException;
 
 public class ManageApplications {
     World world;
@@ -65,6 +67,35 @@ public class ManageApplications {
 
     @Given("I have applied for {string} {string} licences")
     public void iHaveAppliedForLicences(String licenceType, String operator) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setNoOfVehiclesRequired(6);
+        for (int i = 0; i < trafficAreaList().length - 1; ) {
+            for (String ta : trafficAreaList()) {
+                world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
+                world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
+                world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
+
+                world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
+                world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
+
+                world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
+                world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
+                world.createApplication.setPid(world.userDetails.getPid());
+                world.createApplication.setLicenceId(world.registerUser.getLoginId());
+
+                world.APIJourneySteps.createApplication();
+                world.APIJourneySteps.submitApplication();
+                world.APIJourneySteps.grantLicenceAndPayFees();
+                i++;
+            }
+        }
+    }
+
+    @Given("I have applied for {int} {string} {string} licences")
+    public void iHaveAppliedForLicences(int noOfLicences, String licenceType, String operator) {
+        if (noOfLicences > 9) {
+            throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
+        }
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfVehiclesRequired(6);
         for (int i = 0; i < trafficAreaList().length - 1; ) {

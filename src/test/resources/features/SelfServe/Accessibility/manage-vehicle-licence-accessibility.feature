@@ -31,3 +31,6 @@ Feature: Check that manage vehicle journey is accessible
     And I want to confirm a vehicle removal
     And i scan for accessibility violations
     Then no issues should be present on the page
+
+  Scenario Transfer vehicle journey
+    And I have applied for "standard_national" "goods" licences

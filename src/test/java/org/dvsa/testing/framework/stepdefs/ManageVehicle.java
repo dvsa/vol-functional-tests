@@ -125,4 +125,9 @@ public class ManageVehicle extends BasePage {
     public void iWantToConfirmAVehicleRemoval() throws MalformedURLException, IllegalBrowserException {
         world.UIJourneySteps.vehicleRemovalConfirmationPage();
     }
+
+    @And("choose to transfer a vehicle")
+    public void chooseToTransferAVehicle() throws InterruptedException {
+        wait();
+    }
 }
