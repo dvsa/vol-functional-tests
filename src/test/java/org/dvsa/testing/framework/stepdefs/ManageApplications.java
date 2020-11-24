@@ -68,7 +68,7 @@ public class ManageApplications {
     @Given("I have applied for {string} {string} licences")
     public void iHaveAppliedForLicences(String licenceType, String operator) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setNoOfVehiclesRequired(6);
+        world.createApplication.setOperatingCentreVehicleCap(6);
         for (int i = 0; i < trafficAreaList().length - 1; ) {
             for (String ta : trafficAreaList()) {
                 world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
@@ -91,14 +91,14 @@ public class ManageApplications {
         }
     }
 
-    @Given("I have applied for {int} {string} {string} licences")
-    public void iHaveAppliedForLicences(int noOfLicences, String licenceType, String operator) {
-        if (noOfLicences > 9) {
+    @Given("I have applied for {string} {string} {string} licences")
+    public void iHaveAppliedForLicences(String noOfLicences, String licenceType, String operator) {
+        if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setNoOfVehiclesRequired(6);
-        for (int i = 0; i < trafficAreaList().length - 1; ) {
+        world.createApplication.setOperatingCentreVehicleCap(6);
+        for (int i = 0; i < Integer.parseInt(noOfLicences) - 1; ) {
             for (String ta : trafficAreaList()) {
                 world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
                 world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
