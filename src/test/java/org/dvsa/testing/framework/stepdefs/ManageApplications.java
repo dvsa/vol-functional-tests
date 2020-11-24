@@ -69,25 +69,22 @@ public class ManageApplications {
     public void iHaveAppliedForLicences(String licenceType, String operator) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setOperatingCentreVehicleCap(6);
-        for (int i = 0; i < trafficAreaList().length - 1; ) {
-            for (String ta : trafficAreaList()) {
-                world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
-                world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
-                world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
+        for (String ta : trafficAreaList()) {
+            world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
+            world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
+            world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
 
-                world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
-                world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
+            world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
+            world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
 
-                world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
-                world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
-                world.createApplication.setPid(world.userDetails.getPid());
-                world.createApplication.setLicenceId(world.registerUser.getLoginId());
+            world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
+            world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
+            world.createApplication.setPid(world.userDetails.getPid());
+            world.createApplication.setLicenceId(world.registerUser.getLoginId());
 
-                world.APIJourneySteps.createApplication();
-                world.APIJourneySteps.submitApplication();
-                world.APIJourneySteps.grantLicenceAndPayFees();
-                i++;
-            }
+            world.APIJourneySteps.createApplication();
+            world.APIJourneySteps.submitApplication();
+            world.APIJourneySteps.grantLicenceAndPayFees();
         }
     }
 
@@ -98,25 +95,24 @@ public class ManageApplications {
         }
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setOperatingCentreVehicleCap(6);
-        for (int i = 0; i < Integer.parseInt(noOfLicences) - 1; ) {
-            for (String ta : trafficAreaList()) {
-                world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
-                world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
-                world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
+        world.createApplication.setNoOfVehiclesRequested(2);
+        for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
+            String ta = trafficAreaList()[i];
+            world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
+            world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
+            world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
 
-                world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
-                world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
+            world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
+            world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
 
-                world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
-                world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
-                world.createApplication.setPid(world.userDetails.getPid());
-                world.createApplication.setLicenceId(world.registerUser.getLoginId());
+            world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
+            world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
+            world.createApplication.setPid(world.userDetails.getPid());
+            world.createApplication.setLicenceId(world.registerUser.getLoginId());
 
-                world.APIJourneySteps.createApplication();
-                world.APIJourneySteps.submitApplication();
-                world.APIJourneySteps.grantLicenceAndPayFees();
-                i++;
-            }
+            world.APIJourneySteps.createApplication();
+            world.APIJourneySteps.submitApplication();
+            world.APIJourneySteps.grantLicenceAndPayFees();
         }
     }
 
@@ -125,7 +121,9 @@ public class ManageApplications {
         String password;
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.createLicence.setNoOfVehiclesRequired(3);
-        for (int i = 0; i < trafficAreaList().length - 1; ) {
+        
+//        Don't think both for loops are required but not sure what this test is for.
+        for (int i = 0; i < trafficAreaList().length; ) {
             for (String ta : trafficAreaList()) {
                 world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
                 world.createLicence.setOperatorType(operator);
