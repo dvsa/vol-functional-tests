@@ -37,7 +37,6 @@ public class ManageApplications {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
-            world.createApplication.getApplicationLicenceDetails();
         }
     }
 
@@ -50,7 +49,6 @@ public class ManageApplications {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
-            world.createApplication.getApplicationLicenceDetails();
         }
     }
 
@@ -72,22 +70,7 @@ public class ManageApplications {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setOperatingCentreVehicleCap(6);
         for (String ta : trafficAreaList()) {
-            world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
-            world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
-            world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
-
-            world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
-            world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
-
-            world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
-            world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
-            world.createApplication.setPid(world.userDetails.getPid());
-            world.createApplication.setLicenceId(world.registerUser.getLoginId());
-
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
-            world.createApplication.getApplicationLicenceDetails();
-            world.APIJourneySteps.grantLicenceAndPayFees();
+            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
         }
     }
 
@@ -101,22 +84,22 @@ public class ManageApplications {
         world.createApplication.setNoOfVehiclesRequested(2);
         for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
             String ta = trafficAreaList()[i];
-            world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
-            world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
-            world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
+            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
+        }
+    }
 
-            world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
-            world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
 
-            world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
-            world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
-            world.createApplication.setPid(world.userDetails.getPid());
-            world.createApplication.setLicenceId(world.registerUser.getLoginId());
-
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
-            world.createApplication.getApplicationLicenceDetails();
-            world.APIJourneySteps.grantLicenceAndPayFees();
+    @Given("I have applied for {string} {string} {string} licences with {string} vehicles and a cap of {string}")
+    public void iHaveAppliedForLicencesWithVehicles(String noOfLicences, String licenceType, String operator, String vehicles, String OCVehicleCap) {
+        if (Integer.parseInt(noOfLicences) > 9) {
+            throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
+        }
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(OCVehicleCap));
+        world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
+        for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
+            String ta = trafficAreaList()[i];
+            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
         }
     }
 
