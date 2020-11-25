@@ -88,7 +88,6 @@ public class ManageApplications {
         }
     }
 
-
     @Given("I have applied for {string} {string} {string} licences with {string} vehicles and a cap of {string}")
     public void iHaveAppliedForLicencesWithVehicles(String noOfLicences, String licenceType, String operator, String vehicles, String OCVehicleCap) {
         if (Integer.parseInt(noOfLicences) > 9) {
