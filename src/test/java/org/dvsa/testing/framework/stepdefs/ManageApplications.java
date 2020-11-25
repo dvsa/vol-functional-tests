@@ -109,29 +109,26 @@ public class ManageApplications {
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.createLicence.setNoOfVehiclesRequired(3);
         
-//        Don't think both for loops are required but not sure what this test is for.
-        for (int i = 0; i < trafficAreaList().length; ) {
-            for (String ta : trafficAreaList()) {
-                world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
-                world.createLicence.setOperatorType(operator);
-                world.createLicence.setLicenceType(licenceType);
-                world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
-                world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
-                world.APIJourneySteps.createApplication();
-                String externalFirstName = faker.generateFirstName();
-                String externalLastName = faker.generateLastName();
-                String randomInt = String.valueOf(Int.random(1000, 9999));
-                String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
-                world.createLicence.setForeName(externalFirstName);
-                world.createLicence.setFamilyName(externalLastName);
-                world.createLicence.setTmUserName(externalTmUserName);
-                world.createLicence.setTransManEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
-                world.createLicence.addTransportManager();
-                password = S3.getTempPassword(world.createLicence.getTransManEmailAddress());
-                world.genericUtils.writeToFile(world.createLicence.getTmUserName(), password, fileName.concat("TM.csv"));
-                world.createLicence.setApplicationNumber(null);
-                i++;
-            }
+        // Don't think both for loops are required but not sure what this test is for.
+        for (String ta : trafficAreaList()) {
+            world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
+            world.createLicence.setOperatorType(operator);
+            world.createLicence.setLicenceType(licenceType);
+            world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
+            world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
+            world.APIJourneySteps.createApplication();
+            String externalFirstName = faker.generateFirstName();
+            String externalLastName = faker.generateLastName();
+            String randomInt = String.valueOf(Int.random(1000, 9999));
+            String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
+            world.createLicence.setForeName(externalFirstName);
+            world.createLicence.setFamilyName(externalLastName);
+            world.createLicence.setTmUserName(externalTmUserName);
+            world.createLicence.setTransManEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
+            world.createLicence.addTransportManager();
+            password = S3.getTempPassword(world.createLicence.getTransManEmailAddress());
+            world.genericUtils.writeToFile(world.createLicence.getTmUserName(), password, fileName.concat("TM.csv"));
+            world.createLicence.setApplicationNumber(null);
         }
     }
 
