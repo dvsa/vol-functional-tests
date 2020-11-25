@@ -7,12 +7,14 @@ import activesupport.number.Int;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
+import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import enums.TrafficArea;
 import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
 import org.dvsa.testing.framework.Utils.Generic.PostCode;
+import org.openqa.selenium.InvalidArgumentException;
 
 public class ManageApplications {
     World world;
@@ -66,26 +68,37 @@ public class ManageApplications {
     @Given("I have applied for {string} {string} licences")
     public void iHaveAppliedForLicences(String licenceType, String operator) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setNoOfVehiclesRequired(6);
-        for (int i = 0; i < trafficAreaList().length - 1; ) {
-            for (String ta : trafficAreaList()) {
-                world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(ta)));
-                world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
-                world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
+        world.createApplication.setOperatingCentreVehicleCap(6);
+        for (String ta : trafficAreaList()) {
+            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
+        }
+    }
 
-                world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta));
-                world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(ta).asString());
+    @Given("I have applied for {string} {string} {string} licences")
+    public void iHaveAppliedForLicences(String noOfLicences, String licenceType, String operator) {
+        if (Integer.parseInt(noOfLicences) > 9) {
+            throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
+        }
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setOperatingCentreVehicleCap(6);
+        world.createApplication.setNoOfVehiclesRequested(2);
+        for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
+            String ta = trafficAreaList()[i];
+            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
+        }
+    }
 
-                world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(ta).asString());
-                world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
-                world.createApplication.setPid(world.userDetails.getPid());
-                world.createApplication.setLicenceId(world.registerUser.getLoginId());
-
-                world.APIJourneySteps.createApplication();
-                world.APIJourneySteps.submitApplication();
-                world.APIJourneySteps.grantLicenceAndPayFees();
-                i++;
-            }
+    @Given("I have applied for {string} {string} {string} licences with {string} vehicles and a cap of {string}")
+    public void iHaveAppliedForLicencesWithVehicles(String noOfLicences, String licenceType, String operator, String vehicles, String OCVehicleCap) {
+        if (Integer.parseInt(noOfLicences) > 9) {
+            throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
+        }
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(OCVehicleCap));
+        world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
+        for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
+            String ta = trafficAreaList()[i];
+            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
         }
     }
 
@@ -94,28 +107,27 @@ public class ManageApplications {
         String password;
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.createLicence.setNoOfVehiclesRequired(3);
-        for (int i = 0; i < trafficAreaList().length - 1; ) {
-            for (String ta : trafficAreaList()) {
-                world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
-                world.createLicence.setOperatorType(operator);
-                world.createLicence.setLicenceType(licenceType);
-                world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
-                world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
-                world.APIJourneySteps.createApplication();
-                String externalFirstName = faker.generateFirstName();
-                String externalLastName = faker.generateLastName();
-                String randomInt = String.valueOf(Int.random(1000, 9999));
-                String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
-                world.createLicence.setForeName(externalFirstName);
-                world.createLicence.setFamilyName(externalLastName);
-                world.createLicence.setTmUserName(externalTmUserName);
-                world.createLicence.setTransManEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
-                world.createLicence.addTransportManager();
-                password = S3.getTempPassword(world.createLicence.getTransManEmailAddress());
-                world.genericUtils.writeToFile(world.createLicence.getTmUserName(), password, fileName.concat("TM.csv"));
-                world.createLicence.setApplicationNumber(null);
-                i++;
-            }
+        
+        // Don't think both for loops are required but not sure what this test is for.
+        for (String ta : trafficAreaList()) {
+            world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
+            world.createLicence.setOperatorType(operator);
+            world.createLicence.setLicenceType(licenceType);
+            world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
+            world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
+            world.APIJourneySteps.createApplication();
+            String externalFirstName = faker.generateFirstName();
+            String externalLastName = faker.generateLastName();
+            String randomInt = String.valueOf(Int.random(1000, 9999));
+            String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
+            world.createLicence.setForeName(externalFirstName);
+            world.createLicence.setFamilyName(externalLastName);
+            world.createLicence.setTmUserName(externalTmUserName);
+            world.createLicence.setTransManEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
+            world.createLicence.addTransportManager();
+            password = S3.getTempPassword(world.createLicence.getTransManEmailAddress());
+            world.genericUtils.writeToFile(world.createLicence.getTmUserName(), password, fileName.concat("TM.csv"));
+            world.createLicence.setApplicationNumber(null);
         }
     }
 

@@ -24,6 +24,7 @@ public class World {
     public GenericUtils genericUtils;
     public UpdateLicenceAPI updateLicence;
     public DirectorJourneySteps directorJourneySteps;
+    public DVLAJourneySteps dvlaJourneySteps;
     public InternalSearchJourneySteps internalSearch;
     public InternalNavigationalJourneySteps internalNavigation;
     public SelfServeNavigationalJourneySteps selfServeNavigation;

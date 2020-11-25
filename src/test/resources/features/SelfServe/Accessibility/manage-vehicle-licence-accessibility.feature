@@ -1,9 +1,7 @@
 Feature: Check that manage vehicle journey is accessible
 
   Background:
-    Given I have applied for a "goods" "standard_national" licence
-    When I grant licence
-    Then the licence should be granted
+    Given I have applied for "2" "standard_national" "goods" licences
 
   Scenario: Check that Manage Vehicle page is accessible
     When I navigate to manage vehicle page
@@ -29,5 +27,11 @@ Feature: Check that manage vehicle journey is accessible
   Scenario: Confirm vehicle removal
     When I navigate to manage vehicle page
     And I want to confirm a vehicle removal
+    And i scan for accessibility violations
+    Then no issues should be present on the page
+
+  Scenario: Transfer vehicle journey
+    When I navigate to manage vehicle page
+    And i choose to transfer a vehicle
     And i scan for accessibility violations
     Then no issues should be present on the page

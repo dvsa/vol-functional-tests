@@ -14,9 +14,13 @@ import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.net.MalformedURLException;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ManageVehicle extends BasePage {
     World world;
@@ -36,10 +40,7 @@ public class ManageVehicle extends BasePage {
     @When("I navigate to manage vehicle page")
     public void iNavigateToManageVehiclePage() throws MalformedURLException, IllegalBrowserException {
         world.selfServeNavigation.navigateToLogin( world.registerUser.getLoginId(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Vehicles");
-        String URL = Browser.navigate().getCurrentUrl();
-        String newURL = URL.substring(0, URL.length()-2);
-        Browser.navigate().get(newURL);
+        world.dvlaJourneySteps.navigateToManageVehiclesPage();
     }
 
     @Then("the add vehicle page should display licence number")
@@ -107,15 +108,6 @@ public class ManageVehicle extends BasePage {
         //Todo
     }
 
-    @When("I navigate to add existing vehicle page")
-    public void iNavigateToAddExistingVehiclePage() throws MalformedURLException, IllegalBrowserException {
-        Browser.navigate().get("https://ssap1.da.olcs.dev-dvsacloud.uk/licence/545765/vehicle/add/");
-        LoginPage.signIn("James289.Witherspoon6212144", "BunDog=336MixZoo");
-        waitAndEnterText("vehicle-search[search-value]",SelectorType.ID,"F95 JGE");
-        waitAndClick("vehicle-search[submit]",SelectorType.ID);
-        waitAndClick("confirm",SelectorType.ID);
-    }
-
     @And("I choose to remove a vehicle")
     public void iChooseToRemoveAVehicle() throws MalformedURLException, IllegalBrowserException {
         world.UIJourneySteps.removeVehicle();
@@ -124,5 +116,79 @@ public class ManageVehicle extends BasePage {
     @And("I want to confirm a vehicle removal")
     public void iWantToConfirmAVehicleRemoval() throws MalformedURLException, IllegalBrowserException {
         world.UIJourneySteps.vehicleRemovalConfirmationPage();
+    }
+
+    @And("i choose to transfer a vehicle")
+    public void iChooseToTransferAVehicle() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToTransferVehiclePage();
+    }
+
+    @When("i transfer a vehicle to an assumed licence")
+    public void iTransferAVehiclesToAnAssumedLicence() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToTransferVehiclePage();
+        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:", 10));
+        String VRM = getText("//td//a", SelectorType.XPATH);
+        click("//input[@type='checkbox']", SelectorType.XPATH);
+        click("//*[@type='submit']", SelectorType.XPATH);
+        waitForTitleToBePresent("Are you sure you want to transfer this vehicle to licence");
+        assertTrue(isTextPresent(VRM, 10));
+        click("//input[@id='option-yes']", SelectorType.XPATH);
+        click("//*[@type='submit']", SelectorType.XPATH);
+        waitForTitleToBePresent("Do you want to");
+    }
+
+    @When("i transfer a vehicle to a specified licence")
+    public void iTransferAVehicleAToASpecifiedLicence() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToTransferVehiclePage();
+        assertTrue(isTextPresent("Select the licence that you want to transfer your vehicles to", 10));
+        String VRM = getText("//td//a", SelectorType.XPATH);
+        click("//input[@type='checkbox']", SelectorType.XPATH);
+        Select option = new Select(findElement("//select[@id='select-a-licence']", SelectorType.XPATH));
+        assertEquals("Select a licence", option.getFirstSelectedOption().getText());
+        selectValueFromDropDownByIndex("select-a-licence", SelectorType.ID, 1);
+        click("//*[@type='submit']", SelectorType.XPATH);
+        waitForTitleToBePresent("Are you sure you want to transfer this vehicle to licence");
+        assertTrue(isTextPresent(VRM, 10));
+        click("//input[@id='option-yes']", SelectorType.XPATH);
+        click("//*[@type='submit']", SelectorType.XPATH);
+        waitForTitleToBePresent("Do you want to");
+    }
+
+    @When("i transfer all the vehicles from my licence")
+    public void iTransferAllTheVehiclesFromMyLicence() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToTransferVehiclePage();
+        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:", 10));
+        List<WebElement> VRMElements = findElements("//td//a", SelectorType.XPATH);
+        List<WebElement> checkboxElements = findElements("//input[@type='checkbox']", SelectorType.XPATH);
+        String[] VRMs = new String[VRMElements.size()];
+        for (int i = 0; i < VRMElements.size(); i++) {
+            VRMs[i] = VRMElements.get(i).getText();
+            checkboxElements.get(i).click();
+        }
+        click("//*[@type='submit']", SelectorType.XPATH);
+        waitForTitleToBePresent("Are you sure you want to transfer these vehicles to licence");
+        for (String VRM: VRMs) {
+            assertTrue(isTextPresent(VRM, 10));
+        }
+        click("//input[@id='option-yes']", SelectorType.XPATH);
+        click("//*[@type='submit']", SelectorType.XPATH);
+    }
+
+    @Then("the {string} confirmation banner should appear")
+    public void theConfirmationBannerShouldAppear(String bannerValue) throws MalformedURLException, IllegalBrowserException {
+        String banner = getText("//h1[@class='govuk-panel__title']", SelectorType.XPATH);
+        assertTrue(banner.contains(bannerValue));
+    }
+
+    @Then("the {string} confirmation body should appear")
+    public void theConfirmationBodyShouldAppear(String bannerValue) throws MalformedURLException, IllegalBrowserException {
+        String banner = getText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
+        assertTrue(banner.contains(bannerValue));
+    }
+
+    @Then("a {string} error banner should appear")
+    public void aErrorBannerShouldAppear(String bannerValue) throws MalformedURLException, IllegalBrowserException {
+        String banner = getText("//p[@role='alert']", SelectorType.XPATH);
+        assertTrue(banner.contains(bannerValue));
     }
 }

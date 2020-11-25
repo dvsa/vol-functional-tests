@@ -35,3 +35,11 @@ Feature: TM signs through verify
     Then i choose to sign with verify with "pavlov"
     And the operator countersigns by print and sign
     And the print and sign page is displayed
+
+  Scenario: Operator rejects TM details and TM details are marked incomplete
+    When i add new person as a transport manager
+    And i sign the declaration
+    And i choose to sign with verify with "pavlov"
+    When the operator rejects the transport managers details
+    And the TM has got the reset link email
+    And the TM should see the incomplete label and provide details link
