@@ -44,7 +44,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
             case "application":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
-                clickByLinkText(world.createApplication.getApplicationNumber());
+                clickByLinkText(world.createApplication.getApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply for a new licence");
                 } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
