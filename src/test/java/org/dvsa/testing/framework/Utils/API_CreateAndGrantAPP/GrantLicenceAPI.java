@@ -99,7 +99,7 @@ public class GrantLicenceAPI extends BaseAPI{
 
     public void grant(String applicationNumber) {
         String grantApplicationResource = URL.build(env, String.format("application/%s/grant/", applicationNumber)).toString();
-        GrantApplicationBuilder grantApplication = new GrantApplicationBuilder().withId(applicationNumber).withDuePeriod("9").withCaseworkerNotes("This notes are from the API");
+        GrantApplicationBuilder grantApplication = new GrantApplicationBuilder().withId(applicationNumber).withDuePeriod("9").withCaseworkerNotes("This notes are from the API").withAuthority("grant_authority_dl");
         apiResponse = RestUtils.put(grantApplication, grantApplicationResource, getHeaders());
 
         if (apiResponse.extract().statusCode() != HttpStatus.SC_OK) {
