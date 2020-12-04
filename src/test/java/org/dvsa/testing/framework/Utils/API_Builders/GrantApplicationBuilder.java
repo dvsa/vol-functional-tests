@@ -22,6 +22,8 @@ public class GrantApplicationBuilder {
     private String caseworkerNotes;
     @JsonProperty("reason")
     private String reason;
+    @JsonProperty("grantAuthority")
+    private String grantAuthority;
 
     @JsonProperty("id")
     public String getId() {
@@ -83,6 +85,21 @@ public class GrantApplicationBuilder {
         return this;
     }
 
+    @JsonProperty("grantAuthority")
+    public String getGrantAuthority() {
+        return grantAuthority;
+    }
+
+    @JsonProperty("grantAuthority")
+    public void setGrantAuthority(String grantAuthority) {
+        this.grantAuthority = grantAuthority;
+    }
+
+    public GrantApplicationBuilder withAuthority(String grantAuthority){
+        this.grantAuthority =grantAuthority;
+        return this;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(ToStringStyle.JSON_STYLE)
@@ -90,6 +107,7 @@ public class GrantApplicationBuilder {
                 .append("duePeriod", getDuePeriod())
                 .append("caseworkerNotes", getCaseworkerNotes())
                 .append("reason", getReason())
+                .append("grantAuthority", getGrantAuthority())
                 .toString();
     }
 }
