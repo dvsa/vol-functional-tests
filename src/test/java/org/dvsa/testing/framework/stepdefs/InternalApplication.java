@@ -116,6 +116,8 @@ public class InternalApplication extends BasePage implements En {
                 throw new TimeoutException("Kickout time for expecting no fee is present when granting a licence exceeded.");
             }
             waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
+            waitAndClick("//input[@id='grant-authority']", SelectorType.XPATH);
+            waitAndClick("//button[@id='form-actions[continue-to-grant]']", SelectorType.XPATH);
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
             click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
         });
