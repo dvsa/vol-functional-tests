@@ -117,7 +117,7 @@ public class APIJourneySteps {
         world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
         world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
 
-        world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(trafficArea));
+        world.createApplication.setPostCodeByTrafficArea(trafficArea);
         world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(trafficArea).asString());
 
         world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(trafficArea).asString());
