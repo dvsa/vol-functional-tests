@@ -24,7 +24,6 @@ public class APIJourneySteps {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
     }
 
-
     public void nIAddressBuilder() {
         world.createLicence.setEnforcementArea("EA-N");
         world.createLicence.setTrafficArea("N");
@@ -107,7 +106,7 @@ public class APIJourneySteps {
     public void grantLicenceAndPayFees() {
         world.grantApplication.setDateState(DateState.getDates("current",0));
         world.grantApplication.grantLicence(world.createApplication.getApplicationId(), world.createApplication.getOrganisationId());
-        world.grantApplication.payGrantFees(world.createApplication.getApplicationId());
+        world.grantApplication.payGrantFees(world.createApplication.getApplicationId(), world.createApplication.getOrganisationId());
     }
 
     public void createLicenceWithTrafficArea(String licenceType, String operator, String trafficArea) {
