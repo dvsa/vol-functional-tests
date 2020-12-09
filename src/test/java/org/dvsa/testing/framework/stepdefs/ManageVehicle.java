@@ -113,12 +113,17 @@ public class ManageVehicle extends BasePage {
         world.UIJourneySteps.removeVehicle();
     }
 
+    @And("I choose to reprint a vehicle disc")
+    public void iChooseToReprintAVehicleDisc() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
+    }
+
     @And("I want to confirm a vehicle removal")
     public void iWantToConfirmAVehicleRemoval() throws MalformedURLException, IllegalBrowserException {
         world.UIJourneySteps.vehicleRemovalConfirmationPage();
     }
 
-    @And("i choose to transfer a vehicle")
+    @And("I choose to transfer a vehicle")
     public void iChooseToTransferAVehicle() throws MalformedURLException, IllegalBrowserException {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
     }
@@ -190,5 +195,19 @@ public class ManageVehicle extends BasePage {
     public void aErrorBannerShouldAppear(String bannerValue) throws MalformedURLException, IllegalBrowserException {
         String banner = getText("//p[@role='alert']", SelectorType.XPATH);
         assertTrue(banner.contains(bannerValue));
+    }
+
+    @And("I want to confirm a vehicle disc reprint")
+    public void iWantToConfirmAVehicleDiscReprint() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
+        click("//input[@type='checkbox']", SelectorType.XPATH);
+        click("//*[@type='submit']", SelectorType.XPATH);
+    }
+
+    @And("I want to confirm a vehicle transfer")
+    public void iWantToConfirmAVehicleTransfer() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToTransferVehiclePage();
+        click("//input[@type='checkbox']", SelectorType.XPATH);
+        click("//*[@type='submit']", SelectorType.XPATH);
     }
 }
