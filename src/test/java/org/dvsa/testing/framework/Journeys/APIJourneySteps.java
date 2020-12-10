@@ -6,6 +6,7 @@ import activesupport.dates.DateState;
 import apiCalls.Utils.generic.Headers;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.OperatorType;
+import apiCalls.enums.UserType;
 import enums.UserRoles;
 
 import static activesupport.dates.DateState.getDates;
@@ -129,6 +130,25 @@ public class APIJourneySteps {
         world.APIJourneySteps.submitApplication();
         world.APIJourneySteps.grantLicenceAndPayFees();
     }
+
+
+    public void applyForLicenceWithVehicles(String licenceType, String operator, String vehicles) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
+        world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
+        world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
+        world.createLicence.setOperatorType(operator);
+        world.createLicence.setLicenceType(licenceType);
+        if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
+            world.APIJourneySteps.createSpecialRestrictedLicence();
+        } else if (world.createLicence.getApplicationNumber() == null) {
+            world.APIJourneySteps.createApplication();
+            world.APIJourneySteps.submitApplication();
+        }
+    }
+
+    //TODO: Need apply for licence, create licence, both with vehicles, vehicles and operating cap, traffic area.
+    // Need this done with refactored methods and overloading. Also need to cover all preexisting scenarios and replace with new API.
 
     public static String adminApiHeader() {
         return "e91f1a255e01e20021507465a845e7c24b3a1dc951a277b874c3bcd73dec97a1";
