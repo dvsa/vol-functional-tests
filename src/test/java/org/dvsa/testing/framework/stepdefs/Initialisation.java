@@ -22,10 +22,10 @@ public class Initialisation extends BasePage implements En {
     public Initialisation (World world) {
         this.world = world;
         world.registerUser = new RegisterUser();
-        world.createApplication = new CreateApplication();
-        world.applicationDetails = new GetApplicationDetails();
-        world.grantApplication = new GrantLicence();
         world.userDetails = new GetUserDetails();
+        world.createApplication = new CreateApplication(world.registerUser, world.userDetails);
+        world.applicationDetails = new GetApplicationDetails();
+        world.grantApplication = new GrantLicence(world.createApplication);
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);
         world.createLicence = new CreateLicenceAPI();
