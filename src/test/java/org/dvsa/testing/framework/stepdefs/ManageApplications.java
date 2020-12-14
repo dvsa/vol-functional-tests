@@ -92,7 +92,7 @@ public class ManageApplications {
         world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(OCVehicleCap));
         world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
         for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
-            apiCalls.enums.TrafficArea ta = trafficAreaList()[i];
+            TrafficArea ta = trafficAreaList()[i];
             world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
         }
     }
