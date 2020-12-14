@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TMDetails extends BasePage implements En {
 
-    String fileName = "src/test/resources/";
-
     public TMDetails(World world) {
         Given("^I have a new application$", () -> {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
@@ -78,9 +76,6 @@ public class TMDetails extends BasePage implements En {
             for (String button : sections) {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
             }
-        });
-        Then("^accounts should be created$", () -> {
-            world.genericUtils.writeToFile(world.createLicence.getTransportManagerApplicationId(), world.globalMethods.getLoginPassword(), fileName.concat("TM.csv"));
         });
     }
 }
