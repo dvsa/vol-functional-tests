@@ -39,7 +39,7 @@ public class ManageVehicle extends BasePage {
 
     @When("I navigate to manage vehicle page")
     public void iNavigateToManageVehiclePage() throws MalformedURLException, IllegalBrowserException {
-        world.selfServeNavigation.navigateToLogin( world.registerUser.getLoginId(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToLogin( world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourneySteps.navigateToManageVehiclesPage();
     }
 

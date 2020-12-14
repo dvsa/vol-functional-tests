@@ -5,10 +5,7 @@ import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
-import enums.TrafficArea;
 import enums.UserRoles;
-import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
-import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -34,11 +31,11 @@ public class CreateApplications extends BasePage implements En {
             for (int i = 0; i < trafficAreas.size(); ) {
                 for (String ta : trafficAreas) {
                     world.createLicence.setNiFlag(Region);
-                    world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta.toUpperCase())));
+//                    world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta.toUpperCase())));
                     world.createLicence.setOperatorType(operatorType);
                     world.createLicence.setLicenceType(licenceType);
-                    world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta.toUpperCase())));
-                    world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta.toUpperCase())));
+//                    world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta.toUpperCase())));
+//                    world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta.toUpperCase())));
                     world.APIJourneySteps.createApplication();
                     i++;
                 }
