@@ -1,22 +1,28 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
+import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import cucumber.api.java8.En;
 import enums.UserRoles;
-import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;
+import scanner.ReportGenerator;
 
-import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Scanner;
 
 
 public class ManageUsersPage extends BasePage implements En {
     AXEScanner scanner;
+    ReportGenerator reportGenerator = new ReportGenerator();
 
     public ManageUsersPage(World world) {
         Given("^i have an admin account to add users$", () -> {
@@ -32,12 +38,7 @@ public class ManageUsersPage extends BasePage implements En {
             this.scanner.scan();
         });
         Then("^no issues should be present on the page$", () -> {
-            if(scanner.axeFindings().length() != 0) {
-                FileUtils.writeStringToFile(new File("Findings.txt"), scanner.axeFindings());
-                Assert.fail("Violation findings found");
-            }else{
-                Assert.assertEquals(0, scanner.axeFindings().length());
-            }
+            world.UIJourneySteps.scanPageForAccessibilityViolations(Browser.navigate().getCurrentUrl(),scanner);
         });
         Then("^name of button should be 'Add a user'$", () -> {
             Assert.assertEquals("Add a user", getAttribute("action", SelectorType.NAME, "data-label"));

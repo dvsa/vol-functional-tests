@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
@@ -67,19 +66,6 @@ public class InternalApplication extends BasePage implements En {
             click("form-actions[submit]", SelectorType.ID);
             waitForTextToBePresent("Operating centres and authorisation");
             assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
-        });
-
-        Given("^I have partially applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
-            world.createLicence.setOperatorType(operator);
-            world.createLicence.setLicenceType(licenceType);
-            if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
-                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-                world.APIJourneySteps.createSpecialRestrictedLicence();
-            } else if (world.createLicence.getApplicationNumber() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-                world.APIJourneySteps.createApplication();
-
-            }
         });
 
         When("^the caseworker completes and submits the application$", () -> {
