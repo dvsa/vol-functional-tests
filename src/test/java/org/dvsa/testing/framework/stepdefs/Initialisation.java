@@ -24,7 +24,7 @@ public class Initialisation extends BasePage implements En {
         world.registerUser = new RegisterUser();
         world.userDetails = new GetUserDetails();
         world.createApplication = new CreateApplication(world.registerUser, world.userDetails);
-        world.applicationDetails = new GetApplicationDetails();
+        world.applicationDetails = new GetApplicationDetails(world.createApplication);
         world.grantApplication = new GrantLicence(world.createApplication);
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);

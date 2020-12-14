@@ -38,7 +38,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
-                clickByLinkText(world.createApplication.getLicenceNumber());
+                clickByLinkText(world.applicationDetails.getLicenceNumber());
                 waitForTitleToBePresent("View and amend your licence");
                 break;
             case "application":

@@ -83,7 +83,6 @@ public class APIJourneySteps {
     }
 
     public void submitApplication() {
-        world.applicationDetails.setApplicationId(world.createApplication.getApplicationId());
         world.createApplication.submitApplication();
         world.applicationDetails.getApplicationLicenceDetails(world.createApplication);
     }
@@ -106,8 +105,8 @@ public class APIJourneySteps {
 
     public void grantLicenceAndPayFees() {
         world.grantApplication.setDateState(DateState.getDates("current",0));
-        world.grantApplication.grantLicence(world.createApplication.getApplicationId(), world.userDetails.getOrganisationId());
-        world.grantApplication.payGrantFees(world.createApplication.getApplicationId(), world.userDetails.getOrganisationId());
+        world.grantApplication.grantLicence();
+        world.grantApplication.payGrantFees();
     }
 
     public void createLicenceWithTrafficArea(String licenceType, String operator, TrafficArea trafficArea) {
