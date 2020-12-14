@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Utils.API_Builders.*;
 import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
@@ -48,7 +49,7 @@ public class CreateLicenceAPI extends BaseAPI{
     private String addressLine3 = address.get("addressLine3");
     private String addressLine4 = address.get("addressLine4");
     private String town = faker.generateAddress().get("town");
-    private String postcode;
+    private String postcode = PostCode.getRandomRealNottinghamPostcode();
     private String countryCode = "GB";
     private LinkedHashMap<String, String> establishmentAddress = faker.generateAddress();
     private String establishmentAddressLine1 = establishmentAddress.get("addressLine1");

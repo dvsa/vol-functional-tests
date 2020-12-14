@@ -14,12 +14,11 @@
         <cucumber-java.version>4.4.0</cucumber-java.version>
         <cucumber-junit.version>4.4.0</cucumber-junit.version>
         <junit.version>4.12</junit.version>
-        <active-support.version>1.4.4.3</active-support.version>
+        <active-support.version>1.4.4.2</active-support.version>
         <slf4j.version>2.12.1</slf4j.version>
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <axe-scanner-version>1.0</axe-scanner-version>
-        <api-calls.version>0.3.3</api-calls.version>
         <page-objects.version>0.6.9.6</page-objects.version>
         <page-action.version>0.2</page-action.version>
         <uri-constructor.version>1.5.4</uri-constructor.version>
@@ -306,11 +305,6 @@
                     <artifactId>selenenium-java</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.dvsa.testing.framework</groupId>
-            <artifactId>vol-api-calls</artifactId>
-            <version>${api-calls.version}</version>
         </dependency>
     </dependencies>
 </project>
