@@ -27,10 +27,9 @@ public class APIJourneySteps {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
     }
 
-    // TODO: Use API enums to pull through and set values.
     public void nIAddressBuilder() {
-        world.createLicence.setEnforcementArea("EA-N");
-        world.createLicence.setTrafficArea("N");
+        world.createLicence.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND.asString());
+        world.createLicence.setTrafficArea(TrafficArea.NORTHERN_IRELAND.asString());
         world.createLicence.setTown("Belfast");
         world.createLicence.setPostcode("BT28HQ");
         world.createLicence.setCountryCode("NI");
