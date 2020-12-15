@@ -64,7 +64,7 @@ public class UIJourneySteps extends BasePage {
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
 
         HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(-5, 0, -20);
+        dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
 
         enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
         enterText("dob_month", dates.get("month").toString(), SelectorType.ID);

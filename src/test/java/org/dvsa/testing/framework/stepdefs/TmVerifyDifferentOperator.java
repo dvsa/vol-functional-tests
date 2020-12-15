@@ -164,7 +164,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         When("^create a user and add them as a tm with a future DOB$", () -> {
             world.TMJourneySteps.generateAndOperatorUser();
-            HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
+            HashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
             world.TMJourneySteps.addOperatorUserAsTransportManager(dob, true);
         });
         Then("^two TM DOB errors should display$", () -> {
@@ -174,7 +174,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         When("^i add an operator as a transport manager with a future DOB$", () -> {
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             world.TMJourneySteps.nominateOperatorUserAsTransportManager(String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()),true);
-            HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
+            HashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
             replaceDateById("dob", dob);
             click("form-actions[submit]", SelectorType.ID);
             waitForPageLoad();

@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.enums.OperatorType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;

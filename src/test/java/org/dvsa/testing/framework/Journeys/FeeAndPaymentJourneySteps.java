@@ -53,7 +53,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
 
                 HashMap<String, Integer> dates;
-                dates = world.globalMethods.date.getDate(0, 0, 0);
+                dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
 
                 waitAndEnterText("details[chequeDate][day]",SelectorType.NAME, dates.get("day").toString());
                 waitAndEnterText("details[chequeDate][month]",SelectorType.NAME, dates.get("month").toString());

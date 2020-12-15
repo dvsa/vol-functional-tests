@@ -23,7 +23,7 @@ public class Continuations extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
             world.internalNavigation.urlSearchAndViewLicence();
-            continuationDate = dates.getDate(10, 0, 0);
+            continuationDate = dates.getDateHashMap(10, 0, 0);
             world.continuationJourneySteps.replaceContinuationAndReviewDates(continuationDate, continuationDate);
         });
         And("^i generate a continuation$", () -> {

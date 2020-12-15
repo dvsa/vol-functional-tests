@@ -49,10 +49,10 @@ public class BusRegistrationJourneySteps extends BasePage {
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
 
         HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(0, 0, 0);
+        dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
         replaceDateById("receivedDate", dates);
 
-        dates = world.globalMethods.date.getDate(0, month, 0);
+        dates = world.globalMethods.date.getDateHashMap(0, month, 0);
         enterText("effectiveDate_day", dates.get("day"), SelectorType.ID);
         enterText("effectiveDate_month", dates.get("month"), SelectorType.ID);
         enterText("effectiveDate_year", dates.get("year"), SelectorType.ID);
