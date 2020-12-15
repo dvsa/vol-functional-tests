@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
-import activesupport.dates.DateState;
+import activesupport.dates.Dates;
 import apiCalls.Utils.generic.Headers;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.LicenceType;
@@ -10,13 +10,13 @@ import apiCalls.enums.OperatorType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import enums.UserRoles;
-
-import static activesupport.dates.DateState.getDates;
+import org.joda.time.LocalDate;
 
 public class APIJourneySteps {
 
     private World world;
     public static int tmCount;
+    Dates date = new Dates(LocalDate::new);
 
     public APIJourneySteps(World world) throws MissingRequiredArgument {
         this.world = world;
@@ -106,7 +106,7 @@ public class APIJourneySteps {
     }
 
     public void grantLicenceAndPayFees() {
-        world.grantApplication.setDateState(DateState.getDates("current",0));
+        world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
         world.grantApplication.payGrantFees();
     }
