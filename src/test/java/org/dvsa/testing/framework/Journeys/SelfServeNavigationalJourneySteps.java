@@ -38,13 +38,13 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
-                clickByLinkText(world.createApplication.getLicenceNumber());
+                clickByLinkText(world.applicationDetails.getLicenceNumber());
                 waitForTitleToBePresent("View and amend your licence");
                 break;
             case "application":
                 overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
-                clickByLinkText(world.createApplication.getApplicationNumber());
+                clickByLinkText(world.createApplication.getApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply for a new licence");
                 } else if (applicationStatus.equals("UNDER CONSIDERATION")) {

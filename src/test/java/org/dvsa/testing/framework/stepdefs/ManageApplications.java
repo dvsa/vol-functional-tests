@@ -4,16 +4,11 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import apiCalls.enums.LicenceType;
-import apiCalls.enums.OperatorType;
+import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
-import com.sun.org.apache.xpath.internal.functions.WrongNumberArgsException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import enums.TrafficArea;
 import enums.UserRoles;
-import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
-import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.openqa.selenium.InvalidArgumentException;
 
 public class ManageApplications {
@@ -69,7 +64,7 @@ public class ManageApplications {
     public void iHaveAppliedForLicences(String licenceType, String operator) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setOperatingCentreVehicleCap(6);
-        for (String ta : trafficAreaList()) {
+        for (TrafficArea ta : trafficAreaList()) {
             world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
         }
     }
@@ -83,7 +78,7 @@ public class ManageApplications {
         world.createApplication.setOperatingCentreVehicleCap(6);
         world.createApplication.setNoOfVehiclesRequested(2);
         for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
-            String ta = trafficAreaList()[i];
+            TrafficArea ta = trafficAreaList()[i];
             world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
         }
     }
@@ -97,7 +92,7 @@ public class ManageApplications {
         world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(OCVehicleCap));
         world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
         for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
-            String ta = trafficAreaList()[i];
+            TrafficArea ta = trafficAreaList()[i];
             world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
         }
     }
@@ -124,12 +119,12 @@ public class ManageApplications {
         world.createLicence.setNoOfVehiclesRequired(3);
         
         // Don't think both for loops are required but not sure what this test is for.
-        for (String ta : trafficAreaList()) {
-            world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
+        for (TrafficArea ta : trafficAreaList()) {
+//            world.createLicence.setPostcode(ta);
             world.createLicence.setOperatorType(operator);
             world.createLicence.setLicenceType(licenceType);
-            world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
-            world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
+//            world.createLicence.setTrafficArea(ta);
+//            world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(ta));
             world.APIJourneySteps.createApplication();
             String externalFirstName = faker.generateFirstName();
             String externalLastName = faker.generateLastName();
@@ -151,10 +146,9 @@ public class ManageApplications {
         world.genericUtils.writeToFile(world.createLicence.getLoginId(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
     }
 
-    private String[] trafficAreaList() {
-        return new String[]{apiCalls.enums.TrafficArea.NORTH_EAST.name(), apiCalls.enums.TrafficArea.NORTH_WEST.name(),
-                apiCalls.enums.TrafficArea.MIDLANDS.name(), apiCalls.enums.TrafficArea.EAST.name(), apiCalls.enums.TrafficArea.WALES.name(),
-                apiCalls.enums.TrafficArea.WEST.name(), apiCalls.enums.TrafficArea.LONDON.name(), apiCalls.enums.TrafficArea.SCOTLAND.name(),
-                apiCalls.enums.TrafficArea.NORTHERN_IRELAND.name()};
+    private TrafficArea[] trafficAreaList() {
+        return new TrafficArea[]{TrafficArea.NORTH_EAST, TrafficArea.NORTH_WEST, TrafficArea.MIDLANDS,
+                TrafficArea.EAST, TrafficArea.WALES, TrafficArea.WEST, TrafficArea.LONDON,
+                TrafficArea.SCOTLAND, TrafficArea.NORTHERN_IRELAND};
     }
 }

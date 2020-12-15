@@ -4,8 +4,10 @@ import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.DateState;
 import apiCalls.Utils.generic.Headers;
+import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.OperatorType;
+import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import enums.UserRoles;
 
@@ -25,7 +27,7 @@ public class APIJourneySteps {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
     }
 
-
+    // TODO: Use API enums to pull through and set values.
     public void nIAddressBuilder() {
         world.createLicence.setEnforcementArea("EA-N");
         world.createLicence.setTrafficArea("N");
@@ -48,7 +50,6 @@ public class APIJourneySteps {
     }
 
     public void createApplication() {
-        world.createApplication.setPid(world.userDetails.getPid());
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -84,7 +85,6 @@ public class APIJourneySteps {
     }
 
     public void submitApplication() {
-        world.applicationDetails.setApplicationNumber(world.createApplication.getApplicationNumber());
         world.createApplication.submitApplication();
         world.applicationDetails.getApplicationLicenceDetails(world.createApplication);
     }
@@ -106,25 +106,17 @@ public class APIJourneySteps {
     }
 
     public void grantLicenceAndPayFees() {
-        world.grantApplication.setApplicationNumber(world.createApplication.getApplicationNumber());
-        world.grantApplication.setOrganisationId(world.createApplication.getOrganisationId());
         world.grantApplication.setDateState(DateState.getDates("current",0));
         world.grantApplication.grantLicence();
         world.grantApplication.payGrantFees();
     }
 
-    public void createLicenceWithTrafficArea(String licenceType, String operator, String trafficArea) {
-        world.createApplication.setPostcode(apiCalls.enums.TrafficArea.getPostCode(apiCalls.enums.TrafficArea.valueOf(trafficArea)));
+    public void createLicenceWithTrafficArea(String licenceType, String operator, TrafficArea trafficArea) {
         world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
         world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
 
-        world.createApplication.setPostCodeByTrafficArea(apiCalls.enums.TrafficArea.valueOf(trafficArea));
-        world.createApplication.setTrafficArea(apiCalls.enums.TrafficArea.valueOf(trafficArea).asString());
-
-        world.createApplication.setEnforcementArea(apiCalls.enums.EnforcementArea.valueOf(trafficArea).asString());
-        world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
-        world.createApplication.setPid(world.userDetails.getPid());
-        world.createApplication.setLicenceId(world.registerUser.getLoginId());
+        world.createApplication.setTrafficArea(trafficArea);
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
 
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
@@ -134,7 +126,6 @@ public class APIJourneySteps {
 
     public void applyForLicenceWithVehicles(String licenceType, String operator, String vehicles) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setOrganisationId(world.userDetails.getOrganisationId());
         world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
         world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
         world.createLicence.setOperatorType(operator);
