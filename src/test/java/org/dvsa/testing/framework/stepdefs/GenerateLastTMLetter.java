@@ -27,7 +27,7 @@ public class GenerateLastTMLetter extends BasePage implements En {
             assertTrue(isTextPresent("You are removing your last Transport Manager.",30));
         });
         Given("^the licence status is \"([^\"]*)\"$", (String arg0) -> {
-            world.updateLicence.updateLicenceStatus(world.createLicence.getLicenceId(), arg0);
+            world.updateLicence.updateLicenceStatus(arg0);
         });
         And("^the user confirms they want to send letter$", () -> {
             waitForTextToBePresent(alertHeaderValue);

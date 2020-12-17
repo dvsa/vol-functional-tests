@@ -62,7 +62,7 @@ public class Surrenders extends BasePage implements En {
             } else if (userType.equals("internal")) {
                 pid = adminApiHeader();
             }
-            apiResponse = world.updateLicence.updateSurrender(world.createLicence.getLicenceId(), pid, this.surrenderId);
+            apiResponse = world.updateLicence.updateSurrender(this.surrenderId);
             String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
             assertTrue(createdMessage.contains("Surrender successfully updated"));
             apiResponse.body("id.surrender", Matchers.equalTo(this.surrenderId));
@@ -104,20 +104,20 @@ public class Surrenders extends BasePage implements En {
 
         });
         And("^another user is unable to update my surrender details$", () -> {
-            apiResponse = world.updateLicence.updateSurrender(world.createLicence.getLicenceId(), this.selfServeUserPid, this.surrenderId);
+            apiResponse = world.updateLicence.updateSurrender(this.surrenderId);
             String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
             assertTrue(createdMessage.contains("You do not have access to this resource"));
             apiResponse.statusCode(HttpStatus.SC_FORBIDDEN);
         });
         And("^as internal user i can delete a surrender$", () -> {
-            apiResponse = world.updateLicence.deleteSurrender(world.createLicence.getLicenceId(), adminApiHeader(), this.surrenderId);
+            apiResponse = world.updateLicence.deleteSurrender(this.surrenderId);
             String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
             assertTrue(createdMessage.toLowerCase().contains("id ".concat(this.surrenderId.toString()).concat(" deleted")));
             apiResponse.body("id.id".concat(this.surrenderId.toString()), Matchers.equalTo(this.surrenderId.toString()));
             apiResponse.statusCode(HttpStatus.SC_OK);
         });
         And("^as selfserve user I cannot delete my surrender$", () -> {
-            apiResponse = world.updateLicence.deleteSurrender(world.createLicence.getLicenceId(), world.createLicence.getPid(), this.surrenderId);
+            apiResponse = world.updateLicence.deleteSurrender(this.surrenderId);
             String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
             assertTrue(createdMessage.contains("You do not have access to this resource"));
             apiResponse.statusCode(HttpStatus.SC_FORBIDDEN);
@@ -129,13 +129,13 @@ public class Surrenders extends BasePage implements En {
             apiResponse.statusCode(HttpStatus.SC_BAD_REQUEST);
         });
         Then("^as \"([^\"]*)\" user I cannot update a surrender$", (String userType) -> {
-            apiResponse = world.updateLicence.updateSurrender(world.createLicence.getLicenceId(), adminApiHeader(), 1);
+            apiResponse = world.updateLicence.updateSurrender(1);
             String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
             assertTrue(createdMessage.contains("Handler Dvsa\\Olcs\\Api\\Domain\\CommandHandler\\Surrender\\Update is currently disabled via feature toggle"));
             apiResponse.statusCode(HttpStatus.SC_BAD_REQUEST);
         });
         Then("^as \"([^\"]*)\" user I cannot delete a surrender$", (String userType) -> {
-            apiResponse = world.updateLicence.deleteSurrender(world.createLicence.getLicenceId(), adminApiHeader(), 1);
+            apiResponse = world.updateLicence.deleteSurrender(1);
             String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
             assertTrue(createdMessage.contains("Handler Dvsa\\Olcs\\Api\\Domain\\CommandHandler\\Surrender\\Delete is currently disabled via feature toggle"));
             apiResponse.statusCode(HttpStatus.SC_BAD_REQUEST);
@@ -220,7 +220,7 @@ public class Surrenders extends BasePage implements En {
         });
         When("^a caseworker views the surrender details$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             waitAndClick("menu-licence_surrender", SelectorType.ID);
         });
@@ -281,7 +281,7 @@ public class Surrenders extends BasePage implements En {
         });
         When("^the caseworker checks the case and bus reg is visible in surrenders$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             waitForTextToBePresent("Overview");
             if (isTextPresent("Surrender", 10)){

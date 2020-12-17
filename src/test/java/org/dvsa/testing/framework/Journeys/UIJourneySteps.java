@@ -122,7 +122,7 @@ public class UIJourneySteps extends BasePage {
         Thread.sleep(3000);
         if (autoIt.winExists(wordLoginWindow, "")) {
             autoIt.mouseClick("left", 1100, 630, 2, 1);
-            autoIt.send(world.updateLicence.getAdminUserLogin());
+            autoIt.send(world.updateLicence.getInternalUserLogin());
             autoIt.mouseClick("left", 1100, 720, 2, 1);
             autoIt.send(world.globalMethods.getLoginPassword());
             autoIt.mouseClick("left", 990, 780, 2, 1);
@@ -173,7 +173,7 @@ public class UIJourneySteps extends BasePage {
         waitForTitleToBePresent("Operating centres and authorisation");
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
-        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
         if (Integer.parseInt(noOfVehicles) > world.createLicence.getNoOfVehiclesRequired()) {
             click(nameAttribute("button", "form-actions[submit]"));
         }
@@ -342,7 +342,7 @@ public class UIJourneySteps extends BasePage {
 
     public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         clickByLinkText("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
@@ -489,7 +489,7 @@ public class UIJourneySteps extends BasePage {
         }
 
         String url = navigate().getCurrentUrl();
-        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url, 2));
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 2));
     }
 
     public void removeFirstVehicleOnVehiclePage() throws IllegalBrowserException, MalformedURLException {

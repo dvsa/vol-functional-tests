@@ -26,11 +26,11 @@ public class Initialisation extends BasePage implements En {
         world.createApplication = new CreateApplication(world.registerUser, world.userDetails);
         world.applicationDetails = new GetApplicationDetails(world.createApplication);
         world.grantApplication = new GrantLicence(world.createApplication);
+        world.updateLicence = new UpdateLicence(world.createApplication);
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);
         world.createLicence = new CreateLicenceAPI();
         world.grantLicence = new GrantLicenceAPI(world);
-        world.updateLicence = new UpdateLicenceAPI(world);
         world.genericUtils = new GenericUtils(world);
         world.APIJourneySteps = new APIJourneySteps(world);
         world.continuationJourneySteps = new ContinuationJourneySteps(world);

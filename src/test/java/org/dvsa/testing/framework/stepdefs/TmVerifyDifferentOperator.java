@@ -127,7 +127,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
             if(Browser.navigate().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size()!=0) {
                 world.selfServeNavigation.navigateToPage("application", "Transport Managers");
-            } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationNumber())).size()!=0) {
+            } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationId())).size()!=0) {
                 world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
             }
             clickByLinkText(world.TMJourneySteps.getOperatorForeName() + " " + world.TMJourneySteps.getOperatorFamilyName());
