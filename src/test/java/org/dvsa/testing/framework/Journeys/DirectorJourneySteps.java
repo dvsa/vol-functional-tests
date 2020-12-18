@@ -51,7 +51,7 @@ public class DirectorJourneySteps extends BasePage {
         enterText("familyname", lastName, SelectorType.ID);
 
         HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(-5, 0, -20);
+        dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
 
         enterText("dob_day", dates.get("day"), SelectorType.ID);
         enterText("dob_month", dates.get("month"), SelectorType.ID);

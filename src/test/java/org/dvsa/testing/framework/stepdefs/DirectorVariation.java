@@ -110,7 +110,7 @@ public class DirectorVariation extends BasePage implements En {
         });
 
         Then("^a task should be created in internal$", () -> {
-           world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
+           world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(),world.updateLicence.getInternalUserEmailAddress());
            world.internalSearch.searchAndViewApplication();
         });
 

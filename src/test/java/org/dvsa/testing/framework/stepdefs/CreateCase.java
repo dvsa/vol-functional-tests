@@ -21,7 +21,7 @@ public class CreateCase extends BasePage implements En {
             world.updateLicence.createCase();
         });
         Then("^I should be able to view the case details$", () -> {
-           response = world.updateLicence.getCaseDetails("cases",world.updateLicence.getCaseId());
+           response = world.updateLicence.getCaseDetails("cases");
            assertThat(response.body("description", Matchers.equalTo("Sent through the API"),
                    "caseType.id",  Matchers.equalTo("case_t_lic")));
         });
@@ -29,7 +29,7 @@ public class CreateCase extends BasePage implements En {
             world.updateLicence.addComplaint();
         });
         Then("^Complaint should be created$", () -> {
-            response = world.updateLicence.getCaseDetails("complaint",world.updateLicence.getComplaintId());
+            response = world.updateLicence.getCaseDetails("complaint");
             assertThat(response.body("driverFamilyName", Matchers.equalTo(world.updateLicence.getDriverFamilyName()),
                     "complaintType.id",  Matchers.equalTo("ct_cov")));
         });
@@ -37,7 +37,7 @@ public class CreateCase extends BasePage implements En {
             world.updateLicence.addConviction();
         });
         Then("^Conviction should be created$", () -> {
-            response = world.updateLicence.getCaseDetails("conviction",world.updateLicence.getConvictionId());
+            response = world.updateLicence.getCaseDetails("conviction");
             assertThat(response.body("birthDate", Matchers.equalTo("1999-06-10"),
                     "convictionCategory.id",  Matchers.equalTo("conv_c_cat_1065")));
         });
@@ -45,7 +45,7 @@ public class CreateCase extends BasePage implements En {
            world.updateLicence.addConditionsUndertakings();
         });
         Then("^the condition undertaking should be created$", () -> {
-            response = world.updateLicence.getCaseDetails("condition-undertaking",world.updateLicence.getConditionUndertaking());
+            response = world.updateLicence.getCaseDetails("condition-undertaking");
             assertThat(response.body("conditionCategory.id", Matchers.equalTo("cu_cat_fin"),
                     "licence.id.toString()",  Matchers.hasToString(world.createLicence.getLicenceId())));
         });
@@ -53,7 +53,7 @@ public class CreateCase extends BasePage implements En {
             world.updateLicence.createSubmission();
         });
         Then("^the submission should be created$", () -> {
-            response = world.updateLicence.getCaseDetails("submission", world.updateLicence.getSubmissionsId());
+            response = world.updateLicence.getCaseDetails("submission");
             assertThat(response.body("submissionType.id", Matchers.equalTo("submission_type_o_env"),
                     "submissionType.description",  Matchers.equalTo("ENV")));
         });
@@ -61,7 +61,7 @@ public class CreateCase extends BasePage implements En {
             world.updateLicence.createCaseNote();
         });
         Then("^case notes should be created$", () -> {
-            response = world.updateLicence.getCaseDetails("processing/note",world.updateLicence.getCaseNoteId());
+            response = world.updateLicence.getCaseDetails("processing/note");
             assertThat(response.body("comment", Matchers.equalTo("case note submitted through the API")));
         });
         And("^i add a new public inquiry$", () -> {
@@ -83,7 +83,7 @@ public class CreateCase extends BasePage implements En {
         });
         And("^i add a case in internal on the \"([^\"]*)\" page$", (String page) -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.UIJourneySteps.createCaseUI(page);
         });
     }

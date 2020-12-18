@@ -22,7 +22,7 @@ public class World {
     public GrantLicence grantApplication;
     public GrantLicenceAPI grantLicence;
     public GenericUtils genericUtils;
-    public UpdateLicenceAPI updateLicence;
+    public UpdateLicence updateLicence;
     public DirectorJourneySteps directorJourneySteps;
     public DVLAJourneySteps dvlaJourneySteps;
     public InternalSearchJourneySteps internalSearch;

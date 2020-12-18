@@ -105,7 +105,7 @@ public class TransportManagerJourneySteps extends BasePage {
         enterText("familyName", familyName, SelectorType.ID);
 
         HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(0, 0, 25);
+        dates = world.globalMethods.date.getDateHashMap(0, 0, 25);
         enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
         enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
         enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
@@ -122,7 +122,7 @@ public class TransportManagerJourneySteps extends BasePage {
         String postCode = world.createLicence.getPostcode();
 
         HashMap<String, Integer> dob;
-        dob = world.globalMethods.date.getDate(0, 0, -25);
+        dob = world.globalMethods.date.getDateHashMap(0, 0, -25);
         replaceDateById("dob", dob);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
@@ -214,7 +214,7 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
-        HashMap<String, Integer> dob = world.globalMethods.date.getDate(-5, 0, -20);
+        HashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
         world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
         if (applicationOrNot) {
@@ -294,7 +294,7 @@ public class TransportManagerJourneySteps extends BasePage {
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", world.TMJourneySteps.getOperatorForeName(), SelectorType.ID);
         enterText("familyName", world.TMJourneySteps.getOperatorFamilyName(), SelectorType.ID);
-        LinkedHashMap<String, Integer> dob = world.globalMethods.date.getDate(0, 0, -20);
+        LinkedHashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
         replaceDateById("dob", dob);
         enterText("username", world.TMJourneySteps.getOperatorUser(), SelectorType.ID);
         enterText("emailAddress", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);

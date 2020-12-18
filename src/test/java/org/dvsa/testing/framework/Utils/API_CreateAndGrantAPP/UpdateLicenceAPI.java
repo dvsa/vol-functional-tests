@@ -413,7 +413,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         String internalAdminUserResource = URL.build(env, String.format("user/internal/%s", userId)).toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        HashMap<String, Integer> internalUserDOB = date.getDate(0, 0, -30);
+        HashMap<String, Integer> internalUserDOB = date.getDateHashMap(0, 0, -30);
         PersonBuilder personBuilder = new PersonBuilder().withForename("Long").withFamilyName("Ash").withBirthDate(internalUserDOB.get("year") + "-" + internalUserDOB.get("month") + "-" + internalUserDOB.get("day"));
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);
@@ -435,7 +435,7 @@ public class UpdateLicenceAPI extends BaseAPI {
         String internalAdminUserResource = URL.build(env, "user/internal").toString();
 
         AddressBuilder addressBuilder = new AddressBuilder().withAddressLine1("AXIS Building").withTown("Nottingham").withPostcode("LS28 5LY").withCountryCode("GB");
-        HashMap<String, Integer> internalUserDOB = date.getDate(0, 0, -30);
+        HashMap<String, Integer> internalUserDOB = date.getDateHashMap(0, 0, -30);
         PersonBuilder personBuilder = new PersonBuilder().withForename(faker.generateFirstName()).withFamilyName(faker.generateLastName()).withBirthDate((internalUserDOB.get("year") + "-" + internalUserDOB.get("month") + "-" + internalUserDOB.get("day")));
 
         ContactDetailsBuilder contactDetails = new ContactDetailsBuilder().withEmailAddress(adminUserEmailAddress).withAddress(addressBuilder).withPerson(personBuilder);

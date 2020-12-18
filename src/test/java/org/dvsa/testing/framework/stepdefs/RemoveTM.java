@@ -45,13 +45,13 @@ public class RemoveTM extends BasePage implements En {
         });
         When("^the internal user goes to remove the last transport manager$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             world.TMJourneySteps.promptRemovalOfInternalTransportManager();
         });
         When("^the transport manager has been removed by an internal user$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             world.TMJourneySteps.removeInternalTransportManager();
         });
@@ -92,7 +92,7 @@ public class RemoveTM extends BasePage implements En {
             world.grantLicence.payGrantFees();
         });
         When("^i create a variation$", () -> {
-            world.updateLicence.createVariation(null);
+            world.updateLicence.createVariation();
         });
         And("^user attempts to remove the last TM without selecting an option$", () -> {
             waitForTextToBePresent(alertHeaderValue);
@@ -107,7 +107,7 @@ public class RemoveTM extends BasePage implements En {
         });
 
         And("^i update the licence type$", () -> {
-            world.updateLicence.updateLicenceType(world.createLicence.getLicenceId());
+            world.updateLicence.updateLicenceType();
         });
         And("^the removal date is changed to (\\d+) hours into the future$", (Integer arg0) -> {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

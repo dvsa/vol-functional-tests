@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.enums.OperatorType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
@@ -84,7 +85,7 @@ public class ManageApplications {
     }
 
     @Given("I have applied for {string} {string} {string} licences with {string} vehicles and a cap of {string}")
-    public void iHaveAppliedForLicencesWithVehicles(String noOfLicences, String licenceType, String operator, String vehicles, String OCVehicleCap) {
+    public void iHaveAppliedForLicencesWithVehiclesAndCap(String noOfLicences, String licenceType, String operator, String vehicles, String OCVehicleCap) {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
@@ -94,6 +95,21 @@ public class ManageApplications {
         for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
             TrafficArea ta = trafficAreaList()[i];
             world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
+        }
+    }
+
+    @Given("I have applied for a {string} {string} licence with {string} vehicles")
+    public void iHaveAppliedForLicenceWithVehicles(String licenceType, String operator, String vehicles) {
+        world.APIJourneySteps.applyForLicenceWithVehicles(licenceType, operator, vehicles);
+    }
+
+    @Given("I have a {string} {string} licence with {string} vehicles")
+    public void iHaveLicenceWithVehicles(String licenceType, String operator, String vehicles) {
+        world.APIJourneySteps.applyForLicenceWithVehicles(licenceType, operator, vehicles);
+        world.APIJourneySteps.grantLicenceAndPayFees();
+        world.grantApplication.grantLicence();
+        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+            world.grantApplication.payGrantFees();
         }
     }
 

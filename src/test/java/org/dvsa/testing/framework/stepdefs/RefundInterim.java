@@ -37,7 +37,7 @@ public class RefundInterim extends BasePage implements En {
         });
         Then("^the interim fee should be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
-            world.internalNavigation.navigateToLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Fees");
             selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
@@ -59,7 +59,7 @@ public class RefundInterim extends BasePage implements En {
         });
         Then("^the interim fee should not be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
-            world.internalNavigation.navigateToLogin(world.updateLicence.getAdminUserLogin(), world.updateLicence.getAdminUserEmailAddress());
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Fees");
             do {
@@ -72,20 +72,20 @@ public class RefundInterim extends BasePage implements En {
             world.APIJourneySteps.grantLicenceAndPayFees();
         });
         And("^the interim is granted$", () -> {
-            world.updateLicence.grantInterimApplication(world.createLicence.getApplicationNumber());
+            world.updateLicence.grantInterimApplication();
         });
         When("^i pay for the interim application$", () -> {
             world.UIJourneySteps.payForInterimApp();
             waitForTitleToBePresent("Application overview");
         });
         And("^the application has been refused$", () -> {
-            world.grantLicence.refuse(world.updateLicence.getVariationApplicationNumber());
+            world.grantLicence.refuse(world.updateLicence.getVariationApplicationId());
         });
         And("^the application has been withdrawn$", () -> {
-            world.grantLicence.withdraw(world.updateLicence.getVariationApplicationNumber());
+            world.grantLicence.withdraw(world.updateLicence.getVariationApplicationId());
         });
         And("^the variation interim is granted$", () -> {
-            world.updateLicence.grantInterimApplication(world.updateLicence.getVariationApplicationNumber());
+            world.updateLicence.grantInterimApplication();
         });
     }
 }

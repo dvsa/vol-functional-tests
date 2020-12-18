@@ -22,7 +22,7 @@ public class InternalSearchJourneySteps extends BasePage {
     public void searchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("search-select", SelectorType.ID, "Applications");
 
-        String variationApplicationNumber = world.updateLicence.getVariationApplicationNumber();
+        String variationApplicationNumber = world.updateLicence.getVariationApplicationId();
         long kickOut = System.currentTimeMillis() + 120000;
         if (variationApplicationNumber != null) {
             do {

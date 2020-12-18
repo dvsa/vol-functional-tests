@@ -30,8 +30,26 @@ Feature: Check that manage vehicle journey is accessible
     And i scan for accessibility violations
     Then no issues should be present on the page
 
+  Scenario: Reprint vehicle discs
+    When I navigate to manage vehicle page
+    And I choose to reprint a vehicle disc
+    And i scan for accessibility violations
+    Then no issues should be present on the page
+
+  Scenario: Confirm reprint vehicle discs
+    When I navigate to manage vehicle page
+    And I want to confirm a vehicle disc reprint
+    And i scan for accessibility violations
+    Then no issues should be present on the page
+
   Scenario: Transfer vehicle journey
     When I navigate to manage vehicle page
-    And i choose to transfer a vehicle
+    And I choose to transfer a vehicle
+    And i scan for accessibility violations
+    Then no issues should be present on the page
+
+  Scenario: Confirm transfer vehicle
+    When I navigate to manage vehicle page
+    And I want to confirm a vehicle transfer
     And i scan for accessibility violations
     Then no issues should be present on the page

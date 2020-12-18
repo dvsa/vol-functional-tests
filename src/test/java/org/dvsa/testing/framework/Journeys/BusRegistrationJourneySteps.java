@@ -49,10 +49,10 @@ public class BusRegistrationJourneySteps extends BasePage {
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
 
         HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(0, 0, 0);
+        dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
         replaceDateById("receivedDate", dates);
 
-        dates = world.globalMethods.date.getDate(0, month, 0);
+        dates = world.globalMethods.date.getDateHashMap(0, month, 0);
         enterText("effectiveDate_day", dates.get("day"), SelectorType.ID);
         enterText("effectiveDate_month", dates.get("month"), SelectorType.ID);
         enterText("effectiveDate_year", dates.get("year"), SelectorType.ID);
@@ -121,7 +121,7 @@ public class BusRegistrationJourneySteps extends BasePage {
             System.out.println("Licence: " + world.createLicence.getLicenceNumber());
         }
         world.APIJourneySteps.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         internalSiteAddBusNewReg(5);
         payFeesAndGrantNewBusReg();

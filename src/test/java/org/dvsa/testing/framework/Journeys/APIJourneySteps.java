@@ -2,20 +2,21 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
-import activesupport.dates.DateState;
+import activesupport.dates.Dates;
 import apiCalls.Utils.generic.Headers;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.TrafficArea;
+import apiCalls.enums.UserType;
 import enums.UserRoles;
-
-import static activesupport.dates.DateState.getDates;
+import org.joda.time.LocalDate;
 
 public class APIJourneySteps {
 
     private World world;
     public static int tmCount;
+    Dates date = new Dates(LocalDate::new);
 
     public APIJourneySteps(World world) throws MissingRequiredArgument {
         this.world = world;
@@ -26,10 +27,9 @@ public class APIJourneySteps {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
     }
 
-    // TODO: Use API enums to pull through and set values.
     public void nIAddressBuilder() {
-        world.createLicence.setEnforcementArea("EA-N");
-        world.createLicence.setTrafficArea("N");
+        world.createLicence.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND.asString());
+        world.createLicence.setTrafficArea(TrafficArea.NORTHERN_IRELAND.asString());
         world.createLicence.setTown("Belfast");
         world.createLicence.setPostcode("BT28HQ");
         world.createLicence.setCountryCode("NI");
@@ -105,7 +105,7 @@ public class APIJourneySteps {
     }
 
     public void grantLicenceAndPayFees() {
-        world.grantApplication.setDateState(DateState.getDates("current",0));
+        world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
         world.grantApplication.payGrantFees();
     }
@@ -121,6 +121,24 @@ public class APIJourneySteps {
         world.APIJourneySteps.submitApplication();
         world.APIJourneySteps.grantLicenceAndPayFees();
     }
+
+
+    public void applyForLicenceWithVehicles(String licenceType, String operator, String vehicles) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
+        world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
+        world.createLicence.setOperatorType(operator);
+        world.createLicence.setLicenceType(licenceType);
+        if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
+            world.APIJourneySteps.createSpecialRestrictedLicence();
+        } else if (world.createLicence.getApplicationNumber() == null) {
+            world.APIJourneySteps.createApplication();
+            world.APIJourneySteps.submitApplication();
+        }
+    }
+
+    //TODO: Need apply for licence, create licence, both with vehicles, vehicles and operating cap, traffic area.
+    // Need this done with refactored methods and overloading. Also need to cover all preexisting scenarios and replace with new API.
 
     public static String adminApiHeader() {
         return "e91f1a255e01e20021507465a845e7c24b3a1dc951a277b874c3bcd73dec97a1";

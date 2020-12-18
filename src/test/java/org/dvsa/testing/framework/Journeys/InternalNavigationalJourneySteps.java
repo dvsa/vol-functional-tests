@@ -28,14 +28,14 @@ public class InternalNavigationalJourneySteps extends BasePage {
 
     public void logInAndNavigateToDocsTable() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
-        navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         urlSearchAndViewApplication();
         clickByLinkText("Docs");
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
     public void logInAndNavigateToTask() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
-        navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         urlSearchAndViewApplication();
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
@@ -51,7 +51,7 @@ public class InternalNavigationalJourneySteps extends BasePage {
     }
 
     public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {
-        navigate().get(this.myURL.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationNumber())));
+        navigate().get(this.myURL.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationId())));
     }
 
     public void urlSearchAndViewEditFee(String feeNumber) throws IllegalBrowserException, MalformedURLException {
