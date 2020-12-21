@@ -47,7 +47,7 @@ public class CreateCase extends BasePage implements En {
         Then("^the condition undertaking should be created$", () -> {
             response = world.updateLicence.getCaseDetails("condition-undertaking");
             assertThat(response.body("conditionCategory.id", Matchers.equalTo("cu_cat_fin"),
-                    "licence.id.toString()",  Matchers.hasToString(world.createLicence.getLicenceId())));
+                    "licence.id.toString()",  Matchers.hasToString(world.createApplication.getLicenceId())));
         });
         When("^I add submission details$", () -> {
             world.updateLicence.createSubmission();

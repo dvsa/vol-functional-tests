@@ -43,7 +43,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void continueLicenceWithVerifyAndPay() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
         clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         completeContinuationsReviewPage();
@@ -60,7 +60,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void completeContinuationFinancesPage() throws IllegalBrowserException, MalformedURLException {
-        if (!(world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("special_restricted"))) {
+        if (!(world.createApplication.getOperatorType().equals("public") && world.createApplication.getLicenceType().equals("special_restricted"))) {
             String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]","");
             enterText("averageBalance", necessaryIncome, SelectorType.ID);
             findSelectAllRadioButtonsByValue("N");
@@ -89,7 +89,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void completeContinuationPayOrSubmit() throws IllegalBrowserException, MalformedURLException {
-        if (world.createLicence.getOperatorType().equals("goods") || world.createLicence.getLicenceType().equals("special_restricted")) {
+        if (world.createApplication.getOperatorType().equals("goods") || world.createApplication.getLicenceType().equals("special_restricted")) {
             click("submitAndPay", SelectorType.ID);
             click("form-actions[pay]", SelectorType.ID);
             world.feeAndPaymentJourneySteps.customerPaymentModule();
@@ -113,9 +113,9 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void completeContinuationConditionsAndUndertakingsPage() throws MalformedURLException, IllegalBrowserException {
-        if (!world.createLicence.getLicenceType().equals("special_restricted")) {
-            if (world.createLicence.getOperatorType().equals("public") &&
-                    (world.createLicence.getLicenceType().equals("restricted") || !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
+        if (!world.createApplication.getLicenceType().equals("special_restricted")) {
+            if (world.createApplication.getOperatorType().equals("public") &&
+                    (world.createApplication.getLicenceType().equals("restricted") || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large"))) {
                 waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
                 clickAllCheckboxes();
                 click("submit", SelectorType.ID);
@@ -138,14 +138,14 @@ public class ContinuationJourneySteps extends BasePage {
         Assert.assertTrue(isTextPresent("Business details", 10));
         Assert.assertTrue(isTextPresent("Addresses", 10));
         Assert.assertTrue(isTextPresent("Directors", 10));
-        if (!world.createLicence.getLicenceType().equals("special_restricted")){
+        if (!world.createApplication.getLicenceType().equals("special_restricted")){
             Assert.assertTrue(isTextPresent("Operating centres and authorisation", 10));
             Assert.assertTrue(isTextPresent("Safety and compliance", 10));
-            if (!world.createLicence.getLicenceType().equals("restricted")) {
+            if (!world.createApplication.getLicenceType().equals("restricted")) {
                 Assert.assertTrue(isTextPresent("Transport managers", 10));
             }
         }
-        if (world.createLicence.getOperatorType().equals("goods")) {
+        if (world.createApplication.getOperatorType().equals("goods")) {
             // 'Vehicle' targeting is fine on snapshot.
             if (isTextPresent("Print this page", 10)) {
                 Assert.assertTrue(isTextPresent("Vehicles", 10));

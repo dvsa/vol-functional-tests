@@ -19,7 +19,7 @@ public class WebDavAPIStep implements En {
             this.userId = world.updateLicence.createInternalUser(userRole, UserRoles.INTERNAL.getUserRoles());
         });
         When("^i view their user details$", () -> {
-            this.response = world.createLicence.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId, APIJourneySteps.adminApiHeader());
+            this.response = world.userDetails.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId);
             this.pid = response.extract().jsonPath().getString("pid");
         });
         Then("^the OS Type value should be null$", () -> {
@@ -35,7 +35,7 @@ public class WebDavAPIStep implements En {
             this.response = world.updateLicence.updateInternalUserDetails(this.userId, osVersion);
         });
         Then("^their new OS Type should be \"([^\"]*)\"$", (String expectedOSVersion) -> {
-            this.response = world.createLicence.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId, APIJourneySteps.adminApiHeader());
+            this.response = world.userDetails.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId);
             assertEquals(response.extract().body().jsonPath().get("osType.id"),expectedOSVersion);
         });
     }

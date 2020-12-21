@@ -36,8 +36,8 @@ public class RemoveTM extends BasePage implements En {
         this.world = world;
 
         Given("^i have an application with a transport manager$", () -> {
-            if (world.createLicence.getOperatorType() == null) {
-                world.createLicence.setOperatorType("public");
+            if (world.createApplication.getOperatorType() == null) {
+                world.createApplication.setOperatorType("public");
             }
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
@@ -61,11 +61,10 @@ public class RemoveTM extends BasePage implements En {
             assertEquals(alertContent, newAlertValue);
         });
         Given("^i add a transport manager to an existing licence$", () -> {
-            world.createLicence.setUsername("newTmApi");
-            world.createLicence.addTransportManager();
-            world.createLicence.submitTransport();
-            world.createLicence.addTmResponsibilities();
-            world.createLicence.submitTmResponsibilities();
+            world.createApplication.addTransportManager();
+            world.createApplication.submitTransport();
+            world.createApplication.addTmResponsibilities();
+            world.createApplication.submitTmResponsibilities();
         });
         Then("^the remove TM popup should not be displaying new TM remove text$", () -> {
             waitForTextToBePresent(alertHeaderValue);
@@ -83,13 +82,13 @@ public class RemoveTM extends BasePage implements En {
             }
         });
         Given("^a self-serve user removes the last TM$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
             click("//*[@value='Remove']", SelectorType.XPATH);
         });
         Given("^the licence has been granted$", () -> {
-            world.grantLicence.grantLicence();
-            world.grantLicence.payGrantFees();
+            world.grantApplication.grantLicence();
+            world.grantApplication.payGrantFees();
         });
         When("^i create a variation$", () -> {
             world.updateLicence.createVariation();
@@ -116,15 +115,15 @@ public class RemoveTM extends BasePage implements En {
             String sqlStatement = String.format(
                     "UPDATE `OLCS_RDS_OLCSDB`.`transport_manager_licence` SET `deleted_date` = '%s' WHERE (`licence_id` = '%s')",
                     dateAndTime,
-                    world.createLicence.getLicenceId()
+                    world.createApplication.getLicenceId()
             );
             Properties.set("dbUsername", world.configuration.config.getString("dbUsername"));
             Properties.set("dbPassword", world.configuration.config.getString("dbPassword"));
             executeUpdateSQL(sqlStatement);
         });
         Then("^the TM email should be generated and letter attached$", () -> {
-            String email = world.createLicence.getBusinessEmailAddress();
-            String licenceNo = world.createLicence.getLicenceNumber();
+            String email = world.createApplication.getBusinessEmailAddress();
+            String licenceNo = world.applicationDetails.getLicenceNumber();
             sleep(10000);
             boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
             Assert.assertTrue(letterExists);

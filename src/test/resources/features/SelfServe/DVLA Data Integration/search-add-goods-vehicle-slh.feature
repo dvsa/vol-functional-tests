@@ -4,9 +4,7 @@
 Feature: Search and add a vehicle
 
   Background:
-    Given I have applied for a "goods" "standard_national" licence
-    When I grant licence
-    Then the licence should be granted
+    Given I have a "goods" "standard_national" licence
 
   Scenario Outline: Check page contents
     When I navigate to manage vehicle page

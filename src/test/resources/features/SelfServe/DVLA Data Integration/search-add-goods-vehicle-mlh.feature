@@ -4,7 +4,7 @@
 Feature: Search and add a vehicle for a multi licence holder
 
   Background:
-    Given I have applied for "standard_national" "goods" licences
+    Given I have "2" "standard_national" "goods" licences
 
   @VOL-933
   Scenario: Check page contents for Single Licence holder

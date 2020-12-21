@@ -18,10 +18,6 @@ public class TMDetails extends BasePage implements En {
     String fileName = "src/test/resources/";
 
     public TMDetails(World world) {
-        Given("^I have a new application$", () -> {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.APIJourneySteps.createPartialApplication();
-        });
         And("^the \"([^\"]*)\" button should not be displayed$", (String button) -> {
             assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
         });
@@ -60,7 +56,7 @@ public class TMDetails extends BasePage implements En {
             }
         });
         And("^i navigate to the transport managers details page$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
             click("//*[@name='table[action]']", SelectorType.XPATH);
             waitForTitleToBePresent("Add Transport Manager");
@@ -80,7 +76,7 @@ public class TMDetails extends BasePage implements En {
             }
         });
         Then("^accounts should be created$", () -> {
-            world.genericUtils.writeToFile(world.createLicence.getTransportManagerApplicationId(), world.globalMethods.getLoginPassword(), fileName.concat("TM.csv"));
+            world.genericUtils.writeToFile(world.createApplication.getTransportManagerApplicationId(), world.globalMethods.getLoginPassword(), fileName.concat("TM.csv"));
         });
     }
 }

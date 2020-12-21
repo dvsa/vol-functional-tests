@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
+import apiCalls.enums.UserType;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -21,7 +22,8 @@ public class GenerateLastTMLetter extends BasePage implements En {
     public GenerateLastTMLetter(World world) {
 
         Given("^i have a valid \"([^\"]*)\" \"([^\"]*)\" licence$", (String operatorType, String licenceType) -> {
-            world.UIJourneySteps.createLicence(world, operatorType, licenceType);
+            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.licenceCreation.createLicence(operatorType, licenceType);
         });
         Then("^a pop up should be displayed advising the user that they are about to remove the last TM$", () -> {
             assertTrue(isTextPresent("You are removing your last Transport Manager.",30));
@@ -45,7 +47,7 @@ public class GenerateLastTMLetter extends BasePage implements En {
         });
         And("^i navigate to the review and declarations page and submit the application$", () -> {
             clickByLinkText("GOV.UK");
-            clickByLinkText(world.createLicence.getApplicationNumber());
+            clickByLinkText(world.createApplication.getApplicationId());
             clickByLinkText("Review and declarations");
             waitAndClick("//*[@id='label-declarationConfirmation']", SelectorType.XPATH);
             click("//*[@id='submit']", SelectorType.XPATH);

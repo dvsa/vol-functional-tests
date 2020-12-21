@@ -4,6 +4,8 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.string.Str;
+import apiCalls.enums.EnforcementArea;
+import apiCalls.enums.TrafficArea;
 import enums.UserRoles;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -30,9 +32,9 @@ public class BusRegistrationJourneySteps extends BasePage {
     public void internalSearchForBusReg() throws IllegalBrowserException, MalformedURLException {
         selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Bus registrations");
         do {
-            SearchNavBar.search(world.createLicence.getLicenceNumber());
-        } while (!isLinkPresent(world.createLicence.getLicenceNumber(), 60));
-        clickByLinkText(world.createLicence.getLicenceNumber());
+            SearchNavBar.search(world.applicationDetails.getLicenceNumber());
+        } while (!isLinkPresent(world.applicationDetails.getLicenceNumber(), 60));
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     public void internalSiteAddBusNewReg(int month) throws IllegalBrowserException, MalformedURLException {
@@ -71,7 +73,7 @@ public class BusRegistrationJourneySteps extends BasePage {
     }
 
     public void closeBusReg() throws IllegalBrowserException, MalformedURLException {
-        clickByLinkText("" + world.createLicence.getLicenceNumber() + "");
+        clickByLinkText("" + world.applicationDetails.getLicenceNumber() + "");
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
         enterText("fields[reason]", "Mistake", SelectorType.ID);
@@ -101,24 +103,26 @@ public class BusRegistrationJourneySteps extends BasePage {
 
     public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException {
         if (licenceType.equals("si")) {
-            world.createLicence.setLicenceType("standard_international");
+            world.createApplication.setLicenceType("standard_international");
         } else if (licenceType.equals("sn")) {
-            world.createLicence.setLicenceType("standard_national");
+            world.createApplication.setLicenceType("standard_national");
         } else {
-            world.createLicence.setLicenceType("standard_national");
+            world.createApplication.setLicenceType("standard_national");
         }
-        world.createLicence.setTrafficArea("B");
-        world.createLicence.setEnforcementArea("EA-B");
-        world.createLicence.setOperatorType(operatorType);
+        TrafficArea TA = TrafficArea.getTrafficAreaOf("B");
+        EnforcementArea EA = EnforcementArea.getEnforcementArea("EA-B");
+        world.createApplication.setTrafficArea(TA);
+        world. createApplication.setEnforcementArea(EA);
+        world.createApplication.setOperatorType(operatorType);
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         if (String.valueOf(operatorType).equals("public")) {
             world.APIJourneySteps.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.createLicence.getLicenceNumber());
+            System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         } else {
             world.APIJourneySteps.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.createLicence.getLicenceNumber());
+            System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         }
         world.APIJourneySteps.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
@@ -148,7 +152,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.genericUtils.modifyXML(state, interval);
         GenericUtils.zipFolder();
-        world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
         clickByLinkText("Bus registrations");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);

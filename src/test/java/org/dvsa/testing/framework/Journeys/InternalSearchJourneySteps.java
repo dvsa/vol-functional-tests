@@ -32,9 +32,9 @@ public class InternalSearchJourneySteps extends BasePage {
             assertTrue(Boolean.parseBoolean(String.valueOf(navigate().getCurrentUrl().contains("variation"))));
         } else {
             do {
-                SearchNavBar.search(String.valueOf(world.createLicence.getApplicationNumber()));
-            } while (!isLinkPresent(world.createLicence.getApplicationNumber(), 200) && System.currentTimeMillis() < kickOut);
-            clickByLinkText(world.createLicence.getApplicationNumber());
+                SearchNavBar.search(String.valueOf(world.createApplication.getApplicationId()));
+            } while (!isLinkPresent(world.createApplication.getApplicationId(), 200) && System.currentTimeMillis() < kickOut);
+            clickByLinkText(world.createApplication.getApplicationId());
             if (isLinkPresent("Interim", 60))
                 clickByLinkText("Interim ");
         }
@@ -44,9 +44,9 @@ public class InternalSearchJourneySteps extends BasePage {
         selectValueFromDropDown("search-select", SelectorType.ID, "Licence");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
-            SearchNavBar.search(String.valueOf(world.createLicence.getLicenceNumber()));
-        } while (!isLinkPresent(world.createLicence.getLicenceNumber(), 200) && System.currentTimeMillis() < kickOut);
-        clickByLinkText(world.createLicence.getLicenceNumber());
+            SearchNavBar.search(String.valueOf(world.applicationDetails.getLicenceNumber()));
+        } while (!isLinkPresent(world.applicationDetails.getLicenceNumber(), 200) && System.currentTimeMillis() < kickOut);
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     public void searchAndViewCase() throws IllegalBrowserException, MalformedURLException {
@@ -65,8 +65,8 @@ public class InternalSearchJourneySteps extends BasePage {
             // - 5 is required because the set start number is for all licences that need printing, not just this licence, and so taking the end number and scaling back makes more sense.
             SearchNavBar.search(String.valueOf(Integer.parseInt(world.updateLicence.getEndNumber()) - 5));
         } while (!isTextPresent(String.valueOf(Integer.parseInt(world.updateLicence.getEndNumber()) - 5), 200) && System.currentTimeMillis() < kickOut);
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.createLicence.getLicenceNumber()), SelectorType.XPATH);
-        clickByLinkText(world.createLicence.getLicenceNumber());
+        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
     }
 
@@ -75,20 +75,20 @@ public class InternalSearchJourneySteps extends BasePage {
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(String.format("%s, %s, %s, %s, %s",
-                    world.createLicence.getOperatingCentreAddressLine1(),
-                    world.createLicence.getOperatingCentreAddressLine2(),
-                    world.createLicence.getOperatingCentreAddressLine3(),
-                    world.createLicence.getOperatingCentreAddressLine4(),
-                    world.createLicence.getOperatingCentreTown()));
+                    world.createApplication.getOperatingCentreAddressLine1(),
+                    world.createApplication.getOperatingCentreAddressLine2(),
+                    world.createApplication.getOperatingCentreAddressLine3(),
+                    world.createApplication.getOperatingCentreAddressLine4(),
+                    world.createApplication.getOperatingCentreTown()));
         } while (!isTextPresent(String.format("%s, %s, %s, %s, %s",
-                world.createLicence.getOperatingCentreAddressLine1(),
-                world.createLicence.getOperatingCentreAddressLine2(),
-                world.createLicence.getOperatingCentreAddressLine3(),
-                world.createLicence.getOperatingCentreAddressLine4(),
-                world.createLicence.getOperatingCentreTown()), 200)
+                world.createApplication.getOperatingCentreAddressLine1(),
+                world.createApplication.getOperatingCentreAddressLine2(),
+                world.createApplication.getOperatingCentreAddressLine3(),
+                world.createApplication.getOperatingCentreAddressLine4(),
+                world.createApplication.getOperatingCentreTown()), 200)
                 && System.currentTimeMillis() < kickOut);
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", world.createLicence.getLicenceNumber()), SelectorType.XPATH);
-        clickByLinkText(world.createLicence.getLicenceNumber());
+        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Addresses");
     }
 }

@@ -27,7 +27,7 @@ public class Continuations extends BasePage implements En {
             world.continuationJourneySteps.replaceContinuationAndReviewDates(continuationDate, continuationDate);
         });
         And("^i generate a continuation$", () -> {
-            world.continuationJourneySteps.generateContinuationOnInternal(world.createLicence.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDate.get("month"));
+            world.continuationJourneySteps.generateContinuationOnInternal(world.applicationDetails.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDate.get("month"));
         });
         And("^fill in my continuation details on self serve$", () -> {
             world.continuationJourneySteps.continueLicenceWithVerifyAndPay();
@@ -84,11 +84,11 @@ public class Continuations extends BasePage implements En {
             world.continuationJourneySteps.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
             world.continuationJourneySteps.completeContinuationsReviewPage();
-            if (!world.createLicence.getLicenceType().equals("special_restricted")) {
-                if (world.createLicence.getOperatorType().equals("public") &&
-                        (world.createLicence.getLicenceType().equals("restricted") || !world.createLicence.getPsvVehicleSize().equals("psvvs_medium_large"))) {
+            if (!world.createApplication.getLicenceType().equals("special_restricted")) {
+                if (world.createApplication.getOperatorType().equals("public") &&
+                        (world.createApplication.getLicenceType().equals("restricted") || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large"))) {
                     waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
-                    if (world.createLicence.getLicenceType().equals("restricted")) {
+                    if (world.createApplication.getLicenceType().equals("restricted")) {
                         world.continuationJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
                     }
                     clickAllCheckboxes();
@@ -99,7 +99,7 @@ public class Continuations extends BasePage implements En {
             world.continuationJourneySteps.completeContinuationsSignPage();
             world.continuationJourneySteps.completeContinuationPayOrSubmit();
             world.continuationJourneySteps.viewContinuationSnapshotOnInternal();
-            if (world.createLicence.getOperatorType().equals("public") && world.createLicence.getLicenceType().equals("restricted")) {
+            if (world.createApplication.getOperatorType().equals("public") && world.createApplication.getLicenceType().equals("restricted")) {
                 waitForTextToBePresent("Conditions and undertakings");
                 world.continuationJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
             }

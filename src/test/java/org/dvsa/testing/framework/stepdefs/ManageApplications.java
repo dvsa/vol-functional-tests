@@ -4,7 +4,7 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import apiCalls.enums.OperatorType;
+import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
@@ -21,70 +21,98 @@ public class ManageApplications {
         this.world = world;
     }
 
-    @Given("I have applied for a {string} {string} licence")
-    public void iHaveAppliedForALicence(String operator, String licenceType) {
-        world.createLicence.setNoOfVehiclesRequired(13);
-        world.createLicence.setOperatorType(operator);
-        world.createLicence.setLicenceType(licenceType);
-        if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.APIJourneySteps.createSpecialRestrictedLicence();
-        } else if (world.createLicence.getApplicationNumber() == null) {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
-        }
+    @Given("I have a {string} application")
+    public void iHaveANewApplication(String operatorType) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.licenceCreation.createApplication(operatorType, "standard_national");
+    }
+
+    @Given("I have a {string} {string} application")
+    public void iHaveAnStringStringApplication(String operatorType, String licenceType) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.licenceCreation.createApplication(operatorType, licenceType);
     }
 
     @Given("I have a {string} {string} application which is under consideration")
-    public void iHaveAApplicationWhichIsUnderConsideration(String vehicleType, String typeOfLicence) {
-        world.createLicence.setIsInterim("Y");
-        world.createLicence.setOperatorType(vehicleType);
-        world.createLicence.setLicenceType(typeOfLicence);
-        if (world.createLicence.getApplicationNumber() == null) {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
-        }
-    }
-
-    @Given("I have partially applied for a {string} {string} licence")
-    public void iHavePartiallyAppliedForALicence(String operator, String licenceType) {
-        world.createLicence.setOperatorType(operator);
-        world.createLicence.setLicenceType(licenceType);
-        if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.APIJourneySteps.createSpecialRestrictedLicence();
-        } else if (world.createLicence.getApplicationNumber() == null) {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.APIJourneySteps.createApplication();
-        }
-    }
-
-    @Given("I have applied for {string} {string} licences")
-    public void iHaveAppliedForLicences(String licenceType, String operator) {
+    public void iHaveAnInterimApplicationWhichIsUnderConsideration(String operatorType, String licenceType) {
+        world.createApplication.setIsInterim("Y");
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setOperatingCentreVehicleCap(6);
-        for (TrafficArea ta : trafficAreaList()) {
-            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
+        world.licenceCreation.createSubmittedApplicationWithVehicles(licenceType, operatorType, "5");
+    }
+
+    @Given("I have all {string} {string} Traffic Areas applications with an external TM")
+    public void iHaveAppliedForTMApplication(String licenceType, String operator) throws Exception {
+        String password;
+        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.createApplication.setNoOfVehiclesRequested(3);
+        
+        for (int i = 0; i < 9; i++) {
+            world.createApplication.setPostCodeByTrafficArea(TrafficArea.getPostCode(trafficAreaList()[i]));
+            world.createApplication.setOperatorType(operator);
+            world.createApplication.setLicenceType(licenceType);
+            world.createApplication.setTrafficArea(trafficAreaList()[i]);
+            world.createApplication.setEnforcementArea(enforcementAreaList()[i]);
+            world.APIJourneySteps.createApplication();
+            String externalFirstName = faker.generateFirstName();
+            String externalLastName = faker.generateLastName();
+            String randomInt = String.valueOf(Int.random(1000, 9999));
+            String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
+            world.createApplication.setTransportManagerFirstName(externalFirstName);
+            world.createApplication.setTransportManagerLastName(externalLastName);
+            world.createApplication.setTransportManagerUserName(externalTmUserName);
+            world.createApplication.setTransportManagerEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
+            world.createApplication.addTransportManager();
+//            Need to think of new way of setting TM names now it is included in the addTM method.
+            password = S3.getTempPassword(world.createApplication.getTransportManagerEmailAddress());
+            world.genericUtils.writeToFile(world.createApplication.getTransportManagerUserName(), password, fileName.concat("TM.csv"));
+            world.createApplication.setApplicationId(null);
         }
     }
 
-    @Given("I have applied for {string} {string} {string} licences")
-    public void iHaveAppliedForLicences(String noOfLicences, String licenceType, String operator) {
+    @Then("the licence should be created and granted")
+    public void theLicenceShouldBeCreatedAndGranted() throws Exception {
+        world.genericUtils.writeToFile(world.registerUser.getUserName(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
+        // What does this do?
+    }
+
+    @Given("I have {string} {string} {string} licences")
+    public void iHaveNumberLicences(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setOperatingCentreVehicleCap(6);
-        world.createApplication.setNoOfVehiclesRequested(2);
-        for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
-            TrafficArea ta = trafficAreaList()[i];
-            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
+        for (TrafficArea ta : trafficAreaList()) {
+            world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         }
     }
 
-    @Given("I have applied for {string} {string} {string} licences with {string} vehicles and a cap of {string}")
+    @Given("I have all {string} {string} traffic area licences")
+    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        for (TrafficArea ta : trafficAreaList()) {
+            world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
+        }
+    }
+
+    @Given("I have a {string} {string} application with {string} vehicles")
+    public void iHaveAnApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.licenceCreation.createApplicationWithVehicles(operatorType, licenceType, vehicles);
+    }
+
+    @Given("I have a {string} {string} licence")
+    public void iHaveLicenceWithVehicles(String operatorType, String licenceType) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.licenceCreation.createLicence(operatorType, licenceType);
+    }
+
+    @Given("I have a {string} {string} licence with {string} vehicles")
+    public void iHaveLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicles);
+    }
+
+    @Given("I have {string} {string} {string} licences with {string} vehicles and a cap of {string}")
     public void iHaveAppliedForLicencesWithVehiclesAndCap(String noOfLicences, String licenceType, String operator, String vehicles, String OCVehicleCap) {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
@@ -94,62 +122,19 @@ public class ManageApplications {
         world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
         for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
             TrafficArea ta = trafficAreaList()[i];
-            world.APIJourneySteps.createLicenceWithTrafficArea(licenceType, operator, ta);
+            world.licenceCreation.createLicenceWithTrafficArea(licenceType, operator, ta);
         }
-    }
-
-    @Given("I have applied for a {string} {string} licence with {string} vehicles")
-    public void iHaveAppliedForLicenceWithVehicles(String licenceType, String operator, String vehicles) {
-        world.APIJourneySteps.applyForLicenceWithVehicles(licenceType, operator, vehicles);
-    }
-
-    @Given("I have a {string} {string} licence with {string} vehicles")
-    public void iHaveLicenceWithVehicles(String licenceType, String operator, String vehicles) {
-        world.APIJourneySteps.applyForLicenceWithVehicles(licenceType, operator, vehicles);
-        world.APIJourneySteps.grantLicenceAndPayFees();
-        world.grantApplication.grantLicence();
-        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
-            world.grantApplication.payGrantFees();
-        }
-    }
-
-    @Given("I have applied for {string} {string} TM application")
-    public void iHaveAppliedForTMApplication(String licenceType, String operator) throws Exception {
-        String password;
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-        world.createLicence.setNoOfVehiclesRequired(3);
-        
-        // Don't think both for loops are required but not sure what this test is for.
-        for (TrafficArea ta : trafficAreaList()) {
-//            world.createLicence.setPostcode(ta);
-            world.createLicence.setOperatorType(operator);
-            world.createLicence.setLicenceType(licenceType);
-//            world.createLicence.setTrafficArea(ta);
-//            world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(ta));
-            world.APIJourneySteps.createApplication();
-            String externalFirstName = faker.generateFirstName();
-            String externalLastName = faker.generateLastName();
-            String randomInt = String.valueOf(Int.random(1000, 9999));
-            String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
-            world.createLicence.setForeName(externalFirstName);
-            world.createLicence.setFamilyName(externalLastName);
-            world.createLicence.setTmUserName(externalTmUserName);
-            world.createLicence.setTransManEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
-            world.createLicence.addTransportManager();
-            password = S3.getTempPassword(world.createLicence.getTransManEmailAddress());
-            world.genericUtils.writeToFile(world.createLicence.getTmUserName(), password, fileName.concat("TM.csv"));
-            world.createLicence.setApplicationNumber(null);
-        }
-    }
-
-    @Then("the licence should be created and granted")
-    public void theLicenceShouldBeCreatedAndGranted() throws Exception {
-        world.genericUtils.writeToFile(world.createLicence.getLoginId(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
     }
 
     private TrafficArea[] trafficAreaList() {
         return new TrafficArea[]{TrafficArea.NORTH_EAST, TrafficArea.NORTH_WEST, TrafficArea.MIDLANDS,
                 TrafficArea.EAST, TrafficArea.WALES, TrafficArea.WEST, TrafficArea.LONDON,
                 TrafficArea.SCOTLAND, TrafficArea.NORTHERN_IRELAND};
+    }
+
+    private EnforcementArea[] enforcementAreaList() {
+        return new EnforcementArea[]{EnforcementArea.NORTH_EAST, EnforcementArea.NORTH_WEST, EnforcementArea.MIDLANDS,
+                EnforcementArea.EAST, EnforcementArea.WALES, EnforcementArea.WEST, EnforcementArea.LONDON,
+                EnforcementArea.SCOTLAND, EnforcementArea.NORTHERN_IRELAND};
     }
 }

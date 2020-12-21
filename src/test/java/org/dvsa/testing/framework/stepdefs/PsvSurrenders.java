@@ -23,7 +23,7 @@ public class PsvSurrenders extends BasePage implements En {
             world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
-            if (world.createLicence.getLicenceType().equals("standard_international")) {
+            if (world.createApplication.getLicenceType().equals("standard_international")) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
                 world.surrenderJourneySteps.addCommunityLicenceDetails();
             }
@@ -32,17 +32,17 @@ public class PsvSurrenders extends BasePage implements En {
 
         Then("^the correct licence details should be displayed$", () -> {
             String licenceNumber = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][1]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            Assert.assertEquals(world.createLicence.getLicenceNumber(), licenceNumber);
+            Assert.assertEquals(world.applicationDetails.getLicenceNumber(), licenceNumber);
         });
         And("^the correct correspondence details should be displayed$", () -> {
-            Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(), world.createLicence.getAddressLine1());
-            Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderTown(), world.createLicence.getTown());
+            Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(), world.createApplication.getCorrespondenceAddressLine1());
+            Assertions.assertEquals(world.surrenderJourneySteps.getSurrenderTown(), world.createApplication.getCorrespondenceAddressLine1());
         });
         And("^the correct contact details should be displayed$", () -> {
             String contactNumber = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            Assert.assertEquals(world.createLicence.getPhoneNumber(), contactNumber);
+            Assert.assertEquals(world.createApplication.getPhoneNumber(), contactNumber);
             String emailAddress = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][3]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            Assert.assertEquals(world.createLicence.getBusinessEmailAddress(), emailAddress);
+            Assert.assertEquals(world.createApplication.getBusinessEmailAddress(), emailAddress);
         });
         And("^i update my correspondence address$", () -> {
             this.town = "Leicester";
@@ -64,17 +64,17 @@ public class PsvSurrenders extends BasePage implements En {
         Then("^the post verify success page is displayed$", () -> {
             waitForTextToBePresent("What happens next");
             Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 30));
+            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber()), 30));
             Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 30));
             assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 30));
             waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
         });
         And("^the surrender status is \"([^\"]*)\"$", (String status) -> {
-            waitForTextToBePresent(world.createLicence.getLicenceNumber());
+            waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
             Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), status.toUpperCase());
         });
         Then("^the number of disc should match the vehicles registered on the licence$", () -> {
-            assertEquals(getText("//*[@id=\"main\"]/div/div/div[2]/div/p[2]/strong", SelectorType.XPATH), String.valueOf(world.createLicence.getNoOfVehiclesRequired()));
+            assertEquals(getText("//*[@id=\"main\"]/div/div/div[2]/div/p[2]/strong", SelectorType.XPATH), String.valueOf(world.createApplication.getNoOfVehiclesRequested()));
         });
         And("^discs have been added to my licence$", () -> {
             world.updateLicence.printLicenceDiscs();

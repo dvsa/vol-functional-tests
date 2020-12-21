@@ -43,11 +43,11 @@ public class InternalNavigationalJourneySteps extends BasePage {
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
     public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
-        navigate().get(this.myURL.concat(String.format("application/%s", world.createLicence.getApplicationNumber())));
+        navigate().get(this.myURL.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
 
     public void urlSearchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
-        navigate().get(this.myURL.concat(String.format("licence/%s", world.createLicence.getLicenceId())));
+        navigate().get(this.myURL.concat(String.format("licence/%s", world.createApplication.getLicenceId())));
     }
 
     public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {

@@ -30,10 +30,10 @@ public class CreateApplications extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             for (int i = 0; i < trafficAreas.size(); ) {
                 for (String ta : trafficAreas) {
-                    world.createLicence.setNiFlag(Region);
+                    world.createApplication.setNiFlag(Region);
 //                    world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta.toUpperCase())));
-                    world.createLicence.setOperatorType(operatorType);
-                    world.createLicence.setLicenceType(licenceType);
+                    world.createApplication.setOperatorType(operatorType);
+                    world.createApplication.setLicenceType(licenceType);
 //                    world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta.toUpperCase())));
 //                    world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta.toUpperCase())));
                     world.APIJourneySteps.createApplication();
@@ -42,7 +42,7 @@ public class CreateApplications extends BasePage implements En {
             }
         });
         When("^i choose to print and sign$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);
             clickByLinkText("Review and declarations");
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);

@@ -13,7 +13,7 @@ public class ApplicationVerifyJourney extends BasePage implements En {
         Given("^i have an application in progress$", () -> {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
-            world.selfServeNavigation.navigateToLogin( world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", "Review and declarations");
             world.UIJourneySteps.signDeclaration();
         });

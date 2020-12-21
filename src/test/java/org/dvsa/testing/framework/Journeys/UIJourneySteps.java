@@ -107,7 +107,7 @@ public class UIJourneySteps extends BasePage {
 
     public void editDocumentWithWebDav() throws IllegalBrowserException, IOException, InterruptedException {
         // Forgive us for using sleeps. There's no other way as this is not a window that selenium can recognise.
-        String window = "Olcs - ".concat(world.createLicence.getLicenceNumber()).concat(" - Google Chrome");
+        String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
         String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
 
         Thread.sleep(1000);
@@ -174,7 +174,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
-        if (Integer.parseInt(noOfVehicles) > world.createLicence.getNoOfVehiclesRequired()) {
+        if (Integer.parseInt(noOfVehicles) > world.createApplication.getNoOfVehiclesRequested()) {
             click(nameAttribute("button", "form-actions[submit]"));
         }
         click(nameAttribute("button", "form-actions[submit]"));
@@ -290,37 +290,21 @@ public class UIJourneySteps extends BasePage {
 
     public void addDisc() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Home");
-        clickByLinkText(world.createLicence.getLicenceNumber());
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitAndEnterText("data[additionalDiscs]", SelectorType.ID, "2");
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         world.updateLicence.printLicenceDiscs();
         clickByLinkText("Home");
-        clickByLinkText(world.createLicence.getLicenceNumber());
-    }
-
-    public void createLicence(World world, String operatorType, String licenceType) {
-        world.createLicence.setOperatorType(operatorType);
-        world.createLicence.setLicenceType(licenceType);
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-        if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
-            world.APIJourneySteps.createSpecialRestrictedLicence();
-        } else if (world.createLicence.getApplicationNumber() == null) {
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
-        }
-        world.grantLicence.grantLicence();
-        if (world.createLicence.getOperatorType().equals("goods")) {
-            world.grantLicence.payGrantFees();
-        }
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     public void closeCase() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("" + world.updateLicence.getCaseId() + "");
 
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        String casePath = String.format("/case/details/%s", String.valueOf(world.updateLicence.getCaseId()));
+        String casePath = String.format("/case/details/%s", world.updateLicence.getCaseId());
         navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");

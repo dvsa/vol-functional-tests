@@ -73,7 +73,7 @@ public class GenericUtils extends BasePage {
                         node.setTextContent(getDates(dateState, months));
                     }
                     if ("LicenceNumber".equals(node.getNodeName())) {
-                        node.setTextContent(world.createLicence.getLicenceNumber());
+                        node.setTextContent(world.applicationDetails.getLicenceNumber());
                     }
                     if ("RegistrationNumber".equals(node.getNodeName())) {
                         String getContent = node.getTextContent();
@@ -283,14 +283,14 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public static String retrieveAPIData(String url, String jsonPath, String defaultReturn) {
-        Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
-        ValidatableResponse response = RestUtils.get(url, Headers.getHeaders());
-        try {
-            return response.extract().response().jsonPath().getString(jsonPath);
-        } catch (NullPointerException ne) {
-            return defaultReturn;
-        }
-    }
+//    public static String retrieveAPIData(String url, String jsonPath, String defaultReturn) {
+//        Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
+//        ValidatableResponse response = RestUtils.get(url, Headers.getHeaders());
+//        try {
+//            return response.extract().response().jsonPath().getString(jsonPath);
+//        } catch (NullPointerException ne) {
+//            return defaultReturn;
+//        }
+//    }
 }
 

@@ -5,7 +5,7 @@
 Feature: Internal User should be able to create an operator account
 
   Scenario Outline: Caseworker submits application
-      Given I have partially applied for a "<operator>" "<licence-type>" licence
+      Given I have a "<operator>" "<licence-type>" application
       When the caseworker completes and submits the application
       And grants the application
       Then the licence is granted in Internal

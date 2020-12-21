@@ -16,24 +16,24 @@ public class RefundInterim extends BasePage implements En {
             if (operatorType.equals("public")){
                 throw new Exception("PSV licences cannot have interim applications.");
             }
-            world.createLicence.setOperatorType(operatorType);
-            world.createLicence.setLicenceType(licenceType);
-            world.createLicence.setIsInterim("Y");
+            world.createApplication.setOperatorType(operatorType);
+            world.createApplication.setLicenceType(licenceType);
+            world.createApplication.setIsInterim("Y");
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            if(licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)){
+            if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
                 world.APIJourneySteps.createSpecialRestrictedLicence();
             }
-            else if (world.createLicence.getApplicationNumber() == null) {
+            else if (world.createApplication.getApplicationId() == null) {
                 world.APIJourneySteps.createApplication();
                 world.APIJourneySteps.submitApplication();
             }
         });
         When("^the interim fee has been paid$", () -> {
-            world.grantLicence.getOutstandingFees(world.createLicence.getApplicationNumber());
-            world.grantLicence.payOutstandingFees(world.createLicence.getOrganisationId(), world.createLicence.getApplicationNumber());
+            world.grantApplication.getOutstandingFees();
+            world.grantApplication.payOutstandingFees();
         });
         And("^the licence has been refused$", () -> {
-            world.grantLicence.refuse(world.createLicence.getApplicationNumber());
+            world.grantApplication.refuse();
         });
         Then("^the interim fee should be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
@@ -55,7 +55,7 @@ public class RefundInterim extends BasePage implements En {
             assertTrue(checkForPartialMatch("£68.00"));
         });
         And("^the licence has been withdrawn$", () -> {
-            world.grantLicence.withdraw(world.createLicence.getApplicationNumber());
+            world.grantApplication.withdraw();
         });
         Then("^the interim fee should not be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
@@ -79,10 +79,10 @@ public class RefundInterim extends BasePage implements En {
             waitForTitleToBePresent("Application overview");
         });
         And("^the application has been refused$", () -> {
-            world.grantLicence.refuse(world.updateLicence.getVariationApplicationId());
+            world.grantApplication.refuse();
         });
         And("^the application has been withdrawn$", () -> {
-            world.grantLicence.withdraw(world.updateLicence.getVariationApplicationId());
+            world.grantApplication.withdraw();
         });
         And("^the variation interim is granted$", () -> {
             world.updateLicence.grantInterimApplication();

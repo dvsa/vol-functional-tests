@@ -18,10 +18,10 @@ public class ResettingPassword extends BasePage implements En {
 
         And("^i reset my password$", () -> {
             String env = System.getProperty("env");
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             clickByLinkText("Sign out");
             world.UIJourneySteps.resettingExternalPassword();
-            enterField(nameAttribute("input", "username"), world.createLicence.getLoginId());
+            enterField(nameAttribute("input", "username"), world.registerUser.getUserName());
             isTextPresent("Failed",30);
             click(nameAttribute("input","submit"), SelectorType.CSS);
                 while (isTextPresent("Failed",30)) {
@@ -35,7 +35,7 @@ public class ResettingPassword extends BasePage implements En {
         });
         And("^i then try reset my password$", () -> {
             world.UIJourneySteps.resettingExternalPassword();
-            enterField(nameAttribute("input", "username"), world.createLicence.getLoginId());
+            enterField(nameAttribute("input", "username"), world.registerUser.getUserName());
             isTextPresent("Failed",30);
             click(nameAttribute("input","submit"), SelectorType.CSS);
             isTextPresent("Failed",30);

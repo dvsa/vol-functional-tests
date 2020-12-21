@@ -29,7 +29,7 @@ public class WebDav extends BasePage implements En {
 
     public WebDav(World world) {
         And("^i make changes to the document with WebDav and save it$", () -> {
-            String licenceNumber = world.createLicence.getLicenceNumber();
+            String licenceNumber = world.applicationDetails.getLicenceNumber();
             String documentLink = Browser.navigate().findElement(By.id("letter-link")).getText();
 
             world.UIJourneySteps.editDocumentWithWebDav();
@@ -45,14 +45,14 @@ public class WebDav extends BasePage implements En {
             Assert.assertTrue(isTextPresent(templateName,30));
             clickByLinkText(templateName);
 
-            String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.createLicence.getLicenceNumber(), templateName);
+            String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.applicationDetails.getLicenceNumber(), templateName);
 
             File file = getDownloadedFile("downloadDirectory", templateRegex);
 
             Assert.assertTrue(checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
         });
         And("^i open the document in word for the first time$", () -> {
-            String window = "Olcs - ".concat(world.createLicence.getLicenceNumber()).concat(" - Google Chrome");
+            String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
             Thread.sleep(1000);
             clickByLinkText("BUS");
 

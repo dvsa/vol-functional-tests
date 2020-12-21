@@ -42,7 +42,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 waitForTitleToBePresent("View and amend your licence");
                 break;
             case "application":
-                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
+                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createApplication.getApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.createApplication.getApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {

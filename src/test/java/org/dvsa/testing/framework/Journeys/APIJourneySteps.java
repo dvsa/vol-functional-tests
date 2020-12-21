@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.Journeys;
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
-import apiCalls.Utils.generic.Headers;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.OperatorType;
@@ -20,7 +19,6 @@ public class APIJourneySteps {
 
     public APIJourneySteps(World world) throws MissingRequiredArgument {
         this.world = world;
-        Headers.setAPI_HEADER(adminApiHeader());
     }
 
     public void createAdminUser() throws MissingRequiredArgument {
@@ -28,23 +26,23 @@ public class APIJourneySteps {
     }
 
     public void nIAddressBuilder() {
-        world.createLicence.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND.asString());
-        world.createLicence.setTrafficArea(TrafficArea.NORTHERN_IRELAND.asString());
-        world.createLicence.setTown("Belfast");
-        world.createLicence.setPostcode("BT28HQ");
-        world.createLicence.setCountryCode("NI");
-        world.createLicence.setNiFlag("Y");
+        world.createApplication.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND);
+        world.createApplication.setTrafficArea(TrafficArea.NORTHERN_IRELAND);
+        world.createApplication.setCountryCode("NI");
+        world.createApplication.setNiFlag("Y");
     }
 
-    public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) throws Exception {
-        world.createLicence.setTrafficArea(trafficArea);
-        world.createLicence.setEnforcementArea(enforcementArea);
-        world.createLicence.setOperatorType("public");
+    public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) {
+        TrafficArea TA = TrafficArea.getTrafficAreaOf(trafficArea);
+        EnforcementArea EA = EnforcementArea.getEnforcementArea(enforcementArea);
+        world.createApplication.setTrafficArea(TA);
+        world.createApplication.setEnforcementArea(EA);
+        world.createApplication.setOperatorType("public");
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
-        world.grantLicence.grantLicence();
-        world.grantLicence.payGrantFees();
+        world.grantApplication.grantLicence();
+        world.grantApplication.payGrantFees();
         world.updateLicence.getLicenceTrafficArea();
     }
 
@@ -72,75 +70,46 @@ public class APIJourneySteps {
         world.createApplication.applicationReviewAndDeclare();
     }
 
-    public void createSpecialRestrictedLicence() {
-        world.createLicence.createApplication();
-        world.createLicence.updateBusinessType();
-        world.createLicence.updateBusinessDetails();
-        world.createLicence.addAddressDetails();
-        world.createLicence.addPartners();
-        world.createLicence.submitTaxiPhv();
-        world.createLicence.submitApplication();
-        world.createLicence.getApplicationLicenceDetails();
-    }
-
     public void submitApplication() {
         world.createApplication.submitApplication();
         world.applicationDetails.getApplicationLicenceDetails(world.createApplication);
     }
 
+    public void createSpecialRestrictedApplication() {
+        world.createApplication.startApplication();
+        world.createApplication.addBusinessType();
+        world.createApplication.addBusinessDetails();
+        world.createApplication.addAddressDetails();
+        world.createApplication.addPartners();
+        world.createApplication.submitTaxiPhv();
+    }
+
+    public void createSpecialRestrictedLicence() {
+        world.APIJourneySteps.createSpecialRestrictedApplication();
+        world.APIJourneySteps.submitApplication();
+    }
+
     public void createPartialApplication() {
-        world.createLicence.createApplication();
-        world.createLicence.updateBusinessType();
-        world.createLicence.updateBusinessDetails();
-        world.createLicence.addAddressDetails();
-        world.createLicence.addPartners();
-        world.createLicence.addOperatingCentre();
-        world.createLicence.updateOperatingCentre();
-        world.createLicence.addFinancialEvidence();
+        world.createApplication.startApplication();
+        world.createApplication.addBusinessType();
+        world.createApplication.addBusinessDetails();
+        world.createApplication.addAddressDetails();
+        world.createApplication.addPartners();
+        world.createApplication.addOperatingCentre();
+        world.createApplication.updateOperatingCentre();
+        world.createApplication.addFinancialEvidence();
     }
 
     public void registerAndGetUserDetails(String userType) {
         world.registerUser.registerUser();
-        world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), adminApiHeader());
+        world.userDetails.getUserDetails(userType, world.registerUser.getUserId());
     }
 
     public void grantLicenceAndPayFees() {
         world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
-        world.grantApplication.payGrantFees();
-    }
-
-    public void createLicenceWithTrafficArea(String licenceType, String operator, TrafficArea trafficArea) {
-        world.createApplication.setOperatorType(OperatorType.valueOf(operator.toUpperCase()).asString());
-        world.createApplication.setLicenceType(LicenceType.valueOf(licenceType.toUpperCase()).asString());
-
-        world.createApplication.setTrafficArea(trafficArea);
-        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
-
-        world.APIJourneySteps.createApplication();
-        world.APIJourneySteps.submitApplication();
-        world.APIJourneySteps.grantLicenceAndPayFees();
-    }
-
-
-    public void applyForLicenceWithVehicles(String licenceType, String operator, String vehicles) {
-        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
-        world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
-        world.createLicence.setOperatorType(operator);
-        world.createLicence.setLicenceType(licenceType);
-        if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
-            world.APIJourneySteps.createSpecialRestrictedLicence();
-        } else if (world.createLicence.getApplicationNumber() == null) {
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
+        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+            world.grantApplication.payGrantFees();
         }
-    }
-
-    //TODO: Need apply for licence, create licence, both with vehicles, vehicles and operating cap, traffic area.
-    // Need this done with refactored methods and overloading. Also need to cover all preexisting scenarios and replace with new API.
-
-    public static String adminApiHeader() {
-        return "e91f1a255e01e20021507465a845e7c24b3a1dc951a277b874c3bcd73dec97a1";
     }
 }

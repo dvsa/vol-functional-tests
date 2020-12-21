@@ -78,7 +78,7 @@ public class TransportManagerJourneySteps extends BasePage {
     public void promptRemovalOfInternalTransportManager() throws MalformedURLException, IllegalBrowserException {
         assertTrue(isTextPresent("Overview", 60));
         if (!isLinkPresent("Transport", 60) && isTextPresent("Granted", 60)) {
-            clickByLinkText(world.createLicence.getLicenceNumber());
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
             tmCount = returnTableRows("//*[@id='lva-transport-managers']/fieldset/div/div[2]/table/tbody/tr", SelectorType.XPATH);
         }
         clickByLinkText("Transport");
@@ -118,8 +118,8 @@ public class TransportManagerJourneySteps extends BasePage {
 
     public void addTransportManagerDetails() throws IllegalBrowserException, MalformedURLException {
         //Add Personal Details
-        String birthPlace = world.createLicence.getTown();
-        String postCode = world.createLicence.getPostcode();
+        String birthPlace = world.createApplication.getTransportManagerTown();
+        String postCode = world.createApplication.getTransportManagerPostCode();
 
         HashMap<String, Integer> dob;
         dob = world.globalMethods.date.getDateHashMap(0, 0, -25);
@@ -194,7 +194,7 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
     public void addOperatorAdminAsTransportManager() throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
-        String user = String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName());
+        String user = String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName());
         nominateOperatorUserAsTransportManager(user, true);
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
@@ -280,7 +280,7 @@ public class TransportManagerJourneySteps extends BasePage {
 
     public void generateAndOperatorUser() throws MalformedURLException, IllegalBrowserException {
         world.TMJourneySteps.generateOperatorValues();
-        world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.UIJourneySteps.addUser(
                 world.TMJourneySteps.getOperatorUser(),
                 world.TMJourneySteps.getOperatorForeName(),

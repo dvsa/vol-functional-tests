@@ -5,7 +5,7 @@
 Feature: TM/operator checks optional wording has been removed for TM details page
 
   Background:
-    Given I have a new application
+    Given I have a "goods" application
     And i navigate to the transport managers details page
 
   Scenario: Radio button not clicked
