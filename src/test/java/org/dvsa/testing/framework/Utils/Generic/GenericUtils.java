@@ -4,16 +4,12 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
-import activesupport.http.RestUtils;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
-import io.restassured.response.ValidatableResponse;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
-import org.dvsa.testing.framework.Utils.API_Headers.Headers;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
@@ -282,15 +278,5 @@ public class GenericUtils extends BasePage {
                 return false;
         }
     }
-
-//    public static String retrieveAPIData(String url, String jsonPath, String defaultReturn) {
-//        Headers.headers.put("x-pid", APIJourneySteps.adminApiHeader());
-//        ValidatableResponse response = RestUtils.get(url, Headers.getHeaders());
-//        try {
-//            return response.extract().response().jsonPath().getString(jsonPath);
-//        } catch (NullPointerException ne) {
-//            return defaultReturn;
-//        }
-//    }
 }
 
