@@ -27,16 +27,16 @@ public class LicenceCreation {
         }
         world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
         world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
-        createApplication(licenceType, operatorType);
+        createApplication(operatorType, licenceType);
     }
 
     public void createSubmittedApplication(String operatorType, String licenceType) {
-        createApplication(licenceType, operatorType);
+        createApplication(operatorType, licenceType);
         world.APIJourneySteps.submitApplication();
     }
 
     public void createSubmittedApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
-        createApplicationWithVehicles(licenceType, operatorType, vehicles);
+        createApplicationWithVehicles(operatorType, licenceType, vehicles);
         world.APIJourneySteps.submitApplication();
     }
 
