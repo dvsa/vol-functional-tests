@@ -15,8 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TMDetails extends BasePage implements En {
 
-    String fileName = "src/test/resources/";
-
     public TMDetails(World world) {
         And("^the \"([^\"]*)\" button should not be displayed$", (String button) -> {
             assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));

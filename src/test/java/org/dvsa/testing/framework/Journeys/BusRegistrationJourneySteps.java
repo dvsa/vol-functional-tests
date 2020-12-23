@@ -158,7 +158,6 @@ public class BusRegistrationJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"));
         String workingDir = System.getProperty("user.dir");
-        System.out.println("====THIS=IS=WORKING==DIR====" + workingDir);
         uploadFile("//*[@id='fields[files][file]']", workingDir + zipFilePath, "document.getElementById('fields[files][file]').style.left = 0", SelectorType.XPATH);
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }

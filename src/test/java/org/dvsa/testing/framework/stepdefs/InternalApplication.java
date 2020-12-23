@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
@@ -68,6 +69,19 @@ public class InternalApplication extends BasePage implements En {
             assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
         });
 
+        Given("^I have partially applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
+            world.createLicence.setOperatorType(operator);
+            world.createLicence.setLicenceType(licenceType);
+            if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+                world.APIJourneySteps.createSpecialRestrictedLicence();
+            } else if (world.createLicence.getApplicationNumber() == null) {
+                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+                world.APIJourneySteps.createApplication();
+
+            }
+        });
+
         When("^the caseworker completes and submits the application$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
@@ -102,6 +116,8 @@ public class InternalApplication extends BasePage implements En {
                 throw new TimeoutException("Kickout time for expecting no fee is present when granting a licence exceeded.");
             }
             waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
+            waitAndClick("//input[@id='grant-authority']", SelectorType.XPATH);
+            waitAndClick("//button[@id='form-actions[continue-to-grant]']", SelectorType.XPATH);
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
             click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
         });
