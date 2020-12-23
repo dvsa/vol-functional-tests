@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import com.google.common.collect.FluentIterable;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
 import enums.UserRoles;
@@ -14,6 +15,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TMDetails extends BasePage implements En {
+
+    String fileName = "src/test/resources/";
 
     public TMDetails(World world) {
         And("^the \"([^\"]*)\" button should not be displayed$", (String button) -> {

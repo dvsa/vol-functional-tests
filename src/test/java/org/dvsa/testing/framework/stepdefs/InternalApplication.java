@@ -70,12 +70,12 @@ public class InternalApplication extends BasePage implements En {
         });
 
         Given("^I have partially applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
-            world.createLicence.setOperatorType(operator);
-            world.createLicence.setLicenceType(licenceType);
-            if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
+            world.createApplication.setOperatorType(operator);
+            world.createApplication.setLicenceType(licenceType);
+            if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
                 world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createSpecialRestrictedLicence();
-            } else if (world.createLicence.getApplicationNumber() == null) {
+            } else if (world.createApplication.getApplicationId() == null) {
                 world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createApplication();
 

@@ -4,11 +4,10 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.enums.TrafficArea;
+import apiCalls.enums.EnforcementArea;
 import cucumber.api.java8.En;
-import enums.TrafficArea;
 import enums.UserRoles;
-import org.dvsa.testing.framework.Utils.Generic.EnforcementArea;
-import org.dvsa.testing.framework.Utils.Generic.PostCode;
 import org.dvsa.testing.lib.pages.BasePage;
 
 public class UserResearch extends BasePage implements En {
@@ -19,18 +18,18 @@ public class UserResearch extends BasePage implements En {
 
         Given("^^I have applied for \"([^\"]*)\" \"([^\"]*)\" licences$", (String licenceType, String operator) -> {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.createLicence.setNoOfVehiclesRequired(5);
+            world.createApplication.setNoOfVehiclesRequested(5);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 for (String ta : trafficAreaList()) {
-                    world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
-                    world.createLicence.setOperatorType(operator);
-                    world.createLicence.setLicenceType(licenceType);
-                    world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
-                    world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
+                    world.createApplication.setCorrespondencePostCode(TrafficArea.getPostCode(TrafficArea.valueOf(ta)));
+                    world.createApplication.setOperatorType(operator);
+                    world.createApplication.setLicenceType(licenceType);
+                    world.createApplication.setTrafficArea(TrafficArea.getTrafficAreaOf(ta));
+                    world.createApplication.setEnforcementArea(EnforcementArea.getEnforcementArea(ta));
                     world.APIJourneySteps.createApplication();
                     world.APIJourneySteps.submitApplication();
                     world.APIJourneySteps.grantLicenceAndPayFees();
-                    world.createLicence.setApplicationNumber(null);
+                    world.createApplication.setApplicationId(null);
                     i++;
                 }
             }
@@ -39,36 +38,38 @@ public class UserResearch extends BasePage implements En {
         Given("^I have applied for \"([^\"]*)\" \"([^\"]*)\" TM application$", (String licenceType, String operator) -> {
             String password;
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.createLicence.setNoOfVehiclesRequired(3);
+            world.createApplication.setNoOfVehiclesRequested(3);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
-                for (String ta : trafficAreaList()) {
-                    world.createLicence.setPostcode(PostCode.getPostCode(TrafficArea.valueOf(ta)));
-                    world.createLicence.setOperatorType(operator);
-                    world.createLicence.setLicenceType(licenceType);
-                    world.createLicence.setTrafficArea(String.valueOf(TrafficArea.valueOf(ta)));
-                    world.createLicence.setEnforcementArea(EnforcementArea.getEnforcementArea(TrafficArea.valueOf(ta)));
-                    world.APIJourneySteps.createApplication();
-                    String externalFirstName = faker.generateFirstName();
-                    String externalLastName = faker.generateLastName();
-                    String randomInt = String.valueOf(Int.random(1000, 9999));
-                    String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
-                    world.createLicence.setForeName(externalFirstName);
-                    world.createLicence.setFamilyName(externalLastName);
-                    world.createLicence.setTmUserName(externalTmUserName);
-                    world.createLicence.setTransManEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
-                    world.createLicence.addTransportManager();
-                    password = S3.getTempPassword(world.createLicence.getTransManEmailAddress());
-                    world.genericUtils.writeToFile(world.createLicence.getTmUserName(), password, fileName.concat("TM.csv"));
-                    world.createLicence.setApplicationNumber(null);
-                    i++;
-                }
+                String ta = trafficAreaList()[i];
+                String ea = enforcementAreaList()[i];
+                world.createApplication.setPostCodeByTrafficArea(TrafficArea.getPostCode(TrafficArea.valueOf(ta)));
+                world.createApplication.setOperatorType(operator);
+                world.createApplication.setLicenceType(licenceType);
+                world.createApplication.setTrafficArea(TrafficArea.getTrafficAreaOf(ta));
+                world.createApplication.setEnforcementArea(EnforcementArea.getEnforcementArea(ea));
+                world.APIJourneySteps.createApplication();
+                String externalFirstName = faker.generateFirstName();
+                String externalLastName = faker.generateLastName();
+                String randomInt = String.valueOf(Int.random(1000, 9999));
+                String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
+                world.createApplication.setTransportManagerFirstName(externalFirstName);
+                world.createApplication.setTransportManagerLastName(externalLastName);
+                world.createApplication.setTransportManagerUserName(externalTmUserName);
+                world.createApplication.setTransportManagerEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
+                world.createApplication.addTransportManager();
+                password = S3.getTempPassword(world.createApplication.getTransportManagerEmailAddress());
+                world.genericUtils.writeToFile(world.createApplication.getTransportManagerUserName(), password, fileName.concat("TM.csv"));
+                world.createApplication.setApplicationId(null);
+                i++;
             }
         });
         Then("^the licence should be created and granted$", () -> {
-            world.genericUtils.writeToFile(world.createLicence.getLoginId(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
+            world.genericUtils.writeToFile(world.registerUser.getUserName(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
         });
     }
     private String[] trafficAreaList() {
         return new String[]{"B", "C", "D", "F", "G", "H", "K", "M"};
     }
+
+    private String[] enforcementAreaList() { return new String[]{"EA-B", "EA-C", "EA-D", "EA-F", "EA-E", "EA-J", "EA-H", "EA-A", "EA-N"}; }
 }
