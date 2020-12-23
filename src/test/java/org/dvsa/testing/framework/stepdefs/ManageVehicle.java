@@ -105,7 +105,7 @@ public class ManageVehicle extends BasePage {
 
     @And("I choose to remove a vehicle")
     public void iChooseToRemoveAVehicle() throws MalformedURLException, IllegalBrowserException {
-        world.dvlaJourneySteps.removeVehicle();
+        world.UIJourneySteps.removeVehicle();
     }
 
     @And("I choose to reprint a vehicle disc")

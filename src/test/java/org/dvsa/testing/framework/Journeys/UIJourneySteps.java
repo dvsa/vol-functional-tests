@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -20,9 +21,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import scanner.AXEScanner;
+import scanner.ReportGenerator;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -512,5 +516,38 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
+    }
+
+
+    public void addAVehicle(String licenceNumber) throws MalformedURLException, IllegalBrowserException {
+        findSelectAllRadioButtonsByValue("add");
+        waitAndClick("next",SelectorType.ID);
+        waitAndEnterText("vehicle-search[search-value]",SelectorType.ID,licenceNumber);
+        waitAndClick("vehicle-search[submit]",SelectorType.ID);
+    }
+    public void removeVehicle() throws MalformedURLException, IllegalBrowserException {
+        findSelectAllRadioButtonsByValue("remove");
+        waitAndClick("next",SelectorType.ID);
+    }
+
+
+    public void vehicleRemovalConfirmationPage() throws MalformedURLException, IllegalBrowserException {
+        removeVehicle();
+        waitAndClick("//*[@name='table[id][]'][1]",SelectorType.XPATH);
+        waitAndClick("formActions[action]",SelectorType.ID);
+    }
+
+    public void scanPageForAccessibilityViolations(String URL, AXEScanner scanner) throws IOException, URISyntaxException {
+        AXEScanner axeScanner;
+        ReportGenerator reportGenerator = new ReportGenerator();
+        axeScanner = scanner;
+        if(scanner.axeFindings().length() != 0) {
+            reportGenerator.urlScannedReportSection(URL);
+            reportGenerator.violationDetailsReportSection(URL, axeScanner);
+            reportGenerator.createReport(axeScanner);
+            Assert.fail("Violation findings found");
+        }else{
+            Assert.assertEquals(0, scanner.axeFindings().length());
+        }
     }
 }
