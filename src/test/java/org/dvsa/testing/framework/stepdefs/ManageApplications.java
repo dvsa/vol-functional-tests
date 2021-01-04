@@ -10,7 +10,10 @@ import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import enums.UserRoles;
+import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.InvalidArgumentException;
+
+import java.util.List;
 
 public class ManageApplications {
     World world;
@@ -76,7 +79,7 @@ public class ManageApplications {
     }
 
     @Given("I have {string} {string} {string} licences")
-    public void iHaveNumberLicences(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
+    public void iHaveNumberLicences(String noOfLicences, String operatorType, String licenceType) {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
@@ -123,6 +126,22 @@ public class ManageApplications {
         for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
             TrafficArea ta = trafficAreaList()[i];
             world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
+        }
+    }
+
+    @Given("i have a {string} {string} {string} application in traffic area")
+    public void iHaveAnApplicationInTrafficArea(String operatorType, String licenceType, String Region, DataTable trafficAreaTable) {
+        if (Region.equals("NI".toUpperCase())) {
+            Region = "Y";
+        } else {
+            Region = "N";
+        }
+        world.createApplication.setNiFlag(Region);
+        List<String> trafficAreas = trafficAreaTable.asList(String.class);
+        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        for (String ta : trafficAreas) {
+            TrafficArea trafficArea = TrafficArea.getTrafficAreaOf(ta.toUpperCase());
+            world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
         }
     }
 

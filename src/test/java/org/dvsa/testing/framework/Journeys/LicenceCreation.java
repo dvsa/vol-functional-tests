@@ -14,9 +14,9 @@ public class LicenceCreation {
     public void createApplication(String operatorType, String licenceType) {
         world.createApplication.setOperatorType(operatorType);
         world.createApplication.setLicenceType(licenceType);
-        if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
+        if (licenceType.equals("special_restricted")) {
             world.APIJourneySteps.createSpecialRestrictedApplication();
-        } else if (world.createApplication.getApplicationId() == null) {
+        } else {
             world.APIJourneySteps.createApplication();
         }
     }
@@ -27,6 +27,12 @@ public class LicenceCreation {
         }
         world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
         world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
+        createApplication(operatorType, licenceType);
+    }
+
+    public void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
+        world.createApplication.setTrafficArea(trafficArea);
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
         createApplication(operatorType, licenceType);
     }
 
