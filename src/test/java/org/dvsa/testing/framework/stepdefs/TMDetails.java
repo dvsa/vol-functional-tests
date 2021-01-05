@@ -56,12 +56,14 @@ public class TMDetails extends BasePage implements En {
                 assertTrue(Browser.navigate().findElements(By.xpath(String.format("//*[@id=\"%s\"]/div/div", section))).stream().noneMatch(x -> x.getText().contains("(optional)")));
             }
         });
-        And("^i navigate to the transport managers details page$", () -> {
+        And("^i navigate to the admin transport managers details page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            world.selfServeNavigation.navigateToNavBarPage("manage users");
+            String admin = getAttribute("*//td[contains(text(),'Administrator')]/../td[1]/input", SelectorType.XPATH, "value");
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
             click("//*[@name='table[action]']", SelectorType.XPATH);
             waitForTitleToBePresent("Add Transport Manager");
-            selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
+            selectValueFromDropDown("data[registeredUser]", SelectorType.ID, admin);
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
         });
         And("^the section buttons should not be displayed$", (DataTable table) -> {
