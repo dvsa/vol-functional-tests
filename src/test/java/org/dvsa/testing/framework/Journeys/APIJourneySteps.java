@@ -51,7 +51,7 @@ public class APIJourneySteps {
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
         world.createApplication.addAddressDetails();
-        world.createApplication.addPartners();
+        world.createApplication.addDirectors();
         world.createApplication.submitTaxiPhv();
         world.createApplication.addOperatingCentre();
         world.createApplication.updateOperatingCentre();
@@ -80,7 +80,7 @@ public class APIJourneySteps {
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
         world.createApplication.addAddressDetails();
-        world.createApplication.addPartners();
+        world.createApplication.addDirectors();
         world.createApplication.submitTaxiPhv();
     }
 
@@ -94,7 +94,7 @@ public class APIJourneySteps {
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
         world.createApplication.addAddressDetails();
-        world.createApplication.addPartners();
+        world.createApplication.addDirectors();
         world.createApplication.addOperatingCentre();
         world.createApplication.updateOperatingCentre();
         world.createApplication.addFinancialEvidence();

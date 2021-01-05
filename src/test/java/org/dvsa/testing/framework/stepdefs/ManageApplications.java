@@ -36,11 +36,17 @@ public class ManageApplications {
         world.licenceCreation.createApplication(operatorType, licenceType);
     }
 
-    @Given("I have a {string} {string} application which is under consideration")
+    @Given("I have a {string} {string} interim application which is under consideration")
     public void iHaveAnInterimApplicationWhichIsUnderConsideration(String operatorType, String licenceType) {
         world.createApplication.setIsInterim("Y");
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createSubmittedApplicationWithVehicles(operatorType, licenceType, "5");
+    }
+
+    @Given("I have submitted a {string} {string} application")
+    public void iHaveSubmittedApplication(String operatorType, String licenceType) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.licenceCreation.createSubmittedApplication(operatorType, licenceType);
     }
 
     @Given("I have all {string} {string} Traffic Areas applications with an external TM")
@@ -116,7 +122,7 @@ public class ManageApplications {
     }
 
     @Given("I have {string} {string} {string} licences with {string} vehicles and a cap of {string}")
-    public void iHaveAppliedForLicencesWithVehiclesAndCap(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
+    public void iHaveLicencesWithVehiclesAndCap(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }

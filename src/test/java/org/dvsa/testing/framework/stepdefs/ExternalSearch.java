@@ -24,13 +24,13 @@ public class ExternalSearch extends BasePage implements En {
                     enterText("search", world.createApplication.getPostCodeByTrafficArea(), SelectorType.NAME);
                     break;
                 case "business":
-                    enterText("search", world.registerUser.getOrganisationName(), SelectorType.NAME);
+                    enterText("search", world.createApplication.getBusinessName(), SelectorType.NAME);
                     break;
                 case "licence":
                     enterText("search", world.applicationDetails.getLicenceNumber(), SelectorType.NAME);
                     break;
                 case "person":
-                    enterText("search", String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), SelectorType.NAME);
+                    enterText("search", String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()), SelectorType.NAME);
                     break;
             }
             clickByName("submit");
@@ -46,7 +46,7 @@ public class ExternalSearch extends BasePage implements En {
                     world.createApplication.getOperatingCentreAddressLine3(),
                     world.createApplication.getOperatingCentreAddressLine4(),
                     world.createApplication.getOperatingCentreTown(),
-                    world.createApplication.getPostCodeByTrafficArea()
+                    world.createApplication.getOperatingCentrePostCode()
             );
             world.selfServeNavigation.clickSearchWhileCheckingTextPresent(clippedCorrespondenceAddress, 240, "KickOut reached. Correspondence and operating centre address external search failed.");
             WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", clippedCorrespondenceAddress), SelectorType.XPATH);
@@ -57,20 +57,20 @@ public class ExternalSearch extends BasePage implements En {
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
         });
         Then("^search results page should display operator names containing our business name$", () -> {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.registerUser.getOrganisationName(), 240, "KickOut reached. Operator name external search failed.");
-            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.registerUser.getOrganisationName()), SelectorType.XPATH);
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getBusinessName(), 240, "KickOut reached. Operator name external search failed.");
+            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getBusinessName()), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
         });
         Then("^search results page should only display our licence number$", () -> {
             world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 240, "KickOut reached. Licence number external search failed.");
-            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.registerUser.getOrganisationName()), SelectorType.XPATH);
+            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getBusinessName()), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
         });
         Then("^search results page should display names containing our operator name$", () -> {
-            String operatorName = String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName());
+            String operatorName = String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName());
             world.selfServeNavigation.clickSearchWhileCheckingTextPresent(operatorName, 300, "KickOut reached. Operator name external search failed.");
             WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", operatorName), SelectorType.XPATH);
-            assertTrue(tableRow.getText().contains(world.registerUser.getOrganisationName()));
+            assertTrue(tableRow.getText().contains(world.createApplication.getBusinessName()));
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
         });
     }

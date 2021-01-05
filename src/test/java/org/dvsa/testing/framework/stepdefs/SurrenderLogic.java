@@ -2,10 +2,12 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import apiCalls.enums.LicenceType;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
 
@@ -89,15 +91,14 @@ public class SurrenderLogic extends BasePage implements En {
             assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
         });
         And("^i am on the community licence page$", () -> {
-            if (world.createApplication.getLicenceType().equals("standard_international")) {
+            if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 waitAndClick("form-actions[submit]", SelectorType.ID);
                 world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
                 waitForTextToBePresent("In your possession");
                 world.surrenderJourneySteps.addOperatorLicenceDetails();
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
-            }
-            {
-                //doesn't need to be run
+            } else {
+                throw new InvalidArgumentException("Only a goods standard international licence has community pages");
             }
         });
         And("^user is taken to the community licence page on clicking continue application$", () -> {
@@ -109,7 +110,7 @@ public class SurrenderLogic extends BasePage implements En {
             world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
-            if (world.createApplication.getLicenceType().equals("standard_international")) {
+            if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
                 world.surrenderJourneySteps.addCommunityLicenceDetails();
             }
@@ -124,7 +125,7 @@ public class SurrenderLogic extends BasePage implements En {
             world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
-            if (world.createApplication.getLicenceType().equals("standard_international")) {
+            if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
                 world.surrenderJourneySteps.addCommunityLicenceDetails();
             }
@@ -136,7 +137,7 @@ public class SurrenderLogic extends BasePage implements En {
             world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
-            if (world.createApplication.getLicenceType().equals("standard_international")) {
+            if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
                 world.surrenderJourneySteps.addCommunityLicenceDetails();
             }
