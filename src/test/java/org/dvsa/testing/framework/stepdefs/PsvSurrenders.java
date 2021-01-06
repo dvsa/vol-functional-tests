@@ -42,7 +42,7 @@ public class PsvSurrenders extends BasePage implements En {
             String contactNumber = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
             Assert.assertEquals(world.createApplication.getPhoneNumber(), contactNumber);
             String emailAddress = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][3]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            Assert.assertEquals(world.createApplication.getBusinessEmailAddress(), emailAddress);
+            Assert.assertEquals(world.createApplication.getOrganisationEmailAddress(), emailAddress);
         });
         And("^i update my correspondence address$", () -> {
             this.town = "Leicester";

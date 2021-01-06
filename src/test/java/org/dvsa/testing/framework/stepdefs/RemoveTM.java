@@ -122,7 +122,7 @@ public class RemoveTM extends BasePage implements En {
             executeUpdateSQL(sqlStatement);
         });
         Then("^the TM email should be generated and letter attached$", () -> {
-            String email = world.createApplication.getBusinessEmailAddress();
+            String email = world.createApplication.getOrganisationEmailAddress();
             String licenceNo = world.applicationDetails.getLicenceNumber();
             sleep(10000);
             boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
