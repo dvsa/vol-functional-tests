@@ -24,10 +24,9 @@ public class ESBRupload extends BasePage implements En {
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
             world.busRegistrationJourneySteps.viewESBRInExternal();
-            waitForTextToBePresent("New");
-            assertTrue(isTextPresent("successful",30));
-            assertTrue(isTextPresent("New",30));
-            assertTrue(isTextPresent("short notice",30));
+            assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
+            assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'New')]", SelectorType.XPATH));
+            assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'short notice')]", SelectorType.XPATH));
         });
         And("^A short notice tab should be displayed in internal$", () -> {
             world.APIJourneySteps.createAdminUser();
@@ -38,9 +37,9 @@ public class ESBRupload extends BasePage implements En {
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
             world.busRegistrationJourneySteps.viewESBRInExternal();
             waitForTextToBePresent("successful");
-            assertTrue(isTextPresent("successful", 60));
-            assertTrue(isTextPresent("New", 60));
-            assertFalse(isTextPresent("short notice", 60));
+            assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
+            assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'New')]", SelectorType.XPATH));
+            assertFalse(isElementPresent("//span[@class='status orange' and contains(text(),'short notice')]", SelectorType.XPATH));
         });
 
         And("^A short notice tab should not be displayed in internal$", () -> {
