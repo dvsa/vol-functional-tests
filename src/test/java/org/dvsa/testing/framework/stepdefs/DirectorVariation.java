@@ -104,7 +104,6 @@ public class DirectorVariation extends BasePage implements En {
         });
 
         When("^i remove a the last director$", () -> {
-            world.APIJourneySteps.createAdminUser();
             world.selfServeNavigation.navigateToPage("licence", "Directors");
             world.directorJourneySteps.removeDirector();
         });
