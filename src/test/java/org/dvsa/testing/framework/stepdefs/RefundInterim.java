@@ -72,7 +72,7 @@ public class RefundInterim extends BasePage implements En {
             world.APIJourneySteps.grantLicenceAndPayFees();
         });
         And("^the interim is granted$", () -> {
-            world.updateLicence.grantInterimApplication();
+            world.updateLicence.grantInterimApplication(world.createApplication.getApplicationId());
         });
         When("^i pay for the interim application$", () -> {
             world.UIJourneySteps.payForInterimApp();
@@ -85,7 +85,7 @@ public class RefundInterim extends BasePage implements En {
             world.grantApplication.withdraw();
         });
         And("^the variation interim is granted$", () -> {
-            world.updateLicence.grantInterimApplication();
+            world.updateLicence.grantInterimApplication(world.updateLicence.getVariationApplicationId());
         });
     }
 }
