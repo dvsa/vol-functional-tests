@@ -10,6 +10,9 @@ import cucumber.api.java8.En;
 import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 
+import static apiCalls.enums.TrafficArea.trafficAreaList;
+import static apiCalls.enums.EnforcementArea.enforcementAreaList;
+
 public class UserResearch extends BasePage implements En {
     String fileName = "src/test/resources/";
     FakerUtils faker = new FakerUtils();
@@ -20,12 +23,12 @@ public class UserResearch extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.createApplication.setNoOfVehiclesRequested(5);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
-                for (String ta : trafficAreaList()) {
-                    world.createApplication.setCorrespondencePostCode(TrafficArea.getPostCode(TrafficArea.valueOf(ta)));
+                for (TrafficArea TA : trafficAreaList()) {
+                    world.createApplication.setCorrespondencePostCode(TrafficArea.getPostCode(TA));
                     world.createApplication.setOperatorType(operator);
                     world.createApplication.setLicenceType(licenceType);
-                    world.createApplication.setTrafficArea(TrafficArea.getTrafficAreaOf(ta));
-                    world.createApplication.setEnforcementArea(EnforcementArea.getEnforcementArea(ta));
+                    world.createApplication.setTrafficArea(TA);
+                    world.createApplication.setEnforcementArea(EnforcementArea.valueOf(TA.name()));
                     world.APIJourneySteps.createApplication();
                     world.APIJourneySteps.submitApplication();
                     world.APIJourneySteps.grantLicenceAndPayFees();
@@ -40,13 +43,13 @@ public class UserResearch extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.createApplication.setNoOfVehiclesRequested(3);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
-                String ta = trafficAreaList()[i];
-                String ea = enforcementAreaList()[i];
-                world.createApplication.setPostCodeByTrafficArea(TrafficArea.getPostCode(TrafficArea.valueOf(ta)));
+                TrafficArea TA = trafficAreaList()[i];
+                EnforcementArea EA = enforcementAreaList()[i];
+                world.createApplication.setPostCodeByTrafficArea(TrafficArea.getPostCode(TA));
                 world.createApplication.setOperatorType(operator);
                 world.createApplication.setLicenceType(licenceType);
-                world.createApplication.setTrafficArea(TrafficArea.getTrafficAreaOf(ta));
-                world.createApplication.setEnforcementArea(EnforcementArea.getEnforcementArea(ea));
+                world.createApplication.setTrafficArea(TA);
+                world.createApplication.setEnforcementArea(EA);
                 world.APIJourneySteps.createApplication();
                 String externalFirstName = faker.generateFirstName();
                 String externalLastName = faker.generateLastName();
@@ -67,9 +70,4 @@ public class UserResearch extends BasePage implements En {
             world.genericUtils.writeToFile(world.registerUser.getUserName(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
         });
     }
-    private String[] trafficAreaList() {
-        return new String[]{"B", "C", "D", "F", "G", "H", "K", "M"};
-    }
-
-    private String[] enforcementAreaList() { return new String[]{"EA-B", "EA-C", "EA-D", "EA-F", "EA-E", "EA-J", "EA-H", "EA-A", "EA-N"}; }
 }

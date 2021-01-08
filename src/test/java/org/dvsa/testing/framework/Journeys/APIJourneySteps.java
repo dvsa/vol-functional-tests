@@ -33,8 +33,8 @@ public class APIJourneySteps {
     }
 
     public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) {
-        TrafficArea TA = TrafficArea.getTrafficAreaOf(trafficArea);
-        EnforcementArea EA = EnforcementArea.getEnforcementArea(enforcementArea);
+        TrafficArea TA = TrafficArea.valueOf(trafficArea.toUpperCase());
+        EnforcementArea EA = EnforcementArea.valueOf(enforcementArea.toUpperCase());
         world.createApplication.setTrafficArea(TA);
         world.createApplication.setEnforcementArea(EA);
         world.createApplication.setOperatorType("public");

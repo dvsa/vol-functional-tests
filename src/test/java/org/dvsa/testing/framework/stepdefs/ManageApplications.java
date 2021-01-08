@@ -15,6 +15,9 @@ import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
 
+import static apiCalls.enums.EnforcementArea.enforcementAreaList;
+import static apiCalls.enums.TrafficArea.trafficAreaList;
+
 public class ManageApplications {
     World world;
     String fileName = "src/test/resources/";
@@ -146,20 +149,8 @@ public class ManageApplications {
         List<String> trafficAreas = trafficAreaTable.asList(String.class);
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         for (String ta : trafficAreas) {
-            TrafficArea trafficArea = TrafficArea.getTrafficAreaOf(ta.toUpperCase());
+            TrafficArea trafficArea = TrafficArea.valueOf(ta.toUpperCase());
             world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
         }
-    }
-
-    private TrafficArea[] trafficAreaList() {
-        return new TrafficArea[]{TrafficArea.NORTH_EAST, TrafficArea.NORTH_WEST, TrafficArea.MIDLANDS,
-                TrafficArea.EAST, TrafficArea.WALES, TrafficArea.WEST, TrafficArea.LONDON,
-                TrafficArea.SCOTLAND, TrafficArea.NORTHERN_IRELAND};
-    }
-
-    private EnforcementArea[] enforcementAreaList() {
-        return new EnforcementArea[]{EnforcementArea.NORTH_EAST, EnforcementArea.NORTH_WEST, EnforcementArea.MIDLANDS,
-                EnforcementArea.EAST, EnforcementArea.WALES, EnforcementArea.WEST, EnforcementArea.LONDON,
-                EnforcementArea.SCOTLAND, EnforcementArea.NORTHERN_IRELAND};
     }
 }

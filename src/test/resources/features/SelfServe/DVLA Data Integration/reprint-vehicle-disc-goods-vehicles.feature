@@ -25,7 +25,6 @@ Feature: Reprint a vehicle more than 10 vehicles
   Scenario: Search and reprint a vehicle disc with more than 10 vehicles
     Given I have a "goods" "standard_national" licence with "13" vehicles
 
-
   Scenario: Reprint all my vehicles discs
     Given I have a "goods" "standard_national" licence with "5" vehicles
 
