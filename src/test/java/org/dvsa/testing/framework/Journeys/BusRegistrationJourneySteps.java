@@ -107,8 +107,8 @@ public class BusRegistrationJourneySteps extends BasePage {
         } else {
             world.createApplication.setLicenceType("standard_national");
         }
-        world.createApplication.setTrafficArea(TrafficArea.valueOf(TrafficArea.NORTH_EAST.name().toUpperCase()));
-        world. createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name().toUpperCase()));
+        world.createApplication.setTrafficArea(TrafficArea.valueOf(TrafficArea.NORTH_EAST.name()));
+        world. createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name()));
         world.createApplication.setOperatorType(operatorType);
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
