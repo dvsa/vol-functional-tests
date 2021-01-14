@@ -16,8 +16,8 @@ public class SelfServePayFees extends BasePage implements En {
             world.feeAndPaymentJourneySteps.payFee(null, "card");
         });
         And("^an internal user has granted my application$", () -> {
-            world.grantLicence.grant(world.createLicence.getApplicationNumber());
-            world.grantLicence.payGrantFees();
+            world.grantApplication.grant();
+            world.grantApplication.payGrantFees();
         });
         Then("^my licence should valid$", () -> {
             clickByLinkText("Home");

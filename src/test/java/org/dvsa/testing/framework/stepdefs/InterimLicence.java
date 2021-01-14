@@ -25,7 +25,7 @@ public class InterimLicence extends BasePage implements En {
             findSelectAllRadioButtonsByValue("Y");
             InterimPage.startDate(LocalDate.now().getDayOfWeek(), LocalDate.now().getMonthOfYear(), LocalDate.now().getYear());
             InterimPage.endDate(LocalDate.now().plusDays(7).getDayOfWeek(), LocalDate.now().plusMonths(2).getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.vehicleAuthority(world.createLicence.getNoOfVehiclesRequired() + 1);
+            InterimPage.vehicleAuthority(world.createApplication.getNoOfVehiclesRequested() + 1);
         });
 
         When("^I have an interim vehicle authority equal to my application vehicle authority$", () -> {
@@ -34,7 +34,7 @@ public class InterimLicence extends BasePage implements En {
             InterimPage.enterInterimDetail("Test Test");
             InterimPage.startDate(LocalDate.now().getDayOfWeek(), LocalDate.now().getMonthOfYear(), LocalDate.now().getYear());
             InterimPage.endDate(LocalDate.now().plusDays(7).getDayOfWeek(), LocalDate.now().plusMonths(2).getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.vehicleAuthority(world.createLicence.getNoOfVehiclesRequired());
+            InterimPage.vehicleAuthority(world.createApplication.getNoOfVehiclesRequested());
         });
 
         When("^I have an interim vehicle authority less than my application vehicle authority$", () -> {
@@ -43,15 +43,15 @@ public class InterimLicence extends BasePage implements En {
             InterimPage.enterInterimDetail("Test Test");
             InterimPage.startDate(LocalDate.now().getDayOfWeek(), LocalDate.now().getMonthOfYear(), LocalDate.now().getYear());
             InterimPage.endDate(LocalDate.now().plusDays(7).getDayOfWeek(), LocalDate.now().plusMonths(2).getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.vehicleAuthority(world.createLicence.getNoOfVehiclesRequired() - 1);
+            InterimPage.vehicleAuthority(world.createApplication.getNoOfVehiclesRequested() - 1);
         });
 
         When("^I create an interim application with no start and end dates$", () -> {
             clickByLinkText("add interim");
             findSelectAllRadioButtonsByValue("Y");
             InterimPage.enterInterimDetail("Test Test");
-            InterimPage.vehicleAuthority(world.createLicence.getNoOfVehiclesRequired());
-            InterimPage.trailerAuthority(world.createLicence.getNoOfVehiclesRequired());
+            InterimPage.vehicleAuthority(world.createApplication.getNoOfVehiclesRequested());
+            InterimPage.trailerAuthority(world.createApplication.getNoOfVehiclesRequested());
         });
 
         Then("^I should get an error when i save the application$", () -> {
@@ -78,15 +78,15 @@ public class InterimLicence extends BasePage implements En {
         });
         And("^i have logged in to internal$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         });
         When("^I create an interim application with a start and no end date$", () -> {
             clickByLinkText("add interim");
             findSelectAllRadioButtonsByValue("Y");
             InterimPage.startDate(10, 8, 2017);
             InterimPage.enterInterimDetail("Interim with no dates");
-            InterimPage.vehicleAuthority(world.createLicence.getNoOfVehiclesRequired());
-            InterimPage.trailerAuthority(world.createLicence.getNoOfVehiclesRequired());
+            InterimPage.vehicleAuthority(world.createApplication.getNoOfVehiclesRequested());
+            InterimPage.trailerAuthority(world.createApplication.getNoOfVehiclesRequested());
         });
         And("^i create a variation in internal$", () -> {
             waitAndClick("//*[@id='menu-licence-quick-actions-create-variation']",SelectorType.XPATH);

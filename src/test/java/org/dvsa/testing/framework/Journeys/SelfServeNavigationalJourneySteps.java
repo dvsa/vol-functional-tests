@@ -38,13 +38,13 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
-                clickByLinkText(world.createLicence.getLicenceNumber());
+                clickByLinkText(world.applicationDetails.getLicenceNumber());
                 waitForTitleToBePresent("View and amend your licence");
                 break;
             case "application":
-                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createLicence.getApplicationNumber());
+                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createApplication.getApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
-                clickByLinkText(world.createLicence.getApplicationNumber());
+                clickByLinkText(world.createApplication.getApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply for a new licence");
                 } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
@@ -52,9 +52,9 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 }
                 break;
             case "variation":
-                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.updateLicence.getVariationApplicationNumber());
+                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.updateLicence.getVariationApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
-                clickByLinkText(world.updateLicence.getVariationApplicationNumber());
+                clickByLinkText(world.updateLicence.getVariationApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
                     waitForTextToBePresent("Apply to change a licence");
                 } else if (applicationStatus.equals("UNDER CONSIDERATION")) {

@@ -12,7 +12,7 @@ public class LicenceDiscs extends BasePage implements En {
 
 //          Retrieving end print number and the number of discs going to be displayed on the licence.
             int endNumber = Integer.valueOf(world.updateLicence.getEndNumber());
-            int numberOfDiscs = world.createLicence.getNoOfVehiclesRequired();
+            int numberOfDiscs = world.createApplication.getNoOfVehiclesRequested();
 
 //          Getting the end number and counting backwards as this will be the most recent set of licence disc that get printed.
             for (int i = 1; i <= numberOfDiscs; i++){

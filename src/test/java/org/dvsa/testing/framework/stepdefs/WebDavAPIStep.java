@@ -19,23 +19,23 @@ public class WebDavAPIStep implements En {
             this.userId = world.updateLicence.createInternalUser(userRole, UserRoles.INTERNAL.getUserRoles());
         });
         When("^i view their user details$", () -> {
-            this.response = world.createLicence.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId, APIJourneySteps.adminApiHeader());
+            this.response = world.userDetails.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId);
             this.pid = response.extract().jsonPath().getString("pid");
         });
         Then("^the OS Type value should be null$", () -> {
             assertNull(response.extract().body().jsonPath().get("osType"));
         });
         When("^i attempt to update their OS version to \"([^\"]*)\"$", (String osVersion) -> {
-            this.response = world.updateLicence.updateInternalUserODetails(this.userId, osVersion,APIJourneySteps.adminApiHeader());
+            this.response = world.updateLicence.updateInternalUserDetails(this.userId, osVersion);
         });
         Then("^their OS Type value should be displaying \"([^\"]*)\"$", (String expectedOSVersion) -> {
             assertEquals(response.extract().body().jsonPath().get("osType.id"),expectedOSVersion);
         });
         When("^they attempt to update their OS version to \"([^\"]*)\"$", (String osVersion) -> {
-            this.response = world.updateLicence.updateInternalUserODetails(this.userId, osVersion,this.pid);
+            this.response = world.updateLicence.updateInternalUserDetails(this.userId, osVersion);
         });
         Then("^their new OS Type should be \"([^\"]*)\"$", (String expectedOSVersion) -> {
-            this.response = world.createLicence.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId, APIJourneySteps.adminApiHeader());
+            this.response = world.userDetails.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId);
             assertEquals(response.extract().body().jsonPath().get("osType.id"),expectedOSVersion);
         });
     }

@@ -29,7 +29,7 @@ public class WebDav extends BasePage implements En {
 
     public WebDav(World world) {
         And("^i make changes to the document with WebDav and save it$", () -> {
-            String licenceNumber = world.createLicence.getLicenceNumber();
+            String licenceNumber = world.applicationDetails.getLicenceNumber();
             String documentLink = Browser.navigate().findElement(By.id("letter-link")).getText();
 
             world.UIJourneySteps.editDocumentWithWebDav();
@@ -45,14 +45,14 @@ public class WebDav extends BasePage implements En {
             Assert.assertTrue(isTextPresent(templateName,30));
             clickByLinkText(templateName);
 
-            String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.createLicence.getLicenceNumber(), templateName);
+            String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.applicationDetails.getLicenceNumber(), templateName);
 
             File file = getDownloadedFile("downloadDirectory", templateRegex);
 
             Assert.assertTrue(checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
         });
         And("^i open the document in word for the first time$", () -> {
-            String window = "Olcs - ".concat(world.createLicence.getLicenceNumber()).concat(" - Google Chrome");
+            String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
             Thread.sleep(1000);
             clickByLinkText("BUS");
 
@@ -67,13 +67,13 @@ public class WebDav extends BasePage implements En {
             Assert.assertTrue(this.autoIt.winExists(wordLoginWindow, ""));
         });
         When("^i update my operating system on internal to \"([^\"]*)\"$", (String operatingSystem) -> {
-            world.internalNavigation.urlSearchAndViewInternalUserAccount(world.updateLicence.getAdminUserId());
+            world.internalNavigation.urlSearchAndViewInternalUserAccount(world.updateLicence.getInternalUserId());
             waitForTextToBePresent("User type");
             selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         });
         Then("^the operating system should be updated to \"([^\"]*)\"$", (String operatingSystem) -> {
-            world.internalNavigation.urlSearchAndViewInternalUserAccount(world.updateLicence.getAdminUserId());
+            world.internalNavigation.urlSearchAndViewInternalUserAccount(world.updateLicence.getInternalUserId());
             Assert.assertEquals(getText("//*[@id='osType']//*[@selected='selected']", SelectorType.XPATH), operatingSystem);
         });
         And("^upload a document$", () -> {

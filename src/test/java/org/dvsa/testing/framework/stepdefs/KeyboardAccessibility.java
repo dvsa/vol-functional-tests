@@ -32,7 +32,7 @@ public class KeyboardAccessibility extends BasePage implements En {
 
     public KeyboardAccessibility(World world) {
         When("^i am on the vehicle details page$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);
             clickByLinkText("Vehicles");
             waitForTextToBePresent("Vehicle details");
@@ -66,7 +66,7 @@ public class KeyboardAccessibility extends BasePage implements En {
 
         });
         When("^i navigate to self serve application main pages i can skip to main content$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", "Addresses");
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.selfServeNavigation.navigateToPage("application", "Financial evidence");
@@ -84,7 +84,7 @@ public class KeyboardAccessibility extends BasePage implements En {
         });
         When("^i navigate to self serve licence main pages i can skip to main content$", () -> {
             world.UIJourneySteps.CheckSkipToMainContentOnExternalUserLogin();
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("licence", "View");
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.selfServeNavigation.navigateToPage("licence", "Type of licence");
@@ -109,7 +109,7 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.UIJourneySteps.skipToMainContentAndCheck();
         });
         When("^i navigate to self serve licence nav bar pages i can skip to main content$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToNavBarPage("Home");
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.selfServeNavigation.navigateToNavBarPage("Manage users");
@@ -128,7 +128,7 @@ public class KeyboardAccessibility extends BasePage implements En {
             waitForTextToBePresent("In your possession");
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.surrenderJourneySteps.addOperatorLicenceDetails();
-            if (world.createLicence.getLicenceType().equals("standard_international")) {
+            if (world.createApplication.getLicenceType().equals("standard_international")) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
                 world.UIJourneySteps.skipToMainContentAndCheck();
                 world.surrenderJourneySteps.addCommunityLicenceDetails();

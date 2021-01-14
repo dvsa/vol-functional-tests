@@ -8,7 +8,7 @@ Feature: Various accessibility Rules Checks
 
   Scenario: Keyboard - Skip to main content on all VOL application pages
     Given i have a "public" "standard_national" "GB" application in traffic area
-      | b |
+      | north_east |
     When i navigate to self serve application main pages i can skip to main content
 
   Scenario: Keyboard - Skip to main content on all VOL licence pages

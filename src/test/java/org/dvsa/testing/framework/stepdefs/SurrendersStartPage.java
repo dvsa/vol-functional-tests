@@ -22,7 +22,7 @@ public class SurrendersStartPage extends BasePage implements En {
                 assertTrue(isTextPresent("You will need to cancel all registered bus services.",40));
         });
         And("^the correct licence number should be displayed$", () -> {
-            boolean isTrue = findElement("//h3", SelectorType.XPATH,10).getText().contains(world.createLicence.getLicenceNumber());
+            boolean isTrue = findElement("//h3", SelectorType.XPATH,10).getText().contains(world.applicationDetails.getLicenceNumber());
             assertTrue(isTrue);
         });
         When("^i click on the surrenders tab$", () -> {

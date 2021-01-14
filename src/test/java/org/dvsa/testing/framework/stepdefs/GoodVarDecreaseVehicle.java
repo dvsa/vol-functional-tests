@@ -10,20 +10,20 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
 
     public GoodVarDecreaseVehicle(World world) {
         When("^A selfserve user decreases the vehicle authority count$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getLicenceNumber());
-            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createLicence.getNoOfVehiclesRequired() - 1));
-            world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createLicence.getNoOfVehiclesRequired() - 1));
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
+            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested() - 1));
+            world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfVehiclesRequested() - 1));
         });
         When("^A selfserve user decreases the vehicle required count by invalid characters$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getLicenceNumber());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
             world.UIJourneySteps.changeVehicleReq("-6");
         });
         When("^A selfserve user decreases the vehicle authority by invalid charecters$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getLicenceNumber());
-            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createLicence.getNoOfVehiclesRequired()));
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
+            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested()));
             world.UIJourneySteps.changeVehicleAuth("-6");
         });
         Then("^a status of update required should be shown next to Review and declarations$", () -> {

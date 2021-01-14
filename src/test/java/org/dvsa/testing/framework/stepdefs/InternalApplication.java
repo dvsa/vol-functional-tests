@@ -70,12 +70,12 @@ public class InternalApplication extends BasePage implements En {
         });
 
         Given("^I have partially applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
-            world.createLicence.setOperatorType(operator);
-            world.createLicence.setLicenceType(licenceType);
-            if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
+            world.createApplication.setOperatorType(operator);
+            world.createApplication.setLicenceType(licenceType);
+            if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
                 world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createSpecialRestrictedLicence();
-            } else if (world.createLicence.getApplicationNumber() == null) {
+            } else if (world.createApplication.getApplicationId() == null) {
                 world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
                 world.APIJourneySteps.createApplication();
 
@@ -84,7 +84,7 @@ public class InternalApplication extends BasePage implements En {
 
         When("^the caseworker completes and submits the application$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewApplication();
             click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
