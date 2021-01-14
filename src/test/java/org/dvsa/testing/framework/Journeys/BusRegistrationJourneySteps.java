@@ -102,22 +102,18 @@ public class BusRegistrationJourneySteps extends BasePage {
     }
 
     public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException {
-        if (licenceType.equals("si")) {
+        if (licenceType.equals("standard_international")) {
             world.createApplication.setLicenceType("standard_international");
-        } else if (licenceType.equals("sn")) {
-            world.createApplication.setLicenceType("standard_national");
         } else {
             world.createApplication.setLicenceType("standard_national");
         }
-        TrafficArea TA = TrafficArea.valueOf("north_east".toUpperCase());
-        EnforcementArea EA = EnforcementArea.valueOf("north_east".toUpperCase());
-        world.createApplication.setTrafficArea(TA);
-        world. createApplication.setEnforcementArea(EA);
+        world.createApplication.setTrafficArea(TrafficArea.valueOf(TrafficArea.NORTH_EAST.name().toUpperCase()));
+        world. createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name().toUpperCase()));
         world.createApplication.setOperatorType(operatorType);
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
-        if (String.valueOf(operatorType).equals("public")) {
+        if (String.valueOf(operatorType).equals(operatorType)) {
             world.APIJourneySteps.grantLicenceAndPayFees();
             System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         } else {

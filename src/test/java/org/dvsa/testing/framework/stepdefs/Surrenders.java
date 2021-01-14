@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.system.Properties;
+import cucumber.api.java.en.Given;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
