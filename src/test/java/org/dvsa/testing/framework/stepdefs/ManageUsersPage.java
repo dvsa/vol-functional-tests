@@ -11,12 +11,14 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;
+import scanner.ReportGenerator;
 
 import java.io.File;
 
 
 public class ManageUsersPage extends BasePage implements En {
     AXEScanner scanner;
+    ReportGenerator reportGenerator;
 
     public ManageUsersPage(World world) {
         Given("^i have an admin account to add users$", () -> {
@@ -33,7 +35,7 @@ public class ManageUsersPage extends BasePage implements En {
         });
         Then("^no issues should be present on the page$", () -> {
             if(scanner.axeFindings().length() != 0) {
-                FileUtils.writeStringToFile(new File("Findings.txt"), scanner.axeFindings());
+                reportGenerator.createReport(scanner);
                 Assert.fail("Violation findings found");
             }else{
                 Assert.assertEquals(0, scanner.axeFindings().length());

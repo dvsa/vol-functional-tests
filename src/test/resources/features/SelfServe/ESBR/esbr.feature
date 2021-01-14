@@ -6,7 +6,7 @@ Feature: ESBR for English, Welsh and Scottish Areas
   @short
   Scenario Outline: Short notice ESBR in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
-    When I upload an esbr file with "<Days>" days notice
+    When I upload an ebsr file with "<Days>" days notice
     Then A short notice flag should be displayed in selfserve
     Examples:
       | Area       | Days |
@@ -18,7 +18,7 @@ Feature: ESBR for English, Welsh and Scottish Areas
 
   Scenario Outline: ESBR in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
-    When I upload an esbr file with "<Days>" days notice
+    When I upload an ebsr file with "<Days>" days notice
     Then A short notice flag should not be displayed in selfserve
     Examples:
       | Area | Days |
@@ -31,7 +31,7 @@ Feature: ESBR for English, Welsh and Scottish Areas
   Scenario Outline: ESBR for curtailed and suspended licence in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     And the licence status is "<LicenceStatus>"
-    When I upload an esbr file with "<Days>" days notice
+    When I upload an ebsr file with "<Days>" days notice
     Then A short notice flag should be displayed in selfserve
     Examples:
       | Area        | Days | LicenceStatus |

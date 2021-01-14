@@ -33,12 +33,10 @@ public class APIJourneySteps {
     }
 
     public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) {
-        TrafficArea TA = TrafficArea.valueOf(trafficArea.toUpperCase());
-        EnforcementArea EA = EnforcementArea.valueOf(enforcementArea.toUpperCase());
-        world.createApplication.setTrafficArea(TA);
-        world.createApplication.setEnforcementArea(EA);
-        world.createApplication.setOperatorType("public");
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
+        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         world.grantApplication.grantLicence();

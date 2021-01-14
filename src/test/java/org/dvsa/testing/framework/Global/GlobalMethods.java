@@ -48,9 +48,6 @@ public class GlobalMethods extends BasePage{
         get(myURL);
         String password = world.configuration.getTempPassword(emailAddress);
 
-        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
-
         try {
             LoginPage.signIn(username, password);
         } catch (Exception e) {
@@ -66,5 +63,8 @@ public class GlobalMethods extends BasePage{
                 setLoginPassword(newPassword);
             }
         }
+
+        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
     }
 }

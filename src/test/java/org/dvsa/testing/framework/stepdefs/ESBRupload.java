@@ -18,9 +18,6 @@ public class ESBRupload extends BasePage implements En {
         this.world = world;
 
 
-        Given("^I have a psv application with traffic area \"([^\"]*)\" and enforcement area \"([^\"]*)\" which has been granted$", (String arg0, String arg1) -> {
-            world.APIJourneySteps.generateAndGrantPsvApplicationPerTrafficArea(arg0, arg1);
-        });
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
             world.busRegistrationJourneySteps.viewESBRInExternal();
@@ -50,10 +47,6 @@ public class ESBRupload extends BasePage implements En {
             assertFalse(isTextPresent("Short notice", 60));
         });
 
-        When("^I upload an esbr file with \"([^\"]*)\" days notice$", (String arg0) -> {
-            // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-            world.busRegistrationJourneySteps.uploadAndSubmitESBR("futureDay", Integer.parseInt(arg0));
-        });
         Given("^i add a new bus registration$", () -> {
             world.internalNavigation.urlSearchAndViewLicence();
             world.busRegistrationJourneySteps.internalSiteAddBusNewReg(5);
