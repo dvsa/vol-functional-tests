@@ -113,7 +113,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
-        if (String.valueOf(operatorType).equals(operatorType)) {
+        if (String.valueOf(operatorType).equals("public")) {
             world.APIJourneySteps.grantLicenceAndPayFees();
             System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         } else {
