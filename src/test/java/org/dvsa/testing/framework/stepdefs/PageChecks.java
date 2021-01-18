@@ -12,12 +12,12 @@ public class PageChecks extends BasePage implements En {
 
     public PageChecks(World world) {
         And("^on self serve the withdraw application link is present on \"([^\"]*)\"$", (String page) -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage(page,"View");
             assertTrue(isElementPresent("//div//a[text()='Withdraw application']", SelectorType.XPATH));
         });
         Then("^on self serve the withdraw application link is not present on \"([^\"]*)\"$", (String page) -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage(page,"View");
             assertFalse(isElementPresent("//div//a[text()='Withdraw application']", SelectorType.XPATH));
         });

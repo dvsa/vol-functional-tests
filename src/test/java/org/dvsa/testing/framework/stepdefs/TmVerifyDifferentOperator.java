@@ -30,7 +30,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     public TmVerifyDifferentOperator(World world) {
         Then("^the 'Awaiting operator review' post signature page is displayed showing the correct information$", () -> {
-            String name = world.createLicence.getForeName() + " " + world.createLicence.getFamilyName();
+            String name = world.registerUser.getForeName() + " " + world.registerUser.getFamilyName();
             assertTrue(isTextPresent(name,30));
             assertTrue(isTextPresent("What happens next",30));
             assertTrue(isTextPresent("Awaiting operator review",30));
@@ -53,7 +53,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             Path fileToRead = getPath(world);
             String data = world.genericUtils.readFileAsString(String.valueOf(fileToRead));
             assertTrue(isTextPresent(data,30));
-            assertTrue(isTextPresent(world.createLicence.getForeName() + " " + world.createLicence.getFamilyName(),30));
+            assertTrue(isTextPresent(world.registerUser.getForeName() + " " + world.registerUser.getFamilyName(),30));
             assertTrue(isTextPresent("How would you like to sign the declaration?",30));
             assertTrue(isTextPresent("Sign your declaration online",30));
             assertTrue(isTextPresent("Print, sign and return",30));
@@ -100,7 +100,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         });
         And("^I am the operator and not the transport manager$", () -> {
-            world.createLicence.setIsOwner("N");
+            world.createApplication.setIsOwner("N");
         });
         And("^i add an existing person as a transport manager who is not the operator on \"([^\"]*)\"$", (String applicationType) -> {
             boolean applicationOrNot = applicationType.equals("application");
@@ -110,10 +110,10 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         And("^the operator countersigns digitally$", () -> {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            if(Browser.navigate().findElements(By.partialLinkText(world.createLicence.getApplicationNumber())).size()!=0) {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            if(Browser.navigate().findElements(By.partialLinkText(world.createApplication.getApplicationId())).size()!=0) {
                 world.selfServeNavigation.navigateToPage("application", "Transport Managers");
-            } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationNumber())).size()!=0) {
+            } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationId())).size()!=0) {
                 world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
             }
             clickByLinkText(world.TMJourneySteps.getOperatorForeName() + " " + world.TMJourneySteps.getOperatorFamilyName());
@@ -132,7 +132,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             }
         });
         When("^i add an operator as a transport manager$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.TMJourneySteps.addOperatorAdminAsTransportManager();
         });
         And("^i sign the declaration$", () -> {
@@ -141,7 +141,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         And("^the operator countersigns by print and sign$", () -> {
             waitForTextToBePresent("What happens next?");
             clickByLinkText("Sign out");
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
             clickByLinkText(String.format("%s %s", world.TMJourneySteps.getOperatorForeName(), world.TMJourneySteps.getOperatorFamilyName()));
             click("form-actions[submit]", SelectorType.ID);
@@ -150,7 +150,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         When("^create a user and add them as a tm with a future DOB$", () -> {
             world.TMJourneySteps.generateAndAddOperatorUser();
-            HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
+            HashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
             world.TMJourneySteps.addOperatorUserAsTransportManager(dob, true);
         });
         Then("^two TM DOB errors should display$", () -> {
@@ -158,16 +158,16 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             assertTrue(isElementPresent("//*[@class='validation-wrapper']//p[contains(text(),'This date is not allowed to be in the future')]", SelectorType.XPATH));
         });
         When("^i add an operator as a transport manager with a future DOB$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.TMJourneySteps.nominateOperatorUserAsTransportManager(String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()),true);
-            HashMap<String, Integer> dob = world.globalMethods.date.getDate(1, 0, 0);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            world.TMJourneySteps.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()),true);
+            HashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
             replaceDateById("dob", dob);
             click("form-actions[submit]", SelectorType.ID);
             waitForPageLoad();
         });
         When("^i add an operator as a transport manager with a no hours worked$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            world.TMJourneySteps.nominateOperatorUserAsTransportManager(String.format("%s %s", world.createLicence.getForeName(), world.createLicence.getFamilyName()),true);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            world.TMJourneySteps.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()),true);
             click("form-actions[submit]", SelectorType.ID);
             waitForPageLoad();
         });
@@ -177,7 +177,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         });
         When("^i add new person as a transport manager and they fill out their details$", () -> {
             world.TMJourneySteps.generateOperatorValues();
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.TMJourneySteps.addNewPersonAsTransportManager("application");
             world.selfServeNavigation.navigateToLogin(world.TMJourneySteps.getOperatorUser(), world.TMJourneySteps.getOperatorUserEmail());
             clickByLinkText("Provide details");
@@ -188,7 +188,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             clickByLinkText("Home");
             world.TMJourneySteps.assertTMDetailsWithOperator();
             clickByLinkText("Sign out");
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
             clickByLinkText(String.format("%s %s", world.TMJourneySteps.getOperatorForeName(), world.TMJourneySteps.getOperatorFamilyName()));
             click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
@@ -207,7 +207,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     private Path getPath(World world) throws URISyntaxException {
         String declarationText;
-        if (world.createLicence.getNiFlag().equals("N")) {
+        if (world.createApplication.getNiFlag().equals("N")) {
             declarationText = "operator-GB-declaration.txt";
         } else {
             declarationText = "operator-NI-declaration.txt";

@@ -43,7 +43,7 @@ public class SurrenderJourneySteps extends BasePage {
     }
 
     public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
-        world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", "View");
         clickByLinkText("Apply to surrender licence");
     }
@@ -106,7 +106,7 @@ public class SurrenderJourneySteps extends BasePage {
         addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
-        if (world.createLicence.getLicenceType().equals("standard_international")) {
+        if (world.createApplication.getLicenceType().equals("standard_international")) {
             assertTrue(navigate().getCurrentUrl().contains("community-licence"));
             addCommunityLicenceDetails();
         }
@@ -114,7 +114,7 @@ public class SurrenderJourneySteps extends BasePage {
 
     public void caseworkManageSurrender() throws MalformedURLException, IllegalBrowserException {
         world.APIJourneySteps.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
@@ -127,7 +127,7 @@ public class SurrenderJourneySteps extends BasePage {
     public void checkVerifyConfirmation() throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.createLicence.getLicenceNumber()), 10));
+        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber()), 10));
         Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
         assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
@@ -158,7 +158,7 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("form-actions[submit]", SelectorType.ID);
         addDiscInformation();
         clickByLinkText("Home");
-        clickByLinkText(world.createLicence.getLicenceNumber());
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         untilElementPresent("//*[@id='modal-title']", SelectorType.XPATH);

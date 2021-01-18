@@ -1,11 +1,11 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import apiCalls.actions.*;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.*;
-import org.dvsa.testing.framework.Utils.API_CreateAndGrantAPP.*;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 
@@ -20,16 +20,21 @@ public class Initialisation extends BasePage implements En {
 
     public Initialisation (World world) {
         this.world = world;
+        world.registerUser = new RegisterUser();
+        world.userDetails = new GetUserDetails();
+        world.createApplication = new CreateApplication(world.registerUser, world.userDetails);
+        world.applicationDetails = new GetApplicationDetails(world.createApplication);
+        world.grantApplication = new GrantLicence(world.createApplication);
+        world.updateLicence = new UpdateLicence(world.createApplication);
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);
-        world.createLicence = new CreateLicenceAPI();
-        world.grantLicence = new GrantLicenceAPI(world);
-        world.updateLicence = new UpdateLicenceAPI(world);
+        world.licenceCreation = new LicenceCreation(world);
         world.genericUtils = new GenericUtils(world);
         world.APIJourneySteps = new APIJourneySteps(world);
         world.continuationJourneySteps = new ContinuationJourneySteps(world);
         world.busRegistrationJourneySteps = new BusRegistrationJourneySteps(world);
         world.directorJourneySteps = new DirectorJourneySteps(world);
+        world.dvlaJourneySteps = new DVLAJourneySteps(world);
         world.internalSearch = new InternalSearchJourneySteps(world);
         world.feeAndPaymentJourneySteps = new FeeAndPaymentJourneySteps(world);
         world.internalNavigation = new InternalNavigationalJourneySteps(world);

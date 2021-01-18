@@ -5,8 +5,8 @@
 Feature: TM/operator checks optional wording has been removed for TM details page
 
   Background:
-    Given I have a new application
-    And i navigate to the transport managers details page
+    Given I have a "goods" "standard_national" application
+    And i navigate to the admin transport managers details page
 
   Scenario: Radio button not clicked
     Then the optional wording should not be displayed on the page
@@ -35,9 +35,9 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
 
     Examples:
       | page                           | button                        | page-title                                              |
-      | add-other-licence-applications | Add other licences            | Add other licence details                               |
-      | add-employment                 | Add other employment          | Add other employment details                            |
-      | add-previous-conviction        | Add convictions and penalties | Add Offence                                             |
+#      | add-other-licence-applications | Add other licences            | Add other licence details                               |
+#      | add-employment                 | Add other employment          | Add other employment details                            |
+#      | add-previous-conviction        | Add convictions and penalties | Add Offence                                             |
       | add-previous-licence           | Add licences                  | Add Details of revoked, curtailed or suspended licences |
 
   Scenario: validation checks when no radio button has been selected

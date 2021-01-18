@@ -26,7 +26,7 @@ public class SurrendersStartPage extends BasePage implements En {
             }
         });
         And("^the correct licence number should be displayed$", () -> {
-            boolean isTrue = findElement("//h3", SelectorType.XPATH,10).getText().contains(world.createLicence.getLicenceNumber());
+            boolean isTrue = findElement("//h3", SelectorType.XPATH,10).getText().contains(world.applicationDetails.getLicenceNumber());
             assertTrue(isTrue);
         });
     }

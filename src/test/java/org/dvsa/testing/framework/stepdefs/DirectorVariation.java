@@ -104,13 +104,12 @@ public class DirectorVariation extends BasePage implements En {
         });
 
         When("^i remove a the last director$", () -> {
-            world.APIJourneySteps.createAdminUser();
             world.selfServeNavigation.navigateToPage("licence", "Directors");
             world.directorJourneySteps.removeDirector();
         });
 
         Then("^a task should be created in internal$", () -> {
-           world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin,world.updateLicence.adminUserEmailAddress);
+           world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(),world.updateLicence.getInternalUserEmailAddress());
            world.internalSearch.searchAndViewApplication();
         });
 

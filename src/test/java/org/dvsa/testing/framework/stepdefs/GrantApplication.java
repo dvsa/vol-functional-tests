@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import apiCalls.enums.OperatorType;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
 
@@ -15,11 +16,11 @@ public class GrantApplication implements En {
         this.world = world;
 
         When("^I grant licence$", () -> {
-            apiResponse = world.grantLicence.grantLicence();
+            apiResponse = world.grantApplication.grantLicence();
         });
         Then("^the licence should be granted$", () -> {
-            if (world.createLicence.getOperatorType().equals("goods")) {
-                apiResponse = world.grantLicence.payGrantFees();
+            if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+                apiResponse = world.grantApplication.payGrantFees();
                 assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
             } else {
                 assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));

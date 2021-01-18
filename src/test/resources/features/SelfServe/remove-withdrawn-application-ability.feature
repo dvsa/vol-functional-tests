@@ -5,7 +5,7 @@
 Feature: SS user ability to withdraw application removed when open cases are present
 
   Scenario: SS user ability to not withdraw application removed for new application with cases
-    Given I have applied for a "public" "restricted" licence
+    Given I have submitted a "public" "restricted" application
     And on self serve the withdraw application link is present on "application"
     And i add a case in internal on the "application" page
     Then on self serve the withdraw application link is not present on "application"

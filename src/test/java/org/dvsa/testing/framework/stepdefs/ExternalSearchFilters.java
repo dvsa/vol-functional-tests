@@ -15,7 +15,7 @@ public class ExternalSearchFilters extends BasePage implements En {
             String myURL = org.dvsa.testing.lib.url.webapp.URL.build(ApplicationType.EXTERNAL, env,"search/find-lorry-bus-operators/").toString();
             Browser.navigate().get(myURL);
             findSelectAllRadioButtonsByValue("licence");
-            enterText("search", world.createLicence.getLicenceNumber(),SelectorType.NAME);
+            enterText("search", world.applicationDetails.getLicenceNumber(),SelectorType.NAME);
             click(nameAttribute("input","submit"));
             do { click(nameAttribute("button","submit"));}
             while(!isElementPresent("//*[@class='table__wrapper']",SelectorType.XPATH));
@@ -38,7 +38,7 @@ public class ExternalSearchFilters extends BasePage implements En {
             Assert.assertEquals(world.updateLicence.getLicenceTrafficArea(),traffArea);
         });
         Then("^the Goods or PSV filter should be displayed$", () -> {
-            waitForTextToBePresent(world.createLicence.getLicenceNumber());
+            waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
             String opType = getText(String.format("//*[@id='filter[goodsOrPsvDesc]']/option[2]"), SelectorType.XPATH);
             Assert.assertEquals(world.updateLicence.getOperatorTypeDetails(), opType);
         });

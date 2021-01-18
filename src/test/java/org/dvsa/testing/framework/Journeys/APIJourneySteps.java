@@ -2,105 +2,112 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import activesupport.dates.Dates;
+import apiCalls.enums.EnforcementArea;
+import apiCalls.enums.LicenceType;
+import apiCalls.enums.OperatorType;
+import apiCalls.enums.TrafficArea;
+import apiCalls.enums.UserType;
 import enums.UserRoles;
+import org.joda.time.LocalDate;
 
 public class APIJourneySteps {
 
     private World world;
     public static int tmCount;
+    Dates date = new Dates(LocalDate::new);
 
     public APIJourneySteps(World world) throws MissingRequiredArgument {
         this.world = world;
     }
 
     public void createAdminUser() throws MissingRequiredArgument {
-        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
+        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
     }
 
     public void nIAddressBuilder() {
-        world.createLicence.setEnforcementArea("EA-N");
-        world.createLicence.setTrafficArea("N");
-        world.createLicence.setTown("Belfast");
-        world.createLicence.setPostcode("BT28HQ");
-        world.createLicence.setCountryCode("NI");
-        world.createLicence.setNiFlag("Y");
+        world.createApplication.setEnforcementArea(EnforcementArea.NORTHERN_IRELAND);
+        world.createApplication.setTrafficArea(TrafficArea.NORTHERN_IRELAND);
+        world.createApplication.setCountryCode("NI");
+        world.createApplication.setNiFlag("Y");
     }
 
-    public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) throws Exception {
-        world.createLicence.setTrafficArea(trafficArea);
-        world.createLicence.setEnforcementArea(enforcementArea);
-        world.createLicence.setOperatorType("public");
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+    public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) {
+        world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
+        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
-        world.grantLicence.grantLicence();
-        world.grantLicence.payGrantFees();
+        world.grantApplication.grantLicence();
+        world.grantApplication.payGrantFees();
         world.updateLicence.getLicenceTrafficArea();
     }
 
-    public void createApplication(){
-            world.createLicence.createApplication();
-            world.createLicence.updateBusinessType();
-            world.createLicence.updateBusinessDetails();
-            world.createLicence.addAddressDetails();
-            world.createLicence.addPartners();
-            world.createLicence.submitTaxiPhv();
-            world.createLicence.addOperatingCentre();
-            world.createLicence.updateOperatingCentre();
-            world.createLicence.addFinancialEvidence();
-            world.createLicence.addTransportManager();
-            world.createLicence.submitTransport();
-            world.createLicence.addTmResponsibilities();
-            world.createLicence.submitTmResponsibilities();
-            world.createLicence.addVehicleDetails();
-            world.createLicence.submitVehicleDeclaration();
-            world.createLicence.addFinancialHistory();
-            world.createLicence.addApplicationSafetyAndComplianceDetails();
-            world.createLicence.addSafetyInspector();
-            world.createLicence.addConvictionsDetails();
-            world.createLicence.addLicenceHistory();
-            world.createLicence.applicationReviewAndDeclare();
+    public void createApplication() {
+        world.createApplication.startApplication();
+        world.createApplication.addBusinessType();
+        world.createApplication.addBusinessDetails();
+        world.createApplication.addAddressDetails();
+        world.createApplication.addDirectors();
+        world.createApplication.submitTaxiPhv();
+        world.createApplication.addOperatingCentre();
+        world.createApplication.updateOperatingCentre();
+        world.createApplication.addFinancialEvidence();
+        world.createApplication.addTransportManager();
+        world.createApplication.submitTransport();
+        world.createApplication.addTmResponsibilities();
+        world.createApplication.submitTmResponsibilities();
+        world.createApplication.addVehicleDetails();
+        world.createApplication.submitVehicleDeclaration();
+        world.createApplication.addFinancialHistory();
+        world.createApplication.addApplicationSafetyAndComplianceDetails();
+        world.createApplication.addSafetyInspector();
+        world.createApplication.addConvictionsDetails();
+        world.createApplication.addLicenceHistory();
+        world.createApplication.applicationReviewAndDeclare();
     }
 
-    public void createSpecialRestrictedLicence(){
-        world.createLicence.createApplication();
-        world.createLicence.updateBusinessType();
-        world.createLicence.updateBusinessDetails();
-        world.createLicence.addAddressDetails();
-        world.createLicence.addPartners();
-        world.createLicence.submitTaxiPhv();
-        world.createLicence.submitApplication();
-        world.createLicence.getApplicationLicenceDetails();
+    public void submitApplication() {
+        world.createApplication.submitApplication();
+        world.applicationDetails.getApplicationLicenceDetails(world.createApplication);
     }
 
-    public void submitApplication(){
-        world.createLicence.submitApplication();
-        world.createLicence.getApplicationLicenceDetails();
+    public void createSpecialRestrictedApplication() {
+        world.createApplication.startApplication();
+        world.createApplication.addBusinessType();
+        world.createApplication.addBusinessDetails();
+        world.createApplication.addAddressDetails();
+        world.createApplication.addDirectors();
+        world.createApplication.submitTaxiPhv();
+    }
+
+    public void createSpecialRestrictedLicence() {
+        world.APIJourneySteps.createSpecialRestrictedApplication();
+        world.APIJourneySteps.submitApplication();
     }
 
     public void createPartialApplication() {
-        world.createLicence.createApplication();
-        world.createLicence.updateBusinessType();
-        world.createLicence.updateBusinessDetails();
-        world.createLicence.addAddressDetails();
-        world.createLicence.addPartners();
-        world.createLicence.addOperatingCentre();
-        world.createLicence.updateOperatingCentre();
-        world.createLicence.addFinancialEvidence();
+        world.createApplication.startApplication();
+        world.createApplication.addBusinessType();
+        world.createApplication.addBusinessDetails();
+        world.createApplication.addAddressDetails();
+        world.createApplication.addDirectors();
+        world.createApplication.addOperatingCentre();
+        world.createApplication.updateOperatingCentre();
+        world.createApplication.addFinancialEvidence();
     }
 
-    public void registerAndGetUserDetails(String userType){
-        world.createLicence.registerUser();
-        world.createLicence.getUserDetails(userType,null, adminApiHeader());
+    public void registerAndGetUserDetails(String userType) {
+        world.registerUser.registerUser();
+        world.userDetails.getUserDetails(userType, world.registerUser.getUserId());
     }
 
-    public void grantLicenceAndPayFees(){
-        world.grantLicence.grantLicence();
-        world.grantLicence.payGrantFees();
-    }
-
-
-    public static String adminApiHeader(){
-        return "e91f1a255e01e20021507465a845e7c24b3a1dc951a277b874c3bcd73dec97a1";
+    public void grantLicenceAndPayFees() {
+        world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
+        world.grantApplication.grantLicence();
+        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+            world.grantApplication.payGrantFees();
+        }
     }
 }

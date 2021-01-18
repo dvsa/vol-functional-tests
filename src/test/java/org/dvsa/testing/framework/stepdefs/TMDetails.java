@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import com.google.common.collect.FluentIterable;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
 import enums.UserRoles;
@@ -15,11 +16,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TMDetails extends BasePage implements En {
 
+    String fileName = "src/test/resources/";
+
     public TMDetails(World world) {
-        Given("^I have a new application$", () -> {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-            world.APIJourneySteps.createPartialApplication();
-        });
         And("^the \"([^\"]*)\" button should not be displayed$", (String button) -> {
             assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
         });
@@ -57,12 +56,14 @@ public class TMDetails extends BasePage implements En {
                 assertTrue(Browser.navigate().findElements(By.xpath(String.format("//*[@id=\"%s\"]/div/div", section))).stream().noneMatch(x -> x.getText().contains("(optional)")));
             }
         });
-        And("^i navigate to the transport managers details page$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+        And("^i navigate to the admin transport managers details page$", () -> {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            world.selfServeNavigation.navigateToNavBarPage("manage users");
+            String admin = getAttribute("*//td[contains(text(),'Administrator')]/../td[1]/input", SelectorType.XPATH, "value");
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
             click("//*[@name='table[action]']", SelectorType.XPATH);
             waitForTitleToBePresent("Add Transport Manager");
-            selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
+            selectValueFromDropDown("data[registeredUser]", SelectorType.ID, admin);
             click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
         });
         And("^the section buttons should not be displayed$", (DataTable table) -> {
@@ -76,6 +77,9 @@ public class TMDetails extends BasePage implements En {
             for (String button : sections) {
                 assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
             }
+        });
+        Then("^accounts should be created$", () -> {
+            world.genericUtils.writeToFile(world.createApplication.getTransportManagerApplicationId(), world.globalMethods.getLoginPassword(), fileName.concat("TM.csv"));
         });
     }
 }

@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import apiCalls.enums.OperatorType;
 import cucumber.api.java8.En;
 import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -12,9 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ApplicationVerifyJourney extends BasePage implements En {
     public ApplicationVerifyJourney(World world) {
         Given("^i have an application in progress$", () -> {
+            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
             world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
             world.APIJourneySteps.createApplication();
-            world.selfServeNavigation.navigateToLogin( world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", "Review and declarations");
             world.UIJourneySteps.signDeclaration();
         });

@@ -14,10 +14,10 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
     public GoodVarIncreaseVehicle(World world) {
 
         When("^i increase my vehicle authority count$", () -> {
-         world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-         clickByLinkText(world.createLicence.getLicenceNumber());
-         world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createLicence.getNoOfVehiclesRequired() + 1 ));
-         world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createLicence.getNoOfVehiclesRequired() + 1 ));
+         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+         clickByLinkText(world.applicationDetails.getLicenceNumber());
+         world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested() + 1 ));
+         world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfVehiclesRequested() + 1 ));
         });
 
         Then("^a status of update required should be shown next to financial evidence$", () -> {
@@ -25,8 +25,8 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         });
 
         When("^A selfserve user increases the vehicle required count by invalid characters$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getLicenceNumber());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
             world.UIJourneySteps.changeVehicleReq("+6");
         });
         Then("^An error message should appear$", () -> {
@@ -34,24 +34,24 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         });
 
         When("^A selfserve user increases the vehicle authority by invalid charecters$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(),world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getLicenceNumber());
-            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createLicence.getNoOfVehiclesRequired()));
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
+            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested()));
             world.UIJourneySteps.changeVehicleAuth("+6");
         });
         Then("^An error should appear$", () -> {
             isTextPresent("//*[@id=\"OperatingCentres\"]/fieldset[3]/div[1]/div/p",30);
         });
         When("^a selfserve user creates a variation and increases the vehicle authority count$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
-            clickByLinkText(world.createLicence.getLicenceNumber());
-            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createLicence.getNoOfVehiclesRequired() +2));
-            world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createLicence.getNoOfVehiclesRequired() + 2));
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
+            world.UIJourneySteps.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested() +2));
+            world.UIJourneySteps.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfVehiclesRequested() + 2));
             world.UIJourneySteps.updateFinancialInformation();
             world.UIJourneySteps.signDeclarationForVariation();
         });
         And("^a selfserve user creates a variation and adds an operating centre$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.createLicence.getLoginId(), world.createLicence.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
             world.UIJourneySteps.changeLicenceForVariation();
             world.UIJourneySteps.addNewOperatingCentreSelfServe("B988QF",7,7);

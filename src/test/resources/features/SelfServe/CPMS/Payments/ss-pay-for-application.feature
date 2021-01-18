@@ -6,7 +6,7 @@ Feature: Self Serve Apply for licence
   @CPMS_tests
   Scenario Outline: Create and pay application fees
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
-      | b |
+      | north_east |
     And i choose to print and sign
     When i pay for my application
     Then the application should be submitted
@@ -19,8 +19,8 @@ Feature: Self Serve Apply for licence
   @stored_cards
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
-      | b |
-      | c |
+      | north_east |
+      | north_west |
     And i choose to print and sign
     When i pay for my application
     Then the application should be submitted
@@ -31,9 +31,10 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
+  @NI_application
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
-      | N |
+      | northern_ireland |
     And i choose to print and sign
     When i pay for my application
     Then the application should be submitted

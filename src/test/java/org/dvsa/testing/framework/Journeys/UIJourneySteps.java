@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -20,9 +21,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
+import scanner.AXEScanner;
+import scanner.ReportGenerator;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.NoSuchElementException;
@@ -58,7 +62,7 @@ public class UIJourneySteps extends BasePage {
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
 
         HashMap<String, Integer> dates;
-        dates = world.globalMethods.date.getDate(-5, 0, -20);
+        dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
 
         enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
         enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
@@ -101,7 +105,7 @@ public class UIJourneySteps extends BasePage {
 
     public void editDocumentWithWebDav() throws IllegalBrowserException, IOException, InterruptedException {
         // Forgive us for using sleeps. There's no other way as this is not a window that selenium can recognise.
-        String window = "Olcs - ".concat(world.createLicence.getLicenceNumber()).concat(" - Google Chrome");
+        String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
         String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
 
         Thread.sleep(1000);
@@ -116,7 +120,7 @@ public class UIJourneySteps extends BasePage {
         Thread.sleep(3000);
         if (autoIt.winExists(wordLoginWindow, "")) {
             autoIt.mouseClick("left", 1100, 630, 2, 1);
-            autoIt.send(world.updateLicence.getAdminUserLogin());
+            autoIt.send(world.updateLicence.getInternalUserLogin());
             autoIt.mouseClick("left", 1100, 720, 2, 1);
             autoIt.send(world.globalMethods.getLoginPassword());
             autoIt.mouseClick("left", 990, 780, 2, 1);
@@ -167,8 +171,8 @@ public class UIJourneySteps extends BasePage {
         waitForTitleToBePresent("Operating centres and authorisation");
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
-        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
-        if (Integer.parseInt(noOfVehicles) > world.createLicence.getNoOfVehiclesRequired()) {
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
+        if (Integer.parseInt(noOfVehicles) > world.createApplication.getNoOfVehiclesRequested()) {
             click(nameAttribute("button", "form-actions[submit]"));
         }
         click(nameAttribute("button", "form-actions[submit]"));
@@ -284,37 +288,21 @@ public class UIJourneySteps extends BasePage {
 
     public void addDisc() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("Home");
-        clickByLinkText(world.createLicence.getLicenceNumber());
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitAndEnterText("data[additionalDiscs]", SelectorType.ID, "2");
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         world.updateLicence.printLicenceDiscs();
         clickByLinkText("Home");
-        clickByLinkText(world.createLicence.getLicenceNumber());
-    }
-
-    public void createLicence(World world, String operatorType, String licenceType) {
-        world.createLicence.setOperatorType(operatorType);
-        world.createLicence.setLicenceType(licenceType);
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
-        if (licenceType.equals("special_restricted") && (world.createLicence.getApplicationNumber() == null)) {
-            world.APIJourneySteps.createSpecialRestrictedLicence();
-        } else if (world.createLicence.getApplicationNumber() == null) {
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
-        }
-        world.grantLicence.grantLicence();
-        if (world.createLicence.getOperatorType().equals("goods")) {
-            world.grantLicence.payGrantFees();
-        }
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     public void closeCase() throws IllegalBrowserException, MalformedURLException {
         clickByLinkText("" + world.updateLicence.getCaseId() + "");
 
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        String casePath = String.format("/case/details/%s", String.valueOf(world.updateLicence.getCaseId()));
+        String casePath = String.format("/case/details/%s", world.updateLicence.getCaseId());
         navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
@@ -336,7 +324,7 @@ public class UIJourneySteps extends BasePage {
 
     public void addNewOperatingCentre() throws IllegalBrowserException, MalformedURLException {
         world.APIJourneySteps.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.adminUserLogin, world.updateLicence.adminUserEmailAddress);
+        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         clickByLinkText("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
@@ -482,7 +470,7 @@ public class UIJourneySteps extends BasePage {
         }
 
         String url = navigate().getCurrentUrl();
-        world.updateLicence.setVariationApplicationNumber(returnNthNumberSequenceInString(url, 2));
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 2));
     }
 
     public void removeFirstVehicleOnVehiclePage() throws IllegalBrowserException, MalformedURLException {
@@ -527,5 +515,38 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForElementToBeClickable("//*[@id='upload']", SelectorType.XPATH);
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
+    }
+
+
+    public void addAVehicle(String licenceNumber) throws MalformedURLException, IllegalBrowserException {
+        findSelectAllRadioButtonsByValue("add");
+        waitAndClick("next",SelectorType.ID);
+        waitAndEnterText("vehicle-search[search-value]",SelectorType.ID,licenceNumber);
+        waitAndClick("vehicle-search[submit]",SelectorType.ID);
+    }
+    public void removeVehicle() throws MalformedURLException, IllegalBrowserException {
+        findSelectAllRadioButtonsByValue("remove");
+        waitAndClick("next",SelectorType.ID);
+    }
+
+
+    public void vehicleRemovalConfirmationPage() throws MalformedURLException, IllegalBrowserException {
+        removeVehicle();
+        waitAndClick("//*[@name='table[id][]'][1]",SelectorType.XPATH);
+        waitAndClick("formActions[action]",SelectorType.ID);
+    }
+
+    public void scanPageForAccessibilityViolations(String URL, AXEScanner scanner) throws IOException, URISyntaxException {
+        AXEScanner axeScanner;
+        ReportGenerator reportGenerator = new ReportGenerator();
+        axeScanner = scanner;
+        if(scanner.axeFindings().length() != 0) {
+            reportGenerator.urlScannedReportSection(URL);
+            reportGenerator.violationDetailsReportSection(URL, axeScanner);
+            reportGenerator.createReport(axeScanner);
+            Assert.fail("Violation findings found");
+        }else{
+            Assert.assertEquals(0, scanner.axeFindings().length());
+        }
     }
 }
