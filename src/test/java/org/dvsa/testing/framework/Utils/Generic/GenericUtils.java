@@ -144,7 +144,7 @@ public class GenericUtils extends BasePage {
         jenkinsParams.put(JenkinsParameterKey.NODE.toString(), String.format("api&&%s&&olcs", Properties.get("env", true)));
         jenkinsParams.put(JenkinsParameterKey.JOB.toString(), command);
 
-        Jenkins.trigger(Jenkins.Job.BATCH_PROCESS_QUEQUE, jenkinsParams);
+        Jenkins.trigger(Jenkins.Job.BATCH_PROCESS_QUEUE, jenkinsParams);
     }
 
     public String stripNonAlphanumericCharacters(String value) {
