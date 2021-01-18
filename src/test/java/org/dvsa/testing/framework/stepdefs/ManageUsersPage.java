@@ -3,9 +3,8 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import enums.UserRoles;
-import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
@@ -22,7 +21,7 @@ public class ManageUsersPage extends BasePage implements En {
 
     public ManageUsersPage(World world) {
         Given("^i have an admin account to add users$", () -> {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         });
         When("^i navigate to the manage users page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());

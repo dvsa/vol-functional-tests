@@ -1,8 +1,9 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import apiCalls.enums.UserRoles;
+import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
@@ -19,7 +20,7 @@ public class RefundInterim extends BasePage implements En {
             world.createApplication.setOperatorType(operatorType);
             world.createApplication.setLicenceType(licenceType);
             world.createApplication.setIsInterim("Y");
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
                 world.APIJourneySteps.createSpecialRestrictedLicence();
             }
@@ -36,7 +37,7 @@ public class RefundInterim extends BasePage implements En {
             world.grantApplication.refuse();
         });
         Then("^the interim fee should be refunded$", () -> {
-            world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
+            world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Fees");
@@ -58,7 +59,7 @@ public class RefundInterim extends BasePage implements En {
             world.grantApplication.withdraw();
         });
         Then("^the interim fee should not be refunded$", () -> {
-            world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(),UserRoles.INTERNAL.getUserRoles());
+            world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Fees");

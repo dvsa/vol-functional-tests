@@ -3,24 +3,20 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
-import apiCalls.enums.EnforcementArea;
-import apiCalls.enums.TrafficArea;
-import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateApplications extends BasePage implements En {
     public CreateApplications(World world) {
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+
         When("^i choose to print and sign$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);

@@ -7,7 +7,6 @@ import activesupport.system.Properties;
 import apiCalls.enums.UserType;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 

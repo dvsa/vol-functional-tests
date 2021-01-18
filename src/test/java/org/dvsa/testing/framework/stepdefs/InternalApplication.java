@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
@@ -73,10 +73,10 @@ public class InternalApplication extends BasePage implements En {
             world.createApplication.setOperatorType(operator);
             world.createApplication.setLicenceType(licenceType);
             if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
-                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+                world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
                 world.APIJourneySteps.createSpecialRestrictedLicence();
             } else if (world.createApplication.getApplicationId() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+                world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
                 world.APIJourneySteps.createApplication();
 
             }
