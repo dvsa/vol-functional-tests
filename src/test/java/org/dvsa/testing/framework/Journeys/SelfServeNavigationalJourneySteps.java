@@ -46,7 +46,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.createApplication.getApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                    waitForTextToBePresent("Apply for a new licence");
+                    waitForTitleToBePresent("Apply for a new licence");
                 } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
                     waitForTitleToBePresent("Application overview");
                 }
@@ -56,7 +56,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.updateLicence.getVariationApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                    waitForTextToBePresent("Apply to change a licence");
+                    waitForTitleToBePresent("Apply to change a licence");
                 } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
                     waitForTitleToBePresent("Application overview");
                 }
