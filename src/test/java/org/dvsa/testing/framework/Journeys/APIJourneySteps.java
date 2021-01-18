@@ -3,12 +3,7 @@ package org.dvsa.testing.framework.Journeys;
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
-import apiCalls.enums.EnforcementArea;
-import apiCalls.enums.LicenceType;
-import apiCalls.enums.OperatorType;
-import apiCalls.enums.TrafficArea;
-import apiCalls.enums.UserType;
-import enums.UserRoles;
+import apiCalls.enums.*;
 import org.joda.time.LocalDate;
 
 public class APIJourneySteps {
@@ -22,7 +17,7 @@ public class APIJourneySteps {
     }
 
     public void createAdminUser() throws MissingRequiredArgument {
-        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.getUserRoles(), UserRoles.INTERNAL.getUserRoles());
+        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
     public void nIAddressBuilder() {

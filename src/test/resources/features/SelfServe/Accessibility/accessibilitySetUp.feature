@@ -4,7 +4,7 @@ Feature: Set up users for accessibility testing
 
   @multiple_licences
   Scenario Outline: PSV account with 16 different licences and 3 vehicles
-    Given I have all "OperatorType" "LicenceType" traffic area licences
+    Given I have all "<OperatorType>" "<LicenceType>" traffic area licences
     When i have logged in to self serve
     Then the licence should be created and granted
 

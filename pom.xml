@@ -15,11 +15,11 @@
         <cucumber-java.version>4.4.0</cucumber-java.version>
         <cucumber-junit.version>4.4.0</cucumber-junit.version>
         <junit.version>4.12</junit.version>
-        <active-support.version>1.4.4.6</active-support.version>
+        <active-support.version>1.4.4.7</active-support.version>
         <slf4j.version>2.12.1</slf4j.version>
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
-        <axe-scanner-version>1.0</axe-scanner-version>
+        <axe-scanner-version>1.1</axe-scanner-version>
         <page-objects.version>0.6.9.6</page-objects.version>
         <page-action.version>0.2</page-action.version>
         <uri-constructor.version>1.5.4</uri-constructor.version>
@@ -29,7 +29,7 @@
         <allure-cucumber4-jvm.version>2.13.2</allure-cucumber4-jvm.version>
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn-version>2.10.0</allure-mvn-version>
-        <cucable-plugin.version>1.8.0</cucable-plugin.version>
+        <cucable-plugin.version>1.9.0</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
         <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
@@ -119,9 +119,9 @@
                     <!-- Required properties -->
                     <sourceRunnerTemplateFile>src/test/resources/parallel/cucable.template</sourceRunnerTemplateFile>
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
-                    <generatedFeatureDirectory>${project.basedir}/src/test/resources/parallel/features
+                    <generatedFeatureDirectory>target/parallel/features
                     </generatedFeatureDirectory>
-                    <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
+                    <generatedRunnerDirectory>target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                     <desiredNumberOfFeaturesPerRunner>5</desiredNumberOfFeaturesPerRunner>
                 </configuration>
@@ -141,7 +141,7 @@
                 </executions>
                 <configuration>
                     <sources>
-                        <source>${project.build.directory}/parallel/runners</source>
+                        <source>target/parallel/runners</source>
                     </sources>
                 </configuration>
             </plugin>

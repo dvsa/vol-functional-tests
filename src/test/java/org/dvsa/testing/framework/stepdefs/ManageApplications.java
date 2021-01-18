@@ -4,12 +4,10 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import enums.UserRoles;
 import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.InvalidArgumentException;
 
@@ -29,13 +27,13 @@ public class ManageApplications {
 
     @Given("I have a {string} application")
     public void iHaveANewApplication(String operatorType) {
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createApplication(operatorType, "standard_national");
     }
 
     @Given("I have a {string} {string} application")
     public void iHaveAnStringStringApplication(String operatorType, String licenceType) {
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createApplication(operatorType, licenceType);
     }
 
@@ -48,14 +46,14 @@ public class ManageApplications {
 
     @Given("I have submitted a {string} {string} application")
     public void iHaveSubmittedApplication(String operatorType, String licenceType) {
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createSubmittedApplication(operatorType, licenceType);
     }
 
     @Given("I have all {string} {string} Traffic Areas applications with an external TM")
     public void iHaveAppliedForTMApplication(String licenceType, String operator) throws Exception {
         String password;
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfVehiclesRequested(3);
         
         for (int i = 0; i < 9; i++) {
@@ -147,7 +145,7 @@ public class ManageApplications {
         }
         world.createApplication.setNiFlag(Region);
         List<String> trafficAreas = trafficAreaTable.asList(String.class);
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         for (String ta : trafficAreas) {
             TrafficArea trafficArea = TrafficArea.valueOf(ta.toUpperCase());
             world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
