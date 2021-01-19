@@ -5,8 +5,8 @@ import activesupport.driver.Browser;
 import activesupport.jenkins.Jenkins;
 import activesupport.system.Properties;
 import activesupport.aws.s3.S3;
+import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
@@ -39,7 +39,7 @@ public class RemoveTM extends BasePage implements En {
             if (world.createApplication.getOperatorType() == null) {
                 world.createApplication.setOperatorType("public");
             }
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.APIJourneySteps.createApplication();
             world.APIJourneySteps.submitApplication();
         });

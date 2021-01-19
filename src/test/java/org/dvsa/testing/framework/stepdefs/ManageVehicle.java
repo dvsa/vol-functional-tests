@@ -2,15 +2,10 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
-import activesupport.driver.Browser;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import enums.OperatorType;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;

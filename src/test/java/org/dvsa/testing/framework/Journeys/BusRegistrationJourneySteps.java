@@ -6,7 +6,7 @@ import activesupport.MissingRequiredArgument;
 import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
-import enums.UserRoles;
+import apiCalls.enums.UserType;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -110,7 +110,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         world.createApplication.setTrafficArea(TrafficArea.valueOf(TrafficArea.NORTH_EAST.name()));
         world. createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name()));
         world.createApplication.setOperatorType(operatorType);
-        world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourneySteps.createApplication();
         world.APIJourneySteps.submitApplication();
         if (String.valueOf(operatorType).equals("public")) {

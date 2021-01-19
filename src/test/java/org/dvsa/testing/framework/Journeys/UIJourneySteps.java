@@ -6,7 +6,6 @@ import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
 import activesupport.string.Str;
 import autoitx4java.AutoItX;
-import enums.UserRoles;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
