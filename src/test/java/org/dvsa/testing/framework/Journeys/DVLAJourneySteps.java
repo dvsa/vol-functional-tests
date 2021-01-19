@@ -14,8 +14,8 @@ public class DVLAJourneySteps extends BasePage {
 
     public DVLAJourneySteps(World world){ this.world = world; }
 
-    public void navigateToManageVehiclesPage() throws MalformedURLException, IllegalBrowserException {
-        world.selfServeNavigation.navigateToPage("licence", "Vehicle");
+    public void navigateToManageVehiclesPage(String licenceStatus) throws MalformedURLException, IllegalBrowserException {
+        world.selfServeNavigation.navigateToPage(licenceStatus, "Vehicle");
         String URL = Browser.navigate().getCurrentUrl();
         String newURL = URL.substring(0, URL.length()-2);
         Browser.navigate().get(newURL);
