@@ -29,4 +29,4 @@ Feature: Transfer a vehicle
     When i transfer all the vehicles from my licence
     Then a "Transferring these vehicles would exceed the vehicle authority on licence" error banner should appear
 
-# Need application, variation and search and tranfer.
+# Need application, variation and search and transfer.
