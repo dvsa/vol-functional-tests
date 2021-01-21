@@ -6,6 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.*;
+import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 
@@ -28,6 +29,7 @@ public class Initialisation extends BasePage implements En {
         world.updateLicence = new UpdateLicence(world.createApplication);
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);
+        world.DBUtils = new DBUtils(world);
         world.licenceCreation = new LicenceCreation(world);
         world.genericUtils = new GenericUtils(world);
         world.APIJourneySteps = new APIJourneySteps(world);
