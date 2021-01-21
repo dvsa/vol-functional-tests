@@ -72,7 +72,7 @@ public class DVLAJourneySteps extends BasePage {
             this.VRM = (this.VRM == null ? getText("//td//a", SelectorType.XPATH) : this.VRM);
         }
         if (search.equals("Y")) {
-            searchForExactVRM(VRM);
+            searchForExactVRM(this.VRM);
         }
         if (previousDiscNumber == "Y") {
             this.previousDiscNumber = getText(String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", this.VRM), SelectorType.XPATH);
