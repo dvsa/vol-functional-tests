@@ -2,12 +2,18 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import activesupport.database.exception.UnsupportedDatabaseDriverException;
+import activesupport.system.Properties;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.internal.SearchNavBar;
 
 import java.net.MalformedURLException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import static activesupport.database.DBUnit.checkResult;
+import static activesupport.database.DBUnit.executeUpdateSQL;
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertTrue;
 
@@ -58,14 +64,15 @@ public class InternalSearchJourneySteps extends BasePage {
         clickByLinkText(String.valueOf(world.updateLicence.getCaseId()));
     }
 
-    public void searchAndViewPSVDisc() throws IllegalBrowserException, MalformedURLException {
+    public void searchAndViewPSVDisc() throws IllegalBrowserException, MalformedURLException, UnsupportedDatabaseDriverException, SQLException {
+        int psvDiscNumber = world.DBUtils.getFirstPsvDiscNumber(world.createApplication.getLicenceId(), world.configuration);
         selectValueFromDropDown("search-select", SelectorType.ID, "Psv Disc");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             // - 5 is required because the set start number is for all licences that need printing, not just this licence, and so taking the end number and scaling back makes more sense.
-            SearchNavBar.search(String.valueOf(Integer.parseInt(world.updateLicence.getEndNumber()) - 5));
-        } while (!isTextPresent(String.valueOf(Integer.parseInt(world.updateLicence.getEndNumber()) - 5), 200) && System.currentTimeMillis() < kickOut);
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]",world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
+            SearchNavBar.search(String.valueOf(psvDiscNumber));
+        } while (!isTextPresent(String.valueOf(psvDiscNumber), 200) && System.currentTimeMillis() < kickOut);
+        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
     }
