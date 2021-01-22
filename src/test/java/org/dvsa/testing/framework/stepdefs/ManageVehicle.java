@@ -14,8 +14,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ManageVehicle extends BasePage {
     World world;
@@ -229,7 +228,7 @@ public class ManageVehicle extends BasePage {
         Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber, 10));
     }
 
-    @And("the all the licence discs number should be updated")
+    @And("all the licence discs number should be updated")
     public void theAllTheLicenceDiscsNumberShouldBeUpdated() throws MalformedURLException, IllegalBrowserException {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
         for (int i = 0; i < world.createApplication.getVehicleVRMs().length; i++) {
@@ -240,18 +239,77 @@ public class ManageVehicle extends BasePage {
         }
     }
 
-    @When("I clicks submit without choosing a vehicle disc")
-    public void iClicksSubmitWithoutChoosingAVehicleDisc() throws MalformedURLException, IllegalBrowserException {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
+    @When("I clicks submit on {string} without checking a checkbox")
+    public void iClicksSubmitWithoutCheckingACheckbox(String page) throws MalformedURLException, IllegalBrowserException {
+        switch (page) {
+            case "remove":
+                world.dvlaJourneySteps.navigateToRemoveVehiclePage();
+                break;
+            case "reprint":
+                world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
+                break;
+            case "transfer":
+                world.dvlaJourneySteps.navigateToTransferVehiclePage();
+                break;
+        }
         click("//*[@name='formActions[action]']", SelectorType.XPATH);
     }
 
-    @Then("the vehicle disc errors appear")
-    public void theVehicleDiscErrorsAppear() throws InterruptedException, IllegalBrowserException {
+    @Then("the standard {string} errors appear")
+    public void theVehicleDiscErrorsAppear(String error) throws IllegalBrowserException {
         String errorTitle = "There is a problem";
-        String error = "Select the discs you want to reprint";
         assertTrue(isElementPresent(String.format("//div[@class='validation-summary']/h2[contains(text(),'%s')]", errorTitle), SelectorType.XPATH));
         assertTrue(isElementPresent(String.format("//div[@class='validation-summary']//a[contains(text(),'%s')]", error), SelectorType.XPATH));
         assertTrue(isElementPresent(String.format("//div[@class='validation-wrapper']//p[contains(text(),'%s')]", error), SelectorType.XPATH));
+    }
+
+    @And("i remove a vehicle")
+    public void iRemoveAVehicle() throws MalformedURLException, IllegalBrowserException, InterruptedException {
+        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
+        world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "N");
+        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
+    }
+
+    @And("the vehicle should no longer be present")
+    public void theVehicleShouldNoLongerBePresent() throws MalformedURLException, IllegalBrowserException, InterruptedException {
+        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
+        List<WebElement> remainingVRMs = findElements("//td//a", SelectorType.XPATH);
+        for (WebElement VRM : remainingVRMs){
+            assertNotEquals(VRM.getText(),(world.dvlaJourneySteps.VRM));
+        }
+    }
+
+    @And("i search and remove a vehicle")
+    public void iSearchAndRemoveAVehicle() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
+        world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "Y");
+        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
+    }
+
+    @And("i search and the vehicle should no longer be present")
+    public void iSearchAndTheVehicleShouldNoLongerBePresent() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
+        enterText("vehicleSearch[search-value]", world.dvlaJourneySteps.VRM, SelectorType.NAME);
+        click("vehicleSearch[submit]", SelectorType.NAME);
+        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.VRM, 10));
+        Assert.assertTrue(isTextPresent("No vehicle can be found with that Vehicle Registration Mark", 10));
+    }
+
+    @And("i remove all my vehicles")
+    public void iRemoveAllMyVehicles() throws MalformedURLException, IllegalBrowserException {
+        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
+        world.dvlaJourneySteps.completeDVLAPageAndStoreAllValues("Y", "Y");
+        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to remove the vehicles from your licence?");
+    }
+
+    @Then("the switchboard only views add vehicle and view vehicle radio buttons")
+    public void theSwitchboardOnlyViewsAddVehicleAndViewVehicleRadioButtons() throws MalformedURLException, IllegalBrowserException {
+        List<WebElement> switchboardElements = findElements("//label[@class='govuk-label govuk-radios__label']", SelectorType.XPATH);
+        for (WebElement radioButton : switchboardElements) {
+            assertNotEquals(radioButton.getText(),"Remove a vehicle");
+            assertNotEquals(radioButton.getText(),"Reprint vehicle disc");
+        }
+        assertEquals(switchboardElements.get(0).getText(), "Add a vehicle");
+        assertEquals(switchboardElements.get(1).getText(), "View the vehicles you have removed from your licence");
     }
 }
