@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.enums.UserType;
@@ -12,12 +13,9 @@ import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;
 import scanner.ReportGenerator;
 
-import java.io.File;
-
-
 public class ManageUsersPage extends BasePage implements En {
-    AXEScanner scanner;
-    ReportGenerator reportGenerator;
+    AXEScanner scanner = new AXEScanner();
+    ReportGenerator reportGenerator = new ReportGenerator();
 
     public ManageUsersPage(World world) {
         Given("^i have an admin account to add users$", () -> {
@@ -29,11 +27,12 @@ public class ManageUsersPage extends BasePage implements En {
             Assert.assertEquals("Manage users", getText("h1", SelectorType.CSS));
         });
         And("^i scan for accessibility violations$", () -> {
-            this.scanner = new AXEScanner();
-            this.scanner.scan();
+            scanner.scan();
         });
         Then("^no issues should be present on the page$", () -> {
             if(scanner.axeFindings().length() != 0) {
+                reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
+                reportGenerator.violationDetailsReportSection(Browser.navigate().getCurrentUrl(), scanner);
                 reportGenerator.createReport(scanner);
                 Assert.fail("Violation findings found");
             }else{

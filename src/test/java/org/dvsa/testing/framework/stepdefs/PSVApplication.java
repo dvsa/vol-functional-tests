@@ -4,10 +4,10 @@ import Injectors.World;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
 
-public class PSVapplication implements En {
+public class PSVApplication implements En {
     private World world;
 
-    public PSVapplication(World world) {
+    public PSVApplication(World world) {
 
         Given("^I have applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
             world.createApplication.setOperatorType(operator);

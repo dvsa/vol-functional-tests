@@ -6,7 +6,6 @@ import activesupport.MissingRequiredArgument;
 import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
-import apiCalls.enums.UserRoles;
 import apiCalls.enums.UserType;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;

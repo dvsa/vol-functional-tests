@@ -2,9 +2,14 @@ package org.dvsa.testing.framework.runner;
 
 import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
+import cucumber.api.java.After;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.Rule;
+import org.junit.rules.TestRule;
+import org.junit.rules.TestWatcher;
+import org.junit.runner.Description;
+import org.junit.runners.model.Statement;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.TakesScreenshot;
@@ -16,6 +21,7 @@ import java.io.IOException;
 import java.time.Instant;
 
 public class Hooks {
+
 
     private static File directory = new File(System.getProperty("user.dir") + "/target/img");
 
@@ -38,10 +44,10 @@ public class Hooks {
         }
     }
 
-    @AfterAll
+    @After
     public static void tearDown(){
         try {
-            if(Browser.isBrowserOpen())
+            if(Browser.isBrowserOpen());
             Browser.closeBrowser();
         } catch (SessionNotCreatedException ignored) { }
     }
