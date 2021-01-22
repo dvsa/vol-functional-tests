@@ -18,7 +18,7 @@ Feature: Remove a vehicle more than 10 vehicles
     Then the "1 vehicle has been removed" confirmation banner should appear
     And the vehicle should no longer be present
 
-  Scenario: Remove vehicle on variation (Do we need?)
+  Scenario: Remove vehicle on variation
     Given I have a "goods" "standard_national" licence
     When i add an existing person as a transport manager who is not the operator on "variation"
     And I navigate to manage vehicle page on a variation
