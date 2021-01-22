@@ -1,10 +1,9 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import io.restassured.response.ValidatableResponse;
-import org.dvsa.testing.framework.Journeys.APIJourneySteps;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -16,10 +15,10 @@ public class WebDavAPIStep implements En {
 
     public WebDavAPIStep(World world) {
         Given("^i have registered a new \"([^\"]*)\" user$", (String userRole) -> {
-            this.userId = world.updateLicence.createInternalUser(userRole, UserRoles.INTERNAL.getUserRoles());
+            this.userId = world.updateLicence.createInternalUser(userRole, UserType.INTERNAL.asString());
         });
         When("^i view their user details$", () -> {
-            this.response = world.userDetails.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId);
+            this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId);
             this.pid = response.extract().jsonPath().getString("pid");
         });
         Then("^the OS Type value should be null$", () -> {
@@ -35,7 +34,7 @@ public class WebDavAPIStep implements En {
             this.response = world.updateLicence.updateInternalUserDetails(this.userId, osVersion);
         });
         Then("^their new OS Type should be \"([^\"]*)\"$", (String expectedOSVersion) -> {
-            this.response = world.userDetails.getUserDetails(UserRoles.INTERNAL.getUserRoles(), userId);
+            this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId);
             assertEquals(response.extract().body().jsonPath().get("osType.id"),expectedOSVersion);
         });
     }

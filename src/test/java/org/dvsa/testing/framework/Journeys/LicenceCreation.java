@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import apiCalls.enums.*;
+import org.openqa.selenium.InvalidArgumentException;
 
 public class LicenceCreation {
 
@@ -22,8 +23,8 @@ public class LicenceCreation {
     }
 
     public void createApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
-        if(licenceType.equals("special_restricted")){
-            vehicles = "2";
+        if(licenceType.equals("special_restricted") && Integer.parseInt(vehicles) > 2){
+            throw new InvalidArgumentException("Special restricted licences can not have more than 2 vehicles on them.");
         }
         world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
         world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));

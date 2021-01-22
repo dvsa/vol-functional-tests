@@ -6,8 +6,8 @@ import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.EnforcementArea;
+import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
@@ -20,7 +20,7 @@ public class UserResearch extends BasePage implements En {
     public UserResearch(World world) {
 
         Given("^^I have applied for \"([^\"]*)\" \"([^\"]*)\" licences$", (String licenceType, String operator) -> {
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.createApplication.setNoOfVehiclesRequested(5);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 for (TrafficArea TA : trafficAreaList()) {
@@ -40,7 +40,7 @@ public class UserResearch extends BasePage implements En {
 
         Given("^I have applied for \"([^\"]*)\" \"([^\"]*)\" TM application$", (String licenceType, String operator) -> {
             String password;
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.createApplication.setNoOfVehiclesRequested(3);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 TrafficArea TA = trafficAreaList()[i];

@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import enums.UserRoles;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
@@ -18,7 +18,7 @@ public class VerifySwitchedOff extends BasePage implements En {
             if (country.equals("NI")) {
                 world.APIJourneySteps.nIAddressBuilder();
             }
-            world.APIJourneySteps.registerAndGetUserDetails(UserRoles.EXTERNAL.getUserRoles());
+            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.APIJourneySteps.createPartialApplication();
         });
         And("^transport manager details approved banner appears$", () -> {
