@@ -54,7 +54,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
             world.UIJourneySteps.changeLicenceForVariation();
-            world.UIJourneySteps.addNewOperatingCentreSelfServe("B988QF",7,7);
+            world.UIJourneySteps.addNewOperatingCentreSelfServe(7,7);
             world.UIJourneySteps.updateFinancialInformation();
             world.UIJourneySteps.signDeclarationForVariation();
         });

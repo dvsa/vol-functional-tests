@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
+import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
@@ -41,6 +42,8 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNum
 public class UIJourneySteps extends BasePage {
 
     private World world;
+    private FakerUtils faker = new FakerUtils();
+
 
     public UIJourneySteps(World world) {
         this.world = world;
@@ -253,16 +256,6 @@ public class UIJourneySteps extends BasePage {
             click("//*[@id='submitAndPay']", SelectorType.XPATH);
         } else if (size("//*[@id='submit']", SelectorType.XPATH) != 0)
             click("//*[@id='submit']", SelectorType.XPATH);
-    }
-
-    public void updateContactDetails(String addressLine1, String addressLine2, String addressLine3, String
-            addressLine4, String contactNumber) throws IllegalBrowserException, MalformedURLException {
-        replaceText("addressLine1", SelectorType.ID, addressLine1);
-        replaceText("correspondence_address[addressLine2]", SelectorType.ID, addressLine2);
-        replaceText("correspondence_address[addressLine3]", SelectorType.ID, addressLine3);
-        replaceText("correspondence_address[addressLine4]", SelectorType.ID, addressLine4);
-        replaceText("phone_primary", SelectorType.ID, contactNumber);
-        waitAndClick("form-actions[save]", SelectorType.ID);
     }
 
     public void signManually() throws IllegalBrowserException, MalformedURLException {
@@ -478,12 +471,31 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void addNewOperatingCentreSelfServe(String postcode, int vehicles, int trailers) throws
+    public void addNewAddressDetails(HashMap<String, String> address, String postcode, String typeOfAddress) throws MalformedURLException, IllegalBrowserException {
+        replaceText(String.format("//*[contains(@name,'%s[addressLine1]')]", typeOfAddress), SelectorType.XPATH, address.get("addressLine1"));
+        replaceText(String.format("//*[contains(@name,'%s[addressLine2]')]", typeOfAddress), SelectorType.XPATH, address.get("addressLine2"));
+        replaceText(String.format("//*[contains(@name,'%s[addressLine3]')]", typeOfAddress), SelectorType.XPATH, address.get("addressLine3"));
+        replaceText(String.format("//*[contains(@name,'%s[addressLine4]')]", typeOfAddress), SelectorType.XPATH, address.get("addressLine4"));
+        replaceText(String.format("//*[contains(@name,'%s[town]')]", typeOfAddress), SelectorType.XPATH, address.get("town"));
+        replaceText(String.format("//*[contains(@name,'%s[postcode]')]", typeOfAddress), SelectorType.XPATH, postcode);
+    }
+
+    public void checkAddressDetails(HashMap<String, String> address, String postcode, String typeOfAddress) throws MalformedURLException, IllegalBrowserException {
+        checkValue(String.format("//*[@name='%s[addressLine1]']", typeOfAddress), SelectorType.XPATH, address.get("addressLine1"));
+        checkValue(String.format("//*[@name='%s[addressLine2]']", typeOfAddress), SelectorType.XPATH, address.get("addressLine2"));
+        checkValue(String.format("//*[@name='%s[addressLine3]']", typeOfAddress), SelectorType.XPATH, address.get("addressLine3"));
+        checkValue(String.format("//*[@name='%s[addressLine4]']", typeOfAddress), SelectorType.XPATH, address.get("addressLine4"));
+        checkValue(String.format("//*[@name='%s[town]']", typeOfAddress), SelectorType.XPATH, address.get("town"));
+        checkValue(String.format("//*[@name='%s[postcode]']", typeOfAddress), SelectorType.XPATH, postcode);
+    }
+
+    public void addNewOperatingCentreSelfServe(int vehicles, int trailers) throws
             IllegalBrowserException, MalformedURLException {
         waitForTitleToBePresent("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
-        searchAndSelectAddress("postcodeInput1", postcode, 1);
-        waitForElementToBeClickable("//*[@id='addressLine1']", SelectorType.XPATH);
+        HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
+        clickByLinkText("Enter the address yourself");
+        addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         enterText("//*[@id='noOfVehiclesRequired']", Integer.toString(vehicles), SelectorType.XPATH);
         enterText("//*[@id='noOfTrailersRequired']", Integer.toString(trailers), SelectorType.XPATH);
         click("//*[@id='permission']", SelectorType.XPATH);
