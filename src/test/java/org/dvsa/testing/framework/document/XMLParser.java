@@ -15,17 +15,17 @@ public class XMLParser {
 
     public Set<String> browser;
 
-    public XMLParser(){
+    public XMLParser() {
         browser = new HashSet<>();
     }
 
-    public void addBrowser(String retrievedBrowser){
+    public void addBrowser(String retrievedBrowser) {
         browser.add(retrievedBrowser);
     }
 
     public void getElementsByTagName() {
         try {
-            File inputFile = new File("src/test/resources/testNG.xml");
+            File inputFile = new File("src/test/browserStack/resources/browserStack/testNG.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
@@ -37,7 +37,8 @@ public class XMLParser {
 
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
-                   addBrowser(eElement.getAttribute("value"));
+                    addBrowser(eElement.getAttribute("value"));
+                    addBrowser(eElement.getAttribute("version"));
                 }
             }
         } catch (Exception e) {

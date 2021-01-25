@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(features = {"src/test/resources/features"},
-        glue = {"Parallel.stepdefs"})
+        glue = {"org.dvsa.testing.framework.stepdefs"})
 
 public class ParallelRunner extends AbstractTestNGCucumberTests{
     @Override

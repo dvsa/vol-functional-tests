@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suite name="Parallel" thread-count="2" parallel="classes">
     <test name="CrossBrowser">
-        <parameter name="browser" value="chrome"/>
-        <parameter name="browser" value="firefox"/>
-        <parameter name="browser" value="edge"/>
+        <parameter name="browser" value="chrome" version="87.0"/>
+<!--        <parameter name="browser" value="firefox" version="84.0"/>-->
+        <parameter name="browser" value="edge" version="87.0"/>
         <classes>
-            <class name="Parallel.Runner"/>
+            <class name="org.dvsa.testing.framework.runner.ParallelRunner"/>
         </classes>
     </test>
-<!--    <test name="SingleTestFirefox">-->
-<!--        <parameter name="browser" value="firefox"/>-->
-<!--        <classes>-->
-<!--            <class name="Parallel.Runner"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-<!--    <test name="SingleTestSafari">-->
-<!--        <parameter name="browser" value="safari"/>-->
-<!--        <classes>-->
-<!--            <class name="Parallel.Runner"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-<!--    <test name="SingleTestIE">-->
-<!--        <parameter name="browser" value="edge"/>-->
-<!--        <classes>-->
-<!--            <class name="Parallel.Runner"/>-->
-<!--        </classes>-->
-<!--    </test>-->
 </suite>
