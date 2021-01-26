@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
@@ -12,12 +13,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ApplicationVerifyJourney extends BasePage implements En {
     public ApplicationVerifyJourney(World world) {
         Given("^i have an application in progress$", () -> {
-            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
-            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-            world.APIJourneySteps.createApplication();
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            world.selfServeNavigation.navigateToPage("application", "Review and declarations");
-            world.UIJourneySteps.signDeclaration();
+            Browser.navigate().get("https://www.bbc.co.uk");
+//            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+//            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+//            world.APIJourneySteps.createApplication();
+//            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+//            world.selfServeNavigation.navigateToPage("application", "Review and declarations");
+//            world.UIJourneySteps.signDeclaration();
         });
         When("^i choose to sign with verify with \"([^\"]*)\"$", (String arg0) -> {
             world.UIJourneySteps.signWithVerify();

@@ -25,7 +25,7 @@ public class XMLParser {
 
     public void getElementsByTagName() {
         try {
-            File inputFile = new File("src/test/browserStack/resources/browserStack/testNG.xml");
+            File inputFile = new File("src/test/resources/browserStack/testNG.xml");
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);

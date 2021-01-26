@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Parallel" thread-count="2" parallel="classes">
+<suite name="Parallel" thread-count="1" parallel="methods">
     <test name="CrossBrowser">
-        <parameter name="browser" value="chrome" version="87.0"/>
+<!--        <parameter name="browser" value="chrome"/>-->
 <!--        <parameter name="browser" value="firefox" version="84.0"/>-->
-        <parameter name="browser" value="edge" version="87.0"/>
+        <parameter name="browser" value="firefox"/>
         <classes>
             <class name="org.dvsa.testing.framework.runner.ParallelRunner"/>
         </classes>
