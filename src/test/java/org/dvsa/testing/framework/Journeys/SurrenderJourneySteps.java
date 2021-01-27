@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import apiCalls.enums.LicenceType;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
@@ -106,7 +107,7 @@ public class SurrenderJourneySteps extends BasePage {
         addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
-        if (world.createApplication.getLicenceType().equals("standard_international")) {
+        if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             assertTrue(navigate().getCurrentUrl().contains("community-licence"));
             addCommunityLicenceDetails();
         }
