@@ -8,6 +8,7 @@ import org.testng.annotations.DataProvider;
         glue = {"org.dvsa.testing.framework.stepdefs"})
 
 public class ParallelRunner extends AbstractTestNGCucumberTests {
+
     @Override
     @DataProvider(parallel = true)
     public Object[][] scenarios() {

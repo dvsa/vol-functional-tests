@@ -186,7 +186,7 @@
 
     <profiles>
         <profile>
-            <id>parallel</id>
+            <id>browserStack</id>
             <build>
                 <plugins>
                     <plugin>

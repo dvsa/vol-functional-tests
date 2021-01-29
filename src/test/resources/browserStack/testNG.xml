@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="Parallel" thread-count="1" parallel="methods">
-    <test name="CrossBrowser">
-<!--        <parameter name="browser" value="chrome"/>-->
-<!--        <parameter name="browser" value="firefox" version="84.0"/>-->
-        <parameter name="browser" value="firefox"/>
+<suite name="CrossBrowser" thread-count="3" parallel="tests">
+    <test name="ChromeTest">
+        <parameter name="browser" value="chrome" />
+        <parameter name="version" value="87.0" />
+        <parameter name="platform" value="windows" />
         <classes>
-            <class name="org.dvsa.testing.framework.runner.ParallelRunner"/>
+            <class name="org.dvsa.testing.framework.runner.TestRunner"/>
+        </classes>
+    </test>
+    <test name="EdgeTest">
+        <parameter name="browser" value="edge"/>
+        <parameter name="version" value="87.0" />
+        <parameter name="platform" value="windows"/>
+        <classes>
+            <class name="org.dvsa.testing.framework.runner.TestRunner"/>
         </classes>
     </test>
 </suite>

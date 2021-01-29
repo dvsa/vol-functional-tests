@@ -1,33 +1,44 @@
 package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
-import cucumber.api.java8.En;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.dvsa.testing.lib.pages.BasePage;
+
+import java.net.MalformedURLException;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ApplicationVerifyJourney extends BasePage implements En {
-    public ApplicationVerifyJourney(World world) {
-        Given("^i have an application in progress$", () -> {
-            Browser.navigate().get("https://www.bbc.co.uk");
+public class ApplicationVerifyJourney extends BasePage {
+    World world;
+
+    @Given("i have an application in progress")
+    public void iHaveAnApplicationInProgress() throws MalformedURLException, IllegalBrowserException {
+        Browser.navigate().get("https://www.bbc.co.uk");
 //            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
 //            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
 //            world.APIJourneySteps.createApplication();
 //            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 //            world.selfServeNavigation.navigateToPage("application", "Review and declarations");
 //            world.UIJourneySteps.signDeclaration();
-        });
-        When("^i choose to sign with verify with \"([^\"]*)\"$", (String arg0) -> {
-            world.UIJourneySteps.signWithVerify();
-        });
-        Then("^the application should be signed with verify$", () -> {
-            waitForTitleToBePresent("Review and declarations");
-            assertTrue(isTextPresent("Declaration signed through GOV.UK Verify",30));
-            assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")),30));
-        });
+        assertTrue(Browser.navigate().getTitle().contains("BBC"));
+    }
+
+    @When("i choose to sign with verify")
+    public void iChooseToSignWithVerify() throws MalformedURLException, IllegalBrowserException {
+        world.UIJourneySteps.signWithVerify();
+    }
+
+    @Then("the application should be signed with verify")
+    public void theApplicationShouldBeSignedWithVerify() throws MalformedURLException, IllegalBrowserException {
+        waitForTitleToBePresent("Review and declarations");
+        assertTrue(isTextPresent("Declaration signed through GOV.UK Verify", 30));
+        assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")), 30));
     }
 }
