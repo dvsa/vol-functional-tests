@@ -17,7 +17,7 @@ public class TestRunner extends AbstractTestNGCucumberTests {
 
     @BeforeMethod(alwaysRun = true)
     @Parameters({ "browser", "version", "platform" })
-    public void setUpClass(String browser, String version, String platform) {
+    public void setUpClass(@Optional("edge") String browser, @Optional("87.0") String version, @Optional String platform) {
         System.out.println("===BROWSER==" + browser);
         System.out.println("===VERSION==" + version);
         Browser.setBrowserVersion(version);
