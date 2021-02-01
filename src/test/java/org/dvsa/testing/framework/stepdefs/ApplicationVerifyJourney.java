@@ -22,12 +22,13 @@ public class ApplicationVerifyJourney extends BasePage {
 
     @Given("i have an application in progress")
     public void iHaveAnApplicationInProgress() throws MalformedURLException, IllegalBrowserException {
-        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
-        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.APIJourneySteps.createApplication();
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("application", "Review and declarations");
-        world.UIJourneySteps.signDeclaration();
+        Browser.navigate().get("https://www.bbc.co.uk");
+//        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+//        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+//        world.APIJourneySteps.createApplication();
+//        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+//        world.selfServeNavigation.navigateToPage("application", "Review and declarations");
+//        world.UIJourneySteps.signDeclaration();
     }
 
     @When("i choose to sign with verify")
