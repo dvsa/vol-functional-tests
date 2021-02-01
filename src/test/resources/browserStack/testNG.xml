@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<suite name="CrossBrowser" thread-count="3" parallel="tests">
-    <test name="ChromeTest">
-        <parameter name="browser" value="chrome" />
+<suite name="CrossBrowser" thread-count="2" parallel="tests">
+    <test name="ChromeTest"
+          preserve-order="true">
+        <parameter name="browser" value="chrome edge" />
+        <parameter name="browser" value="edge" />
         <parameter name="version" value="87.0" />
         <parameter name="platform" value="windows" />
         <classes>
             <class name="org.dvsa.testing.framework.runner.TestRunner"/>
         </classes>
     </test>
-    <test name="EdgeTest">
-        <parameter name="browser" value="edge"/>
-        <parameter name="version" value="87.0" />
-        <parameter name="platform" value="windows"/>
-        <classes>
-            <class name="org.dvsa.testing.framework.runner.TestRunner"/>
-        </classes>
-    </test>
+<!--    <test name="EdgeTest"-->
+<!--          preserve-order="true">-->
+<!--        <parameter name="browser" value="edge"/>-->
+<!--        <parameter name="browser" value="chrome"/>-->
+<!--        <parameter name="version" value="87.0" />-->
+<!--        <parameter name="platform" value="windows"/>-->
+<!--        <classes>-->
+<!--            <class name="org.dvsa.testing.framework.runner.TestRunner"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>
