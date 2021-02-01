@@ -343,16 +343,16 @@
             <artifactId>vol-api-calls</artifactId>
             <version>${api-calls.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-testng</artifactId>
-            <version>4.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>7.3.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.cucumber</groupId>-->
+<!--            <artifactId>cucumber-testng</artifactId>-->
+<!--            <version>4.4.0</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.testng</groupId>-->
+<!--            <artifactId>testng</artifactId>-->
+<!--            <version>7.3.0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <!--  Nexus Configuration  -->
