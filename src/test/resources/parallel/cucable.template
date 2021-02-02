@@ -6,6 +6,10 @@ import org.junit.jupiter.api.AfterAll;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import cucumber.api.java.Before;
 
  @RunWith(Cucumber.class)
  @CucumberOptions(plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm", "json:target/results.json"},
@@ -13,6 +17,14 @@ import org.junit.runner.RunWith;
          glue = {"org.dvsa.testing.framework.stepdefs"}
  )
  public class [CUCABLE:RUNNER] {
+
+    @Before
+    public void deleteRunnersFolder() throws IOException {
+        Path path = Paths.get(System.getProperty("user.dir") + "src/test/java/runners");
+        if (Files.exists(path)) {
+            Files.delete(path);
+        }
+    }
 
    @AfterAll
     public static void tearDown(){
