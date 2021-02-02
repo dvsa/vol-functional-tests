@@ -119,9 +119,9 @@
                     <!-- Required properties -->
                     <sourceRunnerTemplateFile>src/test/resources/parallel/cucable.template</sourceRunnerTemplateFile>
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
-                    <generatedFeatureDirectory>${project.basedir}/src/test/resources/parallel/features
+                    <generatedFeatureDirectory>${project.basedir}/target/resources/parallel/features
                     </generatedFeatureDirectory>
-                    <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
+                    <generatedRunnerDirectory>${project.basedir}/target/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                     <desiredNumberOfFeaturesPerRunner>5</desiredNumberOfFeaturesPerRunner>
                 </configuration>

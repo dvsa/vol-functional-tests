@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.runner;
 import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
+import cucumber.api.java.Before;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.junit.Rule;
@@ -23,10 +24,18 @@ import java.time.Instant;
 public class Hooks {
 
 
-    private static File directory = new File(System.getProperty("user.dir") + "/target/img");
+    private static final File directory = new File(System.getProperty("user.dir") + "/target/img");
 
     private void createDirectory() throws IOException {
         FileUtils.forceMkdir(directory);
+    }
+
+    @Before
+    public void deleteRunnersFolder(){
+        File runners = new File("src/test/java/runners");
+        if(runners.exists()){
+            runners.delete();
+        }
     }
 
     @Attachment(value = "Screenshot on failure", type = "image/png")
@@ -49,6 +58,8 @@ public class Hooks {
         try {
             if(Browser.isBrowserOpen());
             Browser.closeBrowser();
-        } catch (SessionNotCreatedException ignored) { }
+        } catch (SessionNotCreatedException ignored) { } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

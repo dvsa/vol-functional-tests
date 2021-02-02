@@ -22,9 +22,6 @@ public class ApplicationVerifyJourney extends BasePage {
 
     @Given("i have an application in progress")
     public void iHaveAnApplicationInProgress() throws MalformedURLException, IllegalBrowserException {
-        String browserStackUser = world.configuration.config.getString("browserStackUser");
-        String browserStackKey = world.configuration.config.getString("browserStackKey");
-        Browser.setGridURL(String.format("https://%s:%s@hub-cloud.browserstack.com/wd/hub", browserStackUser, browserStackKey));
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourneySteps.createApplication();
