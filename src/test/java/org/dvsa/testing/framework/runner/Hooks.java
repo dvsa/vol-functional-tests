@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.runner;
 import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
-import cucumber.api.java.Before;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
