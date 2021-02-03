@@ -18,19 +18,13 @@ import cucumber.api.java.Before;
  )
  public class [CUCABLE:RUNNER] {
 
-    @Before
-    public void deleteRunnersFolder() throws IOException {
-        Path path = Paths.get(System.getProperty("user.dir") + "src/test/java/runners");
-        if (Files.exists(path)) {
-            Files.delete(path);
-        }
-    }
-
    @AfterAll
-    public static void tearDown(){
-         try {
-             if(Browser.isBrowserOpen())
-             Browser.closeBrowser();
-         } catch (SessionNotCreatedException ignored) { }
-     }
+       public static void tearDown(){
+            try {
+                if(Browser.isBrowserOpen())
+                Browser.closeBrowser();
+            } catch (SessionNotCreatedException ignored) { } catch (Exception e) {
+                e.printStackTrace();
+            }
+      }
  }
