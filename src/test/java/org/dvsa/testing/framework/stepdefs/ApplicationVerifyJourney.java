@@ -17,6 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ApplicationVerifyJourney extends BasePage {
     World world;
 
+    public ApplicationVerifyJourney(World world){
+        this.world = world;
+    }
+
     @Given("i have an application in progress")
     public void iHaveAnApplicationInProgress() throws MalformedURLException, IllegalBrowserException {
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
