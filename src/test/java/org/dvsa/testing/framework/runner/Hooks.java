@@ -14,21 +14,10 @@ import activesupport.driver.Browser;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Instant;
 
 public class Hooks {
 
-
-    @Before
-    public void deleteRunnersFolder() throws IOException {
-        Path path = Paths.get(System.getProperty("user.dir") + "src/test/java/runners");
-        if (Files.exists(path)) {
-            Files.delete(path);
-        }
-    }
 
     private static final File directory = new File(System.getProperty("user.dir") + "/target/img");
 
