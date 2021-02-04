@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
