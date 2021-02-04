@@ -8,6 +8,7 @@ import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.dvsa.testing.framework.BrowserStartLocal;
 import org.dvsa.testing.lib.pages.BasePage;
 
 import java.net.MalformedURLException;
@@ -23,7 +24,9 @@ public class ApplicationVerifyJourney extends BasePage {
     }
 
     @Given("i have an application in progress")
-    public void iHaveAnApplicationInProgress() throws MalformedURLException, IllegalBrowserException {
+    public void iHaveAnApplicationInProgress() throws Exception {
+        BrowserStartLocal local = new BrowserStartLocal();
+        local.browserLocal(world);
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourneySteps.createApplication();
