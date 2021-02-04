@@ -85,11 +85,11 @@ public class ManageApplications {
     }
 
     @Given("I have all {string} {string} traffic area licences")
-    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) {
+    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) throws Exception {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfVehiclesRequested(3);
         for (TrafficArea ta : trafficAreaList()) {
-            world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
+            world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
             world.createApplication.setApplicationId(null);
         }
     }
