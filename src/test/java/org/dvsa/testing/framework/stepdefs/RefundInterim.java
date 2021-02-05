@@ -33,8 +33,8 @@ public class RefundInterim extends BasePage implements En {
             world.grantApplication.getOutstandingFees();
             world.grantApplication.payOutstandingFees();
         });
-        And("^the licence has been refused$", () -> {
-            world.grantApplication.refuse(world.createApplication.getLicenceId());
+        And("^the application has been refused$", () -> {
+            world.grantApplication.refuse(world.createApplication.getApplicationId());
         });
         Then("^the interim fee should be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
@@ -55,8 +55,8 @@ public class RefundInterim extends BasePage implements En {
             assertTrue(getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded"));
             assertTrue(checkForPartialMatch("£68.00"));
         });
-        And("^the licence has been withdrawn$", () -> {
-            world.grantApplication.withdraw(world.createApplication.getLicenceId());
+        And("^the application has been withdrawn$", () -> {
+            world.grantApplication.withdraw(world.createApplication.getApplicationId());
         });
         Then("^the interim fee should not be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());

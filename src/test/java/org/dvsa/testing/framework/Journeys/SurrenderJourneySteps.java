@@ -143,13 +143,13 @@ public class SurrenderJourneySteps extends BasePage {
 
     public void addDiscInformation() throws IllegalBrowserException, MalformedURLException {
         assertTrue(getCurrentUrl().contains("current-discs"));
+        click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
+        click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
         waitForTextToBePresent("Number of discs you will destroy");
         waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, getDiscsToDestroy());
-        click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='lostSection[info][number]']", SelectorType.XPATH, getDiscsLost());
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");
-        click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, getDiscsStolen());
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
