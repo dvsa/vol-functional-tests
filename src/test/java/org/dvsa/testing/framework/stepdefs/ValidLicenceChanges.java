@@ -30,8 +30,6 @@ public class ValidLicenceChanges extends BasePage implements En {
 
     HashMap<String, String> newAddress = faker.generateAddress();
 
-//TODO: Fix all of this. The UI id naming and the method doesn't work over the
-
     public ValidLicenceChanges(World world) {
         When("^i make changes to the business details page$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Business details");
