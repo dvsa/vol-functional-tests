@@ -10,7 +10,7 @@ Feature: Set up users for accessibility testing
 
     Examples:
       | OperatorType | LicenceType            |
-#      | goods        | standard_national      |
+      | goods        | standard_national      |
       | public       | standard_international |
 
   @tm_accounts

@@ -19,5 +19,3 @@ Feature: Review Discs and Documentation Page Standard International
   Scenario: Documentation Details
     And the correct operator details should be displayed
     And the correct community licence details should be displayed
-
-#    Add tests for contacts details page checks for these?
