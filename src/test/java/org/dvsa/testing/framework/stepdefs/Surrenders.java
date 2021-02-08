@@ -48,9 +48,6 @@ public class Surrenders extends BasePage implements En {
             String communityLicenceDocumentStatus = getText("//dt[contains(text(),'Licence document and all certified copies')]//..//dd", SelectorType.XPATH);
             assertEquals("stolen", communityLicenceDocumentStatus);
         });
-
-
-
         Then("^the internal surrender menu should be displayed$", () -> {
             waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         });
