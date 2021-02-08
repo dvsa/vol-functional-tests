@@ -9,7 +9,7 @@
     <version>1.1</version>
 
     <properties>
-        <api-calls.version>1.0.1</api-calls.version>
+        <api-calls.version>1.0.2</api-calls.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.7.0</maven.compiler.version>
         <cucumber-java.version>4.4.0</cucumber-java.version>
@@ -123,7 +123,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfFeaturesPerRunner>5</desiredNumberOfFeaturesPerRunner>
+                    <desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>
                 </configuration>
             </plugin>
             <plugin>

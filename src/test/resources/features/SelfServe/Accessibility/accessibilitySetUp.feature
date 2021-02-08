@@ -6,7 +6,7 @@ Feature: Set up users for accessibility testing
   Scenario Outline: PSV account with 16 different licences and 3 vehicles
     Given I have all "<OperatorType>" "<LicenceType>" traffic area licences
     When i have logged in to self serve
-    Then the licence should be created and granted
+    Then i write the licence login information to a file for use of user research
 
     Examples:
       | OperatorType | LicenceType            |
@@ -14,7 +14,7 @@ Feature: Set up users for accessibility testing
       | public       | standard_international |
 
   @tm_accounts
-  Scenario Outline: PSV account with 16 different licences with external tm
+  Scenario Outline: PSV account with 16 different licences with external tm (requires api fix)
     Given I have all "<OperatorType>" "<LicenceType>" Traffic Areas applications with an external TM
     Then accounts should be created
 

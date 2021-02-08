@@ -51,35 +51,23 @@ public class ManageApplications {
     }
 
     @Given("I have all {string} {string} Traffic Areas applications with an external TM")
-    public void iHaveAppliedForTMApplication(String licenceType, String operator) throws Exception {
+    public void iHaveAppliedForTMApplication(String operatorType, String licenceType) throws Exception {
         String password;
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfVehiclesRequested(3);
-        
-        for (int i = 0; i < 9; i++) {
-            world.createApplication.setPostCodeByTrafficArea(TrafficArea.getPostCode(trafficAreaList()[i]));
-            world.createApplication.setOperatorType(operator);
-            world.createApplication.setLicenceType(licenceType);
-            world.createApplication.setTrafficArea(trafficAreaList()[i]);
-            world.createApplication.setEnforcementArea(enforcementAreaList()[i]);
-            world.APIJourneySteps.createApplication();
-            String externalFirstName = faker.generateFirstName();
-            String externalLastName = faker.generateLastName();
-            String randomInt = String.valueOf(Int.random(1000, 9999));
-            String externalTmUserName = String.format("UserResearchTM-%s%s%s", externalFirstName, externalLastName, randomInt);
-            world.createApplication.setTransportManagerFirstName(externalFirstName);
-            world.createApplication.setTransportManagerLastName(externalLastName);
-            world.createApplication.setTransportManagerUserName(externalTmUserName);
-            world.createApplication.setTransportManagerEmailAddress(String.format("UserResearchTM%s%s%s@vol.org", externalFirstName, externalLastName, randomInt));
-            world.createApplication.addTransportManager();
-//            Need to think of new way of setting TM names now it is included in the addTM method.
+        for (TrafficArea ta : trafficAreaList()) {
+            world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
             password = S3.getTempPassword(world.createApplication.getTransportManagerEmailAddress());
             world.genericUtils.writeToFile(world.createApplication.getTransportManagerUserName(), password, fileName.concat("TM.csv"));
             world.createApplication.setApplicationId(null);
+//          Need to add way to create new TMs. Values are set in the addTM method because if more than one TM is added
+//          in one go, the user logins equal and the API rejects this.
+//          Possibly all uses of the add tm method when used more than once, needs to reset the values before the run
+//          of the addTM method.
         }
     }
 
-    @Then("the licence should be created and granted")
+    @Then("i write the licence login information to a file for use of user research")
     public void theLicenceShouldBeCreatedAndGranted() throws Exception {
         world.genericUtils.writeToFile(world.registerUser.getUserName(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
         // What does this do?
@@ -97,10 +85,12 @@ public class ManageApplications {
     }
 
     @Given("I have all {string} {string} traffic area licences")
-    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) {
+    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) throws Exception {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setNoOfVehiclesRequested(3);
         for (TrafficArea ta : trafficAreaList()) {
-            world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
+            world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
+            world.createApplication.setApplicationId(null);
         }
     }
 

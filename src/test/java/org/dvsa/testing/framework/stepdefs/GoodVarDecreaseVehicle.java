@@ -30,10 +30,10 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
             untilExpectedTextInElement("//*[@id='overview-item__undertakings']",  SelectorType.XPATH,"REQUIRES ATTENTION", 10);
         });
         And("^removes a vehicle because of new vehicle cap", () -> {
-            world.selfServeNavigation.navigateToPage("licence", "Vehicles");
+            world.selfServeNavigation.navigateToPage("variation", "Vehicles");
             world.UIJourneySteps.removeFirstVehicleOnVehiclePage();
             javaScriptExecutor("location.reload(true)");
-            waitAndClick("//*[@class='back-link']",SelectorType.XPATH);
+            waitAndClick("//*[@class='govuk-back-link']",SelectorType.XPATH);
         });
     }
 }

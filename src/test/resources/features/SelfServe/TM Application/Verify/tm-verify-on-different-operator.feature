@@ -37,7 +37,7 @@ Feature: TM signs through verify
     And the print and sign page is displayed
 
   Scenario: Operator rejects TM details and TM details are marked incomplete
-    When i add new person as a transport manager
+    When i add new person as a transport manager and they fill out their details
     And i sign the declaration
     And i choose to sign with verify with "pavlov"
     When the operator rejects the transport managers details

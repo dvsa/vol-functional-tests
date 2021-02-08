@@ -5,6 +5,7 @@ import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.pages.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -26,6 +27,10 @@ public class ApplicationVerifyJourney extends BasePage implements En {
             waitForTitleToBePresent("Review and declarations");
             assertTrue(isTextPresent("Declaration signed through GOV.UK Verify",30));
             assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")),30));
+        });
+        And("^i choose to sign with print and sign$", () -> {
+            click("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            click("form-actions[submit]", SelectorType.ID);
         });
     }
 }

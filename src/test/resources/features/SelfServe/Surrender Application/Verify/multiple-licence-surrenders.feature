@@ -7,7 +7,7 @@
 Feature: Multiple licence holder
 
   Background:
-    Given I have all "goods" "standard_national" traffic area licences
+    Given I have "2" "goods" "standard_national" licences
 
   Scenario: Surrender multiple licences
     And my application to surrender is under consideration

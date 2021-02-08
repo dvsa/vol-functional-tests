@@ -21,95 +21,32 @@ import static org.junit.Assert.assertEquals;
 public class Surrenders extends BasePage implements En {
     ValidatableResponse apiResponse;
     private Integer surrenderId;
-    private String discsToDestroy;
-    private String discsStolen;
-    private String discsLost;
     private String operatorLicence;
     private String communityLicence;
 
     public Surrenders(World world) {
-        Given("^surrenders has been switched \"([^\"]*)\"$", (String toggle) -> {
-            String status = "";
-            if (toggle.toLowerCase().equals("off")) {
-                status = "inactive";
-            } else if (toggle.toLowerCase().equals("on")) {
-                status = "always-active";
-            }
-            world.updateLicence.updateFeatureToggle("15", "Backend Surrender", "back_surrender", status);
-        });
-        And("^another user is unable to surrender my licence$", () -> {
-            apiResponse = world.updateLicence.surrenderLicence(world.createApplication.getLicenceId());
-            String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
-            assertTrue(createdMessage.contains("You do not have access to this resource"));
-            apiResponse.statusCode(HttpStatus.SC_FORBIDDEN);
-        });
-        And("^another user is unable to update my surrender details$", () -> {
-            apiResponse = world.updateLicence.updateSurrender(this.surrenderId);
-            String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
-            assertTrue(createdMessage.contains("You do not have access to this resource"));
-            apiResponse.statusCode(HttpStatus.SC_FORBIDDEN);
-        });
-        And("^as internal user i can delete a surrender$", () -> {
-            apiResponse = world.updateLicence.deleteSurrender(this.surrenderId);
-            String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
-            assertTrue(createdMessage.toLowerCase().contains("id ".concat(this.surrenderId.toString()).concat(" deleted")));
-            apiResponse.body("id.id".concat(this.surrenderId.toString()), Matchers.equalTo(this.surrenderId.toString()));
-            apiResponse.statusCode(HttpStatus.SC_OK);
-        });
-        And("^as selfserve user I cannot delete my surrender$", () -> {
-            apiResponse = world.updateLicence.deleteSurrender(this.surrenderId);
-            String createdMessage = apiResponse.extract().jsonPath().getString("messages[0]");
-            assertTrue(createdMessage.contains("You do not have access to this resource"));
-            apiResponse.statusCode(HttpStatus.SC_FORBIDDEN);
-        });
-        When("^i am on the review discs and documentation page$", () -> {
-            this.discsLost = "2";
-            this.discsToDestroy = "2";
-            this.discsStolen = "1";
-            click("//*[@id='submit']", SelectorType.XPATH);
-            waitForTitleToBePresent("Review your contact information");
-            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            world.surrenderJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
+        When("^i surrender my licence to the review discs and documentation page$", () -> {
+            world.surrenderJourneySteps.submitSurrenderUntilReviewPage();
         });
         Then("^the correct destroyed disc details should be displayed$", () -> {
-            String destroyedDiscs = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            assertEquals(this.discsToDestroy, destroyedDiscs);
+            String destroyedDiscs = getText("//dt[contains(text(),'Number to be destroyed')]//..//dd", SelectorType.XPATH);
+            assertEquals(world.surrenderJourneySteps.getDiscsToDestroy(), destroyedDiscs);
         });
         And("^the correct lost disc details should be displayed$", () -> {
-            String lostDiscs = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][2]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            assertEquals(this.discsLost, lostDiscs);
+            String lostDiscs = getText("//dt[contains(text(),'Number lost')]//..//dd", SelectorType.XPATH);
+            assertEquals(world.surrenderJourneySteps.getDiscsLost(), lostDiscs);
         });
         And("^the correct stolen disc details should be displayed$", () -> {
-            String stolenDiscs = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][3]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            assertEquals(this.discsStolen, stolenDiscs);
+            String stolenDiscs = getText("//dt[contains(text(),'Number stolen')]//..//dd", SelectorType.XPATH);
+            assertEquals(world.surrenderJourneySteps.getDiscsStolen(), stolenDiscs);
         });
         And("^the correct operator details should be displayed$", () -> {
-            String stolenDiscs = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][3]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            assertEquals(this.discsStolen, stolenDiscs);
-        });
-        And("^the correct licence number is be displayed$", () -> {
-            this.operatorLicence = "to be destroyed";
-            String operatorLicenceStatus = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-            assertEquals(operatorLicence, operatorLicenceStatus);
+            String operatorLicenceDocumentStatus = getText("//dt[contains(text(),'Licence document')]//..//dd", SelectorType.XPATH);
+            assertEquals("lost", operatorLicenceDocumentStatus);
         });
         And("^the correct community licence details should be displayed$", () -> {
-            And("^the correct licence number is be displayed$", () -> {
-                this.communityLicence = "to be destroyed";
-                String communityLicenceStatus = getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][2]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
-                assertEquals(communityLicence, communityLicenceStatus);
-            });
-        });
-        And("^i have completed a surrender application with verify$", () -> {
-            this.discsLost = "2";
-            this.discsToDestroy = "2";
-            this.discsStolen = "1";
-            world.surrenderJourneySteps.navigateToSurrendersStartPage();
-            click("//*[@id='submit']", SelectorType.XPATH);
-            waitForTitleToBePresent("Review your contact information");
-            world.surrenderJourneySteps.navigateToSurrenderReviewPage(discsToDestroy, discsLost, discsStolen);
-            click("//*[@id='submit']", SelectorType.XPATH);
-            waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify();
+            String communityLicenceDocumentStatus = getText("//dt[contains(text(),'Licence document and all certified copies')]//..//dd", SelectorType.XPATH);
+            assertEquals("stolen", communityLicenceDocumentStatus);
         });
         Then("^the internal surrender menu should be displayed$", () -> {
             waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
@@ -149,7 +86,6 @@ public class Surrenders extends BasePage implements En {
         And("^i choose to surrender my licence with \"([^\"]*)\"$", (String surrenderMethod) -> {
             world.surrenderJourneySteps.submitSurrenderUntilChoiceOfVerification();
             EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-
             if (surrenderMethod.equalsIgnoreCase("verify")) {
                 if (GenericUtils.isVerifySupportedPlatform(env.name())) {
                     waitAndClick("//*[@id='sign']", SelectorType.XPATH);

@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
@@ -9,6 +10,7 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
@@ -16,14 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class SurrenderLogic extends BasePage implements En {
-    private String discLost = "2";
-    private String discDestroyed = "2";
-    private String discStolen = "1";
-    private String addressLine1 = "Change";
-    private String addressLine2 = "For";
-    private String addressLine3 = "Surrender";
-    private String addressLine4 = "Premises";
     private String contactNumber = "07123465976";
+    private FakerUtils faker = new FakerUtils();
+    private HashMap<String, String> address = faker.generateAddress();
 
 
     public SurrenderLogic(World world) {
@@ -36,7 +33,9 @@ public class SurrenderLogic extends BasePage implements En {
             clickByLinkText("Home");
             clickByLinkText(world.applicationDetails.getLicenceNumber());
             clickByLinkText("Addresses");
-            world.UIJourneySteps.updateContactDetails(addressLine1, addressLine2, addressLine3, addressLine4, contactNumber);
+            world.UIJourneySteps.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
+            replaceText("phone_primary", SelectorType.ID, contactNumber);
+            waitAndClick("form-actions[save]", SelectorType.ID);
         });
         Then("^continue with application link is displayed$", () -> {
             assertFalse(isLinkPresent("Apply to surrender licence", 30));
@@ -51,11 +50,12 @@ public class SurrenderLogic extends BasePage implements En {
             assertEquals(expectedChangedText, actualChangeText);
         });
         Given("^i remove a disc to my licence$", () -> {
-            world.surrenderJourneySteps.removeDisc(discDestroyed, discLost, discStolen);
+            world.surrenderJourneySteps.removeDisc();
         });
         And("^the new correspondence details are displayed on correspondence page$", () -> {
             click("//*[contains(text(),'Review')]", SelectorType.XPATH);
-            assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s", addressLine1, addressLine2, addressLine3, addressLine4));
+            assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s",
+                    address.get("addressLine1"), address.get("addressLine2"), address.get("addressLine3"), address.get("addressLine4")));
         });
         Given("^i add a disc to my licence$", () -> {
             world.UIJourneySteps.addDisc();
@@ -82,7 +82,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the operator licence page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation(discDestroyed, discLost, discStolen);
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
         });
@@ -93,7 +93,7 @@ public class SurrenderLogic extends BasePage implements En {
         And("^i am on the community licence page$", () -> {
             if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 waitAndClick("form-actions[submit]", SelectorType.ID);
-                world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+                world.surrenderJourneySteps.addDiscInformation();
                 waitForTextToBePresent("In your possession");
                 world.surrenderJourneySteps.addOperatorLicenceDetails();
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
@@ -107,7 +107,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the disc and doc review page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
@@ -122,7 +122,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the destroy disc page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
@@ -134,7 +134,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the declaration page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourneySteps.addOperatorLicenceDetails();
             if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
