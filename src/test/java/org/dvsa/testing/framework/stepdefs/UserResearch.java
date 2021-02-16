@@ -66,8 +66,5 @@ public class UserResearch extends BasePage implements En {
                 i++;
             }
         });
-        Then("^the licence should be created and granted$", () -> {
-            world.genericUtils.writeToFile(world.registerUser.getUserName(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
-        });
     }
 }

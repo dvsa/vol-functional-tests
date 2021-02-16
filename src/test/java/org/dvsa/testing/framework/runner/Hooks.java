@@ -1,5 +1,7 @@
 package org.dvsa.testing.framework.runner;
 
+
+import ReportConfig.Environments;
 import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -24,10 +26,11 @@ public class Hooks {
         FileUtils.forceMkdir(directory);
     }
 
+
     @Attachment(value = "Screenshot on failure", type = "image/png")
     public void attach(Scenario scenarioStatus) throws IOException, IllegalBrowserException {
-      if(scenarioStatus.isFailed())
-        createDirectory();
+        if (scenarioStatus.isFailed())
+            createDirectory();
         File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
         if (scenarioStatus.isFailed()) {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
@@ -40,11 +43,14 @@ public class Hooks {
     }
 
     @After
-    public static void tearDown(){
+    public static void tearDown() {
+        Environments environments = new Environments();
+        environments.generateXML();
         try {
-            if(Browser.isBrowserOpen());
+            if (Browser.isBrowserOpen()) ;
             Browser.closeBrowser();
-        } catch (SessionNotCreatedException ignored) { } catch (Exception e) {
+        } catch (SessionNotCreatedException ignored) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

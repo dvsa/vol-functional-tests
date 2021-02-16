@@ -119,9 +119,9 @@
                     <!-- Required properties -->
                     <sourceRunnerTemplateFile>src/test/resources/parallel/cucable.template</sourceRunnerTemplateFile>
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
-                    <generatedFeatureDirectory>${project.basedir}/src/test/resources/parallel/features
+                    <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
-                    <generatedRunnerDirectory>${project.basedir}/src/test/java/runners</generatedRunnerDirectory>
+                    <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                     <desiredNumberOfFeaturesPerRunner>5</desiredNumberOfFeaturesPerRunner>
                 </configuration>
@@ -183,37 +183,6 @@
             </plugin>
         </plugins>
     </build>
-
-<!--    <profiles>-->
-<!--        <profile>-->
-<!--            <id>browserStack</id>-->
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-surefire-plugin</artifactId>-->
-<!--                        <version>${maven-surefire-plugin.version}</version>-->
-<!--                        <configuration>-->
-<!--                            <suiteXmlFiles>-->
-<!--                                <file>src/test/resources/browserStack/testNG.xml</file>-->
-<!--                            </suiteXmlFiles>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-<!--                    <plugin>-->
-<!--                        <groupId>io.qameta.allure</groupId>-->
-<!--                        <artifactId>allure-maven</artifactId>-->
-<!--                        <version>${allure-mvn-version}</version>-->
-<!--                        <configuration>-->
-<!--                            <reportingOutputDirectory>${project.basedir}/target/site/allure-report-->
-<!--                            </reportingOutputDirectory>-->
-<!--                            <reportVersion>${allure-mvn-version}</reportVersion>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-<!--    </profiles>-->
-
     <dependencies>
         <dependency>
             <groupId>javax.xml.ws</groupId>
@@ -343,16 +312,6 @@
             <artifactId>vol-api-calls</artifactId>
             <version>${api-calls.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.cucumber</groupId>-->
-<!--            <artifactId>cucumber-testng</artifactId>-->
-<!--            <version>4.4.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.testng</groupId>-->
-<!--            <artifactId>testng</artifactId>-->
-<!--            <version>7.3.0</version>-->
-<!--        </dependency>-->
     </dependencies>
 
     <!--  Nexus Configuration  -->

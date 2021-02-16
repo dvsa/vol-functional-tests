@@ -11,7 +11,7 @@ Feature: Set up users for accessibility testing
     Examples:
       | OperatorType | LicenceType            |
       | goods        | standard_national      |
-#      | public       | standard_international |
+      | public       | standard_international |
 
   @tm_accounts
   Scenario Outline: PSV and Goods  account with 16 different licences with external tm
