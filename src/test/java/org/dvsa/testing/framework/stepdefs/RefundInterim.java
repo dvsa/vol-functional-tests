@@ -33,8 +33,8 @@ public class RefundInterim extends BasePage implements En {
             world.grantApplication.getOutstandingFees();
             world.grantApplication.payOutstandingFees();
         });
-        And("^the licence has been refused$", () -> {
-            world.grantApplication.refuse();
+        And("^the application has been refused$", () -> {
+            world.grantApplication.refuse(world.createApplication.getApplicationId());
         });
         Then("^the interim fee should be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
@@ -55,8 +55,8 @@ public class RefundInterim extends BasePage implements En {
             assertTrue(getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded"));
             assertTrue(checkForPartialMatch("£68.00"));
         });
-        And("^the licence has been withdrawn$", () -> {
-            world.grantApplication.withdraw();
+        And("^the application has been withdrawn$", () -> {
+            world.grantApplication.withdraw(world.createApplication.getApplicationId());
         });
         Then("^the interim fee should not be refunded$", () -> {
             world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
@@ -79,11 +79,11 @@ public class RefundInterim extends BasePage implements En {
             world.UIJourneySteps.payForInterimApp();
             waitForTitleToBePresent("Application overview");
         });
-        And("^the application has been refused$", () -> {
-            world.grantApplication.refuse();
+        And("^the variation application has been refused$", () -> {
+            world.grantApplication.refuse(world.updateLicence.getVariationApplicationId());
         });
-        And("^the application has been withdrawn$", () -> {
-            world.grantApplication.withdraw();
+        And("^the variation application has been withdrawn$", () -> {
+            world.grantApplication.withdraw(world.updateLicence.getVariationApplicationId());
         });
         And("^the variation interim is granted$", () -> {
             world.updateLicence.grantInterimApplication(world.updateLicence.getVariationApplicationId());

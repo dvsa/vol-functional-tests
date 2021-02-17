@@ -21,13 +21,16 @@ public class VerifySwitchedOff extends BasePage implements En {
             world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.APIJourneySteps.createPartialApplication();
         });
-        Then("^Signing options are not displayed on the page$", () -> {
-            assertFalse(isElementPresent("//*[@type='radio']", SelectorType.XPATH));
-            assertFalse(isTextPresent("How would you like to sign the declaration?",30));
+        And("^transport manager details approved banner appears$", () -> {
+            assertTrue(isTextPresent("Transport Manager details approved", 10));
+            clickByLinkText("Back to Transport Managers");
+        });
+        And("^transport manager status is \"([^\"]*)\" and \"([^\"]*)\"$", (String classString, String Text) -> {
+            assertTrue(isElementPresent(String.format("//*[contains(@class,'status %s') and contains(text(),'%s')]", classString, Text), SelectorType.XPATH));
         });
         And("^submit to operator button is displayed$", () -> {
-            String buttonName = findElement("form-actions[submit]", SelectorType.ID, 10).getText();
-            assertEquals("Submit to operator", buttonName);
+            assertTrue(isElementPresent("//h1[contains(text(),'Awaiting operator review')]", SelectorType.XPATH));
+            clickByLinkText("Back to Transport Managers");
         });
         And("^submit to operator button is not displayed$", () -> {
             String buttonName = findElement("form-actions[submit]", SelectorType.ID, 10).getText();
@@ -55,11 +58,6 @@ public class VerifySwitchedOff extends BasePage implements En {
         Then("^the print and sign page is displayed$", () -> {
             Assert.assertTrue(isTextPresent("Transport Manager details approved",30));
             Assert.assertTrue(isTextPresent("Print, sign and return",30));
-        });
-        And("^the application status is \"([^\"]*)\"$", (String status) -> {
-            clickByLinkText("Back to Transport");
-            waitForTitleToBePresent("Transport Managers");
-            Assert.assertTrue(isTextPresent(status,30));
         });
         Then("^the 'Awaiting operator review' post signature page is displayed$", () -> {
             waitForTextToBePresent("What happens next?");

@@ -33,9 +33,7 @@ public class KeyboardAccessibility extends BasePage implements En {
     public KeyboardAccessibility(World world) {
         When("^i am on the vehicle details page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().findFirst().ifPresent(WebElement::click);
-            clickByLinkText("Vehicles");
-            waitForTextToBePresent("Vehicle details");
+            world.selfServeNavigation.navigateToPage("licence", "Vehicles");
             waitAndClick("//*[@class='more-actions__button']", SelectorType.XPATH);
             untilElementPresent("//*[@class='more-actions__list']",SelectorType.XPATH);
         });
@@ -97,7 +95,7 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.selfServeNavigation.navigateToPage("licence", "Directors");
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.selfServeNavigation.navigateToPage("licence","operating centers");
+            world.selfServeNavigation.navigateToPage("licence","Operating centres and authorisation");
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
             world.UIJourneySteps.skipToMainContentAndCheck();
@@ -124,7 +122,7 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.UIJourneySteps.skipToMainContentAndCheck();
             waitAndClick("form-actions[submit]",SelectorType.ID);
             world.UIJourneySteps.skipToMainContentAndCheck();
-            world.surrenderJourneySteps.addDiscInformation("2", "2", "1");
+            world.surrenderJourneySteps.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.UIJourneySteps.skipToMainContentAndCheck();
             world.surrenderJourneySteps.addOperatorLicenceDetails();
@@ -138,7 +136,7 @@ public class KeyboardAccessibility extends BasePage implements En {
             waitForTextToBePresent("Securely destroy");
             world.UIJourneySteps.skipToMainContentAndCheck();
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            waitForTextToBePresent("Declaration");
+            waitForTitleToBePresent("Declaration");
         });
     }
 

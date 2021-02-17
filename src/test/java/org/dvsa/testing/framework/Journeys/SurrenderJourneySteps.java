@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import apiCalls.enums.LicenceType;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
@@ -17,6 +18,26 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDa
 public class SurrenderJourneySteps extends BasePage {
 
     private World world;
+    private String discsToDestroy = "2";
+    private String discsLost = "2";
+    private String discsStolen = "1";
+    private String updatedTown;
+
+    public String getDiscsLost() { return discsLost; }
+
+    public void setDiscsLost(String discsLost) { this.discsLost = discsLost; }
+
+    public String getDiscsStolen() { return discsStolen; }
+
+    public void setDiscsStolen(String discsStolen) { this.discsStolen = discsStolen; }
+
+    public String getDiscsToDestroy() { return discsToDestroy; }
+
+    public void setDiscsToDestroy(String discsToDestroy) { this.discsToDestroy = discsToDestroy; }
+
+    public String getUpdatedTown() { return updatedTown; }
+
+    public void setUpdatedTown(String updatedTown) { this.updatedTown = updatedTown; }
 
     public SurrenderJourneySteps(World world){
         this.world = world;
@@ -33,16 +54,6 @@ public class SurrenderJourneySteps extends BasePage {
         waitForTitleToBePresent("Review your contact information");
     }
 
-    public void navigateToSurrenderReviewPage(String discToDestroy, String discsLost, String discsStolen) throws IllegalBrowserException, MalformedURLException {
-        addDiscInformation(discToDestroy, discsLost, discsStolen);
-        addOperatorLicenceDetails();
-        if (world.createApplication.getLicenceType().equals("standard_international")) {
-            addCommunityLicenceDetails();
-        }
-        assertTrue(getCurrentUrl().contains("review"));
-        assertTrue(isTextPresent("Review your surrender", 40));
-    }
-
     public void addOperatorLicenceDetails() throws IllegalBrowserException, MalformedURLException {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
@@ -56,11 +67,15 @@ public class SurrenderJourneySteps extends BasePage {
     }
 
     public String getSurrenderAddressLine1() throws IllegalBrowserException, MalformedURLException {
-        return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
+        return getText("//dt[contains(text(),'Address')]//..//dd", SelectorType.XPATH);
     }
 
     public String getSurrenderTown() throws IllegalBrowserException, MalformedURLException {
-        return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][2]/div[@class='app-check-your-answers__contents'][2]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
+        return getText("//dt[contains(text(),'Town/city')]//..//dd", SelectorType.XPATH);
+    }
+
+    public String getSurrenderCountry() throws IllegalBrowserException, MalformedURLException {
+        return getText("//dt[contains(text(),'Country')]//..//dd", SelectorType.XPATH);
     }
 
     public String getSurrenderContactNumber() throws IllegalBrowserException, MalformedURLException {
@@ -81,17 +96,21 @@ public class SurrenderJourneySteps extends BasePage {
     }
 
     public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, MalformedURLException {
+        submitSurrenderUntilReviewPage();
+        acknowledgeDestroyPage();
+    }
+
+    public void submitSurrenderUntilReviewPage() throws IllegalBrowserException, MalformedURLException {
         navigateToSurrendersStartPage();
         startSurrender();
         waitAndClick("form-actions[submit]", SelectorType.ID);
-        addDiscInformation("2", "2", "1");
+        addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
-        if (world.createApplication.getLicenceType().equals("standard_international")) {
+        if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             assertTrue(navigate().getCurrentUrl().contains("community-licence"));
             addCommunityLicenceDetails();
         }
-        acknowledgeDestroyPage();
     }
 
     public void caseworkManageSurrender() throws MalformedURLException, IllegalBrowserException {
@@ -122,23 +141,23 @@ public class SurrenderJourneySteps extends BasePage {
         waitForTitleToBePresent("Declaration");
     }
 
-    public void addDiscInformation(String discToDestroy, String discsLost, String discsStolen) throws IllegalBrowserException, MalformedURLException {
+    public void addDiscInformation() throws IllegalBrowserException, MalformedURLException {
         assertTrue(getCurrentUrl().contains("current-discs"));
+        click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
+        click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
         waitForTextToBePresent("Number of discs you will destroy");
-        waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, discToDestroy);
-        click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
-        waitAndEnterText("//*[@id='lostSection[info][number]']", SelectorType.XPATH, discsLost);
+        waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, getDiscsToDestroy());
+        waitAndEnterText("//*[@id='lostSection[info][number]']", SelectorType.XPATH, getDiscsLost());
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");
-        click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
-        waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, discsStolen);
+        waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, getDiscsStolen());
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
     }
 
-    public void removeDisc(String discDestroyed, String discLost, String discStolen) throws IllegalBrowserException, MalformedURLException, ElementDidNotAppearWithinSpecifiedTimeException {
+    public void removeDisc() throws IllegalBrowserException, MalformedURLException, ElementDidNotAppearWithinSpecifiedTimeException {
         waitAndClick("form-actions[submit]", SelectorType.ID);
-        addDiscInformation(discDestroyed, discLost, discStolen);
+        addDiscInformation();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
