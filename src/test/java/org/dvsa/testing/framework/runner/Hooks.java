@@ -1,15 +1,12 @@
 package org.dvsa.testing.framework.runner;
 
+
+import org.dvsa.testing.framework.Report.Config.Environments;
 import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
-import org.junit.Rule;
-import org.junit.rules.TestRule;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
-import org.junit.runners.model.Statement;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.TakesScreenshot;
@@ -23,16 +20,17 @@ import java.time.Instant;
 public class Hooks {
 
 
-    private static File directory = new File(System.getProperty("user.dir") + "/target/img");
+    private static final File directory = new File(System.getProperty("user.dir") + "/target/img");
 
     private void createDirectory() throws IOException {
         FileUtils.forceMkdir(directory);
     }
 
+
     @Attachment(value = "Screenshot on failure", type = "image/png")
     public void attach(Scenario scenarioStatus) throws IOException, IllegalBrowserException {
-      if(scenarioStatus.isFailed())
-        createDirectory();
+        if (scenarioStatus.isFailed())
+            createDirectory();
         File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
         if (scenarioStatus.isFailed()) {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
@@ -45,10 +43,15 @@ public class Hooks {
     }
 
     @After
-    public static void tearDown(){
+    public static void tearDown() {
+        Environments environments = new Environments();
+        environments.generateXML();
         try {
-            if(Browser.isBrowserOpen());
+            if (Browser.isBrowserOpen()) ;
             Browser.closeBrowser();
-        } catch (SessionNotCreatedException ignored) { }
+        } catch (SessionNotCreatedException ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

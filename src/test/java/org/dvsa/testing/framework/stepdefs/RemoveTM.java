@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.driver.Browser;
-import activesupport.jenkins.Jenkins;
 import activesupport.system.Properties;
 import activesupport.aws.s3.S3;
 import apiCalls.enums.UserType;
@@ -13,7 +12,6 @@ import org.junit.Assert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 
 import static activesupport.database.DBUnit.*;
 import static java.lang.Thread.sleep;

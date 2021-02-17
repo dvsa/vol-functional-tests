@@ -1,24 +1,14 @@
 package runners;
 
-import org.openqa.selenium.SessionNotCreatedException;
-import activesupport.driver.Browser;
-import org.junit.jupiter.api.AfterAll;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
 
  @RunWith(Cucumber.class)
  @CucumberOptions(plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm", "json:target/results.json"},
-         features = {"src/test/resources/parallel/features/[CUCABLE:FEATURE].feature"},
+         features = {"target/parallel/features/[CUCABLE:FEATURE].feature"},
          glue = {"org.dvsa.testing.framework.stepdefs"}
  )
  public class [CUCABLE:RUNNER] {
 
-   @AfterAll
-    public static void tearDown(){
-         try {
-             if(Browser.isBrowserOpen())
-             Browser.closeBrowser();
-         } catch (SessionNotCreatedException ignored) { }
-     }
  }
