@@ -189,10 +189,6 @@ public class UIJourneySteps extends BasePage {
         String verifyUsername = world.configuration.config.getString("verifyUsername");
         String verifyPassword = world.configuration.config.getString("verifyPassword");
 
-        if (verifyPassword == null) {
-            getText("//td//a", SelectorType.XPATH);
-        }
-
         if (isTextPresent("The last company selected on this device was Post Office Stub.", 70)) {
             waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
         } else {
