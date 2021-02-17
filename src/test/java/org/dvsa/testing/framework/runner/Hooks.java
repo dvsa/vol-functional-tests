@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.runner;
 
 
-import ReportConfig.Environments;
+import org.dvsa.testing.framework.Report.Config.Environments;
 import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;

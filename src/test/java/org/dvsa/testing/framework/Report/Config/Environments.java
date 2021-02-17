@@ -1,8 +1,6 @@
-package ReportConfig;
+package org.dvsa.testing.framework.Report.Config;
 
-import cucumber.api.java8.Fi;
 import org.apache.commons.io.FileUtils;
-import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
