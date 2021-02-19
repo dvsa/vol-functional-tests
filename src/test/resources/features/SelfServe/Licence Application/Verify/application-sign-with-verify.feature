@@ -1,9 +1,8 @@
-@SS
 @OLCS-7284
 @SS-Verify-On
 @ss_regression
 @gov-verify
-@cross-browser-test
+@cross-browser
 
 Feature: Operator signs with verify
 

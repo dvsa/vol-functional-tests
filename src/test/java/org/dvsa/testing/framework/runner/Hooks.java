@@ -44,8 +44,6 @@ public class Hooks {
 
     @After
     public static void tearDown() {
-        Environments environments = new Environments();
-        environments.generateXML();
         try {
             if (Browser.isBrowserOpen()) ;
             Browser.closeBrowser();

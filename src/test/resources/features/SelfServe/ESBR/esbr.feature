@@ -1,4 +1,3 @@
-@SS
 @ESBR
 @ss_regression
 Feature: ESBR for English, Welsh and Scottish Areas
