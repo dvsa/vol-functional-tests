@@ -11,16 +11,10 @@ import java.io.IOException;
 
 
 public class ScenarioTearDown {
-
     @After
-    public static void afterClass(Scenario scenario) throws Exception {
+    public void afterClass(Scenario scenario) throws Exception {
         Hooks hooks = new Hooks();
         hooks.attach(scenario);
-        if (scenario.getStatus().toString().equals("PASSED")) {
-            if (Browser.isBrowserOpen()) {
-                Browser.closeBrowser();
-            }
-        }
     }
 
     @Before
