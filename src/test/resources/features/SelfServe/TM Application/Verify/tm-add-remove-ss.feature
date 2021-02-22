@@ -13,9 +13,10 @@ Feature: Set and check criteria for triggering automatic letter
     When a self-serve user removes the last TM
     Then a pop up should be displayed advising the user that they are about to remove the last TM
 
+  @cross-browser
   Scenario: TM verifies variational not as operator
     When i add an existing person as a transport manager who is not the operator on "variation"
     And i sign the declaration
-    And i choose to sign with verify with "pavlov"
+    And i choose to sign with verify
     And the operator countersigns digitally
     Then the 'Review and declarations' post signature page is displayed
