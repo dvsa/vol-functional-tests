@@ -30,13 +30,13 @@ public class ManageUsersPage extends BasePage implements En {
             scanner.scan();
         });
         Then("^no issues should be present on the page$", () -> {
-            if(scanner.axeFindings().length() != 0) {
+            if(scanner.axeFindings.length() != 0) {
                 reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
                 reportGenerator.violationDetailsReportSection(Browser.navigate().getCurrentUrl(), scanner);
                 reportGenerator.createReport(scanner);
                 Assert.fail("Violation findings found");
             }else{
-                Assert.assertEquals(0, scanner.axeFindings().length());
+                Assert.assertEquals(0, scanner.axeFindings.length());
             }
         });
         Then("^name of button should be 'Add a user'$", () -> {
