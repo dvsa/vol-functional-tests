@@ -264,14 +264,14 @@ public class ManageVehicle extends BasePage {
     }
 
     @And("i remove a vehicle")
-    public void iRemoveAVehicle() throws MalformedURLException, IllegalBrowserException, InterruptedException {
+    public void iRemoveAVehicle() throws MalformedURLException, IllegalBrowserException {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
         world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "N");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
     }
 
     @And("the vehicle should no longer be present")
-    public void theVehicleShouldNoLongerBePresent() throws MalformedURLException, IllegalBrowserException, InterruptedException {
+    public void theVehicleShouldNoLongerBePresent() throws MalformedURLException, IllegalBrowserException {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
         List<WebElement> remainingVRMs = findElements("//td//a", SelectorType.XPATH);
         for (WebElement VRM : remainingVRMs){

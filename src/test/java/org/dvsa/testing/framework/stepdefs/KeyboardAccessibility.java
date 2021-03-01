@@ -31,12 +31,6 @@ public class KeyboardAccessibility extends BasePage implements En {
     private JSONObject axeResponse;
 
     public KeyboardAccessibility(World world) {
-        When("^i am on the vehicle details page$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            world.selfServeNavigation.navigateToPage("licence", "Vehicles");
-            waitAndClick("//*[@class='more-actions__button']", SelectorType.XPATH);
-            untilElementPresent("//*[@class='more-actions__list']",SelectorType.XPATH);
-        });
         Then("^i should be able to navigate page using my keyboard$", () -> {
              axeResponse = new AXE.Builder(getDriver(), scriptUrl)
                     .options("{runOnly:{type: 'tag', values: ['wcag21aa']}}")

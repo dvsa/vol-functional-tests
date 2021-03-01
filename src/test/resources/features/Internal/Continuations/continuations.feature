@@ -1,5 +1,6 @@
 @INT
 @continuations
+@gov-verify
 
 Feature: Continuations journey through internal and self serve
 

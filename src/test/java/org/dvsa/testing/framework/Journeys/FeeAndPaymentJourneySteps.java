@@ -26,7 +26,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
 
     public void payFee(String amount, @NotNull String paymentMethod) throws IllegalBrowserException, MalformedURLException {
         String payment = paymentMethod.toLowerCase().trim();
-        waitForTextToBePresent("Pay fee");
+        waitForTextToBePresent("Payment method");
         if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
             waitAndEnterText("details[received]",SelectorType.NAME,amount);
             waitAndEnterText("details[payer]",SelectorType.NAME,"Automation payer");
@@ -36,9 +36,9 @@ public class FeeAndPaymentJourneySteps extends BasePage {
             case "cash":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
                 if (isTextPresent("Customer reference", 10)) {
+                    world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
                     waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationCashCustomerRef");
-                    world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     clickPayAndConfirm(paymentMethod);
                 } else {
                     clickByName("form-actions[pay]");
@@ -49,6 +49,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 if (isTextPresent("Customer reference", 10)) {
                     waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationChequeCustomerRef");
                 }
+                world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 waitAndEnterText("details[chequeNo]", SelectorType.NAME, "12345");
                 waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
 
@@ -58,7 +59,6 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 waitAndEnterText("details[chequeDate][day]",SelectorType.NAME, dates.get("day").toString());
                 waitAndEnterText("details[chequeDate][month]",SelectorType.NAME, dates.get("month").toString());
                 waitAndEnterText("details[chequeDate][year]",SelectorType.NAME, dates.get("year").toString());
-                world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "postal":
@@ -66,10 +66,10 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 if (isTextPresent("Payer name", 10)) {
                     waitAndEnterText("details[payer]",SelectorType.NAME, "Jane Doe");
                 }
+                world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationPostalOrderCustomerRef");
                 waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
                 waitAndEnterText("details[poNo]",SelectorType.NAME, "123456");
-                world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
@@ -102,7 +102,6 @@ public class FeeAndPaymentJourneySteps extends BasePage {
         waitAndClick("//*[@value='Pay']", SelectorType.XPATH);
         waitForTextToBePresent("Payment method");
     }
-
 
     public void selectFee() throws IllegalBrowserException, MalformedURLException {
         long kickOut = System.currentTimeMillis() + 60000;
@@ -139,6 +138,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
 
     public void clickPayAndConfirm(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@id='postcode']");
         waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
         if (!paymentMethod.toLowerCase().trim().equals("card"))
             waitForTextToBePresent("The payment was made successfully");
