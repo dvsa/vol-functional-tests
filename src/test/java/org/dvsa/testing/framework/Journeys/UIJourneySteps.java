@@ -188,7 +188,7 @@ public class UIJourneySteps extends BasePage {
         if (isTextPresent("The last company selected on this device was Post Office Stub.", 70)) {
             waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
         } else {
-            waitForTextToBePresent("Sign in with GOV.UK Verify");
+            waitForTextToBePresent("This is my first time using GOV.UK Verify");
             click("//*[@id='start_form_selection_false']", SelectorType.XPATH);
             click("//*[@id='next-button']", SelectorType.XPATH);
             click("//*[contains(text(),'Select Post')]", SelectorType.XPATH);
