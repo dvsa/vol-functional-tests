@@ -34,7 +34,7 @@ public class OldVehicleDetailsJourney extends BasePage {
     String transferSubmitButton = "//*[@name='form-actions[transfer]']";
     String firstLicenceInTransferDropdown = "//*[@id='data[licence]']/option[2]";
     String generatedWeight = String.valueOf(Int.random(1000, 9999));
-    String generatedVRM = VehiclesBuilder.generateRandomVRM().toUpperCase();
+    String generatedVRM = VehiclesBuilder.generateRandomVRM();
     String firstVRM;
     String transferLicence;
 
