@@ -1,6 +1,6 @@
 @Surrender
 @gov-verify
-
+@cross-browser
 Feature: Sign surrender
 
   Background:
