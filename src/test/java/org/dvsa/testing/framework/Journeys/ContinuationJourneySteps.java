@@ -84,8 +84,8 @@ public class ContinuationJourneySteps extends BasePage {
 
     public void replaceContinuationAndReviewDates(LinkedHashMap<String, Integer> continuationDates, LinkedHashMap<String, Integer> reviewDates) throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Continuation date");
-        replaceDateById("details[continuationDate]", continuationDates);
-        replaceDateById("details[reviewDate]", reviewDates);
+        replaceDateFieldsByPartialId("details[continuationDate]", continuationDates);
+        replaceDateFieldsByPartialId("details[reviewDate]", reviewDates);
         click("form-actions[submit]", SelectorType.ID);
         waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
     }

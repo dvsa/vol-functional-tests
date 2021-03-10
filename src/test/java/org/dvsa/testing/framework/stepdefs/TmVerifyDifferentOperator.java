@@ -161,7 +161,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.TMJourneySteps.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()),true);
             HashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
-            replaceDateById("dob", dob);
+            replaceDateFieldsByPartialId("dob", dob);
             click("form-actions[submit]", SelectorType.ID);
             waitForPageLoad();
         });

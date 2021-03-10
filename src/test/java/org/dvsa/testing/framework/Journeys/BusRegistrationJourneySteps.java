@@ -52,7 +52,7 @@ public class BusRegistrationJourneySteps extends BasePage {
 
         HashMap<String, Integer> dates;
         dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
-        replaceDateById("receivedDate", dates);
+        replaceDateFieldsByPartialId("receivedDate", dates);
 
         dates = world.globalMethods.date.getDateHashMap(0, month, 0);
         enterText("effectiveDate_day", dates.get("day"), SelectorType.ID);

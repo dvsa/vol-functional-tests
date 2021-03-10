@@ -100,7 +100,7 @@ public class TransportManagerJourneySteps extends BasePage {
 
         HashMap<String, Integer> dob;
         dob = world.globalMethods.date.getDateHashMap(0, 0, -25);
-        replaceDateById("dob", dob);
+        replaceDateFieldsByPartialId("dob", dob);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -165,7 +165,7 @@ public class TransportManagerJourneySteps extends BasePage {
     public void addOperatorUserAsTransportManager(HashMap<String, Integer> dob, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         String user = String.format("%s %s", getOperatorForeName(), getOperatorFamilyName());
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
-        replaceDateById("dob", dob);
+        replaceDateFieldsByPartialId("dob", dob);
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
     }
@@ -272,7 +272,7 @@ public class TransportManagerJourneySteps extends BasePage {
         enterText("forename", world.TMJourneySteps.getOperatorForeName(), SelectorType.ID);
         enterText("familyName", world.TMJourneySteps.getOperatorFamilyName(), SelectorType.ID);
         LinkedHashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
-        replaceDateById("dob", dob);
+        replaceDateFieldsByPartialId("dob", dob);
         enterText("username", world.TMJourneySteps.getOperatorUser(), SelectorType.ID);
         enterText("emailAddress", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
         enterText("emailConfirm", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
