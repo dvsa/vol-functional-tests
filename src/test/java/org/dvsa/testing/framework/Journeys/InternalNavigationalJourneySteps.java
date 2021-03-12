@@ -18,6 +18,8 @@ public class InternalNavigationalJourneySteps extends BasePage {
     private World world;
     private String myURL = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
+    public String taskTitle = "//h2[text()='Edit task']";
+
     public InternalNavigationalJourneySteps(World world) {
         this.world = world;
     }
@@ -60,5 +62,11 @@ public class InternalNavigationalJourneySteps extends BasePage {
 
     public void urlSearchAndViewInternalUserAccount(String adminUserId) throws IllegalBrowserException, MalformedURLException {
         navigate().get(this.myURL.concat(String.format("admin/user-management/users/edit/%s", adminUserId)));
+    }
+
+    public void logIntoInternalAndClickOnTask(String taskLinkText) throws MalformedURLException, IllegalBrowserException {
+        logInAndNavigateToTask();
+        clickByXPath(taskLinkText);
+        waitForElementToBePresent(taskTitle);
     }
 }
