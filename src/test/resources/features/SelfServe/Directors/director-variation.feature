@@ -4,7 +4,7 @@
 Feature: Add a director variation
 
   Background:
-    Given i have a valid "public" "standard_international" licence
+    Given i have a valid "psv" "standard_international" licence
     And i have logged in to self serve
 
   Scenario: Director without any convictions
@@ -42,6 +42,8 @@ Feature: Add a director variation
     And i remove a director
     Then a task should not be created in internal
 
+# Add validation tests for all pages.
+
   Scenario: Task should be created in internal when last director is removed
     When i remove the last director
-    Then a task is created in internal
+    Then the last director deleted task is created in internal

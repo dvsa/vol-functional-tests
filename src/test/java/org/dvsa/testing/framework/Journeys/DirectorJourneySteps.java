@@ -6,12 +6,14 @@ import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,6 +37,7 @@ public class DirectorJourneySteps extends BasePage {
     public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
     public String deleteDirectorConfirmation = "//button[@name='form-actions[submit]']";
+    public String lastDirectorRemovedMessage = "Last director removed";
 
     public String internalDirectorTask = "//a[text()='Add director(s)']";
     public String internalUrgentCheckboxLabel = "//div[4]/label";
@@ -124,12 +127,26 @@ public class DirectorJourneySteps extends BasePage {
 
     public void assertLastDirectorTaskNotCreated() throws MalformedURLException, IllegalBrowserException {
         List<WebElement> directors = world.UIJourneySteps.getTableBodyElement();
-        assertFalse(directors.stream().anyMatch(d -> d.getText().contains("Last director removed")));
+        assertFalse(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 
     public void assertLastDirectorTaskCreated() throws MalformedURLException, IllegalBrowserException {
         List<WebElement> directors = world.UIJourneySteps.getTableBodyElement();
-        assertTrue(directors.stream().anyMatch(d -> d.getText().contains("Last director removed")));
+        assertTrue(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 
+    public void assertDirectorChangeInTable(String operatorType) throws MalformedURLException, IllegalBrowserException {
+        List<WebElement> docsAttach = listOfWebElements("//tbody/tr[*]/td[2]", SelectorType.XPATH);
+        String documentPrefix = operatorType.equals("lcat_gv") ? "GV81" : "PSV431";
+        String peopleChangeDocument = String.format("//a[contains(text(),'%s')]", documentPrefix);
+        assertTrue(docsAttach.stream().anyMatch(d -> d.getText().contains("Application")));
+        assertTrue(isElementPresent(peopleChangeDocument, SelectorType.XPATH));
+    }
+
+    public void assertNewDirectorExistsAndMultiplePresent(String director) throws MalformedURLException, IllegalBrowserException {
+        List<WebElement> directorList = listOfWebElements("//*/tbody/tr[*]/td[1]/input", SelectorType.XPATH);
+        long directorsCount = directorList.size();
+        MatcherAssert.assertThat(directorsCount, greaterThan(1L));
+        assertTrue(directorList.stream().anyMatch(d -> d.getAttribute("value").contains(director)));
+    }
 }
