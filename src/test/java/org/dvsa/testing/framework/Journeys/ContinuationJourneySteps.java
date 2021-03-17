@@ -62,7 +62,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void completeContinuationFinancesPage() throws IllegalBrowserException, MalformedURLException {
-        if (!(world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString()) && world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString()))) {
+        if (!(world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString()))) {
             String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]","");
             enterText("averageBalance", necessaryIncome, SelectorType.ID);
             findSelectAllRadioButtonsByValue("N");
@@ -91,7 +91,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void completeContinuationPayOrSubmit() throws IllegalBrowserException, MalformedURLException {
-        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
+        if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             click("submitAndPay", SelectorType.ID);
             click("form-actions[pay]", SelectorType.ID);
             world.feeAndPaymentJourneySteps.customerPaymentModule();
@@ -116,7 +116,7 @@ public class ContinuationJourneySteps extends BasePage {
 
     public void completeContinuationConditionsAndUndertakingsPage() throws MalformedURLException, IllegalBrowserException {
         if (!world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
-            if (world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString()) &&
+            if (world.licenceCreation.isPSVLicence() &&
                     (world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString()) || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large"))) {
                 waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
                 clickAllCheckboxes();
@@ -147,7 +147,7 @@ public class ContinuationJourneySteps extends BasePage {
                 Assert.assertTrue(isTextPresent("Transport managers", 10));
             }
         }
-        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+        if (world.licenceCreation.isGoodsLicence()) {
             // 'Vehicle' targeting is fine on snapshot.
             if (isTextPresent("Print this page", 10)) {
                 Assert.assertTrue(isTextPresent("Vehicles", 10));

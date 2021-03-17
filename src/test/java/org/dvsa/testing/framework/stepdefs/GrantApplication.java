@@ -19,12 +19,10 @@ public class GrantApplication implements En {
             apiResponse = world.grantApplication.grantLicence();
         });
         Then("^the licence should be granted$", () -> {
-            if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+            if (world.licenceCreation.isGoodsLicence()) {
                 apiResponse = world.grantApplication.payGrantFees();
-                assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
-            } else {
-                assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
             }
+            assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
         });
     }
 }

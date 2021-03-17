@@ -70,5 +70,8 @@ public class GlobalMethods extends BasePage{
 
         if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
+
+
     }
+
 }

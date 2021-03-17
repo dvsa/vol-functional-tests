@@ -6,7 +6,6 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.sl.In;
 import org.dvsa.testing.framework.Journeys.DirectorJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -29,10 +28,13 @@ public class DirectorVariation extends BasePage {
         directorJourney = world.directorJourneySteps;
     }
 
-
-    @When("^i begin adding a new director and their details$")
-    public void iBeginAddingANewDirectorAndTheirDetails() throws MalformedURLException, IllegalBrowserException {
+    @And("i navigate to the directors page")
+    public void iNavigateToTheDirectorsPage() throws MalformedURLException, IllegalBrowserException {
         world.selfServeNavigation.navigateToPage("licence", "Directors");
+    }
+
+    @When("^I begin adding a new director and their details$")
+    public void iBeginAddingANewDirectorAndTheirDetails() throws MalformedURLException, IllegalBrowserException {
         clickByXPath(directorJourney.addButton);
         directorJourney.addDirectorDetails();
     }
@@ -71,12 +73,11 @@ public class DirectorVariation extends BasePage {
     @Then("^a snapshot should be created in internal$")
     public void aSnapshotShouldBeCreatedInInternal() throws MalformedURLException, IllegalBrowserException {
         world.internalNavigation.logInAndNavigateToDocsTable();
-        directorJourney.assertDirectorChangeInTable(world.createApplication.getOperatorType());
+        directorJourney.assertDirectorChangeInTable();
     }
 
     @Given("^i add a director$")
     public void iAddADirector() throws MalformedURLException, IllegalBrowserException {
-        world.selfServeNavigation.navigateToPage("licence", "Directors");
         directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
     }
 
@@ -98,7 +99,6 @@ public class DirectorVariation extends BasePage {
 
     @When("^i remove the last director$")
     public void iRemoveTheLastDirector() throws MalformedURLException, IllegalBrowserException {
-        world.selfServeNavigation.navigateToPage("licence", "Directors");
         directorJourney.removeDirector();
     }
 
@@ -114,10 +114,9 @@ public class DirectorVariation extends BasePage {
         directorJourney.assertLastDirectorTaskCreated();
     }
 
-    @When("when I submit the add a director page")
-    public void whenISubmitTheAddADirectorPage() throws MalformedURLException, IllegalBrowserException {
-        world.selfServeNavigation.navigateToPage("licence", "Directors");
-        clickByName(directorJourney.saveAndContinue);
+    @When("I submit the empty page")
+    public void iSubmitAnEmptyPage() throws MalformedURLException, IllegalBrowserException {
+        clickByXPath(directorJourney.saveAndContinue);
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 
@@ -136,9 +135,8 @@ public class DirectorVariation extends BasePage {
         assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(3).getText());
     }
 
-    @When("when I wrongly fill in and submit the add a director page")
+    @When("I wrongly fill in and submit the add a director page")
     public void whenIWronglyFillInAndSubmitTheAddADirectorPage() throws MalformedURLException, IllegalBrowserException {
-        world.selfServeNavigation.navigateToPage("licence", "Directors");
         clickByXPath(directorJourney.addButton);
         waitForTitleToBePresent(directorJourney.directorDetailsTitle);
         selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
@@ -147,7 +145,7 @@ public class DirectorVariation extends BasePage {
         enterText(directorJourney.firstNameField, incorrectNameValue, SelectorType.XPATH);
         enterText(directorJourney.lastNameField, incorrectNameValue, SelectorType.XPATH);
 
-        HashMap<String, String> incorrectDateValues = new HashMap();
+        HashMap<String, String> incorrectDateValues = new HashMap<String,String>();
         incorrectDateValues.put("day", "!@");
         incorrectDateValues.put("month", "£$");
         incorrectDateValues.put("year", "%^&*");
@@ -172,4 +170,29 @@ public class DirectorVariation extends BasePage {
         assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfInlineErrors.get(2).getText());
     }
 
+    @Then("the director financial history page empty field validation should appear")
+    public void theDirectorFinancialHistoryPageEmptyFieldValidationShouldAppear() throws MalformedURLException, IllegalBrowserException {
+        List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
+        assertEquals(directorJourney.bankruptcyValidation, listOfSummaryErrors.get(0).getText());
+        assertEquals(directorJourney.liquidationValidation, listOfSummaryErrors.get(1).getText());
+        assertEquals(directorJourney.receivershipValidation, listOfSummaryErrors.get(2).getText());
+        assertEquals(directorJourney.administrationValidation, listOfSummaryErrors.get(3).getText());
+        assertEquals(directorJourney.disqualifiedValidation, listOfSummaryErrors.get(4).getText());
+
+        List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
+        assertEquals(directorJourney.bankruptcyValidation, listOfInlineErrors.get(0).getText());
+        assertEquals(directorJourney.liquidationValidation, listOfInlineErrors.get(1).getText());
+        assertEquals(directorJourney.receivershipValidation, listOfInlineErrors.get(2).getText());
+        assertEquals(directorJourney.administrationValidation, listOfInlineErrors.get(3).getText());
+        assertEquals(directorJourney.disqualifiedValidation, listOfInlineErrors.get(4).getText());
+    }
+
+    @Then("the director convictions and penalties page empty field validation should appear")
+    public void theDirectorConvictionsAndPenaltiesPageEmptyFieldValidationShouldAppear() throws MalformedURLException, IllegalBrowserException {
+        List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
+        assertEquals(directorJourney.convictionsAndPenaltiesValidation, listOfSummaryErrors.get(0).getText());
+
+        List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
+        assertEquals(directorJourney.convictionsAndPenaltiesValidation, listOfInlineErrors.get(0).getText());
+    }
 }

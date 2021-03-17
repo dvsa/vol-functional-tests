@@ -41,6 +41,8 @@ public class DirectorJourneySteps extends BasePage {
 
     public String internalDirectorTask = "//a[text()='Add director(s)']";
     public String internalUrgentCheckboxLabel = "//div[4]/label";
+    public String GVPeopleChangeSnapshot = "GV81";
+    public String PSVPeopleChangeSnapshot = "PSV431";
 
     public String validationTitle = "There is a problem";
     public String listOfSummaryErrors = "//ol/li/a";
@@ -52,6 +54,12 @@ public class DirectorJourneySteps extends BasePage {
     public String dateOfBirthIncorrectValueValidation1 = "The date should be entered in number format";
     public String dateOfBirthIncorrectValueValidation2 = "Please enter all 4 digits of the year";
     public String dateOfBirthIncorrectValueValidation3 = "The input does not appear to be a valid value";
+    public String bankruptcyValidation = "Bankruptcy: Choose an option";
+    public String liquidationValidation = "Liquidation: Choose an option";
+    public String receivershipValidation = "Receivership: Choose an option";
+    public String administrationValidation = "Administration: Choose an option";
+    public String disqualifiedValidation = "Disqualified: Choose an option";
+    public String convictionsAndPenaltiesValidation = "validation message not decided yet";
 
 
     public DirectorJourneySteps(World world){
@@ -147,11 +155,11 @@ public class DirectorJourneySteps extends BasePage {
         assertTrue(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 
-    public void assertDirectorChangeInTable(String operatorType) throws MalformedURLException, IllegalBrowserException {
-        List<WebElement> docsAttach = listOfWebElements("//tbody/tr[*]/td[2]", SelectorType.XPATH);
-        String documentPrefix = operatorType.equals("lcat_gv") ? "GV81" : "PSV431";
+    public void assertDirectorChangeInTable() throws MalformedURLException, IllegalBrowserException {
+        List<WebElement> listOfInternalLicenceDocuments = listOfWebElements("//tbody/tr[*]/td[2]", SelectorType.XPATH);
+        String documentPrefix = world.licenceCreation.isGoodsLicence() ? GVPeopleChangeSnapshot : PSVPeopleChangeSnapshot;
         String peopleChangeDocument = String.format("//a[contains(text(),'%s')]", documentPrefix);
-        assertTrue(docsAttach.stream().anyMatch(d -> d.getText().contains("Application")));
+        assertTrue(listOfInternalLicenceDocuments.stream().anyMatch(d -> d.getText().contains("Application")));
         assertTrue(isElementPresent(peopleChangeDocument, SelectorType.XPATH));
     }
 

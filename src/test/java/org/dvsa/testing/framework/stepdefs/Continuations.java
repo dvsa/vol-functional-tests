@@ -85,7 +85,7 @@ public class Continuations extends BasePage implements En {
             click("submit", SelectorType.ID);
             world.continuationJourneySteps.completeContinuationsReviewPage();
             if (!world.createApplication.getLicenceType().equals("special_restricted")) {
-                if (world.createApplication.getOperatorType().equals("public") &&
+                if (world.licenceCreation.isPSVLicence() &&
                         (world.createApplication.getLicenceType().equals("restricted") || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large"))) {
                     waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
                     if (world.createApplication.getLicenceType().equals("restricted")) {
@@ -99,7 +99,7 @@ public class Continuations extends BasePage implements En {
             world.continuationJourneySteps.completeContinuationsSignPage();
             world.continuationJourneySteps.completeContinuationPayOrSubmit();
             world.continuationJourneySteps.viewContinuationSnapshotOnInternal();
-            if (world.createApplication.getOperatorType().equals("public") && world.createApplication.getLicenceType().equals("restricted")) {
+            if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
                 waitForTextToBePresent("Conditions and undertakings");
                 world.continuationJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
             }

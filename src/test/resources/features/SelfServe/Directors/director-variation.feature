@@ -6,23 +6,24 @@ Feature: Add a director variation
   Background:
     Given i have a valid "public" "standard_international" licence
     And i have logged in to self serve
+    And i navigate to the directors page
 
   Scenario: Director without any convictions
-    When i begin adding a new director and their details
+    When I begin adding a new director and their details
     And i enter "No" to financial details question
     And i enter "No" to previous convictions details question
     Then a new director should be added to my licence
     And a non urgent task is created in internal
 
   Scenario: Director with convictions and bankruptcy
-    When i begin adding a new director and their details
+    When I begin adding a new director and their details
     And i enter "Yes" to financial details question
     And i enter "Yes" to previous convictions details question
     Then a new director should be added to my licence
     And an urgent task is created in internal
 
   Scenario: Director with convictions and no bankruptcy
-    When i begin adding a new director and their details
+    When I begin adding a new director and their details
     And i enter "No" to financial details question
     And i enter "Yes" to previous convictions details question
     Then a new director should be added to my licence
@@ -42,23 +43,25 @@ Feature: Add a director variation
     And i remove a director
     Then a task should not be created in internal
 
-# Add validation tests for all pages.
-
-  Scenario: Add a director page validation (empty fields)
-    When when I submit the add a director page
-    Then the add a director page empty field validation should appear
-
-  Scenario: Add a director page validation (incorrect information)
-    When when I wrongly fill in and submit the add a director page
-    Then the add a director page incorrect value validation should appear
-
-
-  Scenario: Director financial history page validation
-
-
-  Scenario: Director convictions and penalties page validation
-
-
   Scenario: Task should be created in internal when last director is removed
     When i remove the last director
     Then the last director deleted task is created in internal
+
+  Scenario: Add a director page validation (empty fields)
+    When I submit the empty page
+    Then the add a director page empty field validation should appear
+
+  Scenario: Add a director page validation (incorrect information)
+    When I wrongly fill in and submit the add a director page
+    Then the add a director page incorrect value validation should appear
+
+  Scenario: Director financial history page validation
+    And I begin adding a new director and their details
+    When I submit the empty page
+    Then the director financial history page empty field validation should appear
+
+  Scenario: Director convictions and penalties page validation
+    When I begin adding a new director and their details
+    And i enter "No" to financial details question
+    When I submit the empty page
+    Then the director convictions and penalties page empty field validation should appear
