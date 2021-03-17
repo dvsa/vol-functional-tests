@@ -146,12 +146,12 @@ public class DirectorJourneySteps extends BasePage {
     }
 
     public void assertLastDirectorTaskNotCreated() throws MalformedURLException, IllegalBrowserException {
-        List<WebElement> directors = world.UIJourneySteps.getTableBodyElement();
+        List<WebElement> directors = world.UIJourneySteps.getTableBodyRowList();
         assertFalse(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 
     public void assertLastDirectorTaskCreated() throws MalformedURLException, IllegalBrowserException {
-        List<WebElement> directors = world.UIJourneySteps.getTableBodyElement();
+        List<WebElement> directors = world.UIJourneySteps.getTableBodyRowList();
         assertTrue(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 

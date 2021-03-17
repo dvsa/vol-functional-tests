@@ -544,7 +544,7 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("formActions[action]",SelectorType.ID);
     }
 
-    public List<WebElement> getTableBodyElement() throws MalformedURLException, IllegalBrowserException {
+    public List<WebElement> getTableBodyRowList() throws MalformedURLException, IllegalBrowserException {
         return listOfWebElements("//tbody", SelectorType.XPATH);
     }
 }
