@@ -28,11 +28,11 @@ public class ContinuationJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, int month) throws IllegalBrowserException, MalformedURLException {
+    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month) throws IllegalBrowserException, MalformedURLException {
         click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         click("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='generate-continuation-type']");
-        selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, month - 1); // Minus one in the month because of indexing.
+        selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, Integer.parseInt(month) - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
         click("form-actions[generate]", SelectorType.ID);
         enterText("filters[licenceNo]", licenceNo,  SelectorType.ID);
@@ -82,7 +82,7 @@ public class ContinuationJourneySteps extends BasePage {
         switchToWindow(tabs.get(1));
     }
 
-    public void replaceContinuationAndReviewDates(LinkedHashMap<String, Integer> continuationDates, LinkedHashMap<String, Integer> reviewDates) throws IllegalBrowserException, MalformedURLException {
+    public void replaceContinuationAndReviewDates(LinkedHashMap<String, String> continuationDates, LinkedHashMap<String, String> reviewDates) throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Continuation date");
         replaceDateFieldsByPartialId("details[continuationDate]", continuationDates);
         replaceDateFieldsByPartialId("details[reviewDate]", reviewDates);

@@ -60,7 +60,7 @@ public class UIJourneySteps extends BasePage {
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
 
-        HashMap<String, Integer> dates;
+        HashMap<String, String> dates;
         dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
 
         enterText("dob_day", dates.get("day").toString(), SelectorType.ID);

@@ -4,7 +4,7 @@
 Feature: Add a director variation
 
   Background:
-    Given i have a valid "psv" "standard_international" licence
+    Given i have a valid "public" "standard_international" licence
     And i have logged in to self serve
 
   Scenario: Director without any convictions
@@ -43,6 +43,21 @@ Feature: Add a director variation
     Then a task should not be created in internal
 
 # Add validation tests for all pages.
+
+  Scenario: Add a director page validation (empty fields)
+    When when I submit the add a director page
+    Then the add a director page empty field validation should appear
+
+  Scenario: Add a director page validation (incorrect information)
+    When when I wrongly fill in and submit the add a director page
+    Then the add a director page incorrect value validation should appear
+
+
+  Scenario: Director financial history page validation
+
+
+  Scenario: Director convictions and penalties page validation
+
 
   Scenario: Task should be created in internal when last director is removed
     When i remove the last director

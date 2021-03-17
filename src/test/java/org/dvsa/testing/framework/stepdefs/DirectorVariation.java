@@ -6,14 +6,17 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.sl.In;
 import org.dvsa.testing.framework.Journeys.DirectorJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DirectorVariation extends BasePage {
@@ -110,4 +113,63 @@ public class DirectorVariation extends BasePage {
         world.internalNavigation.logInAndNavigateToTask();
         directorJourney.assertLastDirectorTaskCreated();
     }
+
+    @When("when I submit the add a director page")
+    public void whenISubmitTheAddADirectorPage() throws MalformedURLException, IllegalBrowserException {
+        world.selfServeNavigation.navigateToPage("licence", "Directors");
+        clickByName(directorJourney.saveAndContinue);
+        waitForTextToBePresent(directorJourney.validationTitle);
+    }
+
+    @Then("the add a director page empty field validation should appear")
+    public void theAddADirectorPageEmptyFieldValidationShouldAppear() throws MalformedURLException, IllegalBrowserException {
+        List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
+        assertEquals(directorJourney.titleValidation, listOfSummaryErrors.get(0).getText());
+        assertEquals(directorJourney.firstNameValidation, listOfSummaryErrors.get(1).getText());
+        assertEquals(directorJourney.lastNameValidation, listOfSummaryErrors.get(2).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(3).getText());
+
+        List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
+        assertEquals(directorJourney.titleValidation, listOfInlineErrors.get(0).getText());
+        assertEquals(directorJourney.firstNameValidation, listOfInlineErrors.get(1).getText());
+        assertEquals(directorJourney.lastNameValidation, listOfInlineErrors.get(2).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(3).getText());
+    }
+
+    @When("when I wrongly fill in and submit the add a director page")
+    public void whenIWronglyFillInAndSubmitTheAddADirectorPage() throws MalformedURLException, IllegalBrowserException {
+        world.selfServeNavigation.navigateToPage("licence", "Directors");
+        clickByXPath(directorJourney.addButton);
+        waitForTitleToBePresent(directorJourney.directorDetailsTitle);
+        selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
+
+        String incorrectNameValue = "!@£$%^";
+        enterText(directorJourney.firstNameField, incorrectNameValue, SelectorType.XPATH);
+        enterText(directorJourney.lastNameField, incorrectNameValue, SelectorType.XPATH);
+
+        HashMap<String, String> incorrectDateValues = new HashMap();
+        incorrectDateValues.put("day", "!@");
+        incorrectDateValues.put("month", "£$");
+        incorrectDateValues.put("year", "%^&*");
+        replaceDateFieldsByPartialId("dob", incorrectDateValues);
+
+        clickByXPath(directorJourney.saveAndContinue);
+        waitForTextToBePresent(directorJourney.validationTitle);
+    }
+
+    @Then("the add a director page incorrect value validation should appear")
+    public void theAddADirectorPageIncorrectValueValidationShouldAppear() throws MalformedURLException, IllegalBrowserException {
+        // Name fields do not currently contain any incorrect value validation
+
+        List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
+        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation1, listOfSummaryErrors.get(0).getText());
+        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation2, listOfSummaryErrors.get(1).getText());
+        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfSummaryErrors.get(2).getText());
+
+        List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
+        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation1, listOfInlineErrors.get(0).getText());
+        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation2, listOfInlineErrors.get(1).getText());
+        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfInlineErrors.get(2).getText());
+    }
+
 }

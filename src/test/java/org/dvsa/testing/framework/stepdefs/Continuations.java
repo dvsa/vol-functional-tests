@@ -15,7 +15,7 @@ import java.util.List;
 public class Continuations extends BasePage implements En {
 
     private Dates dates = new Dates(new LocalDateCalendar());
-    private LinkedHashMap<String, Integer> continuationDate;
+    private LinkedHashMap<String, String> continuationDate;
 
     public Continuations(World world) {
 

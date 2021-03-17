@@ -42,6 +42,18 @@ public class DirectorJourneySteps extends BasePage {
     public String internalDirectorTask = "//a[text()='Add director(s)']";
     public String internalUrgentCheckboxLabel = "//div[4]/label";
 
+    public String validationTitle = "There is a problem";
+    public String listOfSummaryErrors = "//ol/li/a";
+    public String listOfInlineErrors = "//p[@class='error__text']";
+    public String titleValidation = "Title is required";
+    public String firstNameValidation = "First name is required";
+    public String lastNameValidation = "Last name is required";
+    public String dateOfBirthEmptyFieldValidation = "Date of birth is required";
+    public String dateOfBirthIncorrectValueValidation1 = "The date should be entered in number format";
+    public String dateOfBirthIncorrectValueValidation2 = "Please enter all 4 digits of the year";
+    public String dateOfBirthIncorrectValueValidation3 = "The input does not appear to be a valid value";
+
+
     public DirectorJourneySteps(World world){
         this.world = world;
     }
@@ -64,7 +76,7 @@ public class DirectorJourneySteps extends BasePage {
         directorLastName = faker.generateLastName();
         enterText(firstNameField, directorFirstName, SelectorType.XPATH);
         enterText(lastNameField, directorLastName, SelectorType.XPATH);
-        HashMap<String, Integer> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
+        HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         replaceDateFieldsByPartialId("dob", dates);
         clickByXPath(saveAndContinue);
     }

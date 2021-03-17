@@ -36,3 +36,5 @@ Feature: ESBR for English, Welsh and Scottish Areas
       | Area        | Days | LicenceStatus |
       | north_east  | 41   | curtail       |
       | wales       | 55   | suspend       |
+
+#  The upload will be Successful but it's only from accessing the bus registration or checking the created task that you can see if the files were generated.

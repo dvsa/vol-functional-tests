@@ -50,7 +50,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
 
-        HashMap<String, Integer> dates;
+        HashMap<String, String> dates;
         dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
         replaceDateFieldsByPartialId("receivedDate", dates);
 
