@@ -114,6 +114,13 @@ public class DirectorVariation extends BasePage {
         directorJourney.assertLastDirectorTaskCreated();
     }
 
+    @When("I begin adding a director but submit empty fields")
+    public void iBeginAddingADirectorButSubmitEmptyFields() throws MalformedURLException, IllegalBrowserException {
+        clickByXPath(directorJourney.addButton);
+        clickByXPath(directorJourney.saveAndContinue);
+        waitForTextToBePresent(directorJourney.validationTitle);
+    }
+
     @When("I submit the empty page")
     public void iSubmitAnEmptyPage() throws MalformedURLException, IllegalBrowserException {
         clickByXPath(directorJourney.saveAndContinue);

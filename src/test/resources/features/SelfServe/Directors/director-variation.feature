@@ -48,7 +48,7 @@ Feature: Add a director variation
     Then the last director deleted task is created in internal
 
   Scenario: Add a director page validation (empty fields)
-    When I submit the empty page
+    When I begin adding a director but submit empty fields
     Then the add a director page empty field validation should appear
 
   Scenario: Add a director page validation (incorrect information)
