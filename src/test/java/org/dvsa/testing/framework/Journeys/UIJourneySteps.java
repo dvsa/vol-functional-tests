@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -59,7 +60,7 @@ public class UIJourneySteps extends BasePage {
         enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
         enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
 
-        HashMap<String, Integer> dates;
+        HashMap<String, String> dates;
         dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
 
         enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
@@ -541,5 +542,9 @@ public class UIJourneySteps extends BasePage {
         removeVehicle();
         waitAndClick("//*[@name='table[id][]'][1]",SelectorType.XPATH);
         waitAndClick("formActions[action]",SelectorType.ID);
+    }
+
+    public List<WebElement> getTableBodyRowList() throws MalformedURLException, IllegalBrowserException {
+        return listOfWebElements("//tbody", SelectorType.XPATH);
     }
 }

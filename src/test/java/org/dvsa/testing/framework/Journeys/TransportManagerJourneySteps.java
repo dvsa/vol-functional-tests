@@ -98,9 +98,9 @@ public class TransportManagerJourneySteps extends BasePage {
         String birthPlace = world.createApplication.getTransportManagerTown();
         String postCode = world.createApplication.getTransportManagerPostCode();
 
-        HashMap<String, Integer> dob;
+        HashMap<String, String> dob;
         dob = world.globalMethods.date.getDateHashMap(0, 0, -25);
-        replaceDateById("dob", dob);
+        replaceDateFieldsByPartialId("dob", dob);
         enterText("birthPlace", birthPlace, SelectorType.ID);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -162,10 +162,10 @@ public class TransportManagerJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
-    public void addOperatorUserAsTransportManager(HashMap<String, Integer> dob, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
         String user = String.format("%s %s", getOperatorForeName(), getOperatorFamilyName());
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
-        replaceDateById("dob", dob);
+        replaceDateFieldsByPartialId("dob", dob);
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
         click("form-actions[send]", SelectorType.ID);
     }
@@ -191,7 +191,7 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
-        HashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
+        HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
         world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
         if (applicationOrNot) {
@@ -271,8 +271,8 @@ public class TransportManagerJourneySteps extends BasePage {
         waitAndClick("addUser", SelectorType.ID);
         enterText("forename", world.TMJourneySteps.getOperatorForeName(), SelectorType.ID);
         enterText("familyName", world.TMJourneySteps.getOperatorFamilyName(), SelectorType.ID);
-        LinkedHashMap<String, Integer> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
-        replaceDateById("dob", dob);
+        LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
+        replaceDateFieldsByPartialId("dob", dob);
         enterText("username", world.TMJourneySteps.getOperatorUser(), SelectorType.ID);
         enterText("emailAddress", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
         enterText("emailConfirm", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);

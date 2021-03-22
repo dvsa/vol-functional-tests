@@ -28,11 +28,11 @@ public class ContinuationJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, int month) throws IllegalBrowserException, MalformedURLException {
+    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month) throws IllegalBrowserException, MalformedURLException {
         click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         click("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='generate-continuation-type']");
-        selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, month - 1); // Minus one in the month because of indexing.
+        selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, Integer.parseInt(month) - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
         click("form-actions[generate]", SelectorType.ID);
         enterText("filters[licenceNo]", licenceNo,  SelectorType.ID);
@@ -62,7 +62,7 @@ public class ContinuationJourneySteps extends BasePage {
     }
 
     public void completeContinuationFinancesPage() throws IllegalBrowserException, MalformedURLException {
-        if (!(world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString()) && world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString()))) {
+        if (!(world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString()))) {
             String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]","");
             enterText("averageBalance", necessaryIncome, SelectorType.ID);
             findSelectAllRadioButtonsByValue("N");
@@ -82,16 +82,16 @@ public class ContinuationJourneySteps extends BasePage {
         switchToWindow(tabs.get(1));
     }
 
-    public void replaceContinuationAndReviewDates(LinkedHashMap<String, Integer> continuationDates, LinkedHashMap<String, Integer> reviewDates) throws IllegalBrowserException, MalformedURLException {
+    public void replaceContinuationAndReviewDates(LinkedHashMap<String, String> continuationDates, LinkedHashMap<String, String> reviewDates) throws IllegalBrowserException, MalformedURLException {
         waitForTextToBePresent("Continuation date");
-        replaceDateById("details[continuationDate]", continuationDates);
-        replaceDateById("details[reviewDate]", reviewDates);
+        replaceDateFieldsByPartialId("details[continuationDate]", continuationDates);
+        replaceDateFieldsByPartialId("details[reviewDate]", reviewDates);
         click("form-actions[submit]", SelectorType.ID);
         waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
     }
 
     public void completeContinuationPayOrSubmit() throws IllegalBrowserException, MalformedURLException {
-        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
+        if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             click("submitAndPay", SelectorType.ID);
             click("form-actions[pay]", SelectorType.ID);
             world.feeAndPaymentJourneySteps.customerPaymentModule();
@@ -116,7 +116,7 @@ public class ContinuationJourneySteps extends BasePage {
 
     public void completeContinuationConditionsAndUndertakingsPage() throws MalformedURLException, IllegalBrowserException {
         if (!world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
-            if (world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString()) &&
+            if (world.licenceCreation.isPSVLicence() &&
                     (world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString()) || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large"))) {
                 waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
                 clickAllCheckboxes();
@@ -147,7 +147,7 @@ public class ContinuationJourneySteps extends BasePage {
                 Assert.assertTrue(isTextPresent("Transport managers", 10));
             }
         }
-        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+        if (world.licenceCreation.isGoodsLicence()) {
             // 'Vehicle' targeting is fine on snapshot.
             if (isTextPresent("Print this page", 10)) {
                 Assert.assertTrue(isTextPresent("Vehicles", 10));

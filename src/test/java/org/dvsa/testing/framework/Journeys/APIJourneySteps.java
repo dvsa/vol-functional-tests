@@ -101,7 +101,7 @@ public class APIJourneySteps {
     public void grantLicenceAndPayFees() {
         world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
-        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+        if (world.licenceCreation.isGoodsLicence()) {
             world.grantApplication.payGrantFees();
         }
     }

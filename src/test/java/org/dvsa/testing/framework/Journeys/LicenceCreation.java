@@ -62,4 +62,12 @@ public class LicenceCreation {
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
         createLicence(operatorType, licenceType);
     }
+
+    public boolean isGoodsLicence() {
+        return world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString());
+    }
+
+    public boolean isPSVLicence() {
+        return world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString());
+    }
 }
