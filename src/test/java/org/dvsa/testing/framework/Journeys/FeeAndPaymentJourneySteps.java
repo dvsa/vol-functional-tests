@@ -26,7 +26,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
 
     public void payFee(String amount, @NotNull String paymentMethod) throws IllegalBrowserException, MalformedURLException {
         String payment = paymentMethod.toLowerCase().trim();
-        waitForTextToBePresent("Payment method");
+        waitForElementToBePresent("//label[contains(text(),'Fee amount')]");
         if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
             waitAndEnterText("details[received]",SelectorType.NAME,amount);
             waitAndEnterText("details[payer]",SelectorType.NAME,"Automation payer");
