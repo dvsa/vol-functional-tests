@@ -9,7 +9,7 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 public class Configuration{
     public EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     public Config config = new activesupport.config.Configuration(env.toString()).getConfig();
-    public String localDefaultPassword = Properties.get("localDefaultPassword", false);
+    public String localDefaultPassword;
     private World world;
 
     public Configuration(World world) {
