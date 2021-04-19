@@ -81,12 +81,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                             kickOut = false;
                         } else {
                             pageNumber++;
-                            try {
-                                clickByLinkText(Integer.toString(pageNumber));
-                            } catch (IllegalBrowserException var4) {
-                                var4.printStackTrace();
-                                System.out.println("Publication not found. Something has gone wrong.");
-                            }
+                            clickByLinkText(Integer.toString(pageNumber));
                         }
                     }
                     click("//*[@id='menu-admin-dashboard/admin-publication/pending']", SelectorType.XPATH);
