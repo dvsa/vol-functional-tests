@@ -3,11 +3,9 @@ package org.dvsa.testing.framework.Global;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
-import activesupport.database.exception.UnsupportedDatabaseDriverException;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
-import activesupport.system.Properties;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -15,11 +13,8 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import java.net.MalformedURLException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
-import static activesupport.database.DBUnit.checkResult;
 import static activesupport.driver.Browser.navigate;
 
 public class GlobalMethods extends BasePage{
