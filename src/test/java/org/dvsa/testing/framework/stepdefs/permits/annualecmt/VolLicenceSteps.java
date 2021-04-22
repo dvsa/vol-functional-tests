@@ -4,6 +4,7 @@ import activesupport.number.Int;
 import activesupport.string.Str;
 import apiCalls.Utils.eupaBuilders.GenericModel;
 import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
+import apiCalls.Utils.eupaBuilders.enums.Boolean;
 import apiCalls.Utils.eupaBuilders.external.*;
 import apiCalls.Utils.eupaBuilders.external.enums.*;
 import apiCalls.eupaActions.OrganisationAPI;
@@ -25,6 +26,7 @@ import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.sections.Decisions;
 import org.jetbrains.annotations.NotNull;
 
+
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
@@ -32,7 +34,7 @@ import java.util.stream.IntStream;
 public class VolLicenceSteps implements En {
 
     public VolLicenceSteps(OperatorStore operator, World world) {
-        Given("^I have (\\d+ )?(?:a )?valid (PublicService|Goods) (standard_international |standard_national |restricted |special_restricted )?VOL (licences?)( including Northern Ireland)?$", (String quantityOfLicences, String licenceGroupType, String licenceType, String multiple, String withNI) -> {
+         Given("^I have (\\d+ )?(?:a )?valid (PublicService|Goods) (standard_international |standard_national |restricted |special_restricted )?VOL (licences?)( including Northern Ireland)?$", (String quantityOfLicences, String licenceGroupType, String licenceType, String multiple, String withNI) -> {
             List<Map<String, Object>> licences = new ArrayList<>();
             world.put("licences", licences);
             world.put("licence.type.group", licenceGroupType);
@@ -130,7 +132,8 @@ public class VolLicenceSteps implements En {
         LicenceStore licenceStore = new LicenceStore();
         operator.withLicences(licenceStore);
 
-        UserModel registeredUserDetails = UserAPI.get(operator.getUserDetails());
+        PersonModel operatorDetails = operator.getUserDetails();
+        UserModel registeredUserDetails = UserAPI.get(operatorDetails);
         Integer transportManagerApplicationId;
         String organisationId;
         String applicationId;

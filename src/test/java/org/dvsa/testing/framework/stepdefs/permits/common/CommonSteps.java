@@ -7,6 +7,7 @@ import apiCalls.Utils.eupaBuilders.external.StandardResponseModel;
 import apiCalls.Utils.eupaBuilders.internal.*;
 import apiCalls.Utils.eupaBuilders.internal.enums.PaymentMethod;
 import apiCalls.Utils.eupaBuilders.internal.enums.Status;
+import apiCalls.Utils.eupaBuilders.enums.Boolean;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import apiCalls.eupaActions.external.ApplicationAPI;
