@@ -1,8 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.permits.common;
 
 import activesupport.IllegalBrowserException;
+import activesupport.config.Configuration;
 import activesupport.string.Str;
 import activesupport.system.Properties;
+import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
 import apiCalls.Utils.eupaBuilders.external.StandardResponseModel;
 import apiCalls.Utils.eupaBuilders.internal.*;
 import apiCalls.Utils.eupaBuilders.internal.enums.PaymentMethod;
@@ -12,6 +14,7 @@ import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.internal.CaseWorkerAPI;
+import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.VolAccountJourney;
@@ -36,6 +39,7 @@ import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
@@ -242,9 +246,11 @@ public class CommonSteps extends BasePage implements En {
                 .withVehiclesPsvStatus(Status.Unknown)
                 .withVersion(1);
 
+        String applicationId = world.get("applicationId");
+        TrafficArea trafficArea = world.get("trafficArea");
         OverviewModel overview = new OverviewModel()
-                .withApplicationId(world.get("applicationId"))
-                .withLeadTcArea(world.get("trafficArea"))
+                .withApplicationId(applicationId)
+                .withLeadTcArea(trafficArea)
                 .withOverrideOppositionDate(Boolean.TRUE)
                 .withTrackingModel(tracking)
                 .withVersion(++version);
@@ -313,12 +319,27 @@ public class CommonSteps extends BasePage implements En {
     }
 
     public static void signIn(World world) {
-        LoginPage.signIn(world.get("username"), world.get("password"));
-        String newPassword = Str.randomWord(7).concat("13JSs");
-        if (ChangeYourPasswordPage.onPage()) {
-            ChangeYourPasswordPage.update(world.get("password"), newPassword);
+        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+        Config config = new Configuration(env.toString()).getConfig();
+        String newPassword = config.getString("internalNewPassword");
 
-            world.put("password", newPassword);
+        try {
+            LoginPage.signIn(world.get("username"), world.get("password"));
+        } catch (Exception e) {
+            //User is already registered
+            ChangeYourPasswordPage.update(world.get("password"), newPassword);
+        } finally {
+            if (isTextPresent("Current password", 60)) {
+                waitForTextToBePresent("Re-enter new password");
+                enterField(nameAttribute("input", "oldPassword"), world.get("password"));
+                enterField(nameAttribute("input", "newPassword"), newPassword);
+                enterField(nameAttribute("input", "confirmPassword"), newPassword);
+                click(nameAttribute("input", "submit"));
+                world.put("password", newPassword);
+            }
         }
+
+        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
     }
 }

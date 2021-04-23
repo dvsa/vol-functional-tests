@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.permits.internal;
 
+import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -14,7 +15,8 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
 
     private static volatile AnnualBilateralJourney instance = null;
 
-    protected AnnualBilateralJourney(){}
+    protected AnnualBilateralJourney(){
+    }
 
     public static AnnualBilateralJourney getInstance(){
         if (instance == null) {

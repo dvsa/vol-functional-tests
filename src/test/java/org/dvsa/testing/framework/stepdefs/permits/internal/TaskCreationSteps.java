@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
+import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
@@ -15,10 +16,12 @@ import org.junit.Assert;
 
 public class TaskCreationSteps extends BasePage implements En {
 
-    public TaskCreationSteps(OperatorStore operatorStore) {
+    private World world;
+
+    public TaskCreationSteps(World world, OperatorStore operatorStore) {
 
         And("^I am on the internal home page$", () -> {
-            BaseInternalJourney.getInstance().signin(BaseInternalJourney.User.Admin.getUsername(), BaseInternalJourney.User.Admin.getPassword());
+            BaseInternalJourney.getInstance().signin(BaseInternalJourney.User.Admin.getUsername(), world.configuration.config.getString("internalNewPassword"));
             Assert.assertEquals(BasePage.getElementValueByText("//h1[contains(text(),'Home')]", SelectorType.XPATH), "Home");
         });
         And("^I navigate to the corresponding task created against the licence$", () -> {

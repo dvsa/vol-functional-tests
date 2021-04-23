@@ -2,9 +2,11 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.S3;
+import activesupport.config.Configuration;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
+import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.StatusUtils;
@@ -27,6 +29,7 @@ import org.dvsa.testing.lib.pages.internal.admin.permits.Permit;
 import org.dvsa.testing.lib.pages.internal.admin.permits.Scoring;
 import org.dvsa.testing.lib.pages.internal.admin.permits.Window;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -142,7 +145,10 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
 
         get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true)).toString());
 
-        LoginPage.signIn(BaseInternalJourney.User.Admin.getUsername(), BaseInternalJourney.User.Admin.getPassword());
+        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+        Config config = new Configuration(env.toString()).getConfig();
+
+        LoginPage.signIn(BaseInternalJourney.User.Admin.getUsername(), config.getString("internalNewPassword"));
         org.dvsa.testing.lib.pages.internal.NavigationBar.administratorButton();
         org.dvsa.testing.lib.pages.internal.NavigationBar.administratorList(AdminOption.PERMITS);
 
