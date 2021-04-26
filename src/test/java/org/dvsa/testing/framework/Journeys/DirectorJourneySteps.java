@@ -47,10 +47,10 @@ public class DirectorJourneySteps extends BasePage {
     public String validationTitle = "There is a problem";
     public String listOfSummaryErrors = "//ol/li/a";
     public String listOfInlineErrors = "//p[@class='error__text']";
-    public String titleValidation = "Title is required";
-    public String firstNameValidation = "First name is required";
-    public String lastNameValidation = "Last name is required";
-    public String dateOfBirthEmptyFieldValidation = "Date of birth is required";
+    public String titleValidation = "Select an option for: \"Title\"";
+    public String firstNameValidation = "Enter first name";
+    public String lastNameValidation = "Enter last name";
+    public String dateOfBirthEmptyFieldValidation = "Enter date of birth";
     public String dateOfBirthIncorrectValueValidation1 = "The date should be entered in number format";
     public String dateOfBirthIncorrectValueValidation2 = "Please enter all 4 digits of the year";
     public String dateOfBirthIncorrectValueValidation3 = "The input does not appear to be a valid value";

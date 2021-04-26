@@ -217,11 +217,14 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-
+            deleteCookies();
+            refreshPage();
             BaseInternalJourney.getInstance().openLicence(
                     licence.getLicenceId()
             ).signin();
             IrhpPermitsApplyPage.licence();
+            // TODO: Need to fix this. This selects a licence near on random and goes to internal and navigates to the
+            //  wrong licence and can't find the permit half the time.
             String browser = String.valueOf(getURL());
             get(browser+"irhp-application/");
             IrhpPermitsApplyPage.viewApplication();
@@ -231,12 +234,14 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             IrhpPermitsApplyPage.grantApplication();
             IrhpPermitsApplyPage.continueButton();
             sleep(5000);
+            deleteCookies();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
             waitForTextToBePresent("Sign in to your Vehicle Operator Licensing account                ");
             LoginPage.signIn(world.get("username"), world.get("password"));
             HomePage.selectTab(Tab.PERMITS);
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
+
         });
         Then ("^the user is navigated to under consideration page$", UnderConsiderationPage::untilOnPage);
         Then ("^the user is navigated to awaiting fee page$", () -> isPath("/permits/\\d+/ecmt-awaiting-fee/"));
