@@ -34,7 +34,7 @@
         <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <allure-report-version>2.13.5</allure-report-version>
-        <apache-commons.version>1.6</apache-commons.version>
+        <apache-commons.version>1.8</apache-commons.version>
         <owasp-dependency-checker.version>6.0.2</owasp-dependency-checker.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <nexus.snapshots>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-snapshots</nexus.snapshots>

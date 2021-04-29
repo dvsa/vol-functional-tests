@@ -1,4 +1,4 @@
-#https://jira.dvsacloud.uk/browse/VOL-147
+#needs implementing for applications
 
 @VOL-147
 Feature: Search and add a vehicle
