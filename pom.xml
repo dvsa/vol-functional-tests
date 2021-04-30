@@ -35,7 +35,6 @@
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <allure-report-version>2.13.5</allure-report-version>
         <apache-commons.version>1.8</apache-commons.version>
-        <owasp-dependency-checker.version>6.0.2</owasp-dependency-checker.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <nexus.snapshots>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-snapshots</nexus.snapshots>
     </properties>
@@ -123,7 +122,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfRunners>3</desiredNumberOfRunners>
+                    <desiredNumberOfRunners>5</desiredNumberOfRunners>
                 </configuration>
             </plugin>
             <plugin>
@@ -159,25 +158,6 @@
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${owasp-dependency-checker.version}</version>
-                <configuration>
-                    <failBuildOnCVSS>11</failBuildOnCVSS>
-                    <suppressionFile>./src/test/resources/false_positives.xml</suppressionFile>
-                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
-                    <retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
-                    <mavenSettingsProxyId>shd_proxy</mavenSettingsProxyId>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
