@@ -18,7 +18,7 @@ import static org.dvsa.testing.lib.pages.Driver.DriverUtils.getDriver;
 
 public interface PaymentJourney {
 
-    default PaymentJourney cardDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    default PaymentJourney cardDetailsPage() {
         Date date = new Date();
         SimpleDateFormat monthDF = new SimpleDateFormat("M");
         SimpleDateFormat yearDF = new SimpleDateFormat("YY");
@@ -32,7 +32,7 @@ public interface PaymentJourney {
         return this;
     }
 
-    default PaymentJourney cardHolderDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    default PaymentJourney cardHolderDetailsPage() {
         String email = RandomUtils.email();
         FeeCardHolderDetailsPage.cardHoldersName(Str.randomWord(3, 8) + " " + Str.randomWord(3, 8));
 //        FeeCardHolderDetailsPage.address(Str.randomWord(4, 11), Str.randomWord(7, 11), Str.randomWord(7, 11));
@@ -45,14 +45,14 @@ public interface PaymentJourney {
         return this;
     }
 
-    default PaymentJourney confirmAndPay() throws MalformedURLException, IllegalBrowserException {
+    default PaymentJourney confirmAndPay() {
         FeePaymentConfirmationPage.makeMayment();
         //FeeCustomerManagementSystemPage.save();  CPMS page has been updated the way Save card function work . Commenting this out to keep a record
 
         return this;
     }
 
-    default PaymentJourney passwordAuthorisation() throws MalformedURLException, IllegalBrowserException {
+    default PaymentJourney passwordAuthorisation() {
         WebDriver driver = getDriver();
         driver.switchTo().frame("scp_threeDSecure_iframe");
         FeePaymentConfirmationPage.passwordAuthorisation("Test_6721");

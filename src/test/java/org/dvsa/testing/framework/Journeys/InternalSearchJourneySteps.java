@@ -25,7 +25,7 @@ public class InternalSearchJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void searchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
+    public void searchAndViewApplication()  {
         selectValueFromDropDown("search-select", SelectorType.ID, "Applications");
 
         String variationApplicationNumber = world.updateLicence.getVariationApplicationId();
@@ -46,7 +46,7 @@ public class InternalSearchJourneySteps extends BasePage {
         }
     }
 
-    public void searchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
+    public void searchAndViewLicence()  {
         selectValueFromDropDown("search-select", SelectorType.ID, "Licence");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
@@ -55,7 +55,7 @@ public class InternalSearchJourneySteps extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
-    public void searchAndViewCase() throws IllegalBrowserException, MalformedURLException {
+    public void searchAndViewCase()  {
         selectValueFromDropDown("search-select", SelectorType.ID, "Case");
         long kickOut = System.currentTimeMillis() + 120000;
         do {
@@ -64,7 +64,7 @@ public class InternalSearchJourneySteps extends BasePage {
         clickByLinkText(String.valueOf(world.updateLicence.getCaseId()));
     }
 
-    public void searchAndViewPSVDisc() throws IllegalBrowserException, MalformedURLException, UnsupportedDatabaseDriverException, SQLException {
+    public void searchAndViewPSVDisc() throws UnsupportedDatabaseDriverException, SQLException {
         int psvDiscNumber = world.DBUtils.getFirstPsvDiscNumber(world.createApplication.getLicenceId(), world.configuration);
         selectValueFromDropDown("search-select", SelectorType.ID, "Psv Disc");
         long kickOut = System.currentTimeMillis() + 120000;
@@ -77,7 +77,7 @@ public class InternalSearchJourneySteps extends BasePage {
         clickByLinkText("Licence discs");
     }
 
-    public void searchAndViewAddress() throws IllegalBrowserException, MalformedURLException {
+    public void searchAndViewAddress()  {
         selectValueFromDropDown("search-select", SelectorType.ID, "Address");
         long kickOut = System.currentTimeMillis() + 120000;
         do {

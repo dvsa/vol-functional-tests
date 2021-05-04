@@ -58,7 +58,7 @@ public class CheckYourAnswersPageSteps implements En {
         });
     }
 
-    private void updateSectionWithValidRandomAnswer(ApplicationInfo section, World world, OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    private void updateSectionWithValidRandomAnswer(ApplicationInfo section, World world, OperatorStore operatorStore) {
         LicenceStore licenceStore = operatorStore.getLatestLicence().get();
         operatorStore.withLicences(licenceStore);
         world.put("origin", getURL());

@@ -68,20 +68,8 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
 
             // Apply for ECMT applications
             IntStream.rangeClosed(1, world.get("licence.quantity")).forEach((i) -> {
-                try {
-                    EcmtApplicationJourney.getInstance().beginApplication();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    ECMTPermitApplicationSteps.completeEcmtApplication(operator, world);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
+                EcmtApplicationJourney.getInstance().beginApplication();
+                ECMTPermitApplicationSteps.completeEcmtApplication(operator, world);
             });
 
             // trigger issuing
@@ -128,7 +116,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
         });
     }
 
-    public static void payOutstandingFees() throws MalformedURLException, IllegalBrowserException {
+    public static void payOutstandingFees() {
         waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
         refreshPage();
         LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
@@ -153,7 +141,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
                 .collect(Collectors.toList());
     }
 
-    public static void viewLicenceOnInternal(String licenceNumber) throws MalformedURLException, IllegalBrowserException {
+    public static void viewLicenceOnInternal(String licenceNumber) {
         deleteCookies();
         get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true)).toString());
         LoginPage.signIn("usr291", "password");

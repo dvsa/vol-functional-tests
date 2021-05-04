@@ -34,17 +34,11 @@ public class ApplicationSteps extends BasePage implements En {
                     HomePage.selectTab(Tab.PERMITS);
                     HomePage.applyForLicenceButton();
 
-                   try {
-                       AnnualMultilateralJourney.INSTANCE
+                    AnnualMultilateralJourney.INSTANCE
                                .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
                                .licencePage(operator, world)
                                .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                                .numberOfPermitsPage(operator);
-                   } catch (MalformedURLException e) {
-                       e.printStackTrace();
-                   } catch (IllegalBrowserException e) {
-                       e.printStackTrace();
-                   }
                    get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
                    HomePage.selectTab(Tab.PERMITS);
             });

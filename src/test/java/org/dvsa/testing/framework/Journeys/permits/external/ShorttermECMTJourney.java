@@ -21,7 +21,7 @@ public class ShorttermECMTJourney extends BasePermitJourney {
 
         return instance;
     }
-    public ShorttermECMTJourney overview(org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.Section section, OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public ShorttermECMTJourney overview(org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.Section section, OperatorStore operatorStore) {
         String reference = org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.reference();
         org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.untilOnPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
@@ -30,7 +30,7 @@ public class ShorttermECMTJourney extends BasePermitJourney {
         return this;
     }
 
-    public ShorttermECMTJourney numberOfPermits(OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public ShorttermECMTJourney numberOfPermits(OperatorStore operatorStore) {
         LicenceStore licenceStore =
                 operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 

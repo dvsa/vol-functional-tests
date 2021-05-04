@@ -75,7 +75,7 @@ public class TransportManagerJourneySteps extends BasePage {
         this.operatorUserEmail = operatorUserEmail;
     }
 
-    public void promptRemovalOfInternalTransportManager() throws MalformedURLException, IllegalBrowserException {
+    public void promptRemovalOfInternalTransportManager() {
         assertTrue(isTextPresent("Overview", 60));
         if (!isLinkPresent("Transport", 60) && isTextPresent("Granted", 60)) {
             clickByLinkText(world.applicationDetails.getLicenceNumber());
@@ -86,14 +86,14 @@ public class TransportManagerJourneySteps extends BasePage {
         click("//*[@value='Remove']", SelectorType.XPATH);
     }
 
-    public void removeInternalTransportManager() throws IllegalBrowserException, MalformedURLException {
+    public void removeInternalTransportManager()  {
         promptRemovalOfInternalTransportManager();
         waitForTitleToBePresent("Are you sure you want to remove this Transport Manager?");
         findSelectAllRadioButtonsByValue("Y");
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
-    public void addTransportManagerDetails() throws IllegalBrowserException, MalformedURLException {
+    public void addTransportManagerDetails()  {
         //Add Personal Details
         String birthPlace = world.createApplication.getTransportManagerTown();
         String postCode = world.createApplication.getTransportManagerPostCode();
@@ -162,7 +162,7 @@ public class TransportManagerJourneySteps extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
-    public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) {
         String user = String.format("%s %s", getOperatorForeName(), getOperatorFamilyName());
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         replaceDateFieldsByPartialId("dob", dob);
@@ -176,7 +176,7 @@ public class TransportManagerJourneySteps extends BasePage {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
 
-    public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException, InterruptedException {
+    public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) {
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
@@ -255,7 +255,7 @@ public class TransportManagerJourneySteps extends BasePage {
         );
     }
 
-    public void generateAndAddOperatorUser() throws MalformedURLException, IllegalBrowserException {
+    public void generateAndAddOperatorUser() {
         world.TMJourneySteps.generateOperatorValues();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.UIJourneySteps.addUser(
@@ -265,7 +265,7 @@ public class TransportManagerJourneySteps extends BasePage {
                 world.TMJourneySteps.getOperatorUserEmail());
     }
 
-    public void addNewPersonAsTransportManager(String licenceType) throws MalformedURLException, IllegalBrowserException {
+    public void addNewPersonAsTransportManager(String licenceType) {
         world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
         click("add", SelectorType.ID);
         waitAndClick("addUser", SelectorType.ID);

@@ -47,7 +47,7 @@ public class Hooks extends BasePage {
     }
 
     @AfterAll
-    public static void tearDown() throws MalformedURLException, IllegalBrowserException {
+    public static void tearDown() {
         quit();
     }
 }

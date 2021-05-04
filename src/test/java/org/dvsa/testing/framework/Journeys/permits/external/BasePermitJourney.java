@@ -35,25 +35,25 @@ public class BasePermitJourney extends VolAccountJourney {
         return instance;
     }
 
-    public BasePermitJourney beginApplication()throws MalformedURLException, IllegalBrowserException {
+    public BasePermitJourney beginApplication()  {
         HomePage.selectTab(Tab.PERMITS);
         HomePage.applyForLicenceButton();
         return this;
     }
 
-    public BasePermitJourney permitType(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException {
+    public BasePermitJourney permitType(OperatorStore operatorStore) {
         return permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
     }
 
-    public BasePermitJourney permitType()throws MalformedURLException, IllegalBrowserException {
+    public BasePermitJourney permitType() {
         return permitType(PermitTypePage.PermitType.EcmtAnnual, new OperatorStore());
     }
 
-    public BasePermitJourney yearSelection() throws MalformedURLException, IllegalBrowserException {
+    public BasePermitJourney yearSelection() {
         return yearSelection(YearSelectionPage.YearSelection.YEAR_2019, new OperatorStore());
     }
 
-    public BasePermitJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) throws MalformedURLException, IllegalBrowserException {
+    public BasePermitJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -68,7 +68,7 @@ public class BasePermitJourney extends VolAccountJourney {
         return this;
     }
 
-    public BasePermitJourney shortTermType(PeriodSelectionPageOne.ShortTermType shortTermType, OperatorStore operator)throws MalformedURLException, IllegalBrowserException {
+    public BasePermitJourney shortTermType(PeriodSelectionPageOne.ShortTermType shortTermType, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -80,7 +80,7 @@ public class BasePermitJourney extends VolAccountJourney {
         PeriodSelectionPageOne.continueButton();
         return this;
     }
-    public BasePermitJourney bilateralPeriodType (PeriodSelectionPage.BilateralPeriodType bilateralPeriodType, OperatorStore operator)throws MalformedURLException, IllegalBrowserException {
+    public BasePermitJourney bilateralPeriodType (PeriodSelectionPage.BilateralPeriodType bilateralPeriodType, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -91,7 +91,7 @@ public class BasePermitJourney extends VolAccountJourney {
         //PeriodSelectionPage.continueButton();
         return this;
     }
-    public BasePermitJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator) throws MalformedURLException, IllegalBrowserException{
+    public BasePermitJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator){
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -104,7 +104,7 @@ public class BasePermitJourney extends VolAccountJourney {
         return this;
     }
 
-    public BasePermitJourney licencePage(OperatorStore operator, World world)throws MalformedURLException, IllegalBrowserException {
+    public BasePermitJourney licencePage(OperatorStore operator, World world) {
         LicenceStore selectedLicence;
         String licenceNumber;
 

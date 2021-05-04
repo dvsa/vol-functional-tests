@@ -22,7 +22,7 @@ public class ApplicationVerifyJourney extends BasePage {
     }
 
     @Given("i have an application in progress")
-    public void iHaveAnApplicationInProgress() throws MalformedURLException, IllegalBrowserException {
+    public void iHaveAnApplicationInProgress() {
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourneySteps.createApplication();
@@ -32,12 +32,12 @@ public class ApplicationVerifyJourney extends BasePage {
     }
 
     @When("i choose to sign with verify")
-    public void iChooseToSignWithVerify() throws MalformedURLException, IllegalBrowserException {
+    public void iChooseToSignWithVerify() {
         world.UIJourneySteps.signWithVerify();
     }
 
     @Then("the application should be signed with verify")
-    public void theApplicationShouldBeSignedWithVerify() throws MalformedURLException, IllegalBrowserException {
+    public void theApplicationShouldBeSignedWithVerify() {
         waitForTitleToBePresent("Review and declarations");
         assertTrue(isTextPresent("Declaration signed through GOV.UK Verify", 30));
         assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")), 30));

@@ -29,7 +29,7 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
         return instance;
     }
 
-    public AnnualBilateralJourney numberOfPermits(LicenceStore licence, int... numPermits) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney numberOfPermits(LicenceStore licence, int... numPermits) {
         AnnualBilateralStore permit = licence.getLatestAnnualBilateral().orElseGet(AnnualBilateralStore::new);
         licence.setAnnualBilateral(permit);
 
@@ -37,14 +37,14 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
         return this;
     }
 
-    public AnnualBilateralJourney numberOfPermits(LicenceStore licence) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney numberOfPermits(LicenceStore licence) {
         int maxAllowed = licence.getNumberOfAuthorisedVehicles();
         int[] numPermits = IntStream.range(0, Int.random(1, InternalAnnualBilateralPermitApplicationPage.numberOfOpenWindows())).map(idx -> Int.random(1, maxAllowed)).toArray();
 
         return numberOfPermits(licence, numPermits);
     }
 
-    public AnnualBilateralJourney declare(LicenceStore licence, boolean declaration) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney declare(LicenceStore licence, boolean declaration) {
         AnnualBilateralStore permit = licence.getLatestAnnualBilateral().orElseThrow(IllegalStateException::new);
 
         InternalAnnualBilateralPermitApplicationPage.declaration(declaration);
@@ -53,12 +53,12 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
         return this;
     }
 
-    public AnnualBilateralJourney submit() throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney submit() {
         InternalAnnualBilateralPermitApplicationPage.Decisions.submit();
         return this;
     }
 
-    public AnnualBilateralJourney save(LicenceStore licence) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney save(LicenceStore licence) {
         AnnualBilateralStore permit = licence.getLatestAnnualBilateral().orElseThrow(IllegalStateException::new);
         InternalAnnualBilateralPermitApplicationPage.save();
 
@@ -67,7 +67,7 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
         return this;
     }
 
-    public AnnualBilateralJourney select(String reference) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney select(String reference) {
         IrhpPermitsDetailsPage.untilOnPage();
         IrhpPermitsDetailsPage.select(reference);
         InternalAnnualBilateralPermitApplicationPage.untilOnPage();
@@ -75,27 +75,27 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
     }
 
     @Override
-    public AnnualBilateralJourney signin() throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney signin() {
         return (AnnualBilateralJourney) super.signin();
     }
 
     @Override
-    public AnnualBilateralJourney signin(User user) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney signin(User user) {
         return (AnnualBilateralJourney) super.signin(user);
     }
 
     @Override
-    public AnnualBilateralJourney signin(String username, String password) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney signin(String username, String password) {
         return (AnnualBilateralJourney) super.signin(username, password);
     }
 
     @Override
-    public AnnualBilateralJourney openLicence(Integer licenceId) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney openLicence(Integer licenceId) {
         return (AnnualBilateralJourney) super.openLicence(licenceId);
     }
 
     @Override
-    public AnnualBilateralJourney openLicence(String licenceId) throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney openLicence(String licenceId) {
         return (AnnualBilateralJourney) super.openLicence(licenceId);
     }
 }

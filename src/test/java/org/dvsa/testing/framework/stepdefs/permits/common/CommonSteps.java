@@ -303,12 +303,12 @@ public class CommonSteps extends BasePage implements En {
         HomePage.applyForLicenceButton();
     }
 
-    public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull PermitSection section) throws MalformedURLException, IllegalBrowserException {
+    public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull PermitSection section) {
         beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
         OverviewPage.section(section);
     }
 
-    public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) {
         LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
 
         clickToPermitTypePage(world);

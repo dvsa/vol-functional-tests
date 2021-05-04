@@ -104,13 +104,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
     public static void hasApplicationAwaitingFee(OperatorStore operatorStore, World world) throws ElementDidNotAppearWithinSpecifiedTimeException, InterruptedException, MalformedURLException, IllegalBrowserException {
         IntStream.rangeClosed(1, operatorStore.getLicences().size()).forEach((i) -> {
             HomePage.applyForLicenceButton();
-            try {
-                ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IllegalBrowserException e) {
-                e.printStackTrace();
-            }
+            ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
         });
 
         StatusUtils.update(world.getId(), StatusUtils.Phase.WAITING);

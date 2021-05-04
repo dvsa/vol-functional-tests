@@ -26,18 +26,12 @@ public class CancelApplicationPageSteps extends BasePage implements En {
                     .signin(operator, world);
 
             operator.getLicences().forEach((licence) -> {
-                try {
-                    AnnualMultilateralJourney.INSTANCE
+                AnnualMultilateralJourney.INSTANCE
                             .beginApplication()
                             .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
                             .licencePage(operator, world)
                             .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                             .numberOfPermitsPage(operator);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
 
                 NumberOfPermitsPage.overview();
                 OverviewPage.cancel();

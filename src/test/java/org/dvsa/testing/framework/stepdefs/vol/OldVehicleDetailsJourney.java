@@ -39,13 +39,13 @@ public class OldVehicleDetailsJourney extends BasePage {
     String transferLicence;
 
     @When("^i am on the vehicle details page$")
-    public void iAmOnTheVehicleDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    public void iAmOnTheVehicleDetailsPage() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", "Vehicles");
     };
 
     @When("i add a vehicle to my licence")
-    public void iAddAVehicleToMyLicence() throws MalformedURLException, IllegalBrowserException {
+    public void iAddAVehicleToMyLicence() {
         click("add", SelectorType.ID);
         waitForTitleToBePresent("Add vehicle");
         enterText(VRMField, generatedVRM, SelectorType.XPATH);
@@ -54,13 +54,13 @@ public class OldVehicleDetailsJourney extends BasePage {
     }
 
     @Then("the vehicle should be appear")
-    public void theVehicleShouldBeAppear() throws MalformedURLException, IllegalBrowserException {
+    public void theVehicleShouldBeAppear() {
         String valueOfFirstVRMInTable = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         assertEquals(generatedVRM, valueOfFirstVRMInTable);
     }
 
     @When("i remove a vehicle from my licence")
-    public void iRemoveAVehicleFromMyLicence() throws MalformedURLException, IllegalBrowserException {
+    public void iRemoveAVehicleFromMyLicence() {
         firstVRM = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         click(firstVehicleRemoveButton, SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
@@ -73,7 +73,7 @@ public class OldVehicleDetailsJourney extends BasePage {
     }
 
     @When("i change a vehicle on my licence")
-    public void iChangeAVehicleOnMyLicence() throws MalformedURLException, IllegalBrowserException {
+    public void iChangeAVehicleOnMyLicence() {
         firstVRM = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         click(firstVehicleInTable, SelectorType.XPATH);
         replaceText(weightField, SelectorType.XPATH, generatedWeight);
@@ -81,14 +81,14 @@ public class OldVehicleDetailsJourney extends BasePage {
     }
 
     @Then("the vehicle should have changed")
-    public void theVehicleShouldHaveChanged() throws MalformedURLException, IllegalBrowserException {
+    public void theVehicleShouldHaveChanged() {
         String weightOfSelectedVRM = String.format("//*[contains(@value,'%s')]/../../td[2]", firstVRM);
         String firstWeightInTable = getText(weightOfSelectedVRM, SelectorType.XPATH);
         assertEquals(generatedWeight.concat(" kg"), firstWeightInTable);
     }
 
     @When("i transfer a vehicle to another licence")
-    public void iTransferAVehicleToAnotherLicence() throws MalformedURLException, IllegalBrowserException {
+    public void iTransferAVehicleToAnotherLicence() {
         firstVRM = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         click(firstVehicleCheckbox, SelectorType.XPATH);
         click(moreActionsButton, SelectorType.XPATH);
@@ -99,7 +99,7 @@ public class OldVehicleDetailsJourney extends BasePage {
     }
 
     @And("the other licence contains that vehicle")
-    public void theOtherLicenceContainsThatVehicle() throws MalformedURLException, IllegalBrowserException {
+    public void theOtherLicenceContainsThatVehicle() {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
         clickByLinkText(transferLicence);

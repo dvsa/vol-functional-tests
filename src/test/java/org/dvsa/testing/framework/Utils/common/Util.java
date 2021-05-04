@@ -75,12 +75,12 @@ public class Util {
 
                 allureAttachment(projectPath.concat(scenarioFilename + ".png"));
             }
-        } catch (WebDriverException | IOException | IllegalBrowserException somePlatformsDontSupportScreenshots) {
+        } catch (WebDriverException | IOException somePlatformsDontSupportScreenshots) {
             System.err.println(somePlatformsDontSupportScreenshots.getMessage());
         }
     }
 
-    private static byte[] screenShot() throws MalformedURLException, IllegalBrowserException {
+    private static byte[] screenShot() {
         return ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 

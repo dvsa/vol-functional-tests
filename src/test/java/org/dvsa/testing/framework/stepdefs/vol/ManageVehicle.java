@@ -24,51 +24,51 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("I navigate to manage vehicle page on an application")
-    public void iNavigateToManageVehiclePageOnAnApplication() throws MalformedURLException, IllegalBrowserException {
+    public void iNavigateToManageVehiclePageOnAnApplication() {
         world.selfServeNavigation.navigateToLogin( world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourneySteps.navigateToManageVehiclesPage("application");
     }
 
     @When("I navigate to manage vehicle page on a licence")
-    public void iNavigateToManageVehiclePageOnALicence() throws MalformedURLException, IllegalBrowserException {
+    public void iNavigateToManageVehiclePageOnALicence() {
         world.selfServeNavigation.navigateToLogin( world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourneySteps.navigateToManageVehiclesPage("licence");
     }
 
     @When("I navigate to manage vehicle page on a variation")
-    public void iNavigateToManageVehiclePageOnAVariation() throws MalformedURLException, IllegalBrowserException {
+    public void iNavigateToManageVehiclePageOnAVariation() {
         world.selfServeNavigation.navigateToLogin( world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourneySteps.navigateToManageVehiclesPage("variation");
     }
 
     @Then("the add vehicle page should display licence number")
-    public void theAddVehiclePageShouldDisplayLicenceNumber() throws MalformedURLException, IllegalBrowserException {
+    public void theAddVehiclePageShouldDisplayLicenceNumber() {
         Assert.assertEquals(world.applicationDetails.getLicenceNumber(),getText("licence",SelectorType.ID));
     }
 
     @And("choose to add a {string} vehicle")
-    public void chooseToAddAVehicle(String VRM) throws MalformedURLException, IllegalBrowserException {
+    public void chooseToAddAVehicle(String VRM) {
         world.UIJourneySteps.addAVehicle(VRM);
     }
 
     @And("{string} heading")
-    public void heading(String heading) throws MalformedURLException, IllegalBrowserException {
+    public void heading(String heading) {
         Assert.assertEquals(heading, getText("h1", SelectorType.CSS));
     }
 
     @And("I search without entering a registration number")
-    public void iSearchWithoutEnteringARegistrationNumber() throws MalformedURLException, IllegalBrowserException {
+    public void iSearchWithoutEnteringARegistrationNumber() {
         click("//*[contains(text(),'Find vehicle')]",SelectorType.XPATH);
     }
 
     @Then("An error message should be displayed")
-    public void anErrorMessageShouldBeDisplayed() throws MalformedURLException, IllegalBrowserException {
+    public void anErrorMessageShouldBeDisplayed() {
         isElementPresent("//div[@class=\"govuk-error-summary\"]",SelectorType.XPATH);
         isTextPresent("Enter a Vehicle Registration Mark",60);
     }
 
     @When("I search for a valid {string} registration")
-    public void iSearchForAValidRegistration(String vrm) throws MalformedURLException, IllegalBrowserException {
+    public void iSearchForAValidRegistration(String vrm) {
         world.dvlaJourneySteps.VRM = vrm;
         enterText("registration-mark", world.dvlaJourneySteps.VRM, SelectorType.ID);
     }
@@ -82,7 +82,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @And("the vehicle details should not be empty")
-    public void theVehicleDetailsShouldNotBeEmpty() throws MalformedURLException, IllegalBrowserException {
+    public void theVehicleDetailsShouldNotBeEmpty() {
         List<WebElement> vehicleDetails =
                 findElements("//*[@class='govuk-table']//tbody[@class='govuk-table__body']//ancestor::tr[@class='govuk-table__row']//following-sibling::td",SelectorType.XPATH);
         for(WebElement element : vehicleDetails)
@@ -107,27 +107,27 @@ public class ManageVehicle extends BasePage {
     }
 
     @And("I choose to remove a vehicle")
-    public void iChooseToRemoveAVehicle() throws MalformedURLException, IllegalBrowserException {
+    public void iChooseToRemoveAVehicle() {
         world.UIJourneySteps.removeVehicle();
     }
 
     @And("I choose to reprint a vehicle disc")
-    public void iChooseToReprintAVehicleDisc() throws MalformedURLException, IllegalBrowserException {
+    public void iChooseToReprintAVehicleDisc() {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
     }
 
     @And("I want to confirm a vehicle removal")
-    public void iWantToConfirmAVehicleRemoval() throws MalformedURLException, IllegalBrowserException {
+    public void iWantToConfirmAVehicleRemoval() {
         world.UIJourneySteps.vehicleRemovalConfirmationPage();
     }
 
     @And("I choose to transfer a vehicle")
-    public void iChooseToTransferAVehicle() throws MalformedURLException, IllegalBrowserException {
+    public void iChooseToTransferAVehicle() {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
     }
 
     @When("i transfer a vehicle to an assumed licence")
-    public void iTransferAVehiclesToAnAssumedLicence() throws MalformedURLException, IllegalBrowserException {
+    public void iTransferAVehiclesToAnAssumedLicence() {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
         assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:", 10));
         world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "N");
@@ -135,7 +135,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("i transfer a vehicle to a specified licence")
-    public void iTransferAVehicleAToASpecifiedLicence() throws MalformedURLException, IllegalBrowserException {
+    public void iTransferAVehicleAToASpecifiedLicence() {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
         assertTrue(isTextPresent("Select the licence that you want to transfer your vehicles to", 10));
         Select option = new Select(findElement("//select[@id='select-a-licence']", SelectorType.XPATH));
@@ -146,7 +146,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("i transfer all the vehicles from my licence")
-    public void iTransferAllTheVehiclesFromMyLicence() throws MalformedURLException, IllegalBrowserException {
+    public void iTransferAllTheVehiclesFromMyLicence() {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
         assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:", 10));
         world.dvlaJourneySteps.completeDVLAPageAndStoreAllValues("Y", "N");
@@ -154,7 +154,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("I reprint a vehicle disc")
-    public void iReprintAVehicleDisc() throws MalformedURLException, IllegalBrowserException {
+    public void iReprintAVehicleDisc() {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
         world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "Y", "N");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
@@ -162,7 +162,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("i search for and reprint a vehicle disc")
-    public void iSearchForAndReprintAVehicleDisc() throws MalformedURLException, IllegalBrowserException {
+    public void iSearchForAndReprintAVehicleDisc() {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
         world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "Y", "Y");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
@@ -170,7 +170,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("I reprint all my discs")
-    public void iReprintAllMyDiscs() throws MalformedURLException, IllegalBrowserException {
+    public void iReprintAllMyDiscs() {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
         world.dvlaJourneySteps.completeDVLAPageAndStoreAllValues("Y", "Y");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to reprint discs for these vehicles");
@@ -178,39 +178,39 @@ public class ManageVehicle extends BasePage {
     }
 
     @Then("the {string} confirmation banner should appear")
-    public void theConfirmationBannerShouldAppear(String bannerValue) throws MalformedURLException, IllegalBrowserException {
+    public void theConfirmationBannerShouldAppear(String bannerValue) {
         String banner = getText("//h1[@class='govuk-panel__title']", SelectorType.XPATH);
         assertTrue(banner.contains(bannerValue));
     }
 
     @Then("the {string} confirmation body should appear")
-    public void theConfirmationBodyShouldAppear(String bannerValue) throws MalformedURLException, IllegalBrowserException {
+    public void theConfirmationBodyShouldAppear(String bannerValue) {
         String banner = getText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
         assertTrue(banner.contains(bannerValue));
     }
 
     @Then("a {string} error banner should appear")
-    public void aErrorBannerShouldAppear(String bannerValue) throws MalformedURLException, IllegalBrowserException {
+    public void aErrorBannerShouldAppear(String bannerValue) {
         String banner = getText("//p[@role='alert']", SelectorType.XPATH);
         assertTrue(banner.contains(bannerValue));
     }
 
     @And("I want to confirm a vehicle disc reprint")
-    public void iWantToConfirmAVehicleDiscReprint() throws MalformedURLException, IllegalBrowserException {
+    public void iWantToConfirmAVehicleDiscReprint() {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
         click("//input[@type='checkbox']", SelectorType.XPATH);
         click("//*[@name='formActions[action]']", SelectorType.XPATH);
     }
 
     @And("I want to confirm a vehicle transfer")
-    public void iWantToConfirmAVehicleTransfer() throws MalformedURLException, IllegalBrowserException {
+    public void iWantToConfirmAVehicleTransfer() {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
         click("//input[@type='checkbox']", SelectorType.XPATH);
         click("//*[@name='formActions[action]']", SelectorType.XPATH);
     }
 
     @And("the licence discs number should be updated")
-    public void theLicenceDiscsNumberShouldBeUpdated() throws MalformedURLException, IllegalBrowserException {
+    public void theLicenceDiscsNumberShouldBeUpdated() {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
         world.dvlaJourneySteps.newDiscNumber = getText(
                 String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourneySteps.VRM), SelectorType.XPATH);
@@ -219,7 +219,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @And("i search and the licence discs number should be updated")
-    public void iSearchAndTheLicenceDiscsNumberShouldBeUpdated() throws MalformedURLException, IllegalBrowserException {
+    public void iSearchAndTheLicenceDiscsNumberShouldBeUpdated() {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
         world.dvlaJourneySteps.searchForExactVRM(world.dvlaJourneySteps.VRM);
         world.dvlaJourneySteps.newDiscNumber = getText(
@@ -229,7 +229,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @And("all the licence discs number should be updated")
-    public void theAllTheLicenceDiscsNumberShouldBeUpdated() throws MalformedURLException, IllegalBrowserException {
+    public void theAllTheLicenceDiscsNumberShouldBeUpdated() {
         world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
         for (int i = 0; i < world.createApplication.getVehicleVRMs().length; i++) {
             world.dvlaJourneySteps.newDiscNumber = getText(
@@ -240,7 +240,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("I clicks submit on {string} without checking a checkbox")
-    public void iClicksSubmitWithoutCheckingACheckbox(String page) throws MalformedURLException, IllegalBrowserException {
+    public void iClicksSubmitWithoutCheckingACheckbox(String page) {
         switch (page) {
             case "remove":
                 world.dvlaJourneySteps.navigateToRemoveVehiclePage();
@@ -264,14 +264,14 @@ public class ManageVehicle extends BasePage {
     }
 
     @And("i remove a vehicle")
-    public void iRemoveAVehicle() throws MalformedURLException, IllegalBrowserException {
+    public void iRemoveAVehicle() {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
         world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "N");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
     }
 
     @And("the vehicle should no longer be present")
-    public void theVehicleShouldNoLongerBePresent() throws MalformedURLException, IllegalBrowserException {
+    public void theVehicleShouldNoLongerBePresent() {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
         List<WebElement> remainingVRMs = findElements("//td//a", SelectorType.XPATH);
         for (WebElement VRM : remainingVRMs){
@@ -280,14 +280,14 @@ public class ManageVehicle extends BasePage {
     }
 
     @And("i search and remove a vehicle")
-    public void iSearchAndRemoveAVehicle() throws MalformedURLException, IllegalBrowserException {
+    public void iSearchAndRemoveAVehicle() {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
         world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "Y");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
     }
 
     @And("i search and the vehicle should no longer be present")
-    public void iSearchAndTheVehicleShouldNoLongerBePresent() throws MalformedURLException, IllegalBrowserException {
+    public void iSearchAndTheVehicleShouldNoLongerBePresent() {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
         enterText("vehicleSearch[search-value]", world.dvlaJourneySteps.VRM, SelectorType.NAME);
         click("vehicleSearch[submit]", SelectorType.NAME);
@@ -296,14 +296,14 @@ public class ManageVehicle extends BasePage {
     }
 
     @And("i remove all my vehicles")
-    public void iRemoveAllMyVehicles() throws MalformedURLException, IllegalBrowserException {
+    public void iRemoveAllMyVehicles() {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
         world.dvlaJourneySteps.completeDVLAPageAndStoreAllValues("Y", "Y");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to remove the vehicles from your licence?");
     }
 
     @Then("the switchboard only views add vehicle and view vehicle radio buttons")
-    public void theSwitchboardOnlyViewsAddVehicleAndViewVehicleRadioButtons() throws MalformedURLException, IllegalBrowserException {
+    public void theSwitchboardOnlyViewsAddVehicleAndViewVehicleRadioButtons() {
         List<WebElement> switchboardElements = findElements("//label[@class='govuk-label govuk-radios__label']", SelectorType.XPATH);
         for (WebElement radioButton : switchboardElements) {
             assertNotEquals(radioButton.getText(),"Remove a vehicle");

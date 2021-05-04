@@ -35,7 +35,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return instance;
     }
 
-    public AnnualBilateralJourney countries(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney countries(OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
         List<Country> name = RestrictedCountriesPage.randomCountries();
@@ -44,7 +44,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return this;
     }
 
-    public AnnualBilateralJourney allCountries(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney allCountries(OperatorStore operatorStore){
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
         List<Country> name = RestrictedCountriesPage.allCountries();
@@ -53,33 +53,33 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return this;
     }
 
-    public AnnualBilateralJourney norway(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney norway(OperatorStore operatorStore){
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         String country  = CountrySelectionPage.norwaySelection();
         operatorStore.setCountry(country);
         return this;
 
     }
-    public AnnualBilateralJourney turkey(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney turkey(OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         String country = CountrySelectionPage.turkeySelection();
         operatorStore.setCountry(country);
         return this;
     }
-    public AnnualBilateralJourney morocco(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney morocco(OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         String country = CountrySelectionPage.moroccoSelection();
         operatorStore.setCountry(country);
         return this;
     }
 
-    public AnnualBilateralJourney ukraine(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney ukraine(OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         String country = CountrySelectionPage.ukraineSelection();
         operatorStore.setCountry(country);
         return this;
     }
-    public AnnualBilateralJourney permit(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney permit(OperatorStore operatorStore){
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         String permitname  = NumberOfPermitsPage.permitLabel();
         operatorStore.setPermit(permitname);
@@ -87,7 +87,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     }
 
 
-    public AnnualBilateralJourney journeyType(World world,LicenceStore licenceStore)throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney journeyType(World world,LicenceStore licenceStore){
         JourneyType journeyType = JourneyType.random();
         PermitUsagePage.journeyType(journeyType);
         RestrictedCountriesPage.saveAndContinue();
@@ -96,14 +96,14 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return this;
     }
 
-    public AnnualBilateralJourney cabotageConfirmation(World world, LicenceStore licenceStore)throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney cabotageConfirmation(World world, LicenceStore licenceStore){
         String noCabotage  = CabotagePage.yesAndCabotagePermitConfirmation();
         RestrictedCountriesPage.saveAndContinue();
         world.put("noCabotage", noCabotage);
         licenceStore.getEcmt().setNoCabotage(String.valueOf(noCabotage));
         return this;
     }
-    public AnnualBilateralJourney overview(OverviewPage.Section section, OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney overview(OverviewPage.Section section, OperatorStore operatorStore) {
         String reference = OverviewPage.reference();
         OverviewPage.untilOnOverviewPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
@@ -112,7 +112,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return this;
     }
 
-    public AnnualBilateralJourney overviewNorway(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney overviewNorway(OperatorStore operatorStore) {
        /*String reference = OverviewPage.reference();
         OverviewPage.untilOnPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));*/
@@ -121,7 +121,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return this;
     }
 
-    public AnnualBilateralJourney country(World world, OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney country(World world, OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         String country = CountrySelectionPage.norwaySelection();
         RestrictedCountriesPage.saveAndContinue();
@@ -129,7 +129,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return this;
     }
 
-    public AnnualBilateralJourney numberOfPermits(OperatorStore operatorStore)throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney numberOfPermits(OperatorStore operatorStore){
         LicenceStore licenceStore =
                 operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
@@ -139,24 +139,24 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return this;
     }
 
-    public AnnualBilateralJourney checkYourAnswers()throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney checkYourAnswers(){
         CheckYourAnswersPage.untilOnPage();
         CheckYourAnswersPage.saveAndContinue();
         return this;
     }
 
-    public AnnualBilateralJourney declare(boolean declaration)throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney declare(boolean declaration){
         DeclarationPage.untilOnPage();
         DeclarationPage.declare(declaration);
         DeclarationPage.acceptAndContinue();
         return this;
     }
 
-    public AnnualBilateralJourney declare()throws MalformedURLException, IllegalBrowserException{
+    public AnnualBilateralJourney declare(){
         return declare(true);
     }
 
-    public AnnualBilateralJourney permitFee()throws MalformedURLException, IllegalBrowserException {
+    public AnnualBilateralJourney permitFee() {
         PermitFeePage.untilOnPage();
         PermitFeePage.submitAndPay();
         return this;

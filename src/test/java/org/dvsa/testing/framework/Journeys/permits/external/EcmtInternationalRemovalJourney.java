@@ -30,7 +30,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
 
         return instance;
     }
-    public EcmtInternationalRemovalJourney overview(org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.Section section, OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney overview(org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.Section section, OperatorStore operatorStore) {
         String reference = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.reference();
         org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.untilOnPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
@@ -39,7 +39,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
         return this;
     }
 
-    public EcmtInternationalRemovalJourney numberOfPermits(OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney numberOfPermits(OperatorStore operatorStore) {
         LicenceStore licenceStore =
                 operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
@@ -49,60 +49,60 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
         return this;
     }
 
-    public EcmtInternationalRemovalJourney checkYourAnswers() throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney checkYourAnswers() {
         CheckYourAnswersPage.untilOnPage();
         BaseCheckYourAnswersPage.saveAndContinue();
         return this;
     }
 
-    public EcmtInternationalRemovalJourney declaration() throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney declaration() {
         Declaration.DeclarationConfirmation();
         DeclarationPage.acceptAndContinue();
         return this;
     }
 
-    public EcmtInternationalRemovalJourney removalsEligibility(boolean declaration) throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney removalsEligibility(boolean declaration) {
        RemovalsEligibilityPage.declare(declaration);
        BasePermitPage.saveAndContinue();
        return this;
     }
 
-    public EcmtInternationalRemovalJourney cabotagePage() throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney cabotagePage() {
         CabotagePage.cabotageConfirmation();
         saveAndContinue();
         return this;
     }
 
-    public EcmtInternationalRemovalJourney certificatesRequiredPage() throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney certificatesRequiredPage() {
         CertificatesRequiredPage.CertificateRequiredConfirmation();
         saveAndContinue();
         return this;
     }
 
-    public EcmtInternationalRemovalJourney permitStartDatePage() throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney permitStartDatePage() {
         PermitStartDatePage.permitDate();
         saveAndContinue();
         return this;
     }
 
-    public EcmtInternationalRemovalJourney numberOfPermits() throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney numberOfPermits() {
         NumberofPermitsPage.numberOfPermits();
         saveAndContinue();
         return this;
     }
 
 
-    public EcmtInternationalRemovalJourney declare(boolean declaration) throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney declare(boolean declaration) {
         DeclarationPage.declare(declaration);
         DeclarationPage.acceptAndContinue();
         return this;
     }
 
-    public EcmtInternationalRemovalJourney declare() throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney declare() {
         return declare(true);
     }
 
-    public EcmtInternationalRemovalJourney permitFee() throws MalformedURLException, IllegalBrowserException {
+    public EcmtInternationalRemovalJourney permitFee() {
         PermitFeePage.untilOnPage();
         org.dvsa.testing.lib.pages.external.permit.bilateral.PermitFeePage.submitAndPay();
         return this;

@@ -36,22 +36,22 @@ public class PrintingJourney {
         return this;
     }
 
-    public PrintingJourney goPrintIrhpPermits() throws MalformedURLException, IllegalBrowserException {
+    public PrintingJourney goPrintIrhpPermits() {
         BasePrintingPage.Sidebar.select(BasePrintingPage.Section.PrintIrhpPermits);
         return this;
     }
 
-    public PrintingJourney tickAllApplicationRefs(String... references) throws MalformedURLException, IllegalBrowserException {
+    public PrintingJourney tickAllApplicationRefs(String... references) {
         PrintIrhpPermitsPage.tick(PrintIrhpPermitsPage.By.ApplicationReference, references);
         return this;
     }
 
-    public PrintingJourney stage() throws MalformedURLException, IllegalBrowserException {
+    public PrintingJourney stage() {
         PrintIrhpPermitsPage.continueButton();
         return this;
     }
 
-    public PrintingJourney print() throws MalformedURLException, IllegalBrowserException {
+    public PrintingJourney print() {
         PrintIrhpPermitsPage.confirm();
         return this;
     }

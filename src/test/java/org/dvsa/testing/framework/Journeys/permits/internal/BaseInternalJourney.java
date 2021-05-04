@@ -32,44 +32,44 @@ public class BaseInternalJourney extends BaseJourney {
     EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     Config config = new Configuration(env.toString()).getConfig();
 
-    public BaseInternalJourney signin() throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney signin() {
         return signin(User.Admin.getUsername(), config.getString("internalNewPassword"));
     }
 
-    public BaseInternalJourney signin(User user) throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney signin(User user) {
         return signin(user.getUsername(), config.getString("internalNewPassword"));
     }
 
-    public BaseInternalJourney signin(String username, String password) throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney signin(String username, String password) {
         LoginPage.signIn(username, password);
         return this;
     }
 
-    public BaseInternalJourney openLicence(Integer licenceId) throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney openLicence(Integer licenceId) {
         return openLicence(String.valueOf(licenceId));
     }
 
-    public BaseInternalJourney openLicence(String licenceId) throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney openLicence(String licenceId) {
         get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true), "licence/".concat(licenceId)).toString());
         return this;
     }
 
-    public BaseInternalJourney openIrhpPermits(int licenceId) throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney openIrhpPermits(int licenceId) {
         return openIrhpPermits(String.valueOf(licenceId));
     }
 
-    public BaseInternalJourney openIrhpPermits(String licenceId) throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney openIrhpPermits(String licenceId) {
         readyBrowser();
         return go(ApplicationType.INTERNAL, "licence/" + licenceId + "/permits/");
     }
 
     @Override
-    public BaseInternalJourney go(ApplicationType applicationType, String endpoint) throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney go(ApplicationType applicationType, String endpoint) {
         return (BaseInternalJourney) super.go(applicationType, endpoint);
     }
 
     @Override
-    public BaseInternalJourney go(ApplicationType applicationType) throws MalformedURLException, IllegalBrowserException {
+    public BaseInternalJourney go(ApplicationType applicationType) {
         return (BaseInternalJourney) super.go(applicationType);
     }
 

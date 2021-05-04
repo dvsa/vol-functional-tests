@@ -16,7 +16,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
 
     public FeeAndPaymentJourneySteps(World world){ this.world = world; }
 
-    public void createAdminFee(String amount, String feeType) throws IllegalBrowserException, MalformedURLException {
+    public void createAdminFee(String amount, String feeType)  {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
         waitForTextToBePresent("Create new fee");
         selectValueFromDropDown("fee-details[feeType]", SelectorType.NAME, feeType);
@@ -24,7 +24,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
         waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void payFee(String amount, @NotNull String paymentMethod) throws IllegalBrowserException, MalformedURLException {
+    public void payFee(String amount, @NotNull String paymentMethod)  {
         String payment = paymentMethod.toLowerCase().trim();
         waitForElementToBePresent("//label[contains(text(),'Fee amount')]");
         if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
@@ -88,7 +88,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
     }
 
 
-    public void selectFeeById(String feeNumber) throws IllegalBrowserException, MalformedURLException {
+    public void selectFeeById(String feeNumber)  {
         do {
             //nothing
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH));
@@ -103,7 +103,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
         waitForTextToBePresent("Payment method");
     }
 
-    public void selectFee() throws IllegalBrowserException, MalformedURLException {
+    public void selectFee()  {
         long kickOut = System.currentTimeMillis() + 60000;
         do {
             //nothing
@@ -115,7 +115,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
         waitForTextToBePresent("Pay fee");
     }
 
-    public void customerPaymentModule() throws IllegalBrowserException, MalformedURLException {
+    public void customerPaymentModule()  {
         Config config = world.configuration.config;
         waitForTextToBePresent("Card Number*");
         enterText("//*[@id='scp_cardPage_cardNumber_input']", config.getString("cardNumber"), SelectorType.XPATH);
@@ -136,7 +136,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
         }
     }
 
-    public void clickPayAndConfirm(String paymentMethod) throws IllegalBrowserException, MalformedURLException {
+    public void clickPayAndConfirm(String paymentMethod)  {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='postcode']");
         waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);

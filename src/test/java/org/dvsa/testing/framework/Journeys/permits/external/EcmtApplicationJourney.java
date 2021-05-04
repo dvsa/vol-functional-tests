@@ -37,13 +37,13 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return instance;
     }
 
-    public EcmtApplicationJourney overviewPage(PermitSection section) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney overviewPage(PermitSection section) {
        // OverviewPage.untilOnPage();
         OverviewPage.section(section);
         return this;
     }
 
-    public EcmtApplicationJourney euro6Page(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney euro6Page(World world, LicenceStore licenceStore) {
         boolean euro6 = true;
 
         VehicleStandardPage.isEuro6Compliant(euro6);
@@ -53,7 +53,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney cabotagePage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney cabotagePage(World world, LicenceStore licenceStore) {
         boolean cabotage = true;
 
         CabotagePage.wontCarryCabotage(cabotage);
@@ -63,7 +63,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney certificateRequired(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney certificateRequired(World world, LicenceStore licenceStore) {
         boolean certificatesRequired = true;
         CertificatesRequiredPage.certificatesRequired(certificatesRequired);
         CertificatesRequiredPage.saveAndContinue();
@@ -72,7 +72,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney restrictedCountriesPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney restrictedCountriesPage(World world, LicenceStore licenceStore) {
         boolean restrictedCountries = false;
 
         RestrictedCountriesPage.deliverToRestrictedCountry(restrictedCountries);
@@ -83,14 +83,14 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         licence.getEcmt().setNumberOfPermits(NumberOfPermitsPage.quantity(maxNumberOfPermits));
         NumberOfPermitsPage.saveAndContinue();
         return this;
     }
 
-    public EcmtApplicationJourney numberOfPermitsPage(OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney numberOfPermitsPage(OperatorStore operatorStore) {
         int authVehicles = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).getNumberOfAuthorisedVehicles();
         numberOfPermitsPage(operatorStore);
         numberOfPermitsPage(authVehicles,operatorStore);
@@ -99,7 +99,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
 
-    public EcmtApplicationJourney numberOfTripsPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney numberOfTripsPage(World world, LicenceStore licenceStore) {
         int numberOfTrips = Integer.parseInt(Str.randomNumbers(5));
         int numberOfPermits = licenceStore.getNumberOfAuthorisedVehicles();
 
@@ -117,7 +117,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney internationalBusinessPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney internationalBusinessPage(World world, LicenceStore licenceStore) {
         JourneyProportion journeyProportion = JourneyProportion.random();
         PercentageOfInternationalJourneysPage.proportion(journeyProportion);
         PercentageOfInternationalJourneysPage.saveAndContinue();
@@ -132,7 +132,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney sectorPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney sectorPage(World world, LicenceStore licenceStore) {
         Sector sector = Sector.random();
 
         SectorPage.sector(sector);
@@ -144,79 +144,79 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney checkYourAnswersPage() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney checkYourAnswersPage() {
         CheckYourAnswersPage.saveAndContinue();
         return this;
     }
 
-    public EcmtApplicationJourney declaration(boolean declaration) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney declaration(boolean declaration) {
         DeclarationPage.declare(declaration);
         DeclarationPage.saveAndContinue();
         return this;
     }
 
-    public EcmtApplicationJourney feeOverviewPage() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney feeOverviewPage() {
         FeeOverviewPage.saveAndContinue();
         return this;
     }
 
     @Override
-    public EcmtApplicationJourney beginApplication() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney beginApplication() {
         return (EcmtApplicationJourney) super.beginApplication();
     }
 
     @Override
-    public EcmtApplicationJourney permitType(OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney permitType(OperatorStore operatorStore) {
         return (EcmtApplicationJourney) super.permitType(operatorStore);
     }
 
     @Override
-    public EcmtApplicationJourney permitType() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney permitType() {
         return (EcmtApplicationJourney) super.permitType();
     }
 
     @Override
 
-    public EcmtApplicationJourney yearSelection() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney yearSelection() {
         return (EcmtApplicationJourney) super.yearSelection();
     }
 
     @Override
-    public EcmtApplicationJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
         return (EcmtApplicationJourney) super.permitType(type, operator);
     }
 
     @Override
-    public EcmtApplicationJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator) {
         return (EcmtApplicationJourney) super.yearSelection(yearSelection, operator);
     }
 
     @Override
-    public EcmtApplicationJourney licencePage(OperatorStore operator, World world) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney licencePage(OperatorStore operator, World world) {
         return (EcmtApplicationJourney) super.licencePage(operator, world);
     }
 
     @Override
-    public EcmtApplicationJourney cardDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney cardDetailsPage() {
         return (EcmtApplicationJourney) PaymentJourney.super.cardDetailsPage();
     }
 
     @Override
-    public EcmtApplicationJourney cardHolderDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney cardHolderDetailsPage() {
         return (EcmtApplicationJourney) PaymentJourney.super.cardHolderDetailsPage();
     }
 
     @Override
-    public EcmtApplicationJourney confirmAndPay() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney confirmAndPay() {
         return (EcmtApplicationJourney) PaymentJourney.super.confirmAndPay();
     }
 
     @Override
-    public EcmtApplicationJourney passwordAuthorisation() throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney passwordAuthorisation() {
         return (EcmtApplicationJourney) PaymentJourney.super.passwordAuthorisation();
     }
 
-    public EcmtApplicationJourney submitApplication(LicenceStore licenceStore, World world) throws MalformedURLException, IllegalBrowserException {
+    public EcmtApplicationJourney submitApplication(LicenceStore licenceStore, World world) {
         licenceStore.setReferenceNumber(ApplicationSubmitPage.getReferenceNumber().substring(22,40));
         world.put("referenceNumber", licenceStore.getReferenceNumber());
         ApplicationSubmitPage.finish();

@@ -30,11 +30,11 @@ public class VolAccountJourney extends BaseJourney {
         return instance;
     }
 
-    public VolAccountJourney signin(World world) throws MalformedURLException, IllegalBrowserException {
+    public VolAccountJourney signin(World world) {
         return signin(new OperatorStore(), world);
     }
 
-    public VolAccountJourney signin(OperatorStore operator, World world) throws MalformedURLException, IllegalBrowserException {
+    public VolAccountJourney signin(OperatorStore operator, World world) {
         LoginPage.signIn(operator.getUsername(), operator.getPassword());
 
         if (ChangeYourPasswordPage.onPage()) {

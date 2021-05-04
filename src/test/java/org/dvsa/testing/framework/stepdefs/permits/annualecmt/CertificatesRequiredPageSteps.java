@@ -43,7 +43,7 @@ public class CertificatesRequiredPageSteps implements En {
         Then("^I am taken to the Restricted countries page$", () -> RestrictedCountriesPage.hasPageHeading());
 
     }
-    public static void appOverviewPage() throws MalformedURLException, IllegalBrowserException {
+    public static void appOverviewPage() {
         HomePage.selectTab(Tab.PERMITS);
         HomePage.applyForLicenceButton();
         PermitTypePage.type(PermitTypePage.PermitType.EcmtAnnual);

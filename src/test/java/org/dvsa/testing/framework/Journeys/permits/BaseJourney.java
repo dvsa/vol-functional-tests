@@ -24,7 +24,7 @@ public class BaseJourney  extends BasePage {
         return instance;
     }
 
-    public BaseJourney go(ApplicationType applicationType, String endpoint) throws MalformedURLException, IllegalBrowserException {
+    public BaseJourney go(ApplicationType applicationType, String endpoint) {
         getDriver().manage().deleteAllCookies();
         getDriver().navigate().refresh();
         get(URL.build(applicationType, Properties.get("env", true), endpoint).toString());
@@ -32,11 +32,11 @@ public class BaseJourney  extends BasePage {
         return this;
     }
 
-    public BaseJourney go(ApplicationType applicationType) throws MalformedURLException, IllegalBrowserException {
+    public BaseJourney go(ApplicationType applicationType) {
         return go(applicationType, "");
     }
 
-    protected void readyBrowser() throws MalformedURLException, IllegalBrowserException {
+    protected void readyBrowser() {
         if (getDriver() != null && !getDriver().toString().contains("null")) {
             getDriver();
         } else {

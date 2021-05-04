@@ -177,38 +177,14 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             IntStream.rangeClosed(1, quantity).forEach((i) -> {
                 HomePage.applyForLicenceButton();
-                try {
-                    AnnualBilateralJourney.getInstance().permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore).licencePage(operatorStore, world);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    AnnualBilateralJourney.getInstance().norway(operatorStore);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
+                AnnualBilateralJourney.getInstance().permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore).licencePage(operatorStore, world);
+                AnnualBilateralJourney.getInstance().norway(operatorStore);
                 OverviewPage.untilOnOverviewPage();
                 OverviewPage.clickNorway();
                 EssentialInformationPage.bilateralEssentialInfoContinueButton();
-                try {
-                    AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
+                AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
                 PermitUsagePage.untilOnPermitUsagePage();
-                try {
-                    AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
+                AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
                 CabotagePage.yesButton();
                 BasePermitPage.saveAndContinue();
                 NumberOfPermitsPage.numberOfPermits();
@@ -218,25 +194,12 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
                 OverviewPage.selectDeclaration();
                 licenceStore.setReferenceNumber(DeclarationPage.reference());
-                try {
-                    AnnualBilateralJourney.getInstance().declare(true)
+                AnnualBilateralJourney.getInstance().declare(true)
                             .permitFee();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    EcmtApplicationJourney.getInstance()
+                 EcmtApplicationJourney.getInstance()
                             .cardDetailsPage()
                             .cardHolderDetailsPage()
                             .confirmAndPay();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
                 BaseApplicationSubmitPage.untilSubmittedPageLoad();
                 ApplicationSubmitPage.finish();
                 String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
@@ -276,25 +239,12 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
                 licenceStore.setReferenceNumber(DeclarationPage.reference());
-                try {
-                    AnnualBilateralJourney.getInstance().declare(true)
-                            .permitFee();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    EcmtApplicationJourney.getInstance()
+                AnnualBilateralJourney.getInstance().declare(true)
+                        .permitFee();
+                EcmtApplicationJourney.getInstance()
                             .cardDetailsPage()
                             .cardHolderDetailsPage()
                             .confirmAndPay();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
                 BaseApplicationSubmitPage.untilSubmittedPageLoad();
                 ApplicationSubmitPage.finish();
                 String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
@@ -330,25 +280,12 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
             licenceStore.setReferenceNumber(DeclarationPage.reference());
-            try {
-                AnnualBilateralJourney.getInstance().declare(true)
+            AnnualBilateralJourney.getInstance().declare(true)
                         .permitFee();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IllegalBrowserException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                EcmtApplicationJourney.getInstance()
+             EcmtApplicationJourney.getInstance()
                         .cardDetailsPage()
                         .cardHolderDetailsPage()
                         .confirmAndPay();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IllegalBrowserException e) {
-                e.printStackTrace();
-            }
             BaseApplicationSubmitPage.untilSubmittedPageLoad();
             ApplicationSubmitPage.finish();
             String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
@@ -432,37 +369,20 @@ public class AnnualBilateralSteps extends BasePage implements En {
             IntStream.rangeClosed(1, quantity).forEach((i) -> {
                 HomePage.selectTab(Tab.PERMITS);
                 HomePage.applyForLicenceButton();
-                try {
-                    AnnualBilateralJourney.getInstance()
+                AnnualBilateralJourney.getInstance()
                             .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore);
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
+                AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
                 OverviewPage.select(OverviewPage.Section.Countries);
-                try {
-                    AnnualBilateralJourney.getInstance().countries(operatorStore)
+                AnnualBilateralJourney.getInstance().countries(operatorStore)
                             .numberOfPermits(operatorStore)
                             .checkYourAnswers()
                             .declare(true)
                             .permitFee();
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    EcmtApplicationJourney.getInstance()
+                 EcmtApplicationJourney.getInstance()
                             .cardDetailsPage()
                             .cardHolderDetailsPage()
                             .confirmAndPay()
                             .submitApplication(operatorStore.getLatestLicence().get(), world);
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
             });
             System.out.println("WOO");
         });

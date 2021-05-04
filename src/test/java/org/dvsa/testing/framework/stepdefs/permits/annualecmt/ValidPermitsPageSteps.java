@@ -154,15 +154,15 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         });
     }
 
-    public static void untilNonPermitStatusMatch(PermitStatus status) throws MalformedURLException, IllegalBrowserException {
+    public static void untilNonPermitStatusMatch(PermitStatus status) {
         untilPermitStatusIsNot(HomePage.PermitsTab::nonePermitWithStatus, status);
     }
 
-    public static void untilAnyPermitStatusMatch(PermitStatus status) throws MalformedURLException, IllegalBrowserException {
+    public static void untilAnyPermitStatusMatch(PermitStatus status) {
         untilPermitStatusIsNot(HomePage.PermitsTab::anyPermitWithStatus, status );
     }
 
-    private static <T> void untilPermitStatusIsNot(Predicate<T> p, T status) throws MalformedURLException, IllegalBrowserException {
+    private static <T> void untilPermitStatusIsNot(Predicate<T> p, T status) {
         int maxTries = 30;
 
         while(!p.test(status) && maxTries > 0) {

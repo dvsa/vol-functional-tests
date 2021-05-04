@@ -19,7 +19,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
 
     public static final AnnualMultilateralJourney INSTANCE = new AnnualMultilateralJourney();
 
-    public AnnualMultilateralJourney overviewPage(OverviewPage.Section section, OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney overviewPage(OverviewPage.Section section, OperatorStore operatorStore) {
         OverviewPage.untilOnPage();
 
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
@@ -34,14 +34,14 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
         return this;
     }
 
-    public AnnualMultilateralJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         licence.getLatestAnnualMultilateral().get().setNumberOfPermits(NumberOfPermitsPage.quantity(maxNumberOfPermits));
         NumberOfPermitsPage.saveAndContinue();
         return this;
     }
 
-    public AnnualMultilateralJourney numberOfPermitsPage(OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney numberOfPermitsPage(OperatorStore operatorStore) {
         int authVehicles = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).getNumberOfAuthorisedVehicles();
         numberOfPermitsPage(authVehicles, operatorStore);
 
@@ -49,23 +49,23 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
         return this;
     }
 
-    public AnnualMultilateralJourney checkYourAnswers() throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney checkYourAnswers() {
         CheckYourAnswersPage.saveAndContinue();
         return this;
     }
 
-    public AnnualMultilateralJourney declaration(boolean declaration) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney declaration(boolean declaration) {
         DeclarationPage.declare(declaration);
         DeclarationPage.saveAndContinue();
         return this;
     }
 
-    public AnnualMultilateralJourney feeOverviewPage() throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney feeOverviewPage() {
         FeeOverviewPage.saveAndContinue();
         return this;
     }
 
-    public AnnualMultilateralJourney submit() throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney submit() {
         ProportionOfInternationalJourneyPage.untilElementIsPresent("//h2[@class='govuk-heading-m']", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
         ApplicationSubmitPage.finish();
         return this;
@@ -74,62 +74,62 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     // Overrides /////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public AnnualMultilateralJourney go(ApplicationType applicationType, String endpoint) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney go(ApplicationType applicationType, String endpoint) {
         return (AnnualMultilateralJourney) super.go(applicationType, endpoint);
     }
 
     @Override
-    public AnnualMultilateralJourney go(ApplicationType applicationType) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney go(ApplicationType applicationType) {
         return (AnnualMultilateralJourney) super.go(applicationType);
     }
 
     @Override
-    public AnnualMultilateralJourney beginApplication() throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney beginApplication() {
         return (AnnualMultilateralJourney) super.beginApplication();
     }
 
     @Override
-    public AnnualMultilateralJourney permitType(OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney permitType(OperatorStore operatorStore) {
         return (AnnualMultilateralJourney) super.permitType(operatorStore);
     }
 
     @Override
-    public AnnualMultilateralJourney permitType() throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney permitType() {
         return (AnnualMultilateralJourney) super.permitType();
     }
 
     @Override
-    public AnnualMultilateralJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
         return (AnnualMultilateralJourney) super.permitType(type, operator);
     }
 
     @Override
-    public AnnualMultilateralJourney licencePage(OperatorStore operator, World world) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney licencePage(OperatorStore operator, World world) {
         return (AnnualMultilateralJourney) super.licencePage(operator, world);
     }
 
     @Override
-    public AnnualMultilateralJourney signin(World world) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney signin(World world) {
         return (AnnualMultilateralJourney) super.signin(world);
     }
 
     @Override
-    public AnnualMultilateralJourney signin(OperatorStore operator, World world) throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney signin(OperatorStore operator, World world) {
         return (AnnualMultilateralJourney) super.signin(operator, world);
     }
 
     @Override
-    public AnnualMultilateralJourney cardDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney cardDetailsPage() {
         return (AnnualMultilateralJourney) PaymentJourney.super.cardDetailsPage();
     }
 
     @Override
-    public AnnualMultilateralJourney cardHolderDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney cardHolderDetailsPage() {
         return (AnnualMultilateralJourney) PaymentJourney.super.cardHolderDetailsPage();
     }
 
     @Override
-    public AnnualMultilateralJourney confirmAndPay() throws MalformedURLException, IllegalBrowserException {
+    public AnnualMultilateralJourney confirmAndPay() {
         return (AnnualMultilateralJourney) PaymentJourney.super.confirmAndPay();
     }
 

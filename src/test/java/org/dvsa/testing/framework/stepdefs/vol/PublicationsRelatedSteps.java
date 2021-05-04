@@ -139,7 +139,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
     }
 
 
-    public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath) throws IllegalBrowserException, MalformedURLException {
+    public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath)  {
         List<WebElement> webElements = Browser.navigate().findElements(By.xpath(webElementsXpath));
         if (Browser.navigate().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
             click("//li//a[contains(text(),'50')]", SelectorType.XPATH);

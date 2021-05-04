@@ -38,13 +38,13 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return instance;
     }
 
-    public ECMTShortTermJourney overviewPage(PermitSection section) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney overviewPage(PermitSection section) {
         OverviewPage.untilOnPage();
         OverviewPage.section(section);
         return this;
     }
 
-    public ECMTShortTermJourney euro6Page(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney euro6Page(World world, LicenceStore licenceStore) {
         boolean euro6 = true;
 
         VehicleStandardPage.isEuro6Compliant(euro6);
@@ -54,7 +54,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney cabotagePage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney cabotagePage(World world, LicenceStore licenceStore) {
         boolean cabotage = true;
 
         CabotagePage.wontCarryCabotage(cabotage);
@@ -64,13 +64,13 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney certificateRequired(boolean certificateRequired) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney certificateRequired(boolean certificateRequired) {
         CertificatesRequiredPage.certificatesRequired(certificateRequired);
         CertificatesRequiredPage.saveAndContinue();
         return this;
     }
 
-    public ECMTShortTermJourney restrictedCountriesPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney restrictedCountriesPage(World world, LicenceStore licenceStore) {
         boolean restrictedCountries = false;
 
         RestrictedCountriesPage.deliverToRestrictedCountry(restrictedCountries);
@@ -81,7 +81,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney numberOfPermitsPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney numberOfPermitsPage(World world, LicenceStore licenceStore) {
         int authorisedVehicles = licenceStore.getEcmt().getNumberOfPermits();
 
         int numOfPermits = Int.random(1, authorisedVehicles);
@@ -94,7 +94,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney numberOfTripsPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney numberOfTripsPage(World world, LicenceStore licenceStore) {
         int numberOfTrips = Integer.parseInt(Str.randomNumbers(5));
         int numberOfPermits = licenceStore.getNumberOfAuthorisedVehicles();
 
@@ -111,7 +111,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney internationalBusinessPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney internationalBusinessPage(World world, LicenceStore licenceStore) {
         JourneyProportion journeyProportion = JourneyProportion.random();
         PercentageOfInternationalJourneysPage.proportion(journeyProportion);
         PercentageOfInternationalJourneysPage.saveAndContinue();
@@ -126,7 +126,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney sectorPage(World world, LicenceStore licenceStore) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney sectorPage(World world, LicenceStore licenceStore) {
         Sector sector = Sector.random();
 
         SectorPage.sector(sector);
@@ -138,80 +138,80 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney checkYourAnswersPage() throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney checkYourAnswersPage() {
         CheckYourAnswersPage.saveAndContinue();
         return this;
     }
 
-    public ECMTShortTermJourney declaration(boolean declaration) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney declaration(boolean declaration) {
         DeclarationPage.declare(declaration);
         DeclarationPage.saveAndContinue();
         return this;
     }
 
-    public ECMTShortTermJourney feeOverviewPage() throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney feeOverviewPage() {
         FeeOverviewPage.saveAndContinue();
         return this;
     }
 
     @Override
-    public ECMTShortTermJourney beginApplication() throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney beginApplication() {
         return (ECMTShortTermJourney) super.beginApplication();
     }
 
     @Override
-    public ECMTShortTermJourney permitType(OperatorStore operatorStore) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney permitType(OperatorStore operatorStore) {
         return (ECMTShortTermJourney) super.permitType(operatorStore);
     }
 
     @Override
-    public ECMTShortTermJourney permitType() throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney permitType() {
         return (ECMTShortTermJourney) super.permitType();
     }
 
     @Override
 
-    public ECMTShortTermJourney yearSelection() throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney yearSelection() {
         return (ECMTShortTermJourney) super.yearSelection();
     }
 
     @Override
-    public ECMTShortTermJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
         return (ECMTShortTermJourney) super.permitType(type, operator);
     }
 
     @Override
-    public ECMTShortTermJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator) {
         return (ECMTShortTermJourney) super.yearSelection(yearSelection, operator);
     }
 
     @Override
-    public ECMTShortTermJourney licencePage(OperatorStore operator, World world) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney licencePage(OperatorStore operator, World world) {
         return (ECMTShortTermJourney) super.licencePage(operator, world);
     }
 
     @Override
-    public ECMTShortTermJourney shortTermType(PeriodSelectionPageOne.ShortTermType shortTermType, OperatorStore operator) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney shortTermType(PeriodSelectionPageOne.ShortTermType shortTermType, OperatorStore operator) {
         return (ECMTShortTermJourney) super.shortTermType(shortTermType, operator);
     }
 
 
     @Override
-    public ECMTShortTermJourney cardDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney cardDetailsPage() {
         return (ECMTShortTermJourney) PaymentJourney.super.cardDetailsPage();
     }
 
     @Override
-    public ECMTShortTermJourney cardHolderDetailsPage() throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney cardHolderDetailsPage() {
         return (ECMTShortTermJourney) PaymentJourney.super.cardHolderDetailsPage();
     }
 
     @Override
-    public ECMTShortTermJourney confirmAndPay() throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney confirmAndPay() {
         return (ECMTShortTermJourney) PaymentJourney.super.confirmAndPay();
     }
 
-    public ECMTShortTermJourney submitApplication(LicenceStore licenceStore, World world) throws MalformedURLException, IllegalBrowserException {
+    public ECMTShortTermJourney submitApplication(LicenceStore licenceStore, World world) {
         licenceStore.setReferenceNumber(ApplicationSubmitPage.getReferenceNumber());
         world.put("referenceNumber", licenceStore.getReferenceNumber());
         ApplicationSubmitPage.finish();

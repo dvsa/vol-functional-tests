@@ -259,11 +259,11 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         });
     }
 
-    public static void completeEcmtApplication(World world) throws MalformedURLException, IllegalBrowserException {
+    public static void completeEcmtApplication(World world) {
         completeEcmtApplication(new OperatorStore(), world);
     }
 
-    public static void completeEcmtApplication(OperatorStore operator, World world) throws MalformedURLException, IllegalBrowserException {
+    public static void completeEcmtApplication(OperatorStore operator, World world) {
         EcmtApplicationJourney.getInstance()
                 .permitType(PermitTypePage.PermitType.EcmtAnnual, operator);
         YearSelectionPage.EcmtValidityPeriod();
@@ -283,7 +283,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
 
     }
 
-    public static void completeEcmtApplicationConfirmation(OperatorStore operator, World world) throws MalformedURLException, IllegalBrowserException {
+    public static void completeEcmtApplicationConfirmation(OperatorStore operator, World world) {
         EcmtApplicationJourney.getInstance()
                 .permitType(PermitTypePage.PermitType.EcmtAnnual, operator);
         YearSelectionPage.EcmtValidityPeriod();
@@ -301,7 +301,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
                 .passwordAuthorisation();
     }
 
-    public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) throws MalformedURLException, IllegalBrowserException {
+    public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) {
         LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
         store.withLicences(licenceStore);
         OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
@@ -320,7 +320,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         return licenceStore;
 
    }
-    private static void changePassword(@NotNull World world) throws IllegalBrowserException, MalformedURLException {
+    private static void changePassword(@NotNull World world)  {
         String newPassword = Str.randomWord(7).concat("1");
         if (ChangeYourPasswordPage.onPage()) {
             ChangeYourPasswordPage.update(world.get("password"), newPassword);
