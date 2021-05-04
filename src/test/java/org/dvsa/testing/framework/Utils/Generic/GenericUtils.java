@@ -181,11 +181,11 @@ public class GenericUtils extends BasePage {
         return formatDateTime;
     }
 
-    public String confirmationPanel(String locator, String cssValue)  {
+    public String confirmationPanel(String locator, String cssValue) throws IllegalBrowserException, MalformedURLException {
         return Browser.navigate().findElement(By.xpath(locator)).getCssValue(cssValue);
     }
 
-    public void switchTab(int tab)  {
+    public void switchTab(int tab) throws IllegalBrowserException, MalformedURLException {
         ArrayList<String> tabs = new ArrayList<>(Browser.navigate().getWindowHandles());
         Browser.navigate().switchTo().window(tabs.get(tab));
     }
@@ -235,7 +235,7 @@ public class GenericUtils extends BasePage {
         return scanner;
     }
 
-    public boolean returnFeeStatus(String searchTerm) {
+    public boolean returnFeeStatus(String searchTerm) throws MalformedURLException, IllegalBrowserException {
         return Browser.navigate().findElements(By.xpath("//*[contains(@class,'status')]")).stream().anyMatch(a -> a.getText().contains(searchTerm.toUpperCase()));
     }
 
