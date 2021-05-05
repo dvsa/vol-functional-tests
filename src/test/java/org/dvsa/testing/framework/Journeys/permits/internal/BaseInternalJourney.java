@@ -41,6 +41,8 @@ public class BaseInternalJourney extends BaseJourney {
     }
 
     public BaseInternalJourney signin(String username, String password) {
+        deleteCookies();
+        refreshPage();
         LoginPage.signIn(username, password);
         return this;
     }
