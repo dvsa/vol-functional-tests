@@ -7,7 +7,7 @@ Feature: SelfServe Cookies
 
   @EXTERNAL @OLCS-26828 @OLCS-26908
   Scenario: Verify all Cookies
-    And  I logged into Self Serve site
+    And I logged into Self Serve site before accepting cookies
     Then I should see the cookies list
     And I accept all cookies from banner
     Then I should see the cookies list
@@ -15,7 +15,7 @@ Feature: SelfServe Cookies
 
   @EXTERNAL @OLCS-26885
   Scenario: Accept all Cookies after login
-    And I am on the permit type page
+    And I am on the permit type page before accepting cookies
     And I accept all cookies from banner
     Then I should see the cookies list
     And I should see no banner in the page
@@ -34,7 +34,7 @@ Feature: SelfServe Cookies
 
   @EXTERNAL @OLCS-26885 @WIP
   Scenario: Delete all Cookies after login
-    And I logged into Self Serve site
+    And I logged into Self Serve site before accepting cookies
     And I accept all cookies from banner
     Then I should see the cookies list
     And I should see no banner in the page
@@ -43,7 +43,7 @@ Feature: SelfServe Cookies
 
   @EXTERNAL @OLCS-26885 @WIP
   Scenario: Delete Token Cookies after login
-    And I logged into Self Serve site
+    And I logged into Self Serve site before accepting cookies
     And I accept all cookies from banner
     Then I should see the cookies list
     And I should see no banner in the page
@@ -53,7 +53,7 @@ Feature: SelfServe Cookies
   @EXTERNAL @OLCS-26885 @WIP
   Scenario: Dont Accept Cookies
     And I should see banner in the page
-    And I logged into Self Serve site
+    And I logged into Self Serve site before accepting cookies
     And I should see banner in the page
     Then I should see the cookies list
     And I should see the same cookies list in Permit Page
@@ -68,7 +68,7 @@ Feature: SelfServe Cookies
     And I accept all cookies from banner
     Then I should see the cookies list
     And I should see no banner in the page
-    And I logged into Self Serve site
+    And I logged into Self Serve site before accepting cookies
     And I should see the same cookies list in Permit Page
     And I should see no banner in the page
     And I should see the same cookies list in ECMT Removal Check Answers Page

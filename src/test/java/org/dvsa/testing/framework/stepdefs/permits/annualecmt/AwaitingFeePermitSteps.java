@@ -54,7 +54,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
     public AwaitingFeePermitSteps(OperatorStore operatorStore, World world) {
 
         And("^I am viewing an application that's awaiting fees$", () -> {
-            CommonSteps.signIn(world);
+            CommonSteps.signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);

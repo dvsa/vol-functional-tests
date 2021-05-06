@@ -123,7 +123,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             FeesDetailsPage.untilFeePaidNotification();
 
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
-            CommonSteps.signIn(world);
+            CommonSteps.signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
@@ -170,7 +170,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
                 FeesDetailsPage.waive(FeesDetailsPage.Decision.Approve);
             }
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
-            CommonSteps.signIn(world);
+            CommonSteps.signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);

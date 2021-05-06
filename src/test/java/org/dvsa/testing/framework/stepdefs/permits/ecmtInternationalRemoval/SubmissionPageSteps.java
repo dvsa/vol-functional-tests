@@ -22,7 +22,7 @@ import org.openqa.selenium.WebDriver;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signIn;
+import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signInAndAcceptCookies;
 
 public class SubmissionPageSteps extends DriverUtils implements En {
 
@@ -88,7 +88,7 @@ public class SubmissionPageSteps extends DriverUtils implements En {
         And ("^I navigate to permit dashboard page", SubmissionPage::homeButton);
         And ("^I'm on the ECMT international submitted page for my active application", () -> {
             BaseJourney.getInstance().go(ApplicationType.EXTERNAL);
-            signIn(world);
+            signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
             get(org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.url(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber()));
             EcmtInternationalRemovalJourney.getInstance()

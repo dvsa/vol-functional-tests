@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import activesupport.IllegalBrowserException;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
@@ -37,14 +36,13 @@ import org.hamcrest.Matchers;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signIn;
+import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signInAndAcceptCookies;
 import static org.dvsa.testing.lib.pages.external.HomePage.untilOnHomePage;
 
 public class ECMTPermitApplicationSteps extends BasePage implements En {
@@ -71,7 +69,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         Then("^I should be taken to the permits dashboard$", () -> Assert.assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
         When("^I view the permits tab$", () -> {
-            signIn(world);
+            signInAndAcceptCookies(world);
             changePassword(world);
             HomePage.selectTab(Tab.PERMITS);
         });
@@ -113,7 +111,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             DeclarationPage.saveAndContinue();
         });
         And("^I have completed (an|all) ECMT application$", (String arg) -> {
-            signIn(world);
+            signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
@@ -154,7 +152,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             });
         });
         Then("^I have partial annual ECMT application$", () -> {
-            signIn(world);
+            signInAndAcceptCookies(world);
             IntStream.range(0, operatorStore.getLicences().size()).forEach((i) -> {
                /* try {
                     HomePage.selectTab(Tab.PERMITS);
@@ -190,7 +188,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             });
         });
         When("^I have a partial completed ECMT application$", () -> {
-          signIn(world);
+          signInAndAcceptCookies(world);
           HomePage.selectTab(Tab.PERMITS);
           HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
@@ -205,13 +203,13 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         });
         Then ("^I am on the annual ECMT application overview page$", OverviewPage::overviewPageHeading);
         Then ("^I have an annual ECMT application in under consideration status$", () -> {
-            signIn(world);
+            signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
         });
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
-            signIn(world);
+            signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);

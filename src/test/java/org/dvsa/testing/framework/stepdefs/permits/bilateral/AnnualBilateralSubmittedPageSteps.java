@@ -19,7 +19,7 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signIn;
+import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signInAndAcceptCookies;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.untilOnPage;
 
@@ -70,7 +70,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
         });
         And("^I'm on the annual bilateral submitted page for my active application$", () -> {
             BaseJourney.getInstance().go(ApplicationType.EXTERNAL);
-            signIn(world);
+            signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
             String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);

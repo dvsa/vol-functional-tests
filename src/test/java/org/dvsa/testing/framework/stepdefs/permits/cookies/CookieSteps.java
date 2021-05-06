@@ -29,10 +29,14 @@ public class CookieSteps extends DriverUtils implements En {
     public CookieSteps(World world, OperatorStore operatorStore) {
 
         WebDriver driver;
-        And("^I logged into Self Serve site$", () -> {
+        And("^I logged into Self Serve site before accepting cookies$", () -> {
             signIn(world);
         });
-
+        And("^I am on the permit type page before accepting cookies$", () -> {
+            signIn(world);
+            HomePage.selectTab(Tab.PERMITS);
+            HomePage.applyForLicenceButton();
+        });
         And("^I should see the cookies list$", () -> {
             Set<Cookie> cookies = getDriver().manage().getCookies();
             Cookie cookiePHP = getDriver().manage().getCookieNamed("PHPSESSID");

@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.permits.common;
 
-import activesupport.IllegalBrowserException;
 import activesupport.config.Configuration;
 import activesupport.string.Str;
 import activesupport.system.Properties;
@@ -46,7 +45,6 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 
 import java.math.BigDecimal;
-import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -147,7 +145,7 @@ public class CommonSteps extends BasePage implements En {
             world.put("origin", getURL()); // Used to test a scenario for licence page
         });
         And("^I am on the Annual ECMT licence selection page$", () -> {
-            signIn(world);
+            signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
@@ -210,7 +208,7 @@ public class CommonSteps extends BasePage implements En {
             FeesDetailsPage.pay();
         });
         And("^I am on the permits dashboard on external$", () -> {
-            signIn(world);
+            signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
         });
         Then("^Information and Text appear correctly$", () -> {
@@ -298,7 +296,7 @@ public class CommonSteps extends BasePage implements En {
     }
 
     public static void clickToPermitTypePage(@NotNull World world) {
-        signIn(world);
+        signInAndAcceptCookies(world);
         HomePage.selectTab(Tab.PERMITS);
         HomePage.applyForLicenceButton();
     }
@@ -316,6 +314,14 @@ public class CommonSteps extends BasePage implements En {
                 .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
         YearSelectionPage.EcmtValidityPeriod();
         EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
+    }
+
+    public static void signInAndAcceptCookies(World world) {
+        signIn(world);
+
+        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
+        }
     }
 
     public static void signIn(World world) {
@@ -338,8 +344,5 @@ public class CommonSteps extends BasePage implements En {
                 world.put("password", newPassword);
             }
         }
-
-        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
     }
 }

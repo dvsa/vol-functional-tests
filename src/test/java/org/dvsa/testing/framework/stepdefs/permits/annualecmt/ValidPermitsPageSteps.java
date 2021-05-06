@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import activesupport.IllegalBrowserException;
 import activesupport.number.Int;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
@@ -29,7 +28,6 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
@@ -43,7 +41,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
     public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
         And("^have valid permits$", () -> {
             // TODO: replace steps to issue permits with an API call should devs bother documenting it
-            CommonSteps.signIn(world);
+            CommonSteps.signInAndAcceptCookies(world);
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
