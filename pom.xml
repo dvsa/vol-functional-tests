@@ -107,7 +107,6 @@
                 <artifactId>cucable-plugin</artifactId>
                 <version>${cucable-plugin.version}</version>
                 <executions>
-
                     <execution>
                         <id>generate-test-resources</id>
                         <phase>generate-test-resources</phase>
