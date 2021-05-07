@@ -47,10 +47,10 @@ public class DirectorJourneySteps extends BasePage {
     public String validationTitle = "There is a problem";
     public String listOfSummaryErrors = "//ol/li/a";
     public String listOfInlineErrors = "//p[@class='error__text']";
-    public String titleValidation = "Title is required";
-    public String firstNameValidation = "First name is required";
-    public String lastNameValidation = "Last name is required";
-    public String dateOfBirthEmptyFieldValidation = "Date of birth is required";
+    public String titleValidation = "Select an option for: \"Title\"";
+    public String firstNameValidation = "Enter first name";
+    public String lastNameValidation = "Enter last name";
+    public String dateOfBirthEmptyFieldValidation = "Enter date of birth";
     public String dateOfBirthIncorrectValueValidation1 = "The date should be entered in number format";
     public String dateOfBirthIncorrectValueValidation2 = "Please enter all 4 digits of the year";
     public String dateOfBirthIncorrectValueValidation3 = "The input does not appear to be a valid value";
@@ -70,14 +70,14 @@ public class DirectorJourneySteps extends BasePage {
         return directorFirstName.concat(" ").concat(directorLastName);
     }
 
-    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties() throws IllegalBrowserException, MalformedURLException {
+    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties()  {
         click(addButton, SelectorType.XPATH);
         addDirectorDetails();
         completeDirectorFinancialHistory("N");
         completeConvictionsAndPenalties("N");
     }
 
-    public void addDirectorDetails() throws IllegalBrowserException, MalformedURLException {
+    public void addDirectorDetails()  {
         waitForTitleToBePresent(directorDetailsTitle);
         selectValueFromDropDown(directorTitleDropdown, SelectorType.XPATH, "Dr");
         directorFirstName = faker.generateFirstName();
@@ -89,17 +89,17 @@ public class DirectorJourneySteps extends BasePage {
         clickByXPath(saveAndContinue);
     }
 
-    public void completeDirectorFinancialHistory(String financialHistoryAnswers) throws MalformedURLException, IllegalBrowserException {
+    public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(financialHistoryAnswers);
         clickByXPath(saveAndContinue);
     };
 
-    public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) throws MalformedURLException, IllegalBrowserException {
+    public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
         clickByXPath(saveAndContinue);
     };
 
-    public void removeDirector() throws IllegalBrowserException, MalformedURLException {
+    public void removeDirector()  {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
         clickByXPath(deleteDirectorConfirmation);
@@ -109,7 +109,7 @@ public class DirectorJourneySteps extends BasePage {
         return directors.stream().anyMatch(d -> d.getAttribute("value").contains(director));
     }
 
-    public void answerConvictionsAndPenalties(String convictionsAndPenaltiesAnswer) throws MalformedURLException, IllegalBrowserException {
+    public void answerConvictionsAndPenalties(String convictionsAndPenaltiesAnswer) {
         if (convictionsAndPenaltiesAnswer.equals("No")) {
             findSelectAllRadioButtonsByValue("N");
         } else {
@@ -119,7 +119,7 @@ public class DirectorJourneySteps extends BasePage {
         }
     }
 
-    public void answerFinancialHistory(String answerToFinancialQuestions) throws MalformedURLException, IllegalBrowserException {
+    public void answerFinancialHistory(String answerToFinancialQuestions) {
         if (answerToFinancialQuestions.equals("No")) {
             findSelectAllRadioButtonsByValue("N");
         } else {
@@ -128,34 +128,34 @@ public class DirectorJourneySteps extends BasePage {
         }
     }
 
-    public void assertTaskCheckBoxSelected() throws MalformedURLException, IllegalBrowserException {
+    public void assertTaskCheckBoxSelected() {
         String isSelected = findElement(world.directorJourneySteps.internalUrgentCheckboxLabel, SelectorType.XPATH, 30).getAttribute("class");
         assertEquals("selected", isSelected);
     }
 
-    public void assertTaskCheckBoxUnselected() throws MalformedURLException, IllegalBrowserException {
+    public void assertTaskCheckBoxUnselected() {
         String isSelected = findElement(world.directorJourneySteps.internalUrgentCheckboxLabel, SelectorType.XPATH, 30).getAttribute("class");
         assertEquals("", isSelected);
     }
 
-    public void assertDirectorCount(int count) throws MalformedURLException, IllegalBrowserException {
+    public void assertDirectorCount(int count) {
         waitForTitleToBePresent(world.directorJourneySteps.directorsTitle);
         List<WebElement> directors = listOfWebElements(world.directorJourneySteps.directorLinks, SelectorType.XPATH);
         long directorCount = directors.size();
         assertEquals(count, directorCount);
     }
 
-    public void assertLastDirectorTaskNotCreated() throws MalformedURLException, IllegalBrowserException {
+    public void assertLastDirectorTaskNotCreated() {
         List<WebElement> directors = world.UIJourneySteps.getTableBodyRowList();
         assertFalse(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 
-    public void assertLastDirectorTaskCreated() throws MalformedURLException, IllegalBrowserException {
+    public void assertLastDirectorTaskCreated() {
         List<WebElement> directors = world.UIJourneySteps.getTableBodyRowList();
         assertTrue(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 
-    public void assertDirectorChangeInTable() throws MalformedURLException, IllegalBrowserException {
+    public void assertDirectorChangeInTable() {
         List<WebElement> listOfInternalLicenceDocuments = listOfWebElements("//tbody/tr[*]/td[2]", SelectorType.XPATH);
         String documentPrefix = world.licenceCreation.isGoodsLicence() ? GVPeopleChangeSnapshot : PSVPeopleChangeSnapshot;
         String peopleChangeDocument = String.format("//a[contains(text(),'%s')]", documentPrefix);
@@ -163,7 +163,7 @@ public class DirectorJourneySteps extends BasePage {
         assertTrue(isElementPresent(peopleChangeDocument, SelectorType.XPATH));
     }
 
-    public void assertNewDirectorExistsAndMultiplePresent(String director) throws MalformedURLException, IllegalBrowserException {
+    public void assertNewDirectorExistsAndMultiplePresent(String director) {
         List<WebElement> directorList = listOfWebElements("//*/tbody/tr[*]/td[1]/input", SelectorType.XPATH);
         long directorsCount = directorList.size();
         MatcherAssert.assertThat(directorsCount, greaterThan(1L));
