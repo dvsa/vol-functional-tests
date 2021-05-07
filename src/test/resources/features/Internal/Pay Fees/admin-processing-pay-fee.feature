@@ -15,7 +15,7 @@ Feature: Admin paying fees
 
     Examples:
       | payment-method |
-#      | card           |
-#      | cash           |
+      | card           |
+      | cash           |
       | cheque         |
-#      | postal         |
+      | postal         |
