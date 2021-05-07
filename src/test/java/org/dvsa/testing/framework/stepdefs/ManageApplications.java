@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
@@ -12,6 +13,7 @@ import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
+import java.util.Locale;
 
 import static apiCalls.enums.EnforcementArea.enforcementAreaList;
 import static apiCalls.enums.TrafficArea.trafficAreaList;
@@ -19,16 +21,16 @@ import static apiCalls.enums.TrafficArea.trafficAreaList;
 public class ManageApplications {
     World world;
     String fileName = "src/test/resources/";
-    FakerUtils faker = new FakerUtils();
 
     public ManageApplications(World world) {
         this.world = world;
     }
 
-    @Given("I have a {string} application")
-    public void iHaveANewApplication(String operatorType) {
+    @Given("I have a {string} application with {int} vehicles")
+    public void iHaveANewApplication(String operatorType, int numberOfVehicles) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.licenceCreation.createApplication(operatorType, "standard_national");
+        world.createApplication.setNoOfVehiclesRequested(numberOfVehicles);
+        world.licenceCreation.createApplication(operatorType, LicenceType.STANDARD_INTERNATIONAL.name().toLowerCase(Locale.ROOT));
     }
 
     @Given("I have a {string} {string} application")
