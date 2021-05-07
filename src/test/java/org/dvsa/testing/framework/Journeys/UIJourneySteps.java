@@ -87,7 +87,7 @@ public class UIJourneySteps extends BasePage {
         Browser.navigate().manage().window().maximize();
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
-        clickByName("New letter");
+        clickById("New letter");
         findElement("//*[@id='modal-title']", SelectorType.XPATH, 60);
         waitAndSelectByIndex("Generate letter", "//*[@id='category']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("Generate letter", "//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
