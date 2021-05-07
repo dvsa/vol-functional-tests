@@ -1,4 +1,4 @@
-@DEPRECATED
+@Deprecated
 @EXTERNAL @shortterm_apsg_with_sectors
 Feature: Short term ECMT APSG with sectors Cabotage Page
 

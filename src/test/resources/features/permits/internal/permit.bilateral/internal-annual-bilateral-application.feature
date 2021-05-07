@@ -1,4 +1,4 @@
-@deprecated
+@Deprecated
 Feature: Internal case worker annual bilateral application
 
   Background:

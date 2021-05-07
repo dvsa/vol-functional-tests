@@ -1,4 +1,4 @@
-@DEPRECATED
+@Deprecated
 Feature: Shortterm ECMT APSG with sectors Fee page
 
   Background:

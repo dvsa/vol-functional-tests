@@ -1,4 +1,4 @@
-@DEPRECATED
+@Deprecated
 Feature: Short term ECMT APSG with sectors Euro emission standards page
 
   Background:
