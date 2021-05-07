@@ -1,4 +1,4 @@
-@DEPRECATED
+@Deprecated
 Feature: Short term ECMT APSG with sectors Check your answers page
 
   Background:

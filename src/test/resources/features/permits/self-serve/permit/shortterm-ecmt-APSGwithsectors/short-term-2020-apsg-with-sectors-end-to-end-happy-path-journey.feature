@@ -1,4 +1,4 @@
-@DEPRECATED
+@Deprecated
 Feature: Short term APSG with sectors end to end happy path journey
 
   Background:

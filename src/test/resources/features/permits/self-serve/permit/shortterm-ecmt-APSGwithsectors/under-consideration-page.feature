@@ -1,4 +1,4 @@
-@DEPRECATED
+@Deprecated
 Feature: Short term ECMT APSG with sectors under consideration page
 
   Background:

@@ -107,6 +107,7 @@
                 <artifactId>cucable-plugin</artifactId>
                 <version>${cucable-plugin.version}</version>
                 <executions>
+
                     <execution>
                         <id>generate-test-resources</id>
                         <phase>generate-test-resources</phase>
@@ -124,6 +125,13 @@
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                     <desiredNumberOfRunners>3</desiredNumberOfRunners>
+                    <includeScenarioTags>
+                        not (@skip
+                        or @WIP
+                        or @Deprecated
+                        or @CLOSES-WINDOW
+                        or @TOGGLE-ECMT)
+                    </includeScenarioTags>
                 </configuration>
             </plugin>
             <plugin>

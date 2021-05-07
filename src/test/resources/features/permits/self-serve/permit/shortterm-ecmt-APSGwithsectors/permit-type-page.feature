@@ -1,4 +1,4 @@
-@DEPRECATED
+@Deprecated
 Feature: ShortTerm ECMT Permit Page
 
   Background:

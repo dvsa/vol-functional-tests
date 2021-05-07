@@ -21,7 +21,7 @@ Feature: Annual bilateral Permits dashboard page
     And I have partial annual bilateral applications
     Then ongoing permits should be sorted by reference number in descending order
 
-  @OLCS-23227 @CLOSE-WINDOW @EXTERNAL @OLCS-21112 @bilateral_cabotage_only
+  @OLCS-23227 @CLOSES-WINDOW @EXTERNAL @OLCS-21112 @bilateral_cabotage_only
   Scenario: Annual bilateral permit applications are shown above any ECMT annual permit applications Given I am in the permit dashboard
     And have valid permits
     And I have a valid annual bilateral noway cabotage only permit

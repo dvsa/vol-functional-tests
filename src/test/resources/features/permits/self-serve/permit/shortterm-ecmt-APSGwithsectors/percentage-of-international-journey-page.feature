@@ -1,4 +1,4 @@
-@DEPRECATED
+@Deprecated
 Feature: Short term APSG with sectors Percentage of International Journey
 
   Background:
