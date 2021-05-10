@@ -39,3 +39,4 @@ Feature: Transfer a vehicle
     Then the standard "Select the licence that you wish to transfer your vehicles to" errors appear
 
 # Need application, variation and search and transfer.
+# Need test to check transfer doesn't appear on SLH.
