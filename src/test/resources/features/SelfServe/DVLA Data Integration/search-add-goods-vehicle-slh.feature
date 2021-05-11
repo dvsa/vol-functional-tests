@@ -4,13 +4,12 @@
 Feature: Search and add a vehicle
 
   Background:
-    Given I have a "goods" "standard_national" licence
+    Given I have a "goods" "standard_national" licence with "5" vehicle authorisation with no vehicles
 
   Scenario Outline: Check page contents
     When I navigate to manage vehicle page on a licence
     And choose to add a "<VRM>" vehicle
-    Then the add vehicle page should display licence number
-    And "Add a vehicle" heading
+    Then the "<VRM>" should be displayed on the page
 
     Examples:
       | VRM    |

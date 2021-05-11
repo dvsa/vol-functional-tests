@@ -2,17 +2,24 @@ package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import activesupport.http.RestUtils;
+import apiCalls.enums.UserType;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.junit.After;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -314,5 +321,27 @@ public class ManageVehicle extends BasePage {
         }
         assertEquals(switchboardElements.get(0).getText(), "Add a vehicle");
         assertEquals(switchboardElements.get(1).getText(), "View the vehicles you have removed from your licence");
+    }
+
+    @Then("the {string} should be displayed on the page")
+    public void theShouldBeDisplayedOnThePage(String vrm) {
+        isTextPresent(String.format("A vehicle has been found with registration %s", vrm), 60);
+    }
+
+    @After
+    public void removeVehicleOnLicence(){
+        Map<String,String> queryParams = new HashMap<>();{
+            queryParams.put("includeActive","1");
+            queryParams.put("page","1");
+            queryParams.put("limit","100");
+            queryParams.put("sort","vehicle");
+            queryParams.put("order","DESC");
+        }
+        ValidatableResponse response;
+        response = RestUtils.getWithQueryParams(String.format("licence/%s/vehicles/",world.createApplication.getLicenceId()),queryParams,world.createApplication.apiHeaders.getHeaders());
+        String[] vehicleIds = new String[]{response.extract().body().jsonPath().get("results.vehicle.id.findAll()")};
+
+        String json = String.format("{ids:%s}", (Object) vehicleIds);
+        RestUtils.delete(json,"licence-vehicle/",world.createApplication.apiHeaders.getHeaders());
     }
 }

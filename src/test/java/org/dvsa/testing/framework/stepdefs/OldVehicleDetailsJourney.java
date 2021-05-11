@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.number.Int;
-import apiCalls.Utils.builders.VehiclesBuilder;
+import apiCalls.Utils.volBuilders.VehiclesBuilder;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;

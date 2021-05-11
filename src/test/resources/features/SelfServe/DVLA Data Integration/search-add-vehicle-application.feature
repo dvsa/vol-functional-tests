@@ -2,7 +2,7 @@
 Feature: Search and add a vehicle
 
   Scenario Outline: Add a vehicle
-    Given I have a "<Operator>" application with 0 vehicles
+    Given I have a "<Operator>" application with 5 vehicle authorisation
     When I navigate to manage vehicle page on an application
     And choose to add a "<VRM>" vehicle
     Then the add vehicle page should display licence number

@@ -26,10 +26,11 @@ public class ManageApplications {
         this.world = world;
     }
 
-    @Given("I have a {string} application with {int} vehicles")
+    @Given("I have a {string} application with {int} vehicle authorisation")
     public void iHaveANewApplication(String operatorType, int numberOfVehicles) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfVehiclesRequested(numberOfVehicles);
+        world.createApplication.setGenerateVRM(false);
         world.licenceCreation.createApplication(operatorType, LicenceType.STANDARD_INTERNATIONAL.name().toLowerCase(Locale.ROOT));
     }
 
@@ -108,7 +109,7 @@ public class ManageApplications {
         world.licenceCreation.createLicence(operatorType, licenceType);
     }
 
-    @Given("I have a {string} {string} licence with {string} vehicles")
+    @Given("I have a {string} {string} licence with {string} vehicle authorisation")
     public void iHaveLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicles);
@@ -142,5 +143,11 @@ public class ManageApplications {
             TrafficArea trafficArea = TrafficArea.valueOf(ta.toUpperCase());
             world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
         }
+    }
+    @Given("I have a {string} {string} licence with {string} vehicle authorisation with no vehicles")
+    public void iHaveALicenceWithVehicleAuthorisationWithNoVehicles(String operatorType, String licenceType, String vehicleAuthority) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setGenerateVRM(false);
+        world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicleAuthority);
     }
 }
