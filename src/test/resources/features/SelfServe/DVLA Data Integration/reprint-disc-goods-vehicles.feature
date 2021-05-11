@@ -37,7 +37,6 @@ Feature: Reprint a vehicle more than 10 vehicles
     Then the "Disc for this vehicle will be reprinted and sent to you in the post" confirmation banner should appear
     And i search and the licence discs number should be updated
 
-  Scenario: Clear VRM search?
   Scenario: View a vehicle via reprint disc page?
 
 

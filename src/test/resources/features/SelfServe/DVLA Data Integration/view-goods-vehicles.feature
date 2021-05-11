@@ -10,4 +10,3 @@ Feature: View the vehicles on a licence
   Scenario: Search and view a vehicle
   Scenario: Error validation
   Scenario: Share vehicles details with DVSA
-  Scenario: Check exported vehicles

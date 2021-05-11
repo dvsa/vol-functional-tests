@@ -13,7 +13,6 @@ Feature: Transfer a vehicle
     When i transfer a vehicle to a specified licence
     Then the "1 vehicle has been transferred to licence" confirmation banner should appear
 
-  Scenario: Clear VRM search?
   Scenario: View a vehicle via transfer page?
 
   Scenario: Transfer all vehicles from licence
