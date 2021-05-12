@@ -43,46 +43,46 @@ public class SurrenderJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void navigateToSurrendersStartPage() throws IllegalBrowserException, MalformedURLException {
+    public void navigateToSurrendersStartPage()  {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", "View");
         clickByLinkText("Apply to surrender licence");
     }
 
-    public void startSurrender() throws IllegalBrowserException, MalformedURLException {
+    public void startSurrender()  {
         click("//*[@id='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Review your contact information");
     }
 
-    public void addOperatorLicenceDetails() throws IllegalBrowserException, MalformedURLException {
+    public void addOperatorLicenceDetails()  {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void addCommunityLicenceDetails() throws IllegalBrowserException, MalformedURLException {
+    public void addCommunityLicenceDetails()  {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public String getSurrenderAddressLine1() throws IllegalBrowserException, MalformedURLException {
+    public String getSurrenderAddressLine1()  {
         return getText("//dt[contains(text(),'Address')]//..//dd", SelectorType.XPATH);
     }
 
-    public String getSurrenderTown() throws IllegalBrowserException, MalformedURLException {
+    public String getSurrenderTown()  {
         return getText("//dt[contains(text(),'Town/city')]//..//dd", SelectorType.XPATH);
     }
 
-    public String getSurrenderCountry() throws IllegalBrowserException, MalformedURLException {
+    public String getSurrenderCountry()  {
         return getText("//dt[contains(text(),'Country')]//..//dd", SelectorType.XPATH);
     }
 
-    public String getSurrenderContactNumber() throws IllegalBrowserException, MalformedURLException {
+    public String getSurrenderContactNumber()  {
         return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
     }
 
-    public void submitSurrender() throws MalformedURLException, IllegalBrowserException {
+    public void submitSurrender() {
         submitSurrenderUntilChoiceOfVerification();
         if (navigate().getCurrentUrl().contains("qa")) {
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
@@ -95,12 +95,12 @@ public class SurrenderJourneySteps extends BasePage {
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
 
-    public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, MalformedURLException {
+    public void submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
         acknowledgeDestroyPage();
     }
 
-    public void submitSurrenderUntilReviewPage() throws IllegalBrowserException, MalformedURLException {
+    public void submitSurrenderUntilReviewPage()  {
         navigateToSurrendersStartPage();
         startSurrender();
         waitAndClick("form-actions[submit]", SelectorType.ID);
@@ -113,7 +113,7 @@ public class SurrenderJourneySteps extends BasePage {
         }
     }
 
-    public void caseworkManageSurrender() throws MalformedURLException, IllegalBrowserException {
+    public void caseworkManageSurrender() {
         world.APIJourneySteps.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
@@ -125,7 +125,7 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
     }
 
-    public void checkVerifyConfirmation() throws IllegalBrowserException, MalformedURLException {
+    public void checkVerifyConfirmation()  {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber()), 10));
@@ -134,14 +134,14 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 
-    public void acknowledgeDestroyPage() throws IllegalBrowserException, MalformedURLException {
+    public void acknowledgeDestroyPage()  {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Securely destroy");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTitleToBePresent("Declaration");
     }
 
-    public void addDiscInformation() throws IllegalBrowserException, MalformedURLException {
+    public void addDiscInformation()  {
         assertTrue(getCurrentUrl().contains("current-discs"));
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
@@ -155,7 +155,7 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
     }
 
-    public void removeDisc() throws IllegalBrowserException, MalformedURLException, ElementDidNotAppearWithinSpecifiedTimeException {
+    public void removeDisc() throws ElementDidNotAppearWithinSpecifiedTimeException {
         waitAndClick("form-actions[submit]", SelectorType.ID);
         addDiscInformation();
         clickByLinkText("Home");

@@ -29,7 +29,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void internalSearchForBusReg() throws IllegalBrowserException, MalformedURLException {
+    public void internalSearchForBusReg()  {
         selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Bus registrations");
         do {
             SearchNavBar.search(world.applicationDetails.getLicenceNumber());
@@ -37,7 +37,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
-    public void internalSiteAddBusNewReg(int month) throws IllegalBrowserException, MalformedURLException {
+    public void internalSiteAddBusNewReg(int month)  {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
         click(nameAttribute("button", "action"));
@@ -72,7 +72,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         }
     }
 
-    public void closeBusReg() throws IllegalBrowserException, MalformedURLException {
+    public void closeBusReg()  {
         clickByLinkText("" + world.applicationDetails.getLicenceNumber() + "");
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
@@ -80,7 +80,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         click("form-actions[submit]", SelectorType.ID);
     }
 
-    public void payFeesAndGrantNewBusReg() throws IllegalBrowserException, MalformedURLException {
+    public void payFeesAndGrantNewBusReg()  {
         clickByLinkText("Fees");
         world.feeAndPaymentJourneySteps.selectFee();
         world.feeAndPaymentJourneySteps.payFee("60", "cash");
@@ -101,7 +101,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws IllegalBrowserException, MalformedURLException {
+    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType)  {
         if (licenceType.equals("standard_international")) {
             world.createApplication.setLicenceType("standard_international");
         } else {
@@ -128,7 +128,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         world.updateLicence.createCase();
     }
 
-    public void viewESBRInExternal() throws IllegalBrowserException, MalformedURLException {
+    public void viewESBRInExternal()  {
 
         long kickOutTime = System.currentTimeMillis() + 120000;
 
@@ -144,7 +144,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         }
     }
 
-    public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
+    public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.genericUtils.modifyXML(state, interval);
         GenericUtils.zipFolder();

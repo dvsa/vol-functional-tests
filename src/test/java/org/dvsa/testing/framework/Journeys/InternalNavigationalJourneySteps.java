@@ -24,18 +24,18 @@ public class InternalNavigationalJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void navigateToLogin(String username, String emailAddress) throws MalformedURLException, IllegalBrowserException {
+    public void navigateToLogin(String username, String emailAddress) {
         world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.INTERNAL);
     }
 
-    public void logInAndNavigateToDocsTable() throws IllegalBrowserException, MalformedURLException {
+    public void logInAndNavigateToDocsTable()  {
         world.APIJourneySteps.createAdminUser();
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         urlSearchAndViewApplication();
         clickByLinkText("Docs");
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
-    public void logInAndNavigateToTask() throws IllegalBrowserException, MalformedURLException {
+    public void logInAndNavigateToTask()  {
         world.APIJourneySteps.createAdminUser();
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         urlSearchAndViewApplication();
@@ -44,27 +44,27 @@ public class InternalNavigationalJourneySteps extends BasePage {
         isElementEnabled("//body", SelectorType.XPATH);
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
-    public void urlSearchAndViewApplication() throws IllegalBrowserException, MalformedURLException {
+    public void urlSearchAndViewApplication()  {
         navigate().get(this.myURL.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
 
-    public void urlSearchAndViewLicence() throws IllegalBrowserException, MalformedURLException {
+    public void urlSearchAndViewLicence()  {
         navigate().get(this.myURL.concat(String.format("licence/%s", world.createApplication.getLicenceId())));
     }
 
-    public void urlSearchAndViewVariational() throws IllegalBrowserException, MalformedURLException {
+    public void urlSearchAndViewVariational()  {
         navigate().get(this.myURL.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationId())));
     }
 
-    public void urlSearchAndViewEditFee(String feeNumber) throws IllegalBrowserException, MalformedURLException {
+    public void urlSearchAndViewEditFee(String feeNumber)  {
         navigate().get(this.myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
     }
 
-    public void urlSearchAndViewInternalUserAccount(String adminUserId) throws IllegalBrowserException, MalformedURLException {
+    public void urlSearchAndViewInternalUserAccount(String adminUserId)  {
         navigate().get(this.myURL.concat(String.format("admin/user-management/users/edit/%s", adminUserId)));
     }
 
-    public void logIntoInternalAndClickOnTask(String taskLinkText) throws MalformedURLException, IllegalBrowserException {
+    public void logIntoInternalAndClickOnTask(String taskLinkText) {
         logInAndNavigateToTask();
         clickByXPath(taskLinkText);
         waitForElementToBePresent(taskTitle);

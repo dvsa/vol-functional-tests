@@ -22,16 +22,16 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         this.world = world;
     }
 
-    public void navigateToLogin(String username, String emailAddress) throws MalformedURLException, IllegalBrowserException {
+    public void navigateToLogin(String username, String emailAddress) {
         world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.EXTERNAL);
     }
 
-    public void navigateToSearch() throws IllegalBrowserException, MalformedURLException {
+    public void navigateToSearch()  {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-lorry-bus-operators/").toString();
         navigate().get(myURL);
     }
 
-    public void navigateToPage(String type, String page) throws IllegalBrowserException, MalformedURLException {
+    public void navigateToPage(String type, String page)  {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
         String applicationStatus = null;
@@ -99,7 +99,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         }
     }
 
-    public void navigateToNavBarPage(String page) throws IllegalBrowserException, MalformedURLException {
+    public void navigateToNavBarPage(String page)  {
         switch (page.toLowerCase()) {
             case "home":
                 clickByLinkText("Home");
@@ -123,7 +123,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
     @exceptionMessage an example of this should be: "KickOut reached. Operator name external search failed."
     This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
  */
-    public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage) throws IllegalBrowserException, MalformedURLException {
+    public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage)  {
         boolean conditionNotTrue = true;
         long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
         while (conditionNotTrue) {
@@ -136,7 +136,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         }
     }
 
-    public void navigateThroughApplication() throws IllegalBrowserException, MalformedURLException {
+    public void navigateThroughApplication()  {
         waitForTitleToBePresent("Apply for a new licence");
         clickByLinkText("Type of licence");
         waitForTitleToBePresent("Type of licence");
