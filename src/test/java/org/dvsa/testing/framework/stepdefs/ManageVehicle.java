@@ -3,28 +3,32 @@ package org.dvsa.testing.framework.stepdefs;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.http.RestUtils;
-import apiCalls.enums.UserType;
+import activesupport.system.Properties;
+import apiCalls.Utils.generic.Headers;
+import apiCalls.Utils.generic.Utils;
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.junit.After;
+import org.dvsa.testing.lib.url.api.URL;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.net.MalformedURLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
 public class ManageVehicle extends BasePage {
     World world;
+
+    private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
     public ManageVehicle(World world) {
         this.world = world;
@@ -56,6 +60,7 @@ public class ManageVehicle extends BasePage {
     @And("choose to add a {string} vehicle")
     public void chooseToAddAVehicle(String VRM) throws MalformedURLException, IllegalBrowserException {
         world.UIJourneySteps.addAVehicle(VRM);
+        waitAndClick("confirm", SelectorType.ID);
     }
 
     @And("{string} heading")
@@ -65,7 +70,7 @@ public class ManageVehicle extends BasePage {
 
     @And("I search without entering a registration number")
     public void iSearchWithoutEnteringARegistrationNumber() throws MalformedURLException, IllegalBrowserException {
-        click("//*[contains(text(),'Find vehicle')]", SelectorType.XPATH);
+        world.UIJourneySteps.addAVehicle("");
     }
 
     @Then("An error message should be displayed")
@@ -325,23 +330,27 @@ public class ManageVehicle extends BasePage {
 
     @Then("the {string} should be displayed on the page")
     public void theShouldBeDisplayedOnThePage(String vrm) {
-        isTextPresent(String.format("A vehicle has been found with registration %s", vrm), 60);
+        isTextPresent(String.format("Vehicle %s has been added", vrm), 60);
     }
 
     @After
-    public void removeVehicleOnLicence(){
-        Map<String,String> queryParams = new HashMap<>();{
-            queryParams.put("includeActive","1");
-            queryParams.put("page","1");
-            queryParams.put("limit","100");
-            queryParams.put("sort","vehicle");
-            queryParams.put("order","DESC");
+    public void removeVehicleOnLicence() {
+        JSONObject json = new JSONObject();
+        Map<String, String> queryParams = new HashMap<>();
+        {
+            queryParams.put("includeActive", "1");
+            queryParams.put("page", "1");
+            queryParams.put("limit", "100");
+            queryParams.put("sort", "vehicle");
+            queryParams.put("order", "DESC");
         }
         ValidatableResponse response;
-        response = RestUtils.getWithQueryParams(String.format("licence/%s/vehicles/",world.createApplication.getLicenceId()),queryParams,world.createApplication.apiHeaders.getHeaders());
-        String[] vehicleIds = new String[]{response.extract().body().jsonPath().get("results.vehicle.id.findAll()")};
+        Headers apiHeaders = new Headers();
+        apiHeaders.headers.put("x-pid", Utils.config.getString("apiHeader"));
 
-        String json = String.format("{ids:%s}", (Object) vehicleIds);
-        RestUtils.delete(json,"licence-vehicle/",world.createApplication.apiHeaders.getHeaders());
+        response = RestUtils.getWithQueryParams(String.format(URL.build(this.env, "licence/%s/vehicles/").toString(), world.createApplication.getLicenceId()), queryParams, world.createApplication.apiHeaders.getHeaders());
+        List<Object> responseArray = response.extract().body().jsonPath().get("results.id.findAll()");
+        json.put("ids", responseArray);
+        RestUtils.delete(json.toString(), URL.build(this.env, "licence-vehicle/").toString(), apiHeaders.headers);
     }
 }

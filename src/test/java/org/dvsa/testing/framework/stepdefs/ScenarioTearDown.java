@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs;
 
-import activesupport.driver.Browser;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;

@@ -26,7 +26,7 @@ public class ManageApplications {
         this.world = world;
     }
 
-    @Given("I have a {string} application with {int} vehicle authorisation")
+    @Given("I have a {string} application with {int} vehicle authorisation with no vehicles")
     public void iHaveANewApplication(String operatorType, int numberOfVehicles) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfVehiclesRequested(numberOfVehicles);

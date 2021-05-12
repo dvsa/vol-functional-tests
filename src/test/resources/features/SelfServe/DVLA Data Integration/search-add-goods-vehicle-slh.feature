@@ -12,24 +12,10 @@ Feature: Search and add a vehicle
     Then the "<VRM>" should be displayed on the page
 
     Examples:
-      | VRM    |
-      | Y23WSH |
+      | VRM     |
+      | E304MSG |
 
   Scenario: Check error messages
     When I navigate to manage vehicle page on a licence
     And I search without entering a registration number
     Then An error message should be displayed
-
-  Scenario Outline: Search for a vehicle registration mark
-    When I navigate to manage vehicle page on a licence
-    When I search for a valid "<VRM>" registration
-    Then the vehicle summary should be displayed on the page:
-      | Vehicle information       |
-      | Vehicle Registration Mark |
-      | Gross plated weight in kg |
-      | Make                      |
-    And the vehicle details should not be empty
-
-    Examples:
-      | VRM     |
-      | F95 JGE |
