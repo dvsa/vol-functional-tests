@@ -6,6 +6,7 @@ Feature: Search and add a vehicle
   Background:
     Given I have "1" "goods" "standard_national" licences with "0" vehicles and a vehicleAuthority of "5"
 
+  @add-vehicle
   Scenario Outline: Check page contents
     When I navigate to manage vehicle page on a licence
     And choose to add a "<VRM>" vehicle

@@ -14,4 +14,12 @@ public class Configuration{
     public Configuration(World world) {
         this.world = world;
     }
+
+    public String getBucketName() {
+        return config.getString("bucketName");
+    }
+
+    public String getTempPassword(String emailAddress) {
+        return S3.getTempPassword(emailAddress, getBucketName());
+    }
 }
