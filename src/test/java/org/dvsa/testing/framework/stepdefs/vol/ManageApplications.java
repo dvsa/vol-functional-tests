@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
@@ -12,6 +13,7 @@ import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
+import java.util.Locale;
 
 import static apiCalls.enums.EnforcementArea.enforcementAreaList;
 import static apiCalls.enums.TrafficArea.trafficAreaList;
@@ -19,16 +21,17 @@ import static apiCalls.enums.TrafficArea.trafficAreaList;
 public class ManageApplications {
     World world;
     String fileName = "src/test/resources/";
-    FakerUtils faker = new FakerUtils();
 
     public ManageApplications(World world) {
         this.world = world;
     }
 
-    @Given("I have a {string} application")
-    public void iHaveANewApplication(String operatorType) {
+    @Given("I have a {string} application with {int} vehicles and a vehicleAuthority of {int}")
+    public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, int numberOfVehicles, int authority) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.licenceCreation.createApplication(operatorType, "standard_national");
+        world.createApplication.setNoOfVehiclesRequested(numberOfVehicles);
+        world.createApplication.setOperatingCentreVehicleCap(authority);
+        world.licenceCreation.createApplication(operatorType, LicenceType.STANDARD_INTERNATIONAL.name().toLowerCase(Locale.ROOT));
     }
 
     @Given("I have a {string} {string} application")
@@ -71,6 +74,7 @@ public class ManageApplications {
     public void theLicenceShouldBeCreatedAndGranted() throws Exception {
         world.genericUtils.writeToFile(world.registerUser.getUserName(), world.globalMethods.getLoginPassword(), fileName.concat("Operator.csv"));
         // What does this do?
+        // This writes out the user details[user + password] to a file. It was used to help the user researchers with creating logins
     }
 
     @Given("I have {string} {string} {string} licences")
@@ -106,14 +110,14 @@ public class ManageApplications {
         world.licenceCreation.createLicence(operatorType, licenceType);
     }
 
-    @Given("I have a {string} {string} licence with {string} vehicles")
+    @Given("I have a {string} {string} licence with {string} vehicle authorisation")
     public void iHaveLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicles);
     }
 
-    @Given("I have {string} {string} {string} licences with {string} vehicles and a cap of {string}")
-    public void iHaveLicencesWithVehiclesAndCap(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
+    @Given("I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
+    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }

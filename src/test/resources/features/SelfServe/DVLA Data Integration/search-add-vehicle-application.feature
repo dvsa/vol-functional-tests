@@ -1,40 +1,11 @@
-#https://jira.dvsacloud.uk/browse/VOL-147
-
-@VOL-147
+@VOL-1319
 Feature: Search and add a vehicle
 
-  Scenario Outline: Check page contents
-    Given I have a "<Operator>" application
+  Scenario Outline: Add a vehicle to application
+    Given I have a "<Operator>" application with 0 vehicles and a vehicleAuthority of 5
     When I navigate to manage vehicle page on an application
-    And choose to add a vehicle
-    Then the add vehicle page should display licence number
-    And "Add a vehicle" heading
+    And choose to add a "<VRM>" vehicle
+    Then the "<VRM>" should be displayed on the page
     Examples:
-      | Operator |
-      | goods    |
-      | public   |
-
-  Scenario Outline: Check error messages
-    Given I have a "<Operator>" application
-    When I navigate to manage vehicle page on an application
-    And I search without entering a registration number
-    Then An error message should be displayed
-    Examples:
-      | Operator |
-      | goods    |
-      | public   |
-
-  Scenario Outline: Search for a vehicle registration mark
-    Given I have a "<Operator>" application
-    When I navigate to manage vehicle page on an application
-    When I search for a valid "<vrm>" registration
-    Then the vehicle summary should be displayed on the page:
-      | Vehicle information       |
-      | Vehicle Registration Mark |
-      | Gross plated weight in kg |
-      | Make                      |
-    And the vehicle details should not be empty
-
-    Examples:
-      | Operator | vrm      |
-      | goods    | F95 JGE  |
+      | Operator | VRM     |
+      | goods    | S679ASX |
