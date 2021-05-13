@@ -22,6 +22,16 @@ public class LicenceCreation {
         }
     }
 
+    public void createSubmittedApplication(String operatorType, String licenceType) {
+        createApplication(operatorType, licenceType);
+        world.APIJourneySteps.submitApplication();
+    }
+
+    public void createLicence(String operatorType, String licenceType) {
+        createSubmittedApplication(operatorType, licenceType);
+        world.APIJourneySteps.grantLicenceAndPayFees();
+    }
+
     public void createApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
         if(licenceType.equals("special_restricted") && Integer.parseInt(vehicles) > 2){
             throw new InvalidArgumentException("Special restricted licences can not have more than 2 vehicles on them.");
@@ -31,15 +41,9 @@ public class LicenceCreation {
         createApplication(operatorType, licenceType);
     }
 
-    public void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
-        world.createApplication.setTrafficArea(trafficArea);
-        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
-        createApplication(operatorType, licenceType);
-    }
-
-    public void createSubmittedApplication(String operatorType, String licenceType) {
-        createApplication(operatorType, licenceType);
-        world.APIJourneySteps.submitApplication();
+    public void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
+        createSubmittedApplicationWithVehicles(operatorType, licenceType, vehicles);
+        world.APIJourneySteps.grantLicenceAndPayFees();
     }
 
     public void createSubmittedApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
@@ -47,24 +51,20 @@ public class LicenceCreation {
         world.APIJourneySteps.submitApplication();
     }
 
-    public void createLicence(String operatorType, String licenceType) {
-        createSubmittedApplication(operatorType, licenceType);
-        world.APIJourneySteps.grantLicenceAndPayFees();
-    }
-
-    public void createNILicence(String operatorType, String licenceType) {
-        world.createApplication.setNiFlag("Y");
-        createLicence(operatorType, licenceType);
-    }
-
-    public void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
-        createSubmittedApplicationWithVehicles(operatorType, licenceType, vehicles);
-        world.APIJourneySteps.grantLicenceAndPayFees();
+    public void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
+        world.createApplication.setTrafficArea(trafficArea);
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
+        createApplication(operatorType, licenceType);
     }
 
     public void createLicenceWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
         world.createApplication.setTrafficArea(trafficArea);
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
+        createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
+    }
+
+    public void createNILicence(String operatorType, String licenceType) {
+        world.createApplication.setNiFlag("Y");
         createLicence(operatorType, licenceType);
     }
 
