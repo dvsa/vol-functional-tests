@@ -23,7 +23,6 @@ public class GrantApplication implements En {
                 apiResponse = world.grantApplication.payGrantFees();
             }
             assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
-            System.out.println(apiResponse.extract().response().asString());
         });
     }
 }
