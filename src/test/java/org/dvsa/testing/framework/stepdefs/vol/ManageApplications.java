@@ -101,9 +101,15 @@ public class ManageApplications {
     }
 
     @Given("I have a {string} {string} licence")
-    public void iHaveLicenceWithVehicles(String operatorType, String licenceType) {
+    public void iHaveLicence(String operatorType, String licenceType) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicence(operatorType, licenceType);
+    }
+
+    @Given("I have a {string} {string} NI licence")
+    public void iHaveNILicence(String operatorType, String licenceType) {
+        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.licenceCreation.createNILicence(operatorType, licenceType);
     }
 
     @Given("I have a {string} {string} licence with {string} vehicles")

@@ -2,7 +2,7 @@
 Feature: Bilateral cabotage only permits
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I have a valid annual bilateral noway cabotage only permit
     And I am viewing an issued annual bilateral permit on self-serve

@@ -2,7 +2,7 @@
 Feature:Bilateral standard no cabotage permits: Annual bilateral valid permit-details  page checks
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I have a valid annual bilateral norway standard no cabotage permit
     And I am viewing an issued annual bilateral permit on self-serve

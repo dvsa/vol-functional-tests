@@ -2,7 +2,7 @@
 Feature: Display of the Self service Permit tab
 
   Background:
-    Given I have a valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
 
   @EXTERNAL @OLCS-20685 @ECMT @Test3

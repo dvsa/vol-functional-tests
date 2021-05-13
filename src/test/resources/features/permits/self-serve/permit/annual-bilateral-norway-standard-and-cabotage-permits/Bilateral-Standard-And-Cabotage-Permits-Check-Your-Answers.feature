@@ -2,7 +2,7 @@
 Feature: Annual bilateral standard and cabotage Check your answers page feature
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I am on the Bilateral Standard and Cabotage permits check your answers page
 

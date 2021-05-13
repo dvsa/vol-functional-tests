@@ -2,7 +2,7 @@
 Feature: Number of permits required page
 
   Background:
-    Given I have valid Goods standard_international VOL licences
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I am on the number of permits page
 

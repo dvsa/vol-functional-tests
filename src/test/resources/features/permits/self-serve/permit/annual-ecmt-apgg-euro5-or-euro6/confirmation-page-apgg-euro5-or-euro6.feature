@@ -2,7 +2,7 @@
 Feature: Annual ECMT Application Confirmation Page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
 
   @EXTERNAL @OLCS-21130 @OLCS-25086 @ECMT @olcs-27382 @Test2 @olcs-27502 @olcs-27581

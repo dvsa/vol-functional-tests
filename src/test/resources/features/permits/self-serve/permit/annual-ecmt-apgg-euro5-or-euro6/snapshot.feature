@@ -1,7 +1,7 @@
 Feature:  HTML snapshot
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
 
   @INTERNAL @OLCS-20958 @ECMT @annual_ecmt_apgg_euro5_or_euro6
   Scenario: Doc is generated from ECMT permit application submitted externally

@@ -2,7 +2,7 @@
 Feature: Internal Short Term permits APGG Euro 5 or Euro 6 until UC Status
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL internal site
     And I am viewing a good operating licence on internal
     And I am viewing a licences IRHP section

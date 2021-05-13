@@ -2,7 +2,7 @@
 Feature: Bilaterals Turkey end to end happy path journey including validations
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I have selected Turkey and I am on the Bilateral application overview page
 

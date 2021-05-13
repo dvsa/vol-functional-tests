@@ -2,7 +2,7 @@
 Feature: Annual bilateral Cabotage Page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
 
   @EXTERNAL @OLCS-27071 @bilateral_cabotage_only @olcs-28201

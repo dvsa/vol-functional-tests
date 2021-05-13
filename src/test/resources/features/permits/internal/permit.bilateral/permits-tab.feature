@@ -2,7 +2,7 @@ Feature: Internal permits tab
 
   Background:
     Given I am on the VOL self-serve site
-    And I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
 
   @INTERNAL
   Scenario: Table is formatted for annual bilateral

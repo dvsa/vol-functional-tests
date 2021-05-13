@@ -2,7 +2,7 @@
 Feature: ECMT Permit Application
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
 
   @END-TO-END @EXTERNAL @Test2

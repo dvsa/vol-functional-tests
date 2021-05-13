@@ -2,7 +2,7 @@
 Feature: Annual Ecmt Year Selection Page
 
   Background:
-    Given  I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I am on the Year Selection Page
 

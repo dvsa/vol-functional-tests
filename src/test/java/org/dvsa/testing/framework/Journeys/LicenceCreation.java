@@ -52,6 +52,11 @@ public class LicenceCreation {
         world.APIJourneySteps.grantLicenceAndPayFees();
     }
 
+    public void createNILicence(String operatorType, String licenceType) {
+        world.createApplication.setNiFlag("Y");
+        createLicence(operatorType, licenceType);
+    }
+
     public void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
         createSubmittedApplicationWithVehicles(operatorType, licenceType, vehicles);
         world.APIJourneySteps.grantLicenceAndPayFees();
