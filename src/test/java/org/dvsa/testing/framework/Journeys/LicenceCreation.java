@@ -58,9 +58,9 @@ public class LicenceCreation {
     }
 
     public void createLicenceWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
-        world.createApplication.setTrafficArea(trafficArea);
-        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
         createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
+        world.APIJourneySteps.submitApplication();
+        world.APIJourneySteps.grantLicenceAndPayFees();
     }
 
     public void createNILicence(String operatorType, String licenceType) {
