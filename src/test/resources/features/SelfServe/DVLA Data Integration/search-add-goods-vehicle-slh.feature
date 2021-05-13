@@ -4,7 +4,7 @@
 Feature: Search and add a vehicle
 
   Background:
-    Given I have a "goods" "standard_national" licence with "5" vehicle authorisation with no vehicles
+    Given I have "1" "goods" "standard_national" licences with "0" vehicles and a vehicleAuthority of "5"
 
   Scenario Outline: Check page contents
     When I navigate to manage vehicle page on a licence

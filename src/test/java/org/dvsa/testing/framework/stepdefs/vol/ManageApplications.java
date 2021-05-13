@@ -26,11 +26,11 @@ public class ManageApplications {
         this.world = world;
     }
 
-    @Given("I have a {string} application with {int} vehicle authorisation with no vehicles")
-    public void iHaveANewApplication(String operatorType, int numberOfVehicles) {
+    @Given("I have a {string} application with {int} vehicles and a vehicleAuthority of {int}")
+    public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, int numberOfVehicles, int authority) {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfVehiclesRequested(numberOfVehicles);
-        world.createApplication.setGenerateVRM(false);
+        world.createApplication.setOperatingCentreVehicleCap(authority);
         world.licenceCreation.createApplication(operatorType, LicenceType.STANDARD_INTERNATIONAL.name().toLowerCase(Locale.ROOT));
     }
 
@@ -115,8 +115,8 @@ public class ManageApplications {
         world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicles);
     }
 
-    @Given("I have {string} {string} {string} licences with {string} vehicles and a cap of {string}")
-    public void iHaveLicencesWithVehiclesAndCap(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
+    @Given("I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
+    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
@@ -144,10 +144,10 @@ public class ManageApplications {
             world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
         }
     }
-    @Given("I have a {string} {string} licence with {string} vehicle authorisation with no vehicles")
-    public void iHaveALicenceWithVehicleAuthorisationWithNoVehicles(String operatorType, String licenceType, String vehicleAuthority) {
-        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setGenerateVRM(false);
-        world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicleAuthority);
-    }
+//    @Given("I have a {string} {string} licence with {string} vehicle authorisation with no vehicles")
+//    public void iHaveALicenceWithVehicleAuthorisationWithNoVehicles(String operatorType, String licenceType, String vehicleAuthority) {
+//        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+//        world.createApplication.setGenerateVRM(false);
+//        world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicleAuthority);
+//    }
 }
