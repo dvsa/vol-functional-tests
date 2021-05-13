@@ -4,7 +4,7 @@ import activesupport.IllegalBrowserException;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -22,8 +22,7 @@ import java.net.MalformedURLException;
 public class CancelApplicationPageSteps extends BasePage implements En {
     public CancelApplicationPageSteps(OperatorStore operator, World world) {
         And("^I am on the cancel application page for Annual Multilateral$", () -> {
-            AnnualMultilateralJourney.INSTANCE
-                    .signin(operator, world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
             operator.getLicences().forEach((licence) -> {
                 AnnualMultilateralJourney.INSTANCE

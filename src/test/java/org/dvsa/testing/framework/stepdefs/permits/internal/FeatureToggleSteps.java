@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
+import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.lib.pages.enums.Action;
@@ -10,16 +11,20 @@ import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
 
 public class FeatureToggleSteps implements En {
-    public FeatureToggleSteps() {
+    private World world;
+
+    public FeatureToggleSteps(World world) {
         When("^I log in as an internal user with admin privileges$", () -> {
-            BaseInternalJourney.getInstance().signin(BaseInternalJourney.User.Admin);
-        });
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
         Then("^I should be able to see the feature toggle option$", () -> {
             NavigationBar.adminPanel(Action.OPEN);
             NavigationBar.verifyOptionInList(AdminOption.FEATURE_TOGGLE);
         });
         When("^I log in as an internal user with normal privileges$", () -> {
-            BaseInternalJourney.getInstance().signin(BaseInternalJourney.User.Normal);
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            // Need to add ways of creating users with normal privileges.
         });
         Then("^I should NOT be able to see the feature toggle option$", () -> {
             NavigationBar.adminPanel(Action.OPEN);

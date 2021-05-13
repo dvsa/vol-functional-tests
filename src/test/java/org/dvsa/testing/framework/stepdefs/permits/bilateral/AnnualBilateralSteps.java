@@ -7,7 +7,7 @@ import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
@@ -42,7 +42,6 @@ import java.util.stream.IntStream;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signInAndAcceptCookies;
 import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.untilOnPage;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.equalTo;
@@ -168,7 +167,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
         Given("^I have (a valid |applied for an )annual bilateral noway cabotage only permit$", (String notValid) -> {
 
-            signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
 
             int quantity = operatorStore.getLicences().size();
@@ -361,8 +360,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         Then("^I should be on the bilateral declaration page$", DeclarationPage::untilOnPage);
         When("^I save and continue on bilateral check your answers page$", CheckYourAnswersPage::saveAndContinue);
         And("^I have completed (an|all) annual bilateral application$", (String oneOrAll) -> {
-            signInAndAcceptCookies(world);
-            int quantity = oneOrAll.equalsIgnoreCase("all") ? operatorStore.getLicences().size() : 1;
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            int quantity = oneOrAll.equalsIgnoreCase("all") ? operatorStore.getLicences().size() : 1;
 
             IntStream.rangeClosed(1, quantity).forEach((i) -> {
                 HomePage.selectTab(Tab.PERMITS);
@@ -414,7 +412,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             });
         });
         And("^I continue my current annual bilateral permit$", () -> {
-            signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             get(OverviewPage.url(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber()));
         });
         Then("^the check your answers section should be complete$", () -> {

@@ -10,7 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -42,7 +42,6 @@ import java.util.stream.IntStream;
 
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signInAndAcceptCookies;
 import static org.dvsa.testing.lib.pages.external.HomePage.untilOnHomePage;
 
 public class ECMTPermitApplicationSteps extends BasePage implements En {
@@ -69,8 +68,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         Then("^I should be taken to the permits dashboard$", () -> Assert.assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
         When("^I view the permits tab$", () -> {
-            signInAndAcceptCookies(world);
-            changePassword(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
         });
         Then("^I should see all permit applications$", () -> {
@@ -111,8 +109,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             DeclarationPage.saveAndContinue();
         });
         And("^I have completed (an|all) ECMT application$", (String arg) -> {
-            signInAndAcceptCookies(world);
-            HomePage.selectTab(Tab.PERMITS);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
         });
@@ -152,8 +149,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             });
         });
         Then("^I have partial annual ECMT application$", () -> {
-            signInAndAcceptCookies(world);
-            IntStream.range(0, operatorStore.getLicences().size()).forEach((i) -> {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            IntStream.range(0, operatorStore.getLicences().size()).forEach((i) -> {
                /* try {
                     HomePage.selectTab(Tab.PERMITS);
                 } catch (MalformedURLException | IllegalBrowserException e) {
@@ -188,8 +184,8 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             });
         });
         When("^I have a partial completed ECMT application$", () -> {
-          signInAndAcceptCookies(world);
-          HomePage.selectTab(Tab.PERMITS);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePage.selectTab(Tab.PERMITS);
           HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
                     .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
@@ -203,23 +199,21 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         });
         Then ("^I am on the annual ECMT application overview page$", OverviewPage::overviewPageHeading);
         Then ("^I have an annual ECMT application in under consideration status$", () -> {
-            signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
         });
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
-            signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-            deleteCookies();
-            refreshPage();
-            BaseInternalJourney.getInstance().openLicence(
-                    licence.getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+
             IrhpPermitsApplyPage.licence();
             // TODO: Need to fix this. This selects a licence near on random and goes to internal and navigates to the
             //  wrong licence and can't find the permit half the time.
@@ -235,7 +229,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             deleteCookies();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
             waitForTextToBePresent("Sign in to your Vehicle Operator Licensing account                ");
-            LoginPage.signIn(world.get("username"), world.get("password"));
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);

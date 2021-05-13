@@ -12,12 +12,12 @@ import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.external.UserAPI;
 import apiCalls.eupaActions.internal.LicenceAPI;
 import cucumber.api.java8.En;
+import Injectors.World;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.VolAccountCreationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.VolLicenceApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
-import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -79,9 +79,8 @@ public class VolLicenceSteps implements En {
             TrafficArea trafficArea = TrafficArea.randomExcept(TrafficArea.NorthernIreland);
             VolLicenceApplicationJourney.getInstance().createLicence(getEnum(licenceType), trafficArea, operator, world);
 
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
 
             switch (state) {
                 case "curtailed":

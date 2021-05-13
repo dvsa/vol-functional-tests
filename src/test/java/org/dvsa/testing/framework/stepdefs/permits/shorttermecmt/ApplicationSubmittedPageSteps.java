@@ -9,7 +9,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
@@ -104,9 +104,8 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             refreshPage();
             waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
             IrhpPermitsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
@@ -123,7 +122,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             FeesDetailsPage.untilFeePaidNotification();
 
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
-            CommonSteps.signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
@@ -156,9 +155,8 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
             IrhpPermitsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
 
@@ -170,7 +168,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
                 FeesDetailsPage.waive(FeesDetailsPage.Decision.Approve);
             }
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
-            CommonSteps.signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);

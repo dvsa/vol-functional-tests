@@ -7,7 +7,7 @@ import cucumber.api.java8.StepdefBody;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -32,9 +32,9 @@ public class NumberOfPermitPageSteps implements En {
 
     public NumberOfPermitPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the number of permits required page$", () -> {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney
                     .INSTANCE
-                    .signin(operatorStore, world)
                     .beginApplication()
                     .permitType(PermitTypePage.PermitType.AnnualMultilateral, operatorStore)
                     .licencePage(operatorStore, world)
@@ -76,10 +76,8 @@ public class NumberOfPermitPageSteps implements En {
         Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswersPage::untilOnPage);
         When("^the case worker is viewing current fees$", () -> {
             LicenceStore licence = operatorStore.getCurrentLicence().get();
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
-
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
 
             licence.setFees(FeesPage.fees());

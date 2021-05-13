@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 
 import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
 import apiCalls.Utils.eupaBuilders.external.enums.LicenceType;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;

@@ -17,10 +17,8 @@ public class AnnualMultilateralInternalApplicationSteps extends BasePage impleme
         When("^I'm  viewing my saved application in internal and Granting Permit$", () -> {
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-
-            BaseInternalJourney.getInstance().openLicence(
-                    licence.getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsApplyPage.licence();
             String browser = String.valueOf(getURL());
             System.out.println(getURL());

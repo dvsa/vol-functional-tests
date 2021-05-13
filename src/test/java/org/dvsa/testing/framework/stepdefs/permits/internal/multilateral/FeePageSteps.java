@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.multilateral;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -27,9 +27,8 @@ public class FeePageSteps implements En {
 
     public FeePageSteps(OperatorStore operator, World world) {
         And("I am on the annual multilateral fee page", () -> {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
-                    .go(ApplicationType.EXTERNAL, "auth/login/")
-                    .signin(operator, world)
                     .beginApplication()
                     .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
                     .licencePage(operator, world)

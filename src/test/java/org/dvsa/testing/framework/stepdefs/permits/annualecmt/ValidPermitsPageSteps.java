@@ -5,10 +5,10 @@ import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
+import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.PermitApplication;
@@ -41,16 +41,14 @@ public class ValidPermitsPageSteps extends BasePage implements En {
     public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
         And("^have valid permits$", () -> {
             // TODO: replace steps to issue permits with an API call should devs bother documenting it
-            CommonSteps.signInAndAcceptCookies(world);
-            HomePage.selectTab(Tab.PERMITS);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
 
-            BaseInternalJourney.getInstance().openLicence(
-                    licence.getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsApplyPage.licence();
             String browser = String.valueOf(getURL());
             get(browser+"irhp-application/");
@@ -59,8 +57,8 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             IrhpPermitsApplyPage.continueButton();
             sleep(5000);
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
-            waitForTextToBePresent("Sign in to your Vehicle Operator Licensing account                ");
-            LoginPage.signIn(world.get("username"), world.get("password"));
+            waitForTitleToBePresent("Sign in to your Vehicle Operator Licensing account");
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);

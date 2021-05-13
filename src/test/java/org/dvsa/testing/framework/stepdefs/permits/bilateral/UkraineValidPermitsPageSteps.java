@@ -4,7 +4,7 @@ import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenByCountryModel
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenWindowModel;
 import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.ValidAnnualBilateralPermitsPage;

@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
-import activesupport.IllegalBrowserException;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
@@ -12,7 +11,6 @@ import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.ProportionOfInte
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 
-import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 public class AnnualMultilateralJourney extends BasePermitJourney implements PaymentJourney {
@@ -106,16 +104,6 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     @Override
     public AnnualMultilateralJourney licencePage(OperatorStore operator, World world) {
         return (AnnualMultilateralJourney) super.licencePage(operator, world);
-    }
-
-    @Override
-    public AnnualMultilateralJourney signin(World world) {
-        return (AnnualMultilateralJourney) super.signin(world);
-    }
-
-    @Override
-    public AnnualMultilateralJourney signin(OperatorStore operator, World world) {
-        return (AnnualMultilateralJourney) super.signin(operator, world);
     }
 
     @Override

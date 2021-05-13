@@ -4,7 +4,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
@@ -28,10 +28,8 @@ import java.util.concurrent.TimeUnit;
 public class HtmlSnapshotSteps extends BasePage implements En {
     public HtmlSnapshotSteps(OperatorStore operator, World world, LicenceStore licenceStore) {
         And("A case worker is reviewing my docs & attachments", () -> {
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
-
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.DocsAndAttachments);
         });
         Then("^An HTML snapshot for my annual multilateral permit is generated$", () -> {
@@ -43,9 +41,8 @@ public class HtmlSnapshotSteps extends BasePage implements En {
         });
 
         And("^A case worker is reviewing my annual multilateral snapshot$", () -> {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
-                    .go(ApplicationType.EXTERNAL, "auth/login/")
-                    .signin(operator, world)
                     .beginApplication()
                     .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
                     .licencePage(operator, world)
@@ -66,9 +63,8 @@ public class HtmlSnapshotSteps extends BasePage implements En {
                     TimeUnit.MINUTES
             );
 
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.DocsAndAttachments);
             DocsAndAttachmentsPage.selectSnapshot(operator.getCurrentLicence().get().getReferenceNumber(), PermitType.ANNUAL_MULTILATERAL);
         });

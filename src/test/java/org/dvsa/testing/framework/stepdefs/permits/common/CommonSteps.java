@@ -16,16 +16,14 @@ import apiCalls.eupaActions.internal.CaseWorkerAPI;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.VolAccountJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.ChangeYourPasswordPage;
@@ -102,9 +100,8 @@ public class CommonSteps extends BasePage implements En {
             LicenceModel licence = OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0);
             operator.setCurrentLicenceNumber(licence.getLicNo());
 
-            BaseInternalJourney.getInstance().openLicence(
-                    licence.getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsApplyPage.licence();
             String browser = String.valueOf(getURL());
             System.out.println(getURL());
@@ -118,7 +115,7 @@ public class CommonSteps extends BasePage implements En {
             refreshPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
 
-            LoginPage.signIn(world.get("username"), world.get("password"));
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
             String licence1= operator.getCurrentLicenceNumber().toString().substring(9,18);
@@ -145,7 +142,7 @@ public class CommonSteps extends BasePage implements En {
             world.put("origin", getURL()); // Used to test a scenario for licence page
         });
         And("^I am on the Annual ECMT licence selection page$", () -> {
-            signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
@@ -154,8 +151,7 @@ public class CommonSteps extends BasePage implements En {
 
         });
         When("^I login to self-serve on VOL$", () -> {
-            LoginPage.signIn(operator.getUsername(), operator.getPassword());
-
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             if (ChangeYourPasswordPage.onPage()) {
                 operator.setPassword(Str.randomWord(7).concat("1Pp"));
                 ChangeYourPasswordPage.update(operator.getPreviousPassword(), operator.getPassword());
@@ -184,12 +180,8 @@ public class CommonSteps extends BasePage implements En {
         When("^I save and return to overview$", BasePermitPage::overview);
         When("^I go back$", BasePermitPage::back);
         When("^I sign on as an external user$", () -> {
-            deleteCookies();
-            refreshPage();
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
-
-            VolAccountJourney.getInstance().signin(operator, world);
-        });
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
         And("^all fees have been waived$", () -> {
             LicenceDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
             while (FeesDetailsPage.hasFee()) {
@@ -201,14 +193,13 @@ public class CommonSteps extends BasePage implements En {
             }
         });
         And("^A case worker begins to process my fee payment$", () -> {
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             payOutstandingFees();
             FeesDetailsPage.pay();
         });
         And("^I am on the permits dashboard on external$", () -> {
-            signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
         });
         Then("^Information and Text appear correctly$", () -> {
@@ -296,7 +287,7 @@ public class CommonSteps extends BasePage implements En {
     }
 
     public static void clickToPermitTypePage(@NotNull World world) {
-        signInAndAcceptCookies(world);
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePage.selectTab(Tab.PERMITS);
         HomePage.applyForLicenceButton();
     }
@@ -314,35 +305,5 @@ public class CommonSteps extends BasePage implements En {
                 .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
         YearSelectionPage.EcmtValidityPeriod();
         EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-    }
-
-    public static void signInAndAcceptCookies(World world) {
-        signIn(world);
-
-        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
-        }
-    }
-
-    public static void signIn(World world) {
-        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        Config config = new Configuration(env.toString()).getConfig();
-        String newPassword = config.getString("internalNewPassword");
-
-        try {
-            LoginPage.signIn(world.get("username"), world.get("password"));
-        } catch (Exception e) {
-            //User is already registered
-            ChangeYourPasswordPage.update(world.get("password"), newPassword);
-        } finally {
-            if (isTextPresent("Current password", 60)) {
-                waitForTextToBePresent("Re-enter new password");
-                enterField(nameAttribute("input", "oldPassword"), world.get("password"));
-                enterField(nameAttribute("input", "newPassword"), newPassword);
-                enterField(nameAttribute("input", "confirmPassword"), newPassword);
-                click(nameAttribute("input", "submit"));
-                world.put("password", newPassword);
-            }
-        }
     }
 }

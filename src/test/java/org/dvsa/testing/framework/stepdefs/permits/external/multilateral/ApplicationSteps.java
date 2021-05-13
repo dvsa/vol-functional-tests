@@ -4,7 +4,7 @@ import activesupport.IllegalBrowserException;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -25,8 +25,7 @@ public class ApplicationSteps extends BasePage implements En {
     public ApplicationSteps(OperatorStore operator, World world) {
 
         And("^I have (an|all) ongoing Annual Multilateral Application$", (String arg) -> {
-            AnnualMultilateralJourney.INSTANCE
-                    .signin(operator, world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
             int quantity = arg.equals("all") ? world.get("licence.quantity") : 1;
 
@@ -59,8 +58,8 @@ public class ApplicationSteps extends BasePage implements En {
          When("^(?:I submit an annual multilateral permit on external$|" +
                 "I have an annual multilateral permit|" +
                 "I have a valid annual multilateral permit)", () -> {
+             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
-                    .signin(operator, world)
                     .beginApplication()
                     .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
                     .licencePage(operator, world)

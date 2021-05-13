@@ -4,7 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -16,13 +16,11 @@ import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.SubmissionPage;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signInAndAcceptCookies;
 
 public class SubmissionPageSteps extends DriverUtils implements En {
 
@@ -87,8 +85,7 @@ public class SubmissionPageSteps extends DriverUtils implements En {
         });
         And ("^I navigate to permit dashboard page", SubmissionPage::homeButton);
         And ("^I'm on the ECMT international submitted page for my active application", () -> {
-            BaseJourney.getInstance().go(ApplicationType.EXTERNAL);
-            signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             get(org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.url(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber()));
             EcmtInternationalRemovalJourney.getInstance()

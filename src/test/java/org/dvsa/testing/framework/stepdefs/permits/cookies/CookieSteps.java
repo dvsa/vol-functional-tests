@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.cookies;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.pages.Driver.DriverUtils;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -12,13 +12,13 @@ import org.dvsa.testing.lib.pages.external.CookiesPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Set;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signIn;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.dvsa.testing.lib.pages.external.CookiesPage.*;
@@ -30,10 +30,10 @@ public class CookieSteps extends DriverUtils implements En {
 
         WebDriver driver;
         And("^I logged into Self Serve site before accepting cookies$", () -> {
-            signIn(world);
+            world.globalMethods.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
         });
         And("^I am on the permit type page before accepting cookies$", () -> {
-            signIn(world);
+            world.globalMethods.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
         });

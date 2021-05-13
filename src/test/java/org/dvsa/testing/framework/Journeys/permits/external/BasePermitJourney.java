@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
-import activesupport.IllegalBrowserException;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.pages.enums.external.home.Tab;
@@ -12,11 +12,10 @@ import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 
-import java.net.MalformedURLException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BasePermitJourney extends VolAccountJourney {
+public class BasePermitJourney extends BaseJourney {
     protected static volatile BasePermitJourney instance = null;
 
     protected BasePermitJourney() {

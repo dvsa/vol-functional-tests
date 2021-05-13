@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.hooks;
 
+import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.system.Properties;
 import cucumber.api.Scenario;
@@ -20,19 +21,18 @@ import org.junit.jupiter.api.AfterAll;
 import java.net.MalformedURLException;
 
 public class Hooks extends BasePage {
+    public static World world
+
     @After
-    public void afterScenario(Scenario scenario) throws ElementDidNotDisappearWithinSpecifiedTimeException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, IllegalBrowserException {
+    public void afterScenario(Scenario scenario, World world) throws ElementDidNotDisappearWithinSpecifiedTimeException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, IllegalBrowserException {
         if (scenario.isFailed())
             Util.embedScreenShot(scenario);
 
         if (scenario.getSourceTagNames().contains("@TOGGLE-ECMT")) {
             // These enables ECMT before each scenario
-            deleteCookies();
-            refreshPage();
-            get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true), "auth/login/").toString());
-
-            BaseInternalJourney.getInstance().signin(BaseInternalJourney.User.Admin);
-
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+// Why are they signing into internal at the end of some journeys?
             NavigationBar.adminPanel(Action.OPEN);
             NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
 

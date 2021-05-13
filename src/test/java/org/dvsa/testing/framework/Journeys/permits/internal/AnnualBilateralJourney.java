@@ -75,21 +75,6 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
     }
 
     @Override
-    public AnnualBilateralJourney signin() {
-        return (AnnualBilateralJourney) super.signin();
-    }
-
-    @Override
-    public AnnualBilateralJourney signin(User user) {
-        return (AnnualBilateralJourney) super.signin(user);
-    }
-
-    @Override
-    public AnnualBilateralJourney signin(String username, String password) {
-        return (AnnualBilateralJourney) super.signin(username, password);
-    }
-
-    @Override
     public AnnualBilateralJourney openLicence(Integer licenceId) {
         return (AnnualBilateralJourney) super.openLicence(licenceId);
     }

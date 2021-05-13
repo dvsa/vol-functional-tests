@@ -11,14 +11,13 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.StatusUtils;
 import org.dvsa.testing.framework.Utils.common.TimeUtils;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.AdminOption;
 import org.dvsa.testing.lib.pages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
@@ -51,19 +50,20 @@ import static org.hamcrest.core.Is.is;
 
 public class AwaitingFeePermitSteps extends BasePage implements En {
 
+    private static World world;
+
     public AwaitingFeePermitSteps(OperatorStore operatorStore, World world) {
 
         And("^I am viewing an application that's awaiting fees$", () -> {
-            CommonSteps.signInAndAcceptCookies(world);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
 
-            BaseInternalJourney.getInstance().openLicence(
-                    licence.getLicenceId()
-            ).signin();
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsApplyPage.licence();
             String browser = String.valueOf(getURL());
             getDriver().get(browser+"irhp-application/");
@@ -76,7 +76,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
             sleep(3000);
             getDriver().get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
             waitForTextToBePresent("Sign in to your Vehicle Operator Licensing account                ");
-            LoginPage.signIn(world.get("username"), world.get("password"));
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             getDriver().navigate().refresh();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
@@ -122,11 +122,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
 
         S3.deleteObject(world.getId()); // cleanup
 
-
-        getDriver().manage().deleteAllCookies();
-        get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
-
-        LoginPage.signIn(world.get("username"), world.get("password"));
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePage.selectTab(Tab.PERMITS);
 
         // wait until there are some applications with awaiting fee
@@ -142,7 +138,8 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         Config config = new Configuration(env.toString()).getConfig();
 
-        LoginPage.signIn(BaseInternalJourney.User.Admin.getUsername(), config.getString("internalNewPassword"));
+        world.APIJourneySteps.createAdminUser();
+        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         org.dvsa.testing.lib.pages.internal.NavigationBar.administratorButton();
         org.dvsa.testing.lib.pages.internal.NavigationBar.administratorList(AdminOption.PERMITS);
 

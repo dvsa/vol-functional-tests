@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -19,8 +19,8 @@ public class DeclarationPageSteps implements En {
             DeclarationPage.declare(true);
         });
         And("I am on the annual multilateral declaration page", () -> {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
-                    .signin(operator, world)
                     .beginApplication()
                     .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
                     .licencePage(operator, world)

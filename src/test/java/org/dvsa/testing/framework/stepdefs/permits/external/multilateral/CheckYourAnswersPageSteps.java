@@ -5,7 +5,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 public class CheckYourAnswersPageSteps implements En {
     public CheckYourAnswersPageSteps(OperatorStore operatorStore, World world) {
         Given("I am on the annual multilateral check your answers page", () -> {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
-                    .signin(operatorStore, world)
                     .beginApplication().permitType(PermitTypePage.PermitType.AnnualMultilateral, operatorStore)
                     .licencePage(operatorStore, world).overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operatorStore)
                     .numberOfPermitsPage(operatorStore);

@@ -1,13 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
-import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.S3;
 import activesupport.string.Str;
-import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.VolAccountJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
@@ -16,7 +13,6 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.ApplicationDetailsPage;
 import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
@@ -28,12 +24,9 @@ import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import javax.mail.MessagingException;
-import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -44,7 +37,9 @@ import java.util.stream.IntStream;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.AwaitingFeePermitSteps.triggerPermitIssuing;
 
 public class IRHPPermitsPageSteps extends BasePage implements En {
+    private static World world;
     LocalDate ld;
+
     public IRHPPermitsPageSteps(OperatorStore operator, World world) {
         When("^I am viewing a licences IRHP section$", () -> {
             refreshPage();
@@ -64,8 +59,8 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             });
         });
         And("^I am viewing a licence with an issued ECMT permit on internal$", () -> {
-            VolAccountJourney.getInstance().signin(operator, world);
-
+            world.APIJourneySteps.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             // Apply for ECMT applications
             IntStream.rangeClosed(1, world.get("licence.quantity")).forEach((i) -> {
                 EcmtApplicationJourney.getInstance().beginApplication();
@@ -142,9 +137,8 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
     }
 
     public static void viewLicenceOnInternal(String licenceNumber) {
-        deleteCookies();
-        get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true)).toString());
-        LoginPage.signIn("usr291", "password");
+        world.APIJourneySteps.createAdminUser();
+        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
 
         // Keep searching until licence displays on first page of results
         int maxTriesCount = 30;

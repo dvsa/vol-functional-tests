@@ -32,21 +32,6 @@ public class BaseInternalJourney extends BaseJourney {
     EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     Config config = new Configuration(env.toString()).getConfig();
 
-    public BaseInternalJourney signin() {
-        return signin(User.Admin.getUsername(), config.getString("internalNewPassword"));
-    }
-
-    public BaseInternalJourney signin(User user) {
-        return signin(user.getUsername(), config.getString("internalNewPassword"));
-    }
-
-    public BaseInternalJourney signin(String username, String password) {
-        deleteCookies();
-        refreshPage();
-        LoginPage.signIn(username, password);
-        return this;
-    }
-
     public BaseInternalJourney openLicence(Integer licenceId) {
         return openLicence(String.valueOf(licenceId));
     }
