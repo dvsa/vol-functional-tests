@@ -2,7 +2,7 @@
 Feature: Short term ECMT APSG with sectors under consideration page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And  I am on Short term under consideration page
 

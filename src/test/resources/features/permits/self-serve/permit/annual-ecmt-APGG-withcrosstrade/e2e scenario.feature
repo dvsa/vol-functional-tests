@@ -3,8 +3,8 @@ Feature: Annual ECMT APGG Euro5|Euro6 with Cross trade(3 options)application flo
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And   I am on the VOL self-serve site
-    And   I am on the application overview page
+    And I am on the VOL self-serve site
+    And I am on the application overview page
 
   @EXTERNAL @annualECMTAPGG @OLCS-27819 @Deprecated
   Scenario: Verify ECMT Annual APGG application flow

@@ -2,7 +2,7 @@
 Feature: Short term APSG with sectors end to end happy path journey
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I select Short term ecmt permit on the select permit page
     And I select year on the select year page

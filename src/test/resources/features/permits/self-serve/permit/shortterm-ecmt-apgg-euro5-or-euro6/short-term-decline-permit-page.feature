@@ -2,7 +2,7 @@
 Feature: Short term APGG decline page permit page
 
   Background:
-    Given I have a valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I have a short term application in awaiting fee status
 

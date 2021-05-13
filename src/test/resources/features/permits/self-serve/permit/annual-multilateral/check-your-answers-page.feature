@@ -3,7 +3,7 @@
 Feature: Check your answers page
 
   Background:
-      Given I have valid Goods standard_national VOL licence
+    Given I have a "goods" "standard_international" licence
       And I am on the VOL self-serve site
       And I am on the annual multilateral check your answers page
 

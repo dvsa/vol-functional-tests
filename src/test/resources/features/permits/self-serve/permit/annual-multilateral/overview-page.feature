@@ -3,7 +3,7 @@
 Feature: Annual multilateral permit overview page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I have began applying for an Annual Multilateral Permit
     And I'm on the annual multilateral overview page

@@ -2,7 +2,7 @@
 Feature: Short term Ecmt APSG with sectors overview page feature
 
   Background:
-    Given I have valid Goods standard_national VOL licence
+    Given I have a "goods" "standard_national" licence
     And I am on the VOL self-serve site
     And I am on short term ECMT overview Page
 
