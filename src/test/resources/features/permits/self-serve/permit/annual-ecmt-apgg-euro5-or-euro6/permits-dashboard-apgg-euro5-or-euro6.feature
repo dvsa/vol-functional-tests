@@ -29,16 +29,6 @@ Feature: Self-serve dashboard
     When I view the application from ongoing permit application table
     Then the user is navigated to awaiting fee page
 
-  @EXTERNAL @OLCS-21112 @WIP
-  Scenario: ECMT permit applications are sorted in by permit id descending order
-    And I have completed an ECMT application
-   Then ongoing permits should be sorted by permit ID in descending order
-
-  @EXTERNAL @OLCS-21112 @ECMT @WIP
-  Scenario: Only displays ECMT permits with the correct status
-    And I have completed an ECMT application
-    Then only ECMT applications with the right status are displayed
-
   @OLCS-23131 @EXTERNAL @OLCS-21112 @Deprecated
   Scenario: Issued annual bilateral displayed in reference descending order
     And I have completed all annual bilateral application

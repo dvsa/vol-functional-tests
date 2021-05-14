@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+import cucumber.api.java.hu.Ha;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
@@ -19,6 +20,8 @@ import org.hamcrest.core.StringContains;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -27,6 +30,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 
 public class CheckYourAnswersPageSteps implements En {
+
+    public static Map<String, PermitUsage> permitUsage = new HashMap();
 
     public CheckYourAnswersPageSteps(OperatorStore operatorStore, World world) {
 
@@ -40,7 +45,7 @@ public class CheckYourAnswersPageSteps implements En {
             OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
-            world.put("permit.usage", licence.getEcmt().getPermitusage());
+            CheckYourAnswersPageSteps.permitUsage.put("permit.usage", licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
             BasePermitPage.saveAndContinue();
@@ -74,7 +79,7 @@ CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", Se
             String permitType = CheckYourAnswersPage.getAnswer(PermitType);
             Assert.assertEquals("Short-term ECMT",permitType );
             String actualPermitUsage = CheckYourAnswersPage.getAnswer(PermitsUsage);
-            String s = toShortTermPermitUsage(world.get("permit.usage"));
+            String s = toShortTermPermitUsage(CheckYourAnswersPageSteps.permitUsage.get("permit.usage"));
             Assert.assertEquals(s,actualPermitUsage);
         });
         Then("^I am navigated to the short term declaration page$", DeclarationPage::declarationPageLoad);

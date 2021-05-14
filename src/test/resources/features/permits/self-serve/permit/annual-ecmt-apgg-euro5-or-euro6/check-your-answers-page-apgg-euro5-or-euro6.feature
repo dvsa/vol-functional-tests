@@ -16,7 +16,7 @@ Feature:Check your answers page
   @EXTERNAL @OLCS-21128 @ECMT @OLCS-24973 @Test2 @olcs-27581
   Scenario Outline: Able to change sections
     When I change the <section>
-    Then I should be taken to the <section> page
+    Then I should be taken to the <section> page permits
 
     # Note: This values need to match the literal values within the ApplicationInfo enum
     Examples:

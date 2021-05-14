@@ -1,17 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
-import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -24,8 +21,6 @@ import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SubmittedPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;

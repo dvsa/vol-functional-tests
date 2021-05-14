@@ -21,7 +21,7 @@ import org.junit.jupiter.api.AfterAll;
 import java.net.MalformedURLException;
 
 public class Hooks extends BasePage {
-    public static World world
+    public static World world;
 
     @After
     public void afterScenario(Scenario scenario, World world) throws ElementDidNotDisappearWithinSpecifiedTimeException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, IllegalBrowserException {

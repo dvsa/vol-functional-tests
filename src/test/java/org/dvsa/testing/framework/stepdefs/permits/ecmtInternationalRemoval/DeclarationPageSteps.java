@@ -1,16 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
-import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
@@ -19,8 +16,6 @@ import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Decla
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.PermitFeePage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;

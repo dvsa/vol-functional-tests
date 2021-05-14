@@ -46,7 +46,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
 
         VehicleStandardPage.isEuro6Compliant(euro6);
         VehicleStandardPage.saveAndContinue();
-        world.put("euro6", euro6);
         licenceStore.getEcmt().setEuro6(euro6);
         return this;
     }
@@ -56,7 +55,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
 
         CabotagePage.wontCarryCabotage(cabotage);
         CabotagePage.saveAndContinue();
-        world.put("cabotage", cabotage);
         licenceStore.getEcmt().setCabotage(cabotage);
         return this;
     }
@@ -65,7 +63,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         boolean certificatesRequired = true;
         CertificatesRequiredPage.certificatesRequired(certificatesRequired);
         CertificatesRequiredPage.saveAndContinue();
-        world.put("certificates.required",certificatesRequired);
         licenceStore.getEcmt().setCertificatesRequired(certificatesRequired);
         return this;
     }
@@ -75,7 +72,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
 
         RestrictedCountriesPage.deliverToRestrictedCountry(restrictedCountries);
         RestrictedCountriesPage.saveAndContinue();
-        world.put("restricted.countries", restrictedCountries);
         licenceStore.getEcmt().setRestrictedCountries(restrictedCountries);
 
         return this;
@@ -109,7 +105,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
             NumberOfTripsPage.saveAndContinue();
         }
 
-        world.put("number.of.trips", numberOfTrips);
         licenceStore.getEcmt().setNumberOfTrips(numberOfTrips);
 
         return this;
@@ -124,7 +119,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
             PercentageOfInternationalJourneysPage.saveAndContinue();
         }
 
-        world.put("journey.proportion", journeyProportion);
         licenceStore.getEcmt().setInternationalBusiness(journeyProportion);
 
         return this;
@@ -136,7 +130,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         SectorPage.sector(sector);
       //  SectorPage.saveAndContinue();
 
-        world.put("sector", sector);
         licenceStore.getEcmt().setSector(sector);
 
         return this;
@@ -216,15 +209,12 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
 
     public EcmtApplicationJourney submitApplication(LicenceStore licenceStore, World world) {
         licenceStore.setReferenceNumber(ApplicationSubmitPage.getReferenceNumber().substring(22,40));
-        world.put("referenceNumber", licenceStore.getReferenceNumber());
         ApplicationSubmitPage.finish();
 
         LocalDateTime date = LocalDateTime.now();
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
 
         licenceStore.getEcmt().setSubmitDate(date);
-        world.put("application.date", date);
-        world.put("application.date.formatted", dateFormatted);
 
         return this;
     }

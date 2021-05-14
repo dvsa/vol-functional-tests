@@ -5,6 +5,7 @@ import activesupport.string.Str;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
@@ -47,7 +48,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
 
         VehicleStandardPage.isEuro6Compliant(euro6);
         VehicleStandardPage.saveAndContinue();
-        world.put("euro6", euro6);
         licenceStore.getEcmt().setEuro6(euro6);
         return this;
     }
@@ -57,7 +57,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
 
         CabotagePage.wontCarryCabotage(cabotage);
         CabotagePage.saveAndContinue();
-        world.put("cabotage", cabotage);
         licenceStore.getEcmt().setCabotage(cabotage);
         return this;
     }
@@ -73,7 +72,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
 
         RestrictedCountriesPage.deliverToRestrictedCountry(restrictedCountries);
         RestrictedCountriesPage.saveAndContinue();
-        world.put("restricted.countries", restrictedCountries);
         licenceStore.getEcmt().setRestrictedCountries(restrictedCountries);
 
         return this;
@@ -86,7 +84,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
 
         NumberOfPermitsPage.quantity(numOfPermits);
         NumberOfPermitsPage.saveAndContinue();
-        world.put("numberOfAuthorisedVehicles", numOfPermits);
+        VolLicenceSteps.numberOfAuthorisedVehicles.put("numberOfAuthorisedVehicles", numOfPermits);
         licenceStore.getEcmt().setNumberOfPermits(numOfPermits);
 
         return this;
@@ -103,7 +101,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
             NumberOfTripsPage.saveAndContinue();
         }
 
-        world.put("number.of.trips", numberOfTrips);
         licenceStore.getEcmt().setNumberOfTrips(numberOfTrips);
 
         return this;
@@ -118,7 +115,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
             PercentageOfInternationalJourneysPage.saveAndContinue();
         }
 
-        world.put("journey.proportion", journeyProportion);
         licenceStore.getEcmt().setInternationalBusiness(journeyProportion);
 
         return this;
@@ -130,7 +126,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         SectorPage.sector(sector);
         SectorPage.saveAndContinue();
 
-        world.put("sector", sector);
         licenceStore.getEcmt().setSector(sector);
 
         return this;
@@ -211,15 +206,12 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
 
     public ECMTShortTermJourney submitApplication(LicenceStore licenceStore, World world) {
         licenceStore.setReferenceNumber(ApplicationSubmitPage.getReferenceNumber());
-        world.put("referenceNumber", licenceStore.getReferenceNumber());
         ApplicationSubmitPage.finish();
 
         LocalDateTime date = LocalDateTime.now();
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
 
         licenceStore.getEcmt().setSubmitDate(date);
-        world.put("application.date", date);
-        world.put("application.date.formatted", dateFormatted);
 
         return this;
     }

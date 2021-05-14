@@ -1,16 +1,12 @@
 package org.dvsa.testing.framework.Journeys.permits.internal;
 
-import activesupport.IllegalBrowserException;
 import activesupport.config.Configuration;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;
 import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-
-import java.net.MalformedURLException;
 
 public class BaseInternalJourney extends BaseJourney {
 

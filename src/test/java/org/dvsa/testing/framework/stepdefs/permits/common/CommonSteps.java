@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.permits.common;
 
-import activesupport.config.Configuration;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
@@ -13,14 +12,13 @@ import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.internal.CaseWorkerAPI;
-import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -36,7 +34,6 @@ import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +43,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
@@ -54,6 +52,8 @@ import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.eur
 import static org.hamcrest.CoreMatchers.*;
 
 public class CommonSteps extends BasePage implements En {
+
+    public static Map<String, java.net.URL> origin;
 
     public CommonSteps(OperatorStore operator, World world) {
         Given("^I am on the VOL self-serve site$", () -> {
@@ -139,7 +139,7 @@ public class CommonSteps extends BasePage implements En {
         And("^I am on the (Annual ECMT|Annual Bilateral \\(EU and EEA\\)|Annual Multilateral \\(EU and EEA\\)) licence page$", (String type) -> {
             clickToPermitTypePage(world);
             EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.toEnum(type), operator);
-            world.put("origin", getURL()); // Used to test a scenario for licence page
+            CommonSteps.origin.put("origin", getURL()); // Used to test a scenario for licence page
         });
         And("^I am on the Annual ECMT licence selection page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -158,18 +158,18 @@ public class CommonSteps extends BasePage implements En {
             }
         });
         Then("^the user is navigated to the next page$", () -> {
-            Assert.assertNotEquals(world.get("origin"), getURL().toString());
+            Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());
         });
         Then("^I will get an error message on the licence page$", () -> {
             Assert.assertTrue(LicencePage.hasErrorMessagePresent());
         });
         When("^I use the application back button$", BasePermitPage::back);
         Then("^I should be taken to the next section$", () -> {
-            java.net.URL url = world.get("origin");
+            java.net.URL url = CommonSteps.origin.get("origin");
             Assert.assertThat(getURL(), is(not(equalTo(url))));
         });
         Then("^I should not be taken to the next section$", () -> {
-            java.net.URL url = world.get("origin");
+            java.net.URL url = CommonSteps.origin.get("origin");
             Assert.assertTrue("The current URL path does not match the expected one", isPath(url.getPath()));
         });
         Then("^I should get an error message$", () -> {
@@ -210,7 +210,7 @@ public class CommonSteps extends BasePage implements En {
 
     public static void payAndGrantApplication(@NotNull World world) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        Integer version = world.get("version");
+        Integer version = VolLicenceSteps.version.get("version");
 
         // SETUP: CaseWorker#overview
         TrackingModel tracking = new TrackingModel()
@@ -235,8 +235,8 @@ public class CommonSteps extends BasePage implements En {
                 .withVehiclesPsvStatus(Status.Unknown)
                 .withVersion(1);
 
-        String applicationId = world.get("applicationId");
-        TrafficArea trafficArea = world.get("trafficArea");
+        String applicationId = VolLicenceSteps.applicationId.get("applicationId");
+        TrafficArea trafficArea = VolLicenceSteps.trafficArea.get("trafficArea");
         OverviewModel overview = new OverviewModel()
                 .withApplicationId(applicationId)
                 .withLeadTcArea(trafficArea)
@@ -246,7 +246,7 @@ public class CommonSteps extends BasePage implements En {
 
         // Service Calls
         CaseWorkerAPI.overview(overview);
-        ApplicationFeesModel applicationFees = ApplicationAPI.outstandingFees(world.get("applicationId"));
+        ApplicationFeesModel applicationFees = ApplicationAPI.outstandingFees(VolLicenceSteps.applicationId.get("applicationId"));
         BigDecimal totalOutstandingFee = applicationFees.getTotalGrossAmount();
 
         List<Integer> feeIds = applicationFees.getOutstandingFeeIds();
@@ -255,12 +255,12 @@ public class CommonSteps extends BasePage implements En {
         // SETUP: CaseWorker#payOutstandingFee
         FeesModel fees = new FeesModel()
                 .withFeeIds(feeIds)
-                .withOrganisationId(world.get("organisationId"))
-                .withApplicationId(world.get("applicationId"))
+                .withOrganisationId(VolLicenceSteps.organisationId.get("organisationId"))
+                .withApplicationId(VolLicenceSteps.applicationId.get("applicationId"))
                 .withPaymentMethod(PaymentMethod.Cash)
                 .withReceived(totalOutstandingFee)
                 .withReceiptDate(LocalDateTime.now().format(dateFormatter))
-                .withPayer(world.get("person.firstName"))
+                .withPayer(VolLicenceSteps.personFirstName.get("person.firstName"))
                 .withSlipNo(Str.randomNumbers(6));
 
         // Service Calls
@@ -268,7 +268,7 @@ public class CommonSteps extends BasePage implements En {
 
         // SETUP: CaseWorker#grantApplication
         GrantApplicationModel grantApplication = new GrantApplicationModel()
-                .withId(world.get("applicationId"))
+                .withId(VolLicenceSteps.applicationId.get("applicationId"))
                 .withDuePeriod("9")
                 .withAuthority("grant_authority_dl")
                 .withCaseworkerNotes(Str.randomWord(50, 100));

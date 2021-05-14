@@ -27,11 +27,6 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
                     TimeUnit.MINUTES
             );
         });
-        When("^I view the annual ECMT Permits documentation on internal$", () -> {
-            IrhpPermitsApplyPage.viewApplication();
-            BasePage.waitAndClick("//a[@id='menu-licence_irhp_applications-document']",SelectorType.XPATH);
-            BasePage.waitAndClick("//tbody/tr/td/a",SelectorType.XPATH);
-        });
         Then("^the annual ECMT Permits HTML document should have the correct information$", () -> {
             ArrayList<String> tab = new ArrayList<String> (getDriver().getWindowHandles());
             getDriver().switchTo().window(tab.get(tab.size() - 1));

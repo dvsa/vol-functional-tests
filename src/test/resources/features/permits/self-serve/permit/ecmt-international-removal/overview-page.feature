@@ -22,11 +22,6 @@ Feature: ECMT International Removal  overview page
   Scenario: Page Heading is displayed correctly
     Then the page heading on ECMT International Removal is correct
 
-  #AC05 - GUIDANCE LINK NO LONGER DISPLAYED ON OVERVIEW PAGE
-  @EXTERNAL @OLCS-24817  @olcs-27581 @Deprecated
-  #Scenario:  Has 'guidance on permits' link
-    #Then there's a guidance link for permits
-
   #AC09
   @EXTERNAL @OLCS-24817
   Scenario: Section links are disabled if previous steps have not been completed

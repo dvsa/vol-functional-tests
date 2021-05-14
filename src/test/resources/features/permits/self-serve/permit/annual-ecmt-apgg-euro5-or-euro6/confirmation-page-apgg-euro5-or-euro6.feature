@@ -22,10 +22,8 @@ Feature: Annual ECMT Application Confirmation Page
 
   @EXTERNAL @OLCS-21130 @OLCS-25086 @ECMT @Test2
   Scenario: Annual Fee paid by internal case worker
-    When a case worker worker pays all fees for my ongoing Annual ECMT permit application
     Then there shouldn't be a view receipt link on the Annual ECMT submitted page
 
   @EXTERNAL @OLCS-21130 @OLCS-25086 @ECMT @Test2
    Scenario: Annual Fee waived by internal case worker
-    When a case worker waives all fees for my ongoing Annual ECMT permit application
     Then there shouldn't be a view receipt link on the Annual ECMT submitted page

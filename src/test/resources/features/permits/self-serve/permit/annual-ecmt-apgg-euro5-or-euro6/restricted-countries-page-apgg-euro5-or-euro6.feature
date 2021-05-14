@@ -17,7 +17,6 @@ Feature: Restricted countries page
     And the page heading on Annual ECMT countries with limited countries page is Shown Correctly
     And the Advisory text on Annual ECMT countries with limited countries page is Shown Correctly
     And I do plan on delivering to a restricted country
-    And don't specify which
     And I save and continue
     Then  I should get an error message
     And  I save and return to overview

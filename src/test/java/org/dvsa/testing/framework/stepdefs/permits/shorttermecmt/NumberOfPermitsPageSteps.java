@@ -32,7 +32,6 @@ public class NumberOfPermitsPageSteps implements En {
             OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
-            world.put("permit.usage", licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
             BasePermitPage.saveAndContinue();

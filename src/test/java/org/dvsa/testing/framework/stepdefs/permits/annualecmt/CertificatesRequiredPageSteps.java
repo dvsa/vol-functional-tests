@@ -30,7 +30,6 @@ public class CertificatesRequiredPageSteps implements En {
 
     });
         And("^The main page heading is as per the AC$",() -> CertificatesRequiredPage.hasTheText());
-        //And("^The guidance notes link text is correct and links to the correct url$", () -> CertificatesRequiredPage.hasGuidanceNotesLinkPresent()); --- guidance notes link removed from app
         And("^Correct advisory text is shown below the page heading$", () -> CertificatesRequiredPage.hasAdvisoryMessagesEcmt());
         And("^The advisory text contains bold characters at the right places$", () -> CertificatesRequiredPage.isfontbold());
         And("^There is one checkbox with right label and not checked by default$", () -> CertificatesRequiredPage.checkBoxNotSelected());
@@ -42,20 +41,5 @@ public class CertificatesRequiredPageSteps implements En {
         And("^I select the checkbox and click Save and Continue button$", () -> CertificatesRequiredPage.checkBoxClickedSaveContinue());
         Then("^I am taken to the Restricted countries page$", () -> RestrictedCountriesPage.hasPageHeading());
 
-    }
-    public static void appOverviewPage() {
-        HomePage.selectTab(Tab.PERMITS);
-        HomePage.applyForLicenceButton();
-        PermitTypePage.type(PermitTypePage.PermitType.EcmtAnnual);
-        PermitTypePage.continueButton();
-        YearSelectionPage.EcmtValidityPeriod();
-        LicencePage.randomLicnece();
-        LicencePage.saveAndContinue();
-        OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
-        AnnualEcmtPermitUsagePage.annualEcmtPermitUsage(AnnualEcmtPermitUsage.random());
-        BasePermitPage.saveAndContinue();
-        CabotagePage.wontCarryCabotage(true);
-        BasePermitPage.saveAndContinue();
-        CertificatesRequiredPage.untilOnPage();
     }
 }

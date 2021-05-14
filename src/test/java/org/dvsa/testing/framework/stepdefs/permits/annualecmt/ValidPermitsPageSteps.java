@@ -8,14 +8,11 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -28,7 +25,9 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
@@ -37,6 +36,8 @@ import static java.lang.Thread.sleep;
 import static org.hamcrest.CoreMatchers.is;
 
 public class ValidPermitsPageSteps extends BasePage implements En {
+
+    public static Map<String, PermitApplication> userPermitsSelected = new HashMap();
 
     public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
         And("^have valid permits$", () -> {
@@ -105,25 +106,6 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             String title = BasePage.getElementValueByText("h1.govuk-heading-l",SelectorType.CSS).trim();
             Assert.assertEquals("Annual ECMT", title);
         });
-
-        When("^I select the permit number$", () -> {
-            PermitApplication validPermit = HomePage.PermitsTab.permitsWithStatus(HomePage.PermitsTab.Table.issued, PermitStatus.VALID).get(0);
-            HomePage.PermitsTab.select(validPermit.getReferenceNumber());
-            world.put("user.permit.selected", validPermit);
-        });
-        Then("^all the displayed information should be correct$", () -> {
-            PermitApplication application = world.get("user.permit.selected");
-
-            Assert.assertThat(Permits.permitStatus(), is(application.getStatus()));
-
-            // Checks the number of permits matches the number of permits that were displayed on the home page.
-            Assert.assertThat(Permits.numberOfPermits(), is(application.getNoOfPermits()));
-            // Checks the number of permits in the permits page matches the number of permits in the table of permits.
-            Assert.assertThat(Permits.numberOfPermits(), is(Permits.listPermits().size()));
-        });
-        Then("^I can see the Annual Bilateral Permit applications above ECMT Annual Permit applications$", () -> {
-
-        });
         And ("^I select returns to permit dashboard hyperlink", ValidAnnualBilateralPermitsPage::permitDashboard);
         Then ("^the licence number is displayed above the page heading",  () ->{
             String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
@@ -150,10 +132,6 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         });
     }
 
-    public static void untilNonPermitStatusMatch(PermitStatus status) {
-        untilPermitStatusIsNot(HomePage.PermitsTab::nonePermitWithStatus, status);
-    }
-
     public static void untilAnyPermitStatusMatch(PermitStatus status) {
         untilPermitStatusIsNot(HomePage.PermitsTab::anyPermitWithStatus, status );
     }
@@ -178,10 +156,4 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         if (maxTries <= 0 && !p.test(status))
             throw new RuntimeException("Permit status did not meet desired criterion state");
     }
-
-    private static PermitApplication selectRandomPermit(List<PermitApplication> ongoingPermits) {
-        int index = Int.random(0, ongoingPermits.size() - 1);
-        return ongoingPermits.get(index);
-    }
-
 }

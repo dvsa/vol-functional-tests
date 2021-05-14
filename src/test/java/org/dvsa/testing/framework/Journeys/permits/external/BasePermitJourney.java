@@ -132,7 +132,6 @@ public class BasePermitJourney extends BaseJourney {
         }
 
         operator.setCurrentLicenceNumber(licenceNumber);
-        world.put("licence", selectedLicence);
 
         LicencePage.saveAndContinue();
 

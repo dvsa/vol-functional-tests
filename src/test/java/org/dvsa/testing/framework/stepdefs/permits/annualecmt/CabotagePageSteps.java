@@ -8,7 +8,6 @@ import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
-import org.junit.Assert;
 
 import static org.dvsa.testing.lib.pages.BasePage.getURL;
 
@@ -25,9 +24,8 @@ public class CabotagePageSteps implements En {
             CabotagePage.checkboxSelection();
         });
         Given("^I have not declared not to undertake cabotage$", () -> {
-            world.put("origin", getURL());
+            CommonSteps.origin.put("origin", getURL());
         });
-        Then("^I should see the validation error message for the cabotage page$", () -> Assert.assertTrue(CabotagePage.hasErrorMessagePresent()));
     }
 
 }

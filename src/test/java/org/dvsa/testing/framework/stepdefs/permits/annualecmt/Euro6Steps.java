@@ -31,21 +31,11 @@ public class Euro6Steps implements En {
             BasePermitPage.saveAndContinue();
         });
 
-        When("^I proceed with(out)? declaring euro 6 standards compliance$", (String compliant) -> {
-            boolean isCompliant = compliant == null;
-            VehicleStandardPage.isEuro6Compliant(isCompliant);
-            BasePermitPage.saveAndContinue();
-        });
-
         When("^I select the back hyperlink$", BasePermitPage::back);
 
         Then("^should see the overview page without updating any changes$",() -> {
             untilUrlPathIs(OverviewPage.RESOURCE, TimeUnit.SECONDS, Duration.MEDIUM);
             Assert.assertTrue(OverviewPage.checkStatus(PermitSection.EuroEmissionsStandards, PermitStatus.NOT_STARTED_YET));
-        });
-
-        Given("^I select the checkbox declaration$", () -> {
-            VehicleStandardPage.isEuro6Compliant(true);
         });
 
         Given("^I select the emission checkbox$", () -> {
@@ -58,12 +48,8 @@ public class Euro6Steps implements En {
         });
 
         Then("^I should be able to navigate to the next page$", () -> {
-            Assert.assertNotEquals(world.get("origin"), getURL().toString());
+            Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());
         });
-
-        When("^I try to  proceed without declaring euro 6 standards compliance$",
-                VehicleStandardPage::saveAndContinue
-        );
 
         Then("^should see the error message$", () -> {
             boolean hasError = VehicleStandardPage.hasErrorMessagePresent();

@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal.multilateral;
 
+import Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
@@ -12,6 +13,9 @@ import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 
 
 public class AnnualMultilateralInternalApplicationSteps extends BasePage implements En {
+
+    private World world;
+
     public AnnualMultilateralInternalApplicationSteps(OperatorStore operatorStore) {
 
         When("^I'm  viewing my saved application in internal and Granting Permit$", () -> {

@@ -89,13 +89,6 @@ public class PermitFeePageSteps implements En {
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£"+expectedTotal);
         });
         Then("^my fee should be tiered as expected$", () -> {
-          /*  LicenceModel licenceModel = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicence(operatorStore.getCurrentLicenceNumber().get())
-                    .orElseThrow(IllegalStateException::new);
-            TypesModel types = AvailableTypesAPI.types();
-            TypeModel permitType = types.permit(PermitTypePage.PermitType.AnnualMultilateral.toString());
-            List<WindowModel> windows = OpenWindowsAPI.openWindows(permitType).getWindows();
-            PermitApplicationModel activeApplication = ApplicationAPI.active(String.valueOf(licenceModel.getLicenceId()), permitType);
-            */
             List<PermitFeePage.Fee> feeBreakdowns = PermitFeePage.Fees();
 
             AnnualMultilateralStore permit = operatorStore.getCurrentLicence().get().getLatestAnnualMultilateral().get();

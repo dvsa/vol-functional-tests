@@ -38,19 +38,8 @@ public class FeePageSteps implements En {
         When("^I save and return to overview from fee page$", BaseFeeOverviewPage::returnToOverview);
         Then("^I expect the reference number to match$", () -> {
             String actualReference = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.ApplicationReference);
-            String expectedReference = world.get("application.reference");
+            String expectedReference = ECMTPermitApplicationSteps.applicationReference.get("application.reference");
             assertThat(actualReference, is(expectedReference));
-        });
-        Then("^the permit type should be as expected$", () -> {
-            String expectedPermitTypeKey = world.get("Permit.type");
-            String actualPermitTypeKey = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitType);
-            Assert.assertEquals(expectedPermitTypeKey,actualPermitTypeKey);
-        });
-        Then("^the permit year should be as expected$", () -> {
-           String actualYear = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitYear);
-           String expectedYear= world.get("permit year");
-           assertThat(actualYear,is(expectedYear));
-
         });
         Then("^the number of permits on the fee overview should match$", () -> {
             String expectedNumberOfPermits = String.valueOf(operatorStore.getLatestLicence().get().getEcmt().getNumberOfPermits());

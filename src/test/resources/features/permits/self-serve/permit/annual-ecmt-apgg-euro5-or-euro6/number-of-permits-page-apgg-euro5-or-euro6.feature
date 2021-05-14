@@ -10,7 +10,6 @@ Feature: Number of permits required page
   Scenario: Page Heading and Advisory texts and validation messages are displayed
     And the page heading on the ECMT number of permits page is displayed correctly
     And the advisory texts are displayed correctly
-    And I have not specified an amount for permits
     And I save and continue
     And I should get the ECMT number of permits page error message
     And I select save and return overview link
@@ -27,7 +26,6 @@ Feature: Number of permits required page
 
   @EXTERNAL @OLCS-21286 @ECMT @DEV @Test3 @olcs-27581 @OLCS-28275
   Scenario: Application back button
-    Given I have not specified the amount of permits I'd like
     When I go back
     Then I should be on the Annual ECMT overview page
 

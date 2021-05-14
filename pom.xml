@@ -126,7 +126,6 @@
                     <desiredNumberOfRunners>3</desiredNumberOfRunners>
                     <includeScenarioTags>
                         not (@skip
-                        or @WIP
                         or @Deprecated
                         or @CLOSES-WINDOW
                         or @TOGGLE-ECMT)

@@ -25,4 +25,3 @@ Feature: Annual bilateral Permits dashboard page
   Scenario: Annual bilateral permit applications are shown above any ECMT annual permit applications Given I am in the permit dashboard
     And have valid permits
     And I have a valid annual bilateral noway cabotage only permit
-    Then I can see the Annual Bilateral Permit applications above ECMT Annual Permit applications

@@ -17,6 +17,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
 
     private static volatile AnnualBilateralJourney instance = null;
 
+
     protected AnnualBilateralJourney(){
         // The code below assures that someone can't new up instances using reflections
         if (instance != null)
@@ -85,11 +86,10 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     }
 
 
-    public AnnualBilateralJourney journeyType(World world,LicenceStore licenceStore){
+    public AnnualBilateralJourney journeyType(World world, LicenceStore licenceStore){
         JourneyType journeyType = JourneyType.random();
         PermitUsagePage.journeyType(journeyType);
         RestrictedCountriesPage.saveAndContinue();
-        world.put("journeyType", journeyType);
         licenceStore.getEcmt().setJourneyType(String.valueOf(journeyType));
         return this;
     }
@@ -97,7 +97,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     public AnnualBilateralJourney cabotageConfirmation(World world, LicenceStore licenceStore){
         String noCabotage  = CabotagePage.yesAndCabotagePermitConfirmation();
         RestrictedCountriesPage.saveAndContinue();
-        world.put("noCabotage", noCabotage);
         licenceStore.getEcmt().setNoCabotage(String.valueOf(noCabotage));
         return this;
     }

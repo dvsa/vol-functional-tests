@@ -26,11 +26,6 @@ Feature: Annual Bilateral Application Overview Page
     When I select the edit countries button
     Then I'm navigated to countries selection page
 
-  @EXTERNAL @OLCS-27315 @WIP
-  Scenario: Sections have expected default statuses
-    And  I'm on bilateral overview page
-    Then the default sections statuses on bilateral overview page are as expected
-
   @EXTERNAL @OLCS-27315
   Scenario: Answer questions for individual countries is marked as complete
     And I have completed till check your answers page

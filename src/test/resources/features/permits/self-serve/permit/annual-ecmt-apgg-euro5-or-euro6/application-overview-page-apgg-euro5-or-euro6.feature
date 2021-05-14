@@ -33,7 +33,5 @@ Feature: Application overview page
   Scenario: Application overview functionalities are displayed correctly
     Then only the expected status labels are displayed
     And  the page heading is displayed correctly
-    #And  the advisory text is displayed correctly ---- advisory text no longer displayed on overview page
-    #And  the guidance on permits link navigates to the correct link  --- guidance link no longer displayed on the overview page
     When I use the application back button
     Then I should be taken to the permits dashboard

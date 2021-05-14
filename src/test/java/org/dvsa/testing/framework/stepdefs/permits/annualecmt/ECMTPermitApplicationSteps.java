@@ -9,7 +9,6 @@ import cucumber.api.java8.En;
 import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -17,9 +16,7 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.ChangeYourPasswordPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
@@ -37,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -46,15 +44,11 @@ import static org.dvsa.testing.lib.pages.external.HomePage.untilOnHomePage;
 
 public class ECMTPermitApplicationSteps extends BasePage implements En {
 
+    public static Map<String, String> applicationReference;
+
     public ECMTPermitApplicationSteps(World world, OperatorStore operatorStore) {
         When("^I fill in the permits form$", () -> {
             completeEcmtApplication(operatorStore, world);
-        });
-        Then("^(?:I expect my application to be submitted|my submitted application should be on the dashboard)$", () -> {
-            untilOnHomePage();
-            untilAnyPermitStatusMatch(PermitStatus.UNDER_CONSIDERATION);
-            //System.out.println(HomePage.hasReferenceNumber(world.get("referenceNumber")));
-            //Assert.assertTrue(HomePage.hasReferenceNumber(world.get("referenceNumber")));
         });
         Then("^the permits tab should (not )?be displayed$", (String hidden) -> {
             if (hidden != null && StringUtils.deleteWhitespace(hidden).toLowerCase().equals("not")) {
@@ -67,47 +61,6 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         And ("^I save and continue$", () -> BasePermitPage.saveAndContinue());
         Then("^I should be taken to the permits dashboard$", () -> Assert.assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
-        When("^I view the permits tab$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-        });
-        Then("^I should see all permit applications$", () -> {
-            List<PermitApplication> expectedApplications = ECMTPermitApplicationAPI.get(world.get("organisationId")).getResults()
-                    .stream()
-                    .sorted((o1, o2) -> o2.getPermitId().compareTo(o1.getPermitId()))
-                    .map(permit -> {
-                                return new PermitApplication()
-                                        .withReferenceNumber(permit.getApplicationRef())
-                                        .withNoOfPermits(permit.getPermitsRequired())
-                                        .withType(permit.getPermitType().getDescription())
-                                        .withStatus(permit.getStatus().getDescription().toString());
-                            }
-                    ).collect(Collectors.toList());
-            List<PermitApplication> actualApplications = HomePage.PermitsTab.ongoingPermitApplications();
-
-            assertApplicationsAreAllEqual(expectedApplications, actualApplications);
-        });
-        Then("^ongoing permits should be sorted by permit ID in descending order$", () -> {
-            List<PermitApplication> actualApplications = HomePage.PermitsTab.ongoingPermitApplications();
-            for (int i = 0; i < (actualApplications.size() - 1); i++) {
-                Assert.assertThat(actualApplications.get(i).getId(), Matchers.greaterThan(actualApplications.get(i + 1).getId()));
-            }
-        });
-        Then("^only ECMT applications with the right status are displayed$", () -> {
-            List<PermitApplication> actualApplications = HomePage.PermitsTab.ongoingPermitApplications();
-            boolean allMatch = actualApplications.stream().allMatch(application ->
-                    application.getStatus() == PermitStatus.UNDER_CONSIDERATION ||
-                            application.getStatus() == PermitStatus.NOT_YET_SUBMITTED
-            );
-
-            Assert.assertTrue("There was one or more applications with an incorrect permit status", allMatch);
-        });
-        Given("^I have completed all sections$", () -> {
-            completeUpToCheckYourAnswersPage(world, operatorStore);
-            CheckYourAnswersPage.saveAndContinue();
-            DeclarationPage.declare(true);
-            DeclarationPage.saveAndContinue();
-        });
         And("^I have completed (an|all) ECMT application$", (String arg) -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
@@ -117,25 +70,8 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             HomePage.applyForLicenceButton();
             AnnualBilateralJourney.getInstance().permitType();
         });
-        Given("^I have a high intensity of use for number of permits$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
-            AnnualEcmtPermitUsagePage.annualEcmtPermitUsage(AnnualEcmtPermitUsage.random());
-            BasePermitPage.saveAndContinue();
-            CabotagePage.wontCarryCabotage(true);
-            CertificatesRequiredPage.certificatesRequired(true);
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            NumberOfPermitsPage.permitsValue();
-            BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
-            BasePermitPage.saveAndContinue();
-            EcmtApplicationJourney.getInstance()
-                    .numberOfTripsPage(world,licenceStore);
-        });
         When("^I withdraw without confirming$", () -> {
-            HomePage.PermitsTab.selectOngoing(world.get("application.reference"));
+            HomePage.PermitsTab.selectOngoing(ECMTPermitApplicationSteps.applicationReference.get("application.reference"));
             ApplicationDetailsPage.withdraw();
             WithdrawApplicationPage.withdraw();
         });
@@ -146,41 +82,6 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
                 String ref1 = actualApplications.get(i + 1).getReferenceNumber();
 
                 Assert.assertThat(ref1, Matchers.greaterThanOrEqualTo(ref2));
-            });
-        });
-        Then("^I have partial annual ECMT application$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            IntStream.range(0, operatorStore.getLicences().size()).forEach((i) -> {
-               /* try {
-                    HomePage.selectTab(Tab.PERMITS);
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    HomePage.applyForLicenceButton();
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    EcmtApplicationJourney.getInstance()
-                            .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    EcmtApplicationJourney.getInstance().yearSelection(YearSelectionPage.YearSelection.YEAR_2020, operatorStore);
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    BasePermitPage.back();
-                } catch (MalformedURLException | IllegalBrowserException e) {
-                    e.printStackTrace();
-                }*/
             });
         });
         When("^I have a partial completed ECMT application$", () -> {
@@ -198,12 +99,6 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             HomePage.PermitsTab.selectOngoing(licence1);
         });
         Then ("^I am on the annual ECMT application overview page$", OverviewPage::overviewPageHeading);
-        Then ("^I have an annual ECMT application in under consideration status$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
-            ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
-        });
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
@@ -220,9 +115,6 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             String browser = String.valueOf(getURL());
             get(browser+"irhp-application/");
             IrhpPermitsApplyPage.viewApplication();
-           // BasePermitPage.waitAndClick("//input[@id='checked']", SelectorType.XPATH);
-            //IrhpPermitsApplyPage.saveIRHP();
-            //IrhpPermitsApplyPage.viewApplication();
             IrhpPermitsApplyPage.grantApplication();
             IrhpPermitsApplyPage.continueButton();
             sleep(5000);
@@ -239,7 +131,6 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         Then ("^the user is navigated to awaiting fee page$", () -> isPath("/permits/\\d+/ecmt-awaiting-fee/"));
 
         When("^I try applying with a licence that has an existing annual ECMT application$", () -> {
-          // HomePage.untilOnHomePage();
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
@@ -249,10 +140,6 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
             LicencePage.licence(licence.getLicenceNumber());
             LicencePage.saveAndContinue();
         });
-    }
-
-    public static void completeEcmtApplication(World world) {
-        completeEcmtApplication(new OperatorStore(), world);
     }
 
     public static void completeEcmtApplication(OperatorStore operator, World world) {
@@ -307,23 +194,9 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         EuroEmissioStandardsPage.Emissionsconfirmation();
         BasePermitPage.saveAndContinue();
         licenceStore.setReferenceNumber(CheckYourAnswersPage.reference());
-        world.put("application.reference",licenceStore.getReferenceNumber());
+        ECMTPermitApplicationSteps.applicationReference.put("application.reference",licenceStore.getReferenceNumber());
         store.withLicences(licenceStore);
         return licenceStore;
 
    }
-    private static void changePassword(@NotNull World world)  {
-        String newPassword = Str.randomWord(7).concat("1");
-        if (ChangeYourPasswordPage.onPage()) {
-            ChangeYourPasswordPage.update(world.get("password"), newPassword);
-
-            world.put("password", newPassword);
-        }
-    }
-
-    private static void assertApplicationsAreAllEqual(List<PermitApplication> expected, List<PermitApplication> actual) {
-        for (int i = 0; i < expected.size(); i++){
-            Assert.assertEquals(expected.get(i), actual.get(i));
-        }
-    }
 }

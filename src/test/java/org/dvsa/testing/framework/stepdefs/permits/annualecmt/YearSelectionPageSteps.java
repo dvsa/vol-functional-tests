@@ -28,16 +28,14 @@ public class YearSelectionPageSteps implements En {
 
                 EcmtApplicationJourney.getInstance()
                         .yearSelection(YearSelectionPage.YearSelection.YEAR_2021, operatorStore);
-}
+            }
             else{
                 continueButton();
             }
-
-                });
+        });
 
         When ("^the user is navigated to licence selection page$", () -> {
             isPath("/permits/type/\\d+/licence/");
         });
-
     }
 }

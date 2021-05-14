@@ -1,11 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import activesupport.system.Properties;
-import apiCalls.Utils.eupaBuilders.organisation.OrganisationModel;
-import apiCalls.eupaActions.OrganisationAPI;
-import cucumber.api.PendingException;
 import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -26,7 +22,6 @@ import org.openqa.selenium.WebDriver;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.dvsa.testing.lib.pages.Driver.DriverUtils.get;
 import static org.dvsa.testing.lib.pages.Driver.DriverUtils.getDriver;
 import static org.dvsa.testing.lib.pages.external.permit.OverviewPage.section;
@@ -39,13 +34,6 @@ public class ConfirmationPageSteps implements En {
             clickToPermitTypePage(world);
             ECMTPermitApplicationSteps.completeEcmtApplicationConfirmation(operatorStore, world);
         });
-
-        And("^I am in the confirmation Page$", () -> {
-           Assert.assertTrue(isPath(ConfirmationPage.RESOURCE));
-        });
-
-        Then("^I should be able to see the application reference number$", () -> {
-                  });
 
         Then("^the reference number on the annual ECMT submitted page  is as expected$", () -> {
 BaseApplicationSubmitPage.untilSubmittedPageLoad();
@@ -101,24 +89,5 @@ BaseApplicationSubmitPage.untilSubmittedPageLoad();
         Then("^there shouldn't be a view receipt link on the Annual ECMT submitted page$", () -> {
             Assert.assertFalse(ApplicationSubmitPage.hasViewReceipt());
         });
-
-        Then("^a case worker worker pays all fees for my ongoing Annual ECMT permit application$", () -> {
-        });
-        Then("^a case worker waives all fees for my ongoing Annual ECMT permit application$", () -> {
-        });
-
-        And("^the licence number$", () -> {
-            OrganisationModel organisation = OrganisationAPI.get(world.get("organisationId"));
-            Assert.assertEquals(organisation.getDashboard().getLicences().get(0).getLicNo(), LicencePage.getLicenceNumber());
-        });
-
-        When("^I finish the application$", () -> {
-            throw new PendingException();
-        });
-
-        Then("^I will taken to the permit dashboard$", () -> {
-            throw new PendingException();
-        });
-        Then("^I'm taken to the cancel confirmation page$", (StepdefBody.A0) CancelApplicationPage::untilOnPage);
     }
 }

@@ -27,9 +27,6 @@ public class LicencePageSteps implements En {
             Assert.assertThat(actualLicenceNumber, new IsEqualIgnoringCase(expectedLicenceNumber));
         });
         When("^I select any licence number$", () -> EcmtApplicationJourney.getInstance().licencePage(operatorStore, world));
-        And("^Don't select a licence$", () -> {
-            // here for legibility
-        });
         Then("^I should be notified that I have applied against all valid licences$", () -> {
             String expectedPageTitle = LicencePage.AppliedAgainstAllPage.TITLE;
             String actualPageTitle = LicencePage.AppliedAgainstAllPage.getTitleOnPage();

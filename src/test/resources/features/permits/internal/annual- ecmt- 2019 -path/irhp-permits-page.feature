@@ -24,12 +24,6 @@ Feature: Internal IRHP permits page
     When I am viewing a licences IRHP section
     Then the ongoing permit application is to be as expected
 
-#  TODO: Replace scenario above with this one once journey objects are ready so that steps can be less imperative
-#  Scenario: Licence with permit applications
-#    Given there is an ECMT eligible licence with permit applications
-#    When I am viewing a licences IRHP section
-#    Then the no issued permits message should be displayed
-
   @CLOSES-WINDOW @INTERNAL @OLCS-20948 @Deprecated
   Scenario: Licence without permit applications
     Given I have a "goods" "standard_international" licence

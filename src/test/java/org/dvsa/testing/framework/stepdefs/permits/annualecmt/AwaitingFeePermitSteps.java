@@ -1,19 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import activesupport.IllegalBrowserException;
-import activesupport.aws.s3.S3;
 import activesupport.config.Configuration;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import org.dvsa.testing.framework.Utils.common.StatusUtils;
 import org.dvsa.testing.framework.Utils.common.TimeUtils;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -50,7 +46,7 @@ import static org.hamcrest.core.Is.is;
 
 public class AwaitingFeePermitSteps extends BasePage implements En {
 
-    private static World world;
+    private World world;
 
     public AwaitingFeePermitSteps(OperatorStore operatorStore, World world) {
 
@@ -68,9 +64,6 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
             String browser = String.valueOf(getURL());
             getDriver().get(browser+"irhp-application/");
             IrhpPermitsApplyPage.viewApplication();
-           // BasePermitPage.waitAndClick("//input[@id='checked']", SelectorType.XPATH);
-           // IrhpPermitsApplyPage.saveIRHP();
-          //  IrhpPermitsApplyPage.viewApplication();
             IrhpPermitsApplyPage.grantApplication();
             IrhpPermitsApplyPage.continueButton();
             sleep(3000);
@@ -83,17 +76,6 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
         });
-        Then("^all the information on the issuing fee should match that which was entered during the application process$", () -> {
-            PermitApplication selectedPermit = world.get("user.permit.selected");
-            int permitFee = 123;
-          //  int numOfPermitsAwarded = ApplicationIssuingFeePage.numberOfPermitsAwarded();
-           // String expectedIssuingFeePerPermit = String.format("%d x £%d\nview permits", numOfPermitsAwarded, permitFee);
-
-            Assert.assertThat(ApplicationIssuingFeePage.getInfo(ReferenceNumber), is(selectedPermit.getReferenceNumber()));
-            Assert.assertThat(ApplicationIssuingFeePage.getInfo(PermitType), is("Annual ECMT"));
-           // Assert.assertThat(ApplicationIssuingFeePage.getInfo(IssuingFeePerPermit), StringContains.containsString(expectedIssuingFeePerPermit));
-           // Assert.assertThat(ApplicationIssuingFeePage.getInfo(TotalIssuingFeeToBePaid), is(String.format("£%d (non-refundable)", permitFee * numOfPermitsAwarded)));
-        });
         When("^I cancel and return to dashboard from issuing fee page$", ApplicationIssuingFeePage::cancelAndReturnToDashboard);
         When("^I decline payment$", ApplicationIssuingFeePage::declinePermits);
         Then("^I should be on the decline awarded permits page$", () -> Assert.assertTrue(isPath("permits/application/\\d+/decline/")));
@@ -101,36 +83,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
         Then("^I should be taken to the payment provider$", () -> Assert.assertThat(getURL().getHost(), is("sbsctest.e-paycapita.com")));
         }
 
-    public static void hasApplicationAwaitingFee(OperatorStore operatorStore, World world) throws ElementDidNotAppearWithinSpecifiedTimeException, InterruptedException, MalformedURLException, IllegalBrowserException {
-        IntStream.rangeClosed(1, operatorStore.getLicences().size()).forEach((i) -> {
-            HomePage.applyForLicenceButton();
-            ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
-        });
-
-        StatusUtils.update(world.getId(), StatusUtils.Phase.WAITING);
-        StatusUtils.untilNonAtPhase(StatusUtils.Phase.OPEN, Duration.CENTURY, TimeUnit.MINUTES);
-        if (StatusUtils.noneAtPhase(StatusUtils.Phase.CLOSING)) {
-            StatusUtils.update(world.getId(), StatusUtils.Phase.CLOSING);
-            triggerPermitIssuing();
-            StatusUtils.update(world.getId(), StatusUtils.Phase.CLOSED);
-        } else {
-            StatusUtils.untilNonAtPhase(StatusUtils.Phase.CLOSING, Duration.CENTURY, TimeUnit.MINUTES);
-        }
-
-        getDriver().manage().deleteAllCookies();
-        get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
-
-        S3.deleteObject(world.getId()); // cleanup
-
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        HomePage.selectTab(Tab.PERMITS);
-
-        // wait until there are some applications with awaiting fee
-        untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
-
-    }
-
-    public static void triggerPermitIssuing() throws ElementDidNotAppearWithinSpecifiedTimeException, InterruptedException, MalformedURLException, IllegalBrowserException {
+    public static void triggerPermitIssuing(World world) throws ElementDidNotAppearWithinSpecifiedTimeException, InterruptedException, MalformedURLException, IllegalBrowserException {
         getDriver().manage().deleteAllCookies();
 
         get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true)).toString());

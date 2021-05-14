@@ -28,16 +28,12 @@ public class RestrictedCountriesPageSteps implements En {
         });
         Given("^I have selected some restricted countries$", () -> {
             RestrictedCountriesPage.countries(RestrictedCountry.random());
-            world.put("origin", getURL());
+            CommonSteps.origin.put("origin", getURL());
         });
         Given("^I (do |don't )?plan on delivering to a restricted country$", (String deliverToRestrictedCountries) -> {
             boolean deliverToRestricted = deliverToRestrictedCountries.equals("do ");
             RestrictedCountriesPage.deliverToRestrictedCountry(deliverToRestricted);
         });
-        And("^don't specify (?:which|anything)$", () -> {
-            // Here for readability
-        });
-        Then("^I should see the validation error\\(s\\) message for restricted countries page$", () -> Assert.assertTrue(RestrictedCountriesPage.hasErrorMessagePresent()));
         Then("^the Advisory text on Annual ECMT countries with limited countries page is Shown Correctly$", () -> {
             RestrictedCountriesPage.hasAdvisoryText();
         });

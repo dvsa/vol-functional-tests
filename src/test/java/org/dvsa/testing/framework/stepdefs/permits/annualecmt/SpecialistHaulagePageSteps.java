@@ -29,7 +29,7 @@ public class SpecialistHaulagePageSteps implements En {
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
-        //    AnnualEcmtPermitUsagePage.annualEcmtPermitUsage(AnnualEcmtPermitUsage.random());
+            //    AnnualEcmtPermitUsagePage.annualEcmtPermitUsage(AnnualEcmtPermitUsage.random());
             BasePermitPage.saveAndContinue();
             //OverviewPage.section(PermitSection.Cabotage);
             CabotagePage.wontCarryCabotage(true);
@@ -46,14 +46,13 @@ public class SpecialistHaulagePageSteps implements En {
         Then("^Non other sectors should be in alphabetical order$", () -> {
             List<String> sectorTitles = SectorPage.getSectorsOnPage().stream()
                     .filter((String sector) -> !sector.equals("Other non-metallic mineral products")
-                            && !sector.equals("None or more than one of these sectors") )
+                            && !sector.equals("None or more than one of these sectors"))
                     .collect(Collectors.toList());
 
             for (int i = 0; i < sectorTitles.size() - 1; i++) {
                 Assert.assertTrue(sectorTitles.get(i).substring(0, 1).compareTo(sectorTitles.get(i + 1).substring(0, 1)) <= 0);
             }
         });
-        Then("^I should see the validation error message for the sectors page$", () -> Assert.assertTrue(SectorPage.hasErrorMessagePresent()));
     }
 
 }

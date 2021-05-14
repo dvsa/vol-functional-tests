@@ -5,19 +5,6 @@ Feature: ECMT Permit Euro Emission Standard Page
     Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
 
-  @EXTERNAL @OLC-20557,@OLCS-24818 @ECMT @Test2 @olcs-27581 @OLCS-28275 @WIP
-  Scenario Outline: Vehicles meeting Euro6 standards successfully
-    Given I have a valid Goods <licence_type> VOL licences
-#    Look into above because it creates 2 separate licences. However it is WIP so can be ignored now.
-    And I am on the euro emission standard page
-    When I select the checkbox declaration
-    Then I should be able to navigate to the next page
-
-    Examples:
-      | licence_type                |
-      | restricted                  |
-      | standard_international      |
-
   @EXTERNAL @OLC-20557,@OLCS-24818 @ECMT @Test2 @olcs-27581 @OLCS-28275
   Scenario: Successful navigation of back link
     And I am on the euro emission standard page

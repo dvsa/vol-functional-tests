@@ -6,6 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -27,7 +28,7 @@ public class ApplicationSteps extends BasePage implements En {
         And("^I have (an|all) ongoing Annual Multilateral Application$", (String arg) -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
-            int quantity = arg.equals("all") ? world.get("licence.quantity") : 1;
+            int quantity = arg.equals("all") ? VolLicenceSteps.licenceQuantity.get("licence.quantity") : 1;
 
                IntStream.rangeClosed(1, quantity).forEach((i) -> {
                     HomePage.selectTab(Tab.PERMITS);

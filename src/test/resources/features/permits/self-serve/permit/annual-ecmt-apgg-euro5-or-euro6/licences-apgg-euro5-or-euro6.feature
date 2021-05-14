@@ -28,7 +28,6 @@ Feature: Licence page
   Scenario: User successfully progresses past licences page when saving and continuing
     Given I have a "goods" "standard_international" licence
     And I am on the Annual ECMT licence selection page
-    And Don't select a licence
     When I save and continue
     Then I will get an error message on the licence page
     When  I select any licence number

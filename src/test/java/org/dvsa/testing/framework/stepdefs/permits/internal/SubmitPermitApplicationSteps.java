@@ -49,10 +49,6 @@ public class SubmitPermitApplicationSteps implements En {
     public SubmitPermitApplicationSteps(World world, OperatorStore operatorStore) {
 
         Given("^I am on the VOL internal site$", () -> {
-            if (world.get("browser.initialised") == null) {
-                world.put("browser.initialised", true);
-            }
-
             deleteCookies();
             refreshPage();
             get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true), "auth/login/").toString());
