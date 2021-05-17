@@ -8,7 +8,7 @@ import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.Journeys.DirectorJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;

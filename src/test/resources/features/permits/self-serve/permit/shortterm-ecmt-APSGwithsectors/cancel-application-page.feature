@@ -16,7 +16,6 @@ Feature: Short term ECMT APSG with sectors Cancel application Page
   Scenario: Cancel application page details are displayed correctly
     Then the short term ECMT CancelApplication page heading should be correct
     And the short term  CancelApplication page displays the correct advisory text
-    And the correct text is displayed next to the checkbox in short term ECMT page
     And I select cancel application button
     Then I should get an error message on short term ECMT cancel application page
     When the checkbox is selected

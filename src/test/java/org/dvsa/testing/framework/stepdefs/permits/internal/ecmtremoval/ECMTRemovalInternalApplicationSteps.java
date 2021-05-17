@@ -21,7 +21,7 @@ import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsPage;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.lib.pages.Driver.DriverUtils.get;
+import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
 import static org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage.*;
 
 public class ECMTRemovalInternalApplicationSteps implements En {

@@ -13,8 +13,8 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
@@ -109,8 +109,8 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         And ("^I select returns to permit dashboard hyperlink", ValidAnnualBilateralPermitsPage::permitDashboard);
         Then ("^the licence number is displayed above the page heading",  () ->{
             String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            String actual = ValidAnnualMultilateralPermitsPage.reference();
-            Assert.assertEquals(expectedReference, ValidAnnualMultilateralPermitsPage.reference());
+            String actual = BasePermitPage.getReference();
+            Assert.assertEquals(expectedReference, BasePermitPage.getReference());
         });
         Then ("^the ECMT application licence number is displayed above the page heading",  () ->{
             String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);

@@ -4,7 +4,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.LicencePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -117,7 +117,7 @@ public class BasePermitJourney extends BaseJourney {
                 operator.hasCurrentPermitType(PermitTypePage.PermitType.AnnualMultilateral) ||
                 operator.hasCurrentPermitType(PermitTypePage.PermitType.ShortTermECMT) ||
                 operator.hasCurrentPermitType(PermitTypePage.PermitType.EcmtInternationalRemoval)) {
-            org.dvsa.testing.lib.pages.external.permit.bilateral.LicencePage.licence(selectedLicence.getLicenceNumber());
+            org.dvsa.testing.lib.pages.external.permit.bilateral.LicencePage.licence(world.applicationDetails.getLicenceNumber());
             licenceNumber = selectedLicence.getLicenceNumber();
         }
 

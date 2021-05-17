@@ -4,10 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.CertificatesRequiredPage;
-import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.RestrictedCountriesPage;
+import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
@@ -42,7 +39,7 @@ public class RestrictedCountriesPageSteps implements En {
         });
         Then("^the application reference number is shown correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber = RestrictedCountriesPage.reference();
+            String actualReferenceNumber = BasePermitPage.getReference();
             Assert.assertThat(actualReferenceNumber, containsString(expectedLicenceNumber));
         });
 

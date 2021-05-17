@@ -3,8 +3,9 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.enums.Country;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -95,13 +96,13 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     }
 
     public AnnualBilateralJourney cabotageConfirmation(World world, LicenceStore licenceStore){
-        String noCabotage  = CabotagePage.yesAndCabotagePermitConfirmation();
+        String noCabotage  = BilateralJourneySteps.yesAndCabotagePermitConfirmation();
         RestrictedCountriesPage.saveAndContinue();
         licenceStore.getEcmt().setNoCabotage(String.valueOf(noCabotage));
         return this;
     }
     public AnnualBilateralJourney overview(OverviewPage.Section section, OperatorStore operatorStore) {
-        String reference = OverviewPage.reference();
+        String reference = BasePermitPage.getReference();
         OverviewPage.untilOnOverviewPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);
@@ -110,9 +111,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     }
 
     public AnnualBilateralJourney overviewNorway(OperatorStore operatorStore) {
-       /*String reference = OverviewPage.reference();
-        OverviewPage.untilOnPage();
-        Assert.assertTrue(operatorStore.hasLicence(reference));*/
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         OverviewPage.sectionNorway();
         return this;

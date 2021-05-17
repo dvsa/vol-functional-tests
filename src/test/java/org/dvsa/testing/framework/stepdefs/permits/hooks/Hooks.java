@@ -2,20 +2,16 @@ package org.dvsa.testing.framework.stepdefs.permits.hooks;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
-import activesupport.system.Properties;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.Util;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.Action;
-import org.dvsa.testing.lib.pages.enums.AdminOption;
-import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
-import org.dvsa.testing.lib.pages.exception.ElementDidNotDisappearWithinSpecifiedTimeException;
+import org.dvsa.testing.lib.newPages.enums.Action;
+import org.dvsa.testing.lib.newPages.enums.AdminOption;
+import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
+import org.dvsa.testing.lib.newPages.exception.ElementDidNotDisappearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.pages.internal.NavigationBar;
 import org.dvsa.testing.lib.pages.internal.admin.permits.FeatureTogglesPage;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.jupiter.api.AfterAll;
 
 import java.net.MalformedURLException;

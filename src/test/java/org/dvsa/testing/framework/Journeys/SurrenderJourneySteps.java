@@ -1,14 +1,11 @@
 package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import apiCalls.enums.LicenceType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.junit.Assert;
-
-import java.net.MalformedURLException;
 
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;

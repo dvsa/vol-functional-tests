@@ -20,9 +20,7 @@ Feature: Annual bilateral check your answers page
     Then I should be on the bilateral declaration page
     When I go back
     Then I navigate to the annual bilateral overview page
-    Then the check your answers section should be complete
     When I click Check your answers link on the overview page again
     Then I am navigated to the check your answers page
     When I save and return to overview
     Then I should be on the bilateral overview page
-    Then the check your answers section should be complete

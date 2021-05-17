@@ -7,8 +7,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
@@ -22,8 +22,8 @@ import org.openqa.selenium.WebDriver;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
-import static org.dvsa.testing.lib.pages.Driver.DriverUtils.get;
-import static org.dvsa.testing.lib.pages.Driver.DriverUtils.getDriver;
+import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
+import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.getDriver;
 import static org.dvsa.testing.lib.pages.external.permit.OverviewPage.section;
 
 public class ConfirmationPageSteps implements En {

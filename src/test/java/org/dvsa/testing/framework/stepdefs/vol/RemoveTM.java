@@ -7,7 +7,7 @@ import activesupport.aws.s3.S3;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 
 import java.time.LocalDateTime;

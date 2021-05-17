@@ -6,18 +6,18 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.GenericPermitJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.MultilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CancelConfirmationPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.CancelApplicationPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
-
-import java.net.MalformedURLException;
 
 public class CancelApplicationPageSteps extends BasePage implements En {
     public CancelApplicationPageSteps(OperatorStore operator, World world) {
@@ -34,13 +34,13 @@ public class CancelApplicationPageSteps extends BasePage implements En {
 
                 NumberOfPermitsPage.overview();
                 OverviewPage.cancel();
-                CancelApplicationPage.untilOnPage();
+                MultilateralJourneySteps.untilOnCancelApplicationPage();
             });
 
         });
         Then("^the annual multilateral Cancel Application page has a reference number$", () -> {
             String expectedReference = operator.getCurrentLicence().get().getReferenceNumber();
-            Assert.assertEquals(expectedReference, CancelApplicationPage.reference());
+            Assert.assertEquals(expectedReference, BasePermitPage.getReference());
         });
         Then("^the annual multilateral Cancel Application page has expected text$", () -> {
             String expectedAdvisory = "By cancelling you understand that:" +
@@ -55,15 +55,15 @@ public class CancelApplicationPageSteps extends BasePage implements En {
             String message = "Expected checkbox to be unselected but it was selected";
             Assert.assertFalse(message, CancelApplicationPage.confirmationCheckboxStatus());
         });
-        When("^I cancel my Annual Multilateral application without confirming$", CancelApplicationPage::cancel);
+        When("^I cancel my Annual Multilateral application without confirming$", MultilateralJourneySteps::clickCancelButton);
         Then("^I should get the expected error message for annual multilateral Cancel Application page$", () -> {
             Assert.assertEquals("You must select the checkbox to continue", CancelApplicationPage.errorMessage());
         });
         When("^I confirm and cancel my annual multilateral permit$", () -> {
-            CancelApplicationPage.confirm(true);
-            CancelApplicationPage.cancel();
+            MultilateralJourneySteps.clickCancelCheckbox();
+            MultilateralJourneySteps.clickCancelButton();
         });
-        Then("^I am taken to the application cancelled page$", CancelConfirmationPage::untilOnPage);
+        Then("^I am taken to the application cancelled page$", GenericPermitJourneySteps::untilOnCancelConfirmationPage);
         And("^there are no fees for the permit$", () -> {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
             Assert.assertFalse(HomePage.FeesTab.hasOutstandingFees());

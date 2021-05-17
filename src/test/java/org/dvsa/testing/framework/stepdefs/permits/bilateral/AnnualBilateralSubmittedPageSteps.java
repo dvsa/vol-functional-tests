@@ -7,8 +7,9 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -37,7 +38,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermits();
             BasePermitPage.saveAndContinue();
@@ -55,14 +56,6 @@ public class AnnualBilateralSubmittedPageSteps implements En {
         Then("^my application reference should be displayed$", () -> {
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body'] ", SelectorType.XPATH);
             Assert.assertEquals(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,18)),true);
-        });
-        Then("^the submitted page advisory texts are displayed as per AC$", () -> {
-             SubmittedPage.pageHeading();
-             SubmittedPage.subHeading();
-             SubmittedPage.advisoryTexts();
-        });
-        And("^I have not fully paid my outstanding fees$", () -> {
-            // Here to improve scenario readability
         });
         Then("^I should see the view receipt link$", () -> {
             Assert.assertTrue("'View  Receipt' link  should be displayed but wasn't", ApplicationSubmitPage.hasViewReceipt());
@@ -94,7 +87,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermits();

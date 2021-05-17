@@ -8,7 +8,6 @@ Feature: Annual bilateral licence page checks
   @EXTERNAL @OLCS-23117 @bilateral_cabotage_only @OLCS-27444 @OLCS-27781
   Scenario: Able to apply for a permit when there are no existing application on the selected licence
     When I have began applying for an Annual Bilateral Permit
-    And my selected licence does not have an existing annual bilateral permit
     Then I am able to complete an annual bilateral permit application
 
   @EXTERNAL @OLCS-23117 @bilateral_cabotage_only @OLCS-27444

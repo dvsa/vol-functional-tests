@@ -1,15 +1,16 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
+import Injectors.World;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.DocsAndAttachmentsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.internal.doc.PermitApplicationDocPage;
 import org.junit.Assert;
@@ -18,7 +19,10 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
-    public AnnualEcmtPermitsHtmlDoc(OperatorStore operatorStore) {
+
+    private World world;
+
+    public AnnualEcmtPermitsHtmlDoc(World world, OperatorStore operatorStore) {
         When("^I view the annual ECMT Permits documentation$", () -> {
             IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.DocsAndAttachments);
            DocsAndAttachmentsPage.select(
@@ -34,7 +38,7 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             String selectLicence1= operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
             LicenceStore selectedLicence = operatorStore.getLatestLicence().get();
             // Check heading contains correct heading
-            Assert.assertTrue(String.valueOf(PermitApplicationDocPage.referenceNumber().contains(selectLicence1)),true);
+            Assert.assertTrue(String.valueOf(BasePermitPage.getReference().contains(selectLicence1)),true);
             // Verify Euro 6
             Assert.assertTrue(
                     toBool(PermitApplicationDocPage.get(PermitApplicationDocPage.Section.Euro6))

@@ -31,7 +31,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
         return instance;
     }
     public EcmtInternationalRemovalJourney overview(org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.Section section, OperatorStore operatorStore) {
-        String reference = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.reference();
+        String reference = BasePermitPage.getReference();
         org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.untilOnPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);

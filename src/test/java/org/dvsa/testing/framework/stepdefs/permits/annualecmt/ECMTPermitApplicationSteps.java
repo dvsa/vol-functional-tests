@@ -1,28 +1,24 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import activesupport.string.Str;
+import Injectors.World;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
-import apiCalls.eupaActions.external.ECMTPermitApplicationAPI;
 import cucumber.api.java8.En;
 import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.UnderConsiderationPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.AnnualEcmtPermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.EuroEmissioStandardsPage;
@@ -35,12 +31,10 @@ import org.junit.Assert;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
-import static org.dvsa.testing.lib.pages.external.HomePage.untilOnHomePage;
 
 public class ECMTPermitApplicationSteps extends BasePage implements En {
 
@@ -193,7 +187,7 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         BasePermitPage.saveAndContinue();
         EuroEmissioStandardsPage.Emissionsconfirmation();
         BasePermitPage.saveAndContinue();
-        licenceStore.setReferenceNumber(CheckYourAnswersPage.reference());
+        licenceStore.setReferenceNumber(BasePermitPage.getReference());
         ECMTPermitApplicationSteps.applicationReference.put("application.reference",licenceStore.getReferenceNumber());
         store.withLicences(licenceStore);
         return licenceStore;

@@ -33,14 +33,10 @@ public class CertificateRequiredPageSteps implements En {
             CertificatesRequiredPage.hasPageHeading();
             CertificatesRequiredPage.hasAdvisoryMessages();
             String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber= CertificatesRequiredPage.reference();
+            String actualReferenceNumber= BasePermitPage.getReference();
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
         Then("^I should get the certificates required page error message$", CertificatesRequiredPage::errorText);
-        // No more valid
-        /*Then("^selection of hyperlink on the page displays guidance page$", () -> {
-            CertificatesRequiredPage.certificatesLink();
-        });*/
         Then("^I confirm the Certificates Required checkbox$", CertificatesRequiredPage::CertificatesRequiredConfirmation);
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
             String error = "Expected the status of certificates required page to be complete but it wasn't";

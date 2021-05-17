@@ -1,18 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import activesupport.IllegalBrowserException;
-import cucumber.api.java8.En;
 import Injectors.World;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.AnnualEcmtPermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
-
-import java.net.MalformedURLException;
 
 public class CertificatesRequiredPageSteps implements En {
 

@@ -60,7 +60,7 @@ public class Euro6Steps implements En {
         });
         Then("^I see the application reference number is displayed correctly$", () -> {
             String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber= OverviewPage.reference();
+            String actualReferenceNumber= BasePermitPage.getReference();
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
         Then("^the texts are displayed correctly$", () -> VehicleStandardPage.emissionsPageText());

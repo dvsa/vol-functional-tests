@@ -1,17 +1,16 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
-import apiCalls.eupaActions.OrganisationAPI;
+import Injectors.World;
 import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.common.type.Permit;
+import org.dvsa.testing.lib.newPages.common.type.Permit;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage;
@@ -44,7 +43,7 @@ public class NumberOfPermitPageSteps implements En {
             String expectedLicenceNumber = operatorStore.getLatestLicence()
                     .orElseThrow(IllegalAccessError::new)
                     .getReferenceNumber();
-            String actualReferenceNumber = NumberOfPermitsPage.reference();
+            String actualReferenceNumber = BasePermitPage.getReference();
             Assert.assertEquals(expectedLicenceNumber, actualReferenceNumber);
             Assert.assertEquals("How many permits do you require for this licence?",OverviewPage.pageHeading().trim());
         });

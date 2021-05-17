@@ -9,7 +9,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -111,7 +112,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
 //            SubmittedPage.untilOnPage();
             pageHeading();
             untilExpectedTextInElement("//a[contains(text(),'Go to permits dashboard')]",SelectorType.XPATH,"Go to permits dashboard",1000);
-            org.dvsa.testing.lib.pages.external.permit.bilateral.CancelApplicationPage.finishButton();
+            BilateralJourneySteps.clickFinishButton();
         });;
         Then("^I am navigated back to the permits dashboard page with my application status shown as Under Consideration", () -> {
             String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
@@ -147,9 +148,8 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-//            SubmittedPage.untilOnPage();
             SubmittedPage.advisoryText();
-            org.dvsa.testing.lib.pages.external.permit.bilateral.CancelApplicationPage.finishButton();
+            BilateralJourneySteps.clickFinishButton();
         });
 
     }

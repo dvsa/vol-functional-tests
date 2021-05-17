@@ -13,6 +13,8 @@ import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.EuroEmissioStand
 
 public class AnnualTripsAbroadPageSteps implements En {
 
+    private World world;
+
     public AnnualTripsAbroadPageSteps(World world, OperatorStore store) {
         And("^I am on the annual trips abroad page$", () -> {
             LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);

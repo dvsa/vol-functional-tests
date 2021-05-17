@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CancelApplicationPage;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.TurkeyThirdCountryPage;
 import org.junit.Assert;
 
@@ -42,7 +42,7 @@ public class TurkeyThirdCountrySteps implements En {
             TurkeyThirdCountryPage.noAdvisoryText();
         });
         When("^I am navigated to the cancel application page$", () -> {
-            CancelApplicationPage.untilOnPage();
+            BilateralJourneySteps.untilOnCancelApplicationPage();
         });
     }
 }

@@ -4,7 +4,8 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.ProportionOfInternationalJourneyPage;
@@ -21,12 +22,12 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
         OverviewPage.untilOnPage();
 
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        licence.setReferenceNumber(OverviewPage.reference());
+        licence.setReferenceNumber(BasePermitPage.getReference());
         AnnualMultilateralStore permit = licence
                 .getLatestAnnualMultilateral()
                 .orElseGet(AnnualMultilateralStore::new);
         licence.addAnnualMultilateral(permit);
-        permit.setReference(OverviewPage.reference());
+        permit.setReference(BasePermitPage.getReference());
 
         OverviewPage.select(section);
         return this;

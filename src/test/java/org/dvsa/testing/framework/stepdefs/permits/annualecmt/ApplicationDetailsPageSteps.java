@@ -18,6 +18,8 @@ import static org.hamcrest.core.Is.is;
 
 public class ApplicationDetailsPageSteps implements En {
 
+    private World world;
+
     public ApplicationDetailsPageSteps(OperatorStore operatorStore, World world) {
         And("^I am viewing an application$", () -> {
             LicenceStore licence = operatorStore.getLatestLicence()

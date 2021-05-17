@@ -7,7 +7,7 @@ import activesupport.number.Int;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;

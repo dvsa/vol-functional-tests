@@ -1,19 +1,13 @@
 package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.database.exception.UnsupportedDatabaseDriverException;
-import activesupport.system.Properties;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.internal.SearchNavBar;
 
-import java.net.MalformedURLException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static activesupport.database.DBUnit.checkResult;
-import static activesupport.database.DBUnit.executeUpdateSQL;
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertTrue;
 

@@ -1,13 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
-import cucumber.api.java.hu.Ha;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
@@ -66,8 +65,8 @@ CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", Se
                     CheckYourAnswersPage.hasPageHeading();
                 });
         Then("^the short term check your answers page has reference number$", () -> {
-            CheckYourAnswersPage.reference();
-            System.out.println(CheckYourAnswersPage.reference());
+            BasePermitPage.getReference();
+            System.out.println(BasePermitPage.getReference());
         });
         Then("^Short term application answers are displayed on the check your answers page$", () -> {
             String licence = CheckYourAnswersPage.getAnswer(Licence);

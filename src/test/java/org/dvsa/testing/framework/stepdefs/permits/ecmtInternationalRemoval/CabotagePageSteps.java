@@ -26,7 +26,7 @@ public class CabotagePageSteps implements En {
                     .removalsEligibility(true);
         });
         And ("^the ECMT International Removal application reference number should be displayed$", () -> {
-            String actualReference = CabotagePage.reference();
+            String actualReference = BasePermitPage.getReference();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         Then("^the ECMT international removal cabotage heading should be correct$", CabotagePage::cabotagePageText);

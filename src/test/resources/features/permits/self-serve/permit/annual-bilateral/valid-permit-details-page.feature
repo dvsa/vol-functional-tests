@@ -12,7 +12,6 @@ Feature: Bilateral cabotage only permits
     Then the user is in the annual bilateral list page
     And the licence number is displayed in Annual bilateral list page
     When I select Norway in the filter list and click Apply filter
-    Then the results are filtered successfully
     Then the table of annual bilateral permits is as expected
 
   @OLCS-23288 @EXTERNAL @OLCS-26045 @olcs-27365

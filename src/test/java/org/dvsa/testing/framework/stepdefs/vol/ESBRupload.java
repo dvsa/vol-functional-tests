@@ -4,7 +4,7 @@ import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 
 import static junit.framework.TestCase.assertTrue;

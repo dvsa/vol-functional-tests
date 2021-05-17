@@ -6,16 +6,14 @@ import activesupport.driver.Browser;
 import activesupport.file.TestResourceReader;
 import activesupport.system.Properties;
 import apiCalls.enums.LicenceType;
-import apiCalls.enums.OperatorType;
 import com.typesafe.config.Config;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 

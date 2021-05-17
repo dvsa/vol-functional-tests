@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.Journeys.permits.internal;
 
 import activesupport.IllegalBrowserException;
-import org.dvsa.testing.lib.pages.enums.AdminOption;
-import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
+import org.dvsa.testing.lib.newPages.enums.AdminOption;
+import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.pages.internal.NavigationBar;
 import org.dvsa.testing.lib.pages.internal.printing.BasePrintingPage;
 import org.dvsa.testing.lib.pages.internal.printing.PrintIrhpPermitsPage;

@@ -62,7 +62,7 @@ public class OverviewPageSteps implements En {
             org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.untilOnPage();
         });
         Then("^the application reference number should be on the annual multilateral overview page$", () -> {
-            String reference = org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.reference();
+            String reference = BasePermitPage.getReference();
             Assert.assertThat(reference, MatchesPattern.matchesPattern(CommonPatterns.REFERENCE_NUMBER));
         });
         When("^I select (Licence number|Number of permits required) from multilateral overview page$",

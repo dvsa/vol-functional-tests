@@ -1,20 +1,18 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
-import activesupport.IllegalBrowserException;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.FeeCardDetailsPage;
 import org.dvsa.testing.lib.pages.external.permit.FeeCardHolderDetailsPage;
 import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.openqa.selenium.WebDriver;
 
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.dvsa.testing.lib.pages.Driver.DriverUtils.getDriver;
+import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.getDriver;
 
 public interface PaymentJourney {
 

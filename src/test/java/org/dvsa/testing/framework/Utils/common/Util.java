@@ -27,7 +27,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.dvsa.testing.lib.pages.Driver.DriverUtils.getDriver;
+import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.getDriver;
 
 public class Util {
 

@@ -33,7 +33,7 @@ public class PermitUsagePageSteps implements En {
             OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
         });
         Then("^the shortterm ecmt permit usage page has an application reference number$", () -> {
-            String actualReference = PermitUsagePage.reference();
+            String actualReference = BasePermitPage.getReference();
             System.out.println(actualReference);
             String aa = operatorStore.getCurrentLicenceNumber().toString();
             System.out.println(aa);

@@ -36,7 +36,7 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
         });
         Then("^the application reference number on countries with limited permits page is shown correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber = CountriesWithLimitedPermitsPage.reference();
+            String actualReferenceNumber = BasePermitPage.getReference();
             Assert.assertThat(actualReferenceNumber, containsString(expectedLicenceNumber));
         });
         And("^the page heading on short term  countries with limited countries page is Shown Correctly$", CountriesWithLimitedPermitsPage::pageHeading);

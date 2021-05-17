@@ -8,9 +8,10 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.ValidECMTRemovalPermitsPage;
@@ -67,7 +68,7 @@ public class ValidPermitPageSteps implements En {
         Then("^I am on the ECMT removal Permit list page$", ValidECMTRemovalPermitsPage::untilOnPage);
         And("^the licence number is displayed in ECMT removals list page$", () -> {
             String expectedReference = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
-            String actual = ValidECMTRemovalPermitsPage.reference();
+            String actual = BasePermitPage.getReference();
             Assert.assertEquals(expectedReference, actual);
         });
         And("^the table of ECMT removal permits is as expected$", () -> {

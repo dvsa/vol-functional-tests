@@ -4,6 +4,8 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.GenericPermitJourneySteps;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
@@ -44,7 +46,7 @@ public class PermitsUsagePageSteps implements En {
             PermitUsagePage.journeyType(JourneyType.random());
         });
         Then("^I am taken to the Bilateral Cabotage page$", () -> {
-            PermitUsagePage.untilOnCabotagePage();
+            BilateralJourneySteps.untilOnCabotagePage();
         });
         Then("^I get error message if there is more than one Journey types available to select and I click continue without making any selection$", () -> {
             PermitUsagePage.PermitUsageError();

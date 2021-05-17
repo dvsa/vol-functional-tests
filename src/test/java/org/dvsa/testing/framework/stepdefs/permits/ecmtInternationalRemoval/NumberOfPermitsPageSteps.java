@@ -40,7 +40,7 @@ public class NumberOfPermitsPageSteps implements En {
         });
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {
-            String actualReference = CabotagePage.reference();
+            String actualReference = BasePermitPage.getReference();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
 
         });

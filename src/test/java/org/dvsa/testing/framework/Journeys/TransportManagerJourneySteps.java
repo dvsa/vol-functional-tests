@@ -4,18 +4,15 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import activesupport.string.Str;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.junit.Assert;
 
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertTrue;
 
 public class TransportManagerJourneySteps extends BasePage {

@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
@@ -34,7 +35,7 @@ public class CheckYourAnswersSteps implements En {
         });
         Then("^I am able to see the application reference number on the annual bilateral check your answers page$", () -> {
             CheckYourAnswersPage.untilOnPage();
-            String actualReference =  CheckYourAnswersPage.reference();
+            String actualReference =  BasePermitPage.getReference();
             String expectedReference = operatorStore.getCurrentLicence().get().getReferenceNumber();
             Assert.assertEquals(expectedReference, actualReference);
         });

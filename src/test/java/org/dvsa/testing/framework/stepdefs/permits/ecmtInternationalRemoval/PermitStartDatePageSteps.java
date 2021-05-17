@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.PermitStartDatePage;
@@ -27,7 +28,7 @@ public class PermitStartDatePageSteps implements En {
                     .certificatesRequiredPage();
         });
         And ("^the reference number is displayed correctly$", () -> {
-            String actualReference = PermitStartDatePage.reference();
+            String actualReference = BasePermitPage.getReference();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         And ("^the page heading on permit start date page should be correct$", PermitStartDatePage::hasPageHeading);

@@ -4,16 +4,20 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
+import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
 
-public class CabotagePageSteps implements En {
+public class CabotagePageSteps extends BasePage implements En {
     public CabotagePageSteps(OperatorStore operatorStore, World world, CountrySelectionPage countrySelectionPage) {
         And ("^I am on the Bilateral Cabotage Page with more than one countries selected$", () -> {
             clickToPermitTypePage(world);
@@ -32,13 +36,17 @@ public class CabotagePageSteps implements En {
             PermitUsagePage.journeyType(JourneyType.random());
 
         });
-        Then("^the page heading on the bilateral cabotage page is displayed correctly$", CabotagePage::pageHeading);
-        And ("^the advisory texts on the bilateral cabotage page are displayed correctly$", CabotagePage::advisoryTexts);
+        Then("^the page heading on the bilateral cabotage page is displayed correctly$", () -> {
+            Assert.assertEquals(getText("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH),"Do you need to carry out cabotage?");
+        });
+        And ("^the advisory texts on the bilateral cabotage page are displayed correctly$", BilateralJourneySteps::assertBilateralCabotageAdvisoryTexts);
         When("^select save and continue without confirming$", BasePermitPage::saveAndContinue);
-        Then("^the cabotage relevant error message is displayed$", CabotagePage::errorText);
-        When("^I select 'no' button$", CabotagePage::noButton);
-        Then("^the relevant advisory text message is displayed$", CabotagePage::advisoryTextforNonCabotageConfirmation);
-        When("^I select 'yes' button and save and continue$", CabotagePage::yesButton);
+        Then("^the cabotage relevant error message is displayed$", () -> {
+            Assert.assertEquals(getText("//p[@class='error__text']", SelectorType.XPATH),"Please select one option");
+        });
+        When("^I select 'no' button$", BilateralJourneySteps::clickNoToCabotage);
+        Then("^the relevant advisory text message is displayed$", BilateralJourneySteps::assertNonCabotageConfirmationAdvisoryTexts);
+        When("^I select 'yes' button and save and continue$", BilateralJourneySteps::clickYesToCabotage);
         And ("^I am on the Bilateral Cabotage Page with norway selection", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
@@ -61,11 +69,11 @@ public class CabotagePageSteps implements En {
             }
             else
             {
-                CancelApplicationPage.untilOnPage();
-                CancelApplicationPage.hasAdvisoryText();
+                BilateralJourneySteps.untilOnCancelApplicationPage();
+                BilateralJourneySteps.assertAdvisoryTextOnCancelApplicationPage();
             }
         });
-        And ("^the advisory texts on the bilateral standard and cabotage permits page are displayed correctly", CabotagePage::advisoryTextsStandardAndCabotagePermits);
+        And ("^the advisory texts on the bilateral standard and cabotage permits page are displayed correctly", BilateralJourneySteps::assertStandardAndCabotagePermitsAdvisoryTexts);
         And ("^I am on the cabotage page for standard and cabotage permits with more than one countries selected", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()

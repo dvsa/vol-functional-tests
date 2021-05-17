@@ -6,8 +6,9 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
@@ -35,7 +36,7 @@ public class CheckYourAnswersPageSteps implements En {
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.continueButton();
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.bilateralSaveAndContinue();
             NumberOfPermitsPage.numberOfPermits();
             AnnualBilateralJourney.getInstance().permit(operatorStore);
@@ -90,7 +91,7 @@ public class CheckYourAnswersPageSteps implements En {
           PermitUsagePage.untilOnPermitUsagePage();
           PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
           PermitUsagePage.continueButton();
-          CabotagePage.noButton();
+          BilateralJourneySteps.clickNoToCabotage();
           BasePermitPage.bilateralSaveAndContinue();
           NumberOfPermitsPage.numberOfPermits();
           AnnualBilateralJourney.getInstance().permit(operatorStore);

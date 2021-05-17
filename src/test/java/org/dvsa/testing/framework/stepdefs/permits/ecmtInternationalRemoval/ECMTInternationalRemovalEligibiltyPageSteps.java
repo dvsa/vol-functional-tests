@@ -33,7 +33,7 @@ public class ECMTInternationalRemovalEligibiltyPageSteps implements En {
             Assert.assertTrue(ECMTInternationalRemovalPage.Errormessage());
         });
         And ("^the Application Number is shown correctly on ECMT International Eligibility page", () -> {
-            String actualReference = ECMTInternationalRemovalPage.reference();
+            String actualReference = BasePermitPage.getReference();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         And ("^the page heading is shown as per updated AC$", ECMTInternationalRemovalPage::hasPageHeading);

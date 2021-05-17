@@ -35,7 +35,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             OverviewPage.select(OverviewPage.Section.RegistrationNumber);
             VehicleRegistrationNumberPage.untilOnRegistrationPage();
             VehicleRegistrationNumberPage.hasPageHeading();
-            VehicleRegistrationNumberPage.reference();
+            BasePermitPage.getReference();
             VehicleRegistrationNumberPage.registrationNumber();
             BasePermitPage.saveAndContinue();
         });
@@ -43,42 +43,42 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Certificate  of Compliance section and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnCertificatePage();
             CertificateOfComplianceNumberPage.hasPageHeading();
-            CertificateOfComplianceNumberPage.reference();
+            BasePermitPage.getReference();
             CertificateOfComplianceNumberPage.ComplianceNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle make and model section and click save and continue$", () -> {
             MakeAndModelPage.untilOnMakeAndModelPage();
             MakeAndModelPage.hasPageHeading();
-            MakeAndModelPage.reference();
+            BasePermitPage.getReference();
             MakeAndModelPage.MakeAndModel();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnIdentificationPage();
             VehicleIdentificationNumberPage.hasPageHeading();
-            VehicleIdentificationNumberPage.reference();
+            BasePermitPage.getReference();
             VehicleIdentificationNumberPage.identificationNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle Engine number section and click save and continue$", () -> {
             VehicleEngineNumberPage.untilOnEngineNumberPage();
             VehicleEngineNumberPage.hasPageHeading();
-            VehicleEngineNumberPage.reference();
+            BasePermitPage.getReference();
             VehicleEngineNumberPage.engineNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle engine type section and click save and continue$", () -> {
             VehicleEngineTypePage.untilOnEngineTypePage();
             VehicleEngineTypePage.hasPageHeading();
-            VehicleEngineTypePage.reference();
+            BasePermitPage.getReference();
             VehicleEngineTypePage.engineType();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete MOT DATE section and click save and continue$", () -> {
             VehicleMotPage.untilOnMotPage();
             VehicleMotPage.hasPageHeading();
-            VehicleMotPage.reference();
+            BasePermitPage.getReference();
             VehicleMotPage.motDate();
             BasePermitPage.saveAndContinue();
         });

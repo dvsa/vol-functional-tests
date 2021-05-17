@@ -1,13 +1,11 @@
 package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import com.typesafe.config.Config;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 
 public class FeeAndPaymentJourneySteps extends BasePage {

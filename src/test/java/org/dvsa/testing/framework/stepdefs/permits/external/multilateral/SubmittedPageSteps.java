@@ -1,17 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
+import Injectors.World;
 import activesupport.string.Str;
 import activesupport.system.Properties;
-import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.external.permit.PayFeesPage;
@@ -32,7 +30,6 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.lib.pages.BasePage.*;
-import static org.dvsa.testing.lib.pages.Driver.DriverUtils.get;
 
 public class SubmittedPageSteps implements En {
     public SubmittedPageSteps(OperatorStore operator, World world) {

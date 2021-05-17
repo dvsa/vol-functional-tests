@@ -44,7 +44,7 @@ public class AnnualTripsAbroadPageSteps implements En {
         And("^the warning message on short term ECMT Annual Trips Abroad Page is displayed correctly$", AnnualTripsAbroadPage::warningText);
         And("^the reference number on Short term ECMT Annual Trips Abroad Page is displayed correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber = AnnualTripsAbroadPage.reference();
+            String actualReferenceNumber = BasePermitPage.getReference();
             Assert.assertThat(actualReferenceNumber, containsString(expectedLicenceNumber));
         });
         When ("^I select help calculating your international trips$", AnnualTripsAbroadPage::helpCalculatingInternationalTrips);

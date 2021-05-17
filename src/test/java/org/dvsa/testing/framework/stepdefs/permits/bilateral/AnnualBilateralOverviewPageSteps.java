@@ -6,8 +6,9 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
@@ -52,7 +53,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermits();
             BasePermitPage.saveAndContinue();
@@ -88,14 +89,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
         Then("^I m navigated to bilateral overview page$", () -> {
            Assert.assertEquals(OverviewPage.pageHeading(),"Application overview");
         });
-        Then("^the default sections statuses on bilateral overview page are as expected$", () -> {
-            String answerQuestions= BasePage.getElementValueByText("//li[2]//ul[1]//li[1]//span[2]",SelectorType.XPATH);
-            String declaration= BasePage.getElementValueByText("//li[3]//ul[1]//li[1]//span[2]",SelectorType.XPATH);
-            String submitAndPay= BasePage.getElementValueByText("//li//li[2]//span[2]",SelectorType.XPATH);
-            Assert.assertEquals(answerQuestions,"NOT STARTED YET");
-            Assert.assertEquals(declaration,"CAN'T START YET");
-            Assert.assertEquals(submitAndPay,"CAN'T START YET");
-        });
+
         And("^I click on Turkey country link on the Application overview page$", OverviewPage::clickTurkey);
         And("^I click on Ukraine country link on the Application overview page$", OverviewPage::clickUkraine);
         When("^I submit the application on selection of Morocco link on overview page$", () -> {

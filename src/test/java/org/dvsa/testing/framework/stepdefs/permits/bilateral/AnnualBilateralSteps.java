@@ -13,10 +13,11 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.Country;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.licence.LicenceBasePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
@@ -30,7 +31,6 @@ import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.hamcrest.Matchers;
-import org.hamcrest.text.MatchesPattern;
 import org.junit.Assert;
 
 import java.time.LocalDate;
@@ -67,17 +67,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             HomePage.FeesTab.hasOutstandingFees();
             HomePage.FeesTab.outstanbding(true);
         });
-        Then("^bilateral overview licence reference number is correct$", () -> {
-            String expectedLicenceNumber = operatorStore.getLatestLicence().get().getLicenceNumber();
-            String actualReferenceNumber = RestrictedCountriesPage.reference();
-            Assert.assertThat(actualReferenceNumber, MatchesPattern.matchesPattern(expectedLicenceNumber.concat(" / \\d+")));
-        });
         Then("^I select save and continue button on select countries page$", CountrySelectionPage::continueButton);
-        Then("^the page heading on bilateral overview page is correct$", () -> {
-            String expectedPageHeading = "Select the country you are transporting goods to";
-            String actualPageHeading = OverviewPage.pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
-        });
         Then("^countries are displayed in alphabetical order$", () -> {
             List<String> countries = RestrictedCountriesPage.countries();
 
@@ -101,15 +91,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             List<Country> countries = RestrictedCountriesPage.randomCountries();
             licence.getEcmt().setRestrictedCountries(countries);
         });
-        When("^I select countries from the bilateral countries page$", () -> {
-            RestrictedCountriesPage.untilOnPage();
-            LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licence);
-
-            List<Country> countries = RestrictedCountriesPage.randomCountries();
-            licence.getEcmt().setRestrictedCountries(countries);
-        });
-        Then("^I should be on the bilateral number of permits page$", NumberOfPermitsPage::untilOnPage);
         Given("^I'm on the bilateral check your answers page$", () -> {
             AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
             OverviewPage.select(OverviewPage.Section.Countries);
@@ -129,9 +110,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             Assert.assertThat(expectedCountries, equalTo(actualCountries));
         });
-        And("^my selected licence does not have an existing annual bilateral permit$", () -> {
-            // Here for readability and to stop cucumber from throwing an exception
-        });
         Then("^I am able to complete an annual bilateral permit application$", () -> {
             AnnualBilateralJourney.getInstance()
                     .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
@@ -145,7 +123,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.continueButton();
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.bilateralSaveAndContinue();
             NumberOfPermitsPage.numberOfPermits();
             AnnualBilateralJourney.getInstance().permit(operatorStore);
@@ -162,7 +140,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BaseApplicationSubmitPage.untilSubmittedPageLoad();
             ApplicationSubmitPage.finish();
             untilAnyPermitStatusMatch(PermitStatus.VALID);
-            BilateralDashboardPage.BilateralsDashboardPageIssuedCheck();
+            String titleText = getText("//h2[contains(text(),'Issued permits and certificates')]", SelectorType.XPATH);
+            Assert.assertEquals(titleText, "Issued permits and certificates");
         });
 
         Given("^I have (a valid |applied for an )annual bilateral noway cabotage only permit$", (String notValid) -> {
@@ -182,7 +161,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
                 PermitUsagePage.untilOnPermitUsagePage();
                 AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-                CabotagePage.yesButton();
+                BilateralJourneySteps.clickYesToCabotage();
                 BasePermitPage.saveAndContinue();
                 NumberOfPermitsPage.numberOfPermits();
                 String expected= BasePermitPage.getElementValueByText("//label[contains(text(),'Cabotage')]",SelectorType.XPATH);
@@ -190,7 +169,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 BasePermitPage.saveAndContinue();
                 BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
                 OverviewPage.selectDeclaration();
-                licenceStore.setReferenceNumber(DeclarationPage.reference());
+                licenceStore.setReferenceNumber(BasePermitPage.getReference());
                 AnnualBilateralJourney.getInstance().declare(true)
                             .permitFee();
                  EcmtApplicationJourney.getInstance()
@@ -224,7 +203,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.continueButton();
-            CabotagePage.noButton();
+            BilateralJourneySteps.clickNoToCabotage();
             BasePermitPage.bilateralSaveAndContinue();
             NumberOfPermitsPage.numberOfPermitsNew();
             NumberOfPermitsPage.setCabotageValue(NumberOfPermitsPage.getCabotageValue());
@@ -235,7 +214,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.bilateralSaveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
-                licenceStore.setReferenceNumber(DeclarationPage.reference());
+                licenceStore.setReferenceNumber(BasePermitPage.getReference());
                 AnnualBilateralJourney.getInstance().declare(true)
                         .permitFee();
                 EcmtApplicationJourney.getInstance()
@@ -276,7 +255,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.bilateralSaveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
-            licenceStore.setReferenceNumber(DeclarationPage.reference());
+            licenceStore.setReferenceNumber(BasePermitPage.getReference());
             AnnualBilateralJourney.getInstance().declare(true)
                         .permitFee();
              EcmtApplicationJourney.getInstance()
@@ -354,7 +333,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         Then("^I should be on the bilateral overview page for the active application already on the licence$", () -> {
             OverviewPage.untilOnPage();
-            String actualReference = OverviewPage.reference();
+            String actualReference = BasePermitPage.getReference();
             Assert.assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
         Then("^I should be on the bilateral declaration page$", DeclarationPage::untilOnPage);
@@ -389,14 +368,14 @@ public class AnnualBilateralSteps extends BasePage implements En {
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
-            OverviewPage.setReferenceNumber(OverviewPage.reference());
+            OverviewPage.setReferenceNumber(BasePermitPage.getReference());
             OverviewPage.clickNorway();
             untilOnPage();
             EssentialInformationPage.bilateralEssentialInfoContinueButton();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermits();
             operatorStore.setPermit(NumberOfPermitsPage.permitValue);
@@ -410,14 +389,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 String ref1 = actualApplications.get(i + 1).getReferenceNumber();
                 Assert.assertThat(ref1, Matchers.greaterThanOrEqualTo(ref2));
             });
-        });
-        And("^I continue my current annual bilateral permit$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            get(OverviewPage.url(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber()));
-        });
-        Then("^the check your answers section should be complete$", () -> {
-            //     boolean isComplete = OverviewPage.checkStatus(OverviewPage.Section.CheckYourAnswers, PermitStatus.COMPLETED);
-            //   Assert.assertTrue("The 'check your answers' section status is not complete", isComplete);
         });
         And("^I navigate to the annual bilateral overview page$", () -> {
             String path = OverviewPage.RESOURCE.replaceFirst("\\\\d\\+", operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
@@ -437,16 +408,13 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
         And("^the licence number is displayed in Annual bilateral list page$", () -> {
             String expectedReference = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
-            String actual = ValidECMTRemovalPermitsPage.reference();
+            String actual = BasePermitPage.getReference();
             Assert.assertEquals(expectedReference, actual);
         });
 
         When("I select Norway in the filter list and click Apply filter", () -> {
            ValidAnnualBilateralPermitsPage.filter();
             ValidAnnualBilateralPermitsPage.selectNorway();
-        });
-        Then("the results are filtered successfully", () -> {
-
         });
         Then("^the table of annual bilateral permits is as expected$", () -> {
             OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
@@ -502,7 +470,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
         });
         And("^I am on the annual bilateral number of permit page for bilateral standard permits no cabatoge path$", () -> {
@@ -532,7 +500,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.noButton();
+            BilateralJourneySteps.clickNoToCabotage();
             BasePermitPage.saveAndContinue();
         });
         And("^I am on the annual bilateral number of permit page for bilateral standard and cabotage permits with cabotage confirmation path$", () -> {
@@ -549,7 +517,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.continueButton();
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
             BasePermitPage.saveAndContinue();
         });

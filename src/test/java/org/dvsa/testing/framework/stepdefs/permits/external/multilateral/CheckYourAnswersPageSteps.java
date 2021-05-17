@@ -9,7 +9,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
-import org.dvsa.testing.lib.pages.common.type.Permit;
+import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;

@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Utils.store;
 
-import org.dvsa.testing.lib.pages.common.type.Permit;
+import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 

@@ -6,9 +6,10 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.Driver.DriverUtils;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -35,7 +36,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermits();
             BasePermitPage.saveAndContinue();
@@ -43,7 +44,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             OverviewPage.selectDeclaration();
         });
         Then("^the application reference number and advisory text are displayed correctly$", () -> {
-            String actualReference = DeclarationPage.reference();
+            String actualReference = BasePermitPage.getReference();
             licenceStore.setReferenceNumber(actualReference);
             Assert.assertTrue(String.valueOf(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,17))),true);
             DeclarationPage.pageHeading();
@@ -54,13 +55,6 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
         });
         Then("^I am on the Annual Bilateral application submitted page$", () -> {
             isPath("/permits/application/\\d+/submitted/");
-        });
-        Then("^I'm viewing my saved bilateral application in internal$", () -> {
-
-            String licence = world.applicationDetails.getLicenceNumber();
-            operatorStore.setCurrentLicenceNumber(licence);
-
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         });
         Then("^I am continuing on the on-going Annual Bilateral application$", () -> {
             deleteCookies();
@@ -104,7 +98,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermits();
@@ -124,7 +118,6 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
         Then("^there's a guidance notes link to the correct gov page$", () -> {
             Assert.assertTrue("Unable to find guidance notes link", DeclarationPage.hasGuidanceNotes());
         });
-        When("^I save and continue on annual bilateral declaration page$", DeclarationPage::saveAndContinue);
         When("^I submit my annual bilateral declaration$", () -> {
             AnnualBilateralJourney.getInstance().declare(true);
         });

@@ -1,15 +1,13 @@
 package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 

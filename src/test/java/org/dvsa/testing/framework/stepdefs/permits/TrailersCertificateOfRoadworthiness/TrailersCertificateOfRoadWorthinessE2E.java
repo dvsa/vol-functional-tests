@@ -38,7 +38,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             // Check the new validation
             BasePermitPage.saveAndContinue();
             VehicleRegistrationNumberPage.hasRequiredFieldValidation();
-            VehicleRegistrationNumberPage.reference();
+            BasePermitPage.getReference();
             VehicleRegistrationNumberPage.registrationNumber();
 
             BasePermitPage.saveAndContinue();
@@ -47,21 +47,21 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Certificate  of Compliance section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnCertificatePage();
             CertificateOfComplianceNumberPage.hasPageHeading();
-            CertificateOfComplianceNumberPage.reference();
+            BasePermitPage.getReference();
             CertificateOfComplianceNumberPage.ComplianceNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle make and model section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             MakeAndModelPage.untilOnMakeAndModelPage();
             MakeAndModelPage.hasPageHeading();
-            MakeAndModelPage.reference();
+            BasePermitPage.getReference();
             MakeAndModelPage.MakeAndModel();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnIdentificationPage();
             VehicleIdentificationNumberPage.hasPageHeading();
-            VehicleIdentificationNumberPage.reference();
+            BasePermitPage.getReference();
             VehicleIdentificationNumberPage.identificationNumber();
             BasePermitPage.saveAndContinue();
         });
@@ -69,7 +69,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete MOT DATE section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleMotPage.untilOnMotPage();
             VehicleMotPage.hasPageHeading();
-            VehicleMotPage.reference();
+            BasePermitPage.getReference();
             VehicleMotPage.motDate();
             BasePermitPage.saveAndContinue();
         });

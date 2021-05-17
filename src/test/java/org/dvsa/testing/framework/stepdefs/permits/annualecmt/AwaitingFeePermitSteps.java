@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
+import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.config.Configuration;
 import activesupport.system.Properties;
@@ -8,15 +9,13 @@ import apiCalls.eupaActions.OrganisationAPI;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.common.TimeUtils;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.enums.AdminOption;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.AdminOption;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.ApplicationIssuingFeePage;
 import org.dvsa.testing.lib.pages.internal.admin.permits.BaseAdminPermits;
@@ -41,7 +40,6 @@ import java.util.stream.IntStream;
 
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
-import static org.dvsa.testing.lib.pages.external.permit.ApplicationIssuingFeePage.ApplicationInfo.*;
 import static org.hamcrest.core.Is.is;
 
 public class AwaitingFeePermitSteps extends BasePage implements En {

@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CertificatesRequiredPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
@@ -26,7 +27,7 @@ public class CertificatesRequiredPageSteps implements En {
                     .cabotagePage();
         });
         And ("^the application reference number is displayed$", () -> {
-            String actualReference = CertificatesRequiredPage.reference();
+            String actualReference = BasePermitPage.getReference();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         And ("^the page heading should be correct$", CertificatesRequiredPage::hasPageHeading);
