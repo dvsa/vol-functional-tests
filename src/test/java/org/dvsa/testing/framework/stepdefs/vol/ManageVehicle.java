@@ -1,6 +1,8 @@
-package org.dvsa.testing.framework.stepdefs;
+package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
+import activesupport.driver.Browser;
 import activesupport.http.RestUtils;
 import activesupport.system.Properties;
 import apiCalls.Utils.generic.Headers;
@@ -16,6 +18,7 @@ import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 

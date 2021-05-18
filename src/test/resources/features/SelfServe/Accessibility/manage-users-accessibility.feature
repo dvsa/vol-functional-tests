@@ -8,7 +8,7 @@ Feature: Manage users page should comply to the WCAG 2.1 AA accessibility standa
     Given i have an admin account to add users
     And i navigate to the manage users page
 
-  @violations
+  @Accessibility
   Scenario: Scan for accessibility violations
     When i scan for accessibility violations
     Then no issues should be present on the page

@@ -2,6 +2,7 @@
 @SS
 @SS-EXTERNAL-SEARCH
 @ss_regression
+@smoketest
 
 Feature: External user search by Address, Business name, Licence Number and Person's name
 

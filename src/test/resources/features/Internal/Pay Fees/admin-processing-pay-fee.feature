@@ -2,6 +2,7 @@
 @Admin-Payment-Processing
 @int_regression
 @CPMS_tests
+@smoketest
 Feature: Admin paying fees
 
   Background:
@@ -19,3 +20,5 @@ Feature: Admin paying fees
       | cash           |
       | cheque         |
       | postal         |
+
+#    Need NI Payment for internal

@@ -126,6 +126,8 @@
                     <includeScenarioTags>
                         not (@skip
                         or @Deprecated
+                        or @Accessibility
+                        or @Jenkins
                         or @CLOSES-WINDOW
                         or @TOGGLE-ECMT)
                     </includeScenarioTags>
