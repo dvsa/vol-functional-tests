@@ -9,6 +9,9 @@ Feature: Generate letter pop up should contain letter details
     When i update my operating system on internal to "Windows 7"
     And i url search for my licence
 
+  @smoketest
   Scenario: Check generate letter pop up
     When i generate a letter
     Then The pop up should contain letter details
+
+#    Need full generation test and check it exists.
