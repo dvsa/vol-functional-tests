@@ -9,7 +9,6 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 public class Configuration{
     public EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     public Config config = new activesupport.config.Configuration(env.toString()).getConfig();
-    public String localDefaultPassword;
     private World world;
 
     public Configuration(World world) {
@@ -21,9 +20,6 @@ public class Configuration{
     }
 
     public String getTempPassword(String emailAddress) {
-        if (env == EnvironmentType.LOCAL) {
-            return localDefaultPassword;
-        }
         return S3.getTempPassword(emailAddress, getBucketName());
     }
 }

@@ -6,7 +6,7 @@
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 
     <properties>
         <active-support.version>1.5.0</active-support.version>
@@ -34,10 +34,9 @@
         <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
         <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
         <allure-report-version>2.13.5</allure-report-version>
-        <apache-commons.version>1.6</apache-commons.version>
-        <owasp-dependency-checker.version>6.0.2</owasp-dependency-checker.version>
+        <apache-commons.version>1.8</apache-commons.version>
+        <gson.version>20210307</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
-        <nexus.snapshots>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-snapshots</nexus.snapshots>
     </properties>
 
     <repositories>
@@ -168,25 +167,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${owasp-dependency-checker.version}</version>
-                <configuration>
-                    <failBuildOnCVSS>11</failBuildOnCVSS>
-                    <suppressionFile>./src/test/resources/false_positives.xml</suppressionFile>
-                    <assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
-                    <retireJsAnalyzerEnabled>false</retireJsAnalyzerEnabled>
-                    <mavenSettingsProxyId>shd_proxy</mavenSettingsProxyId>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -298,29 +278,19 @@
             <version>${apache-commons.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.deque</groupId>
-            <artifactId>axe-selenium</artifactId>
-            <version>3.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.seleniumhq.selenium</groupId>
-                    <artifactId>selenenium-java</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>org.dvsa.testing.framework</groupId>
             <artifactId>vol-api-calls</artifactId>
             <version>${api-calls.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>${gson.version}</version>
         </dependency>
     </dependencies>
 
     <!--  Nexus Configuration  -->
     <distributionManagement>
-        <snapshotRepository>
-            <id>maven-snapshots</id>
-            <url>${nexus.snapshots}</url>
-        </snapshotRepository>
         <repository>
             <id>maven-releases</id>
             <url>${nexus.releases}</url>

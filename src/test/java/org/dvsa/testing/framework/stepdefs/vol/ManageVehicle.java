@@ -1,82 +1,97 @@
-package org.dvsa.testing.framework.stepdefs.vol;
+package org.dvsa.testing.framework.stepdefs;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
+import activesupport.http.RestUtils;
+import activesupport.system.Properties;
+import apiCalls.Utils.generic.Headers;
+import apiCalls.Utils.generic.Utils;
+import cucumber.api.java.After;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.dvsa.testing.lib.pages.BasePage;
+import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.url.api.URL;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
 public class ManageVehicle extends BasePage {
     World world;
 
-    public ManageVehicle(World world){
-         this.world = world;
+    private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+
+    public ManageVehicle(World world) {
+        this.world = world;
     }
 
     @When("I navigate to manage vehicle page on an application")
-    public void iNavigateToManageVehiclePageOnAnApplication() {
-        world.selfServeNavigation.navigateToLogin( world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+    public void iNavigateToManageVehiclePageOnAnApplication(){
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourneySteps.navigateToManageVehiclesPage("application");
     }
 
     @When("I navigate to manage vehicle page on a licence")
-    public void iNavigateToManageVehiclePageOnALicence() {
-        world.selfServeNavigation.navigateToLogin( world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+    public void iNavigateToManageVehiclePageOnALicence(){
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourneySteps.navigateToManageVehiclesPage("licence");
     }
 
     @When("I navigate to manage vehicle page on a variation")
-    public void iNavigateToManageVehiclePageOnAVariation() {
-        world.selfServeNavigation.navigateToLogin( world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+    public void iNavigateToManageVehiclePageOnAVariation(){
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourneySteps.navigateToManageVehiclesPage("variation");
     }
 
     @Then("the add vehicle page should display licence number")
-    public void theAddVehiclePageShouldDisplayLicenceNumber() {
-        Assert.assertEquals(world.applicationDetails.getLicenceNumber(),getText("licence",SelectorType.ID));
+    public void theAddVehiclePageShouldDisplayLicenceNumber(){
+        Assert.assertEquals(world.applicationDetails.getLicenceNumber(), getText("licence", SelectorType.ID));
     }
 
     @And("choose to add a {string} vehicle")
-    public void chooseToAddAVehicle(String VRM) {
+    public void chooseToAddAVehicle(String VRM){
         world.UIJourneySteps.addAVehicle(VRM);
+        waitAndClick("confirm", SelectorType.ID);
     }
 
     @And("{string} heading")
-    public void heading(String heading) {
+    public void heading(String heading){
         Assert.assertEquals(heading, getText("h1", SelectorType.CSS));
     }
 
     @And("I search without entering a registration number")
     public void iSearchWithoutEnteringARegistrationNumber() {
-        click("//*[contains(text(),'Find vehicle')]",SelectorType.XPATH);
+        world.UIJourneySteps.addAVehicle("");
     }
 
     @Then("An error message should be displayed")
     public void anErrorMessageShouldBeDisplayed() {
-        isElementPresent("//div[@class=\"govuk-error-summary\"]",SelectorType.XPATH);
-        isTextPresent("Enter a Vehicle Registration Mark",60);
+        isElementPresent("//div[@class=\"govuk-error-summary\"]", SelectorType.XPATH);
+        isTextPresent("Enter a Vehicle Registration Mark", 60);
     }
 
     @When("I search for a valid {string} registration")
     public void iSearchForAValidRegistration(String vrm) {
         world.dvlaJourneySteps.VRM = vrm;
-        enterText("registration-mark", world.dvlaJourneySteps.VRM, SelectorType.ID);
+        waitAndClick("//*[contains(text(),'Add a vehicle')]", SelectorType.XPATH);
+        waitAndClick("next", SelectorType.ID);
+        enterText("vehicle-search[search-value]", world.dvlaJourneySteps.VRM, SelectorType.NAME);
+        waitAndClick("vehicle-search[submit]", SelectorType.NAME);
     }
 
     @Then("the vehicle summary should be displayed on the page:")
     public void theVehicleSummaryShouldBeDisplayedOnThePage(List<String> table) {
         isTextPresent(String.format("A vehicle has been found with registration %s", world.dvlaJourneySteps.VRM), 60);
-        for(String columns : table) {
+        for (String columns : table) {
             isTextPresent(columns, 60);
         }
     }
@@ -84,15 +99,15 @@ public class ManageVehicle extends BasePage {
     @And("the vehicle details should not be empty")
     public void theVehicleDetailsShouldNotBeEmpty() {
         List<WebElement> vehicleDetails =
-                findElements("//*[@class='govuk-table']//tbody[@class='govuk-table__body']//ancestor::tr[@class='govuk-table__row']//following-sibling::td",SelectorType.XPATH);
-        for(WebElement element : vehicleDetails)
+                findElements("//*[@class='govuk-table']//tbody[@class='govuk-table__body']//ancestor::tr[@class='govuk-table__row']//following-sibling::td", SelectorType.XPATH);
+        for (WebElement element : vehicleDetails)
             Assert.assertNotNull(element.getText());
     }
 
     @Then("the following should be displayed:")
     public void theFollowingShouldBeDisplayed(List<String> headers) {
-        for(String header : headers){
-            isTextPresent(header,60);
+        for (String header : headers) {
+            isTextPresent(header, 60);
         }
     }
 
@@ -256,7 +271,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @Then("the standard {string} errors appear")
-    public void theVehicleDiscErrorsAppear(String error) throws IllegalBrowserException {
+    public void theVehicleDiscErrorsAppear(String error) {
         String errorTitle = "There is a problem";
         assertTrue(isElementPresent(String.format("//div[@class='validation-summary']/h2[contains(text(),'%s')]", errorTitle), SelectorType.XPATH));
         assertTrue(isElementPresent(String.format("//div[@class='validation-summary']//a[contains(text(),'%s')]", error), SelectorType.XPATH));
@@ -274,8 +289,8 @@ public class ManageVehicle extends BasePage {
     public void theVehicleShouldNoLongerBePresent() {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
         List<WebElement> remainingVRMs = findElements("//td//a", SelectorType.XPATH);
-        for (WebElement VRM : remainingVRMs){
-            assertNotEquals(VRM.getText(),(world.dvlaJourneySteps.VRM));
+        for (WebElement VRM : remainingVRMs) {
+            assertNotEquals(VRM.getText(), (world.dvlaJourneySteps.VRM));
         }
     }
 
@@ -306,10 +321,36 @@ public class ManageVehicle extends BasePage {
     public void theSwitchboardOnlyViewsAddVehicleAndViewVehicleRadioButtons() {
         List<WebElement> switchboardElements = findElements("//label[@class='govuk-label govuk-radios__label']", SelectorType.XPATH);
         for (WebElement radioButton : switchboardElements) {
-            assertNotEquals(radioButton.getText(),"Remove a vehicle");
-            assertNotEquals(radioButton.getText(),"Reprint vehicle disc");
+            assertNotEquals(radioButton.getText(), "Remove a vehicle");
+            assertNotEquals(radioButton.getText(), "Reprint vehicle disc");
         }
         assertEquals(switchboardElements.get(0).getText(), "Add a vehicle");
         assertEquals(switchboardElements.get(1).getText(), "View the vehicles you have removed from your licence");
+    }
+
+    @Then("the {string} should be displayed on the page")
+    public void theShouldBeDisplayedOnThePage(String vrm) {
+        isTextPresent(String.format("Vehicle %s has been added", vrm), 60);
+    }
+
+    @After
+    public void removeVehicleOnLicence() {
+        JSONObject json = new JSONObject();
+        Map<String, String> queryParams = new HashMap<>();
+        {
+            queryParams.put("includeActive", "1");
+            queryParams.put("page", "1");
+            queryParams.put("limit", "100");
+            queryParams.put("sort", "vehicle");
+            queryParams.put("order", "DESC");
+        }
+        ValidatableResponse response;
+        Headers apiHeaders = new Headers();
+        apiHeaders.headers.put("x-pid", Utils.config.getString("apiHeader"));
+
+        response = RestUtils.getWithQueryParams(String.format(URL.build(this.env, "licence/%s/vehicles/").toString(), world.createApplication.getLicenceId()), queryParams, world.createApplication.apiHeaders.getHeaders());
+        List<Object> responseArray = response.extract().body().jsonPath().get("results.id.findAll()");
+        json.put("ids", responseArray);
+        RestUtils.delete(json.toString(), URL.build(this.env, "licence-vehicle/").toString(), apiHeaders.headers);
     }
 }
