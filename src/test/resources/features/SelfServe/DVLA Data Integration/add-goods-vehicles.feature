@@ -9,9 +9,6 @@ Feature: Search and add a vehicle
     Then the add vehicle page should display licence number
     And "Add a vehicle" heading
 
-  @VOL-1319
-  Feature: Search and add a vehicle
-
   Scenario Outline: Add a vehicle to application (This or the one below?)
     Given I have a "<Operator>" application with 0 vehicles and a vehicleAuthority of 5
     When I navigate to manage vehicle page on an application
@@ -54,8 +51,11 @@ Feature: Search and add a vehicle
       | Make                      |
     And the vehicle details should not be empty
 
+  @WIP
   Scenario: Clear active search for a VRM
+    Given I have a "goods" "standard_national" licence
 
+  @WIP
   Scenario: Add a vehicle registration mark for MLH
     Given I have "2" "standard_national" "goods" licences
 
