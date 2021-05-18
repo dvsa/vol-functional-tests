@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -135,7 +136,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     }
 
     public AnnualBilateralJourney checkYourAnswers(){
-        CheckYourAnswersPage.untilOnPage();
+        CheckYourAnswerPage.untilOnPage();
         CheckYourAnswersPage.saveAndContinue();
         return this;
     }

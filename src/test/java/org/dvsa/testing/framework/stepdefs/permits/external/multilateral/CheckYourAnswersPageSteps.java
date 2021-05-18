@@ -55,6 +55,6 @@ public class CheckYourAnswersPageSteps implements En {
                     CheckYourAnswerPage.getAnswer(MultilateralSection.NumberOfPermits)
             );
         });
-        Then("I am navigated to annual multilateral check your answers page", (StepdefBody.A0) CheckYourAnswersPage::untilOnPage);
+        Then("I am navigated to annual multilateral check your answers page", CheckYourAnswerPage::untilOnPage);
     }
 }

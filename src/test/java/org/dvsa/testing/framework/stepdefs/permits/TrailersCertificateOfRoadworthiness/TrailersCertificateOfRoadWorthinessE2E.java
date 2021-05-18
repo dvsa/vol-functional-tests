@@ -6,6 +6,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BaseCheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
@@ -75,7 +76,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         });
         Then("^I check content and click save and continue on the Check Your Answers page for Certificate of Roadworthiness for trailers$", () -> {
             CheckYourAnswersPage.checkAnswersPageLoad();
-            CheckYourAnswersPage.hasPageHeading();
+            CheckYourAnswerPage.hasPageHeading();
             BaseCheckYourAnswersPage.saveAndContinue();
         });
         Then("^I check content and Accept and continue on the Declaration page for Certificate of Roadworthiness for trailers page$", () -> {

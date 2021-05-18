@@ -62,7 +62,7 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("^short term permit check your answers page has correct heading label$", () -> {
 CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", SelectorType.XPATH,10, TimeUnit.SECONDS);
-                    CheckYourAnswersPage.hasPageHeading();
+                    CheckYourAnswerPage.hasPageHeading();
                 });
         Then("^the short term check your answers page has reference number$", () -> {
             BasePermitPage.getReference();
@@ -92,7 +92,7 @@ CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", Se
         And("^I click Check your answers link on the overview page again$", () -> {
             OverviewPage.select(OverviewPage.Section.Checkyouranswers);
         });
-        Then("^I am navigated to the short term check your answers page$", CheckYourAnswersPage::hasPageHeading);
+        Then("^I am navigated to the short term check your answers page$", CheckYourAnswerPage::hasPageHeading);
     }
 
     private static String toShortTermPermitUsage(@NotNull PermitUsage permitUsage) {

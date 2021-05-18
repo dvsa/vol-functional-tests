@@ -14,7 +14,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
@@ -54,7 +53,7 @@ public class NumberOfPermitPageSteps implements En {
             throw new PendingException();
         });
         When("^I choose to change the number of permits section$", () -> {
-            CheckYourAnswersPage.untilOnPage();
+            CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.clickChangeAnswer(MultilateralSection.NumberOfPermits);
         });
         And("^my previously selected values are remembered", () -> {
@@ -74,7 +73,7 @@ public class NumberOfPermitPageSteps implements En {
             boolean isComplete = org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.checkStatus(OverviewPage.Section.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
             Assert.assertTrue("The 'Number of Permits Required' section status is not complete", isComplete);
         });
-        Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswersPage::untilOnPage);
+        Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswerPage::untilOnPage);
         When("^the case worker is viewing current fees$", () -> {
             LicenceStore licence = operatorStore.getCurrentLicence().get();
             world.APIJourneySteps.createAdminUser();

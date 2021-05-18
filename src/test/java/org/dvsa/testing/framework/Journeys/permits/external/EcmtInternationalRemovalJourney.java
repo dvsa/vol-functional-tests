@@ -1,9 +1,9 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 
-import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BaseCheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.CheckYourAnswersPage;
@@ -12,8 +12,6 @@ import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.*;
 import org.junit.Assert;
-
-import java.net.MalformedURLException;
 
 import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.saveAndContinue;
 
@@ -50,7 +48,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
     }
 
     public EcmtInternationalRemovalJourney checkYourAnswers() {
-        CheckYourAnswersPage.untilOnPage();
+        CheckYourAnswerPage.untilOnPage();
         BaseCheckYourAnswersPage.saveAndContinue();
         return this;
     }

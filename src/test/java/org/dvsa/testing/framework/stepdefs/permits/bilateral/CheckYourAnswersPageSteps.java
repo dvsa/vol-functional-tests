@@ -7,6 +7,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -20,7 +21,7 @@ import java.net.MalformedURLException;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.untilOnPage;
 
-public class CheckYourAnswersPageSteps implements En {
+public class CheckYourAnswersPageSteps extends BasePage implements En {
     public CheckYourAnswersPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore)throws MalformedURLException, IllegalBrowserException {
         Then("^I am on the Bilateral check your answers page$", () -> {
             clickToPermitTypePage(world);
@@ -43,21 +44,20 @@ public class CheckYourAnswersPageSteps implements En {
             BasePermitPage.bilateralSaveAndContinue();
         });
         Then("^Country name displayed on the Bilateral check your answers page is the one clicked on the overview page$", () -> {
-            CheckYourAnswersPage.untilOnCheckYourAnswersPage();
-            Assert.assertEquals(CheckYourAnswersPage.getCountry(),operatorStore.getCountry());
+            CheckYourAnswerPage.untilOnPage();
+            String country = getText("//div[@class='govuk-caption-xl']", SelectorType.XPATH);
+            Assert.assertEquals(country, operatorStore.getCountry());
         });
 
         Then("^the page heading on bilateral check your answers page is correct$", () -> {
-            String expectedPageHeading = "Check your answers";
-            String actualPageHeading = CheckYourAnswersPage.pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
+            CheckYourAnswerPage.hasPageHeading();
         });
         Then("^I see four sections displayed on the table correctly$", () -> {
             CheckYourAnswersPage.newSection();
         });
 
         Then("^Period type displayed on the check your answers page is the one I selected on the Period selection page$", () -> {
-            Assert.assertEquals(CheckYourAnswersPage.getPeriod(),operatorStore.getCurrentBilateralPeriodType().toString());
+            Assert.assertEquals(CheckYourAnswersPage.getPeriod(), operatorStore.getCurrentBilateralPeriodType().toString());
         });
         Then("^Journey type displayed on the check your answers page is the one I selected on the Permits usage$", () -> {
             Assert.assertEquals(CheckYourAnswersPage.getJourney(),PermitUsagePage.getJourney());
@@ -96,7 +96,7 @@ public class CheckYourAnswersPageSteps implements En {
           NumberOfPermitsPage.numberOfPermits();
           AnnualBilateralJourney.getInstance().permit(operatorStore);
           BasePermitPage.bilateralSaveAndContinue();
-          CheckYourAnswersPage.untilOnCheckYourAnswersPage();
+          CheckYourAnswerPage.untilOnPage();
         });
         And("^I change period to be Bilateral Standard permits no Cabotage on the period selection and continue to be on the check your answers page$", () -> {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardPermitsNoCabotage, operatorStore);
@@ -108,7 +108,7 @@ public class CheckYourAnswersPageSteps implements En {
             NumberOfPermitsPage.numberOfPermits();
             AnnualBilateralJourney.getInstance().permit(operatorStore);
             BasePermitPage.bilateralSaveAndContinue();
-            CheckYourAnswersPage.untilOnCheckYourAnswersPage();
+            CheckYourAnswerPage.untilOnPage();
         });
 
         Then("^Value of Do you need to carry out cabotage, will be as per the selection after changing the period selection to Bilaterals Standard and Cabotage permits$", () -> {

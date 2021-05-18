@@ -36,13 +36,12 @@ public class CheckYourAnswersPageSteps implements En {
                     .numberOfPermits();
 
         });
-        Then("^ECMT Removals permit check your answers page has correct heading label$", () -> CheckYourAnswersPage.hasPageHeading());
+        Then("^ECMT Removals permit check your answers page has correct heading label$", () -> CheckYourAnswerPage.hasPageHeading());
         And("^the ECMT Removals check your answers page has reference number$", BasePermitPage::getReference);
         And("^the ECMT Removals application answers are displayed on the check your answers page$", () -> {
             String licence = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Licence);
             assertThat(licence,StringContains.containsString(operatorStore.getCurrentLicence().get().getLicenceNumber()));
             String permitType = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.PermitType);
-            System.out.println(permitType);
             Assert.assertEquals(permitType,"ECMT International Removal");
             String RemovalsEligibility = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.RemovalsEligibility);
             Assert.assertEquals(RemovalsEligibility,CheckYourAnswersPage.permitEligibility());
@@ -53,7 +52,7 @@ public class CheckYourAnswersPageSteps implements En {
         And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPage.select(OverviewPage.Section.Checkyouranswers));
         Then("^I am navigated to the ECMT Removals check your answers page$", () ->{
                 CheckYourAnswersPage.checkAnswersPageLoad();
-                CheckYourAnswersPage.hasPageHeading();
+                CheckYourAnswerPage.hasPageHeading();
         });
         Then("^I am on ECMT Removal Declaration page$", Declaration::heading);
         //Then("^I choose to change the ECMT Removals Permits Licence section$", () -> CheckYourAnswersPage.change(ECMTRemovalsInfo.Licence));

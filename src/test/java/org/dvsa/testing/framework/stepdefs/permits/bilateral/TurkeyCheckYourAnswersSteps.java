@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.TurkeyThirdCountryPage;
@@ -13,7 +14,7 @@ public class TurkeyCheckYourAnswersSteps implements En {
         And("^I am on the Annual Bilateral Turkey check your answers page with correct information and content$", ()-> {
 
             //Wait until check your answers page is loaded
-            CheckYourAnswersPage.untilOnCheckYourAnswersPage();
+            CheckYourAnswerPage.untilOnPage();
 
             /*Period should always be Turkey related -
             commented it out as sql script to create stock automatically doesn't populate this automatically and it may change in future */

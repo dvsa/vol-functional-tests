@@ -33,15 +33,15 @@ public class CheckYourAnswersSteps implements En {
                     .countries(operatorStore)
                     .numberOfPermits(operatorStore);
 
-            CheckYourAnswersPage.untilOnPage();
+            CheckYourAnswerPage.untilOnPage();
         });
         Then("^I am able to see the application reference number on the annual bilateral check your answers page$", () -> {
-            CheckYourAnswersPage.untilOnPage();
+            CheckYourAnswerPage.untilOnPage();
             String actualReference =  BasePermitPage.getReference();
             String expectedReference = operatorStore.getCurrentLicence().get().getReferenceNumber();
             Assert.assertEquals(expectedReference, actualReference);
         });
-        Then("^the bilateral check your answers page heading should be correct$", CheckYourAnswersPage::untilOnPage);
+        Then("^the bilateral check your answers page heading should be correct$", CheckYourAnswerPage::untilOnPage);
         Then("^all of the answers displayed match the answers I gave$", () -> {
             LicenceStore licenceStore = operatorStore.getCurrentLicence().get();
             Collections.reverse(licenceStore.getEcmt().getPermitsPerCountry());

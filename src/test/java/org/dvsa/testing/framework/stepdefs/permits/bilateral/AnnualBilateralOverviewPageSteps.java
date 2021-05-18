@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -112,7 +113,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.turkeyNumberofPermitsValidation();
             NumberOfPermitsPage.numberOfPermitsNew();
             BasePermitPage.saveAndContinue();
-            CheckYourAnswersPage.untilOnCheckYourAnswersPage();
+            CheckYourAnswerPage.untilOnPage();
             CheckYourAnswersPage.confirmAndReturnToOverview();
         });
         When("^I submit the application for standard single journey on selection of Morocco link on overview page$", () -> {
@@ -135,7 +136,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.turkeyNumberofPermitsValidation();
             NumberOfPermitsPage.numberOfPermitsNew();
             BasePermitPage.saveAndContinue();
-            CheckYourAnswersPage.untilOnCheckYourAnswersPage();
+            CheckYourAnswerPage.untilOnPage();
             CheckYourAnswersPage.confirmAndReturnToOverview();
         });
         When("^I submit the application for empty entry single journey on selection of Morocco link on overview page$", () -> {
@@ -158,7 +159,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.turkeyNumberofPermitsValidation();
             NumberOfPermitsPage.numberOfPermitsNew();
             BasePermitPage.saveAndContinue();
-            CheckYourAnswersPage.untilOnCheckYourAnswersPage();
+            CheckYourAnswerPage.untilOnPage();
             CheckYourAnswersPage.confirmAndReturnToOverview();
         });
         When("^I submit the application for Hors Contingent single journey on selection of Morocco link on overview page$", () -> {
@@ -181,7 +182,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.turkeyNumberofPermitsValidation();
             NumberOfPermitsPage.numberOfPermitsNew();
             BasePermitPage.saveAndContinue();
-            CheckYourAnswersPage.untilOnCheckYourAnswersPage();
+            CheckYourAnswerPage.untilOnPage();
             CheckYourAnswersPage.confirmAndReturnToOverview();
         });
     }

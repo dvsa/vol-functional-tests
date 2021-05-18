@@ -97,10 +97,10 @@ public class AnnualBilateralSteps extends BasePage implements En {
             OverviewPage.select(OverviewPage.Section.Countries);
             AnnualBilateralJourney.getInstance().countries(operatorStore)
                     .numberOfPermits(operatorStore);
-            CheckYourAnswersPage.untilOnPage();
+            CheckYourAnswerPage.untilOnPage();
         });
         When("^I choose to change the bilateral countries section$", () -> {
-            CheckYourAnswersPage.untilOnPage();
+            CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.clickChangeAnswer(BilateralSection.Country);
         });
         Then("^I should be on the bilateral countries page$", RestrictedCountriesPage::untilOnPage);
