@@ -9,7 +9,7 @@ Feature: Search and add a vehicle
     Then the add vehicle page should display licence number
     And "Add a vehicle" heading
 
-  @VOL-1319
+  @VOL-1319 @WIP
   Feature: Search and add a vehicle
 
   Scenario Outline: Add a vehicle to application (This or the one below?)
@@ -54,8 +54,10 @@ Feature: Search and add a vehicle
       | Make                      |
     And the vehicle details should not be empty
 
+  @WIP
   Scenario: Clear active search for a VRM
 
+  @WIP
   Scenario: Add a vehicle registration mark for MLH
     Given I have "2" "standard_national" "goods" licences
 

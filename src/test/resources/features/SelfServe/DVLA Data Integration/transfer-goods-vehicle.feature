@@ -13,6 +13,7 @@ Feature: Transfer a vehicle
     When i transfer a vehicle to a specified licence
     Then the "1 vehicle has been transferred to licence" confirmation banner should appear
 
+  @WIP
   Scenario: View a vehicle via transfer page?
 
   Scenario: Transfer all vehicles from licence
@@ -29,6 +30,7 @@ Feature: Transfer a vehicle
     When i transfer all the vehicles from my licence
     Then a "Transferring these vehicles would exceed the vehicle authority on licence" error banner should appear
 
+  @WIP
   Scenario: Check transfer option doesn't appear on SLH
 
   Scenario: Error validation
