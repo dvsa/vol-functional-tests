@@ -8,10 +8,12 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
+import org.dvsa.testing.lib.pages.external.permit.enums.sections.BilateralSection;
 import org.junit.Assert;
 
 import java.util.List;
@@ -54,9 +56,9 @@ public class CheckYourAnswersSteps implements En {
             Collections.reverse(deliveryCountries);
             String expectedDeliveryCountry = String.join(", ", deliveryCountries);
 
-            Assert.assertEquals(expectedPermitType, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.PermitType));
-            Assert.assertEquals(expectedLicence, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.Licence));
-            Assert.assertEquals(expectedDeliveryCountry, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.Country));
+            Assert.assertEquals(expectedPermitType, CheckYourAnswerPage.getAnswer(BilateralSection.PermitType));
+            Assert.assertEquals(expectedLicence, CheckYourAnswerPage.getAnswer(BilateralSection.Licence));
+            Assert.assertEquals(expectedDeliveryCountry, CheckYourAnswerPage.getAnswer(BilateralSection.Country));
 
             licenceStore.getEcmt().getPermitsPerCountry().sort((o1, o2) -> {
                 int result = o1.getCountry().toString().substring(0, 1).compareTo(o2.getCountry().toString().substring(0, 1));
@@ -72,7 +74,7 @@ public class CheckYourAnswersSteps implements En {
 
             String expectedPermits = licenceStore.getEcmt().getPermitsPerCountry().stream().map(permits -> String.format("%d permits for %s in %s", permits.getQuantity(), permits.getCountry(), permits.getYear())).collect(Collectors.joining("\n"));
 
-            Assert.assertEquals(expectedPermits, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.Permits));
+            Assert.assertEquals(expectedPermits, CheckYourAnswerPage.getAnswer(BilateralSection.Permits));
         });
     }
 }

@@ -7,6 +7,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.EcmtJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.pages.external.permit.CancelApplicationPage;
 import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage;
@@ -30,7 +32,7 @@ public class CancelApplicationPageSteps implements En {
         Then("^I should see the validation error message for the cancel application page$", () -> {
             Assert.assertTrue(CancelApplicationPage.hasErrorMessagePresent());
         });
-        When("^I cancel my ECMT application$", EcmtJourneySteps::clickCancelCheckbox);
+        When("^I cancel my ECMT application$", CancellationPage::clickCancelCheckbox);
         Then("^I navigate to the Bilaterals cabotage page$", () -> {
             org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.untilOnOverviewPage();
             org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.clickNorway();
@@ -44,7 +46,7 @@ public class CancelApplicationPageSteps implements En {
            BilateralJourneySteps.saveAndContinue();
         });
         Then("^I am navigated to cabotage page$", () -> {
-            EcmtJourneySteps.untilOnCabotagePage();
+            CabotagePage.untilOnCabotagePage();
         });
     }
 

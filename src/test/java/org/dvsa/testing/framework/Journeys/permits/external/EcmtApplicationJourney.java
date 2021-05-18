@@ -136,7 +136,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
     public EcmtApplicationJourney checkYourAnswersPage() {
-        CheckYourAnswersPage.saveAndContinue();
+        BaseCheckYourAnswersPage.saveAndContinue();
         return this;
     }
 

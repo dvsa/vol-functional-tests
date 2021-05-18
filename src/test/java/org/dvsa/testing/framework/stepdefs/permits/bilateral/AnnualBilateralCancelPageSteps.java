@@ -5,7 +5,8 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.GenericPermitJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.CancellationConfirmationPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
@@ -24,28 +25,24 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
             String actualReference = BasePermitPage.getReference();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        Then("^the bilateral CancelApplication heading should be correct$", BilateralJourneySteps::untilOnCancelApplicationPage);
+        Then("^the bilateral CancelApplication heading should be correct$", CancellationPage::untilOnCancelApplicationPage);
 
         When("^I should see the correct text displayed next to the checkbox", () -> {
             assertTrue(isElementPresent("//label[@class='form-control form-control--checkbox']", SelectorType.XPATH));
         });
-        When("the checkbox is selected", BilateralJourneySteps::clickCancelCheckbox);
-        Then("^the bilateral CancelApplication page displays the correct advisory text$", BilateralJourneySteps::assertAdvisoryTextOnCancelApplicationPage);
-        When("^the cancel application button is selected without checkbox ticked$", BilateralJourneySteps::clickCancelButton);
+        When("the checkbox is selected", CancellationPage::clickCancelCheckbox);
+        Then("^the bilateral CancelApplication page displays the correct advisory text$", CancellationPage::assertAdvisoryTextOnCancelApplicationPage);
+        When("^the cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
         Then ("I should be taken to cancel confirmation page", () -> {
-            GenericPermitJourneySteps.untilOnPageCancelConfirmationPage();
-            GenericPermitJourneySteps.assertReferenceOnCancelConfirmationPage(world.applicationDetails.getLicenceNumber());
-            GenericPermitJourneySteps.assertCancelConfirmationPageAdvisoryText();
+            CancellationConfirmationPage.untilOnCancelConfirmationPage();
+            CancellationConfirmationPage.assertReferenceOnCancelConfirmationPage(world.applicationDetails.getLicenceNumber());
+            CancellationConfirmationPage.assertCancelConfirmationPageAdvisoryText();
         });
-        And("I select cancel application button", () -> BilateralJourneySteps.clickCancelButton());
+        And("I select cancel application button", CancellationPage::clickCancelButton);
         //Guidance link no more displayed on the page,changed the assertion
         Then("I select finish button", BilateralJourneySteps::clickFinishButton);
-        And("^I click cancel application link for bilateral application$", () -> {
-            BilateralJourneySteps.bilateralCancel();
-        });
-        And("^I am on the cancel application page for Annual Bilateral page$", () -> {
-            BilateralJourneySteps.untilOnCancelApplicationPage();
-        });
+        And("^I click cancel application link for bilateral application$", BilateralJourneySteps::bilateralCancel);
+        And("^I am on the cancel application page for Annual Bilateral page$", CancellationPage::untilOnCancelApplicationPage);
     }
 }
 

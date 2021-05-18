@@ -11,7 +11,6 @@ import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CancelApplicationPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;

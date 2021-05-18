@@ -1,13 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
-import activesupport.IllegalBrowserException;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.permits.GenericPermitJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.MultilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CancellationConfirmationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -34,7 +33,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
 
                 NumberOfPermitsPage.overview();
                 OverviewPage.cancel();
-                MultilateralJourneySteps.untilOnCancelApplicationPage();
+                CancellationPage.untilOnCancelApplicationPage();
             });
 
         });
@@ -55,15 +54,15 @@ public class CancelApplicationPageSteps extends BasePage implements En {
             String message = "Expected checkbox to be unselected but it was selected";
             Assert.assertFalse(message, CancelApplicationPage.confirmationCheckboxStatus());
         });
-        When("^I cancel my Annual Multilateral application without confirming$", MultilateralJourneySteps::clickCancelButton);
+        When("^I cancel my Annual Multilateral application without confirming$", CancellationPage::clickCancelButton);
         Then("^I should get the expected error message for annual multilateral Cancel Application page$", () -> {
             Assert.assertEquals("You must select the checkbox to continue", CancelApplicationPage.errorMessage());
         });
         When("^I confirm and cancel my annual multilateral permit$", () -> {
-            MultilateralJourneySteps.clickCancelCheckbox();
-            MultilateralJourneySteps.clickCancelButton();
+            CancellationPage.clickCancelCheckbox();
+            CancellationPage.clickCancelButton();
         });
-        Then("^I am taken to the application cancelled page$", GenericPermitJourneySteps::untilOnCancelConfirmationPage);
+        Then("^I am taken to the application cancelled page$", CancellationConfirmationPage::untilOnCancelConfirmationPage);
         And("^there are no fees for the permit$", () -> {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
             Assert.assertFalse(HomePage.FeesTab.hasOutstandingFees());

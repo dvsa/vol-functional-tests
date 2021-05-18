@@ -10,8 +10,10 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
+import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
@@ -53,7 +55,7 @@ public class NumberOfPermitPageSteps implements En {
         });
         When("^I choose to change the number of permits section$", () -> {
             CheckYourAnswersPage.untilOnPage();
-            CheckYourAnswersPage.change(CheckYourAnswersPage.Section.NumberOfPermits);
+            CheckYourAnswerPage.clickChangeAnswer(MultilateralSection.NumberOfPermits);
         });
         And("^my previously selected values are remembered", () -> {
            List<Permit> actualPermits = NumberOfPermitsPage.currentPermits();

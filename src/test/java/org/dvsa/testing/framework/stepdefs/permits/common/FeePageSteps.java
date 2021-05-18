@@ -29,7 +29,7 @@ public class FeePageSteps implements En {
             YearSelectionPage.EcmtValidityPeriod();
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
-            CheckYourAnswersPage.saveAndContinue();
+            BaseCheckYourAnswersPage.saveAndContinue();
             DeclarationPage.declare(true);
             DeclarationPage.saveAndContinue();
           //  FeeOverviewPage.untilOnPage(Duration.MEDIUM, ChronoUnit.SECONDS);

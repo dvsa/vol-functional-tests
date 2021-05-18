@@ -10,7 +10,9 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
+import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
 import org.junit.Assert;
@@ -42,15 +44,15 @@ public class CheckYourAnswersPageSteps implements En {
             );
 
             // Checks permit type
-            Assert.assertEquals(operatorStore.getCurrentPermitType().get().toString(), CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.PermitType));
+            Assert.assertEquals(operatorStore.getCurrentPermitType().get().toString(), CheckYourAnswerPage.getAnswer(MultilateralSection.PermitType));
 
             // Checks licence selected
-            Assert.assertEquals(expectedLicence, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.Licence));
+            Assert.assertEquals(expectedLicence, CheckYourAnswerPage.getAnswer(MultilateralSection.Licence));
 
             // Check number of permits required
             Assert.assertEquals(
                     permit.getNumberOfPermits().stream().sorted(Comparator.comparing(Permit::getYear, Comparator.reverseOrder())).map(p -> String.format("%d permits in %s", p.getNumberOfPermits(), p.getYear())).collect(Collectors.joining("\n")),
-                    CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.NumberOfPermits)
+                    CheckYourAnswerPage.getAnswer(MultilateralSection.NumberOfPermits)
             );
         });
         Then("I am navigated to annual multilateral check your answers page", (StepdefBody.A0) CheckYourAnswersPage::untilOnPage);

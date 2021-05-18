@@ -7,13 +7,13 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
-import org.dvsa.testing.lib.pages.external.permit.enums.ShortTermApplicationInfo;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.hamcrest.core.StringContains;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +24,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.enums.ShortTermApplicationInfo.*;
+import static org.dvsa.testing.lib.pages.external.permit.enums.sections.ShortTermApplicationSection.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
@@ -69,15 +69,15 @@ CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", Se
             System.out.println(BasePermitPage.getReference());
         });
         Then("^Short term application answers are displayed on the check your answers page$", () -> {
-            String licence = CheckYourAnswersPage.getAnswer(Licence);
+            String licence = CheckYourAnswerPage.getAnswer(Licence);
             assertThat(licence, StringContains.containsString(operatorStore.getCurrentLicence().get().getLicenceNumber()));
-            String cabotage = CheckYourAnswersPage.getAnswer(ShortTermApplicationInfo.Cabotage);
+            String cabotage = CheckYourAnswerPage.getAnswer(Cabotage);
             Assert.assertEquals("I confirm that I will not undertake cabotage journeys using an ECMT permit.", cabotage);
-            String certificates = CheckYourAnswersPage.getAnswer(CertificatesRequired);
+            String certificates = CheckYourAnswerPage.getAnswer(CertificatesRequired);
             Assert.assertEquals("I understand that I must obtain and carry the appropriate Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer I intend to use with this permit.", certificates);
-            String permitType = CheckYourAnswersPage.getAnswer(PermitType);
+            String permitType = CheckYourAnswerPage.getAnswer(PermitType);
             Assert.assertEquals("Short-term ECMT",permitType );
-            String actualPermitUsage = CheckYourAnswersPage.getAnswer(PermitsUsage);
+            String actualPermitUsage = CheckYourAnswerPage.getAnswer(PermitsUsage);
             String s = toShortTermPermitUsage(CheckYourAnswersPageSteps.permitUsage.get("permit.usage"));
             Assert.assertEquals(s,actualPermitUsage);
         });

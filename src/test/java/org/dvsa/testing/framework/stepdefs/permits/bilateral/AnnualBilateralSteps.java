@@ -14,6 +14,7 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -26,8 +27,8 @@ import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.ValidECMTRemovalPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
+import org.dvsa.testing.lib.pages.external.permit.enums.sections.BilateralSection;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.hamcrest.Matchers;
@@ -100,7 +101,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         When("^I choose to change the bilateral countries section$", () -> {
             CheckYourAnswersPage.untilOnPage();
-            CheckYourAnswersPage.change(CheckYourAnswersPage.Section.Country);
+            CheckYourAnswerPage.clickChangeAnswer(BilateralSection.Country);
         });
         Then("^I should be on the bilateral countries page$", RestrictedCountriesPage::untilOnPage);
         And("^my previously selected countries should be remembered$", () -> {

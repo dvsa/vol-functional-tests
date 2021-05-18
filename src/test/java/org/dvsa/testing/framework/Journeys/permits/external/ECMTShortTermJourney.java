@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 
 import java.time.LocalDateTime;

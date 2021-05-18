@@ -86,7 +86,7 @@ public class CommonSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             EuroEmissioStandardsPage.Emissionsconfirmation();
             BasePermitPage.saveAndContinue();
-            CheckYourAnswersPage.saveAndContinue();
+            BaseCheckYourAnswersPage.saveAndContinue();
             DeclarationPage.declare(true);
             DeclarationPage.saveAndContinue();
             PermitFee.submitAndPay();

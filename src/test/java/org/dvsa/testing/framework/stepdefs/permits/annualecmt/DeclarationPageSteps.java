@@ -4,7 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.external.permit.CheckYourAnswersPage;
+import org.dvsa.testing.lib.pages.external.permit.BaseCheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
@@ -16,7 +16,7 @@ public class DeclarationPageSteps implements En {
     public DeclarationPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the declaration page$", () -> {
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world,operatorStore);
-            CheckYourAnswersPage.saveAndContinue();
+            BaseCheckYourAnswersPage.saveAndContinue();
         });
         Then("^I should see the validation error message for the declaration page$", () -> Assert.assertTrue(DeclarationPage.hasErrorMessagePresent()));
         When("^I save and continue on the declaration page$", DeclarationPage::saveAndContinue);

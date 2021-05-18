@@ -6,10 +6,11 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.enums.ApplicationInfo;
 import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
+import org.dvsa.testing.lib.pages.external.permit.enums.sections.ApplicationSection;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 
@@ -17,7 +18,7 @@ import java.lang.reflect.Field;
 
 import static org.dvsa.testing.lib.pages.BasePage.getURL;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.external.permit.enums.ApplicationInfo.*;
+import static org.dvsa.testing.lib.pages.external.permit.enums.sections.ApplicationSection.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CheckYourAnswersPageSteps implements En {
@@ -28,34 +29,34 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("^the information I inserted during the application is displayed$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().get();
-            String licence = CheckYourAnswersPage.getAnswer(Licence);
-            String euro6 = CheckYourAnswersPage.getAnswer(Euro6);
-            String cabotage = CheckYourAnswersPage.getAnswer(Cabotage);
-            String restrictedCountries = CheckYourAnswersPage.getAnswer(RestrictedCountries);
+            String licence = CheckYourAnswerPage.getAnswer(Licence);
+            String euro6 = CheckYourAnswerPage.getAnswer(Euro6);
+            String cabotage = CheckYourAnswerPage.getAnswer(Cabotage);
+            String restrictedCountries = CheckYourAnswerPage.getAnswer(RestrictedCountries);
             assertThat(licence, StringContains.containsString(operatorStore.getCurrentLicence().get().getLicenceNumber()));
             Assert.assertEquals("I confirm that I will only use my ECMT permits with vehicles that meet the minimum euro emissions standards allowed.",euro6);
             Assert.assertEquals("I confirm that I will not undertake cabotage journeys using an ECMT permit.",cabotage);
             Assert.assertEquals("No",restrictedCountries);
         });
-        When("^I confirm and continue$", CheckYourAnswersPage::saveAndContinue);
+        When("^I confirm and continue$", CheckYourAnswerPage::saveAndContinue);
         When("^I change the (.+)$", (String section) ->
-            CheckYourAnswersPage.edit(ApplicationInfo.valueOf(section))
+            CheckYourAnswerPage.clickChangeAnswer(ApplicationSection.valueOf(section))
         );
         Then("^I should be taken to the (.+) page permits$", (String section) -> {
-            Class<? extends BasePage> pageClass = sectionPageClass(ApplicationInfo.valueOf(section));
+            Class<? extends BasePage> pageClass = sectionPageClass(ApplicationSection.valueOf(section));
             Field resourceField = pageClass.getDeclaredField("RESOURCE");
             String resource = (String) resourceField.get(null);
             Assert.assertTrue("The current page does not contain the expected URL resource", isPath(resource));
         });
         When("^I edit (.+) and apply the changes$", (String section) -> {
-            ApplicationInfo sectionEnum = ApplicationInfo.valueOf(section);
+            ApplicationSection sectionEnum = ApplicationSection.valueOf(section);
 
-            CheckYourAnswersPage.edit(sectionEnum);
+            CheckYourAnswerPage.clickChangeAnswer(sectionEnum);
             updateSectionWithValidRandomAnswer(sectionEnum, world, operatorStore);
         });
     }
 
-    private void updateSectionWithValidRandomAnswer(ApplicationInfo section, World world, OperatorStore operatorStore) {
+    private void updateSectionWithValidRandomAnswer(ApplicationSection section, World world, OperatorStore operatorStore) {
         LicenceStore licenceStore = operatorStore.getLatestLicence().get();
         operatorStore.withLicences(licenceStore);
         CommonSteps.origin.put("origin", getURL());
@@ -78,7 +79,7 @@ public class CheckYourAnswersPageSteps implements En {
         }
     }
 
-    private static Class<? extends BasePage> sectionPageClass(ApplicationInfo section) {
+    private static Class<? extends BasePage> sectionPageClass(ApplicationSection section) {
         Class<? extends BasePage> pageObject;
 
         switch (section) {
