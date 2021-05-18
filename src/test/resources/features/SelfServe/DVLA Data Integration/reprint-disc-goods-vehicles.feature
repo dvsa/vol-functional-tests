@@ -30,7 +30,7 @@ Feature: Reprint a vehicle more than 10 vehicles
 
 
   Scenario: Search and reprint a vehicle disc with more than 10 vehicles
-    Given I have a "goods" "standard_national" licence with "13" vehicles
+    Given I have a "goods" "standard_national" licence with "13" vehicle authorisation
     And discs have been added to my licence
     And I navigate to manage vehicle page on a licence
     When i search for and reprint a vehicle disc

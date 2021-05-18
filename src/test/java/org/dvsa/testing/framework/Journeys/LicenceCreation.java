@@ -4,6 +4,8 @@ import Injectors.World;
 import apiCalls.enums.*;
 import org.openqa.selenium.InvalidArgumentException;
 
+import java.util.Locale;
+
 public class LicenceCreation {
 
     private World world;
@@ -15,7 +17,7 @@ public class LicenceCreation {
     public void createApplication(String operatorType, String licenceType) {
         world.createApplication.setOperatorType(operatorType);
         world.createApplication.setLicenceType(licenceType);
-        if (licenceType.equals("special_restricted")) {
+        if (licenceType.equals(LicenceType.SPECIAL_RESTRICTED.name().toLowerCase(Locale.ROOT))) {
             world.APIJourneySteps.createSpecialRestrictedApplication();
         } else {
             world.APIJourneySteps.createApplication();
