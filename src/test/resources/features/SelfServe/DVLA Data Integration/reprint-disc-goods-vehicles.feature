@@ -28,6 +28,7 @@ Feature: Reprint a vehicle more than 10 vehicles
 
   @WIP
   Scenario: Reprint vehicle disc on a MLH
+    Given I have a "goods" "standard_national" licence
 
   Scenario: Search and reprint a vehicle disc with more than 10 vehicles
     Given I have a "goods" "standard_national" licence with "13" vehicle authorisation
@@ -39,6 +40,7 @@ Feature: Reprint a vehicle more than 10 vehicles
 
   @WIP
   Scenario: View a vehicle via reprint disc page?
+    Given I have a "goods" "standard_national" licence
 
   Scenario: Reprint all my vehicles discs
     Given I have a "goods" "standard_national" licence

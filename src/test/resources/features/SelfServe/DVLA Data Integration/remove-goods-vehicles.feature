@@ -26,6 +26,7 @@ Feature: Remove a vehicle more than 10 vehicles
 
   @WIP
   Scenario: Remove a vehicle from a MLH
+    Given I have a "goods" "standard_national" licence
 
   Scenario: Search and remove a vehicle with more than 10 vehicles
     Given I have a "goods" "standard_national" licence with "13" vehicles
@@ -36,6 +37,7 @@ Feature: Remove a vehicle more than 10 vehicles
 
   @WIP
   Scenario: View a vehicle via remove page?
+    Given I have a "goods" "standard_national" licence
 
   Scenario: Remove all my vehicles
     Given I have a "goods" "standard_national" licence

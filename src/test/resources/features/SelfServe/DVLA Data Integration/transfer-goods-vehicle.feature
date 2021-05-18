@@ -15,6 +15,7 @@ Feature: Transfer a vehicle
 
   @WIP
   Scenario: View a vehicle via transfer page?
+    Given I have a "goods" "standard_national" licence
 
   Scenario: Transfer all vehicles from licence
     Given I have "2" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
@@ -32,6 +33,7 @@ Feature: Transfer a vehicle
 
   @WIP
   Scenario: Check transfer option doesn't appear on SLH
+    Given I have a "goods" "standard_national" licence
 
   Scenario: Error validation
     Given I have "3" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "5"
