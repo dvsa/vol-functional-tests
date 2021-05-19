@@ -137,9 +137,9 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
     }
 
     public void navigateThroughApplication()  {
-        waitForTitleToBePresent("Apply for a new licence");
-        clickByLinkText("Type of licence");
-        waitForTitleToBePresent("Type of licence");
+        String workingDir = System.getProperty("user.dir");
+        String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
+
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTitleToBePresent("Business type");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
@@ -151,7 +151,11 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+
         waitForTitleToBePresent("Financial evidence");
+        waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
+        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
+
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTitleToBePresent("Transport Managers");
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
