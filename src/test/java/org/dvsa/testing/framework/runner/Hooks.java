@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.runner;
 
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
