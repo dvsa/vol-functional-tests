@@ -1,10 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.dvsa.testing.framework.Report.Config.Environments;
 import org.dvsa.testing.framework.runner.Hooks;
+import org.openqa.selenium.SessionNotCreatedException;
 
 
 import java.io.IOException;
@@ -13,8 +15,8 @@ import java.io.IOException;
 public class ScenarioTearDown {
     @After
     public void afterClass(Scenario scenario) throws Exception {
-        Hooks hooks = new Hooks();
-        hooks.attach(scenario);
+        Hooks.attach(scenario);
+        tearDown();
     }
 
     @Before
@@ -22,5 +24,15 @@ public class ScenarioTearDown {
         Environments environments = new Environments();
         environments.createResultsFolder();
         environments.generateXML();
+    }
+
+    public void tearDown() {
+        try {
+            if (Browser.isBrowserOpen()) ;
+            Browser.closeBrowser();
+        } catch (SessionNotCreatedException ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
