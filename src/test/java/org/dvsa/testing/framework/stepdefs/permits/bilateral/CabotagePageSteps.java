@@ -19,14 +19,16 @@ import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
 
 public class CabotagePageSteps extends BasePage implements En {
-    public CabotagePageSteps(OperatorStore operatorStore, World world, CountrySelectionPage countrySelectionPage) {
+
+    private int numberOfCountries;
+
+    public CabotagePageSteps(OperatorStore operatorStore, World world) {
         And ("^I am on the Bilateral Cabotage Page with more than one countries selected$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
                     .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
                     .licencePage(operatorStore, world);
-            CountrySelectionPage.countrycount();
-            countrySelectionPage.setCountOfCountries(CountrySelectionPage.countrycount());
+            numberOfCountries = size("(//input[@type='checkbox'])", SelectorType.XPATH);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnOverviewPage();
             OverviewPage.clickNorway();
@@ -63,14 +65,12 @@ public class CabotagePageSteps extends BasePage implements En {
             PermitUsagePage.journeyType(JourneyType.random());
         });
         Then("^I m navigated to the correct page depending upon whether there is just one country selected or more than one", () -> {
-            if(countrySelectionPage.getCountOfCountries()>1)
-            {
+            if(this.numberOfCountries > 1) {
                 OverviewPage.untilOnOverviewPage();
                 OverviewPage.norwaySectionNotExists();
             }
-            else
-            {
-                CancellationPage.untilOnCancelApplicationPage();
+            else {
+                CancellationPage.untilOnPage();
                 CancellationPage.assertAdvisoryTextOnCancelApplicationPage();
             }
         });

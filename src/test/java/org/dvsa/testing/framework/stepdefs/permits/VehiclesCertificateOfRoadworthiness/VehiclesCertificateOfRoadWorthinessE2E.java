@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.pages.external.permit.BaseCheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -86,7 +85,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and click save and continue on the Check Your Answers page$", () -> {
             CheckYourAnswersPage.checkAnswersPageLoad();
             CheckYourAnswerPage.hasPageHeading();
-            BaseCheckYourAnswersPage.saveAndContinue();
+            CheckYourAnswerPage.saveAndContinue();
         });
         Then("^I check content and Accept and continue on the Declaration page$", () -> {
 

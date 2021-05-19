@@ -55,7 +55,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         Then("^I complete the Check if you need ECMT permits section and click save and continue$", () -> {
             OverviewPage.select(OverviewPage.Section.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.checkboxSelection();
-            CheckIfYouNeedECMTPermitsPage.shortTermAPGGSaveAndContinue();
+            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         });
         Then("^I complete Cabotage page section and click save and continue$", () -> {
             CabotagePage.hasPageHeading();

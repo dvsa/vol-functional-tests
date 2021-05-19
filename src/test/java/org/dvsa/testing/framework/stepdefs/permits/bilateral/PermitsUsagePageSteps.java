@@ -44,7 +44,7 @@ public class PermitsUsagePageSteps implements En {
         Then("^I select a random Journey type and click continue$", () -> {
             PermitUsagePage.journeyType(JourneyType.random());
         });
-        Then("^I am taken to the Bilateral Cabotage page$", CabotagePage::untilOnCabotagePage);
+        Then("^I am taken to the Bilateral Cabotage page$", CabotagePage::untilOnPage);
         Then("^I get error message if there is more than one Journey types available to select and I click continue without making any selection$", PermitUsagePage::PermitUsageError);
     }
 }

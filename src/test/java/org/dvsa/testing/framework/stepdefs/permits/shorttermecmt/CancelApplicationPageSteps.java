@@ -29,7 +29,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
         Then("^I should be taken back to short Term Overview Page$", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/"));
         });
-        Then("^the short term ECMT CancelApplication page heading should be correct$", CancellationPage::untilOnCancelApplicationPage);
+        Then("^the short term ECMT CancelApplication page heading should be correct$", CancellationPage::untilOnPage);
         Then("^the short term  CancelApplication page displays the correct advisory text$", CancellationPage::assertAdvisoryTextOnCancelApplicationPage);
         Then("^I should get an error message on short term ECMT cancel application page$", CancelApplicationPage::errorMessage);
         And ("^I see the advisory text as per the AC$", CancellationPage::assertAdvisoryTextOnCancelApplicationPage);

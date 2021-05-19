@@ -25,7 +25,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
             String actualReference = BasePermitPage.getReference();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        Then("^the bilateral CancelApplication heading should be correct$", CancellationPage::untilOnCancelApplicationPage);
+        Then("^the bilateral CancelApplication heading should be correct$", CancellationPage::untilOnPage);
 
         When("^I should see the correct text displayed next to the checkbox", () -> {
             assertTrue(isElementPresent("//label[@class='form-control form-control--checkbox']", SelectorType.XPATH));
@@ -34,7 +34,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
         Then("^the bilateral CancelApplication page displays the correct advisory text$", CancellationPage::assertAdvisoryTextOnCancelApplicationPage);
         When("^the cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
         Then ("I should be taken to cancel confirmation page", () -> {
-            CancellationConfirmationPage.untilOnCancelConfirmationPage();
+            CancellationConfirmationPage.untilOnPage();
             CancellationConfirmationPage.assertReferenceOnCancelConfirmationPage(world.applicationDetails.getLicenceNumber());
             CancellationConfirmationPage.assertCancelConfirmationPageAdvisoryText();
         });
@@ -42,7 +42,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
         //Guidance link no more displayed on the page,changed the assertion
         Then("I select finish button", BilateralJourneySteps::clickFinishButton);
         And("^I click cancel application link for bilateral application$", BilateralJourneySteps::bilateralCancel);
-        And("^I am on the cancel application page for Annual Bilateral page$", CancellationPage::untilOnCancelApplicationPage);
+        And("^I am on the cancel application page for Annual Bilateral page$", CancellationPage::untilOnPage);
     }
 }
 

@@ -27,7 +27,7 @@ public class UkraineNumberOfPermitsSteps implements En {
         });
 
         When("^I save and continue on the Ukraine number of permits page$", () -> {
-            TurkeyThirdCountryPage.turkeyThirdCountrySaveAndContinue();
+            TurkeyThirdCountryPage.saveAndContinue();
         });
 
         Then("^I enter the valid number of permits required for Ukraine permit$", () -> {

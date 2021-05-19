@@ -20,8 +20,8 @@ public class CancelApplicationPageSteps extends BasePage implements En {
             String actualReference = BasePermitPage.getReference();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        Then("^I am on the ECMT Removals cancel application page$", CancellationPage::untilOnCancelApplicationPage);
-        And ("^the ECMT international removal  CancelApplication heading should be correct$", CancellationPage::untilOnCancelApplicationPage);
+        Then("^I am on the ECMT Removals cancel application page$", CancellationPage::untilOnPage);
+        And ("^the ECMT international removal  CancelApplication heading should be correct$", CancellationPage::untilOnPage);
         And ("^the ECMT International Removal CancelApplication page displays the correct advisory text$", CancellationPage::assertAdvisoryTextOnCancelApplicationPage);
         And ("^the correct text is displayed next to the checkbox in ECMT Removal cancellation page", CancelApplicationPage::ecmtInternationalRemovalcancelConfirmationText);
         When("^the ECMT International Removal cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);

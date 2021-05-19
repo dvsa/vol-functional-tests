@@ -62,10 +62,10 @@ public class CheckYourAnswersPageSteps implements En {
         CommonSteps.origin.put("origin", getURL());
         switch (section) {
             case Euro6:
-                EcmtApplicationJourney.getInstance().euro6Page(world, licenceStore);
+                EcmtApplicationJourney.getInstance().euro6Page(licenceStore);
                 break;
             case Cabotage:
-                EcmtApplicationJourney.getInstance().cabotagePage(world, licenceStore);
+                EcmtApplicationJourney.getInstance().cabotagePage(licenceStore);
                 break;
             case RestrictedCountries:
                 RestrictedCountry restrictedCountry = RestrictedCountry.random();

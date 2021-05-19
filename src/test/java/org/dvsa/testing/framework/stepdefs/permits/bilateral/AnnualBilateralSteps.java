@@ -15,12 +15,13 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.licence.LicenceBasePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -54,7 +55,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         And("^I am on the country selection page$", () -> {
             PermitTypePage.untilElementIsPresent("//h1[contains(text(),'Select a permit type or certificate to apply for')]", SelectorType.XPATH,10L, TimeUnit.SECONDS);
             EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore);
-            LicenceBasePage.untilElementIsPresent("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH,10L, TimeUnit.SECONDS);
+            untilElementIsPresent("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH,10L, TimeUnit.SECONDS);
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             CountrySelectionPage.untilOnPage();
         });
@@ -68,7 +69,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             HomePage.FeesTab.hasOutstandingFees();
             HomePage.FeesTab.outstanbding(true);
         });
-        Then("^I select save and continue button on select countries page$", CountrySelectionPage::continueButton);
+        Then("^I select save and continue button on select countries page$", CountrySelectionPage::saveAndContinue);
         Then("^countries are displayed in alphabetical order$", () -> {
             List<String> countries = RestrictedCountriesPage.countries();
 
@@ -123,13 +124,13 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
-            PermitUsagePage.continueButton();
+            PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
-            BasePermitPage.bilateralSaveAndContinue();
+            BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermits();
             AnnualBilateralJourney.getInstance().permit(operatorStore);
-            BasePermitPage.bilateralSaveAndContinue();
-            CheckYourAnswersPage.confirmAndReturnToOverview();
+            BasePermitPage.saveAndContinue();
+            CheckYourAnswerPage.saveAndContinue();
             OverviewPage.untilOnOverviewPage();
             OverviewPage.selectDeclaration();
             AnnualBilateralJourney.getInstance().declare(true)
@@ -203,16 +204,16 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
-            PermitUsagePage.continueButton();
+            PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickNoToCabotage();
-            BasePermitPage.bilateralSaveAndContinue();
+            BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermitsNew();
             NumberOfPermitsPage.setCabotageValue(NumberOfPermitsPage.getCabotageValue());
             NumberOfPermitsPage.setStandardValue(NumberOfPermitsPage.getStandardValue());
             NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
             NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
             AnnualBilateralJourney.getInstance().permit(operatorStore);
-            BasePermitPage.bilateralSaveAndContinue();
+            BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
                 licenceStore.setReferenceNumber(BasePermitPage.getReference());
@@ -247,13 +248,13 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            PermitUsagePage.continueButton();
-            BasePermitPage.bilateralSaveAndContinue();
+            PermitUsagePage.saveAndContinue();
+            BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermitsNew();
             NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
             NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
             AnnualBilateralJourney.getInstance().permit(operatorStore);
-            BasePermitPage.bilateralSaveAndContinue();
+            BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
             licenceStore.setReferenceNumber(BasePermitPage.getReference());
@@ -299,14 +300,14 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         Given("^I accept declaration and submit the application$", () -> {
             OverviewPage.selectDeclaration();
-            DeclarationPage.untilOnDeclarationPage();
+            DeclarationPage.untilOnPage();
 
             // Checking declaration page content
-            DeclarationPage.pageHeading();
-            DeclarationPage.advisoryTexts();
-            DeclarationPage.warningText();
-            Declaration.acceptAndContinue();
-            DeclarationPage.errorText();
+            DeclarationPage.hasPageHeading();
+            DeclarationPage.hasBilateralAdvisoryTexts();
+            DeclarationPage.hasWarningText();
+            Declaration.saveAndContinue();
+            DeclarationPage.hasErrorText();
             org.dvsa.testing.lib.pages.external.permit.DeclarationPage.declare(true);
             Declaration.saveAndContinue();
             PermitFeePage.untilOnPage();
@@ -338,7 +339,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             Assert.assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
         Then("^I should be on the bilateral declaration page$", DeclarationPage::untilOnPage);
-        When("^I save and continue on bilateral check your answers page$", CheckYourAnswersPage::saveAndContinue);
+        When("^I save and continue on bilateral check your answers page$", CheckYourAnswerPage::saveAndContinue);
         And("^I have completed (an|all) annual bilateral application$", (String oneOrAll) -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            int quantity = oneOrAll.equalsIgnoreCase("all") ? operatorStore.getLicences().size() : 1;
 
@@ -517,7 +518,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
-            PermitUsagePage.continueButton();
+            PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
             BasePermitPage.saveAndContinue();

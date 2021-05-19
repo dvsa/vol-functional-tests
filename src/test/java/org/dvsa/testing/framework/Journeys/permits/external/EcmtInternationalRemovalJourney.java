@@ -4,16 +4,12 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.pages.external.permit.BaseCheckYourAnswersPage;
+import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CheckYourAnswersPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.*;
 import org.junit.Assert;
-
-import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.saveAndContinue;
 
 public class EcmtInternationalRemovalJourney extends BasePermitJourney {
 
@@ -49,13 +45,13 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
 
     public EcmtInternationalRemovalJourney checkYourAnswers() {
         CheckYourAnswerPage.untilOnPage();
-        BaseCheckYourAnswersPage.saveAndContinue();
+        saveAndContinue();
         return this;
     }
 
     public EcmtInternationalRemovalJourney declaration() {
         Declaration.DeclarationConfirmation();
-        DeclarationPage.acceptAndContinue();
+        saveAndContinue();
         return this;
     }
 
@@ -91,8 +87,8 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
 
 
     public EcmtInternationalRemovalJourney declare(boolean declaration) {
-        DeclarationPage.declare(declaration);
-        DeclarationPage.acceptAndContinue();
+        BaseDeclarationPage.declare(declaration);
+        BaseDeclarationPage.saveAndContinue();
         return this;
     }
 

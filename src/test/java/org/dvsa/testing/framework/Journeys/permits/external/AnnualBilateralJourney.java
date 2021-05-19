@@ -7,6 +7,9 @@ import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
+import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -55,33 +58,29 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     }
 
     public AnnualBilateralJourney norway(OperatorStore operatorStore){
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        String country  = CountrySelectionPage.norwaySelection();
+        String country = CountrySelectionPage.selectCountry("Norway");;
         operatorStore.setCountry(country);
         return this;
+    }
 
-    }
     public AnnualBilateralJourney turkey(OperatorStore operatorStore) {
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        String country = CountrySelectionPage.turkeySelection();
+        String country = CountrySelectionPage.selectCountry("Turkey");
         operatorStore.setCountry(country);
         return this;
     }
+
     public AnnualBilateralJourney morocco(OperatorStore operatorStore) {
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        String country = CountrySelectionPage.moroccoSelection();
+        String country = CountrySelectionPage.selectCountry("Morocco");
         operatorStore.setCountry(country);
         return this;
     }
 
     public AnnualBilateralJourney ukraine(OperatorStore operatorStore) {
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        String country = CountrySelectionPage.ukraineSelection();
+        String country = CountrySelectionPage.selectCountry("Ukraine");
         operatorStore.setCountry(country);
         return this;
     }
     public AnnualBilateralJourney permit(OperatorStore operatorStore){
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         String permitname  = NumberOfPermitsPage.permitLabel();
         operatorStore.setPermit(permitname);
         return this;
@@ -118,8 +117,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     }
 
     public AnnualBilateralJourney country(World world, OperatorStore operatorStore) {
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        String country = CountrySelectionPage.norwaySelection();
+        String country = CountrySelectionPage.selectCountry("Norway");
         RestrictedCountriesPage.saveAndContinue();
         operatorStore.setCountry1(country);
         return this;
@@ -137,14 +135,14 @@ public class AnnualBilateralJourney extends BasePermitJourney {
 
     public AnnualBilateralJourney checkYourAnswers(){
         CheckYourAnswerPage.untilOnPage();
-        CheckYourAnswersPage.saveAndContinue();
+        CheckYourAnswerPage.saveAndContinue();
         return this;
     }
 
     public AnnualBilateralJourney declare(boolean declaration){
         DeclarationPage.untilOnPage();
-        DeclarationPage.declare(declaration);
-        DeclarationPage.acceptAndContinue();
+        BaseDeclarationPage.declare(declaration);
+        DeclarationPage.saveAndContinue();
         return this;
     }
 

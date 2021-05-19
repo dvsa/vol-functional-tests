@@ -24,12 +24,11 @@ import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.BaseCheckYourAnswersPage.saveAndContinue;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage.cabotageConfirmation;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage.CertificatesRequiredConfirmation;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.select;
 
-public class AwaitingFeePermitSteps extends BasePage implements En {
+public class AwaitingFeePermitSteps extends BasePermitPage implements En {
 
     public AwaitingFeePermitSteps(OperatorStore operatorStore, World world) {
         And("^I have a short term application in awaiting fee status$", () -> {
@@ -42,10 +41,10 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
             ECMTShortTermJourney.getInstance()
                     .licencePage(operatorStore, world);
             select(OverviewPage.Section.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.shortTermAPGGSaveAndContinue();
+            saveAndContinue();
             CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
             CheckIfYouNeedECMTPermitsPage.checkboxSelection();
-            CheckIfYouNeedECMTPermitsPage.shortTermAPGGSaveAndContinue();
+            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             cabotageConfirmation();
             BasePermitPage.saveAndContinue();
             CertificatesRequiredConfirmation();

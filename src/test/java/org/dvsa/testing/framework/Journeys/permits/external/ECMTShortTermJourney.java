@@ -91,47 +91,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney numberOfTripsPage(World world, LicenceStore licenceStore) {
-        int numberOfTrips = Integer.parseInt(Str.randomNumbers(5));
-        int numberOfPermits = licenceStore.getNumberOfAuthorisedVehicles();
-
-        NumberOfTripsPage.quantity(numberOfTrips);
-        NumberOfTripsPage.saveAndContinue();
-
-        if (numberOfTrips / numberOfPermits > 100) {
-            NumberOfTripsPage.saveAndContinue();
-        }
-
-        licenceStore.getEcmt().setNumberOfTrips(numberOfTrips);
-
-        return this;
-    }
-
-    public ECMTShortTermJourney internationalBusinessPage(World world, LicenceStore licenceStore) {
-        JourneyProportion journeyProportion = JourneyProportion.random();
-        PercentageOfInternationalJourneysPage.proportion(journeyProportion);
-        PercentageOfInternationalJourneysPage.saveAndContinue();
-
-        if (journeyProportion == JourneyProportion.MoreThan90Percent) {
-            PercentageOfInternationalJourneysPage.saveAndContinue();
-        }
-
-        licenceStore.getEcmt().setInternationalBusiness(journeyProportion);
-
-        return this;
-    }
-
-    public ECMTShortTermJourney sectorPage(World world, LicenceStore licenceStore) {
-        Sector sector = Sector.random();
-
-        SectorPage.sector(sector);
-        SectorPage.saveAndContinue();
-
-        licenceStore.getEcmt().setSector(sector);
-
-        return this;
-    }
-
     public ECMTShortTermJourney checkYourAnswersPage() {
         CheckYourAnswersPage.saveAndContinue();
         return this;

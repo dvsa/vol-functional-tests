@@ -11,7 +11,6 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.BilateralSection;
 import org.junit.Assert;

@@ -80,7 +80,7 @@ BaseApplicationSubmitPage.untilSubmittedPageLoad();
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
             section(PermitSection.CheckYourAnswers);
-            BaseCheckYourAnswersPage.saveAndContinue();
+            BasePermitPage.saveAndContinue();
             DeclarationPage.declare(true);
             DeclarationPage.saveAndContinue();
 

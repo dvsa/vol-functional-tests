@@ -4,8 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CountrySelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.RestrictedCountriesPage;
+import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
 import org.hamcrest.text.MatchesPattern;
 import org.junit.Assert;
 
@@ -16,15 +15,9 @@ public class CountrySelectionSteps implements En {
             String actualReferenceNumber = BasePermitPage.getReference();
             Assert.assertThat(actualReferenceNumber, MatchesPattern.matchesPattern(expectedLicenceNumber.concat(" / \\d+")));
         });
-        Then("^the page heading on bilateral country selection  page is correct$", () -> {
-            String expectedPageHeading = "Select the countries you are transporting goods to or transiting through";
-            String actualPageHeading = CountrySelectionPage.pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
-        });
+        Then("^the page heading on bilateral country selection  page is correct$", CountrySelectionPage::hasPageHeading);
 
-        Then("^I am on the Bilaterals country selection page$", () -> {
-            CountrySelectionPage.untilOnPage();
-        });
+        Then("^I am on the Bilaterals country selection page$", CountrySelectionPage::untilOnPage);
 
     }
 }

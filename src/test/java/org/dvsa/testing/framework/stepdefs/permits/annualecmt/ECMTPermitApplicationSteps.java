@@ -36,7 +36,7 @@ import java.util.stream.IntStream;
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 
-public class ECMTPermitApplicationSteps extends BasePage implements En {
+public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
 
     public static Map<String, String> applicationReference;
 
@@ -179,14 +179,14 @@ public class ECMTPermitApplicationSteps extends BasePage implements En {
         store.withLicences(licenceStore);
         OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
         CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
-        BasePermitPage.saveAndContinue();
+        CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         CabotagePage.wontCarryCabotage(true);
         CertificatesRequiredPage.certificatesRequired(true);
         CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
         NumberOfPermitsPage.permitsValue();
-        BasePermitPage.saveAndContinue();
+        NumberOfPermitsPage.saveAndContinue();
         EuroEmissioStandardsPage.Emissionsconfirmation();
-        BasePermitPage.saveAndContinue();
+        EuroEmissioStandardsPage.saveAndContinue();
         licenceStore.setReferenceNumber(BasePermitPage.getReference());
         ECMTPermitApplicationSteps.applicationReference.put("application.reference",licenceStore.getReferenceNumber());
         store.withLicences(licenceStore);

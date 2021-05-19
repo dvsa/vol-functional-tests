@@ -26,7 +26,7 @@ public class UkraineEmissionsStandardsSteps implements En {
         });
 
         When("^I save and continue on the Ukraine emissions standards page$", () -> {
-            UkraineEmissionsStandardsPage.ukraineEmissionsSaveAndContinue();
+            UkraineEmissionsStandardsPage.saveAndContinue();
 
         });
 

@@ -5,7 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
+import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -29,24 +29,26 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
-            PermitUsagePage.continueButton();
+            PermitUsagePage.saveAndContinue();
             NumberOfPermitsPage.numberOfPermitsNew();
 
             NumberOfPermitsPage.setStandardValue(NumberOfPermitsPage.getStandardValue());
             NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
             NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
             AnnualBilateralJourney.getInstance().permit(operatorStore);
-            BasePermitPage.bilateralSaveAndContinue();
+            AnnualBilateralJourney.saveAndContinue();
         });
 
-        Then("^I see three sections displayed on the table correctly$", CheckYourAnswersPage::newSectionNoCabotage);
+        Then("^I see three sections displayed on the table correctly$", () -> {
+            BilateralJourneySteps.assertSectionsExist(false);
+        });
 
 
         Then("^For bilateral standard permits no cabotage permit type,the value of how many permits you need, will be as per the ones saved on the number of permits page$", () -> {
             int count = NumberOfPermitsPage.getFieldCount();
             String permitlabel = operatorStore.getPermit();
             String permitvalue = String.valueOf(NumberOfPermitsPage.getPermitValue());
-            Assert.assertEquals(CheckYourAnswersPage.getpermitValueforNonCabotage(), permitvalue + " " + permitlabel + "s");
+            Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(), permitvalue + " " + permitlabel + "s");
         });
     }
 }

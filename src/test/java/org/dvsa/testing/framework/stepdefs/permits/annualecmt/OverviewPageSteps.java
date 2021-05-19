@@ -53,7 +53,7 @@ public class OverviewPageSteps implements En {
         });
         When("^I fill all steps preceding steps to declaration$", () -> {
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
-            BaseCheckYourAnswersPage.saveAndContinue();
+            ECMTPermitApplicationSteps.saveAndContinue();
         });
         When("^the page heading is displayed correctly$", OverviewPage::overviewPageHeading);
         When("^I'm on the annual multilateral overview page$", () -> {

@@ -13,9 +13,9 @@ import org.junit.Assert;
 
 public class DeclarationPageSteps implements En {
     public DeclarationPageSteps(OperatorStore operator, World world) {
-        When("I should be on the Annual Multilateral Declaration page", DeclarationPage::untilOnPage);
+        When("I should be on the Annual Multilateral Declaration page", org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage::untilOnPage);
         When("^I make my declaration$", () -> {
-            DeclarationPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.untilOnPage();
             DeclarationPage.declare(true);
         });
         And("I am on the annual multilateral declaration page", () -> {
@@ -28,7 +28,7 @@ public class DeclarationPageSteps implements En {
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers();
 
-            DeclarationPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.untilOnPage();
         });
         Then("^the annual multilateral declaration page has an application reference number$", () -> {
             String message = "Expected Annual Multilateral page to possess reference number but" +

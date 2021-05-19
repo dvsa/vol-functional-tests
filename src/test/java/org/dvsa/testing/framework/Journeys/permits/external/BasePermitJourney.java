@@ -127,8 +127,8 @@ public class BasePermitJourney extends BaseJourney {
         }
 
         else {
-            LicencePage.licence(selectedLicence.getLicenceNumber());
-            licenceNumber = selectedLicence.getLicenceNumber();
+            licenceNumber = world.applicationDetails.getLicenceNumber();
+            LicencePage.licence(licenceNumber);
         }
 
         operator.setCurrentLicenceNumber(licenceNumber);

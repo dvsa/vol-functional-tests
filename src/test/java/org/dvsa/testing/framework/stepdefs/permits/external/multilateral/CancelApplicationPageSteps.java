@@ -33,7 +33,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
 
                 NumberOfPermitsPage.overview();
                 OverviewPage.cancel();
-                CancellationPage.untilOnCancelApplicationPage();
+                CancellationPage.untilOnPage();
             });
 
         });
@@ -62,7 +62,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
             CancellationPage.clickCancelCheckbox();
             CancellationPage.clickCancelButton();
         });
-        Then("^I am taken to the application cancelled page$", CancellationConfirmationPage::untilOnCancelConfirmationPage);
+        Then("^I am taken to the application cancelled page$", CancellationConfirmationPage::untilOnPage);
         And("^there are no fees for the permit$", () -> {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
             Assert.assertFalse(HomePage.FeesTab.hasOutstandingFees());

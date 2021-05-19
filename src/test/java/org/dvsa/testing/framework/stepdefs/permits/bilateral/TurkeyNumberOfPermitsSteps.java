@@ -26,7 +26,7 @@ public class TurkeyNumberOfPermitsSteps implements En {
         });
 
         When("^I save and continue on the Turkey number of permits page$", () -> {
-            TurkeyThirdCountryPage.turkeyThirdCountrySaveAndContinue();
+            TurkeyThirdCountryPage.saveAndContinue();
         });
 
         Then("^I should get the validation error message on the number of permits page$", () -> {

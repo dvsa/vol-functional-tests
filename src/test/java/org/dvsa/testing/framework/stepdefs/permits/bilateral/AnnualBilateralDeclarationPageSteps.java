@@ -10,6 +10,8 @@ import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.EcmtJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -47,8 +49,8 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             String actualReference = BasePermitPage.getReference();
             licenceStore.setReferenceNumber(actualReference);
             Assert.assertTrue(String.valueOf(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,17))),true);
-            DeclarationPage.pageHeading();
-            DeclarationPage.advisoryTexts();
+            DeclarationPage.hasPageHeading();
+            DeclarationPage.hasBilateralAdvisoryTexts();
         });
         Then("^I select the declaration link on the overview page$", () -> {
            OverviewPage.selectDeclaration();
@@ -112,12 +114,8 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
         });
-        Then("^I am taken to the bilateral declaration Page$", () -> {
-              DeclarationPage.pageHeading();
-        });
-        Then("^there's a guidance notes link to the correct gov page$", () -> {
-            Assert.assertTrue("Unable to find guidance notes link", DeclarationPage.hasGuidanceNotes());
-        });
+        Then("^I am taken to the bilateral declaration Page$", DeclarationPage::hasPageHeading);
+        Then("^there's a guidance notes link to the correct gov page$", EcmtJourneySteps::hasDeclarationGuidanceNotesLink);
         When("^I submit my annual bilateral declaration$", () -> {
             AnnualBilateralJourney.getInstance().declare(true);
         });

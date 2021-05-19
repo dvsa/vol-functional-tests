@@ -26,24 +26,12 @@ public class TurkeyThirdCountrySteps implements En {
             TurkeyThirdCountryPage.radiobuttons();
         });
 
-        When("^I save and continue on the Turkey third country page$", () -> {
-            TurkeyThirdCountryPage.turkeyThirdCountrySaveAndContinue();
-        });
-        Then("^I should get the validation error message to select one option$", () -> {
-           TurkeyThirdCountryPage.turkeyThirdCountryErrorText();
-        });
-        When("^I select Yes radio button on the Turkey third country page$", () -> {
-           TurkeyThirdCountryPage.turkeyThirdCountryYes();
-        });
-        When("^I select No radio button on the Turkey third country page$", () -> {
-            TurkeyThirdCountryPage.turkeyThirdCountryNo();
-        });
-        When("^I get advisory text that I don't need Turkey permits$", () -> {
-            TurkeyThirdCountryPage.noAdvisoryText();
-        });
-        When("^I am navigated to the cancel application page$", () -> {
-            CancellationPage.untilOnCancelApplicationPage();
-        });
+        When("^I save and continue on the Turkey third country page$", TurkeyThirdCountryPage::saveAndContinue);
+        Then("^I should get the validation error message to select one option$", TurkeyThirdCountryPage::turkeyThirdCountryErrorText);
+        When("^I select Yes radio button on the Turkey third country page$", TurkeyThirdCountryPage::turkeyThirdCountryYes);
+        When("^I select No radio button on the Turkey third country page$", TurkeyThirdCountryPage::turkeyThirdCountryNo);
+        When("^I get advisory text that I don't need Turkey permits$", TurkeyThirdCountryPage::noAdvisoryText);
+        When("^I am navigated to the cancel application page$", CancellationPage::untilOnPage);
     }
 }
 

@@ -104,7 +104,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             PeriodSelectionPage.moroccoPageHeading();
             Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoStandardMultipleJourney,operatorStore);
-            PeriodSelectionPage.saveAndContinueButton();
+            PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnNumberofPermitsPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());
             NumberOfPermitsPage.pageHeading();
@@ -114,7 +114,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.numberOfPermitsNew();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
-            CheckYourAnswersPage.confirmAndReturnToOverview();
+            CheckYourAnswerPage.saveAndContinue();
         });
         When("^I submit the application for standard single journey on selection of Morocco link on overview page$", () -> {
             OverviewPage.clickMorocco();
@@ -127,7 +127,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             PeriodSelectionPage.moroccoPageHeading();
             Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoStandardSingleJourney,operatorStore);
-            PeriodSelectionPage.saveAndContinueButton();
+            PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnNumberofPermitsPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());
             NumberOfPermitsPage.pageHeading();
@@ -137,7 +137,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.numberOfPermitsNew();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
-            CheckYourAnswersPage.confirmAndReturnToOverview();
+            CheckYourAnswerPage.saveAndContinue();
         });
         When("^I submit the application for empty entry single journey on selection of Morocco link on overview page$", () -> {
             OverviewPage.clickMorocco();
@@ -150,7 +150,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             PeriodSelectionPage.moroccoPageHeading();
             Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoEmptyEntry,operatorStore);
-            PeriodSelectionPage.saveAndContinueButton();
+            PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnNumberofPermitsPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), operatorStore.getCountry());
             NumberOfPermitsPage.pageHeading();
@@ -160,7 +160,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.numberOfPermitsNew();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
-            CheckYourAnswersPage.confirmAndReturnToOverview();
+            CheckYourAnswerPage.saveAndContinue();
         });
         When("^I submit the application for Hors Contingent single journey on selection of Morocco link on overview page$", () -> {
             OverviewPage.clickMorocco();
@@ -173,7 +173,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             PeriodSelectionPage.moroccoPageHeading();
             Assert.assertEquals(PeriodSelectionPage.getCountry(), operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoHorsContingency, operatorStore);
-            PeriodSelectionPage.saveAndContinueButton();
+            PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnNumberofPermitsPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());
             NumberOfPermitsPage.pageHeading();
@@ -183,7 +183,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.numberOfPermitsNew();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
-            CheckYourAnswersPage.confirmAndReturnToOverview();
+            CheckYourAnswerPage.saveAndContinue();
         });
     }
 }
