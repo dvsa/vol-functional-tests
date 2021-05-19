@@ -1,8 +1,5 @@
 package org.dvsa.testing.framework.runner;
 
-
-import org.dvsa.testing.framework.Report.Config.Environments;
-import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import io.qameta.allure.Attachment;
@@ -26,9 +23,8 @@ public class Hooks {
         FileUtils.forceMkdir(directory);
     }
 
-
     @Attachment(value = "Screenshot on failure", type = "image/png")
-    public void attach(Scenario scenarioStatus) throws IOException, IllegalBrowserException {
+    public void attach(Scenario scenarioStatus) throws IOException {
         if (scenarioStatus.isFailed())
             createDirectory();
         File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
