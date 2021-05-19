@@ -336,7 +336,6 @@ public class ManageVehicle extends BasePage {
         isTextPresent(String.format("Vehicle %s has been added", vrm), 60);
     }
 
-    @After
     public void removeVehicleOnLicence() {
         JSONObject json = new JSONObject();
         Map<String, String> queryParams = new HashMap<>();
