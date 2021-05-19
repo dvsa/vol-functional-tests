@@ -18,6 +18,7 @@ Feature: Admin paying fees
       | payment-method |
       | card           |
       | cash           |
+      | cheque         |
       | postal         |
 
 #    Need NI Payment for internal
