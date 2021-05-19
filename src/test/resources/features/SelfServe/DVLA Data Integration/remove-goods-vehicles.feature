@@ -24,8 +24,9 @@ Feature: Remove a vehicle more than 10 vehicles
     Then the "1 vehicle has been removed" confirmation banner should appear
     And the vehicle should no longer be present
 
+  @WIP
   Scenario: Remove a vehicle from a MLH
-
+    Given I have a "goods" "standard_national" licence
 
   Scenario: Search and remove a vehicle with more than 10 vehicles
     Given I have a "goods" "standard_national" licence with "13" vehicles
@@ -34,7 +35,9 @@ Feature: Remove a vehicle more than 10 vehicles
     Then the "1 vehicle has been removed" confirmation banner should appear
     And i search and the vehicle should no longer be present
 
+  @WIP
   Scenario: View a vehicle via remove page?
+    Given I have a "goods" "standard_national" licence
 
   Scenario: Remove all my vehicles
     Given I have a "goods" "standard_national" licence

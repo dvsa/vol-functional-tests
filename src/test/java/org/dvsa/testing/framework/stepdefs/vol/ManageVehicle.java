@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.stepdefs;
+package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
