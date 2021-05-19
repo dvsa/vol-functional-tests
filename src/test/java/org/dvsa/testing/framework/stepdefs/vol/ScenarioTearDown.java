@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -14,10 +13,7 @@ import java.io.IOException;
 public class ScenarioTearDown {
     @After
     public void afterClass(Scenario scenario) throws Exception {
-        World world = new World();
         Hooks.attach(scenario);
-        ManageVehicle manageVehicle = new ManageVehicle(world);
-        manageVehicle.removeVehicleOnLicence();
     }
 
     @Before
