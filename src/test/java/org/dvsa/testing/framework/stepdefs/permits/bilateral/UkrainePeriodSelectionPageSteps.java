@@ -6,12 +6,10 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.untilOnPeriodSelectionPage;
-
 public class UkrainePeriodSelectionPageSteps implements En {
     public UkrainePeriodSelectionPageSteps(OperatorStore operatorStore, World world) {
         Then("^I am on the Bilateral Ukraine Period Selection page with correct information and content$", () -> {
-            untilOnPeriodSelectionPage();
+            PeriodSelectionPage.untilOnPage();
 
             // Checking Page heading
             String expectedPageHeading = "Validity period";

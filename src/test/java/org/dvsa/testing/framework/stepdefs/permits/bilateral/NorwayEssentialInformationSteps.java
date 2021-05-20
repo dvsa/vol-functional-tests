@@ -3,11 +3,12 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
+import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.getCountry;
 
 public class NorwayEssentialInformationSteps implements En {
     public NorwayEssentialInformationSteps(OperatorStore operatorStore, World world) {
@@ -16,27 +17,25 @@ public class NorwayEssentialInformationSteps implements En {
         });
 
         When("^I am on the Norway essential information page$", () -> {
-            untilOnPage();
+            EssentialInformationPage.untilOnPage();
         });
         Then("^Country name displayed on the Bilateral permit essential information page is the one clicked on the overview page$", () -> {
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
         });
         And("^the page heading on Bilateral essential information  page is correct$", () -> {
-            String expectedPageHeading = "Essential information";
-            String actualPageHeading = pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
+            EssentialInformationPage.hasPageHeading();
         });
         And("^the page content on Bilateral essential information  page is correct$", () -> {
-           pageContent();
+            EssentialInformationPage.hasPageContent();
         });
         And("^the GOV.UK link on Bilateral essential information  page is correct$", () -> {
-            link();
+            EssentialInformationPage.hasInternationalAuthorisationGovGuidanceLink();
         });
         And("^I am navigated to Bilaterals period selection page$", () -> {
-            untilOnPeriodSelectionPage();
+            PeriodSelectionPage.untilOnPage();
         });
         And("^I select continue button on the Bilateral essential information page$", () -> {
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.saveAndContinue();
 
         });
     }

@@ -1,24 +1,24 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
 
-public class CabotagePageSteps extends BasePage implements En {
+public class CabotagePageSteps extends BasePermitPage implements En {
 
     private int numberOfCountries;
 
@@ -30,11 +30,7 @@ public class CabotagePageSteps extends BasePage implements En {
                     .licencePage(operatorStore, world);
             numberOfCountries = size("(//input[@type='checkbox'])", SelectorType.XPATH);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
-            untilOnPage();
-            bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
+            annualBilateralOverviewPageUntilPeriodSelectionPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
 
@@ -56,11 +52,7 @@ public class CabotagePageSteps extends BasePage implements En {
                     .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
-            untilOnPage();
-            bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
+            annualBilateralOverviewPageUntilPeriodSelectionPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
@@ -81,11 +73,7 @@ public class CabotagePageSteps extends BasePage implements En {
                     .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
-            untilOnPage();
-            bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
+            annualBilateralOverviewPageUntilPeriodSelectionPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
@@ -95,11 +83,7 @@ public class CabotagePageSteps extends BasePage implements En {
                     .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
-            untilOnPage();
-            bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
+            annualBilateralOverviewPageUntilPeriodSelectionPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
@@ -109,11 +93,7 @@ public class CabotagePageSteps extends BasePage implements En {
                     .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
-            untilOnPage();
-            bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
+            annualBilateralOverviewPageUntilPeriodSelectionPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
@@ -121,4 +101,12 @@ public class CabotagePageSteps extends BasePage implements En {
             isPath("//permits/application/\\d+/ipa/\\d+/bi-number-of-permits");
         });
     }
+
+    private void annualBilateralOverviewPageUntilPeriodSelectionPage() {
+        OverviewPage.untilOnOverviewPage();
+        OverviewPage.clickNorway();
+        EssentialInformationPage.untilOnPage();
+        saveAndContinue();
+        PeriodSelectionPage.untilOnPage();
+    } // Could look a another method where it does the journey with differences in if statements
 }

@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -18,7 +19,7 @@ import org.junit.Assert;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
+import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.getCountry;
 
 public class AnnualBilateralOverviewPageSteps implements En {
     public AnnualBilateralOverviewPageSteps(LicenceStore licenceStore, OperatorStore operatorStore, World world) {
@@ -49,8 +50,8 @@ public class AnnualBilateralOverviewPageSteps implements En {
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
             OverviewPage.clickNorway();
-            untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.untilOnPage();
+            EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -95,14 +96,12 @@ public class AnnualBilateralOverviewPageSteps implements En {
         And("^I click on Ukraine country link on the Application overview page$", OverviewPage::clickUkraine);
         When("^I submit the application on selection of Morocco link on overview page$", () -> {
             OverviewPage.clickMorocco();
-            untilOnPage();
+            EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            String expectedPageHeading = "Essential information";
-            String actualPageHeading = pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.hasPageHeading();
+            EssentialInformationPage.saveAndContinue();
             PeriodSelectionPage.moroccoPageHeading();
-            Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoStandardMultipleJourney,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnNumberofPermitsPage();
@@ -118,14 +117,12 @@ public class AnnualBilateralOverviewPageSteps implements En {
         });
         When("^I submit the application for standard single journey on selection of Morocco link on overview page$", () -> {
             OverviewPage.clickMorocco();
-            untilOnPage();
+            EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            String expectedPageHeading = "Essential information";
-            String actualPageHeading = pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.hasPageHeading();
+            EssentialInformationPage.saveAndContinue();
             PeriodSelectionPage.moroccoPageHeading();
-            Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoStandardSingleJourney,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnNumberofPermitsPage();
@@ -141,14 +138,12 @@ public class AnnualBilateralOverviewPageSteps implements En {
         });
         When("^I submit the application for empty entry single journey on selection of Morocco link on overview page$", () -> {
             OverviewPage.clickMorocco();
-            untilOnPage();
+            EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            String expectedPageHeading = "Essential information";
-            String actualPageHeading = pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.hasPageHeading();
+            EssentialInformationPage.saveAndContinue();
             PeriodSelectionPage.moroccoPageHeading();
-            Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoEmptyEntry,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnNumberofPermitsPage();
@@ -164,14 +159,12 @@ public class AnnualBilateralOverviewPageSteps implements En {
         });
         When("^I submit the application for Hors Contingent single journey on selection of Morocco link on overview page$", () -> {
             OverviewPage.clickMorocco();
-            untilOnPage();
+            EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(), operatorStore.getCountry());
-            String expectedPageHeading = "Essential information";
-            String actualPageHeading = pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.hasPageHeading();
+            EssentialInformationPage.saveAndContinue();
             PeriodSelectionPage.moroccoPageHeading();
-            Assert.assertEquals(PeriodSelectionPage.getCountry(), operatorStore.getCountry());
+            Assert.assertEquals(getCountry(), operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoHorsContingency, operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnNumberofPermitsPage();

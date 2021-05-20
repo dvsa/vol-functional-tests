@@ -6,18 +6,16 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.EcmtJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.CancelApplicationPage;
 import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
 
 public class CancelApplicationPageSteps implements En {
 
@@ -36,9 +34,9 @@ public class CancelApplicationPageSteps implements En {
         Then("^I navigate to the Bilaterals cabotage page$", () -> {
             org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.untilOnOverviewPage();
             org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.clickNorway();
-            untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
+            EssentialInformationPage.untilOnPage();
+            EssentialInformationPage.saveAndContinue();
+            PeriodSelectionPage.untilOnPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });

@@ -4,15 +4,14 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
 
 public class PeriodSelectionPageSteps implements En {
     public PeriodSelectionPageSteps(OperatorStore operatorStore, World world) {
@@ -24,9 +23,9 @@ public class PeriodSelectionPageSteps implements En {
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
             OverviewPage.clickNorway();
-            untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
+            EssentialInformationPage.untilOnPage();
+            EssentialInformationPage.saveAndContinue();
+            PeriodSelectionPage.untilOnPage();
         });
         Then("^Country name displayed on the page is the one clicked on the overview page$", () -> {
             Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());

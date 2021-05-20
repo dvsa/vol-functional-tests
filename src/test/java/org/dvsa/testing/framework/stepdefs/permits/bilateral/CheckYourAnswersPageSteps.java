@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -18,7 +19,6 @@ import org.junit.Assert;
 import java.net.MalformedURLException;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.untilOnPage;
 import static org.junit.Assert.assertTrue;
 
 public class CheckYourAnswersPageSteps extends BasePage implements En {
@@ -31,8 +31,8 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
             OverviewPage.clickNorway();
-            untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.untilOnPage();
+            EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
@@ -84,7 +84,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             }
         });
         Then("^I am navigated to the Bilateral period selection page$", () -> {
-            PeriodSelectionPage.untilOnPeriodSelectionPage();
+            PeriodSelectionPage.untilOnPage();
         });
         And("^I change period to be Bilateral and Standard permits on the period selection and continue to be on the check your answers page$", () -> {
           AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits, operatorStore);

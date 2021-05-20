@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.EcmtJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -34,7 +35,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             OverviewPage.untilOnOverviewPage();
             OverviewPage.clickNorway();
             EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -77,7 +78,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             OverviewPage.untilOnOverviewPage();
             OverviewPage.clickNorway();
             EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -96,7 +97,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             OverviewPage.untilOnOverviewPage();
             OverviewPage.clickNorway();
             EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
+            EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -115,7 +116,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             HomePage.PermitsTab.selectOngoing(licence1);
         });
         Then("^I am taken to the bilateral declaration Page$", DeclarationPage::hasPageHeading);
-        Then("^there's a guidance notes link to the correct gov page$", EcmtJourneySteps::hasDeclarationGuidanceNotesLink);
+        Then("^there's a guidance notes link to the correct gov page$", EcmtJourneySteps::hasInternationalAuthorisationGovGuidanceLink);
         When("^I submit my annual bilateral declaration$", () -> {
             AnnualBilateralJourney.getInstance().declare(true);
         });

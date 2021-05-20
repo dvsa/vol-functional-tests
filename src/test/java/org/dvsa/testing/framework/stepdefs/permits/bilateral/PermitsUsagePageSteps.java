@@ -5,8 +5,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
@@ -14,7 +14,6 @@ import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.untilOnPeriodSelectionPage;
 
 public class PermitsUsagePageSteps implements En {
     public PermitsUsagePageSteps(OperatorStore operatorStore, World world) {
@@ -27,8 +26,8 @@ public class PermitsUsagePageSteps implements En {
             OverviewPage.untilOnOverviewPage();
             OverviewPage.clickNorway();
             EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
+            EssentialInformationPage.saveAndContinue();
+            PeriodSelectionPage.untilOnPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
         });
