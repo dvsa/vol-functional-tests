@@ -1,10 +1,10 @@
 @SS
 @ss-pay-app
 @ss_regression
+@smoketest
 Feature: Self Serve Apply for licence
 
   @CPMS_tests
-  @smoketest
   Scenario Outline: Create and pay application fees
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_east |
@@ -33,7 +33,6 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
 
   @NI_application
-  @smoketest
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |

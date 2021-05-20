@@ -6,14 +6,14 @@ import cucumber.api.java.Before;
 import org.dvsa.testing.framework.Report.Config.Environments;
 import org.dvsa.testing.framework.runner.Hooks;
 
+
 import java.io.IOException;
 
 
 public class ScenarioTearDown {
     @After
     public void afterClass(Scenario scenario) throws Exception {
-        Hooks hooks = new Hooks();
-        hooks.attach(scenario);
+        Hooks.attach(scenario);
     }
 
     @Before

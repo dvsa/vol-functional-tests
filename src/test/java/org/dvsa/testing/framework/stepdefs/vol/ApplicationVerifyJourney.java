@@ -27,7 +27,8 @@ public class ApplicationVerifyJourney extends BasePage {
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourneySteps.createApplication();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("application", "Review and declarations");
+        world.selfServeNavigation.navigateToPage("application", "Type of licence");
+        world.selfServeNavigation.navigateThroughApplication();
         world.UIJourneySteps.signDeclaration();
     }
 
