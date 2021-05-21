@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.ECMTInternationalRemovalPage;
@@ -17,7 +18,7 @@ public class ECMTInternationalRemovalEligibiltyPageSteps implements En {
         When("^I am on the ECMT International Removal Eligibity page", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtInternationalRemoval, operatorStore)
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
                     .overview(OverviewPage.Section.RemovalsEligibility, operatorStore);

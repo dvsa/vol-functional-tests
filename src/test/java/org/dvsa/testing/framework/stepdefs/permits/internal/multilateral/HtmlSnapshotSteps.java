@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.multilateral;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -44,7 +43,7 @@ public class HtmlSnapshotSteps extends BasePage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)

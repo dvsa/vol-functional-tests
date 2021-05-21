@@ -4,8 +4,11 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.pages.SelectALicencePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
+import org.dvsa.testing.lib.pages.external.permit.BaseLicencePage;
 import org.dvsa.testing.lib.pages.external.permit.LicencePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
@@ -41,18 +44,18 @@ public class BasePermitJourney extends BaseJourney {
     }
 
     public BasePermitJourney permitType(OperatorStore operatorStore) {
-        return permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
+        return permitType(PermitType.ECMT_ANNUAL, operatorStore);
     }
 
     public BasePermitJourney permitType() {
-        return permitType(PermitTypePage.PermitType.EcmtAnnual, new OperatorStore());
+        return permitType(PermitType.ECMT_ANNUAL, new OperatorStore());
     }
 
     public BasePermitJourney yearSelection() {
         return yearSelection(YearSelectionPage.YearSelection.YEAR_2019, new OperatorStore());
     }
 
-    public BasePermitJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
+    public BasePermitJourney permitType(PermitType type, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -113,11 +116,11 @@ public class BasePermitJourney extends BaseJourney {
             selectedLicence = operator.randomLicence();
         }
 
-        if (selectedLicence.getEcmt().hasType(PermitTypePage.PermitType.AnnualBilateral) ||
-                operator.hasCurrentPermitType(PermitTypePage.PermitType.AnnualMultilateral) ||
-                operator.hasCurrentPermitType(PermitTypePage.PermitType.ShortTermECMT) ||
-                operator.hasCurrentPermitType(PermitTypePage.PermitType.EcmtInternationalRemoval)) {
-            org.dvsa.testing.lib.pages.external.permit.bilateral.LicencePage.licence(world.applicationDetails.getLicenceNumber());
+        if (selectedLicence.getEcmt().hasType(PermitType.ANNUAL_BILATERAL) ||
+                operator.hasCurrentPermitType(PermitType.ANNUAL_MULTILATERAL) ||
+                operator.hasCurrentPermitType(PermitType.SHORT_TERM_ECMT) ||
+                operator.hasCurrentPermitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)) {
+            BaseLicencePage.licence(world.applicationDetails.getLicenceNumber());
             licenceNumber = selectedLicence.getLicenceNumber();
         }
 

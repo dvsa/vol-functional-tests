@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -29,7 +30,7 @@ public class ECMTRemovalSelfServeApplicationSteps extends BasePage implements En
         And("^I apply for an ECMT removal permit$",() -> {
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
-            EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.EcmtInternationalRemoval,operatorStore);
+            EcmtApplicationJourney.getInstance().permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore);
             LoginInIntPage.selectLicence();
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)

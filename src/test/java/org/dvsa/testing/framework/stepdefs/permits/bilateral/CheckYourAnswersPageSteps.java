@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
@@ -26,7 +27,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
         Then("^I am on the Bilateral check your answers page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -39,8 +40,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
             BilateralJourneySteps.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             AnnualBilateralJourney.saveAndContinue();
         });
         Then("^Country name displayed on the Bilateral check your answers page is the one clicked on the overview page$", () -> {
@@ -66,7 +66,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             BilateralJourneySteps.assertCabotageValueYes();
         });
         Then("^Value of How many permits you need, will be the one saved on the number of permits page$", () -> {
-            String permitlabel = operatorStore.getPermit();
+            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
             String permitvalue =String.valueOf(NumberOfPermitsPage.getPermitValue());
             Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitvalue+" "+permitlabel+"s");
         });
@@ -95,8 +95,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
           PermitUsagePage.saveAndContinue();
           BilateralJourneySteps.clickNoToCabotage();
           BilateralJourneySteps.saveAndContinue();
-          NumberOfPermitsPage.numberOfPermits();
-          AnnualBilateralJourney.getInstance().permit(operatorStore);
+          org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
           AnnualBilateralJourney.saveAndContinue();
           CheckYourAnswerPage.untilOnPage();
         });
@@ -107,8 +106,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             AnnualBilateralJourney.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
         });
@@ -120,7 +118,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             assertTrue(isElementNotPresent("//dt[contains(text(),'Do you need to carry out cabotage?')]", SelectorType.XPATH));
         });
         Then("^Value of How many permits you need, will be the one saved on the number of permits page for Bileterals Standard permits no Cabotage$", () -> {
-            String permitlabel = operatorStore.getPermit();
+            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
             String permitvalue =String.valueOf(NumberOfPermitsPage.getPermitValue());
             Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(),permitvalue+" "+permitlabel+"s");
         });

@@ -73,7 +73,7 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             Assert.assertEquals(BasePage.getElementValueByText("//dl[6]//dd[1]",SelectorType.XPATH),"I only need permits for cabotage");
 
             //How many permits do you need?
-            String permitlabel = operator.getPermit();
+            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
             String permitvalue =String.valueOf(NumberOfPermitsPage.getPermitValue());
             String expected3= permitvalue+" "+permitlabel+"s";
             Assert.assertEquals(BasePage.getElementValueByText("//dl[7]//dt[1]",SelectorType.XPATH),"How many permits do you need?");

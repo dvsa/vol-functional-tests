@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJo
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.DeclarationPage;
@@ -22,7 +23,7 @@ public class DeclarationPageSteps implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)

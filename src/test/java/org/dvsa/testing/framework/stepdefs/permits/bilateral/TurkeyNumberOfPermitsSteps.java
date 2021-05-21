@@ -25,16 +25,9 @@ public class TurkeyNumberOfPermitsSteps implements En {
 
         });
 
-        When("^I save and continue on the Turkey number of permits page$", () -> {
-            TurkeyThirdCountryPage.saveAndContinue();
-        });
-
-        Then("^I should get the validation error message on the number of permits page$", () -> {
-        NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-        });
-        Then("^I enter the valid number of permits required for Turkey permit$", () -> {
-            NumberOfPermitsPage.turkeyNumberOfPermits();
-        });
+        When("^I save and continue on the Turkey number of permits page$", TurkeyThirdCountryPage::saveAndContinue);
+        Then("^I should get the validation error message on the number of permits page$", NumberOfPermitsPage::turkeyNumberofPermitsValidation);
+        Then("^I enter the valid number of permits required for Turkey permit$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::setNumberOfPermitsAndSetRespectiveValues);
     }
 }
 

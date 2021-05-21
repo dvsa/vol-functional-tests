@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJo
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -37,7 +38,7 @@ public class SubmittedPageSteps implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
@@ -67,7 +68,7 @@ public class SubmittedPageSteps implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
@@ -94,7 +95,7 @@ public class SubmittedPageSteps implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
@@ -125,7 +126,7 @@ public class SubmittedPageSteps implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)

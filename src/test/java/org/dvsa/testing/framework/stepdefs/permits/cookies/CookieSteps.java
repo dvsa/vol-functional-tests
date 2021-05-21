@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -167,7 +168,7 @@ public class CookieSteps extends DriverUtils implements En {
                 HomePage.selectTab(Tab.PERMITS);
                 HomePage.applyForLicenceButton();
                 EcmtInternationalRemovalJourney.getInstance()
-                        .permitType(PermitTypePage.PermitType.EcmtInternationalRemoval, operatorStore)
+                        .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                         .licencePage(operatorStore, world);
                 EcmtInternationalRemovalJourney.getInstance()
                         .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)

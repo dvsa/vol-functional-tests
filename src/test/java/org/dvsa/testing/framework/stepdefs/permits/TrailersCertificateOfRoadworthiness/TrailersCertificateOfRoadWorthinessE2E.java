@@ -6,6 +6,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
@@ -21,7 +22,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
         And("^I select Certificate of Roadworthiness for trailers on the select permit page$", () -> {
             clickToPermitTypePage(world);
-            TrailersCertificateOfRoadworthinessJourney.getInstance().permitType(PermitTypePage.PermitType.CertificateOfRoadworthinessForTrailers,operatorStore);
+            TrailersCertificateOfRoadworthinessJourney.getInstance().permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_TRAILERS,operatorStore);
         });
 
         Then("^I select any licence number for Certificate of Roadworthiness for trailers$", () -> {

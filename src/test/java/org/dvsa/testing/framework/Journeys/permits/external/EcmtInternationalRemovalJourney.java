@@ -3,10 +3,11 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.*;
 import org.junit.Assert;
@@ -37,8 +38,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
         LicenceStore licenceStore =
                 operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
-        NumberOfPermitsPage.untilOnPage();
-        licenceStore.getEcmt().setPermitsPerCountry(NumberOfPermitsPage.quantity(licenceStore.getNumberOfAuthorisedVehicles()));
+        licenceStore.getEcmt().setPermitsPerCountry(NumberOfPermitsPage.quantity(licenceStore.getNumberOfAuthorisedVehicles(), PermitType.ANNUAL_BILATERAL));
         saveAndContinue();
         return this;
     }
@@ -80,7 +80,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
     }
 
     public EcmtInternationalRemovalJourney numberOfPermits() {
-        NumberofPermitsPage.numberOfPermits();
+        org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
         saveAndContinue();
         return this;
     }

@@ -12,6 +12,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -83,7 +84,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             HomePage.selectTab(Tab.PERMITS);
           HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.EcmtValidityPeriod();
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             BasePermitPage.back();
@@ -128,17 +129,16 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.EcmtValidityPeriod();
-            LicenceStore licence = operatorStore.getLicences().get(0);
-            LicencePage.licence(licence.getLicenceNumber());
+            LicencePage.licence(world.applicationDetails.getLicenceNumber());
             LicencePage.saveAndContinue();
         });
     }
 
     public static void completeEcmtApplication(OperatorStore operator, World world) {
         EcmtApplicationJourney.getInstance()
-                .permitType(PermitTypePage.PermitType.EcmtAnnual, operator);
+                .permitType(PermitType.ECMT_ANNUAL, operator);
         YearSelectionPage.EcmtValidityPeriod();
         EcmtApplicationJourney.getInstance().licencePage(operator, world);
         LicenceStore licenceStore = completeUpToCheckYourAnswersPage(world, operator);
@@ -158,7 +158,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
 
     public static void completeEcmtApplicationConfirmation(OperatorStore operator, World world) {
         EcmtApplicationJourney.getInstance()
-                .permitType(PermitTypePage.PermitType.EcmtAnnual, operator);
+                .permitType(PermitType.ECMT_ANNUAL, operator);
         YearSelectionPage.EcmtValidityPeriod();
         EcmtApplicationJourney.getInstance()
                 .licencePage(operator, world);

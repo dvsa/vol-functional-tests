@@ -6,6 +6,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
@@ -30,14 +31,14 @@ public class AnnualBilateralOverviewPageSteps implements En {
         And("^I'm on bilateral overview page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
         });
         And("^I'm on bilateral overview page with multiple countries selected$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             System.out.println(operatorStore.getCountry());
@@ -45,7 +46,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
         And("^I have completed till check your answers page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -57,7 +58,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
         });
@@ -110,7 +111,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertTrue("Standard multiple journey permit",true);
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-            NumberOfPermitsPage.numberOfPermitsNew();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.saveAndContinue();
@@ -131,7 +132,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertTrue("Standard single journey permit", true);
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-            NumberOfPermitsPage.numberOfPermitsNew();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.saveAndContinue();
@@ -152,7 +153,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertTrue("Empty Entry single journey permit", true);
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-            NumberOfPermitsPage.numberOfPermitsNew();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.saveAndContinue();
@@ -173,7 +174,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertTrue("Empty Entry single journey permit",true);
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-            NumberOfPermitsPage.numberOfPermitsNew();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.saveAndContinue();

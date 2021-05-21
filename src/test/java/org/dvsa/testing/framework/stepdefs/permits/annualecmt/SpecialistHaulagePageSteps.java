@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
@@ -23,7 +24,7 @@ public class SpecialistHaulagePageSteps implements En {
         And("^I am on the specialist haulage page$", () -> {
             clickToPermitTypePage(world);
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.EcmtValidityPeriod();
             //EcmtApplicationJourney.getInstance().yearSelection(YearSelectionPage.YearSelection.YEAR_2020,operatorStore);
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);

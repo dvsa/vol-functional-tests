@@ -1,15 +1,21 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
+import activesupport.number.Int;
+import jdk.nashorn.internal.runtime.arrays.IntElements;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
+import org.openqa.selenium.WebElement;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 
 public class EcmtApplicationJourney extends BasePermitJourney implements PaymentJourney {
@@ -58,14 +64,17 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
 
     public EcmtApplicationJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        licence.getEcmt().setNumberOfPermits(NumberOfPermitsPage.quantity(maxNumberOfPermits));
+        List<WebElement> numberOfPermitFields = findAll("//*[contains(@class, 'field')]//input[@type='number']", SelectorType.XPATH);
+        numberOfPermitFields.forEach(numberOfPermitsField -> {
+            Integer randomNumberOfPermitsLessThanMax = Int.random(maxNumberOfPermits);
+                    numberOfPermitsField.sendKeys(String.valueOf(randomNumberOfPermitsLessThanMax));
+        });
         NumberOfPermitsPage.saveAndContinue();
         return this;
     }
 
     public EcmtApplicationJourney numberOfPermitsPage(OperatorStore operatorStore) {
         int authVehicles = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).getNumberOfAuthorisedVehicles();
-        numberOfPermitsPage(operatorStore);
         numberOfPermitsPage(authVehicles,operatorStore);
         operatorStore.getCurrentLicence().get().getEcmt().setSubmitDate(LocalDateTime.now());
         return this;
@@ -109,7 +118,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
     @Override
-    public EcmtApplicationJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
+    public EcmtApplicationJourney permitType(PermitType type, OperatorStore operator) {
         return (EcmtApplicationJourney) super.permitType(type, operator);
     }
 

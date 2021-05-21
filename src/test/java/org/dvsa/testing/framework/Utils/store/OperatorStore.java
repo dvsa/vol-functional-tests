@@ -5,6 +5,7 @@ import activesupport.string.Str;
 import apiCalls.Utils.eupaBuilders.external.PersonModel;
 import apiCalls.Utils.eupaBuilders.organisation.ResultModel;
 import org.apache.commons.lang.StringUtils;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
@@ -28,23 +29,13 @@ public class OperatorStore {
     private List<LicenceStore> licences = new ArrayList<>();
     private ResultModel eligibleEcmtLicences;
     private String currentLicence;
-    private PermitTypePage.PermitType currentPermitType;
+    private PermitType currentPermitType;
     private YearSelectionPage.YearSelection currentYearSelection;
     private PeriodSelectionPageOne.ShortTermType currentShortTermType;
     private String country1;
     private String journeyType;
     private String journeyType1;
     private String permitsvalue;
-
-    public String getPermit() {
-        return permit;
-    }
-
-    public void setPermit(String permit) {
-        this.permit = permit;
-    }
-
-    private String permit;
 
     public String getPermitsvalue() {
         return permitsvalue;
@@ -233,7 +224,7 @@ public class OperatorStore {
         }
     }
 
-    public void setCurrentPermitType(PermitTypePage.PermitType currentPermitType) {
+    public void setCurrentPermitType(PermitType currentPermitType) {
         this.currentPermitType = currentPermitType;
     }
 
@@ -249,7 +240,7 @@ public class OperatorStore {
         return currentYearSelection == null ? Optional.empty() : Optional.of(currentYearSelection);
     }
 
-    public Optional<PermitTypePage.PermitType> getCurrentPermitType() {
+    public Optional<PermitType> getCurrentPermitType() {
         return currentPermitType == null ? Optional.empty() : Optional.of(currentPermitType);
     }
 
@@ -257,7 +248,7 @@ public class OperatorStore {
         return getCurrentYearSelection().isPresent() && getCurrentYearSelection().get().equals(yearSelection);
     }
 
-    public boolean hasCurrentPermitType(PermitTypePage.PermitType type) {
+    public boolean hasCurrentPermitType(PermitType type) {
         return getCurrentPermitType().isPresent() && getCurrentPermitType().get().equals(type);
     }
 

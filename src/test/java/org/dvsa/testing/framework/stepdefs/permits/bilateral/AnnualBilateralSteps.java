@@ -13,20 +13,20 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
+import org.dvsa.testing.lib.pages.external.permit.BaseLicencePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -54,13 +54,13 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
         And("^I am on the country selection page$", () -> {
             PermitTypePage.untilElementIsPresent("//h1[contains(text(),'Select a permit type or certificate to apply for')]", SelectorType.XPATH,10L, TimeUnit.SECONDS);
-            EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore);
+            EcmtApplicationJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             untilElementIsPresent("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH,10L, TimeUnit.SECONDS);
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             CountrySelectionPage.untilOnPage();
         });
         Then("^I should be on the bilateral overview page$", OverviewPage::untilOnOverviewPage);
-        Then("^the number of permits value is entered$", NumberOfPermitsPage::numberOfPermits);
+        Then("^the number of permits value is entered$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::setNumberOfPermitsAndSetRespectiveValues);
         Then("^I select the fee tab on the selfserve$", () -> {
              waitAndClick("//a[contains(text(),'Home')]",SelectorType.XPATH);
              HomePage.selectTab(Tab.FEES);
@@ -114,7 +114,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         Then("^I am able to complete an annual bilateral permit application$", () -> {
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -127,8 +127,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.saveAndContinue();
             OverviewPage.untilOnOverviewPage();
@@ -155,7 +154,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             IntStream.rangeClosed(1, quantity).forEach((i) -> {
                 HomePage.applyForLicenceButton();
-                AnnualBilateralJourney.getInstance().permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore).licencePage(operatorStore, world);
+                AnnualBilateralJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore).licencePage(operatorStore, world);
                 AnnualBilateralJourney.getInstance().norway(operatorStore);
                 OverviewPage.untilOnOverviewPage();
                 OverviewPage.clickNorway();
@@ -165,9 +164,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
                 BilateralJourneySteps.clickYesToCabotage();
                 BasePermitPage.saveAndContinue();
-                NumberOfPermitsPage.numberOfPermits();
-                String expected= BasePermitPage.getElementValueByText("//label[contains(text(),'Cabotage')]",SelectorType.XPATH);
-                operatorStore.setPermit(expected);
+                org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
                 BasePermitPage.saveAndContinue();
                 BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
                 OverviewPage.selectDeclaration();
@@ -194,7 +191,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -207,12 +204,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickNoToCabotage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermitsNew();
-            NumberOfPermitsPage.setCabotageValue(NumberOfPermitsPage.getCabotageValue());
-            NumberOfPermitsPage.setStandardValue(NumberOfPermitsPage.getStandardValue());
-            NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
-            NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
@@ -238,7 +230,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -250,10 +242,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             PermitUsagePage.saveAndContinue();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermitsNew();
-            NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
-            NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
@@ -277,7 +266,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         Given("^I have selected Turkey and I am on the Bilateral application overview page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().turkey(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -285,7 +274,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         Given("^I have selected Morocco and I am on the Bilateral application overview page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().morocco(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -293,7 +282,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         Given("^I have selected Ukraine and I am on the Bilateral application overview page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().ukraine(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -324,15 +313,12 @@ public class AnnualBilateralSteps extends BasePage implements En {
             OverviewPage.overviewToHome();
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
-            AnnualBilateralJourney.getInstance().permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore);
+            AnnualBilateralJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             LicenceStore licence = operatorStore.getLicences().get(0);
-            LicencePage.licence(licence.getLicenceNumber());
-            LicencePage.saveAndContinue();
+            BaseLicencePage.licence(licence.getLicenceNumber());
+            SelectALicencePage.saveAndContinue();
         });
-        Then("^I should be informed that there is already an active permit application for this licence$", () -> {
-            Assert.assertTrue("Message informing user that the selected licence already has an active " +
-                    "application was not displayed", LicencePage.hasActivePermitMessage());
-        });
+        Then("^I should be informed that there is already an active permit application for this licence$", SelectALicencePage::hasActivePermitMessage);
         Then("^I should be on the bilateral overview page for the active application already on the licence$", () -> {
             OverviewPage.untilOnPage();
             String actualReference = BasePermitPage.getReference();
@@ -347,7 +333,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 HomePage.selectTab(Tab.PERMITS);
                 HomePage.applyForLicenceButton();
                 AnnualBilateralJourney.getInstance()
-                            .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore);
+                            .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
                 AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
                 OverviewPage.select(OverviewPage.Section.Countries);
                 AnnualBilateralJourney.getInstance().countries(operatorStore)
@@ -366,7 +352,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         And("^I have partial annual bilateral applications$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -379,8 +365,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            operatorStore.setPermit(NumberOfPermitsPage.permitValue);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             });
@@ -431,7 +416,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
 
             // Verify that Type is displayed as per the selection
-            Assert.assertTrue(operatorStore.getPermit().contains(ValidAnnualBilateralPermitsPage.type()));
+            Assert.assertTrue(org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel().contains(ValidAnnualBilateralPermitsPage.type()));
 
             // Check permit number is in ascending order grouped by country
             Map<Country, List<String>> grouped = permits.stream().collect(
@@ -462,7 +447,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         And("^I am on the annual bilateral number of permit page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -478,7 +463,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         And("^I am on the annual bilateral number of permit page for bilateral standard permits no cabatoge path$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -492,7 +477,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         And("^I am on the annual bilateral number of permit page for bilateral standard and cabotage permits path$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -508,7 +493,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         And("^I am on the annual bilateral number of permit page for bilateral standard and cabotage permits with cabotage confirmation path$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnOverviewPage();

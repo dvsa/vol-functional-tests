@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
 import org.hamcrest.core.StringContains;
@@ -25,7 +26,7 @@ public class FeePageSteps implements En {
         And("^I am on the fee page$", () -> {
             clickToPermitTypePage(world);
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.EcmtValidityPeriod();
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);

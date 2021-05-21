@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
@@ -30,7 +31,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
         And("^I'm on the annual bilateral standard and cabotage permit fee page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -43,12 +44,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickNoToCabotage();
             BilateralJourneySteps.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermitsNew();
-            NumberOfPermitsPage.setCabotageValue(NumberOfPermitsPage.getCabotageValue());
-            NumberOfPermitsPage.setStandardValue(NumberOfPermitsPage.getStandardValue());
-            NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
-            NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             AnnualBilateralJourney.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
@@ -57,7 +53,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
         And("^I'm on the annual bilateral standard and cabotage permit fee page with Cabotage selected on Cabotage page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -71,14 +67,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             BilateralJourneySteps.clickYesToCabotage();
             BilateralJourneySteps.yesAndCabotagePermitConfirmation();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermitsNew();
-            NumberOfPermitsPage.setCabotageValue(NumberOfPermitsPage.getCabotageValue());
-            NumberOfPermitsPage.setStandardValue(NumberOfPermitsPage.getStandardValue());
-            NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
-            NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
-            NumberOfPermitsPage.setStandardLabel(NumberOfPermitsPage.getStandardLabel());
-            NumberOfPermitsPage.setCabotageLabel(NumberOfPermitsPage.getCabotageLabel());
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
@@ -87,7 +76,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
         And("^I'm on the annual bilateral standard permit no cabotage fee page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -99,10 +88,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             PermitUsagePage.saveAndContinue();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermitsNew();
-            NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
-            NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
@@ -127,7 +113,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
 
             // Permit type check
             String actualPermitType = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitType);
-            String expectedPermitType = PermitTypePage.PermitType.AnnualBilateral.toString();
+            String expectedPermitType = PermitType.ANNUAL_BILATERAL.toString();
             Assert.assertEquals(expectedPermitType, actualPermitType);
 
             // Number of permits required check
@@ -180,7 +166,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
 
             // Permit type check
             String actualPermitType = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitType);
-            String expectedPermitType = PermitTypePage.PermitType.AnnualBilateral.toString();
+            String expectedPermitType = PermitType.ANNUAL_BILATERAL.toString();
             Assert.assertEquals(expectedPermitType, actualPermitType);
 
 

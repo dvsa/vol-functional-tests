@@ -21,6 +21,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -138,7 +139,7 @@ public class CommonSteps extends BasePage implements En {
         });
         And("^I am on the (Annual ECMT|Annual Bilateral \\(EU and EEA\\)|Annual Multilateral \\(EU and EEA\\)) licence page$", (String type) -> {
             clickToPermitTypePage(world);
-            EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.toEnum(type), operator);
+            EcmtApplicationJourney.getInstance().permitType(PermitType.getEnum(type), operator);
             CommonSteps.origin.put("origin", getURL()); // Used to test a scenario for licence page
         });
         And("^I am on the Annual ECMT licence selection page$", () -> {
@@ -146,7 +147,7 @@ public class CommonSteps extends BasePage implements En {
             HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtAnnual, operator);
+                    .permitType(PermitType.ECMT_ANNUAL, operator);
             YearSelectionPage.EcmtValidityPeriod();
 
         });
@@ -302,7 +303,7 @@ public class CommonSteps extends BasePage implements En {
 
         clickToPermitTypePage(world);
         EcmtApplicationJourney.getInstance()
-                .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
+                .permitType(PermitType.ECMT_ANNUAL, operatorStore);
         YearSelectionPage.EcmtValidityPeriod();
         EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
     }

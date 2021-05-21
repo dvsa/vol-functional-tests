@@ -8,6 +8,8 @@ import org.dvsa.testing.framework.Utils.common.CommonPatterns;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.hamcrest.text.MatchesPattern;
@@ -57,7 +59,7 @@ public class OverviewPageSteps implements En {
         });
         When("^the page heading is displayed correctly$", OverviewPage::overviewPageHeading);
         When("^I'm on the annual multilateral overview page$", () -> {
-            EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.AnnualMultilateral, operatorStore)
+            EcmtApplicationJourney.getInstance().permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
              .licencePage(operatorStore, world);
             org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.untilOnPage();
         });
@@ -70,7 +72,7 @@ public class OverviewPageSteps implements En {
         Then("^I am navigated to the corresponding page for ([\\w\\s]+)$", (String section) -> {
             switch (section.toLowerCase()) {
                 case "number of permits required":
-                    org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage.untilOnPage();
+                    NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported section: '" + section + "'");

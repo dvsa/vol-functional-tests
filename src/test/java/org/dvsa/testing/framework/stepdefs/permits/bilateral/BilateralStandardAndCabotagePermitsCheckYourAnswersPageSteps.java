@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
@@ -21,7 +22,7 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
         Then("^I am on the Bilateral Standard and Cabotage permits check your answers page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -35,12 +36,7 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
             BilateralJourneySteps.clickYesToCabotage();
             BilateralJourneySteps.yesAndCabotagePermitConfirmation();
             BilateralJourneySteps.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermitsNew();
-            NumberOfPermitsPage.setCabotageValue(NumberOfPermitsPage.getCabotageValue());
-            NumberOfPermitsPage.setStandardValue(NumberOfPermitsPage.getStandardValue());
-            NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
-            NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             AnnualBilateralJourney.saveAndContinue();
         });
 
@@ -57,7 +53,7 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
 
         Then("^For Bilateral Standard and cabotage permits ,the Value of How many permits you need, will be as per the ones saved on the number of permits page$", () -> {
             int count = NumberOfPermitsPage.getFieldCount();
-            String permitlabel = operatorStore.getPermit();
+            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
             String permitstandardlabel = String.valueOf(NumberOfPermitsPage.getStandardLabel());
             String permitcabotagelabel = String.valueOf(NumberOfPermitsPage.getCabotageLabel());
             String permitCabotage = String.valueOf(NumberOfPermitsPage.getCabotageValue());

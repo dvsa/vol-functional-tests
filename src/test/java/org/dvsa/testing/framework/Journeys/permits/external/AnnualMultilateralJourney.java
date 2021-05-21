@@ -4,6 +4,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -35,7 +36,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
 
     public AnnualMultilateralJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        licence.getLatestAnnualMultilateral().get().setNumberOfPermits(NumberOfPermitsPage.quantity(maxNumberOfPermits));
+        licence.getLatestAnnualMultilateral().get().setNumberOfPermits(org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.quantity(maxNumberOfPermits, PermitType.ANNUAL_MULTILATERAL));
         NumberOfPermitsPage.saveAndContinue();
         return this;
     }
@@ -98,7 +99,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     }
 
     @Override
-    public AnnualMultilateralJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
+    public AnnualMultilateralJourney permitType(PermitType type, OperatorStore operator) {
         return (AnnualMultilateralJourney) super.permitType(type, operator);
     }
 

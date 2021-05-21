@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
@@ -19,7 +20,7 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
     public CountriesWithLimitedPermitsPageSteps (OperatorStore operatorStore, World world) {
         And("^I am on short term countries with limited permits page$", () -> {
             clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
+            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore)
                     .licencePage(operatorStore,world);

@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -34,7 +35,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         And("^I have a short term application in awaiting fee status$", () -> {
             CommonSteps.clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
+                    .permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
             SelectYearPage.shortTermValidityPeriod();
             PeriodSelectionPageOne.periodSelection();
                     PeriodSelectionPageOne.continueButton();

@@ -23,16 +23,11 @@ public class UkraineNumberOfPermitsSteps implements En {
 
             //checking the Number of permits label
             NumberOfPermitsPage.turkeyStandardSingle();
-
         });
 
-        When("^I save and continue on the Ukraine number of permits page$", () -> {
-            TurkeyThirdCountryPage.saveAndContinue();
-        });
+        When("^I save and continue on the Ukraine number of permits page$", TurkeyThirdCountryPage::saveAndContinue);
 
-        Then("^I enter the valid number of permits required for Ukraine permit$", () -> {
-            NumberOfPermitsPage.ukraineNumberOfPermits();
-        });
+        Then("^I enter the valid number of permits required for Ukraine permit$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::setNumberOfPermitsAndSetRespectiveValues);
     }
 }
 

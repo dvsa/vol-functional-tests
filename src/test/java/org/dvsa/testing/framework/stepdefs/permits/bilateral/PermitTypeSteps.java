@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 
@@ -23,7 +24,7 @@ public class PermitTypeSteps implements En {
         });
 
         When("^I select Bilateral permit on permit type selection page and click continue$", () -> {
-            EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore);
+            EcmtApplicationJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
         });
 
         Then("^I am navigated to Bilaterals licence selection page$", () -> {

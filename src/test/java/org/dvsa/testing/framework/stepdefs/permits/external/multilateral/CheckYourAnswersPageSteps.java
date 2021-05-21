@@ -9,6 +9,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -25,7 +26,7 @@ public class CheckYourAnswersPageSteps implements En {
         Given("I am on the annual multilateral check your answers page", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
-                    .beginApplication().permitType(PermitTypePage.PermitType.AnnualMultilateral, operatorStore)
+                    .beginApplication().permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
                     .licencePage(operatorStore, world).overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operatorStore)
                     .numberOfPermitsPage(operatorStore);
         });

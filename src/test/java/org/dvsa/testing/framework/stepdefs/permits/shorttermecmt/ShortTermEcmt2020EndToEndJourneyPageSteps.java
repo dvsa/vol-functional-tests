@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -35,7 +36,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
         And("^I select Short term ecmt permit on the select permit page$", () -> {
             clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
+            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
         });
         Then("^I select year on the select year page$", SelectYearPage::shortTermValidityPeriod);
         Then("^I  select short term ecmt period$", () -> {
@@ -121,7 +122,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         });
         Then("^I apply and pay for a short term APSG without sectors application", () -> {
             clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
+            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithoutSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);

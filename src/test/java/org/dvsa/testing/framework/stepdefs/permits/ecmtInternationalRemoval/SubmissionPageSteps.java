@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -27,7 +28,7 @@ public class SubmissionPageSteps extends DriverUtils implements En {
         And("^I am on the ECMT International removal submission page", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtInternationalRemoval, operatorStore)
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
                     .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)
@@ -67,7 +68,7 @@ public class SubmissionPageSteps extends DriverUtils implements En {
         And ("^I have partial ECMT international removal application", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtInternationalRemoval, operatorStore)
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
                     .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)

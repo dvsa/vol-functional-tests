@@ -12,6 +12,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -86,7 +87,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         And("^have valid Annual Bilateral Permits$", () -> {
             HomePage.applyForLicenceButton();
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore);
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance()
                     .overview(OverviewPage.Section.Countries, operatorStore)

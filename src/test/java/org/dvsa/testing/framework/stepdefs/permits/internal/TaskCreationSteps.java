@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;

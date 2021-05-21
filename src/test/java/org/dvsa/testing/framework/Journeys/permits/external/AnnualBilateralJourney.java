@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
@@ -80,12 +81,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         operatorStore.setCountry(country);
         return this;
     }
-    public AnnualBilateralJourney permit(OperatorStore operatorStore){
-        String permitname  = NumberOfPermitsPage.permitLabel();
-        operatorStore.setPermit(permitname);
-        return this;
-    }
-
 
     public AnnualBilateralJourney journeyType(World world, LicenceStore licenceStore){
         JourneyType journeyType = JourneyType.random();
@@ -127,8 +122,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         LicenceStore licenceStore =
                 operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
-        NumberOfPermitsPage.untilOnPage();
-        licenceStore.getEcmt().setPermitsPerCountry(NumberOfPermitsPage.quantity(1)); // To pass test
+        licenceStore.getEcmt().setPermitsPerCountry(org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.quantity(1, PermitType.ANNUAL_BILATERAL)); // To pass test
         NumberOfPermitsPage.saveAndContinue();
         return this;
     }

@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -19,7 +20,7 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
         Then("^I am on the Bilateral Standard permits no Cabotage check your answers page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
@@ -30,12 +31,7 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermitsNew();
-
-            NumberOfPermitsPage.setStandardValue(NumberOfPermitsPage.getStandardValue());
-            NumberOfPermitsPage.setFieldCount(NumberOfPermitsPage.getFieldCount());
-            NumberOfPermitsPage.setLabel(NumberOfPermitsPage.permitLabel());
-            AnnualBilateralJourney.getInstance().permit(operatorStore);
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             AnnualBilateralJourney.saveAndContinue();
         });
 
@@ -46,7 +42,7 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
 
         Then("^For bilateral standard permits no cabotage permit type,the value of how many permits you need, will be as per the ones saved on the number of permits page$", () -> {
             int count = NumberOfPermitsPage.getFieldCount();
-            String permitlabel = operatorStore.getPermit();
+            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
             String permitvalue = String.valueOf(NumberOfPermitsPage.getPermitValue());
             Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(), permitvalue + " " + permitlabel + "s");
         });

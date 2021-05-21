@@ -11,6 +11,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -51,7 +52,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
     {
         And ("^I am on the application submitted page$", () -> {
             clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
+            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
@@ -88,7 +89,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
         When ("^a case worker worker pays all fees for my ongoing short term  permit application$", () -> {
             CommonSteps.clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.ShortTermECMT,operatorStore);
+                    .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
@@ -139,7 +140,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
         Then("^a case worker waives all fees for my ongoing short term permit application$", () -> {
             CommonSteps.clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.ShortTermECMT,operatorStore);
+                    .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
@@ -202,7 +203,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
         });
         And("^I have an ongoing short term ECMT with all fees paid$", () -> {
             clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
+            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);

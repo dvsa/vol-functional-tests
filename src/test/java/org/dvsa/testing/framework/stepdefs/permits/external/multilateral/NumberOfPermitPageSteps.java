@@ -9,7 +9,9 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJo
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -28,7 +30,7 @@ import java.util.List;
 
 import static org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.Section.NumberOfPaymentsRequired;
 
-public class NumberOfPermitPageSteps implements En {
+public class NumberOfPermitPageSteps extends BasePermitPage implements En {
 
     public NumberOfPermitPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the number of permits required page$", () -> {
@@ -36,7 +38,7 @@ public class NumberOfPermitPageSteps implements En {
             AnnualMultilateralJourney
                     .INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
                     .licencePage(operatorStore, world)
                     .overviewPage(NumberOfPaymentsRequired, operatorStore);
         });
@@ -86,9 +88,8 @@ public class NumberOfPermitPageSteps implements En {
             Assert.assertEquals("You need to apply for at least 1 permit",NumberOfPermitsPage.errorText());
         });
         And("^I enter zero as value in the number of permits fields$", () -> {
-            int numberOfFields = NumberOfPermitsPage.numberOfFields();
-            List<String> numPermits = new ArrayList<String>(Collections.nCopies(numberOfFields, "0"));
-            NumberOfPermitsPage.quantity(numPermits.toArray(new String[numberOfFields]));
+            findAll("//*[contains(@class, 'field')]//input[@type='text']", SelectorType.XPATH)
+                    .stream().forEach(x -> {x.sendKeys("0");});
         });
         And("^I specify the number of permits I require for my multilateral permit$", () -> {
             AnnualMultilateralJourney.INSTANCE.numberOfPermitsPage(operatorStore);

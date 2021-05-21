@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -23,7 +24,7 @@ public class AnnualTripsAbroadPageSteps implements En {
         And("^I am on short term ECMT annual trips abroad page$", () -> {
             CommonSteps.clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.ShortTermECMT,operatorStore);
+                    .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
             SelectYearPage.shortTermValidityPeriod();
             ECMTShortTermJourney.getInstance().shortTermType(ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ECMTShortTermJourney.getInstance(). licencePage(operatorStore,world);

@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SelectYearPage;
 import org.junit.Assert;
@@ -18,7 +19,7 @@ public class ShortTermECMTPermitApplicationSteps implements En {
         When("^I am on select a year page$", () -> {
             clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
+                    .permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
         });
 
         When("^I am selecting a year for short term ecmt permit$", () -> {

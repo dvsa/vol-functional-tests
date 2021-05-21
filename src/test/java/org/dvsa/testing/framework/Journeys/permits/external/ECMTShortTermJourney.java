@@ -1,17 +1,13 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
-import activesupport.number.Int;
-import activesupport.string.Str;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
-import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 
@@ -78,19 +74,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney numberOfPermitsPage(World world, LicenceStore licenceStore) {
-        int authorisedVehicles = licenceStore.getEcmt().getNumberOfPermits();
-
-        int numOfPermits = Int.random(1, authorisedVehicles);
-
-        NumberOfPermitsPage.quantity(numOfPermits);
-        NumberOfPermitsPage.saveAndContinue();
-        VolLicenceSteps.numberOfAuthorisedVehicles.put("numberOfAuthorisedVehicles", numOfPermits);
-        licenceStore.getEcmt().setNumberOfPermits(numOfPermits);
-
-        return this;
-    }
-
     public ECMTShortTermJourney checkYourAnswersPage() {
         CheckYourAnswersPage.saveAndContinue();
         return this;
@@ -129,7 +112,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     }
 
     @Override
-    public ECMTShortTermJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
+    public ECMTShortTermJourney permitType(PermitType type, OperatorStore operator) {
         return (ECMTShortTermJourney) super.permitType(type, operator);
     }
 

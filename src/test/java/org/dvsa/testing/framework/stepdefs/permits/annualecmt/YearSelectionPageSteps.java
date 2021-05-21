@@ -5,6 +5,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 
@@ -16,7 +17,7 @@ public class YearSelectionPageSteps implements En {
     public YearSelectionPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the Year Selection Page$", () -> {
            CommonSteps.clickToPermitTypePage(world);
-           EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.EcmtAnnual,operatorStore);
+           EcmtApplicationJourney.getInstance().permitType(PermitType.ECMT_ANNUAL,operatorStore);
         });
         And("^the user is navigated to the permit type page$", PermitTypePage::permitTypePageHeading);
         And("^the page heading on Annual Ecmt Year selection page is displayed correctly$", YearSelectionPage::ecmtApsgPageHeading);

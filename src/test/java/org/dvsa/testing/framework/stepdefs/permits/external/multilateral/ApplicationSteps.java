@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -33,7 +34,7 @@ public class ApplicationSteps extends BasePage implements En {
                     HomePage.applyForLicenceButton();
 
                     AnnualMultilateralJourney.INSTANCE
-                               .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                               .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                                .licencePage(operator, world)
                                .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                                .numberOfPermitsPage(operator);
@@ -44,7 +45,7 @@ public class ApplicationSteps extends BasePage implements En {
         When("^I select a licence already with an ongoing annual multilateral permit$", () -> {
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world);
         });
         And("^the section is marked as complete on annual multilateral overview page$", () -> {
@@ -60,7 +61,7 @@ public class ApplicationSteps extends BasePage implements En {
              world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication()
-                    .permitType(PermitTypePage.PermitType.AnnualMultilateral, operator)
+                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
