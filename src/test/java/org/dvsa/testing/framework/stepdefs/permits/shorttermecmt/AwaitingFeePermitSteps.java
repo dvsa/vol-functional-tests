@@ -11,6 +11,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -41,7 +42,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
                     PeriodSelectionPageOne.continueButton();
             ECMTShortTermJourney.getInstance()
                     .licencePage(operatorStore, world);
-            select(OverviewPage.Section.CheckIfYouNeedPermits);
+            select(OverviewSection.CheckIfYouNeedPermits);
             saveAndContinue();
             CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
             CheckIfYouNeedECMTPermitsPage.checkboxSelection();

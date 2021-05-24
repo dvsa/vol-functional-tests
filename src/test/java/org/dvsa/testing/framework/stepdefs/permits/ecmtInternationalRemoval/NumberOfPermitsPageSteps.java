@@ -7,15 +7,13 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.NumberofPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.Section.NumberofPermits;
 
 public class NumberOfPermitsPageSteps implements En {
 
@@ -26,7 +24,7 @@ public class NumberOfPermitsPageSteps implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -41,7 +39,7 @@ public class NumberOfPermitsPageSteps implements En {
         });
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {
-            String actualReference = BasePermitPage.getReference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
 
         });
@@ -71,7 +69,7 @@ public class NumberOfPermitsPageSteps implements En {
         Then("^the number of permits section on the ECMT Removals Overview page is complete$", () -> {
             OverviewPage.OverviewPageLoad();
             NumberofPermitsPage.OverviewNumberOfPermitsPageLoad();
-            boolean isComplete = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.checkStatus(String.valueOf(NumberofPermits),PermitStatus.COMPLETED);
+            boolean isComplete = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.checkStatus(String.valueOf(OverviewSection.NumberOfPermits),PermitStatus.COMPLETED);
             Assert.assertTrue("The 'Number of Permits Required' section status is not complete", isComplete);
         });
     }

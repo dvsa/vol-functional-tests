@@ -7,6 +7,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -30,7 +31,7 @@ public class DeclarationPageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
@@ -64,7 +65,7 @@ public class DeclarationPageSteps implements En {
         });
 
         And("^I click declaration link on the overview page again$", () -> {
-            OverviewPage.select(OverviewPage.Section.Declaration);
+            OverviewPage.select(OverviewSection.Declaration);
 
         });
 
@@ -74,7 +75,7 @@ public class DeclarationPageSteps implements En {
         Then("^I am on the short term permits overview page with Declaration section marked as complete$", () -> {
             String error = "Expected the status of Declarations  page to be complete but it wasn't";
             OverviewPage.untilOnPage();
-            boolean complete = OverviewPage.checkStatus(OverviewPage.Section.Declaration,PermitStatus.COMPLETED);
+            boolean complete = OverviewPage.checkStatus(OverviewSection.Declaration,PermitStatus.COMPLETED);
             Assert.assertTrue(error, complete);
         });
 

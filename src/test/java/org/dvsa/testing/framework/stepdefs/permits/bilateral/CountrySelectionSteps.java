@@ -12,7 +12,7 @@ public class CountrySelectionSteps implements En {
     public CountrySelectionSteps(OperatorStore operatorStore, World world) {
         Then("^bilateral country selection page licence reference number is correct$", () -> {
             String expectedLicenceNumber = operatorStore.getLatestLicence().get().getLicenceNumber();
-            String actualReferenceNumber = BasePermitPage.getReference();
+            String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertThat(actualReferenceNumber, MatchesPattern.matchesPattern(expectedLicenceNumber.concat(" / \\d+")));
         });
         Then("^the page heading on bilateral country selection  page is correct$", CountrySelectionPage::hasPageHeading);

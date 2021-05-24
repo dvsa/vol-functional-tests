@@ -4,6 +4,7 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
@@ -25,9 +26,10 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
 
         return instance;
     }
-    public EcmtInternationalRemovalJourney overview(org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.Section section, OperatorStore operatorStore) {
-        String reference = BasePermitPage.getReference();
-        org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.untilOnPage();
+
+    public EcmtInternationalRemovalJourney overview(OverviewSection section, OperatorStore operatorStore) {
+        String reference = BasePermitPage.getReferenceFromPage();
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);
        OverviewPage.select(section);

@@ -8,11 +8,13 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.SubmissionPage;
@@ -22,7 +24,7 @@ import org.openqa.selenium.WebDriver;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 
-public class SubmissionPageSteps extends DriverUtils implements En {
+public class SubmissionPageSteps extends BasePermitPage implements En {
 
     public SubmissionPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the ECMT International removal submission page", () -> {
@@ -31,7 +33,7 @@ public class SubmissionPageSteps extends DriverUtils implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -71,7 +73,7 @@ public class SubmissionPageSteps extends DriverUtils implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -87,9 +89,9 @@ public class SubmissionPageSteps extends DriverUtils implements En {
         And ("^I'm on the ECMT international submitted page for my active application", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
-            get(org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.url(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber()));
+            clickByLinkText(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewPage.Section.Declaration, operatorStore)
+                    .overview(OverviewSection.Declaration, operatorStore)
                     .declare(true);
         });
         And ("^I proceed with the application", () -> {
@@ -97,7 +99,7 @@ public class SubmissionPageSteps extends DriverUtils implements En {
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewPage.Section.Declaration, operatorStore)
+                    .overview(OverviewSection.Declaration, operatorStore)
                     .declare(true);
         });
 

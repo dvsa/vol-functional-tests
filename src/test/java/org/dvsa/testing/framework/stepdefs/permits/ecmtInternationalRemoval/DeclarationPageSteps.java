@@ -8,6 +8,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -31,7 +32,7 @@ public class DeclarationPageSteps extends BasePage implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -46,13 +47,13 @@ public class DeclarationPageSteps extends BasePage implements En {
         And ("^the Ecmt removal declaration page checkbox has the correct text and displayed unselected by default", Declaration::hasCheckbox);
         And ("^I should see the validation error message on the Ecmt removal declaration page", Declaration::errorText);
         And ("^I click declaration link on the Ecmt removal overview page again", () -> {
-            OverviewPage.select(OverviewPage.Section.Declaration);
+            OverviewPage.select(OverviewSection.Declaration);
         });
         When  ("^I confirm the ECMT removal declaration", Declaration::DeclarationConfirmation);
         Then("^I am on ECMT removal permits overview page with Declaration section marked as complete$", () -> {
             String error = "Expected the status of Declarations  page to be complete but it wasn't";
-            OverviewPage.untilOnPage();
-            boolean complete = OverviewPage.checkStatus(String.valueOf(OverviewPage.Section.Declaration), PermitStatus.COMPLETED);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            boolean complete = OverviewPage.checkStatus(String.valueOf(OverviewSection.Declaration), PermitStatus.COMPLETED);
             Assert.assertTrue(error, complete);
         });
         Then("^I am directed to the ECMT removals permit fee page$", PermitFeePage::untilOnPage);

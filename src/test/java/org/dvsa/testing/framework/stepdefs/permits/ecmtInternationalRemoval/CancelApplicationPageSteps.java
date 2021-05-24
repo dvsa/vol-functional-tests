@@ -17,7 +17,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
     public CancelApplicationPageSteps(OperatorStore operatorStore, World world) {
 
         And ("^the ECMT International Removal application reference number should be displayed above the heading$", () -> {
-            String actualReference = BasePermitPage.getReference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         Then("^I am on the ECMT Removals cancel application page$", CancellationPage::untilOnPage);

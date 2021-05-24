@@ -15,7 +15,6 @@ Feature: Annual Bilateral Application Cancel application page
     Then the bilateral CancelApplication page displays the correct advisory text
     Then I should see the correct text displayed next to the checkbox
     When the cancel application button is selected without checkbox ticked
-    Then I should get an error message
     When I go back
     Then I should be on the bilateral overview page
 

@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import activesupport.number.Int;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
@@ -13,6 +12,7 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -90,7 +90,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance()
-                    .overview(OverviewPage.Section.Countries, operatorStore)
+                    .overview(OverviewSection.Countries, operatorStore)
                     .countries(operatorStore)
                     .numberOfPermits(operatorStore)
                     .checkYourAnswers()
@@ -110,8 +110,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         And ("^I select returns to permit dashboard hyperlink", ValidAnnualBilateralPermitsPage::permitDashboard);
         Then ("^the licence number is displayed above the page heading",  () ->{
             String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            String actual = BasePermitPage.getReference();
-            Assert.assertEquals(expectedReference, BasePermitPage.getReference());
+            Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
         });
         Then ("^the ECMT application licence number is displayed above the page heading",  () ->{
             String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);

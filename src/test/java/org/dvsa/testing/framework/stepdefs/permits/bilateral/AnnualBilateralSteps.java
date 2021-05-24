@@ -14,8 +14,10 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -26,7 +28,7 @@ import org.dvsa.testing.lib.pages.external.permit.BaseLicencePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -95,7 +97,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         Given("^I'm on the bilateral check your answers page$", () -> {
             AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
-            OverviewPage.select(OverviewPage.Section.Countries);
+            OverviewPage.select(OverviewSection.Countries);
             AnnualBilateralJourney.getInstance().countries(operatorStore)
                     .numberOfPermits(operatorStore);
             CheckYourAnswerPage.untilOnPage();
@@ -168,7 +170,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 BasePermitPage.saveAndContinue();
                 BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
                 OverviewPage.selectDeclaration();
-                licenceStore.setReferenceNumber(BasePermitPage.getReference());
+                licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
                 AnnualBilateralJourney.getInstance().declare(true)
                             .permitFee();
                  EcmtApplicationJourney.getInstance()
@@ -208,7 +210,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
-                licenceStore.setReferenceNumber(BasePermitPage.getReference());
+                licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
                 AnnualBilateralJourney.getInstance().declare(true)
                         .permitFee();
                 EcmtApplicationJourney.getInstance()
@@ -246,7 +248,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.selectDeclaration();
-            licenceStore.setReferenceNumber(BasePermitPage.getReference());
+            licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
             AnnualBilateralJourney.getInstance().declare(true)
                         .permitFee();
              EcmtApplicationJourney.getInstance()
@@ -320,8 +322,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         Then("^I should be informed that there is already an active permit application for this licence$", SelectALicencePage::hasActivePermitMessage);
         Then("^I should be on the bilateral overview page for the active application already on the licence$", () -> {
-            OverviewPage.untilOnPage();
-            String actualReference = BasePermitPage.getReference();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
         Then("^I should be on the bilateral declaration page$", DeclarationPage::untilOnPage);
@@ -335,7 +337,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 AnnualBilateralJourney.getInstance()
                             .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
                 AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
-                OverviewPage.select(OverviewPage.Section.Countries);
+                OverviewPage.select(OverviewSection.Countries);
                 AnnualBilateralJourney.getInstance().countries(operatorStore)
                             .numberOfPermits(operatorStore)
                             .checkYourAnswers()
@@ -356,7 +358,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnOverviewPage();
-            OverviewPage.setReferenceNumber(BasePermitPage.getReference());
             OverviewPage.clickNorway();
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
@@ -380,7 +381,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         And("^I navigate to the annual bilateral overview page$", () -> {
             String path = OverviewPage.RESOURCE.replaceFirst("\\\\d\\+", operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), path).toString());
-            OverviewPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         });
         And("I am viewing an issued annual bilateral permit on self-serve", () -> {
             LicenceStore licence = operatorStore.getLatestLicence()
@@ -395,7 +396,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
         And("^the licence number is displayed in Annual bilateral list page$", () -> {
             String expectedReference = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
-            String actual = BasePermitPage.getReference();
+            String actual = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(expectedReference, actual);
         });
 
@@ -512,15 +513,15 @@ public class AnnualBilateralSteps extends BasePage implements En {
             String actual = String.valueOf(PermitUsagePage.getJourney());
             String actual1 = actual.toLowerCase().substring(0,actual.length()-1);
             Assert.assertTrue(getElementValueByText("//div[contains(@class,'field')]//label", SelectorType.XPATH).contains(actual1 + " " + "permit"));
-            NumberOfPermitsPage.pageHeading();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
 
         });
         Then("the page heading and the advisory text are displayed correctly according to the selection", () -> {
             String actual = String.valueOf(licenceStore.getEcmt().getJourneyType());
             String actual1 = actual.toLowerCase().substring(0,actual.length()-1);
             Assert.assertEquals(getElementValueByText("//div[contains(@class,'field')]//label",SelectorType.XPATH),"Cabotage"+" "+actual1+" "+"permit");
-            NumberOfPermitsPage.pageHeading();
-            NumberOfPermitsPage.advisoryText();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
+            NumberOfPermitsPage.hasBilateralAdvisoryText();
         });
         Then("the page heading and the advisory text on standard permits no cabotage page are displayed correctly according to the selection", () -> {
             String actual = String.valueOf(licenceStore.getEcmt().getJourneyType());
@@ -531,7 +532,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             }
             else
                 Assert.assertEquals(getElementValueByText("//p[@class='hint']",SelectorType.XPATH),"Valid for one outward and return journey and transit.");
-            NumberOfPermitsPage.pageHeading();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
         });
     }
     //TODO: This can all be refactored. There is so much duplication.

@@ -7,6 +7,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.FeeOverviewPage;
@@ -32,7 +33,7 @@ public class FeePageSteps implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers()
                     .declaration(true);

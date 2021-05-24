@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
@@ -57,14 +58,14 @@ public class OverviewPageSteps implements En {
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
             ECMTPermitApplicationSteps.saveAndContinue();
         });
-        When("^the page heading is displayed correctly$", OverviewPage::overviewPageHeading);
+        When("^the page heading is displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
         When("^I'm on the annual multilateral overview page$", () -> {
             EcmtApplicationJourney.getInstance().permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
              .licencePage(operatorStore, world);
-            org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         });
         Then("^the application reference number should be on the annual multilateral overview page$", () -> {
-            String reference = BasePermitPage.getReference();
+            String reference = BasePermitPage.getReferenceFromPage();
             Assert.assertThat(reference, MatchesPattern.matchesPattern(CommonPatterns.REFERENCE_NUMBER));
         });
         When("^I select (Licence number|Number of permits required) from multilateral overview page$",
@@ -80,13 +81,13 @@ public class OverviewPageSteps implements En {
         });
         Then("^the default section statuses are as expected$", () -> {
             boolean numberOfPermits = BaseOverviewPage.checkStatus(
-                    org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.Section.NumberOfPaymentsRequired.toString(), PermitStatus.NOT_STARTED_YET);
+                    OverviewSection.NumberOfPaymentsRequired.toString(), PermitStatus.NOT_STARTED_YET);
 
             boolean answers = BaseOverviewPage.checkStatus(
-                    org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.Section.CheckYourAnswers.toString(), PermitStatus.CANT_START_YET);
+                    OverviewSection.CheckYourAnswers.toString(), PermitStatus.CANT_START_YET);
 
             boolean declaration = BaseOverviewPage.checkStatus(
-                    org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.Section.Declaration.toString(),
+                    OverviewSection.Declaration.toString(),
                     PermitStatus.CANT_START_YET);
             Assert.assertTrue("Expected 'number of permits' section status to be 'Not Started Yet' but it wasn't",
                     numberOfPermits);
@@ -99,11 +100,11 @@ public class OverviewPageSteps implements En {
             String error = "Expected not to find a link to the '%s' page but there was one";
             boolean answers =
                     org.dvsa.testing.lib.pages.external.permit.multilateral
-                            .OverviewPage.hasActiveLink(org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.Section.CheckYourAnswers);
+                            .OverviewPage.hasActiveLink(OverviewSection.CheckYourAnswers);
 
             boolean declaration =
                     org.dvsa.testing.lib.pages.external.permit.multilateral
-                            .OverviewPage.hasActiveLink(org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.Section.Declaration);
+                            .OverviewPage.hasActiveLink(OverviewSection.Declaration);
 
             Assert.assertFalse(String.format(error, "Check your answers"), answers);
             Assert.assertFalse(String.format(error, "Declaration"), declaration);

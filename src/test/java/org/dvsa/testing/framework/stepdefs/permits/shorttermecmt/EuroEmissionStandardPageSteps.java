@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BaseOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -33,7 +34,7 @@ public class EuroEmissionStandardPageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();

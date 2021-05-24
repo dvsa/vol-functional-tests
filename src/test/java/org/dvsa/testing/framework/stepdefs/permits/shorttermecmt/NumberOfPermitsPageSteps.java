@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BaseOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -30,7 +31,8 @@ public class NumberOfPermitsPageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
@@ -41,7 +43,7 @@ public class NumberOfPermitsPageSteps implements En {
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
         });
         Then("^the page heading on the short term number of permits page is displayed correctly$", () -> {
-           NumberOfPermitsPage.pageHeading();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
            NumberOfPermitsPage.guidanceText();
         });
         Then("^I should get the number of permits page error message$", () ->{
@@ -62,10 +64,10 @@ public class NumberOfPermitsPageSteps implements En {
             Assert.assertTrue(numberOfPermitsPage);
         });
         Then("^I am taken back to short term number of permits page$", () -> {
-            NumberOfPermitsPage.pageHeading();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
         });
         Then("^the user is navigated to the overview page with the number of permits page status as not started yet$", () -> {
-            OverviewPage.pageHeading();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.hasPageHeading();
             boolean numberOfPermitsPage =  BaseOverviewPage.checkStatus(PermitSection.NumberOfPermitsRequired.toString(), PermitStatus.NOT_STARTED_YET);
             Assert.assertTrue(numberOfPermitsPage);
         });

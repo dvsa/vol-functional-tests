@@ -5,13 +5,16 @@ import cucumber.api.java8.StepdefBody;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfTripsPage;
+import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.EuroEmissioStandardsPage;
 
-public class AnnualTripsAbroadPageSteps implements En {
+public class AnnualTripsAbroadPageSteps extends BasePage implements En {
 
     private World world;
 
@@ -30,10 +33,12 @@ public class AnnualTripsAbroadPageSteps implements En {
             BasePermitPage.saveAndContinue();
 
         });
-        Given("^I specify a valid amount of annual trips$", NumberOfTripsPage::numberOfTripsValue);
-        Given("^I specify an invalid input$", NumberOfTripsPage::inValidValue);
+        Given("^I specify a valid amount of annual trips$", NumberOfTripsPage::enterNumberOfTripsValue);
+        Given("^I specify an invalid input$", () -> {
+            scrollAndEnterField("//input[@type ='text']", SelectorType.XPATH, "1000000");
+        });
 
-        Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepdefBody.A1<String>) NumberOfTripsPage::quantity);
+        Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepdefBody.A1<String>) org.dvsa.testing.lib.newPages.permits.pages.NumberOfTripsPage::quantity);
     }
 
 }

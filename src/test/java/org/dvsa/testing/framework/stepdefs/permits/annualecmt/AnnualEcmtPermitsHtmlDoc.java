@@ -38,7 +38,7 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             String selectLicence1= operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
             LicenceStore selectedLicence = operatorStore.getLatestLicence().get();
             // Check heading contains correct heading
-            Assert.assertTrue(String.valueOf(BasePermitPage.getReference().contains(selectLicence1)),true);
+            Assert.assertTrue(String.valueOf(BasePermitPage.getReferenceFromPage().contains(selectLicence1)),true);
             // Verify Euro 6
             Assert.assertTrue(
                     toBool(PermitApplicationDocPage.get(PermitApplicationDocPage.Section.Euro6))

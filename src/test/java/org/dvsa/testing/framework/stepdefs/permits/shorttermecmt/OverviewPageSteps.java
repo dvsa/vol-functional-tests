@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BaseOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage;
 import org.junit.Assert;
@@ -12,38 +13,33 @@ public class OverviewPageSteps implements En {
 
     public OverviewPageSteps(OperatorStore operatorStore, World world) {
         Then("^the advisory texts on shortterm overview page are displayed correctly$", OverviewPage::overviewPageText);
-        Then("^the page heading on short term Ecmt is displayed correctly$", OverviewPage::pageHeading);
+        Then("^the page heading on short term Ecmt is displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
         Then("^there is a guidance on permits link$", () -> {
           Assert.assertTrue(OverviewPage.guidanceOnPermitsLink());
         });
         Then("^the default section status are displayed as expected$", () -> {
-            //// Licence section no more displayed on the Application  overview page
-            //boolean licence = BaseOverviewPage.checkStatus(
-                  //  OverviewPage.Section.LicenceNumber.toString(), PermitStatus.COMPLETED);
 
             boolean useYourPermits = BaseOverviewPage.checkStatus(
-                    OverviewPage.Section.HowwillyouusethePermits.toString(), PermitStatus.NOT_STARTED_YET);
+                    OverviewSection.HowWillYouUseThePermits.toString(), PermitStatus.NOT_STARTED_YET);
 
             boolean cabotage = BaseOverviewPage.checkStatus(
-                    OverviewPage.Section.Cabotage.toString(), PermitStatus.CANT_START_YET);
+                    OverviewSection.Cabotage.toString(), PermitStatus.CANT_START_YET);
 
             boolean certificatesRequired = BaseOverviewPage.checkStatus(
-                    OverviewPage.Section.CertificatesRequired.toString(), PermitStatus.CANT_START_YET);
+                    OverviewSection.CertificatesRequired.toString(), PermitStatus.CANT_START_YET);
 
             boolean numberOfPermits = BaseOverviewPage.checkStatus(
-                    OverviewPage.Section.NumberofPermits.toString(), PermitStatus.CANT_START_YET);
+                    OverviewSection.NumberOfPermits.toString(), PermitStatus.CANT_START_YET);
 
             boolean euroEmissions = BaseOverviewPage.checkStatus(
-                    OverviewPage.Section.EuroEmissionStandards.toString(), PermitStatus.CANT_START_YET);
+                    OverviewSection.EuroEmissionStandards.toString(), PermitStatus.CANT_START_YET);
 
             boolean checkAnswers = BaseOverviewPage.checkStatus(
-                    OverviewPage.Section.Checkyouranswers.toString(), PermitStatus.CANT_START_YET);
+                    OverviewSection.CheckYourAnswers.toString(), PermitStatus.CANT_START_YET);
 
             boolean declaration = BaseOverviewPage.checkStatus(
-                    OverviewPage.Section.Declaration.toString(), PermitStatus.CANT_START_YET);
-             // Licence section no more displayed on the Application  overview page
-            //Assert.assertTrue("Expected 'Licence' section status to be 'Completed' but it wasn't",
-                   // licence);
+                    OverviewSection.Declaration.toString(), PermitStatus.CANT_START_YET);
+
             Assert.assertTrue("Expected 'How to use your permits' section status to be 'Not started Yet' but it wasn't",
                     useYourPermits);
             Assert.assertTrue("Expected 'Cabotage' section status to be 'Can't start Yet' but it wasn't",
@@ -59,10 +55,10 @@ public class OverviewPageSteps implements En {
                     declaration);
         });
         And("^future sections on shortterm overview page beyond the current step are disabled$", () -> {
-            OverviewPage.hasActiveLink(OverviewPage.Section.LicenceNumber);
+            OverviewPage.hasActiveLink(OverviewSection.LicenceNumber);
         });
         When("^I select number of permits hyperlink from overview page$", () -> {
-            OverviewPage.select(OverviewPage.Section.NumberofPermits);
+            OverviewPage.select(OverviewSection.NumberOfPermits);
         });
     }
 }

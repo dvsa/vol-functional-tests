@@ -6,6 +6,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BaseOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -25,7 +26,7 @@ public class CabotagePageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });
@@ -40,7 +41,7 @@ public class CabotagePageSteps implements En {
         Then("^I confirm not undertaking cabotage journey$", CabotagePage::cabotageConfirmation);
         Then("^the user is navigated to the overview page with the status as completed$", () -> {
             boolean cabotage =  BaseOverviewPage.checkStatus(PermitSection.Cabotage.toString(),PermitStatus.COMPLETED);
-            boolean permitUsage = OverviewPage.checkStatus(OverviewPage.Section.HowwillyouusethePermits.toString(),PermitStatus.COMPLETED);
+            boolean permitUsage = OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits.toString(),PermitStatus.COMPLETED);
             Assert.assertTrue(cabotage);
         });
 

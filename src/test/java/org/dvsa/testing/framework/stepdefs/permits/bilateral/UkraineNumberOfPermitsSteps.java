@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.TurkeyThirdCountryPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.UkraineEmissionsStandardsPage;
 import org.junit.Assert;
@@ -13,16 +13,16 @@ public class UkraineNumberOfPermitsSteps implements En {
 
         Then("^I am on the annual bilateral Ukraine number of permit page with correct information and content$", () -> {
             // Make sure the page has loaded before any further checks
-            NumberOfPermitsPage.untilOnNumberofPermitsPage();
+            NumberOfPermitsPage.untilOnPage();
 
             //checking the Country name displayed on the page is Ukraine
             Assert.assertEquals(UkraineEmissionsStandardsPage.getCountry(),operatorStore.getCountry());
 
             //checking the Page heading on the Turkey number of permits page is correct
-            NumberOfPermitsPage.pageHeading();
+            NumberOfPermitsPage.hasPageHeading();
 
             //checking the Number of permits label
-            NumberOfPermitsPage.turkeyStandardSingle();
+            NumberOfPermitsPage.hasTurkeyAndUkraineBilateralStandardSingleInformation();
         });
 
         When("^I save and continue on the Ukraine number of permits page$", TurkeyThirdCountryPage::saveAndContinue);

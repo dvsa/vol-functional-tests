@@ -5,11 +5,13 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
@@ -96,8 +98,8 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         licenceStore.getEcmt().setNoCabotage(String.valueOf(noCabotage));
         return this;
     }
-    public AnnualBilateralJourney overview(OverviewPage.Section section, OperatorStore operatorStore) {
-        String reference = BasePermitPage.getReference();
+    public AnnualBilateralJourney overview(OverviewSection section, OperatorStore operatorStore) {
+        String reference = BasePermitPage.getReferenceFromPage();
         OverviewPage.untilOnOverviewPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);

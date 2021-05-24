@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
@@ -30,16 +31,16 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
 
         });
 
-        Then("^I am on Certificate of Roadworthiness for trailers Application overview Page$", OverviewPage::untilOnPage);
+        Then("^I am on Certificate of Roadworthiness for trailers Application overview Page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::untilOnPage);
 
         Then("^I check content and complete Registration number section for  Certificate of Roadworthiness for trailers and click save and continue$", () -> {
-            OverviewPage.select(OverviewPage.Section.RegistrationNumber);
+            OverviewPage.select(OverviewSection.RegistrationNumber);
             VehicleRegistrationNumberPage.untilOnRegistrationPage();
             VehicleRegistrationNumberPage.hasPageHeading();
             // Check the new validation
             BasePermitPage.saveAndContinue();
             VehicleRegistrationNumberPage.hasRequiredFieldValidation();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             VehicleRegistrationNumberPage.registrationNumber();
 
             BasePermitPage.saveAndContinue();
@@ -48,21 +49,21 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Certificate  of Compliance section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnCertificatePage();
             CertificateOfComplianceNumberPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             CertificateOfComplianceNumberPage.ComplianceNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle make and model section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             MakeAndModelPage.untilOnMakeAndModelPage();
             MakeAndModelPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             MakeAndModelPage.MakeAndModel();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnIdentificationPage();
             VehicleIdentificationNumberPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             VehicleIdentificationNumberPage.identificationNumber();
             BasePermitPage.saveAndContinue();
         });
@@ -70,7 +71,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete MOT DATE section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleMotPage.untilOnMotPage();
             VehicleMotPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             VehicleMotPage.motDate();
             BasePermitPage.saveAndContinue();
         });

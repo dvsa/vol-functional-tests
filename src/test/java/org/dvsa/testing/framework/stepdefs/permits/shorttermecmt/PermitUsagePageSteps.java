@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
@@ -31,10 +32,10 @@ public class PermitUsagePageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
         });
         Then("^the shortterm ecmt permit usage page has an application reference number$", () -> {
-            String actualReference = BasePermitPage.getReference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             System.out.println(actualReference);
             String aa = operatorStore.getCurrentLicenceNumber().toString();
             System.out.println(aa);
@@ -67,7 +68,7 @@ public class PermitUsagePageSteps implements En {
         When("^I confirm the permit usage$", () -> PermitUsagePage.permitUsage(PermitUsage.random()));
 
         Then("^the user is navigated to the overview page with the permits usage section status displayed as completed$", () -> {
-            boolean permitUsage = OverviewPage.checkStatus(OverviewPage.Section.HowwillyouusethePermits.toString(),PermitStatus.COMPLETED);
+            boolean permitUsage = OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits.toString(),PermitStatus.COMPLETED);
             Assert.assertTrue(permitUsage);
         });
 

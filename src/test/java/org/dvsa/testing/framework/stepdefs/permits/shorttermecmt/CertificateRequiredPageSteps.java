@@ -6,6 +6,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
@@ -24,7 +25,7 @@ public class CertificateRequiredPageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
@@ -34,7 +35,7 @@ public class CertificateRequiredPageSteps implements En {
             CertificatesRequiredPage.hasPageHeading();
             CertificatesRequiredPage.hasAdvisoryMessages();
             String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber= BasePermitPage.getReference();
+            String actualReferenceNumber= BasePermitPage.getReferenceFromPage();
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
         Then("^I should get the certificates required page error message$", CertificatesRequiredPage::errorText);
@@ -42,7 +43,7 @@ public class CertificateRequiredPageSteps implements En {
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
             String error = "Expected the status of certificates required page to be complete but it wasn't";
             OverviewPage.untilOnPage();
-            boolean complete = OverviewPage.checkStatus(OverviewPage.Section.CertificatesRequired,PermitStatus.COMPLETED);
+            boolean complete = OverviewPage.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
             Assert.assertTrue(error, complete);
         });
 

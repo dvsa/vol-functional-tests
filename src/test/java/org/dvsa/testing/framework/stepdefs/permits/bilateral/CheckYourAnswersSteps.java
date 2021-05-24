@@ -9,6 +9,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -29,7 +30,7 @@ public class CheckYourAnswersSteps implements En {
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance()
-                    .overview(OverviewPage.Section.Countries, operatorStore)
+                    .overview(OverviewSection.Countries, operatorStore)
                     .countries(operatorStore)
                     .numberOfPermits(operatorStore);
 
@@ -37,7 +38,7 @@ public class CheckYourAnswersSteps implements En {
         });
         Then("^I am able to see the application reference number on the annual bilateral check your answers page$", () -> {
             CheckYourAnswerPage.untilOnPage();
-            String actualReference =  BasePermitPage.getReference();
+            String actualReference =  BasePermitPage.getReferenceFromPage();
             String expectedReference = operatorStore.getCurrentLicence().get().getReferenceNumber();
             Assert.assertEquals(expectedReference, actualReference);
         });

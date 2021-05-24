@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -45,7 +46,7 @@ public class HtmlSnapshotSteps extends BasePage implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers()
                     .declaration(true)

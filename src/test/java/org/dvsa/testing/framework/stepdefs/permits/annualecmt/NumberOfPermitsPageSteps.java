@@ -28,15 +28,17 @@ public class NumberOfPermitsPageSteps implements En {
             CertificatesRequiredPage.certificatesRequired(true);
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
         });
-        And("^the page heading on the ECMT number of permits page is displayed correctly$", NumberOfPermitsPage::hasPageHeading);
-        And("^the advisory texts are displayed correctly$", NumberOfPermitsPage::hasAdvisoryText);
+        And("^the page heading on the ECMT number of permits page is displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::hasPageHeading);
+        And("^the advisory texts are displayed correctly$", () -> {
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasAdvisoryText();
+        });
 
         Given("^I have specified a number greater than the number of authorised vehicles$", NumberOfPermitsPage::authorisedVehicleExceed);
         And ("^I should get the ECMT number of permits page error message$", () -> {
             Assert.assertEquals(NumberOfPermitsPage.errorMessage(), "Enter how many permits you need");
         });
         Given("^I specify the number of permits$", NumberOfPermitsPage::euro5OrEuro6permitsValue);
-        Then("^I am on the annual ECMT overview page$", OverviewPage::overviewPageHeading);
+        Then("^I am on the annual ECMT overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
         Then("^I select the fee tab and pay the outstanding fees$", () -> {
             HomePage.selectTab(Tab.FEES);
             HomePage.FeesTab.hasOutstandingFees();

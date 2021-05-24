@@ -18,11 +18,11 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
 
     public AnnualBilateralCancelPageSteps(OperatorStore operatorStore, World world) {
         And("^I click cancel application link$", () -> {
-            operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReference());
+            operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
             OverviewPage.Application.cancel();
         });
         Then("^the application reference number should be displayed above the heading$", () -> {
-            String actualReference = BasePermitPage.getReference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         Then("^the bilateral CancelApplication heading should be correct$", CancellationPage::untilOnPage);

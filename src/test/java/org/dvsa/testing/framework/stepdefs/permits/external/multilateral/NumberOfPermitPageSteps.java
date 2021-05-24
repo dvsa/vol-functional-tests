@@ -4,17 +4,16 @@ import Injectors.World;
 import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
-import edu.emory.mathcs.backport.java.util.Collections;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
@@ -25,10 +24,7 @@ import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.Section.NumberOfPaymentsRequired;
 
 public class NumberOfPermitPageSteps extends BasePermitPage implements En {
 
@@ -40,15 +36,15 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
                     .licencePage(operatorStore, world)
-                    .overviewPage(NumberOfPaymentsRequired, operatorStore);
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operatorStore);
         });
         Then("^the reference number and heading are displayed correct", () -> {
             String expectedLicenceNumber = operatorStore.getLatestLicence()
                     .orElseThrow(IllegalAccessError::new)
                     .getReferenceNumber();
-            String actualReferenceNumber = BasePermitPage.getReference();
+            String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(expectedLicenceNumber, actualReferenceNumber);
-            Assert.assertEquals("How many permits do you require for this licence?",OverviewPage.pageHeading().trim());
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
         });
         Then("^should see the text box for each year for Annual Multilateral permit stock with an open window$", () -> {
             //need to add steps later
@@ -72,7 +68,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
             AnnualMultilateralJourney.INSTANCE.numberOfPermitsPage(operatorStore);
         });
         Then("^the number of permits section on the annual multilateral overview page is complete$", () -> {
-            boolean isComplete = org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.checkStatus(OverviewPage.Section.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
+            boolean isComplete = org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
             Assert.assertTrue("The 'Number of Permits Required' section status is not complete", isComplete);
         });
         Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswerPage::untilOnPage);

@@ -49,7 +49,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             OverviewPage.selectDeclaration();
         });
         Then("^the application reference number and advisory text are displayed correctly$", () -> {
-            String actualReference = BasePermitPage.getReference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             licenceStore.setReferenceNumber(actualReference);
             Assert.assertTrue(String.valueOf(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,17))),true);
             DeclarationPage.hasPageHeading();

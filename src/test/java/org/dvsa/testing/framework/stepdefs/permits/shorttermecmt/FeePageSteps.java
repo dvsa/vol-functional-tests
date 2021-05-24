@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
@@ -27,7 +28,7 @@ public class FeePageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore)
             .licencePage(operatorStore,world);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();

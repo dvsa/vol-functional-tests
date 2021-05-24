@@ -10,6 +10,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -49,12 +50,12 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         });
         Then("^I am on short term ECMT Application overview Page$", (StepdefBody.A0) OverviewPage::untilOnPage);
         Then("^I complete the How will you use the permits section and click save and continue$", () -> {
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete the Check if you need ECMT permits section and click save and continue$", () -> {
-            OverviewPage.select(OverviewPage.Section.CheckIfYouNeedPermits);
+            OverviewPage.select(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.checkboxSelection();
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         });
@@ -73,7 +74,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Number of permits required section and click save and continue$", () -> {
-            NumberOfPermitsPage.pageHeading();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
             euro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
         });
@@ -126,7 +127,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithoutSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();

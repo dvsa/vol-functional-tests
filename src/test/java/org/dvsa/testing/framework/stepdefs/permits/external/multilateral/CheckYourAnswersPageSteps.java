@@ -11,6 +11,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
@@ -27,7 +28,7 @@ public class CheckYourAnswersPageSteps implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication().permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
-                    .licencePage(operatorStore, world).overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operatorStore)
+                    .licencePage(operatorStore, world).overviewPage(OverviewSection.NumberOfPaymentsRequired, operatorStore)
                     .numberOfPermitsPage(operatorStore);
         });
         Then("the annual bilateral check your answers page has an application reference displayed", () -> {

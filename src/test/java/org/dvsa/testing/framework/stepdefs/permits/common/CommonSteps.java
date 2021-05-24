@@ -174,9 +174,8 @@ public class CommonSteps extends BasePage implements En {
             Assert.assertTrue("The current URL path does not match the expected one", isPath(url.getPath()));
         });
         Then("^I should get an error message$", () -> {
-            NumberOfTripsPage.maxErrorMessage();
-            //  boolean hasError = BasePage.hasErrorMessagePresent();
-            // Assert.assertTrue("Error message was not displayed on the page", hasError);
+            boolean hasError = BasePage.hasErrorMessagePresent();
+             Assert.assertTrue("Error message was not displayed on the page", hasError);
         });
         When("^I save and return to overview$", BasePermitPage::overview);
         When("^I go back$", BasePermitPage::back);

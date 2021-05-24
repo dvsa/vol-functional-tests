@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJo
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationConfirmationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -29,7 +30,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
                             .beginApplication()
                             .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                             .licencePage(operator, world)
-                            .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                            .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                             .numberOfPermitsPage(operator);
 
                 NumberOfPermitsPage.overview();
@@ -40,7 +41,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
         });
         Then("^the annual multilateral Cancel Application page has a reference number$", () -> {
             String expectedReference = operator.getCurrentLicence().get().getReferenceNumber();
-            Assert.assertEquals(expectedReference, BasePermitPage.getReference());
+            Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
         });
         Then("^the annual multilateral Cancel Application page has expected text$", () -> {
             String expectedAdvisory = "By cancelling you understand that:" +

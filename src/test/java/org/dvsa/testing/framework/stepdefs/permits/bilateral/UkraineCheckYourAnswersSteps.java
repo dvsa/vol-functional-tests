@@ -6,8 +6,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
 import org.junit.Assert;
 
 public class UkraineCheckYourAnswersSteps extends BasePage implements En {
@@ -29,8 +29,8 @@ public class UkraineCheckYourAnswersSteps extends BasePage implements En {
             Assert.assertEquals(emissionStandard,"Euro 3 or Euro 4");
 
             //Number of permits should be the same as entered on the number of permits page
-            String permitvalue =String.valueOf(NumberOfPermitsPage.getPermitValue());
-            Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitvalue+" "+"Standard single journey permits");
+            String permitValue = String.valueOf(NumberOfPermitsPage.getPermitValue());
+            Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitValue + " Standard single journey permits");
         });
 
 

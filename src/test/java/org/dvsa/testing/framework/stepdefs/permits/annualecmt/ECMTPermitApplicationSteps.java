@@ -93,7 +93,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
         });
-        Then ("^I am on the annual ECMT application overview page$", OverviewPage::overviewPageHeading);
+        Then ("^I am on the annual ECMT application overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
@@ -187,7 +187,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         NumberOfPermitsPage.saveAndContinue();
         EuroEmissioStandardsPage.Emissionsconfirmation();
         EuroEmissioStandardsPage.saveAndContinue();
-        licenceStore.setReferenceNumber(BasePermitPage.getReference());
+        licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
         ECMTPermitApplicationSteps.applicationReference.put("application.reference",licenceStore.getReferenceNumber());
         store.withLicences(licenceStore);
         return licenceStore;

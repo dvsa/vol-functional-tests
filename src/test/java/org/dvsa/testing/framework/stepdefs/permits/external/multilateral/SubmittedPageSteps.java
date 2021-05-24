@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -40,7 +41,7 @@ public class SubmittedPageSteps implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers()
                     .declaration(true)
@@ -70,7 +71,7 @@ public class SubmittedPageSteps implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers();
 
@@ -85,7 +86,7 @@ public class SubmittedPageSteps implements En {
             HomePage.selectTab(Tab.PERMITS);
 
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPage.select(OverviewPage.Section.Declaration);
+            OverviewPage.select(OverviewSection.Declaration);
             AnnualMultilateralJourney.INSTANCE.declaration(true);
         });
         Then("^there shouldn't be a view receipt link on the multilateral submitted page$", () -> {
@@ -97,7 +98,7 @@ public class SubmittedPageSteps implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers();
 
@@ -120,7 +121,7 @@ public class SubmittedPageSteps implements En {
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPage.select(OverviewPage.Section.Declaration);
+            OverviewPage.select(OverviewSection.Declaration);
        });
         When("^a case worker worker waives all fees for my ongoing multilateral permit application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -128,7 +129,7 @@ public class SubmittedPageSteps implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers();
 
@@ -147,7 +148,7 @@ public class SubmittedPageSteps implements En {
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPage.select(OverviewPage.Section.Declaration);
+            OverviewPage.select(OverviewSection.Declaration);
         });
         Then("^all the multilateral submitted advisory text is present$", () -> {
             Assert.assertTrue(ApplicationSubmitPage.hasAdvisoryText());

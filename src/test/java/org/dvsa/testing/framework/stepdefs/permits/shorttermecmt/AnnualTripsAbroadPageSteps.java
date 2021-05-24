@@ -8,6 +8,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -28,7 +29,7 @@ public class AnnualTripsAbroadPageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ECMTShortTermJourney.getInstance().shortTermType(ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ECMTShortTermJourney.getInstance(). licencePage(operatorStore,world);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
@@ -45,7 +46,7 @@ public class AnnualTripsAbroadPageSteps implements En {
         And("^the warning message on short term ECMT Annual Trips Abroad Page is displayed correctly$", AnnualTripsAbroadPage::warningText);
         And("^the reference number on Short term ECMT Annual Trips Abroad Page is displayed correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber = BasePermitPage.getReference();
+            String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertThat(actualReferenceNumber, containsString(expectedLicenceNumber));
         });
         When ("^I select help calculating your international trips$", AnnualTripsAbroadPage::helpCalculatingInternationalTrips);

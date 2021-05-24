@@ -5,7 +5,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.TurkeyThirdCountryPage;
 import org.junit.Assert;
 

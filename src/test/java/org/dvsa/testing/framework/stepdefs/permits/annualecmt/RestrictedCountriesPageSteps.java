@@ -39,7 +39,7 @@ public class RestrictedCountriesPageSteps implements En {
         });
         Then("^the application reference number is shown correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber = BasePermitPage.getReference();
+            String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertThat(actualReferenceNumber, containsString(expectedLicenceNumber));
         });
 

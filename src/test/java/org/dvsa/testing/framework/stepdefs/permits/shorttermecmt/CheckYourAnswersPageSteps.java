@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -42,7 +43,7 @@ public class CheckYourAnswersPageSteps implements En {
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore).licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             CheckYourAnswersPageSteps.permitUsage.put("permit.usage", licence.getEcmt().getPermitusage());
@@ -66,8 +67,7 @@ CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", Se
                     CheckYourAnswerPage.hasPageHeading();
                 });
         Then("^the short term check your answers page has reference number$", () -> {
-            BasePermitPage.getReference();
-            System.out.println(BasePermitPage.getReference());
+            BasePermitPage.getReferenceFromPage();
         });
         Then("^Short term application answers are displayed on the check your answers page$", () -> {
             String licence = CheckYourAnswerPage.getAnswer(Licence);
@@ -86,12 +86,12 @@ CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", Se
         Then("^I am on the short term permits overview page with check your answers section marked as complete$", () -> {
             String error = "Expected the status of Declarations  page to be complete but it wasn't";
             OverviewPage.untilOnPage();
-            boolean complete = OverviewPage.checkStatus(OverviewPage.Section.Checkyouranswers, PermitStatus.COMPLETED);
+            boolean complete = OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
             Assert.assertTrue(error, complete);
         });
         Then("^the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET$", CheckYourAnswersPage::decNotStartedYet);
         And("^I click Check your answers link on the overview page again$", () -> {
-            OverviewPage.select(OverviewPage.Section.Checkyouranswers);
+            OverviewPage.select(OverviewSection.CheckYourAnswers);
         });
         Then("^I am navigated to the short term check your answers page$", CheckYourAnswerPage::hasPageHeading);
     }

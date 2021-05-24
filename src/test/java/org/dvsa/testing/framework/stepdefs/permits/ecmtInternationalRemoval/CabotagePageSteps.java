@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CabotagePage;
@@ -23,11 +24,11 @@ public class CabotagePageSteps implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
                     .removalsEligibility(true);
         });
         And ("^the ECMT International Removal application reference number should be displayed$", () -> {
-            String actualReference = BasePermitPage.getReference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         Then("^the ECMT international removal cabotage heading should be correct$", CabotagePage::cabotagePageText);

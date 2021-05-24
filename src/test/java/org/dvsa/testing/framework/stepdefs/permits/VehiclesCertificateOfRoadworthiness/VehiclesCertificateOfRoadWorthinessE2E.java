@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
@@ -33,10 +34,10 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         Then("^I am on Certificate of Roadworthiness for vehicles Application overview Page$", OverviewPage::untilOnOverviewPage);
 
         Then("^I check content and complete Registration number section and click save and continue$", () -> {
-            OverviewPage.select(OverviewPage.Section.RegistrationNumber);
+            OverviewPage.select(OverviewSection.RegistrationNumber);
             VehicleRegistrationNumberPage.untilOnRegistrationPage();
             VehicleRegistrationNumberPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             VehicleRegistrationNumberPage.registrationNumber();
             BasePermitPage.saveAndContinue();
         });
@@ -44,42 +45,42 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Certificate  of Compliance section and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnCertificatePage();
             CertificateOfComplianceNumberPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             CertificateOfComplianceNumberPage.ComplianceNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle make and model section and click save and continue$", () -> {
             MakeAndModelPage.untilOnMakeAndModelPage();
             MakeAndModelPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             MakeAndModelPage.MakeAndModel();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnIdentificationPage();
             VehicleIdentificationNumberPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             VehicleIdentificationNumberPage.identificationNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle Engine number section and click save and continue$", () -> {
             VehicleEngineNumberPage.untilOnEngineNumberPage();
             VehicleEngineNumberPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             VehicleEngineNumberPage.engineNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle engine type section and click save and continue$", () -> {
             VehicleEngineTypePage.untilOnEngineTypePage();
             VehicleEngineTypePage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             VehicleEngineTypePage.engineType();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete MOT DATE section and click save and continue$", () -> {
             VehicleMotPage.untilOnMotPage();
             VehicleMotPage.hasPageHeading();
-            BasePermitPage.getReference();
+            BasePermitPage.getReferenceFromPage();
             VehicleMotPage.motDate();
             BasePermitPage.saveAndContinue();
         });
@@ -108,6 +109,6 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             untilAnyPermitStatusMatch(PermitStatus.VALID);
         });
 
-    }
+    } //TODO Possible refactoring to be done here
 }
 

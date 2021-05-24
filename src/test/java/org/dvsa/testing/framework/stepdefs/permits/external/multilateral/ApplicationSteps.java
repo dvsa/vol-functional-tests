@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -36,7 +37,7 @@ public class ApplicationSteps extends BasePage implements En {
                     AnnualMultilateralJourney.INSTANCE
                                .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                                .licencePage(operator, world)
-                               .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                               .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                                .numberOfPermitsPage(operator);
                    get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
                    HomePage.selectTab(Tab.PERMITS);
@@ -50,8 +51,8 @@ public class ApplicationSteps extends BasePage implements En {
         });
         And("^the section is marked as complete on annual multilateral overview page$", () -> {
             String error = "Expected the status of check your answers to be complete but it wasn't";
-            OverviewPage.untilOnPage();
-            boolean answersComplete = OverviewPage.checkStatus(OverviewPage.Section.CheckYourAnswers, PermitStatus.COMPLETED);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            boolean answersComplete = OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
 
             Assert.assertTrue(error, answersComplete);
         });
@@ -63,7 +64,7 @@ public class ApplicationSteps extends BasePage implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewPage.Section.NumberOfPaymentsRequired, operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers()
                     .declaration(true)

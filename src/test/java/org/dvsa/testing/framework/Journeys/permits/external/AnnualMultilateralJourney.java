@@ -5,9 +5,9 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.ProportionOfInternationalJourneyPage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -19,16 +19,16 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
 
     public static final AnnualMultilateralJourney INSTANCE = new AnnualMultilateralJourney();
 
-    public AnnualMultilateralJourney overviewPage(OverviewPage.Section section, OperatorStore operatorStore) {
-        OverviewPage.untilOnPage();
+    public AnnualMultilateralJourney overviewPage(OverviewSection section, OperatorStore operatorStore) {
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
 
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        licence.setReferenceNumber(BasePermitPage.getReference());
+        licence.setReferenceNumber(BasePermitPage.getReferenceFromPage());
         AnnualMultilateralStore permit = licence
                 .getLatestAnnualMultilateral()
                 .orElseGet(AnnualMultilateralStore::new);
         licence.addAnnualMultilateral(permit);
-        permit.setReference(BasePermitPage.getReference());
+        permit.setReference(BasePermitPage.getReferenceFromPage());
 
         OverviewPage.select(section);
         return this;

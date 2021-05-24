@@ -7,14 +7,17 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -58,12 +61,12 @@ public class AnnualBilateralOverviewPageSteps implements En {
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
         });
         Then("^the status of Morocco under answers questions for individual countries section is marked as Completed$", () -> {
-            boolean  isComplete = OverviewPage.checkStatus(OverviewPage.Section.Countries, PermitStatus.COMPLETED);
+            boolean  isComplete = OverviewPage.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
             Assert.assertFalse("The annual bilateral section status is not complete", isComplete);
         });
         Then("^I select submit and pay link$", OverviewPage::submitAndPay);
@@ -89,9 +92,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
         Then("^I am navigated to the relevant page$", () -> {
             isPath("//permits/application/\\d+/countries/");
         });
-        Then("^I m navigated to bilateral overview page$", () -> {
-           Assert.assertEquals(OverviewPage.pageHeading(),"Application overview");
-        });
+        Then("^I m navigated to bilateral overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
 
         And("^I click on Turkey country link on the Application overview page$", OverviewPage::clickTurkey);
         And("^I click on Ukraine country link on the Application overview page$", OverviewPage::clickUkraine);
@@ -105,13 +106,13 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoStandardMultipleJourney,operatorStore);
             PeriodSelectionPage.saveAndContinue();
-            NumberOfPermitsPage.untilOnNumberofPermitsPage();
+            NumberOfPermitsPage.untilOnPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());
-            NumberOfPermitsPage.pageHeading();
+            NumberOfPermitsPage.hasPageHeading();
             Assert.assertTrue("Standard multiple journey permit",true);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+            NumberOfPermitsPage.hasTurkeyBilateralValidation();
+            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.saveAndContinue();
@@ -126,13 +127,13 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoStandardSingleJourney,operatorStore);
             PeriodSelectionPage.saveAndContinue();
-            NumberOfPermitsPage.untilOnNumberofPermitsPage();
+            NumberOfPermitsPage.untilOnPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());
-            NumberOfPermitsPage.pageHeading();
+            NumberOfPermitsPage.hasPageHeading();
             Assert.assertTrue("Standard single journey permit", true);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+            NumberOfPermitsPage.hasTurkeyBilateralValidation();
+            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.saveAndContinue();
@@ -147,13 +148,13 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoEmptyEntry,operatorStore);
             PeriodSelectionPage.saveAndContinue();
-            NumberOfPermitsPage.untilOnNumberofPermitsPage();
+            NumberOfPermitsPage.untilOnPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), operatorStore.getCountry());
-            NumberOfPermitsPage.pageHeading();
+            NumberOfPermitsPage.hasPageHeading();
             Assert.assertTrue("Empty Entry single journey permit", true);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+            NumberOfPermitsPage.hasTurkeyBilateralValidation();
+            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.saveAndContinue();
@@ -168,16 +169,16 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertEquals(getCountry(), operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.MoroccoHorsContingency, operatorStore);
             PeriodSelectionPage.saveAndContinue();
-            NumberOfPermitsPage.untilOnNumberofPermitsPage();
+            NumberOfPermitsPage.untilOnPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());
-            NumberOfPermitsPage.pageHeading();
+            NumberOfPermitsPage.hasPageHeading();
             Assert.assertTrue("Empty Entry single journey permit",true);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.turkeyNumberofPermitsValidation();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+            NumberOfPermitsPage.hasTurkeyBilateralValidation();
+            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.saveAndContinue();
         });
-    }
+    } //TODO: More refactoring to do, there's so much copy and pasting. UGGHHHHH...
 }
