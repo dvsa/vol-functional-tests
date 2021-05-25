@@ -536,11 +536,19 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("next",SelectorType.ID);
     }
 
-
     public void vehicleRemovalConfirmationPage() {
         removeVehicle();
         waitAndClick("//*[@name='table[id][]'][1]",SelectorType.XPATH);
         waitAndClick("formActions[action]",SelectorType.ID);
+    }
+
+    public void createAndSubmitSubmission() {
+        click("//*[@id='menu-licence/cases']", SelectorType.XPATH);
+        clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
+        clickByLinkText("Submissions");
+        waitAndClick("add",SelectorType.ID);
+        selectValueFromDropDownByIndex("fields[submissionSections][submissionType]",SelectorType.NAME,1);
+        waitAndClick("form-actions[submit]",SelectorType.NAME);
     }
 
     public List<WebElement> getTableBodyRowList() {

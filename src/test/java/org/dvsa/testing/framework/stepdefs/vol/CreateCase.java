@@ -86,5 +86,11 @@ public class CreateCase extends BasePage implements En {
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.UIJourneySteps.createCaseUI(page);
         });
+        When("^i add a submission$", () -> {
+            world.UIJourneySteps.createAndSubmitSubmission();
+        });
+        Then("^the submission details should be displayed$", () -> {
+            isTextPresent("Bus Registration Submission");
+        });
     }
 }
