@@ -1,4 +1,4 @@
-@INT
+@int_regression
 @OLCS-24339
 
 Feature: Public enquiry added and published and deletion of case notes
@@ -18,3 +18,8 @@ Feature: Public enquiry added and published and deletion of case notes
     And I add notes
     And I delete a case note
     Then the note should be deleted
+
+  @Submission
+  Scenario: Add a submission
+    When i add a submission
+    Then the submission details should be displayed
