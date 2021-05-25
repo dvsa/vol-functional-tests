@@ -8,10 +8,10 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SelectYearPage;
@@ -32,7 +32,7 @@ public class PermitUsagePageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
         });
         Then("^the shortterm ecmt permit usage page has an application reference number$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
@@ -68,8 +68,7 @@ public class PermitUsagePageSteps implements En {
         When("^I confirm the permit usage$", () -> PermitUsagePage.permitUsage(PermitUsage.random()));
 
         Then("^the user is navigated to the overview page with the permits usage section status displayed as completed$", () -> {
-            boolean permitUsage = OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits.toString(),PermitStatus.COMPLETED);
-            Assert.assertTrue(permitUsage);
+            OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits, PermitStatus.COMPLETED);
         });
 
     }

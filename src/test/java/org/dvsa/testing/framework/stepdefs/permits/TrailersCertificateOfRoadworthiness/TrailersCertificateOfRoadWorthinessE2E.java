@@ -34,7 +34,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I am on Certificate of Roadworthiness for trailers Application overview Page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::untilOnPage);
 
         Then("^I check content and complete Registration number section for  Certificate of Roadworthiness for trailers and click save and continue$", () -> {
-            OverviewPage.select(OverviewSection.RegistrationNumber);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.RegistrationNumber);
             VehicleRegistrationNumberPage.untilOnRegistrationPage();
             VehicleRegistrationNumberPage.hasPageHeading();
             // Check the new validation

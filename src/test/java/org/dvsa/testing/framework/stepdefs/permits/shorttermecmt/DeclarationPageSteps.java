@@ -19,6 +19,7 @@ import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus;
 
 public class DeclarationPageSteps implements En {
 
@@ -31,7 +32,7 @@ public class DeclarationPageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
@@ -65,18 +66,15 @@ public class DeclarationPageSteps implements En {
         });
 
         And("^I click declaration link on the overview page again$", () -> {
-            OverviewPage.select(OverviewSection.Declaration);
-
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.Declaration);
         });
 
         Then("^I am directed back to the Declaration page$", DeclarationPage::declarationPageLoad);
         When("^I make my short term ECMT declaration$", DeclarationPage::DeclarationConfirmation);
 
         Then("^I am on the short term permits overview page with Declaration section marked as complete$", () -> {
-            String error = "Expected the status of Declarations  page to be complete but it wasn't";
-            OverviewPage.untilOnPage();
-            boolean complete = OverviewPage.checkStatus(OverviewSection.Declaration,PermitStatus.COMPLETED);
-            Assert.assertTrue(error, complete);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.Declaration,PermitStatus.COMPLETED);
         });
 
         Then("^I am directed to the short term permit fee page$", () -> {

@@ -31,10 +31,10 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             VehiclesCertificateOfRoadworthinessJourney.getInstance().licencePage(operatorStore, world);
         });
 
-        Then("^I am on Certificate of Roadworthiness for vehicles Application overview Page$", OverviewPage::untilOnOverviewPage);
+        Then("^I am on Certificate of Roadworthiness for vehicles Application overview Page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::untilOnPage);
 
         Then("^I check content and complete Registration number section and click save and continue$", () -> {
-            OverviewPage.select(OverviewSection.RegistrationNumber);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.RegistrationNumber);
             VehicleRegistrationNumberPage.untilOnRegistrationPage();
             VehicleRegistrationNumberPage.hasPageHeading();
             BasePermitPage.getReferenceFromPage();

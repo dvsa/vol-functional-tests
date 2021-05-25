@@ -7,10 +7,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.DeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
 import org.junit.Assert;
 
 public class DeclarationPageSteps implements En {
@@ -46,8 +44,7 @@ public class DeclarationPageSteps implements En {
             Assert.assertTrue(message, DeclarationPage.hasNotDeclared());
         });
         Then("^the status for the declaration section in annual multilateral is complete$", () -> {
-            boolean isComplete = OverviewPage.checkStatus(String.valueOf(PermitSection.Declaration), PermitStatus.COMPLETED);
-            Assert.assertTrue("The annual multilateral section status is not complete", isComplete);
+            OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });
     }
 }

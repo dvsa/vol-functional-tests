@@ -22,13 +22,13 @@ import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.ChangeYourPasswordPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.EuroEmissioStandardsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PermitFee;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
@@ -76,7 +76,7 @@ public class CommonSteps extends BasePage implements En {
             clickToPermitTypePage(world);
         });
         Then ("^I submit the annual ECMT APGG application$", () -> {
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
+            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
             CabotagePage.wontCarryCabotage(true);
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.certificatesRequired(true);
@@ -292,7 +292,7 @@ public class CommonSteps extends BasePage implements En {
         HomePage.applyForLicenceButton();
     }
 
-    public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull PermitSection section) {
+    public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull OverviewSection section) {
         beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
         OverviewPage.section(section);
     }

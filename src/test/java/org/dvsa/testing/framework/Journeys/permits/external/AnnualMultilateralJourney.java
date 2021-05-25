@@ -30,7 +30,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
         licence.addAnnualMultilateral(permit);
         permit.setReference(BasePermitPage.getReferenceFromPage());
 
-        OverviewPage.select(section);
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
         return this;
     }
 

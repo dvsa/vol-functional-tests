@@ -6,9 +6,9 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.junit.Assert;
 
@@ -22,7 +22,7 @@ public class Euro6Steps implements En {
     public Euro6Steps(OperatorStore operatorStore, World world) {
         And("^I am on the euro emission standard page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
+            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             CabotagePage.wontCarryCabotage(true);
             CertificatesRequiredPage.certificatesRequired(true);
@@ -35,7 +35,7 @@ public class Euro6Steps implements En {
 
         Then("^should see the overview page without updating any changes$",() -> {
             untilUrlPathIs(OverviewPage.RESOURCE, TimeUnit.SECONDS, Duration.MEDIUM);
-            Assert.assertTrue(OverviewPage.checkStatus(PermitSection.EuroEmissionsStandards, PermitStatus.NOT_STARTED_YET));
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
         });
 
         Given("^I select the emission checkbox$", () -> {
@@ -44,7 +44,7 @@ public class Euro6Steps implements En {
         When("^I select save and return overview link$", BasePermitPage::overview);
 
         Then("^I should see the overview page with updated changes$", () -> {
-            Assert.assertTrue(OverviewPage.checkStatus(PermitSection.EuroEmissionsStandards, PermitStatus.COMPLETED));
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
         });
 
         Then("^I should be able to navigate to the next page$", () -> {

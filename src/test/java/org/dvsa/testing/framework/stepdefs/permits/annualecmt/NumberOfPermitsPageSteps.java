@@ -5,13 +5,13 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.junit.Assert;
 
@@ -22,7 +22,7 @@ public class NumberOfPermitsPageSteps implements En {
     public NumberOfPermitsPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the number of permits page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
+            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             CabotagePage.wontCarryCabotage(true);
             CertificatesRequiredPage.certificatesRequired(true);

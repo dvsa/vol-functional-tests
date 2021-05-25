@@ -7,9 +7,9 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationConfirmationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
 import org.junit.Assert;
 
 import static org.junit.Assert.assertTrue;
@@ -19,7 +19,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
     public AnnualBilateralCancelPageSteps(OperatorStore operatorStore, World world) {
         And("^I click cancel application link$", () -> {
             operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
-            OverviewPage.Application.cancel();
+            OverviewPage.clickCancelApplication();
         });
         Then("^the application reference number should be displayed above the heading$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();

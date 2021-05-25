@@ -9,13 +9,9 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.external.permit.BaseOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
-import org.junit.Assert;
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,7 +30,7 @@ public class EuroEmissionStandardPageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
@@ -63,8 +59,7 @@ public class EuroEmissionStandardPageSteps implements En {
 
         });
         Then("^the user is navigated to the short term overview page with the status of emissions displayed as completed$", () -> {
-            boolean emissions =  BaseOverviewPage.checkStatus(PermitSection.EuroEmissionsStandards.toString(),PermitStatus.COMPLETED);
-            Assert.assertTrue(emissions);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards,PermitStatus.COMPLETED);
         });
 
         Then("^I am navigated to annual trips abroad page", () -> {

@@ -11,10 +11,10 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -50,11 +50,8 @@ public class ApplicationSteps extends BasePage implements En {
                     .licencePage(operator, world);
         });
         And("^the section is marked as complete on annual multilateral overview page$", () -> {
-            String error = "Expected the status of check your answers to be complete but it wasn't";
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            boolean answersComplete = OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
-
-            Assert.assertTrue(error, answersComplete);
+            OverviewPage.untilOnPage();
+            OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
         });
          When("^(?:I submit an annual multilateral permit on external$|" +
                 "I have an annual multilateral permit|" +

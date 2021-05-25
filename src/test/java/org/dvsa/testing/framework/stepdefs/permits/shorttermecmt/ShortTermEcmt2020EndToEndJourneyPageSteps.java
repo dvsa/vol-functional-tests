@@ -48,14 +48,14 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         Then("^I select any licence number for short term permit$", () -> {
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
         });
-        Then("^I am on short term ECMT Application overview Page$", (StepdefBody.A0) OverviewPage::untilOnPage);
+        Then("^I am on short term ECMT Application overview Page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::untilOnPage);
         Then("^I complete the How will you use the permits section and click save and continue$", () -> {
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete the Check if you need ECMT permits section and click save and continue$", () -> {
-            OverviewPage.select(OverviewSection.CheckIfYouNeedPermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.checkboxSelection();
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         });
@@ -127,7 +127,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithoutSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();

@@ -6,11 +6,11 @@ import jdk.nashorn.internal.runtime.arrays.IntElements;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDateTime;
@@ -38,7 +38,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return instance;
     }
 
-    public EcmtApplicationJourney overviewPage(PermitSection section) {
+    public EcmtApplicationJourney overviewPage(OverviewSection section) {
        // OverviewPage.untilOnPage();
         OverviewPage.section(section);
         return this;

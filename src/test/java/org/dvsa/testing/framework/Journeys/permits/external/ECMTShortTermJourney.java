@@ -4,10 +4,10 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 
@@ -34,7 +34,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return instance;
     }
 
-    public ECMTShortTermJourney overviewPage(PermitSection section) {
+    public ECMTShortTermJourney overviewPage(OverviewSection section) {
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         OverviewPage.section(section);
         return this;

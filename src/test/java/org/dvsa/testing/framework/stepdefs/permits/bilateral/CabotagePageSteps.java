@@ -5,12 +5,12 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
@@ -59,7 +59,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
         });
         Then("^I m navigated to the correct page depending upon whether there is just one country selected or more than one", () -> {
             if(this.numberOfCountries > 1) {
-                OverviewPage.untilOnOverviewPage();
+                org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
                 OverviewPage.norwaySectionNotExists();
             }
             else {
@@ -104,8 +104,8 @@ public class CabotagePageSteps extends BasePermitPage implements En {
     }
 
     private void annualBilateralOverviewPageUntilPeriodSelectionPage() {
-        OverviewPage.untilOnOverviewPage();
-        OverviewPage.clickNorway();
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
         EssentialInformationPage.untilOnPage();
         saveAndContinue();
         PeriodSelectionPage.untilOnPage();

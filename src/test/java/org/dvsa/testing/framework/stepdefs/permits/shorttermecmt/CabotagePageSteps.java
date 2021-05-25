@@ -7,12 +7,13 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.pages.external.permit.BaseOverviewPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PermitUsagePage;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SelectYearPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -26,7 +27,7 @@ public class CabotagePageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });
@@ -40,10 +41,8 @@ public class CabotagePageSteps implements En {
 
         Then("^I confirm not undertaking cabotage journey$", CabotagePage::cabotageConfirmation);
         Then("^the user is navigated to the overview page with the status as completed$", () -> {
-            boolean cabotage =  BaseOverviewPage.checkStatus(PermitSection.Cabotage.toString(),PermitStatus.COMPLETED);
-            boolean permitUsage = OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits.toString(),PermitStatus.COMPLETED);
-            Assert.assertTrue(cabotage);
+            OverviewPage.checkStatus(OverviewSection.Cabotage,PermitStatus.COMPLETED);
+            OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits ,PermitStatus.COMPLETED);
         });
-
     }
 }

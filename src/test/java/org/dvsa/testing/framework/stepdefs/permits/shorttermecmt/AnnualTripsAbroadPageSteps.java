@@ -29,7 +29,7 @@ public class AnnualTripsAbroadPageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ECMTShortTermJourney.getInstance().shortTermType(ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ECMTShortTermJourney.getInstance(). licencePage(operatorStore,world);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();

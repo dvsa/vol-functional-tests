@@ -13,7 +13,7 @@ import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.cancel;
+import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCancelApplication;
 
 
 public class OverviewPageSteps implements En {
@@ -26,7 +26,7 @@ public class OverviewPageSteps implements En {
         });
         And("^I click cancel application link on the International removal overview page$", () -> {
             operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
-            cancel();
+            clickCancelApplication();
         });
         Then("^I should be on the ECMT International Overview Page$", OverviewPage::untilOnPage);
         And("^the application number is displayed correctly$", () -> {
@@ -37,7 +37,7 @@ public class OverviewPageSteps implements En {
         });
         And("^the page heading on ECMT International Removal is correct$", OverviewPage::hasPageHeading);
         And("^future sections beyond the current step are disabled$", () -> {
-            org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.hasActiveLink(OverviewSection.LicenceNumber);
+            OverviewPage.hasActiveLink(OverviewSection.LicenceNumber);
         });
 
     }

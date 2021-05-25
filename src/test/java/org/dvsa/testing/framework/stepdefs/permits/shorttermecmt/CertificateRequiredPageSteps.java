@@ -25,7 +25,7 @@ public class CertificateRequiredPageSteps implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
@@ -42,9 +42,8 @@ public class CertificateRequiredPageSteps implements En {
         Then("^I confirm the Certificates Required checkbox$", CertificatesRequiredPage::CertificatesRequiredConfirmation);
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
             String error = "Expected the status of certificates required page to be complete but it wasn't";
-            OverviewPage.untilOnPage();
-            boolean complete = OverviewPage.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
-            Assert.assertTrue(error, complete);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
         });
 
     }

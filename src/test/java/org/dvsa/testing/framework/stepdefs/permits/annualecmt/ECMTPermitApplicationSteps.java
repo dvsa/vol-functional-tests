@@ -13,6 +13,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -20,7 +21,6 @@ import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.UnderConsiderationPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.EuroEmissioStandardsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
@@ -177,7 +177,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
     public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) {
         LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
         store.withLicences(licenceStore);
-        OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
+        OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
         CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
         CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         CabotagePage.wontCarryCabotage(true);

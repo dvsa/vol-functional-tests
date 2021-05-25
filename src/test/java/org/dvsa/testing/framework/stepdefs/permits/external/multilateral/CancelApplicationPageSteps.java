@@ -9,13 +9,13 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationConfirmationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.CancelApplicationPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -34,7 +34,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
                             .numberOfPermitsPage(operator);
 
                 NumberOfPermitsPage.overview();
-                OverviewPage.cancel();
+                OverviewPage.clickCancelApplication();
                 CancellationPage.untilOnPage();
             });
 

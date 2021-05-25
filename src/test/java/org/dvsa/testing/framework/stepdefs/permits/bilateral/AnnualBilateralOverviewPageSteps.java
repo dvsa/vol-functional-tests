@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
@@ -52,8 +53,8 @@ public class AnnualBilateralOverviewPageSteps implements En {
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
@@ -66,8 +67,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
         });
         Then("^the status of Morocco under answers questions for individual countries section is marked as Completed$", () -> {
-            boolean  isComplete = OverviewPage.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
-            Assert.assertFalse("The annual bilateral section status is not complete", isComplete);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
         });
         Then("^I select submit and pay link$", OverviewPage::submitAndPay);
         Then("^I am taken to the overview page with the status as completed$", () -> {
@@ -94,10 +94,14 @@ public class AnnualBilateralOverviewPageSteps implements En {
         });
         Then("^I m navigated to bilateral overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
 
-        And("^I click on Turkey country link on the Application overview page$", OverviewPage::clickTurkey);
-        And("^I click on Ukraine country link on the Application overview page$", OverviewPage::clickUkraine);
+        And("^I click on Turkey country link on the Application overview page$", () -> {
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Turkey);
+        });
+        And("^I click on Ukraine country link on the Application overview page$", () -> {
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Ukraine);
+        });
         When("^I submit the application on selection of Morocco link on overview page$", () -> {
-            OverviewPage.clickMorocco();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Morocco);
             EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
             EssentialInformationPage.hasPageHeading();
@@ -118,7 +122,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             CheckYourAnswerPage.saveAndContinue();
         });
         When("^I submit the application for standard single journey on selection of Morocco link on overview page$", () -> {
-            OverviewPage.clickMorocco();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Morocco);
             EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
             EssentialInformationPage.hasPageHeading();
@@ -139,7 +143,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             CheckYourAnswerPage.saveAndContinue();
         });
         When("^I submit the application for empty entry single journey on selection of Morocco link on overview page$", () -> {
-            OverviewPage.clickMorocco();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Morocco);
             EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
             EssentialInformationPage.hasPageHeading();
@@ -160,7 +164,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             CheckYourAnswerPage.saveAndContinue();
         });
         When("^I submit the application for Hors Contingent single journey on selection of Morocco link on overview page$", () -> {
-            OverviewPage.clickMorocco();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Morocco);
             EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(), operatorStore.getCountry());
             EssentialInformationPage.hasPageHeading();

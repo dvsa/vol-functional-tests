@@ -26,9 +26,9 @@ import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;
 
+import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage.cabotageConfirmation;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage.CertificatesRequiredConfirmation;
-import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.select;
 
 public class AwaitingFeePermitSteps extends BasePermitPage implements En {
 
@@ -42,7 +42,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
                     PeriodSelectionPageOne.continueButton();
             ECMTShortTermJourney.getInstance()
                     .licencePage(operatorStore, world);
-            select(OverviewSection.CheckIfYouNeedPermits);
+            clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             saveAndContinue();
             CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
             CheckIfYouNeedECMTPermitsPage.checkboxSelection();

@@ -5,8 +5,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage;
 import org.junit.Assert;
 
 import java.net.MalformedURLException;
@@ -25,10 +25,10 @@ public class ShorttermECMTJourney extends BasePermitJourney {
     }
     public ShorttermECMTJourney overview(OverviewSection section, OperatorStore operatorStore) {
         String reference = BasePermitPage.getReferenceFromPage();
-        org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.untilOnPage();
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);
-        OverviewPage.select(section);
+        OverviewPage.clickOverviewSection(section);
         return this;
     }
 

@@ -7,12 +7,12 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.NumberofPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.ECMTRemovalsSection;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
@@ -50,8 +50,8 @@ public class CheckYourAnswersPageSteps implements En {
             String Cabotage = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Cabotage);
             Assert.assertEquals(Cabotage,CheckYourAnswersPage.cabotage());
         });
-        Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPage.checkStatus("Check your answers",COMPLETED));
-        And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPage.select(OverviewSection.CheckYourAnswers));
+        Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
+        And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers));
         Then("^I am navigated to the ECMT Removals check your answers page$", () ->{
                 CheckYourAnswersPage.checkAnswersPageLoad();
                 CheckYourAnswerPage.hasPageHeading();

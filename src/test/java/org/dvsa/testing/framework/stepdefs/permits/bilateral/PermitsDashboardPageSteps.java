@@ -25,7 +25,7 @@ import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermit
 public class PermitsDashboardPageSteps extends BasePage implements En {
     public PermitsDashboardPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
         Then("^I navigate to the Permits dashboard page from the Bilaterals Overview page$", () -> {
-            OverviewPage.overviewToHome();
+            world.selfServeNavigation.navigateToNavBarPage("home");
             HomePage.selectTab(Tab.PERMITS);
         });
         Then("^my Bilaterals permit should be under the ongoing permit application table with correct columns and values$", () -> {

@@ -32,7 +32,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);
-       OverviewPage.select(section);
+       org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
         return this;
     }
 

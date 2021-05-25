@@ -4,9 +4,9 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 
 public class CertificatesRequiredPageSteps implements En {
 
@@ -14,7 +14,7 @@ public class CertificatesRequiredPageSteps implements En {
 
         And("^I am on the Ecmt Certificates required Page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
+            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             CabotagePage.wontCarryCabotage(true);
         });

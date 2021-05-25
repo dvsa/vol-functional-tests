@@ -18,3 +18,14 @@ Feature: Public enquiry added and published and deletion of case notes
     And I add notes
     And I delete a case note
     Then the note should be deleted
+
+    #TODO: Need to do UI versions of these
+  Scenario: Creating a case with a complaint
+
+  Scenario: Add a conviction to a case
+
+  Scenario: Add a condition-undertaking to a case
+
+  Scenario: Add a submission
+
+  Scenario: Add a case note

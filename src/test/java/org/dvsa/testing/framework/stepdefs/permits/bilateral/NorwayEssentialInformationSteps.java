@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
@@ -13,7 +14,7 @@ import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.getCount
 public class NorwayEssentialInformationSteps implements En {
     public NorwayEssentialInformationSteps(OperatorStore operatorStore, World world) {
         And("^I click on Norway country link on the Application overview page$", () -> {
-            OverviewPage.clickNorway();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
         });
 
         When("^I am on the Norway essential information page$", () -> {

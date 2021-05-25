@@ -4,10 +4,10 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.junit.Assert;
 
 public class DeclarationPageSteps implements En {
@@ -26,8 +26,7 @@ public class DeclarationPageSteps implements En {
         When("^I accept and continue$", DeclarationPage::saveAndContinue);
         When("^I should be on the ECMT permit fee page$", FeeOverviewPage::pageHeading);
         Then("^the status for the declaration section in annual ECMT is complete$", () -> {
-            boolean isComplete = OverviewPage.checkStatus(PermitSection.Declaration,PermitStatus.COMPLETED);
-            Assert.assertTrue("The annual ECMT section status is not complete", isComplete);
+            OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });
     }
 

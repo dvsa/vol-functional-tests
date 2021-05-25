@@ -6,8 +6,8 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CancelApplicationPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
@@ -26,7 +26,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
         });
-        Then("^I click cancel application link on the short term ECMT overview page$", OverviewPage.Application::cancel);
+        Then("^I click cancel application link on the short term ECMT overview page$", OverviewPage::clickCancelApplication);
         Then("^I should be taken back to short Term Overview Page$", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/"));
         });

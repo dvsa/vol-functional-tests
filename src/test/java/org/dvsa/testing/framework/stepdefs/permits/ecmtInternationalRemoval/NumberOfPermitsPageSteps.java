@@ -1,16 +1,16 @@
 
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
+import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.NumberofPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -67,10 +67,9 @@ public class NumberOfPermitsPageSteps implements En {
             NumberofPermitsPage.enterAuthorisedVehicles();
         });
         Then("^the number of permits section on the ECMT Removals Overview page is complete$", () -> {
-            OverviewPage.OverviewPageLoad();
+            OverviewPage.untilOnPage();
             NumberofPermitsPage.OverviewNumberOfPermitsPageLoad();
-            boolean isComplete = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage.checkStatus(String.valueOf(OverviewSection.NumberOfPermits),PermitStatus.COMPLETED);
-            Assert.assertTrue("The 'Number of Permits Required' section status is not complete", isComplete);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
     }
 }

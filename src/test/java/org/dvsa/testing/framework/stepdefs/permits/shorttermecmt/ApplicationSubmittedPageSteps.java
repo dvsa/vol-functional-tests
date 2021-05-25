@@ -13,6 +13,7 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -21,14 +22,12 @@ import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
@@ -56,7 +55,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
@@ -93,7 +92,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             cabotageConfirmation();
@@ -126,7 +125,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
-            section(PermitSection.EuroEmissionsStandards);
+            section(OverviewSection.EuroEmissionStandards);
             EuroEmissioStandardsPage.Emissionsconfirmation();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
@@ -144,7 +143,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            org.dvsa.testing.lib.pages.external.permit.shorttermecmt.OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             cabotageConfirmation();
@@ -173,7 +172,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            section(PermitSection.EuroEmissionsStandards);
+            section(OverviewSection.EuroEmissionStandards);
 
             EuroEmissioStandardsPage.Emissionsconfirmation();
             BasePermitPage.saveAndContinue();
@@ -207,7 +206,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             SelectYearPage.shortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             cabotageConfirmation();
@@ -228,7 +227,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
-            section(PermitSection.EuroEmissionsStandards);
+            section(OverviewSection.EuroEmissionStandards);
             EuroEmissioStandardsPage.Emissionsconfirmation();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);

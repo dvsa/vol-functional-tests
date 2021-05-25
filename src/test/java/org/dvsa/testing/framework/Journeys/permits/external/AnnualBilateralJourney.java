@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
@@ -100,16 +101,16 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     }
     public AnnualBilateralJourney overview(OverviewSection section, OperatorStore operatorStore) {
         String reference = BasePermitPage.getReferenceFromPage();
-        OverviewPage.untilOnOverviewPage();
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         Assert.assertTrue(operatorStore.hasLicence(reference));
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);
-        OverviewPage.select(section);
+        OverviewPage.clickOverviewSection(section);
         return this;
     }
 
     public AnnualBilateralJourney overviewNorway(OperatorStore operatorStore) {
         operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        OverviewPage.sectionNorway();
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
         return this;
     }
 

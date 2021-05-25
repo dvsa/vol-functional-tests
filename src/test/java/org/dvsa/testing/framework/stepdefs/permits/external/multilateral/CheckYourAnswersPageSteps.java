@@ -1,11 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
+import Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.OrganisationModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
@@ -13,10 +12,8 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.CheckYourAnswersPage;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
 import org.junit.Assert;
 
 import java.util.Comparator;

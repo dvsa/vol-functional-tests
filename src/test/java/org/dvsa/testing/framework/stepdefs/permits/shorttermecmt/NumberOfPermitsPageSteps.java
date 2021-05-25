@@ -1,23 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.pages.external.permit.BaseOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
-import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.*;
+import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6Select;
+import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue;
 
 public class NumberOfPermitsPageSteps implements En {
 
@@ -32,7 +29,7 @@ public class NumberOfPermitsPageSteps implements En {
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
 
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
@@ -60,16 +57,14 @@ public class NumberOfPermitsPageSteps implements En {
         });
         Then("^I should get the validation error message$", NumberOfPermitsPage::maxNumEntry);
         Then("^the user is navigated to the overview page with the number of permits page status as completed$", () -> {
-            boolean numberOfPermitsPage =  BaseOverviewPage.checkStatus(PermitSection.NumberOfPermitsRequired.toString(), PermitStatus.COMPLETED);
-            Assert.assertTrue(numberOfPermitsPage);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
         Then("^I am taken back to short term number of permits page$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
         });
         Then("^the user is navigated to the overview page with the number of permits page status as not started yet$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.hasPageHeading();
-            boolean numberOfPermitsPage =  BaseOverviewPage.checkStatus(PermitSection.NumberOfPermitsRequired.toString(), PermitStatus.NOT_STARTED_YET);
-            Assert.assertTrue(numberOfPermitsPage);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.NOT_STARTED_YET);
         });
 
     }

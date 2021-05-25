@@ -13,10 +13,10 @@ import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.InternalAnnualBilateralPermitApplicationPage;
@@ -68,8 +68,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
             AnnualMultilateralJourney.INSTANCE.numberOfPermitsPage(operatorStore);
         });
         Then("^the number of permits section on the annual multilateral overview page is complete$", () -> {
-            boolean isComplete = org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
-            Assert.assertTrue("The 'Number of Permits Required' section status is not complete", isComplete);
+            OverviewPage.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
         });
         Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswerPage::untilOnPage);
         When("^the case worker is viewing current fees$", () -> {

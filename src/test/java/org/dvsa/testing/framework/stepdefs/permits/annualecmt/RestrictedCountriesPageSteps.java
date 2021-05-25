@@ -4,9 +4,9 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
 import org.junit.Assert;
 
@@ -18,7 +18,7 @@ public class RestrictedCountriesPageSteps implements En {
     public RestrictedCountriesPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the restricted countries page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
+            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             CabotagePage.wontCarryCabotage(true);
             CertificatesRequiredPage.certificatesRequired(true);

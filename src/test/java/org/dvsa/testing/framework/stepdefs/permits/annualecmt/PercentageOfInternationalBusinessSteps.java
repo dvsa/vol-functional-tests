@@ -6,11 +6,11 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfTripsPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.EuroEmissioStandardsPage;
 
@@ -25,7 +25,7 @@ public class PercentageOfInternationalBusinessSteps implements En {
                     .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.EcmtValidityPeriod();
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
+            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             BasePermitPage.saveAndContinue();
             CabotagePage.wontCarryCabotage(true);

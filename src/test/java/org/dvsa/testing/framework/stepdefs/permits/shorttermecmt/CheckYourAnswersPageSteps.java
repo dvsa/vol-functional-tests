@@ -43,7 +43,7 @@ public class CheckYourAnswersPageSteps implements En {
             ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore).licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPage.select(OverviewSection.HowWillYouUseThePermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             CheckYourAnswersPageSteps.permitUsage.put("permit.usage", licence.getEcmt().getPermitusage());
@@ -84,14 +84,12 @@ CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", Se
         });
         Then("^I am navigated to the short term declaration page$", DeclarationPage::declarationPageLoad);
         Then("^I am on the short term permits overview page with check your answers section marked as complete$", () -> {
-            String error = "Expected the status of Declarations  page to be complete but it wasn't";
-            OverviewPage.untilOnPage();
-            boolean complete = OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
-            Assert.assertTrue(error, complete);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
         });
         Then("^the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET$", CheckYourAnswersPage::decNotStartedYet);
         And("^I click Check your answers link on the overview page again$", () -> {
-            OverviewPage.select(OverviewSection.CheckYourAnswers);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers);
         });
         Then("^I am navigated to the short term check your answers page$", CheckYourAnswerPage::hasPageHeading);
     }
