@@ -8,6 +8,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -29,8 +30,8 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
     public ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps(OperatorStore operatorStore, World world)  {
         LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
         Then("^I select short term ecmt period", () -> {
-            PeriodSelectionPageOne.periodSelection();
-            PeriodSelectionPageOne.continueButton();
+            PeriodSelectionPage.selectFirstAvailablePermitPeriod();
+            PeriodSelectionPage.saveAndContinue();
         });
         Then("^I am on the Permits start date page$", () -> {
             PermitStartDatePage.permitDate();

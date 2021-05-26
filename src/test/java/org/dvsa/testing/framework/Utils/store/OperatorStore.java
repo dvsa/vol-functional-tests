@@ -6,9 +6,8 @@ import apiCalls.Utils.eupaBuilders.external.PersonModel;
 import apiCalls.Utils.eupaBuilders.organisation.ResultModel;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
+import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
 import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 
 import java.util.ArrayList;
@@ -53,15 +52,15 @@ public class OperatorStore {
         this.journeyType = journeyType;
     }
 
-    public PeriodSelectionPage.BilateralPeriodType getCurrentBilateralPeriodType() {
+    public BilateralPeriodType getCurrentBilateralPeriodType() {
         return currentBilateralPeriodType;
     }
 
-    public void setCurrentBilateralPeriodType(PeriodSelectionPage.BilateralPeriodType currentBilateralPeriodType) {
+    public void setCurrentBilateralPeriodType(BilateralPeriodType currentBilateralPeriodType) {
         this.currentBilateralPeriodType = currentBilateralPeriodType;
     }
 
-    private PeriodSelectionPage.BilateralPeriodType currentBilateralPeriodType;
+    private BilateralPeriodType currentBilateralPeriodType;
 
     public String getOrganisationId() {
         return organisationId;

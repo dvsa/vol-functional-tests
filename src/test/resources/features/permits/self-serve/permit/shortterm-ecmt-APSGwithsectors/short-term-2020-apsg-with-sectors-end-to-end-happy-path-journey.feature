@@ -6,7 +6,7 @@ Feature: Short term APSG with sectors end to end happy path journey
     And  I am on the VOL self-serve site
     And I select Short term ecmt permit on the select permit page
     And I select year on the select year page
-    And I  select short term ecmt period
+    And I select short term ecmt period
     And I select any licence number for short term permit
 
   @EXTERNAL @OLCS-25904 @olcs-27581

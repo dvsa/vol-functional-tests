@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.junit.Assert;
 
@@ -25,8 +25,6 @@ public class TurkeyPermitsUsagePageSteps implements En {
             PermitUsagePage.TurkeyDefaultPeriodOption();
         });
 
-        When("^I select continue button on the Bilateral Turkey permit usage page$", () -> {
-            PeriodSelectionPage.continueButton();
-        });
+        When("^I select continue button on the Bilateral Turkey permit usage page$", PeriodSelectionPage::saveAndContinue);
     }
 }

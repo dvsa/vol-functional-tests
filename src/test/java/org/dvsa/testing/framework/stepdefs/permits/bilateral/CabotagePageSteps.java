@@ -5,13 +5,13 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
@@ -31,7 +31,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
             numberOfCountries = size("(//input[@type='checkbox'])", SelectorType.XPATH);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             annualBilateralOverviewPageUntilPeriodSelectionPage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
 
         });
@@ -53,7 +53,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             annualBilateralOverviewPageUntilPeriodSelectionPage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
         Then("^I m navigated to the correct page depending upon whether there is just one country selected or more than one", () -> {
@@ -74,7 +74,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             annualBilateralOverviewPageUntilPeriodSelectionPage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
         And ("^I am on the Bilateral Cabotage Page for standard and cabotage permits with norway selection", () -> {
@@ -84,7 +84,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             annualBilateralOverviewPageUntilPeriodSelectionPage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
         And ("^I select standard permits no cabotage application", () -> {
@@ -94,7 +94,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             annualBilateralOverviewPageUntilPeriodSelectionPage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
         Then("^the cabotage page is not displayed in the application flow and taken to number of permits page", () -> {
@@ -107,6 +107,6 @@ public class CabotagePageSteps extends BasePermitPage implements En {
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
         EssentialInformationPage.untilOnPage();
         saveAndContinue();
-        PeriodSelectionPage.untilOnPage();
+        org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
     } // Could look a another method where it does the journey with differences in if statements
 }

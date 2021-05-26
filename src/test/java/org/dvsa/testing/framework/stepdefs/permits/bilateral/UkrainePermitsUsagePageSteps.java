@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.junit.Assert;
 
@@ -14,7 +14,7 @@ public class UkrainePermitsUsagePageSteps implements En {
             PermitUsagePage.untilOnPermitUsagePage();
 
             //Country name displayed on the Permits Usage page is the one clicked on the overview page
-            Assert.assertEquals(PermitUsagePage.getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(PermitUsagePage.getCountry(), operatorStore.getCountry());
 
             // the page heading on bilateral Turkey permits usage  page is correct
             String expectedPageHeading = "Permit usage";
@@ -25,8 +25,6 @@ public class UkrainePermitsUsagePageSteps implements En {
             PermitUsagePage.ukraineDefaultPeriodOption();
         });
 
-        When("^I select continue button on the Bilateral Ukraine permit usage page$", () -> {
-            PeriodSelectionPage.continueButton();
-        });
+        When("^I select continue button on the Bilateral Ukraine permit usage page$", PeriodSelectionPage::saveAndContinue);
     }
 }

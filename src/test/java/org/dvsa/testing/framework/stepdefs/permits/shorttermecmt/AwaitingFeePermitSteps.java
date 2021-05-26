@@ -13,6 +13,7 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -38,8 +39,8 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             ECMTShortTermJourney.getInstance()
                     .permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
             SelectYearPage.shortTermValidityPeriod();
-            PeriodSelectionPageOne.periodSelection();
-                    PeriodSelectionPageOne.continueButton();
+            PeriodSelectionPage.selectFirstAvailablePermitPeriod();
+            PeriodSelectionPage.saveAndContinue();
             ECMTShortTermJourney.getInstance()
                     .licencePage(operatorStore, world);
             clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);

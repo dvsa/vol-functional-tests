@@ -40,11 +40,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
         });
         Then("^I select year on the select year page$", SelectYearPage::shortTermValidityPeriod);
-        Then("^I  select short term ecmt period$", () -> {
-            PeriodSelectionPageOne.periodSelection();
-            PeriodSelectionPageOne.continueButton();
-           // ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
-        });
+
         Then("^I select any licence number for short term permit$", () -> {
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
         });
