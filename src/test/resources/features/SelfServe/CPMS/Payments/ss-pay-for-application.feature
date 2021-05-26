@@ -17,6 +17,7 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
+  @cross-browser
   @stored_cards
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
@@ -32,6 +33,7 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
+  @cross-browser
   @NI_application
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
