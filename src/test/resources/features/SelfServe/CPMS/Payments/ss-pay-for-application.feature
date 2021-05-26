@@ -20,7 +20,6 @@ Feature: Self Serve Apply for licence
   @stored_cards
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
-      | north_east |
       | north_west |
     And i choose to print and sign
     When i pay for my application
@@ -32,6 +31,7 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
+  @cross-browser
   @NI_application
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area

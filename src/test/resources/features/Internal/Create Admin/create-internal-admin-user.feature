@@ -1,5 +1,6 @@
 @INT
 @INT-NEW-ADMIN-USER
+@cross-browser
 Feature: Create a new admin user
 
   Scenario: Creating a internal system admin user

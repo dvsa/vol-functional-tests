@@ -2,7 +2,6 @@
 @SS-Verify-On
 @ss_regression
 @gov-verify
-@cross-browser
 @smoketest
 
 Feature: Operator signs with verify
