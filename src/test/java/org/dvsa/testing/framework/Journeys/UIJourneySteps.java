@@ -356,9 +356,9 @@ public class UIJourneySteps extends BasePage {
         enterText("//*[@id='fields[agreedDate]_day']", "21", SelectorType.XPATH);
         enterText("//*[@id='fields[agreedDate]_month']", "6", SelectorType.XPATH);
         enterText("//*[@id='fields[agreedDate]_year']", "2014", SelectorType.XPATH);
-        selectValueFromDropDown("//*[@id='fields[agreedByTc]']", SelectorType.XPATH, "Nick Jones");
+        selectValueFromDropDownByIndex("fields[agreedByTc]",SelectorType.ID,1);
         selectValueFromDropDown("//*[@id='fields[agreedByTcRole]']", SelectorType.XPATH, "Traffic Commissioner");
-        selectValueFromDropDown("//*[@id='assignedCaseworker']", SelectorType.XPATH, "ADRIAN EGMORE");
+        selectValueFromDropDownByIndex("assignedCaseworker", SelectorType.ID, 1);
         click("//*[@id='fields_piTypes__chosen']/ul", SelectorType.XPATH);
         selectFirstValueInList("//*[@id='fields_piTypes__chosen']/ul");
         click("//*[@id='fields_piTypes__chosen']/div/ul/li[1]", SelectorType.XPATH);
