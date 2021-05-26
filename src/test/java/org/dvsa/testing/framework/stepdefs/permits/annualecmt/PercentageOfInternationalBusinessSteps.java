@@ -25,7 +25,7 @@ public class PercentageOfInternationalBusinessSteps implements En {
                     .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.EcmtValidityPeriod();
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             BasePermitPage.saveAndContinue();
             CabotagePage.wontCarryCabotage(true);

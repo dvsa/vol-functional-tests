@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
@@ -47,10 +48,12 @@ public class PermitFeePageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             AnnualBilateralJourney.getInstance().declare(true);
         });
-        And("^I select the submit and pay link from overview page$", OverviewPage::submitAndPay);
+        And("^I select the submit and pay link from overview page$", () -> {
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.SubmitAndPay);
+        });
         Then("^I select return to overview link on the permit fee page$", PermitFeePage::returnToOverview);
         Then("^I should be on the permit fee page$", PermitFeePage::untilOnPage);
         Then("^the page heading is displayed correctly on the fee page$", PermitFeePage::untilOnPage);

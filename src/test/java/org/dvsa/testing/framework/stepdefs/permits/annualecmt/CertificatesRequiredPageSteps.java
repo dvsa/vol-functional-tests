@@ -14,7 +14,7 @@ public class CertificatesRequiredPageSteps implements En {
 
         And("^I am on the Ecmt Certificates required Page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             CabotagePage.wontCarryCabotage(true);
         });

@@ -25,7 +25,6 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.getDriver;
-import static org.dvsa.testing.lib.pages.external.permit.OverviewPage.section;
 
 public class ConfirmationPageSteps implements En {
 
@@ -80,7 +79,7 @@ BaseApplicationSubmitPage.untilSubmittedPageLoad();
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
-            section(OverviewSection.CheckYourAnswers);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers);
             BasePermitPage.saveAndContinue();
             DeclarationPage.declare(true);
             DeclarationPage.saveAndContinue();

@@ -8,12 +8,13 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.junit.Assert;
 
@@ -52,7 +53,7 @@ public class PermitsDashboardPageSteps extends BasePage implements En {
 
         });
         Then("^I Submit my Annual bilateral partial application and navigate to the Permits dashboard$", () -> {
-            OverviewPage.selectDeclaration();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             AnnualBilateralJourney.getInstance().declare(true)
                     .permitFee();
             EcmtApplicationJourney.getInstance()

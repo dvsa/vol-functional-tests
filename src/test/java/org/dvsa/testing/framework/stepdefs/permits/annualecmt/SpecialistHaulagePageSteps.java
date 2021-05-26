@@ -29,7 +29,7 @@ public class SpecialistHaulagePageSteps implements En {
             YearSelectionPage.EcmtValidityPeriod();
             //EcmtApplicationJourney.getInstance().yearSelection(YearSelectionPage.YearSelection.YEAR_2020,operatorStore);
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             //    AnnualEcmtPermitUsagePage.annualEcmtPermitUsage(AnnualEcmtPermitUsage.random());
             BasePermitPage.saveAndContinue();

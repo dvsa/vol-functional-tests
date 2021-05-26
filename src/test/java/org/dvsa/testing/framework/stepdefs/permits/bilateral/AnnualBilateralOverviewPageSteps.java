@@ -16,7 +16,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.junit.Assert;
@@ -69,7 +68,9 @@ public class AnnualBilateralOverviewPageSteps implements En {
         Then("^the status of Morocco under answers questions for individual countries section is marked as Completed$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
         });
-        Then("^I select submit and pay link$", OverviewPage::submitAndPay);
+        Then("^I select submit and pay link$", () -> {
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.SubmitAndPay);
+        });
         Then("^I am taken to the overview page with the status as completed$", () -> {
             String s1= BasePage.getElementValueByText("//li[3]//ul[1]//li[1]//span[2]",SelectorType.XPATH);
             Assert.assertEquals(s1,"COMPLETED");
@@ -79,7 +80,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
          Assert.assertEquals(s1,"COMPLETED");
         });
         Then("^I select the edit countries button$", () -> {
-            OverviewPage.editCountrySelection();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.EditCountrySelection);
         });
         Then("^I declare and save and return to overview$", () -> {
             org.dvsa.testing.lib.pages.external.permit.DeclarationPage.declare(true);
@@ -88,7 +89,9 @@ public class AnnualBilateralOverviewPageSteps implements En {
         Then("^I'm navigated to countries selection page$", () -> {
          isPath("/permits/application/\\d+/countries/\\d+");
         });
-        When("^the hyperlink for select countries is selected$", OverviewPage::selectSection);
+        When("^the hyperlink for select countries is selected$", () -> {
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.Countries);
+        });
         Then("^I am navigated to the relevant page$", () -> {
             isPath("//permits/application/\\d+/countries/");
         });

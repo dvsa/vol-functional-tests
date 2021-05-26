@@ -22,7 +22,7 @@ public class Euro6Steps implements En {
     public Euro6Steps(OperatorStore operatorStore, World world) {
         And("^I am on the euro emission standard page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             CabotagePage.wontCarryCabotage(true);
             CertificatesRequiredPage.certificatesRequired(true);

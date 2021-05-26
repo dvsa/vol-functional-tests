@@ -177,7 +177,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
     public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) {
         LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
         store.withLicences(licenceStore);
-        OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
         CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
         CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         CabotagePage.wontCarryCabotage(true);

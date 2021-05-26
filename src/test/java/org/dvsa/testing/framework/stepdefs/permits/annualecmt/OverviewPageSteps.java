@@ -10,6 +10,7 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.hamcrest.text.MatchesPattern;
 import org.junit.Assert;
@@ -34,13 +35,13 @@ public class OverviewPageSteps implements En {
         });
         When("^I select '([\\w ]+)'$", (String overviewSection) -> {
             OverviewSection section = OverviewSection.toEnum(overviewSection);
-            OverviewPage.section(section);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
         });
         Then("^the (check your answers|declaration) section should be disabled$", (String section) -> {
             OverviewSection sectionEnum = OverviewSection.toEnum(section);
             Assert.assertFalse(
                     sectionEnum.toString() + " should NOT be active but is",
-                    OverviewPage.isActive(sectionEnum)
+                    org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.isActive(sectionEnum)
             );
 
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(sectionEnum, PermitStatus.CANT_START_YET);

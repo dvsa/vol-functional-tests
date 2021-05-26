@@ -41,7 +41,6 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.OverviewPage.section;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage.cabotageConfirmation;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage.CertificatesRequiredConfirmation;
 
@@ -125,7 +124,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
-            section(OverviewSection.EuroEmissionStandards);
+            OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
             EuroEmissioStandardsPage.Emissionsconfirmation();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
@@ -172,7 +171,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            section(OverviewSection.EuroEmissionStandards);
+            OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
 
             EuroEmissioStandardsPage.Emissionsconfirmation();
             BasePermitPage.saveAndContinue();
@@ -227,7 +226,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
-            section(OverviewSection.EuroEmissionStandards);
+            OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
             EuroEmissioStandardsPage.Emissionsconfirmation();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);

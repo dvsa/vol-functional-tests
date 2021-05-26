@@ -76,7 +76,7 @@ public class CommonSteps extends BasePage implements En {
             clickToPermitTypePage(world);
         });
         Then ("^I submit the annual ECMT APGG application$", () -> {
-            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CabotagePage.wontCarryCabotage(true);
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.certificatesRequired(true);
@@ -294,7 +294,7 @@ public class CommonSteps extends BasePage implements En {
 
     public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull OverviewSection section) {
         beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-        OverviewPage.section(section);
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
     }
 
     public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) {

@@ -39,8 +39,8 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
     public EcmtApplicationJourney overviewPage(OverviewSection section) {
-       // OverviewPage.untilOnPage();
-        OverviewPage.section(section);
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
         return this;
     }
 

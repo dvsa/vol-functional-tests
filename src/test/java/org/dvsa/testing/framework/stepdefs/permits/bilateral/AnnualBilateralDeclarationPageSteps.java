@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
 import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
@@ -47,7 +48,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^the application reference number and advisory text are displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
@@ -57,7 +58,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             DeclarationPage.hasBilateralAdvisoryTexts();
         });
         Then("^I select the declaration link on the overview page$", () -> {
-           OverviewPage.selectDeclaration();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I am on the Annual Bilateral application submitted page$", () -> {
             isPath("/permits/application/\\d+/submitted/");
@@ -89,7 +90,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I'm on the annual bilateral StandardAndCabotagePermits only declaration page$", () -> {
             clickToPermitTypePage(world);
@@ -110,7 +111,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I continue with the on-going Annual Bilateral application$", () -> {
             BasePermitPage.back();

@@ -36,7 +36,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
 
     public ECMTShortTermJourney overviewPage(OverviewSection section) {
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-        OverviewPage.section(section);
+        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
         return this;
     }
 

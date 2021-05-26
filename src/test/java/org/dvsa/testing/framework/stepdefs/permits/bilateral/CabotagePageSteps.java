@@ -11,7 +11,6 @@ import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -60,7 +59,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
         Then("^I m navigated to the correct page depending upon whether there is just one country selected or more than one", () -> {
             if(this.numberOfCountries > 1) {
                 org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-                OverviewPage.norwaySectionNotExists();
+                isElementNotPresent("//a[contains(text(),'Norway')]",SelectorType.XPATH);
             }
             else {
                 CancellationPage.untilOnPage();

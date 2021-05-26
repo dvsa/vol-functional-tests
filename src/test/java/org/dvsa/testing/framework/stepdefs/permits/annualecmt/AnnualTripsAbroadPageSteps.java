@@ -22,7 +22,7 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
         And("^I am on the annual trips abroad page$", () -> {
             LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
             store.withLicences(licenceStore);
-            OverviewPage.section(OverviewSection.CheckIfYouNeedPermits);
+            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
             CabotagePage.wontCarryCabotage(true);
             CertificatesRequiredPage.certificatesRequired(true);

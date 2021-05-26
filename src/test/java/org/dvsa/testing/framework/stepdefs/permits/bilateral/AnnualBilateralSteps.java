@@ -128,11 +128,11 @@ public class AnnualBilateralSteps extends BasePage implements En {
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.saveAndContinue();
             OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.selectDeclaration();
+            OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             AnnualBilateralJourney.getInstance().declare(true)
                     .permitFee();
             EcmtApplicationJourney.getInstance()
@@ -165,10 +165,10 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
                 BilateralJourneySteps.clickYesToCabotage();
                 BasePermitPage.saveAndContinue();
-                org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+                NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
                 BasePermitPage.saveAndContinue();
                 BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-                org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.selectDeclaration();
+                OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
                 licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
                 AnnualBilateralJourney.getInstance().declare(true)
                             .permitFee();
@@ -205,10 +205,10 @@ public class AnnualBilateralSteps extends BasePage implements En {
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickNoToCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.selectDeclaration();
+            OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
                 licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
                 AnnualBilateralJourney.getInstance().declare(true)
                         .permitFee();
@@ -243,10 +243,10 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             PermitUsagePage.saveAndContinue();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.selectDeclaration();
+            OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
             AnnualBilateralJourney.getInstance().declare(true)
                         .permitFee();
@@ -289,7 +289,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             OverviewPage.untilOnPage();
         });
         Given("^I accept declaration and submit the application$", () -> {
-            org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.selectDeclaration();
+            OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPage.untilOnPage();
 
             // Checking declaration page content
