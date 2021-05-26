@@ -17,7 +17,6 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
-  @cross-browser
   @stored_cards
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
