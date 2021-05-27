@@ -11,8 +11,8 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
@@ -109,4 +109,4 @@ public class CabotagePageSteps extends BasePermitPage implements En {
         saveAndContinue();
         org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
     } // Could look a another method where it does the journey with differences in if statements
-}
+} // TODO REPETITION.

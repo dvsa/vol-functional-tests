@@ -4,25 +4,23 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.junit.Assert;
 
 public class TurkeyPermitsUsagePageSteps implements En {
     public TurkeyPermitsUsagePageSteps(OperatorStore operatorStore, World world) {
         Then("^I am on the Bilateral Turkey Permit usage page with correct information and content$", () -> {
 
-            PermitUsagePage.untilOnPermitUsagePage();
+            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.untilOnPage();
 
             //Country name displayed on the Permits Usage page is the one clicked on the overview page
             Assert.assertEquals(PermitUsagePage.getCountry(),operatorStore.getCountry());
 
             // the page heading on bilateral Turkey permits usage  page is correct
-            String expectedPageHeading = "Permit usage";
-            String actualPageHeading = PermitUsagePage.turkeyPageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
+            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.hasPageHeading();
 
             // I have only one option displayed by default i.e. Single Journey permits
-            PermitUsagePage.TurkeyDefaultPeriodOption();
+            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.hasDefaultPeriodOption();
         });
 
         When("^I select continue button on the Bilateral Turkey permit usage page$", PeriodSelectionPage::saveAndContinue);

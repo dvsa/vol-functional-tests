@@ -15,8 +15,8 @@ import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.junit.Assert;
 
 import java.time.LocalDateTime;
@@ -39,7 +39,7 @@ public class PermitFeePageSteps extends BasePermitPage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();

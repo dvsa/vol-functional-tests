@@ -12,8 +12,8 @@ import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
@@ -32,7 +32,7 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
             NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();

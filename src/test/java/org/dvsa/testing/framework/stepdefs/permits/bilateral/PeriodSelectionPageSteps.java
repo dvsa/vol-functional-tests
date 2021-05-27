@@ -10,8 +10,8 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -42,7 +42,7 @@ public class PeriodSelectionPageSteps extends BasePermitPage implements En {
 
         });
         Then("^I am taken to the Bilateral permits use page$", () -> {
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
         });
         Then("^I get error message if there is more than one period available to select and I click continue without making any selection$", () -> {
             scrollAndClick("//input[@value = 'Save and continue']", SelectorType.XPATH);

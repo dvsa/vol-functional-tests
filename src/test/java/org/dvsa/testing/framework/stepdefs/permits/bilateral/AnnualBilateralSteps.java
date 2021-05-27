@@ -22,6 +22,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -125,7 +126,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
@@ -163,7 +164,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 OverviewPage.clickCountrySection(Country.Norway);
                 EssentialInformationPage.saveAndContinue();
                 AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-                PermitUsagePage.untilOnPermitUsagePage();
+                PermitUsagePage.untilOnPage();
                 AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
                 BilateralJourneySteps.clickYesToCabotage();
                 BasePermitPage.saveAndContinue();
@@ -202,7 +203,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickNoToCabotage();
@@ -241,7 +242,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             PermitUsagePage.saveAndContinue();
             BasePermitPage.saveAndContinue();
@@ -363,7 +364,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
@@ -457,7 +458,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
@@ -473,7 +474,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
         });
         And("^I am on the annual bilateral number of permit page for bilateral standard and cabotage permits path$", () -> {
@@ -487,7 +488,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickNoToCabotage();
             BasePermitPage.saveAndContinue();
@@ -503,7 +504,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();

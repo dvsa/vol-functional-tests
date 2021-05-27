@@ -12,8 +12,8 @@ import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
@@ -39,7 +39,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickNoToCabotage();
@@ -61,7 +61,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
@@ -84,7 +84,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             PermitUsagePage.saveAndContinue();
             BasePermitPage.saveAndContinue();
@@ -219,5 +219,5 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
                 Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£"+ expectedTotal);
             }
         });
-    }
+    } //TODO: Check page for repetition. Seems to be a fair bit.
 }

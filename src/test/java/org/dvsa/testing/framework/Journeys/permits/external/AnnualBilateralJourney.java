@@ -11,7 +11,6 @@ import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 

@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
@@ -35,7 +36,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
@@ -90,7 +91,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
           AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits, operatorStore);
           org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasWarningText();
           PeriodSelectionPage.saveAndContinue();
-          PermitUsagePage.untilOnPermitUsagePage();
+          PermitUsagePage.untilOnPage();
           PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
           PermitUsagePage.saveAndContinue();
           BilateralJourneySteps.clickNoToCabotage();
@@ -103,7 +104,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage, operatorStore);
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasWarningText();
             PeriodSelectionPage.saveAndContinue();
-            PermitUsagePage.untilOnPermitUsagePage();
+            PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();

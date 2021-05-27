@@ -9,17 +9,18 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SelectYearPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
 
-public class PermitUsagePageSteps implements En {
+public class PermitUsagePageSteps extends BasePermitPage implements En {
 
     public PermitUsagePageSteps(OperatorStore operatorStore, World world) {
 
@@ -31,7 +32,7 @@ public class PermitUsagePageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
         });
         Then("^the shortterm ecmt permit usage page has an application reference number$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
@@ -40,10 +41,10 @@ public class PermitUsagePageSteps implements En {
             System.out.println(aa);
         });
         And("^the page heading on the permit usage page is displayed correctly$", () -> {
-            PermitUsagePage.hasPageHeading();
+            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.hasPageHeading();
         });
         And("^the short term ecmt permit usage buttons are displayed  unselected by default$", () -> {
-            Assert.assertTrue("not selected", PermitUsagePage.hasNotUsageConfirmed());
+            Assert.assertTrue("not selected", !isSelected("//input[@type='radio']", SelectorType.XPATH));
         });
 
         Then("^the shortterm ecmt permit usage page has advisory messages$", () -> {
@@ -55,7 +56,7 @@ public class PermitUsagePageSteps implements En {
         And("^when I save and continue without selecting any radio button$", BasePermitPage::saveAndContinue);
 
         Then("^I should get error message on the permit usage page$", () -> {
-            PermitUsagePage.getErrorText();
+            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.hasErrorText();
         });
 
         And("^when I save and return to overview without selecting any radio button$", BasePermitPage::saveAndContinue);

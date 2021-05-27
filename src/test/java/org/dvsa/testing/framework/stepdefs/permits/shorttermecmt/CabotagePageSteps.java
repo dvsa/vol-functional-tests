@@ -8,11 +8,11 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SelectYearPage;
 import org.junit.Assert;
 
