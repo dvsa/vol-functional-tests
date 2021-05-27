@@ -7,9 +7,9 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.*;
 import org.junit.Assert;
 
@@ -100,7 +100,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
 
     public EcmtInternationalRemovalJourney permitFee() {
         PermitFeePage.untilOnPage();
-        org.dvsa.testing.lib.pages.external.permit.bilateral.PermitFeePage.submitAndPay();
+        PermitFeePage.submitAndPay();
         return this;
     }
 

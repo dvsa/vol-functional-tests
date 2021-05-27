@@ -6,13 +6,12 @@ import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.Country;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 import org.dvsa.testing.lib.pages.internal.details.FeesPage;
 import org.jetbrains.annotations.NotNull;
 
@@ -137,7 +136,7 @@ public class LicenceStore extends OperatorStore {
     public class Ecmt {
         private PermitType type;
         private YearSelectionPage.YearSelection year;
-        private PeriodSelectionPageOne.ShortTermType shortTermType;
+        private PeriodType shortTermType;
         private boolean certificatesRequired;
         private String referenceNumber;
         private boolean euro6;
@@ -167,7 +166,7 @@ public class LicenceStore extends OperatorStore {
         public Optional<YearSelectionPage.YearSelection> getYear(){
             return year == null ? Optional.empty() : Optional.of(year);
         }
-        public Optional<PeriodSelectionPageOne.ShortTermType> getShortTermType(){
+        public Optional<PeriodType> getShortTermType(){
             return shortTermType == null ? Optional.empty() : Optional.of(shortTermType);
         }
 
@@ -189,7 +188,7 @@ public class LicenceStore extends OperatorStore {
             return this;
         }
 
-        public Ecmt setShortTermType(PeriodSelectionPageOne.ShortTermType shortTermType){
+        public Ecmt setShortTermType(PeriodType shortTermType){
             this.shortTermType =shortTermType ;
             return this;
         }

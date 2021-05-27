@@ -6,8 +6,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
 import org.junit.Assert;
 
 public class DeclarationPageSteps implements En {
@@ -24,7 +24,7 @@ public class DeclarationPageSteps implements En {
             DeclarationPage.declare(true);
         });
         When("^I accept and continue$", DeclarationPage::saveAndContinue);
-        When("^I should be on the ECMT permit fee page$", FeeOverviewPage::pageHeading);
+        When("^I should be on the ECMT permit fee page$", PermitFeePage::pageHeading);
         Then("^the status for the declaration section in annual ECMT is complete$", () -> {
             OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });

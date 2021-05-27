@@ -5,11 +5,11 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CheckYourAnswersPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -86,7 +86,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     }
 
     public ECMTShortTermJourney feeOverviewPage() {
-        FeeOverviewPage.saveAndContinue();
+        PermitFeePage.saveAndContinue();
         return this;
     }
 
@@ -127,7 +127,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     }
 
     @Override
-    public ECMTShortTermJourney shortTermType(PeriodSelectionPageOne.ShortTermType shortTermType, OperatorStore operator) {
+    public ECMTShortTermJourney shortTermType(PeriodType shortTermType, OperatorStore operator) {
         return (ECMTShortTermJourney) super.shortTermType(shortTermType, operator);
     }
 

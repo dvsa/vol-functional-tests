@@ -5,14 +5,14 @@ import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BaseLicencePage;
 import org.dvsa.testing.lib.pages.external.permit.LicencePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -69,7 +69,7 @@ public class BasePermitJourney extends BaseJourney {
         return this;
     }
 
-    public BasePermitJourney shortTermType(PeriodSelectionPageOne.ShortTermType shortTermType, OperatorStore operator) {
+    public BasePermitJourney shortTermType(PeriodType shortTermType, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -77,11 +77,11 @@ public class BasePermitJourney extends BaseJourney {
         operator.setCurrentShortTermType(shortTermType);
         operator.withLicences(licence);
 
-        PeriodSelectionPageOne.shortTermtype(shortTermType);
-        PeriodSelectionPageOne.saveAndContinue();
+        PeriodSelectionPage.shortTermType(shortTermType);
+        PeriodSelectionPage.saveAndContinue();
         return this;
     }
-    public BasePermitJourney bilateralPeriodType (BilateralPeriodType bilateralPeriodType, OperatorStore operator) {
+    public BasePermitJourney bilateralPeriodType (PeriodType bilateralPeriodType, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);

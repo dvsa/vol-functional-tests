@@ -7,9 +7,9 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
@@ -57,7 +57,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
@@ -112,7 +112,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             EssentialInformationPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasMoroccoPageHeading();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.MoroccoStandardMultipleJourney,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.MoroccoStandardMultipleJourney,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());
@@ -133,7 +133,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             EssentialInformationPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasMoroccoPageHeading();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.MoroccoStandardSingleJourney,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.MoroccoStandardSingleJourney,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());
@@ -154,7 +154,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             EssentialInformationPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasMoroccoPageHeading();
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.MoroccoEmptyEntry,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.MoroccoEmptyEntry,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), operatorStore.getCountry());
@@ -175,7 +175,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             EssentialInformationPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasMoroccoPageHeading();
             Assert.assertEquals(getCountry(), operatorStore.getCountry());
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.MoroccoHorsContingency, operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.MoroccoHorsContingency, operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
             Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH),operatorStore.getCountry());

@@ -12,8 +12,10 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -62,7 +64,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             saveAndContinue();
             DeclarationPage.declare(true);
             DeclarationPage.saveAndContinue();
-            PermitFee.submitAndPay();
+            PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
@@ -99,7 +101,9 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             Assert.assertTrue(isPath("/permits/application/\\d+/awaiting-fee/"));
 //            Browser.Wait.untilUrlMatches("/permits/application/\\d+/awaiting-fee/", 1000L, ChronoUnit.SECONDS);
         });
-        And("^I select Decline Permits button$", PermitFee::declinePermits);
+        And("^I select Decline Permits button$", () -> {
+            scrollAndClick("//*[contains(text(), 'Decline permits')]", SelectorType.XPATH);
+        });
         And("^I should be on the short term decline awarded permits page$", DeclineAwardedPermitPage::untilOnPage);
         And("^I should see all the relevant advisory texts$", DeclineAwardedPermitPage::advisoryText);
         And("^I select the decline confirmation checkbox and confirm$", () -> {

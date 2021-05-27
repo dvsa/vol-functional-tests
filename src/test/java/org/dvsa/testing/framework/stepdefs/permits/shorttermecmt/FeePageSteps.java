@@ -7,8 +7,9 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
@@ -26,7 +27,7 @@ public class FeePageSteps implements En {
             clickToPermitTypePage(world);
             ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
             SelectYearPage.shortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore)
+            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore)
             .licencePage(operatorStore,world);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
@@ -48,7 +49,7 @@ public class FeePageSteps implements En {
             org.dvsa.testing.lib.pages.external.permit.DeclarationPage.declare(true);
             org.dvsa.testing.lib.pages.external.permit.DeclarationPage.saveAndContinue();
         });
-        Then("^the table contents on short term Fee page is  as per AC$", FeeOverviewPage::tableCheck);
+        Then("^the table contents on short term Fee page is  as per AC$", PermitFeePage::tableCheck);
 
     }
 

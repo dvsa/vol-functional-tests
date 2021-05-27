@@ -5,8 +5,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
 import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
@@ -38,7 +38,7 @@ public class CancelApplicationPageSteps implements En {
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
         Then("^I click save and continue on cabotage page$", () -> {

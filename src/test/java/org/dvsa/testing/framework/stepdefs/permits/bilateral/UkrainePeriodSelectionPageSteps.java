@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -24,7 +24,7 @@ public class UkrainePeriodSelectionPageSteps extends BasePermitPage implements E
 
             // Check that by default period should always be Ukraine related
             assertTrue(isElementPresent("//div[contains(text(),'Ukraine')]", SelectorType.XPATH));
-            operatorStore.setCurrentBilateralPeriodType(BilateralPeriodType.BilateralsUkraine);
+            operatorStore.setCurrentBilateralPeriodType(PeriodType.BilateralsUkraine);
         });
         When("^I select continue button on the Bilateral Ukraine period selection page$", PeriodSelectionPage::saveAndContinue);
     }

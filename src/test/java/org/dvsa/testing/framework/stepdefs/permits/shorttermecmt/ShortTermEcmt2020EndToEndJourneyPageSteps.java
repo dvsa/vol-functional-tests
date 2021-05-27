@@ -11,8 +11,10 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -98,7 +100,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             saveAndContinue();
         });
         Then("^I click on Submit and Pay button on the Permit fee page and complete the payment", () -> {
-            PermitFee.submitAndPay();
+            PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
@@ -121,7 +123,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             clickToPermitTypePage(world);
             ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
             SelectYearPage.shortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithoutSectors,operatorStore);
+            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithoutSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
@@ -141,7 +143,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPage.DeclarationConfirmation();
             saveAndContinue();
-            PermitFee.submitAndPay();
+            PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()
                     .cardHolderDetailsPage()

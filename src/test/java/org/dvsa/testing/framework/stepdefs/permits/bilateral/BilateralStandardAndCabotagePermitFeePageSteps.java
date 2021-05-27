@@ -7,17 +7,14 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
-import org.dvsa.testing.lib.newPages.enums.Country;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.*;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.FeeOverviewPage;
 import org.junit.Assert;
 
 import java.time.LocalDateTime;
@@ -41,7 +38,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
@@ -63,7 +60,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
@@ -86,7 +83,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             PermitUsagePage.saveAndContinue();
@@ -102,7 +99,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             Assert.assertTrue(BasePermitPage.getElementValueByText("//h2[contains(text(),'Fee summary')]",SelectorType.XPATH),true);
 
             // Application reference check
-            String actualReference = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.ApplicationReference);
+            String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
             String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             Assert.assertEquals(actualReference.contains(licence1),true);
             Assert.assertTrue(actualReference.contains(licence1));
@@ -110,22 +107,22 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             // Application date check
             DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMMM yyyy");
             LocalDateTime expectedDateTime = LocalDateTime.now();
-            String actualDate = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.ApplicationDate);
+            String actualDate = PermitFeePage.getTableSectionValue(FeeSection.ApplicationDate);
             String expectedDate = expectedDateTime.format(format);
             Assert.assertEquals(expectedDate, actualDate);
 
             // Permit type check
-            String actualPermitType = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitType);
+            String actualPermitType = PermitFeePage.getTableSectionValue(FeeSection.PermitType);
             String expectedPermitType = PermitType.ANNUAL_BILATERAL.toString();
             Assert.assertEquals(expectedPermitType, actualPermitType);
 
             // Number of permits required check
-            String actualNumberOfPermits = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitsRequired);
+            String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
             String expectedNumberOfPermits = String.valueOf(NumberOfPermitsPage.permitValue);
             Assert.assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
 
             // Total fee to be paid check
-            int actualTotal = Integer.parseInt(Str.find("[\\d,]+", FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
+            int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
             int numberOfPermits = Integer.parseInt(String.valueOf(NumberOfPermitsPage.permitValue));
 
             // if the journey is Standard Multiple then total fee is number of permits * 50
@@ -155,7 +152,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             Assert.assertTrue(BasePermitPage.getElementValueByText("//h2[contains(text(),'Fee summary')]",SelectorType.XPATH),true);
 
             // Application reference check
-            String actualReference = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.ApplicationReference);
+            String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
             String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             Assert.assertEquals(actualReference.contains(licence1),true);
             Assert.assertTrue(actualReference.contains(licence1));
@@ -163,12 +160,12 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             // Application date check
             DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMMM yyyy");
             LocalDateTime expectedDateTime = LocalDateTime.now();
-            String actualDate = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.ApplicationDate);
+            String actualDate = PermitFeePage.getTableSectionValue(FeeSection.ApplicationDate);
             String expectedDate = expectedDateTime.format(format);
             Assert.assertEquals(expectedDate, actualDate);
 
             // Permit type check
-            String actualPermitType = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitType);
+            String actualPermitType = PermitFeePage.getTableSectionValue(FeeSection.PermitType);
             String expectedPermitType = PermitType.ANNUAL_BILATERAL.toString();
             Assert.assertEquals(expectedPermitType, actualPermitType);
 
@@ -183,12 +180,12 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
                 int expectedTotalFee = expectedTotalStandardValue + expectedTotalCabotageValue;
 
                 // Total fee to be paid check
-                int actualTotal = Integer.parseInt(Str.find("[\\d,]+", FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
+                int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
                 Assert.assertEquals(actualTotal, expectedTotalFee);
 
                 // Number of permits required check
                 int totalpermits = standardValue + cabotageValue;
-                String actualNumberOfPermits = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitsRequired);
+                String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
                 Assert.assertEquals(String.valueOf(totalpermits), String.valueOf(actualNumberOfPermits));
 
                 //Fee breakdown check
@@ -203,7 +200,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             }
             // if the journey is any other than Standard Multiple then total fee is number of permits * 8
             else{
-                int actualTotal = Integer.parseInt(Str.find("[\\d,]+", FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
+                int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
 
                 // Total fee to be paid check
                 int numberOfPermits = Integer.parseInt(String.valueOf(NumberOfPermitsPage.permitValue));
@@ -211,7 +208,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
                 Assert.assertEquals(actualTotal, expectedTotal);
 
                 // Number of permits required check
-                String actualNumberOfPermits = FeeOverviewPage.getSectionValue(FeeOverviewPage.FeeSection.PermitsRequired);
+                String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
                 String expectedNumberOfPermits = String.valueOf(NumberOfPermitsPage.permitValue);
                 Assert.assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
 

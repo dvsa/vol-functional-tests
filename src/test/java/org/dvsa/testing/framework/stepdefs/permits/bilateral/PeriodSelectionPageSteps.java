@@ -5,8 +5,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
 import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
@@ -38,7 +38,7 @@ public class PeriodSelectionPageSteps extends BasePermitPage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasPageHeading();
         });
         Then("^I select BilateralCabotagePermitsOnly period and click continue$", () -> {
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
 
         });
         Then("^I am taken to the Bilateral permits use page$", () -> {

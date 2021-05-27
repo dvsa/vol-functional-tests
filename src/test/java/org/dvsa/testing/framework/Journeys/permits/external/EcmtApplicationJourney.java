@@ -2,15 +2,14 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
 import activesupport.number.Int;
-import jdk.nashorn.internal.runtime.arrays.IntElements;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.FeeOverviewPage;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDateTime;
@@ -92,7 +91,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
     public EcmtApplicationJourney feeOverviewPage() {
-        FeeOverviewPage.saveAndContinue();
+        PermitFeePage.saveAndContinue();
         return this;
     }
 

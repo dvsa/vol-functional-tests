@@ -19,7 +19,6 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.Permits;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.PermitStartDatePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SubmittedPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;

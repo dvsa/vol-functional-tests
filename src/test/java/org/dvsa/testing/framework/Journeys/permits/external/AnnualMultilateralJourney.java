@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.multilateral.*;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.ProportionOfInternationalJourneyPage;
@@ -61,7 +62,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     }
 
     public AnnualMultilateralJourney feeOverviewPage() {
-        FeeOverviewPage.saveAndContinue();
+        PermitFeePage.saveAndContinue();
         return this;
     }
 

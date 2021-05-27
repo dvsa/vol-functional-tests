@@ -9,14 +9,13 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne.*;
 import static org.hamcrest.CoreMatchers.containsString;
 
 public class AnnualTripsAbroadPageSteps implements En {
@@ -27,7 +26,7 @@ public class AnnualTripsAbroadPageSteps implements En {
             ECMTShortTermJourney.getInstance()
                     .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
             SelectYearPage.shortTermValidityPeriod();
-            ECMTShortTermJourney.getInstance().shortTermType(ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
+            ECMTShortTermJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ECMTShortTermJourney.getInstance(). licencePage(operatorStore,world);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());

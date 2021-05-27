@@ -7,8 +7,8 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.BilateralPeriodType;
 import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -34,7 +34,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPermitUsagePage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
@@ -87,7 +87,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
         });
         And("^I change period to be Bilateral and Standard permits on the period selection and continue to be on the check your answers page$", () -> {
-          AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralsStandardAndCabotagePermits, operatorStore);
+          AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits, operatorStore);
           org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasWarningText();
           PeriodSelectionPage.saveAndContinue();
           PermitUsagePage.untilOnPermitUsagePage();
@@ -100,7 +100,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
           CheckYourAnswerPage.untilOnPage();
         });
         And("^I change period to be Bilateral Standard permits no Cabotage on the period selection and continue to be on the check your answers page$", () -> {
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(BilateralPeriodType.BilateralsStandardPermitsNoCabotage, operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage, operatorStore);
             org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasWarningText();
             PeriodSelectionPage.saveAndContinue();
             PermitUsagePage.untilOnPermitUsagePage();
