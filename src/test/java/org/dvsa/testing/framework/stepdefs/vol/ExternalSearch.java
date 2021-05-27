@@ -81,7 +81,7 @@ public class ExternalSearch extends BasePage implements En {
         });
         And("^i login as a partner user$", () -> {
             String user = world.configuration.config.getString("partnerUser");
-            String password = world.configuration.config.getString("internalNewPassword");
+            String password = world.configuration.config.getString("partnerUserPassword");
             String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
             get(externalURL);
             LoginPage.signIn(user,password);
