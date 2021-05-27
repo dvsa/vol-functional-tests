@@ -33,7 +33,7 @@ public class CertificatesRequiredPageSteps implements En {
         Then("^I am presented with same validation error message$", () -> CertificatesRequiredPage.notconfirmed());
         And("^if I select the checkbox and click Save and Return to Overview button$", () -> CertificatesRequiredPage.checkBoxClickedReturnOverview());
         And("^I select the checkbox and click Save and Continue button$", () -> CertificatesRequiredPage.checkBoxClickedSaveContinue());
-        Then("^I am taken to the Restricted countries page$", () -> RestrictedCountriesPage.hasPageHeading());
+        Then("^I am taken to the Restricted countries page$", () -> org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage.hasECMTPageHeading());
 
     }
 }

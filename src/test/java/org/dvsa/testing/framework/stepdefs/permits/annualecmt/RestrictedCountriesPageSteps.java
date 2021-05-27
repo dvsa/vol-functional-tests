@@ -5,7 +5,9 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.CountrySelectionPageBilateral;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
 import org.junit.Assert;
@@ -35,7 +37,7 @@ public class RestrictedCountriesPageSteps implements En {
             RestrictedCountriesPage.hasAdvisoryText();
         });
         Then("^the page heading on Annual ECMT countries with limited countries page is Shown Correctly$", () -> {
-            RestrictedCountriesPage.hasPageHeading();
+            RestrictedCountriesPage.hasECMTPageHeading();
         });
         Then("^the application reference number is shown correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);

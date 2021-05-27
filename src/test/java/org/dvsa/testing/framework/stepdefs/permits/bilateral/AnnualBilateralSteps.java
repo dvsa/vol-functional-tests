@@ -30,7 +30,7 @@ import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.RestrictedCountriesPage;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.CountrySelectionPageBilateral;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -75,26 +75,26 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         Then("^I select save and continue button on select countries page$", CountrySelectionPage::saveAndContinue);
         Then("^countries are displayed in alphabetical order$", () -> {
-            List<String> countries = RestrictedCountriesPage.countries();
+            List<String> countries = CountrySelectionPageBilateral.countries();
 
             for (int idx = 0; idx < countries.size() - 1; idx++) {
                 Assert.assertTrue(countries.get(idx).substring(0, 1).compareTo(countries.get(idx + 1).substring(0, 1)) <= 0);
             }
         });
         Then("^I can see the countries selected is listed in alphabetical order$", () -> {
-            List<String> countries = RestrictedCountriesPage.countriesSelected();
+            List<String> countries = CountrySelectionPageBilateral.countriesSelected();
 
             for (int idx = 0; idx < countries.size() - 1; idx++) {
                 Assert.assertTrue(countries.get(idx).substring(0, 1).compareTo(countries.get(idx + 1).substring(0, 1)) <= 0);
             }
         });
-        Then("^the bilateral countries page should display its error message$", RestrictedCountriesPage::hasErrorMessage);
+        Then("^the bilateral countries page should display its error message$", CountrySelectionPageBilateral::hasErrorMessage);
         When("^I select a country from the bilateral countries page$", () -> {
-            RestrictedCountriesPage.untilOnPage();
+            CountrySelectionPage.untilOnPage();
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
 
-            List<Country> countries = RestrictedCountriesPage.randomCountries();
+            List<Country> countries = CountrySelectionPageBilateral.randomCountries();
             licence.getEcmt().setRestrictedCountries(countries);
         });
         Given("^I'm on the bilateral check your answers page$", () -> {
@@ -108,11 +108,11 @@ public class AnnualBilateralSteps extends BasePage implements En {
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.clickChangeAnswer(BilateralSection.Country);
         });
-        Then("^I should be on the bilateral countries page$", RestrictedCountriesPage::untilOnPage);
+        Then("^I should be on the bilateral countries page$", CountrySelectionPage::untilOnPage);
         And("^my previously selected countries should be remembered$", () -> {
             List<Country> countries = operatorStore.getLatestLicence().get().getEcmt().getRestrictedCountriesName();
             List<String> expectedCountries = countries.stream().map(Country::toString).collect(Collectors.toList());
-            List<String> actualCountries = RestrictedCountriesPage.selectedCountries();
+            List<String> actualCountries = CountrySelectionPageBilateral.selectedCountries();
 
             Assert.assertThat(expectedCountries, equalTo(actualCountries));
         });

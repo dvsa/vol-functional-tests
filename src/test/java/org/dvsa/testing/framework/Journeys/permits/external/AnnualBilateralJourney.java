@@ -11,7 +11,7 @@ import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.RestrictedCountriesPage;
+import org.dvsa.testing.lib.pages.external.permit.bilateral.CountrySelectionPageBilateral;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 
 import org.junit.Assert;
@@ -42,7 +42,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     public AnnualBilateralJourney countries(OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
-        List<Country> name = RestrictedCountriesPage.randomCountries();
+        List<Country> name = CountrySelectionPageBilateral.randomCountries();
         RestrictedCountriesPage.saveAndContinue();
         licence.getEcmt().setRestrictedCountries(name);
         return this;
@@ -51,7 +51,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     public AnnualBilateralJourney allCountries(OperatorStore operatorStore){
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
-        List<Country> name = RestrictedCountriesPage.allCountries();
+        List<Country> name = CountrySelectionPageBilateral.allCountries();
         BasePermitPage.waitAndClick("//input[@id='Submit[SubmitButton]']", SelectorType.XPATH);
         licence.getEcmt().setRestrictedCountries(name);
         return this;

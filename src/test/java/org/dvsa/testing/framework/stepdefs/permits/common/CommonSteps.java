@@ -81,7 +81,7 @@ public class CommonSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.certificatesRequired(true);
             BasePermitPage.saveAndContinue();
-            RestrictedCountriesPage.deliverToRestrictedCountry(false);
+            org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage.deliverToRestrictedCountry(false);
             BasePermitPage.saveAndContinue();
             euro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();

@@ -7,6 +7,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CheckYourAnswersPage;

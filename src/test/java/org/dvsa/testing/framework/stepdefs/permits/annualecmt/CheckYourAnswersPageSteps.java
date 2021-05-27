@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
@@ -70,7 +71,7 @@ public class CheckYourAnswersPageSteps implements En {
             case RestrictedCountries:
                 RestrictedCountry restrictedCountry = RestrictedCountry.random();
 
-                RestrictedCountriesPage.countries(restrictedCountry);
+                org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage.countries(restrictedCountry);
                 BasePermitPage.saveAndContinue();
 
                 break;
