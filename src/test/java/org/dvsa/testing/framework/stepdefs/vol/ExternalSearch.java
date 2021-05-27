@@ -1,9 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.MissingRequiredArgument;
+import apiCalls.enums.UserRoles;
+import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.assertTrue;
@@ -72,6 +78,13 @@ public class ExternalSearch extends BasePage implements En {
             WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", operatorName), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
+        });
+        And("^i login as a partner user$", () -> {
+            String user = world.configuration.config.getString("partnerUser");
+            String password = world.configuration.config.getString("internalNewPassword");
+            String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
+            get(externalURL);
+            LoginPage.signIn(user,password);
         });
     }
 }
