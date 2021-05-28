@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CountrySelectionPageBilateral;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
 import org.junit.Assert;

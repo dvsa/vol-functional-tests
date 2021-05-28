@@ -10,6 +10,7 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -28,7 +29,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
             AnnualBilateralJourney.getInstance()
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
-            numberOfCountries = size("(//input[@type='checkbox'])", SelectorType.XPATH);
+            numberOfCountries = CountrySelectionPage.numberOfCountries();
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             annualBilateralOverviewPageUntilPeriodSelectionPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
