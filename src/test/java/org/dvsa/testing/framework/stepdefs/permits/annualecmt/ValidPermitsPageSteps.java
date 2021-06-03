@@ -13,6 +13,7 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -75,8 +76,8 @@ public class ValidPermitsPageSteps extends BasePage implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay()
                     .passwordAuthorisation();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
-            BaseApplicationSubmitPage.finish();
+            SubmittedPage.untilOnPage();
+            SubmittedPage.goToPermitsDashboard();
 
             // Refresh until permit is valid
             untilAnyPermitStatusMatch(PermitStatus.VALID);

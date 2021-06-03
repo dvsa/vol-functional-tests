@@ -4,7 +4,6 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.TurkeyThirdCountryPage;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.UkraineEmissionsStandardsPage;
 import org.junit.Assert;
 
@@ -25,7 +24,7 @@ public class UkraineNumberOfPermitsSteps implements En {
             NumberOfPermitsPage.hasTurkeyAndUkraineBilateralStandardSingleInformation();
         });
 
-        When("^I save and continue on the Ukraine number of permits page$", TurkeyThirdCountryPage::saveAndContinue);
+        When("^I save and continue on the Ukraine number of permits page$", NumberOfPermitsPage::saveAndContinue);
 
         Then("^I enter the valid number of permits required for Ukraine permit$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::setNumberOfPermitsAndSetRespectiveValues);
     }

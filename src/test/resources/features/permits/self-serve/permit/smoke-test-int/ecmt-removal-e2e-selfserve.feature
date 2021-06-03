@@ -10,4 +10,3 @@ Feature: User creates an ECMT removal application with existing licence
     Examples:
       |row_index|
       |0        |
-

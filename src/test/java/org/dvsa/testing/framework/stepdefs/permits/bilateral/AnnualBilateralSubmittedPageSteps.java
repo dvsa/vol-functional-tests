@@ -17,11 +17,9 @@ import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
@@ -56,14 +54,14 @@ public class AnnualBilateralSubmittedPageSteps implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
+            SubmittedPage.untilOnPage();
         });
         Then("^my application reference should be displayed$", () -> {
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body'] ", SelectorType.XPATH);
             Assert.assertEquals(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,18)),true);
         });
         Then("^I should see the view receipt link$", () -> {
-            Assert.assertTrue("'View  Receipt' link  should be displayed but wasn't", ApplicationSubmitPage.hasViewReceipt());
+            Assert.assertTrue("'View  Receipt' link  should be displayed but wasn't", SubmittedPage.hasViewReceipt());
         });
         And("^I'm on the annual bilateral submitted page for my active application$", () -> {
             BaseJourney.getInstance().go(ApplicationType.EXTERNAL);
@@ -75,10 +73,10 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             AnnualBilateralJourney.getInstance().declare(true);
         });
         Then("^I should not see the view receipt link$", () -> {
-            Assert.assertFalse("'View  Receipt' link  should NOT be displayed but was", ApplicationSubmitPage.hasViewReceipt()
+            Assert.assertFalse("'View  Receipt' link  should NOT be displayed but was", SubmittedPage.hasViewReceipt()
             );
         });
-        When("^I select finish$", ApplicationSubmitPage::finish);
+        When("^I select finish$", SubmittedPage::goToPermitsDashboard);
         And ("^I'm on the annual bilateral StandardAndCabotagePermits only submitted page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
@@ -106,7 +104,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
+            SubmittedPage.untilOnPage();
         });
         And ("^I'm on the annual bilateral StandardPermitsNoCabotage only submitted page$", () -> {
             clickToPermitTypePage(world);
@@ -133,7 +131,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
+            SubmittedPage.untilOnPage();
         });
     }
 }

@@ -9,6 +9,7 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
@@ -98,11 +99,10 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             DeclarationPage.saveAndContinue();
         });
         Then("^I check content of the Submitted page$", () -> {
-            SubmittedPage.SubmissionPageLoad();
-            SubmittedPage.pageHeading();
-            SubmittedPage.advisoryText();
-            SubmittedPage.warningMessage();
-
+            SubmittedPage.untilOnPage();
+            SubmittedPage.hasPageHeading();
+            SubmittedPage.hasCertificateAdvisoryText();
+            SubmittedPage.hasWarningMessage();
         });
         Then("^I am navigated back to the permits dashboard page with my application status shown as Valid", () -> {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);

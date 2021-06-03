@@ -31,7 +31,6 @@ import static org.dvsa.testing.lib.pages.BasePage.untilExpectedTextInElement;
 import static org.dvsa.testing.lib.pages.external.permit.DeclarationPage.saveAndContinue;
 import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue;
 import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.permitsValue;
-import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SubmittedPage.pageHeading;
 
 public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
     public ShortTermEcmt2020EndToEndJourneyPageSteps(OperatorStore operatorStore, World world)  {
@@ -105,11 +104,11 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay()
                     .passwordAuthorisation();
-            SubmittedPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
         });
         Then("^I click on the Finish button on the Application submitted page", () -> {
-//            SubmittedPage.untilOnPage();
-            pageHeading();
+            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.hasPageHeading();
             untilExpectedTextInElement("//a[contains(text(),'Go to permits dashboard')]",SelectorType.XPATH,"Go to permits dashboard",1000);
             BilateralJourneySteps.clickFinishButton();
         });;
@@ -147,7 +146,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            SubmittedPage.advisoryText();
+            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.hasShortTermECMTAdvisoryText();
             BilateralJourneySteps.clickFinishButton();
         });
 

@@ -13,12 +13,11 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.external.permit.PayFeesPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
@@ -50,17 +49,17 @@ public class SubmittedPageSteps implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay();
 
-            ApplicationSubmitPage.untilOnPage();
+            SubmittedPage.untilOnPage();
         });
         Then("^the reference number on the multilateral submitted page is as expected$", () -> {
-            ApplicationSubmitPage.untilOnSubmittedPage();
+            SubmittedPage.untilOnPage();
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
             Assert.assertEquals(actualReference.contains(operator.getCurrentLicenceNumber().toString().substring(9,18)),true);
         });
 
         When("I select view receipt from application submitted page", () -> {
             WebDriver driver = getDriver();
-            ApplicationSubmitPage.receipt();
+            SubmittedPage.openReceipt();
             String[] windows = driver.getWindowHandles().toArray(new String[0]);
             driver.switchTo().window(windows[1]);
             ReceiptPage.untilOnPage();
@@ -90,7 +89,7 @@ public class SubmittedPageSteps implements En {
             AnnualMultilateralJourney.INSTANCE.declaration(true);
         });
         Then("^there shouldn't be a view receipt link on the multilateral submitted page$", () -> {
-            Assert.assertFalse(ApplicationSubmitPage.hasViewReceipt());
+            Assert.assertFalse(SubmittedPage.hasViewReceipt());
         });
         When("^a case worker worker pays all fees for my ongoing multilateral permit application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -151,7 +150,7 @@ public class SubmittedPageSteps implements En {
             OverviewPage.clickOverviewSection(OverviewSection.Declaration);
         });
         Then("^all the multilateral submitted advisory text is present$", () -> {
-            Assert.assertTrue(ApplicationSubmitPage.hasAdvisoryText());
+            SubmittedPage.hasMultilateralAdvisoryText();
         });
     }
 }

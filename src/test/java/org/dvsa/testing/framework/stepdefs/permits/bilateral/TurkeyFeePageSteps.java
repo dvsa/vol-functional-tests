@@ -11,7 +11,7 @@ import org.dvsa.testing.lib.newPages.enums.FeeSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
@@ -72,8 +72,7 @@ public class TurkeyFeePageSteps implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay()
                     .passwordAuthorisation();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
-
+            SubmittedPage.untilOnPage();
         });
 
     }

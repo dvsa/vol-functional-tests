@@ -15,10 +15,10 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.UnderConsiderationPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
@@ -151,8 +151,8 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
                 .cardHolderDetailsPage()
                 .confirmAndPay()
                 .passwordAuthorisation();
-                BaseApplicationSubmitPage.untilSubmittedPageLoad();
-        ApplicationSubmitPage.finish();
+        SubmittedPage.untilPageLoad();
+        SubmittedPage.goToPermitsDashboard();
 
     }
 

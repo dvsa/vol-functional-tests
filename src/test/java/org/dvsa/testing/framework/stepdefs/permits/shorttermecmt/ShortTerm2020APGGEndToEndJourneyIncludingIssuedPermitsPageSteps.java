@@ -9,17 +9,16 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.ApplicationIssuingFeePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.Permits;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.PermitStartDatePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SubmittedPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;
 
@@ -77,13 +76,12 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
         And("^I make card payment", () -> {
             EcmtApplicationJourney.getInstance().cardDetailsPage().cardHolderDetailsPage().confirmAndPay().passwordAuthorisation();
             SubmittedPage.untilOnPage();
-            BaseApplicationSubmitPage.finish();
+            SubmittedPage.goToPermitsDashboard();
         });
 
         Then("^My application status changes to Valid", () -> {
             untilAnyPermitStatusMatch(PermitStatus.VALID);
             Permits.Permit.hasIssuedPermitsAndCertificates();
-
     });
 }
 }

@@ -11,11 +11,10 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.ValidECMTRemovalPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SubmittedPage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -48,7 +47,7 @@ public class ValidPermitPageSteps implements En {
                     .confirmAndPay()
                     .passwordAuthorisation();
             SubmittedPage.untilElementIsPresent("//h1[@class='govuk-panel__title']", SelectorType.XPATH,10,TimeUnit.SECONDS);
-            BaseApplicationSubmitPage.finish();
+            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.goToPermitsDashboard();
 
             String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
 

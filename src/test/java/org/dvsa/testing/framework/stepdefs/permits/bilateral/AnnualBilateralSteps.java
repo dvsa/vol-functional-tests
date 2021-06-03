@@ -30,7 +30,6 @@ import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.BilateralSection;
@@ -141,8 +140,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
-            ApplicationSubmitPage.finish();
+            SubmittedPage.untilPageLoad();
+            SubmittedPage.goToPermitsDashboard();
             untilAnyPermitStatusMatch(PermitStatus.VALID);
             String titleText = getText("//h2[contains(text(),'Issued permits and certificates')]", SelectorType.XPATH);
             Assert.assertEquals(titleText, "Issued permits and certificates");
@@ -178,8 +177,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
                             .cardDetailsPage()
                             .cardHolderDetailsPage()
                             .confirmAndPay();
-                BaseApplicationSubmitPage.untilSubmittedPageLoad();
-                ApplicationSubmitPage.finish();
+                SubmittedPage.untilOnPage();
+                SubmittedPage.goToPermitsDashboard();
                 String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
                 HomePage.PermitsTab.untilPermitHasStatus(
                         operatorStore.getCurrentLicence().get().getReferenceNumber(),
@@ -218,8 +217,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
                             .cardDetailsPage()
                             .cardHolderDetailsPage()
                             .confirmAndPay();
-                BaseApplicationSubmitPage.untilSubmittedPageLoad();
-                ApplicationSubmitPage.finish();
+            SubmittedPage.untilOnPage();
+            SubmittedPage.goToPermitsDashboard();
                 String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
                 HomePage.PermitsTab.untilPermitHasStatus(
                         operatorStore.getCurrentLicence().get().getReferenceNumber(),
@@ -256,8 +255,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
                         .cardDetailsPage()
                         .cardHolderDetailsPage()
                         .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
-            ApplicationSubmitPage.finish();
+            SubmittedPage.untilOnPage();
+            SubmittedPage.goToPermitsDashboard();
             String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
             HomePage.PermitsTab.untilPermitHasStatus(
                     operatorStore.getCurrentLicence().get().getReferenceNumber(),
@@ -309,7 +308,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay()
                     .passwordAuthorisation();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
+            SubmittedPage.untilOnPage();
 
         });
         When("^I try applying with a licence that has an existing application$", () -> {

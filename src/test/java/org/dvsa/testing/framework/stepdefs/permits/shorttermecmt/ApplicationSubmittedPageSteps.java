@@ -18,6 +18,7 @@ import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -27,7 +28,6 @@ import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage;
@@ -187,14 +187,14 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             DeclarationPage.saveAndContinue();
         });
         Then("^there shouldn't be a view receipt link on the shortterm ECMT submitted page$", () -> {
-            Assert.assertFalse(ApplicationSubmitPage.hasViewReceipt());
+            Assert.assertFalse(SubmittedPage.hasViewReceipt());
         });
         And ("^all advisory texts on short term ECMT submitted page is displayed correctly$", () -> {
-            SubmittedPage.pageHeading();
-            SubmittedPage.advisoryText();
-            SubmittedPage.warningMessage();
+            SubmittedPage.hasPageHeading();
+            SubmittedPage.hasShortTermECMTAdvisoryText();
+            SubmittedPage.hasWarningMessage();
         });
-        Then("^I select view receipt from short term application submitted page$", BaseApplicationSubmitPage::receipt);
+        Then("^I select view receipt from short term application submitted page$", org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage::openReceipt);
         Then("^the view receipt hyperlink opens in a new window$", () -> {
             WebDriver driver = getDriver();
             String[] windows = driver.getWindowHandles().toArray(new String[0]);

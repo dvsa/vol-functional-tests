@@ -8,8 +8,8 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDateTime;
@@ -152,8 +152,8 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
     public EcmtApplicationJourney submitApplication(LicenceStore licenceStore, World world) {
-        licenceStore.setReferenceNumber(ApplicationSubmitPage.getReferenceNumber().substring(22,40));
-        ApplicationSubmitPage.finish();
+        licenceStore.setReferenceNumber(SubmittedPage.getReferenceNumber().substring(22,40));
+        SubmittedPage.goToPermitsDashboard();
 
         LocalDateTime date = LocalDateTime.now();
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("d MMM yyyy"));

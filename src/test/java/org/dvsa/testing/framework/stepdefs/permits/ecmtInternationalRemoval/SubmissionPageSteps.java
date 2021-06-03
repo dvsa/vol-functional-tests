@@ -10,11 +10,10 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.SubmissionPage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
@@ -44,7 +43,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay()
                     .passwordAuthorisation();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
+            SubmittedPage.untilOnPage();
         });
         Then ("^the page heading on the submission page is displayed correctly", () -> {
 
@@ -57,11 +56,11 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             String actualReferenceNumber= BasePage.getElementValueByText("//div/strong",SelectorType.XPATH);
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
-        And ("^the texts on the submission page are displayed correctly", SubmissionPage::guidelineText);
+        And ("^the texts on the submission page are displayed correctly", SubmittedPage::hasECMTAdvisoryText);
         Then ("^the view receipt of ECMT International hyperlink opens in a new window", () -> {
             WebDriver driver = getDriver();
             String[] windows = driver.getWindowHandles().toArray(new String[0]);
-            SubmissionPage.viewReceiptLink();
+            SubmittedPage.openReceipt();
             driver.switchTo().window(windows[0]);
         });
         And ("^I have partial ECMT international removal application", () -> {
@@ -82,7 +81,9 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.VALID);
         });
-        And ("^I navigate to permit dashboard page", SubmissionPage::homeButton);
+        And ("^I navigate to permit dashboard page", () -> {
+            world.selfServeNavigation.navigateToNavBarPage("home");
+        });
         And ("^I'm on the ECMT international submitted page for my active application", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);

@@ -4,7 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.TurkeyThirdCountryPage;
+import org.dvsa.testing.lib.newPages.permits.pages.TurkeyThirdCountryPage;
 import org.junit.Assert;
 
 public class TurkeyNumberOfPermitsSteps implements En {
@@ -25,7 +25,7 @@ public class TurkeyNumberOfPermitsSteps implements En {
 
         });
 
-        When("^I save and continue on the Turkey number of permits page$", TurkeyThirdCountryPage::saveAndContinue);
+        When("^I save and continue on the Turkey number of permits page$", NumberOfPermitsPage::saveAndContinue);
         Then("^I should get the validation error message on the number of permits page$", NumberOfPermitsPage::hasTurkeyBilateralValidation);
         Then("^I enter the valid number of permits required for Turkey permit$", NumberOfPermitsPage::setNumberOfPermitsAndSetRespectiveValues);
     }

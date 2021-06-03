@@ -24,6 +24,7 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -95,7 +96,7 @@ public class CommonSteps extends BasePage implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            BaseApplicationSubmitPage.finish();
+            SubmittedPage.goToPermitsDashboard();
         });
         And("^I Grant the application on internal$", () -> {
             LicenceModel licence = OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0);
@@ -123,7 +124,7 @@ public class CommonSteps extends BasePage implements En {
             HomePage.PermitsTab.selectOngoing(licence1);
             ApplicationIssuingFeePage.acceptAndPay();
             EcmtApplicationJourney.getInstance().cardDetailsPage().cardHolderDetailsPage().confirmAndPay();
-            BaseApplicationSubmitPage.finish();
+            SubmittedPage.goToPermitsDashboard();
             HomePage.PermitsTab.untilPermitHasStatus(
                     operator.getCurrentLicence().get().getReferenceNumber(),
                     PermitStatus.VALID,

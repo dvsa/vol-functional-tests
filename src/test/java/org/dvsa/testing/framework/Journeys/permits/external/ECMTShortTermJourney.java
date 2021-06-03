@@ -8,8 +8,8 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CheckYourAnswersPage;
 
 import java.time.LocalDateTime;
@@ -149,8 +149,8 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     }
 
     public ECMTShortTermJourney submitApplication(LicenceStore licenceStore, World world) {
-        licenceStore.setReferenceNumber(ApplicationSubmitPage.getReferenceNumber());
-        ApplicationSubmitPage.finish();
+        licenceStore.setReferenceNumber(SubmittedPage.getReferenceNumber());
+        SubmittedPage.goToPermitsDashboard();
 
         LocalDateTime date = LocalDateTime.now();
         String dateFormatted = date.format(DateTimeFormatter.ofPattern("d MMM yyyy"));

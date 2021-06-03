@@ -70,7 +70,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay()
                     .passwordAuthorisation();
-            SubmittedPage.untilOnPage();
+            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
             BilateralJourneySteps.clickFinishButton();
 
 

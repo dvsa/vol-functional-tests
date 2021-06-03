@@ -12,10 +12,9 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -60,8 +59,8 @@ public class PermitsDashboardPageSteps extends BasePage implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
-            ApplicationSubmitPage.finish();
+            SubmittedPage.untilOnPage();
+            SubmittedPage.goToPermitsDashboard();
             untilElementIsPresent("//h2[contains(text(),'Issued permits and certificates')]", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
         });
         Then("^my Bilaterals permit should be under the Issued permit applications table with correct columns and values$", () -> {

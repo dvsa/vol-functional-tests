@@ -6,7 +6,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.TurkeyThirdCountryPage;
+import org.dvsa.testing.lib.newPages.permits.pages.TurkeyThirdCountryPage;
 import org.junit.Assert;
 
 public class TurkeyCheckYourAnswersSteps implements En {
@@ -24,10 +24,10 @@ public class TurkeyCheckYourAnswersSteps implements En {
             Assert.assertEquals(BilateralJourneySteps.getJourney(),"Single journeys");
 
             //Third-country continuation should always be YES
-            Assert.assertEquals(TurkeyThirdCountryPage.Yes(),"Yes");
+            Assert.assertEquals(TurkeyThirdCountryPage.getOverviewThirdCountryContinuationText(), "Yes");
 
             //Number of permits should be the same as entered on the number of permits page
-            String permitValue =String.valueOf(NumberOfPermitsPage.getPermitValue());
+            String permitValue = String.valueOf(NumberOfPermitsPage.getPermitValue());
             Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitValue+" "+"Standard single journey permits");
         });
 
