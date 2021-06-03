@@ -1,11 +1,6 @@
 @SS
 Feature: Various accessibility Rules Checks
 
-  Scenario: Keyboard - Reach all links (text or image), form controls and page functions with keyboard
-    Given i have a valid "goods" "standard_national" licence
-    When i am on the vehicle details page
-    Then i should be able to navigate page using my keyboard
-
   Scenario: Keyboard - Skip to main content on all VOL application pages
     Given i have a "public" "standard_national" "GB" application in traffic area
       | north_east |

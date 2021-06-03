@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.stepdefs;
+package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.driver.Browser;
@@ -12,8 +12,6 @@ import java.net.URL;
 import static junit.framework.TestCase.assertTrue;
 
 public class KeyboardAccessibility extends BasePage implements En {
-    private static final URL scriptUrl = KeyboardAccessibility.class.getResource("/axe/axe.min.js");
-
 
     public KeyboardAccessibility(World world) {
         When("^i navigate to self serve application main pages i can skip to main content$", () -> {
