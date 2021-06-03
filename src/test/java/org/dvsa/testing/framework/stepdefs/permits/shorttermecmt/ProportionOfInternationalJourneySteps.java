@@ -9,6 +9,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
@@ -38,7 +39,7 @@ public class ProportionOfInternationalJourneySteps implements En {
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
+            EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();

@@ -43,15 +43,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney euro6Page(LicenceStore licenceStore) {
-        boolean euro6 = true;
-
-        VehicleStandardPage.isEuro6Compliant(euro6);
-        VehicleStandardPage.saveAndContinue();
-        licenceStore.getEcmt().setEuro6(euro6);
-        return this;
-    }
-
     public EcmtApplicationJourney cabotagePage(LicenceStore licenceStore) {
         boolean cabotage = true;
 

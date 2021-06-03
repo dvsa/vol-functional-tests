@@ -14,6 +14,7 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -75,8 +76,8 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Euro emissions standard page section and click save and continue$", () -> {
-            EuroEmissioStandardsPage.hasPageHeading();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
+            EmissionStandardsPage.hasPageHeading();
+            EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Annual trips abroad page section and click save and continue$", () -> {
@@ -133,8 +134,8 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             permitsValue();
             BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
-            BasePermitPage.saveAndContinue();
+            EmissionStandardsPage.confirmCheckbox();
+            EmissionStandardsPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);

@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
@@ -39,7 +40,7 @@ public class Euro6Steps implements En {
         });
 
         Given("^I select the emission checkbox$", () -> {
-            VehicleStandardPage.emissionCheckbox();
+            EmissionStandardsPage.confirmCheckbox();
         });
         When("^I select save and return overview link$", BasePermitPage::overview);
 
@@ -51,19 +52,17 @@ public class Euro6Steps implements En {
             Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());
         });
 
-        Then("^should see the error message$", () -> {
-            boolean hasError = VehicleStandardPage.hasErrorMessagePresent();
-            Assert.assertTrue(hasError);
-        });
         Then("^I should see the validation errors for euro 6 page$", () -> {
-            Assert.assertTrue("Unable to find an element with the correct error message", VehicleStandardPage.hasErrorMessagePresent());
+            EmissionStandardsPage.hasErrorMessage();
         });
         Then("^I see the application reference number is displayed correctly$", () -> {
             String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber= BasePermitPage.getReferenceFromPage();
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
-        Then("^the texts are displayed correctly$", () -> VehicleStandardPage.emissionsPageText());
+        Then("^the texts are displayed correctly$", () -> {
+            EmissionStandardsPage.confirmCheckbox();
+        });
 
     }
     }

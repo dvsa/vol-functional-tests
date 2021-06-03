@@ -74,45 +74,6 @@ public class SubmitPermitApplicationSteps implements En {
 
         });
 
-        When("^I apply for an ECMT permit application$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
-            int numberOfTrips = Int.random(1, 1000);
-            boolean cabotage = true;
-            boolean euro6Compliant = true;
-
-            //apply application
-            untilOnPage();
-            applyAnnualEcmtApplication();
-
-            int numberOfPermits = Int.random(1, licenceStore.getNumberOfAuthorisedVehicles());
-
-            //Fill application
-            isPath("/licence/\\d+/irhp-application/edit/\\d+/");
-            needECMTPermit();
-            cabotageEligibility();
-            certificatesRequired();
-            restrictedCountriesNo();
-            emissionRadioSelectNew();
-            permitsQuantityEcmtAPGGInternal(numberOfPermits);
-           // permitsQuantityInternal(numberOfPermits);
-            licenceStore.getEcmt().setNumberOfPermits(numberOfPermits);
-           // JourneyProportion journey = internationalJourneys();
-            //selectTrips(numberOfTrips);
-            //Sector sector = sector();
-            isEuro6Compliant(true);
-            declare(true);
-            operatorStore.withLicences(licenceStore);
-
-            //Save application
-            saveIRHP();
-            licenceStore.getEcmt().setSubmitDate(LocalDateTime.now());
-           // licenceStore.getEcmt().setInternationalBusiness(journey);
-            //licenceStore.getEcmt().setSector(sector);
-
-
-        });
         When("^I apply for an ECMT APGG Euro5 or Euro 6 application$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);

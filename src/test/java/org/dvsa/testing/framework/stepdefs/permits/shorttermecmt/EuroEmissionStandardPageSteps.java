@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
@@ -45,20 +46,19 @@ public class EuroEmissionStandardPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^the euro emissions  page has the relevant information$", () -> {
-            EuroEmissioStandardsPage.untilElementIsPresent("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH,10, TimeUnit.SECONDS);
-            EuroEmissioStandardsPage.hasPageHeading();
+            EmissionStandardsPage.untilElementIsPresent("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH,10, TimeUnit.SECONDS);
+            EmissionStandardsPage.hasPageHeading();
         });
         Then("^the short term emissions page has got the correct advisory text$", () -> {
-            EuroEmissioStandardsPage.hasAdvisoryText();
+            EmissionStandardsPage.hasAdvisoryText();
         });
         Then("^the short term emissions page checkbox has the correct text and displayed unselected by default", () -> {
-            EuroEmissioStandardsPage.hasCheckbox();
+            EmissionStandardsPage.hasCheckbox();
         });
-        Then("I should get the emissions  page error message", EuroEmissioStandardsPage::hasErrorMessage);
+        Then("I should get the emissions  page error message", EmissionStandardsPage::hasErrorMessage);
 
         When("^I confirm the emissions standards checkbox", () -> {
-            EuroEmissioStandardsPage.Emissionsconfirmation();
-
+            EmissionStandardsPage.confirmCheckbox();
         });
         Then("^the user is navigated to the short term overview page with the status of emissions displayed as completed$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards,PermitStatus.COMPLETED);

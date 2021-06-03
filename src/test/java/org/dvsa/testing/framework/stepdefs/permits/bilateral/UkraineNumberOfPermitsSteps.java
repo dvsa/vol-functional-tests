@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.UkraineEmissionsStandardsPage;
 import org.junit.Assert;
 
 public class UkraineNumberOfPermitsSteps implements En {
@@ -15,7 +15,7 @@ public class UkraineNumberOfPermitsSteps implements En {
             NumberOfPermitsPage.untilOnPage();
 
             //checking the Country name displayed on the page is Ukraine
-            Assert.assertEquals(UkraineEmissionsStandardsPage.getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(EmissionStandardsPage.getCountry(),operatorStore.getCountry());
 
             //checking the Page heading on the Turkey number of permits page is correct
             NumberOfPermitsPage.hasPageHeading();

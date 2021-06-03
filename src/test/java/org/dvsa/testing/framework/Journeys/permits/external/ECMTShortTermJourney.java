@@ -41,15 +41,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return this;
     }
 
-    public ECMTShortTermJourney euro6Page(World world, LicenceStore licenceStore) {
-        boolean euro6 = true;
-
-        VehicleStandardPage.isEuro6Compliant(euro6);
-        VehicleStandardPage.saveAndContinue();
-        licenceStore.getEcmt().setEuro6(euro6);
-        return this;
-    }
-
     public ECMTShortTermJourney cabotagePage(World world, LicenceStore licenceStore) {
         boolean cabotage = true;
 

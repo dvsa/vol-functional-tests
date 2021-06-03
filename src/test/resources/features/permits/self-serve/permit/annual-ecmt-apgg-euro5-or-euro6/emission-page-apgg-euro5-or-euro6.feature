@@ -15,7 +15,7 @@ Feature: ECMT Permit Euro Emission Standard Page
   Scenario: Fails validation when saving and returning to overview
     And I am on the euro emission standard page
     Then I see the application reference number is displayed correctly
-    And  the texts are displayed correctly
+    And the texts are displayed correctly
     When I save and continue
     Then I should see the validation errors for euro 6 page
     When I select save and return overview link

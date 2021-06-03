@@ -14,6 +14,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -59,7 +60,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             saveAndContinue();
             PermitStartDatePage.permitDate();
             BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
+            EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
             saveAndContinue();
             DeclarationPage.declare(true);

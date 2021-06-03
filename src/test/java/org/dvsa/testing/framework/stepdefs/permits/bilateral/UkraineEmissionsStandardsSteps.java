@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.UkraineEmissionsStandardsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.junit.Assert;
 
 public class UkraineEmissionsStandardsSteps implements En {
@@ -11,38 +11,34 @@ public class UkraineEmissionsStandardsSteps implements En {
 
         Then("^I am on the Ukraine emissions standards page with correct information and content$", () -> {
             // Make sure the page has loaded before any further checks
-            UkraineEmissionsStandardsPage.untilOnEmissionsPage();
+            EmissionStandardsPage.untilOnPage();
 
             //checking the Country name displayed on the page is Ukraine
-            Assert.assertEquals(UkraineEmissionsStandardsPage.getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(EmissionStandardsPage.getCountry(), operatorStore.getCountry());
 
             //checking the Page heading on the Ukraine emissions standards page is correct
-            String expectedPageHeading = "Which vehicle euro emission standard will you use?";
-            String actualPageHeading = UkraineEmissionsStandardsPage.pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
+            EmissionStandardsPage.hasEuroChoicePageHeading();
 
             //checking the  YES and NO radio buttons  with display of respective help texts on selection
-            UkraineEmissionsStandardsPage.radiobuttons();
+            EmissionStandardsPage.hasEuro3To6RadioButtonsChoices();
         });
 
         When("^I save and continue on the Ukraine emissions standards page$", () -> {
-            UkraineEmissionsStandardsPage.saveAndContinue();
+            EmissionStandardsPage.saveAndContinue();
 
         });
 
         When("^I select Euro 3 or Euro 4 radio button on the Ukraine emissions standards page$", () -> {
-           UkraineEmissionsStandardsPage.emissionsYes();
-
+            EmissionStandardsPage.clickYes();
         });
+
         When("^I select Euro 5, Euro 6 or higher emission standard radio button on the Ukraine emissions standards page$", () -> {
-            UkraineEmissionsStandardsPage.emissionsNo();
+            EmissionStandardsPage.clickNo();
 
         });
-        When("^I select 'Euro5, Euro 6 or higher emission standard' radio button on the Ukraine emissions standards page$", () -> {
-            UkraineEmissionsStandardsPage.emissionsNo();
-        });
+
         When("^I get advisory text that I don't need Ukraine permits$", () -> {
-            UkraineEmissionsStandardsPage.ukraineNoAdvisoryText();
+            EmissionStandardsPage.ukraineSelectNoAdvisoryText();
         });
     }
 }

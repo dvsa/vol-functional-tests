@@ -15,10 +15,8 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
-import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -67,7 +65,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             NumberOfPermitsPage.euro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
+            EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
@@ -128,7 +126,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
             OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
-            EuroEmissioStandardsPage.Emissionsconfirmation();
+            EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
@@ -176,7 +174,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
             OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
 
-            EuroEmissioStandardsPage.Emissionsconfirmation();
+            EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
@@ -230,7 +228,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
             OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
-            EuroEmissioStandardsPage.Emissionsconfirmation();
+            EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();

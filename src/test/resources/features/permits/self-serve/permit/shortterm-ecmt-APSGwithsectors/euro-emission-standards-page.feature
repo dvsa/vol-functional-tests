@@ -9,14 +9,14 @@ Feature: Short term ECMT APSG with sectors Euro emission standards page
   @OLCS-25593
   Scenario: Euro EmissionStandard Page heading, advisory text and reference number are displayed correctly
     Then the euro emissions  page has the relevant information
-      Then the short term emissions page has got the correct advisory text
-      Then the short term emissions page checkbox has the correct text and displayed unselected by default
-      When I save and continue
-      Then I should get the emissions  page error message
-      When I save and return to overview
-      Then I should get the emissions  page error message
-      When I go back
-      Then I should be on the short term ECMT overview page
+    Then the short term emissions page has got the correct advisory text
+    Then the short term emissions page checkbox has the correct text and displayed unselected by default
+    When I save and continue
+    Then I should get the emissions  page error message
+    When I save and return to overview
+    Then I should get the emissions  page error message
+    When I go back
+    Then I should be on the short term ECMT overview page
 
    @OLCS-25593
     Scenario: Save and return to overview on Emissions page after confirmation takes back to overview page with status completed

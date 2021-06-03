@@ -7,12 +7,12 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfTripsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.EuroEmissioStandardsPage;
 
 public class AnnualTripsAbroadPageSteps extends BasePage implements En {
 
@@ -29,8 +29,8 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             NumberOfPermitsPage.permitsValue();
             BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
-            BasePermitPage.saveAndContinue();
+            EmissionStandardsPage.confirmCheckbox();
+            EmissionStandardsPage.saveAndContinue();
 
         });
         Given("^I specify a valid amount of annual trips$", NumberOfTripsPage::enterNumberOfTripsValue);

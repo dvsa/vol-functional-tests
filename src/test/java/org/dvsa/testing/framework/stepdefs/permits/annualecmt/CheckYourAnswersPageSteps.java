@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
@@ -62,9 +63,6 @@ public class CheckYourAnswersPageSteps implements En {
         operatorStore.withLicences(licenceStore);
         CommonSteps.origin.put("origin", getURL());
         switch (section) {
-            case Euro6:
-                EcmtApplicationJourney.getInstance().euro6Page(licenceStore);
-                break;
             case Cabotage:
                 EcmtApplicationJourney.getInstance().cabotagePage(licenceStore);
                 break;
@@ -85,7 +83,7 @@ public class CheckYourAnswersPageSteps implements En {
 
         switch (section) {
             case Euro6:
-                pageObject = VehicleStandardPage.class;
+                pageObject = EmissionStandardsPage.class;
                 break;
             case Cabotage:
                 pageObject = CabotagePage.class;

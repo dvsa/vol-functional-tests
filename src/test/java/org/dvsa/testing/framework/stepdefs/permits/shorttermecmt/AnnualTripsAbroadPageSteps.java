@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
@@ -39,7 +40,7 @@ public class AnnualTripsAbroadPageSteps implements En {
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             NumberOfPermitsPage.euro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
+            EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
         });
         And("^the page heading on short term ECMT Annual Trips Abroad page is displayed correctly$", AnnualTripsAbroadPage::pageHeading);
