@@ -7,7 +7,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.ValidAnnualBilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ValidAnnualBilateralPermitsPage;
 import org.junit.Assert;
 
 import java.time.LocalDate;
@@ -51,8 +51,6 @@ public class UkraineValidPermitsPageSteps implements En {
                 // Check expiry date matches that of stock window
                 Assert.assertThat(expiryDates, hasItem(permits.get(idx).getExpiryDate()));
             });
-
-
 
         });
 
