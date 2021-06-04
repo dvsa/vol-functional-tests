@@ -41,7 +41,7 @@ public class CancelApplicationPageSteps implements En {
            BilateralJourneySteps.saveAndContinue();
         });
         Then("^I am navigated to cabotage page$", () -> {
-            CabotagePage.untilOnPage();
+            CabotagePage.ECMTRemovalsUntilOnPage();
         });
     }
 

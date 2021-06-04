@@ -6,8 +6,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CancelApplicationPage;
 import org.junit.Assert;
 
@@ -29,11 +29,11 @@ public class CabotagePageSteps implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        Then("^the ECMT international removal cabotage heading should be correct$", CabotagePage::cabotagePageText);
+        Then("^the ECMT international removal cabotage heading should be correct$", CabotagePage::hasShortTermECMTPageHeading);
         Then ("^the correct text is displayed next to the checkbox in ECMT Removal cabotage page", CancelApplicationPage::ecmtInternationalRemovalcancelConfirmationText);
         When("^save and continue  button is selected without selecting the checkbox$", BasePermitPage::saveAndContinue);
-        Then("^I should get the user defined error message$", CabotagePage::errorText);
-        When ("^the cabotage checkbox is selected$", CabotagePage::cabotageConfirmation);
+        Then("^I should get the user defined error message$", CabotagePage::hasErrorText);
+        When ("^the cabotage checkbox is selected$", CabotagePage::confirmCabotage);
         Then("^I should be taken to certificates required page", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/st-certificates/"));
         });

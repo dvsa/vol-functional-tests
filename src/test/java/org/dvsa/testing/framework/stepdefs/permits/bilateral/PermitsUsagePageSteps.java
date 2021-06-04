@@ -42,7 +42,7 @@ public class PermitsUsagePageSteps implements En {
         Then("^I select a random Journey type and click continue$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.journeyType(JourneyType.random());
         });
-        Then("^I am taken to the Bilateral Cabotage page$", CabotagePage::untilOnPage);
+        Then("^I am taken to the Bilateral Cabotage page$", CabotagePage::AnnualBilateralUntilOnPage);
         Then("^I get error message if there is more than one Journey types available to select and I click continue without making any selection$", org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage::permitUsageError);
     }
 }
