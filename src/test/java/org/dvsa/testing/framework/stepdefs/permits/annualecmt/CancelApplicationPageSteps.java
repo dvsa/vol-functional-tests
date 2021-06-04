@@ -9,7 +9,6 @@ import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.pages.external.permit.CancelApplicationPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
@@ -25,7 +24,7 @@ public class CancelApplicationPageSteps implements En {
             // Here for readability and to stop cucumber from throwing an exception
         });
         Then("^I should see the validation error message for the cancel application page$", () -> {
-            Assert.assertTrue(CancelApplicationPage.hasErrorMessagePresent());
+            CancellationPage.hasErrorMessage();
         });
         When("^I cancel my ECMT application$", CancellationPage::clickCancelCheckbox);
         Then("^I navigate to the Bilaterals cabotage page$", () -> {

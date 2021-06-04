@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import activesupport.system.Properties;
+import cucumber.api.java8.Ca;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import Injectors.World;
@@ -44,21 +45,17 @@ public class CancelApplicationPageSteps extends BasePage implements En {
             Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
         });
         Then("^the annual multilateral Cancel Application page has expected text$", () -> {
-            String expectedAdvisory = "By cancelling you understand that:" +
-                    "this application will be cancelled permanently" +
-                    "the information you have entered will be deleted";
-
             CancellationPage.hasPageHeading();
-            Assert.assertEquals(expectedAdvisory, CancelApplicationPage.advisoryText());
-            Assert.assertEquals("I confirm that I would like to cancel my application.", CancelApplicationPage.checkboxLabel());
+            CancellationPage.assertAdvisoryTextOnCancelApplicationPage();
+            CancellationPage.hasConfirmCheckboxText();
         });
         Then("^the annual multilateral Cancel Application confirmation checkbox is unselected by default$", () -> {
             String message = "Expected checkbox to be unselected but it was selected";
-            Assert.assertFalse(message, CancelApplicationPage.isConfirmed());
+            Assert.assertFalse(message, CancellationPage.isConfirmed());
         });
         When("^I cancel my Annual Multilateral application without confirming$", CancellationPage::clickCancelButton);
         Then("^I should get the expected error message for annual multilateral Cancel Application page$", () -> {
-            Assert.assertEquals("You must select the checkbox to continue", CancelApplicationPage.errorMessage());
+            CancellationPage.hasErrorMessage();
         });
         When("^I confirm and cancel my annual multilateral permit$", () -> {
             CancellationPage.clickCancelCheckbox();

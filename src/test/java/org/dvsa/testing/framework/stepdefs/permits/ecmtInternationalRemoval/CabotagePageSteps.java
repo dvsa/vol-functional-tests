@@ -8,7 +8,6 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CancelApplicationPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
