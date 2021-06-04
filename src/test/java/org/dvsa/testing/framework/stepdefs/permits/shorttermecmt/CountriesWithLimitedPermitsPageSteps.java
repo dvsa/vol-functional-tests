@@ -34,7 +34,7 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.CertificatesRequiredConfirmation();
+            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
         });
         Then("^the application reference number on countries with limited permits page is shown correctly$", () -> {

@@ -38,7 +38,7 @@ public class DeclarationPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.CertificatesRequiredConfirmation();
+            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();

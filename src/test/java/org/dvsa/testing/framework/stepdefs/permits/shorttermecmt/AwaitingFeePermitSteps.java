@@ -30,7 +30,6 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage.cabotageConfirmation;
-import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage.CertificatesRequiredConfirmation;
 
 public class AwaitingFeePermitSteps extends BasePermitPage implements En {
 
@@ -51,7 +50,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             cabotageConfirmation();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredConfirmation();
+            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.permitsValue();

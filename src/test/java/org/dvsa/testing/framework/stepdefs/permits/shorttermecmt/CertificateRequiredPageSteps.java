@@ -9,10 +9,10 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SelectYearPage;
 import org.junit.Assert;
 
@@ -36,13 +36,13 @@ public class CertificateRequiredPageSteps implements En {
         });
         Then("^the certificates required page has the relevant information$", () -> {
             CertificatesRequiredPage.hasPageHeading();
-            CertificatesRequiredPage.hasAdvisoryMessages();
+            CertificatesRequiredPage.hasAdvisoryTexts();
             String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber= BasePermitPage.getReferenceFromPage();
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
-        Then("^I should get the certificates required page error message$", CertificatesRequiredPage::errorText);
-        Then("^I confirm the Certificates Required checkbox$", CertificatesRequiredPage::CertificatesRequiredConfirmation);
+        Then("^I should get the certificates required page error message$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::hasErrorText);
+        Then("^I confirm the Certificates Required checkbox$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::confirmCertificateRequired);
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
             String error = "Expected the status of certificates required page to be complete but it wasn't";
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();

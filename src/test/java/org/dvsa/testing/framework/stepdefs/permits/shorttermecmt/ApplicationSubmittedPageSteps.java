@@ -28,7 +28,6 @@ import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
@@ -43,7 +42,6 @@ import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage.cabotageConfirmation;
-import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CertificatesRequiredPage.CertificatesRequiredConfirmation;
 
 public class ApplicationSubmittedPageSteps extends BasePage implements En {
 
@@ -60,7 +58,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.cabotageConfirmation();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.CertificatesRequiredConfirmation();
+            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             NumberOfPermitsPage.euro5OrEuro6permitsValue();
@@ -97,7 +95,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             cabotageConfirmation();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredConfirmation();
+            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
@@ -148,7 +146,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             cabotageConfirmation();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredConfirmation();
+            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
@@ -211,7 +209,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             cabotageConfirmation();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredConfirmation();
+            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
             org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();

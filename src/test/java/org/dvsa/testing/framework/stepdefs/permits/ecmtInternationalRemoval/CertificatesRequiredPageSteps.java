@@ -6,8 +6,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CertificatesRequiredPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -30,11 +30,11 @@ public class CertificatesRequiredPageSteps implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        And ("^the page heading should be correct$", CertificatesRequiredPage::hasPageHeading);
-        And ("^the advisory texts on certificates required page are displayed correctly$", CertificatesRequiredPage::hasAdvisoryText);
-        And ("^the correct text is displayed next to the checkbox$", CertificatesRequiredPage::checkBoxText);
-        And ("^I should get the correct validation message$", CertificatesRequiredPage::errorText);
-        And ("^I select the certificate required checkbox$", CertificatesRequiredPage::CertificateRequiredConfirmation);
+        And ("^the page heading should be correct$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::hasPageHeading);
+        And ("^the advisory texts on certificates required page are displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::hasAdvisoryTexts);
+        And ("^the correct text is displayed next to the checkbox$", CertificatesRequiredPage::hasCheckBoxText);
+        And ("^I should get the correct validation message$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::hasErrorText);
+        And ("^I select the certificate required checkbox$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::confirmCertificateRequired);
         And ("^I am on the ecmt removals permit start date page$", () -> {
             isPath("/application/\\d+/permit-start-date/");
         });

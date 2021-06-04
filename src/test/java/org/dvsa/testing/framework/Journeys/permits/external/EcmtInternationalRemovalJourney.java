@@ -71,7 +71,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
     }
 
     public EcmtInternationalRemovalJourney certificatesRequiredPage() {
-        CertificatesRequiredPage.CertificateRequiredConfirmation();
+        org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
         saveAndContinue();
         return this;
     }

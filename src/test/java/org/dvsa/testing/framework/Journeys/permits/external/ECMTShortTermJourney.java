@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
@@ -51,7 +52,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     }
 
     public ECMTShortTermJourney certificateRequired(boolean certificateRequired) {
-        CertificatesRequiredPage.certificatesRequired(certificateRequired);
+        CertificatesRequiredPage.confirmCertificateRequired();
         CertificatesRequiredPage.saveAndContinue();
         return this;
     }
