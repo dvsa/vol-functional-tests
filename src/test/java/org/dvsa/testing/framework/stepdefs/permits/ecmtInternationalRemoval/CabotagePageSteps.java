@@ -30,7 +30,9 @@ public class CabotagePageSteps implements En {
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         Then("^the ECMT international removal cabotage heading should be correct$", CabotagePage::hasShortTermECMTPageHeading);
-        Then ("^the correct text is displayed next to the checkbox in ECMT Removal cabotage page", CancelApplicationPage::ecmtInternationalRemovalcancelConfirmationText);
+        Then ("^the correct text is displayed next to the checkbox in ECMT Removal cabotage page", () -> {
+            //TODO: Previous code didn't make any sense being here.
+        });
         When("^save and continue  button is selected without selecting the checkbox$", BasePermitPage::saveAndContinue);
         Then("^I should get the user defined error message$", CabotagePage::hasErrorText);
         When ("^the cabotage checkbox is selected$", CabotagePage::confirmCabotage);

@@ -48,13 +48,13 @@ public class CancelApplicationPageSteps extends BasePage implements En {
                     "this application will be cancelled permanently" +
                     "the information you have entered will be deleted";
 
-            Assert.assertEquals("Cancel application", CancelApplicationPage.title());
+            CancellationPage.hasPageHeading();
             Assert.assertEquals(expectedAdvisory, CancelApplicationPage.advisoryText());
             Assert.assertEquals("I confirm that I would like to cancel my application.", CancelApplicationPage.checkboxLabel());
         });
         Then("^the annual multilateral Cancel Application confirmation checkbox is unselected by default$", () -> {
             String message = "Expected checkbox to be unselected but it was selected";
-            Assert.assertFalse(message, CancelApplicationPage.confirmationCheckboxStatus());
+            Assert.assertFalse(message, CancelApplicationPage.isConfirmed());
         });
         When("^I cancel my Annual Multilateral application without confirming$", CancellationPage::clickCancelButton);
         Then("^I should get the expected error message for annual multilateral Cancel Application page$", () -> {
