@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.external.permit.WithdrawApplicationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.WithdrawApplicationPage;
 import org.junit.Assert;
 
 public class WithdrawApplicationPageSteps implements En {

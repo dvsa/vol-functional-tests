@@ -15,12 +15,11 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.permits.pages.UnderConsiderationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
+import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
+import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -67,7 +66,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         When("^I withdraw without confirming$", () -> {
             HomePage.PermitsTab.selectOngoing(ECMTPermitApplicationSteps.applicationReference.get("application.reference"));
             ApplicationDetailsPage.withdraw();
-            WithdrawApplicationPage.withdraw();
+            WithdrawApplicationPage.clickWithdraw();
         });
         Then("^issued permits should be sorted by reference number in descending order$", () -> {
             List<PermitApplication> actualApplications = HomePage.PermitsTab.issuedPermitApplications();

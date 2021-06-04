@@ -4,9 +4,9 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.lib.newPages.permits.pages.WithdrawApplicationPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.ApplicationDetailsPage;
-import org.dvsa.testing.lib.pages.external.permit.WithdrawApplicationPage;
 import org.junit.Assert;
 
 import java.text.DateFormat;
@@ -39,7 +39,7 @@ public class ApplicationDetailsPageSteps implements En {
         When("^I select return to permits dashboard hyperlink$", ApplicationDetailsPage::returnToPermitsDashboard);
         And("^the advisory text on ECMT under consideration page is displayed correctly$", ApplicationDetailsPage::advisoryText);
         And("^I select the withdraw application button$", ApplicationDetailsPage::withdraw);
-        And("^I should be navigated to the withdraw application page$", WithdrawApplicationPage::pageHeading);
+        And("^I should be navigated to the withdraw application page$", WithdrawApplicationPage::hasPageHeading);
     }
 
 }
