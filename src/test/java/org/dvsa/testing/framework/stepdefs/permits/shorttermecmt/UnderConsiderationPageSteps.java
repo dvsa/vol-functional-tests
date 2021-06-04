@@ -11,15 +11,14 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 
@@ -41,7 +40,7 @@ public class UnderConsiderationPageSteps implements En {
             CertificatesRequiredPage.CertificatesRequiredConfirmation();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            NumberOfPermitsPage.enterPermit();
+            org.dvsa.testing.lib.pages.external.permit.shorttermecmt.NumberOfPermitsPage.enterPermit();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
@@ -63,14 +62,15 @@ public class UnderConsiderationPageSteps implements En {
         });
         Then ("^the page heading on under consideration page is displayed correctly$", UnderConsiderationPage::untilOnPage);
         And("^the table of contents in the short term  under consideration page are displayed correctly$", UnderConsiderationPage::tableCheck);
-        And("^the warning message is displayed correctly$", UnderConsiderationPage::warningMessage);
-        When ("^I select withdraw application button$", UnderConsiderationPage::withdrawButton);
-        Then("^I am taken to the Withdraw Application page$", UnderConsiderationPage::withdrawApplicationPage);
+        And("^the warning message is displayed correctly$", () -> {
+            UnderConsiderationPage.warningMessage();
+        });
+        When ("^I select withdraw application button$", UnderConsiderationPage::clickWithdrawApplication);
+        Then("^I am taken to the Withdraw Application page$", WithdrawApplicationPage::untilOnPage);
         Then("^I am taken back to Under Consideration Page$", UnderConsiderationPage::untilOnPage);
         When ("^I go back to the permit application$", () -> {
             String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.select(licence);
         });
-
-        }
     }
+}

@@ -15,12 +15,12 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.permits.pages.UnderConsiderationPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.UnderConsiderationPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -119,9 +119,10 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             HomePage.selectTab(Tab.PERMITS);
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
-
         });
-        Then ("^the user is navigated to under consideration page$", UnderConsiderationPage::untilOnPage);
+        Then ("^the user is navigated to under consideration page$", () -> {
+            UnderConsiderationPage.untilOnPage();
+        });
         Then ("^the user is navigated to awaiting fee page$", () -> isPath("/permits/\\d+/ecmt-awaiting-fee/"));
 
         When("^I try applying with a licence that has an existing annual ECMT application$", () -> {
@@ -177,7 +178,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
         store.withLicences(licenceStore);
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-        CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
+        CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
         CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         CabotagePage.wontCarryCabotage(true);
         CertificatesRequiredPage.certificatesRequired(true);

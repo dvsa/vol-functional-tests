@@ -1,11 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+import Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -13,17 +13,15 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.PermitStartDatePage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
@@ -47,9 +45,9 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             ECMTShortTermJourney.getInstance()
                     .licencePage(operatorStore, world);
             clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            saveAndContinue();
+            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
-            CheckIfYouNeedECMTPermitsPage.checkboxSelection();
+            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             cabotageConfirmation();
             BasePermitPage.saveAndContinue();

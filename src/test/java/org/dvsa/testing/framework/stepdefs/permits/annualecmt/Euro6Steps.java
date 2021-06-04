@@ -7,9 +7,9 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.junit.Assert;
 
@@ -24,7 +24,8 @@ public class Euro6Steps implements En {
         And("^I am on the euro emission standard page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
+            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
+            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CabotagePage.wontCarryCabotage(true);
             CertificatesRequiredPage.certificatesRequired(true);
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();

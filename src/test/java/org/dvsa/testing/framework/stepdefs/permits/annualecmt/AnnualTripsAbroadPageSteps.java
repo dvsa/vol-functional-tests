@@ -7,11 +7,11 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfTripsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 
 public class AnnualTripsAbroadPageSteps extends BasePage implements En {
@@ -23,7 +23,8 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
             LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
             store.withLicences(licenceStore);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
+            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
+            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CabotagePage.wontCarryCabotage(true);
             CertificatesRequiredPage.certificatesRequired(true);
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();

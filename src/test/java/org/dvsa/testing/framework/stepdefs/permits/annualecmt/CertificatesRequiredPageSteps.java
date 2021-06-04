@@ -5,8 +5,8 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
 
 public class CertificatesRequiredPageSteps implements En {
 
@@ -15,14 +15,13 @@ public class CertificatesRequiredPageSteps implements En {
         And("^I am on the Ecmt Certificates required Page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
+            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
+            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CabotagePage.wontCarryCabotage(true);
         });
         And("^The application reference is displayed on the page$",() -> {
-
                 CertificatesRequiredPage.hasAppRef();
-
-    });
+        });
         And("^The main page heading is as per the AC$",() -> CertificatesRequiredPage.hasTheText());
         And("^Correct advisory text is shown below the page heading$", () -> CertificatesRequiredPage.hasAdvisoryMessagesEcmt());
         And("^The advisory text contains bold characters at the right places$", () -> CertificatesRequiredPage.isfontbold());
