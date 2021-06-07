@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -52,7 +53,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     }
 
     public AnnualMultilateralJourney checkYourAnswers() {
-        CheckYourAnswersPage.saveAndContinue();
+        CheckYourAnswerPage.saveAndContinue();
         return this;
     }
 

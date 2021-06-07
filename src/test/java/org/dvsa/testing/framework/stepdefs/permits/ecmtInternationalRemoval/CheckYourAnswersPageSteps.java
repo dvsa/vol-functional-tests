@@ -9,8 +9,6 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CheckYourAnswersPage;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.NumberofPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.ECMTRemovalsSection;
@@ -46,18 +44,17 @@ public class CheckYourAnswersPageSteps implements En {
             String permitType = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.PermitType);
             Assert.assertEquals(permitType,"ECMT International Removal");
             String RemovalsEligibility = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.RemovalsEligibility);
-            Assert.assertEquals(RemovalsEligibility,CheckYourAnswersPage.permitEligibility());
+            Assert.assertEquals(RemovalsEligibility, "I confirm that I will only use an ECMT international removal permit to move household goods or business possessions and that I will use specialised equipment and staff for removal operations.')]");
             String Cabotage = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Cabotage);
-            Assert.assertEquals(Cabotage,CheckYourAnswersPage.cabotage());
+            Assert.assertEquals(Cabotage, "I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.");
         });
         Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
         And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers));
         Then("^I am navigated to the ECMT Removals check your answers page$", () ->{
-                CheckYourAnswersPage.checkAnswersPageLoad();
+                CheckYourAnswerPage.untilOnPage();
                 CheckYourAnswerPage.hasPageHeading();
         });
         Then("^I am on ECMT Removal Declaration page$", Declaration::heading);
-        //Then("^I choose to change the ECMT Removals Permits Licence section$", () -> CheckYourAnswersPage.change(ECMTRemovalsInfo.Licence));
         Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> {
             CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.RemovalsEligibility);
         });

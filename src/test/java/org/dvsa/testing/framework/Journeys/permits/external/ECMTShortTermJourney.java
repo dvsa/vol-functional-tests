@@ -6,12 +6,10 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
-import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CheckYourAnswersPage;
+import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
+import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -68,7 +66,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     }
 
     public ECMTShortTermJourney checkYourAnswersPage() {
-        CheckYourAnswersPage.saveAndContinue();
+        CheckYourAnswerPage.saveAndContinue();
         return this;
     }
 

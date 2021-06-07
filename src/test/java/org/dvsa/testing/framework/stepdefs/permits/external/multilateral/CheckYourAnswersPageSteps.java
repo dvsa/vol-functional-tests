@@ -13,11 +13,13 @@ import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.CheckYourAnswersPage;
+import org.dvsa.testing.lib.util.CommonPatterns;
 import org.junit.Assert;
 
 import java.util.Comparator;
 import java.util.stream.Collectors;
+
+import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.getReferenceFromPage;
 
 public class CheckYourAnswersPageSteps implements En {
     public CheckYourAnswersPageSteps(OperatorStore operatorStore, World world) {
@@ -30,7 +32,7 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("the annual bilateral check your answers page has an application reference displayed", () -> {
             String message = "Expected there to be a reference number displayed in the correct format but it wasn't";
-            Assert.assertTrue(message, CheckYourAnswersPage.hasReference());
+            Assert.assertTrue(message, getReferenceFromPage().matches(CommonPatterns.REFERENCE_NUMBER));
         });
         Then("^Annual multilateral application answers are displayed on the check your answers page$", () -> {
             LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);

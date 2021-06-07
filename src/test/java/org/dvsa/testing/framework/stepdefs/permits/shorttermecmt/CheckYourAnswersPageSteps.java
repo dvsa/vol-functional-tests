@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
@@ -64,9 +65,9 @@ public class CheckYourAnswersPageSteps implements En {
             SectorPage.sector(Sector.random());
         });
         Then("^short term permit check your answers page has correct heading label$", () -> {
-CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", SelectorType.XPATH,10, TimeUnit.SECONDS);
-                    CheckYourAnswerPage.hasPageHeading();
-                });
+            CheckYourAnswerPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", SelectorType.XPATH,10, TimeUnit.SECONDS);
+            CheckYourAnswerPage.hasPageHeading();
+        });
         Then("^the short term check your answers page has reference number$", () -> {
             BasePermitPage.getReferenceFromPage();
         });
@@ -88,7 +89,7 @@ CheckYourAnswersPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", Se
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
         });
-        Then("^the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET$", CheckYourAnswersPage::decNotStartedYet);
+        Then("^the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET$", OverviewPage::declarationIsNotStartedYet);
         And("^I click Check your answers link on the overview page again$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers);
         });
