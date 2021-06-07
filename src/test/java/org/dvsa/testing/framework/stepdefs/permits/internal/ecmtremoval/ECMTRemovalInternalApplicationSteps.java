@@ -68,12 +68,6 @@ public class ECMTRemovalInternalApplicationSteps implements En {
             FeesDetailsPage.untilFeePaidNotification();
         });
 
-        And("^I have logged on internal site in int environment$", () -> {
-            get("https://iuap1.int.olcs.dvsacloud.uk/");
-        });
-        And("^I input username and passwords with excel row \"([^\"]*)\" dataset$", (String arg0) -> {
-            LoginInIntPage.readExcel(0);
-        });
         And("^the application goes to valid status$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);
