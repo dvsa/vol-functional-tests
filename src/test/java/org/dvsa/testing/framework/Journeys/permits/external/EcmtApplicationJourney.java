@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
@@ -76,7 +77,7 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
     public EcmtApplicationJourney declaration(boolean declaration) {
-        DeclarationPage.declare(declaration);
+        DeclarationPage.confirmDeclaration();
         DeclarationPage.saveAndContinue();
         return this;
     }

@@ -7,9 +7,9 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.NumberofPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.ECMTRemovalsSection;
 import org.hamcrest.core.StringContains;
@@ -54,7 +54,7 @@ public class CheckYourAnswersPageSteps implements En {
                 CheckYourAnswerPage.untilOnPage();
                 CheckYourAnswerPage.hasPageHeading();
         });
-        Then("^I am on ECMT Removal Declaration page$", Declaration::heading);
+        Then("^I am on ECMT Removal Declaration page$", DeclarationPage::untilOnPage);
         Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> {
             CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.RemovalsEligibility);
         });

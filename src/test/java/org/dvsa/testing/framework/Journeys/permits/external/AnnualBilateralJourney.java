@@ -9,7 +9,6 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 
@@ -133,7 +132,7 @@ public class AnnualBilateralJourney extends BasePermitJourney {
 
     public AnnualBilateralJourney declare(boolean declaration){
         DeclarationPage.untilOnPage();
-        BaseDeclarationPage.declare(declaration);
+        DeclarationPage.confirmDeclaration();
         DeclarationPage.saveAndContinue();
         return this;
     }

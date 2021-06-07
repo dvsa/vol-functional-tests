@@ -22,7 +22,6 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
@@ -70,7 +69,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPage.declare(true);
+            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
@@ -131,7 +130,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPage.declare(true);
+            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();
         });
         Then("^a case worker waives all fees for my ongoing short term permit application$", () -> {
@@ -179,7 +178,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPage.declare(true);
+            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();
         });
         Then("^there shouldn't be a view receipt link on the shortterm ECMT submitted page$", () -> {
@@ -233,7 +232,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPage.declare(true);
+            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();
         });
     }

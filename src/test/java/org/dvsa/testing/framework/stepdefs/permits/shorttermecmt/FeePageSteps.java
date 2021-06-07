@@ -9,6 +9,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
@@ -48,8 +49,8 @@ public class FeePageSteps implements En {
             ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            org.dvsa.testing.lib.pages.external.permit.DeclarationPage.declare(true);
-            org.dvsa.testing.lib.pages.external.permit.DeclarationPage.saveAndContinue();
+            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
+            DeclarationPage.saveAndContinue();
         });
         Then("^the table contents on short term Fee page is  as per AC$", PermitFeePage::tableCheck);
 

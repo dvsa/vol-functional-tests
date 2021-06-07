@@ -29,7 +29,6 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.BilateralSection;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -296,10 +295,10 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPage.hasPageHeading();
             DeclarationPage.hasBilateralAdvisoryTexts();
             DeclarationPage.hasWarningText();
-            Declaration.saveAndContinue();
+            DeclarationPage.saveAndContinue();
             DeclarationPage.hasErrorText();
-            org.dvsa.testing.lib.pages.external.permit.DeclarationPage.declare(true);
-            Declaration.saveAndContinue();
+            DeclarationPage.confirmDeclaration();
+            DeclarationPage.saveAndContinue();
             PermitFeePage.untilOnPage();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()

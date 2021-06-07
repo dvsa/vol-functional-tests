@@ -14,22 +14,19 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.pages.BasePage.untilExpectedTextInElement;
-import static org.dvsa.testing.lib.pages.external.permit.DeclarationPage.saveAndContinue;
 import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue;
 import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.permitsValue;
 
@@ -95,8 +92,8 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
         });
         Then("^I click on Accept and continue on the Declaration page$", () -> {
-            DeclarationPage.DeclarationConfirmation();
-            saveAndContinue();
+            DeclarationPage.confirmDeclaration();
+            DeclarationPage.saveAndContinue();
         });
         Then("^I click on Submit and Pay button on the Permit fee page and complete the payment", () -> {
             PermitFeePage.submitAndPay();
@@ -140,14 +137,14 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPage.DeclarationConfirmation();
-            saveAndContinue();
+            DeclarationPage.confirmDeclaration();
+            DeclarationPage.saveAndContinue();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.hasShortTermECMTAdvisoryText();
+            SubmittedPage.hasShortTermECMTAdvisoryText();
             BilateralJourneySteps.clickFinishButton();
         });
 

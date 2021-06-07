@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
@@ -49,8 +50,8 @@ public class UnderConsiderationPageSteps implements En {
             ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            org.dvsa.testing.lib.pages.external.permit.DeclarationPage.declare(true);
-            org.dvsa.testing.lib.pages.external.permit.DeclarationPage.saveAndContinue();
+            DeclarationPage.confirmDeclaration();
+            DeclarationPage.saveAndContinue();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()

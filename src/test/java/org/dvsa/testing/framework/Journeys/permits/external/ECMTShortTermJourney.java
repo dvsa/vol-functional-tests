@@ -9,7 +9,6 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -71,7 +70,7 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     }
 
     public ECMTShortTermJourney declaration(boolean declaration) {
-        DeclarationPage.declare(declaration);
+        org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
         DeclarationPage.saveAndContinue();
         return this;
     }

@@ -31,8 +31,6 @@ import org.dvsa.testing.lib.pages.external.ChangeYourPasswordPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
@@ -91,7 +89,7 @@ public class CommonSteps extends BasePage implements En {
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
             BasePermitPage.saveAndContinue();
-            DeclarationPage.declare(true);
+            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()

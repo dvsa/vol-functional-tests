@@ -80,7 +80,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.EditCountrySelection);
         });
         Then("^I declare and save and return to overview$", () -> {
-            org.dvsa.testing.lib.pages.external.permit.DeclarationPage.declare(true);
+            DeclarationPage.confirmDeclaration();
             BasePermitPage.overview();
         });
         Then("^I'm navigated to countries selection page$", () -> {

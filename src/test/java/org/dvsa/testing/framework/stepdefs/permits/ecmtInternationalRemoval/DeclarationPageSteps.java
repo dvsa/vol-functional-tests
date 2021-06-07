@@ -9,13 +9,12 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.junit.Assert;
 
@@ -39,16 +38,16 @@ public class DeclarationPageSteps extends BasePage implements En {
                     .numberOfPermits()
                     .checkYourAnswers();
         });
-        Then ("^the page heading on Ecmt Removal declaration page is displayed correctly", Declaration::heading);
-        And ("^the Ecmt removal declaration page has reference number", BaseDeclarationPage::hasReference);
-        And ("^the Ecmt removal declaration page has correct link under guidance notes", Declaration::hasGuidanceNotesLinkPresent);
-        And ("^the advisory text on removal declaration page is displayed correctly", Declaration::advisoryText);
-        And ("^the Ecmt removal declaration page checkbox has the correct text and displayed unselected by default", Declaration::hasCheckbox);
-        And ("^I should see the validation error message on the Ecmt removal declaration page", Declaration::errorText);
+        Then ("^the page heading on Ecmt Removal declaration page is displayed correctly", DeclarationPage::untilOnPage);
+        And ("^the Ecmt removal declaration page has reference number", DeclarationPage::hasReference);
+        And ("^the Ecmt removal declaration page has correct link under guidance notes", DeclarationPage::hasGuidanceNotesLinkPresent);
+        And ("^the advisory text on removal declaration page is displayed correctly", DeclarationPage::hasECMTAdvisoryText);
+        And ("^the Ecmt removal declaration page checkbox has the correct text and displayed unselected by default", DeclarationPage::hasCheckboxText);
+        And ("^I should see the validation error message on the Ecmt removal declaration page", DeclarationPage::hasErrorText);
         And ("^I click declaration link on the Ecmt removal overview page again", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.Declaration);
         });
-        When  ("^I confirm the ECMT removal declaration", Declaration::DeclarationConfirmation);
+        When  ("^I confirm the ECMT removal declaration", DeclarationPage::confirmDeclaration);
         Then("^I am on ECMT removal permits overview page with Declaration section marked as complete$", () -> {
             OverviewPage.untilOnPage();
             OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);

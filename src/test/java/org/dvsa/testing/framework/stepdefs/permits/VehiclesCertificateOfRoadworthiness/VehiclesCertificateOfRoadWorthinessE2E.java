@@ -9,15 +9,15 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.vehiclesCertificateOfRoadworthiness.*;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.vehiclesCertificateOfRoadworthiness.DeclarationPage.*;
+import static org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.hasCheckBoxText;
+import static org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration;
 
 
 public class VehiclesCertificateOfRoadWorthinessE2E implements En {
@@ -86,16 +86,15 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and click save and continue on the Check Your Answers page$", () -> {
-            CheckYourAnswersPage.checkAnswersPageLoad();
+            CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.hasPageHeading();
             CheckYourAnswerPage.saveAndContinue();
         });
         Then("^I check content and Accept and continue on the Declaration page$", () -> {
-
-            declarationPageLoad();
-            hasCheckbox();
-            hasPageHeading();
-            DeclarationConfirmation();
+            DeclarationPage.untilOnPage();
+            hasCheckBoxText();
+            DeclarationPage.hasPageHeading();
+            confirmDeclaration();
             DeclarationPage.saveAndContinue();
         });
         Then("^I check content of the Submitted page$", () -> {

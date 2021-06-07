@@ -7,8 +7,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.FeeSection;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
 import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
@@ -33,7 +33,7 @@ public class FeePageSteps implements En {
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
             ECMTPermitApplicationSteps.saveAndContinue();
-            DeclarationPage.declare(true);
+            DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();
           //  FeeOverviewPage.untilOnPage(Duration.MEDIUM, ChronoUnit.SECONDS);
         });

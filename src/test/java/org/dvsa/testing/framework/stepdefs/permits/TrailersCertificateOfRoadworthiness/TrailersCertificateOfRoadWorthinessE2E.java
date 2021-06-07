@@ -9,15 +9,15 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.DeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.trailersCertificateOfRoadworthiness.*;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.trailersCertificateOfRoadworthiness.DeclarationPage.*;
+import static org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration;
+import static org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.hasCheckboxText;
 
 public class TrailersCertificateOfRoadWorthinessE2E implements En {
     public TrailersCertificateOfRoadWorthinessE2E(OperatorStore operatorStore, World world) {
@@ -77,16 +77,16 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and click save and continue on the Check Your Answers page for Certificate of Roadworthiness for trailers$", () -> {
-            CheckYourAnswersPage.checkAnswersPageLoad();
+            CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.hasPageHeading();
-            CheckYourAnswersPage.saveAndContinue();
+            CheckYourAnswerPage.saveAndContinue();
         });
         Then("^I check content and Accept and continue on the Declaration page for Certificate of Roadworthiness for trailers page$", () -> {
-            declarationPageLoad();
-            hasAdvisoryText();
-            hasPageHeading();
-            hasCheckbox();
-            DeclarationConfirmation();
+            DeclarationPage.untilOnPage();
+            DeclarationPage.hasTrailersCertificateAdvisoryMessages();
+            DeclarationPage.hasPageHeading();
+            hasCheckboxText();
+            confirmDeclaration();
             DeclarationPage.saveAndContinue();
         });
         Then("^I check content of the Submitted page for Certificate of Roadworthiness for trailers$", () -> {

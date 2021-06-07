@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
@@ -80,7 +81,7 @@ org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
             HomePage.PermitsTab.selectOngoing(licence);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers);
             BasePermitPage.saveAndContinue();
-            DeclarationPage.declare(true);
+            DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();
 
         });
