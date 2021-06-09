@@ -12,9 +12,9 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.junit.Assert;
 
@@ -38,7 +38,7 @@ public class AnnualTripsAbroadPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            NumberOfPermitsPage.euro5OrEuro6permitsValue();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();

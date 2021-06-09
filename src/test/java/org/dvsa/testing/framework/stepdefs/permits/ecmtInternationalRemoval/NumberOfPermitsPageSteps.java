@@ -8,9 +8,9 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.NumberofPermitsPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -30,13 +30,10 @@ public class NumberOfPermitsPageSteps implements En {
                     .certificatesRequiredPage()
                     .permitStartDatePage();
             BasePermitPage.saveAndContinue();
-            NumberofPermitsPage.PermitsPageLoad();
+            NumberOfPermitsPage.ECMTRemovalUntilOnPage();
         });
-        And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberofPermitsPage::hasheading);
-        And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", () -> {
-            NumberofPermitsPage.hasAdvisoryText1();
-            NumberofPermitsPage.hasAdvisoryText2();
-        });
+        And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPage::hasECMTPageHeading);
+        And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPage::hasFeeText);
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
@@ -47,28 +44,28 @@ public class NumberOfPermitsPageSteps implements En {
             // Here for readability
         });
         Then("^I should get the ECMT Removals number of permits page error message$", () -> {
-            NumberofPermitsPage.hasErrorMessagePresent();
+            NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
         });
 
 
         And("^I enter number of permits more than the authorised vehicles and click save and continue$", () -> {
-            NumberofPermitsPage.authorisedVehicleExceed();
+            NumberOfPermitsPage.exceedAuthorisedVehicle();
             BasePermitPage.saveAndContinue();
         });
         Then("^I should get the ECMT Removals number of permits page validation error message$", () -> {
-            NumberofPermitsPage.hasErrorMessagePresent();
+            NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
 
         });
         And("^I enter valid number of permits on the removals number of permits page and click save and continue$", () -> {
-            NumberofPermitsPage.enterAuthorisedVehicles();
+            NumberOfPermitsPage.enterAuthorisedVehicles();
             BasePermitPage.saveAndContinue();
         });
         And("^I enter valid number of permits on the removals number of permits page$", () -> {
-            NumberofPermitsPage.enterAuthorisedVehicles();
+            NumberOfPermitsPage.enterAuthorisedVehicles();
         });
         Then("^the number of permits section on the ECMT Removals Overview page is complete$", () -> {
             OverviewPage.untilOnPage();
-            NumberofPermitsPage.OverviewNumberOfPermitsPageLoad();
+            NumberOfPermitsPage.untilOnPage();
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
     }

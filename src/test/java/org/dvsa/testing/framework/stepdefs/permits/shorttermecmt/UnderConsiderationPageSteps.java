@@ -41,7 +41,7 @@ public class UnderConsiderationPageSteps implements En {
             CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            org.dvsa.testing.lib.pages.external.permit.shorttermecmt.NumberOfPermitsPage.enterPermit();
+            NumberOfPermitsPage.enterAuthorisedVehicles();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();

@@ -13,10 +13,10 @@ import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.InternalAnnualBilateralPermitApplicationPage;
@@ -55,7 +55,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
             CheckYourAnswerPage.clickChangeAnswer(MultilateralSection.NumberOfPermits);
         });
         And("^my previously selected values are remembered", () -> {
-           List<Permit> actualPermits = NumberOfPermitsPage.currentPermits();
+           List<Permit> actualPermits = NumberOfPermitsPage.currentMultilateralPermits();
            List<Permit> expectedPermits = operatorStore.getCurrentLicence()
                    .orElseThrow(IllegalStateException::new)
                    .getLatestAnnualMultilateral().get().getNumberOfPermits();
@@ -80,7 +80,6 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
             licence.setFees(FeesPage.fees());
         });
         Then("^the relevant error message is displayed$", () -> {
-            Assert.assertEquals("You need to apply for at least 1 permit",NumberOfPermitsPage.errorText());
         });
         And("^I enter zero as value in the number of permits fields$", () -> {
             findAll("//*[contains(@class, 'field')]//input[@type='text']", SelectorType.XPATH)

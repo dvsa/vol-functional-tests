@@ -19,7 +19,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -183,7 +182,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
         CertificatesRequiredPage.saveAndContinue();
         CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-        NumberOfPermitsPage.permitsValue();
+        org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
         NumberOfPermitsPage.saveAndContinue();
         EmissionStandardsPage.confirmCheckbox();
         EmissionStandardsPage.saveAndContinue();

@@ -10,6 +10,7 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.junit.Assert;
@@ -31,7 +32,7 @@ public class Euro6Steps implements En {
             CertificatesRequiredPage.confirmCertificateRequired();
             CertificatesRequiredPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            NumberOfPermitsPage.permitsValue();
+            NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             BasePermitPage.saveAndContinue();
         });
 

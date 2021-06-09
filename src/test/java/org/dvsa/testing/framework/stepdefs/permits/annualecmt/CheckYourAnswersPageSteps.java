@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;

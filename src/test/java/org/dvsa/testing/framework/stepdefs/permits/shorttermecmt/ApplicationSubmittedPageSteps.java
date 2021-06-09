@@ -22,7 +22,6 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
@@ -60,7 +59,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            NumberOfPermitsPage.euro5OrEuro6permitsValue();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
@@ -97,7 +96,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
@@ -148,7 +147,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
@@ -211,7 +210,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
             HomePage.FeesTab.outstanbding(true);

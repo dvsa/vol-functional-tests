@@ -115,7 +115,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.hasPageHeading();
             Assert.assertTrue("Standard multiple journey permit",true);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.hasTurkeyBilateralValidation();
+            NumberOfPermitsPage.hasBilateralErrorMessage();
             NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
@@ -136,7 +136,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.hasPageHeading();
             Assert.assertTrue("Standard single journey permit", true);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.hasTurkeyBilateralValidation();
+            NumberOfPermitsPage.hasBilateralErrorMessage();
             NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
@@ -157,7 +157,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.hasPageHeading();
             Assert.assertTrue("Empty Entry single journey permit", true);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.hasTurkeyBilateralValidation();
+            NumberOfPermitsPage.hasBilateralErrorMessage();
             NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();
@@ -178,7 +178,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             NumberOfPermitsPage.hasPageHeading();
             Assert.assertTrue("Empty Entry single journey permit",true);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.hasTurkeyBilateralValidation();
+            NumberOfPermitsPage.hasBilateralErrorMessage();
             NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
             BasePermitPage.saveAndContinue();
             CheckYourAnswerPage.untilOnPage();

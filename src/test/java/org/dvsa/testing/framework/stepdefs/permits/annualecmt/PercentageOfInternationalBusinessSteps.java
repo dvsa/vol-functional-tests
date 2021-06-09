@@ -7,11 +7,9 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
-import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.NumberOfTripsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.*;
+import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 
@@ -34,7 +32,7 @@ public class PercentageOfInternationalBusinessSteps implements En {
             CertificatesRequiredPage.confirmCertificateRequired();
             CertificatesRequiredPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            NumberOfPermitsPage.permitsValue();
+            NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();
             EmissionStandardsPage.saveAndContinue();

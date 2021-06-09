@@ -1,10 +1,11 @@
+@EXTERNAL @ecmt_removal
 Feature: ECMT International Number of permits Page
 
   Background:
     Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
 
-  @EXTERNAL  @ecmt_removal
+
   Scenario: Number of permits page ECMT Removal - Check validations and content on the page
     And I am on the ECMT Removal number of permits page
     Then the page heading on the ECMT removals number of permits page is displayed correctly
@@ -20,7 +21,6 @@ Feature: ECMT International Number of permits Page
     And I enter valid number of permits on the removals number of permits page and click save and continue
    Then I am navigated to the ECMT Removals check your answers page
 
-  @EXTERNAL  @ecmt_removal
   Scenario: Number of permits page ECMT Removal- Check Navigation and section status
     And I am on the ECMT Removal number of permits page
     When I enter valid number of permits on the removals number of permits page

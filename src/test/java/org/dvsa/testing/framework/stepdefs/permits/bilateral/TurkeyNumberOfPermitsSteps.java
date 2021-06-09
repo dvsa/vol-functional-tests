@@ -26,7 +26,7 @@ public class TurkeyNumberOfPermitsSteps implements En {
         });
 
         When("^I save and continue on the Turkey number of permits page$", NumberOfPermitsPage::saveAndContinue);
-        Then("^I should get the validation error message on the number of permits page$", NumberOfPermitsPage::hasTurkeyBilateralValidation);
+        Then("^I should get the validation error message on the number of permits page$", NumberOfPermitsPage::hasBilateralErrorMessage);
         Then("^I enter the valid number of permits required for Turkey permit$", NumberOfPermitsPage::setNumberOfPermitsAndSetRespectiveValues);
     }
 }

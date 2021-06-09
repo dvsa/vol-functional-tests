@@ -10,13 +10,14 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SelectYearPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6Select;
-import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue;
 
 public class NumberOfPermitsPageSteps implements En {
 
@@ -43,21 +44,21 @@ public class NumberOfPermitsPageSteps implements En {
         });
         Then("^the page heading on the short term number of permits page is displayed correctly$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
-           NumberOfPermitsPage.guidanceText();
+           org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasAdvisoryText();
         });
         Then("^I should get the number of permits page error message$", () ->{
-            NumberOfPermitsPage.errorText();
-            NumberOfPermitsPage.errorTextEmission();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasShortTermECMTEmissionErrorText();
         });
 
         Then("^I enter the valid number of permits required$", () -> {
-            euro5OrEuro6permitsValue();
-                });
-        Then("^I enter the number of permits required more than the authorised vehicles$",() ->{
-                euro5OrEuro6Select();
-                NumberOfPermitsPage.shortTTermAuthorisedVehicleExceed();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
         });
-        Then("^I should get the validation error message$", NumberOfPermitsPage::maxNumEntry);
+        Then("^I enter the number of permits required more than the authorised vehicles$",() ->{
+            NumberOfPermitsPage.euro5OrEuro6Select();
+            NumberOfPermitsPage.exceedAuthorisedVehicle();
+        });
+        Then("^I should get the validation error message$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::hasShortTermECMTMaximumPermitsErrorText);
         Then("^the user is navigated to the overview page with the number of permits page status as completed$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });

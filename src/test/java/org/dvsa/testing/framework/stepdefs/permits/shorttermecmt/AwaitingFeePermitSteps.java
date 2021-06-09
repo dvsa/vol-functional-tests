@@ -49,7 +49,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.permitsValue();
+            NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             saveAndContinue();
             PermitStartDatePage.permitDate();
             BasePermitPage.saveAndContinue();

@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -36,11 +37,11 @@ public class NumberOfPermitsPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasAdvisoryText();
         });
 
-        Given("^I have specified a number greater than the number of authorised vehicles$", NumberOfPermitsPage::authorisedVehicleExceed);
+        Given("^I have specified a number greater than the number of authorised vehicles$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::exceedAuthorisedVehicle);
         And ("^I should get the ECMT number of permits page error message$", () -> {
-            Assert.assertEquals(NumberOfPermitsPage.errorMessage(), "Enter how many permits you need");
+            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
         });
-        Given("^I specify the number of permits$", NumberOfPermitsPage::euro5OrEuro6permitsValue);
+        Given("^I specify the number of permits$", NumberOfPermitsPage::enterEuro5OrEuro6permitsValue);
         Then("^I am on the annual ECMT overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
         Then("^I select the fee tab and pay the outstanding fees$", () -> {
             HomePage.selectTab(Tab.FEES);

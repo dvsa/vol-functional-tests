@@ -10,15 +10,13 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
+import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 
@@ -41,7 +39,7 @@ public class DeclarationPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();

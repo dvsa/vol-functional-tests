@@ -8,9 +8,9 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.NumberofPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.ECMTRemovalsSection;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
@@ -60,6 +60,6 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("^I choose to change the ECMT Removals Permits Cabotage section$", () -> CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.Cabotage));
         Then("^I choose to change the ECMT Removals Permits Number of permits section$", () -> CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.NumberOfPermits));
-        Then("^I should be on the ECMT international removal number of permits page$", () -> { NumberofPermitsPage.hasheading(); });
+        Then("^I should be on the ECMT international removal number of permits page$", NumberOfPermitsPage::hasECMTPageHeading);
     }
 }

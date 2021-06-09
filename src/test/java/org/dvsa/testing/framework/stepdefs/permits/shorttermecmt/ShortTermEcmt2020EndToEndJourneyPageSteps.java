@@ -27,8 +27,6 @@ import org.junit.Assert;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.pages.BasePage.untilExpectedTextInElement;
-import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue;
-import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.permitsValue;
 
 public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
     public ShortTermEcmt2020EndToEndJourneyPageSteps(OperatorStore operatorStore, World world)  {
@@ -68,8 +66,8 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Number of permits required section and click save and continue$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
-            euro5OrEuro6permitsValue();
+            NumberOfPermitsPage.hasPageHeading();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Euro emissions standard page section and click save and continue$", () -> {
@@ -129,7 +127,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
             CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            permitsValue();
+            NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();
             EmissionStandardsPage.saveAndContinue();

@@ -24,6 +24,7 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -49,7 +50,6 @@ import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.internal.IRHPPermitsPageSteps.payOutstandingFees;
-import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue;
 import static org.hamcrest.CoreMatchers.*;
 
 public class CommonSteps extends BasePage implements En {
@@ -84,7 +84,7 @@ public class CommonSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             RestrictedCountriesPage.deliverToRestrictedCountry(false);
             RestrictedCountriesPage.saveAndContinue();
-            euro5OrEuro6permitsValue();
+            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
