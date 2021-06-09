@@ -30,7 +30,7 @@ public class NumberOfPermitsPageSteps implements En {
                     .certificatesRequiredPage()
                     .permitStartDatePage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.ECMTRemovalUntilOnPage();
+            NumberOfPermitsPage.untilOnPage();
         });
         And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPage::hasECMTPageHeading);
         And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPage::hasFeeText);
