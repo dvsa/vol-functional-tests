@@ -24,7 +24,6 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.LicencePage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -164,7 +163,7 @@ public class CommonSteps extends BasePage implements En {
             Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());
         });
         Then("^I will get an error message on the licence page$", () -> {
-            Assert.assertTrue(LicencePage.hasErrorMessagePresent());
+            Assert.assertTrue(SelectALicencePage.hasErrorMessagePresent());
         });
         When("^I use the application back button$", BasePermitPage::back);
         Then("^I should be taken to the next section$", () -> {

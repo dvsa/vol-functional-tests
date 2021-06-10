@@ -7,7 +7,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.permits.pages.LicencePage;
+import org.dvsa.testing.lib.newPages.permits.pages.SelectALicencePage;
 import org.hamcrest.text.IsEqualIgnoringCase;
 import org.junit.Assert;
 
@@ -22,21 +22,21 @@ public class LicencePageSteps implements En {
             OrganisationModel organisation = OrganisationAPI.dashboard(operatorStore.getOrganisationId());
 
             String expectedLicenceNumber = organisation.getDashboard().getLicences().get(0).getLicNo();
-            String actualLicenceNumber = LicencePage.getLicenceNumber();
+            String actualLicenceNumber = SelectALicencePage.getLicenceNumber();
 
             Assert.assertThat(actualLicenceNumber, new IsEqualIgnoringCase(expectedLicenceNumber));
         });
         When("^I select any licence number$", () -> EcmtApplicationJourney.getInstance().licencePage(operatorStore, world));
         Then("^I should be notified that I have applied against all valid licences$", () -> {
-            LicencePage.assertNotificationMessageIsPresent();
+            SelectALicencePage.hasActivePermitMessage();
         });
         Then("^I should see the type of licence next to each licence$", () -> {
             List<LicenceModel> expectedLicences = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences();
 
-            if (!(LicencePage.numberOfLicences() > 1)){
-                Assert.assertTrue(LicencePage.getLicenceNumberWithType().contains(expectedLicences.get(0).getLicenceType().getDescription()));
+            if (!(SelectALicencePage.numberOfLicences() > 1)){
+                Assert.assertTrue(SelectALicencePage.getLicenceNumberWithType().contains(expectedLicences.get(0).getLicenceType().getDescription()));
             } else {
-                List<String> actualLicences = IntStream.rangeClosed(1, LicencePage.numberOfLicences()).mapToObj(LicencePage::getLicenceNumberWithType).collect(Collectors.toList());
+                List<String> actualLicences = IntStream.rangeClosed(1, SelectALicencePage.numberOfLicences()).mapToObj(SelectALicencePage::getLicenceNumberWithType).collect(Collectors.toList());
                 expectedLicences.forEach((licence) -> {
                     boolean matchFound = actualLicences.stream().anyMatch(actualLicence -> actualLicence.contains(licence.getLicNo()) && actualLicence.contains(licence.getLicenceType().getDescription()));
 

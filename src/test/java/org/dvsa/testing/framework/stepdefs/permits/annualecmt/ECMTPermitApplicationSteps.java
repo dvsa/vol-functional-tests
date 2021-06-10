@@ -16,7 +16,6 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.LicencePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
@@ -50,7 +49,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
                 HomePage.tabIsPresent(Tab.PERMITS);
             }
         });
-        Then("^There should be no selected licences$", () -> Assert.assertFalse(LicencePage.hasSelectedLicence()));
+        Then("^There should be no selected licences$", () -> Assert.assertFalse(SelectALicencePage.hasSelectedLicence()));
         And ("^I save and continue$", () -> BasePermitPage.saveAndContinue());
         Then("^I should be taken to the permits dashboard$", () -> Assert.assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
@@ -130,8 +129,8 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             EcmtApplicationJourney.getInstance()
                     .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.EcmtValidityPeriod();
-            LicencePage.licence(world.applicationDetails.getLicenceNumber());
-            LicencePage.saveAndContinue();
+            SelectALicencePage.licence(world.applicationDetails.getLicenceNumber());
+            SelectALicencePage.saveAndContinue();
         });
     }
 

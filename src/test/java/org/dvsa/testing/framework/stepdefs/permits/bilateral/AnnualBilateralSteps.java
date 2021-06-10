@@ -317,7 +317,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             HomePage.applyForLicenceButton();
             AnnualBilateralJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             LicenceStore licence = operatorStore.getLicences().get(0);
-            LicencePage.licence(licence.getLicenceNumber());
+            SelectALicencePage.licence(licence.getLicenceNumber());
             SelectALicencePage.saveAndContinue();
         });
         Then("^I should be informed that there is already an active permit application for this licence$", SelectALicencePage::hasActivePermitMessage);

@@ -7,8 +7,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.LicencePage;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.SelectALicencePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
@@ -118,23 +118,23 @@ public class BasePermitJourney extends BaseJourney {
                 operator.hasCurrentPermitType(PermitType.ANNUAL_MULTILATERAL) ||
                 operator.hasCurrentPermitType(PermitType.SHORT_TERM_ECMT) ||
                 operator.hasCurrentPermitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)) {
-            LicencePage.licence(world.applicationDetails.getLicenceNumber());
+            SelectALicencePage.licence(world.applicationDetails.getLicenceNumber());
             licenceNumber = selectedLicence.getLicenceNumber();
         }
 
-        else if (LicencePage.numberOfLicences() > 1) {
-            LicencePage.licence(selectedLicence.getLicenceNumber());
+        else if (SelectALicencePage.numberOfLicences() > 1) {
+            SelectALicencePage.licence(selectedLicence.getLicenceNumber());
             licenceNumber = selectedLicence.getLicenceNumber();
         }
 
         else {
             licenceNumber = world.applicationDetails.getLicenceNumber();
-            LicencePage.licence(licenceNumber);
+            SelectALicencePage.licence(licenceNumber);
         }
 
         operator.setCurrentLicenceNumber(licenceNumber);
 
-        LicencePage.saveAndContinue();
+        SelectALicencePage.saveAndContinue();
 
         return this;
     }
