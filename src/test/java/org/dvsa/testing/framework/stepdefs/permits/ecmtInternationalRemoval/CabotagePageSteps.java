@@ -21,7 +21,7 @@ public class CabotagePageSteps implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true);
         });
         And ("^the ECMT International Removal application reference number should be displayed$", () -> {

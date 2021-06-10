@@ -23,11 +23,8 @@ public class ShorttermECMTJourney extends BasePermitJourney {
 
         return instance;
     }
-    public ShorttermECMTJourney overview(OverviewSection section, OperatorStore operatorStore) {
-        String reference = BasePermitPage.getReferenceFromPage();
+    public ShorttermECMTJourney overview(OverviewSection section) {
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-        Assert.assertTrue(operatorStore.hasLicence(reference));
-        operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);
         OverviewPage.clickOverviewSection(section);
         return this;
     }

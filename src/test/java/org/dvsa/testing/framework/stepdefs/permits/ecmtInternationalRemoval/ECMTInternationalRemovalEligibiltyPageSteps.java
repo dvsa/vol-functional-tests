@@ -20,7 +20,7 @@ public class ECMTInternationalRemovalEligibiltyPageSteps implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility, operatorStore);
+                    .overview(OverviewSection.RemovalsEligibility);
         });
         And ("^the text is shown below the page heading$", RemovalsEligibilityPage::hasAdvisoryText);
         And ("^the text is shown next to the tick box$", () -> {

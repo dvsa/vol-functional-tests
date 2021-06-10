@@ -12,15 +12,16 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.ValidPermit.ValidAnnualMultilateralPermit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ValidAnnualBilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.bilateralsOnly.ValidAnnualBilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.multilateralsOnly.ValidAnnualMultilateralPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.ValidAnnualMultilateralPermitsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -90,7 +91,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance()
-                    .overview(OverviewSection.Countries, operatorStore)
+                    .overview(OverviewSection.Countries)
                     .countries(operatorStore)
                     .numberOfPermits(operatorStore)
                     .checkYourAnswers()
@@ -120,7 +121,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         Then("^the ECMT permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'valid'";
             OperatorStore store = operatorStore;
-            List<ValidAnnualMultilateralPermitsPage.Permit> permits = ValidAnnualMultilateralPermitsPage.permits();
+            List<ValidAnnualMultilateralPermit> permits = ValidAnnualMultilateralPermitsPage.permits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isBefore(permits.get(idx + 1).getExpiryDate()) ||

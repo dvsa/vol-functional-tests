@@ -14,6 +14,7 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.ValidPermit.ValidAnnualBilateralPermit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
@@ -23,6 +24,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.bilateralsOnly.ValidAnnualBilateralPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -406,7 +408,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
             String message =  "Expected all permits to have a status of 'Pending' but one or more DIDN'T!!!";
             OperatorStore store = operatorStore;
-            List<ValidAnnualBilateralPermitsPage.Permit> permits = ValidAnnualBilateralPermitsPage.permits();
+            List<ValidAnnualBilateralPermit> permits = ValidAnnualBilateralPermitsPage.permits();
 
             List<OpenWindowModel> windows = stock.openWindowsFor(permits.stream().map(p -> p.getCountry().toString()).toArray(String[]::new));
 
@@ -419,8 +421,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             // Check permit number is in ascending order grouped by country
             Map<Country, List<String>> grouped = permits.stream().collect(
-                    Collectors.groupingBy(ValidAnnualBilateralPermitsPage.Permit::getCountry,
-                            Collectors.mapping(ValidAnnualBilateralPermitsPage.Permit::getApplication,
+                    Collectors.groupingBy(ValidAnnualBilateralPermit::getCountry,
+                            Collectors.mapping(ValidAnnualBilateralPermit::getApplication,
                                     Collectors.toList()))
             );
 

@@ -1,5 +1,5 @@
-@ecmt_removal
-Feature: ECMT International Removal Valid Permit Page
+@ecmt_removal @smoketest
+Feature: ECMT International Removal Self Service End to End Smoke test
 
   Background:
     Given I have a "goods" "standard_international" licence

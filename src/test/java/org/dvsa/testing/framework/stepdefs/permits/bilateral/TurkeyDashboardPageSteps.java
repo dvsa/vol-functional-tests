@@ -7,7 +7,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.permits.pages.ValidAnnualBilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.bilateralsOnly.ValidAnnualBilateralPermitsPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 
 import java.util.concurrent.TimeUnit;

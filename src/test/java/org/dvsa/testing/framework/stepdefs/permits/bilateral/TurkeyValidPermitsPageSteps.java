@@ -7,7 +7,8 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.permits.pages.ValidAnnualBilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.ValidPermit.ValidAnnualBilateralPermit;
+import org.dvsa.testing.lib.newPages.permits.pages.bilateralsOnly.ValidAnnualBilateralPermitsPage;
 import org.junit.Assert;
 
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ public class TurkeyValidPermitsPageSteps implements En {
             OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
             String message =  "Expected all permits to have a status of 'VALID' but one or more DIDN'T!!!";
             OperatorStore store = operatorStore;
-            List<ValidAnnualBilateralPermitsPage.Permit> permits = ValidAnnualBilateralPermitsPage.permits();
+            List<ValidAnnualBilateralPermit> permits = ValidAnnualBilateralPermitsPage.permits();
 
             List<OpenWindowModel> windows = stock.openWindowsFor(permits.stream().map(p -> p.getCountry().toString()).toArray(String[]::new));
 

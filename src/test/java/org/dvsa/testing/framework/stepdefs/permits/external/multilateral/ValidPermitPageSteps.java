@@ -5,8 +5,9 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.ValidPermit.ValidAnnualMultilateralPermit;
+import org.dvsa.testing.lib.newPages.permits.pages.multilateralsOnly.ValidAnnualMultilateralPermitsPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.ValidAnnualMultilateralPermitsPage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class ValidPermitPageSteps implements En {
         Then("^the Multilateral permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'pending'";
             OperatorStore store = operator;
-            List<ValidAnnualMultilateralPermitsPage.Permit> permits = ValidAnnualMultilateralPermitsPage.permits();
+            List<ValidAnnualMultilateralPermit> permits = ValidAnnualMultilateralPermitsPage.permits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isBefore(permits.get(idx + 1).getExpiryDate()) ||

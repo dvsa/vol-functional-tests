@@ -29,7 +29,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -69,7 +69,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -89,7 +89,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             HomePage.selectTab(Tab.PERMITS);
             clickByLinkText(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.Declaration, operatorStore)
+                    .overview(OverviewSection.Declaration)
                     .declare(true);
         });
         And ("^I proceed with the application", () -> {
@@ -97,7 +97,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.Declaration, operatorStore)
+                    .overview(OverviewSection.Declaration)
                     .declare(true);
         });
 

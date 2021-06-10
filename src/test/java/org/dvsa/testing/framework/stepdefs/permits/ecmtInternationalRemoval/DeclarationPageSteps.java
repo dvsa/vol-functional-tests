@@ -30,7 +30,7 @@ public class DeclarationPageSteps extends BasePage implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()

@@ -9,12 +9,13 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.ValidPermit.ValidECMTInternationalPermit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.ValidECMTRemovalPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.ValidECMTRemovalPermitsPage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class ValidPermitPageSteps implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -52,7 +53,7 @@ public class ValidPermitPageSteps implements En {
             String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
 
             HomePage.PermitsTab.untilPermitHasStatus(
-                    operatorStore.getCurrentLicence().get().getReferenceNumber(),
+                    world.applicationDetails.getLicenceNumber(),
                     PermitStatus.VALID,
                     Duration.LONG,
                     TimeUnit.MINUTES
@@ -66,14 +67,13 @@ public class ValidPermitPageSteps implements En {
         });
         Then("^I am on the ECMT removal Permit list page$", ValidECMTRemovalPermitsPage::untilOnPage);
         And("^the licence number is displayed in ECMT removals list page$", () -> {
-            String expectedReference = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
+            String expectedReference = world.applicationDetails.getLicenceNumber();
             String actual = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(expectedReference, actual);
         });
         And("^the table of ECMT removal permits is as expected$", () -> {
             String message = "Expected all permits to have a status of 'VALID'";
-            OperatorStore store = operatorStore;
-            List<ValidECMTRemovalPermitsPage.Permit> permits = ValidECMTRemovalPermitsPage.permits();
+            List<ValidECMTInternationalPermit> permits = ValidECMTRemovalPermitsPage.permits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isEqual(permits.get(idx).getStartDate().plusDays(364))));

@@ -48,7 +48,7 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
         And ("^I should get the relevant error message$", CountriesWithLimitedPermitsPage::errorText);
         And ("^I select save and return to overview link without confirming$", BasePermitPage::overview);
         And ("^I select the countries with limited permits hyperlink$", () -> {
-            ShorttermECMTJourney.getInstance().overview(OverviewSection.CountriesWithLimitedPermits,operatorStore);
+            ShorttermECMTJourney.getInstance().overview(OverviewSection.CountriesWithLimitedPermits);
         });
         And ("^I should be on the countries with limited permits page$", CountriesWithLimitedPermitsPage::untilOnPage);
         When ("^I have selected some short term countries with limited permits and clicked save and continue$", () -> {

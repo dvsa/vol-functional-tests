@@ -93,11 +93,8 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         licenceStore.getEcmt().setNoCabotage(String.valueOf(noCabotage));
         return this;
     }
-    public AnnualBilateralJourney overview(OverviewSection section, OperatorStore operatorStore) {
-        String reference = BasePermitPage.getReferenceFromPage();
+    public AnnualBilateralJourney overview(OverviewSection section) {
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-        Assert.assertTrue(operatorStore.hasLicence(reference));
-        operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).setReferenceNumber(reference);
         OverviewPage.clickOverviewSection(section);
         return this;
     }

@@ -6,8 +6,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.PermitStartDatePage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -22,7 +22,7 @@ public class PermitStartDatePageSteps implements En {
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility, operatorStore)
+                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage();
@@ -31,7 +31,9 @@ public class PermitStartDatePageSteps implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        And ("^the page heading on permit start date page should be correct$", PermitStartDatePage::hasPageHeading);
+        And ("^the page heading on permit start date page should be correct$", ()-> {
+            PermitStartDatePage.hasECMTRemovalPageHeading();
+        });
         And ("^the advisory texts on permit start date page are displayed correctly$", PermitStartDatePage::hasAdvisoryText);
         Then  ("^the error message is displayed in the permit start date page$", PermitStartDatePage::errorText);
         And ("^I am taken to the number of permits page$", () -> {

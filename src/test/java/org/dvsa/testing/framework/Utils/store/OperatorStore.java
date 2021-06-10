@@ -186,14 +186,6 @@ public class OperatorStore {
                 );
     }
 
-    public boolean hasLicence(String reference) {
-        String licenceNumber = (reference.contains("/")) ? Str.find("\\w{2}\\d{7}(?= /)", reference).get() : reference;
-        return licences.stream()
-                .anyMatch(
-                        (licence) -> StringUtils.equalsIgnoreCase(licence.getLicenceNumber(), licenceNumber)
-                );
-    }
-
     private boolean hasLicence(LicenceStore licence) {
         return licences.stream()
                 .anyMatch(

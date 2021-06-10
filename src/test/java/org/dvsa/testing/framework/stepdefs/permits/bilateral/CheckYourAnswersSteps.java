@@ -28,7 +28,7 @@ public class CheckYourAnswersSteps implements En {
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance()
-                    .overview(OverviewSection.Countries, operatorStore)
+                    .overview(OverviewSection.Countries)
                     .countries(operatorStore)
                     .numberOfPermits(operatorStore);
 
