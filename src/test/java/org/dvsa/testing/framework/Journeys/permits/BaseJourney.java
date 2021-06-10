@@ -36,12 +36,4 @@ public class BaseJourney  extends BasePermitPage {
     public BaseJourney go(ApplicationType applicationType) {
         return go(applicationType, "");
     }
-
-    protected void readyBrowser() {
-        if (getDriver() != null && !getDriver().toString().contains("null")) {
-            getDriver();
-        } else {
-            getDriver().manage().deleteAllCookies();
-        }
-    }
 }

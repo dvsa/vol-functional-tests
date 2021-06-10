@@ -1,17 +1,11 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 
 public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJourney {
 
@@ -33,50 +27,8 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return instance;
     }
 
-    public ECMTShortTermJourney overviewPage(OverviewSection section) {
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
-        return this;
-    }
-
-    public ECMTShortTermJourney cabotagePage(World world, LicenceStore licenceStore) {
-        boolean cabotage = true;
-
-        CabotagePage.wontCarryCabotage(cabotage);
-        CabotagePage.saveAndContinue();
-        licenceStore.getEcmt().setCabotage(cabotage);
-        return this;
-    }
-
-    public ECMTShortTermJourney certificateRequired(boolean certificateRequired) {
-        CertificatesRequiredPage.confirmCertificateRequired();
-        CertificatesRequiredPage.saveAndContinue();
-        return this;
-    }
-
-    public ECMTShortTermJourney restrictedCountriesPage(World world, LicenceStore licenceStore) {
-        boolean restrictedCountries = false;
-
-        RestrictedCountriesPage.deliverToRestrictedCountry(restrictedCountries);
-        RestrictedCountriesPage.saveAndContinue();
-        licenceStore.getEcmt().setRestrictedCountries(restrictedCountries);
-
-        return this;
-    }
-
     public ECMTShortTermJourney checkYourAnswersPage() {
         CheckYourAnswerPage.saveAndContinue();
-        return this;
-    }
-
-    public ECMTShortTermJourney declaration(boolean declaration) {
-        org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
-        DeclarationPage.saveAndContinue();
-        return this;
-    }
-
-    public ECMTShortTermJourney feeOverviewPage() {
-        PermitFeePage.saveAndContinue();
         return this;
     }
 
@@ -121,7 +73,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return (ECMTShortTermJourney) super.shortTermType(shortTermType, operator);
     }
 
-
     @Override
     public ECMTShortTermJourney cardDetailsPage() {
         return (ECMTShortTermJourney) PaymentJourney.super.cardDetailsPage();
@@ -135,18 +86,6 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     @Override
     public ECMTShortTermJourney confirmAndPay() {
         return (ECMTShortTermJourney) PaymentJourney.super.confirmAndPay();
-    }
-
-    public ECMTShortTermJourney submitApplication(LicenceStore licenceStore, World world) {
-        licenceStore.setReferenceNumber(SubmittedPage.getReferenceNumber());
-        SubmittedPage.goToPermitsDashboard();
-
-        LocalDateTime date = LocalDateTime.now();
-        String dateFormatted = date.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
-
-        licenceStore.getEcmt().setSubmitDate(date);
-
-        return this;
     }
 
 }

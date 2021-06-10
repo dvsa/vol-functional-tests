@@ -1,11 +1,10 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.RemovalsEligibilityPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -27,15 +26,6 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
     public EcmtInternationalRemovalJourney overview(OverviewSection section) {
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
-        return this;
-    }
-
-    public EcmtInternationalRemovalJourney numberOfPermits(OperatorStore operatorStore) {
-        LicenceStore licenceStore =
-                operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-
-        licenceStore.getEcmt().setPermitsPerCountry(NumberOfPermitsPage.quantity(licenceStore.getNumberOfAuthorisedVehicles(), PermitType.ANNUAL_BILATERAL));
-        saveAndContinue();
         return this;
     }
 
@@ -85,16 +75,6 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
     public EcmtInternationalRemovalJourney declare(boolean declaration) {
         DeclarationPage.confirmDeclaration();
         DeclarationPage.saveAndContinue();
-        return this;
-    }
-
-    public EcmtInternationalRemovalJourney declare() {
-        return declare(true);
-    }
-
-    public EcmtInternationalRemovalJourney permitFee() {
-        PermitFeePage.untilOnPage();
-        PermitFeePage.submitAndPay();
         return this;
     }
 

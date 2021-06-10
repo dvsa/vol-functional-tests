@@ -34,5 +34,4 @@ public class VolLicenceApplicationJourney {
 
         return this;
     }
-
 }

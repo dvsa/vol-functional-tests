@@ -12,8 +12,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 
-import org.junit.Assert;
-
 import java.util.List;
 
 public class AnnualBilateralJourney extends BasePermitJourney {
@@ -99,19 +97,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return this;
     }
 
-    public AnnualBilateralJourney overviewNorway(OperatorStore operatorStore) {
-        operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
-        return this;
-    }
-
-    public AnnualBilateralJourney country(World world, OperatorStore operatorStore) {
-        String country = CountrySelectionPage.selectCountry("Norway");
-        RestrictedCountriesPage.saveAndContinue();
-        operatorStore.setCountry1(country);
-        return this;
-    }
-
     public AnnualBilateralJourney numberOfPermits(OperatorStore operatorStore){
         LicenceStore licenceStore =
                 operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
@@ -132,10 +117,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         DeclarationPage.confirmDeclaration();
         DeclarationPage.saveAndContinue();
         return this;
-    }
-
-    public AnnualBilateralJourney declare(){
-        return declare(true);
     }
 
     public AnnualBilateralJourney permitFee() {

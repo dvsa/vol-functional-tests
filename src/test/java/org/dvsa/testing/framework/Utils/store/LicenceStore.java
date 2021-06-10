@@ -249,10 +249,6 @@ public class LicenceStore extends OperatorStore {
             return restrictedCountries;
         }
 
-        public Ecmt setRestrictedCountries(boolean restrictedCounties) {
-            return setRestrictedCountries(restrictedCounties, null);
-        }
-
         public Ecmt setRestrictedCountries(boolean restrictedCounties, List<Country> countries) {
             this.restrictedCountries = restrictedCounties;
             this.restrictedCountriesName = countries;

@@ -7,7 +7,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.LicencePage;
+import org.dvsa.testing.lib.newPages.permits.pages.LicencePage;
 import org.hamcrest.text.IsEqualIgnoringCase;
 import org.junit.Assert;
 
@@ -28,18 +28,15 @@ public class LicencePageSteps implements En {
         });
         When("^I select any licence number$", () -> EcmtApplicationJourney.getInstance().licencePage(operatorStore, world));
         Then("^I should be notified that I have applied against all valid licences$", () -> {
-            String expectedPageTitle = LicencePage.AppliedAgainstAllPage.TITLE;
-            String actualPageTitle = LicencePage.AppliedAgainstAllPage.getTitleOnPage();
-
-            Assert.assertEquals(expectedPageTitle, actualPageTitle);
+            LicencePage.assertNotificationMessageIsPresent();
         });
         Then("^I should see the type of licence next to each licence$", () -> {
             List<LicenceModel> expectedLicences = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences();
 
-            if (!LicencePage.hasMultipleLicences()){
+            if (!(LicencePage.numberOfLicences() > 1)){
                 Assert.assertTrue(LicencePage.getLicenceNumberWithType().contains(expectedLicences.get(0).getLicenceType().getDescription()));
             } else {
-                List<String> actualLicences = IntStream.rangeClosed(1, LicencePage.numOfLicences()).mapToObj(LicencePage::getLicenceNumberWithType).collect(Collectors.toList());
+                List<String> actualLicences = IntStream.rangeClosed(1, LicencePage.numberOfLicences()).mapToObj(LicencePage::getLicenceNumberWithType).collect(Collectors.toList());
                 expectedLicences.forEach((licence) -> {
                     boolean matchFound = actualLicences.stream().anyMatch(actualLicence -> actualLicence.contains(licence.getLicNo()) && actualLicence.contains(licence.getLicenceType().getDescription()));
 

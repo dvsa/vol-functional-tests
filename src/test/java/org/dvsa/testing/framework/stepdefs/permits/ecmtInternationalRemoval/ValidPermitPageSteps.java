@@ -50,8 +50,6 @@ public class ValidPermitPageSteps implements En {
             SubmittedPage.untilElementIsPresent("//h1[@class='govuk-panel__title']", SelectorType.XPATH,10,TimeUnit.SECONDS);
             org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.goToPermitsDashboard();
 
-            String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
-
             HomePage.PermitsTab.untilPermitHasStatus(
                     world.applicationDetails.getLicenceNumber(),
                     PermitStatus.VALID,

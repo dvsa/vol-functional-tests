@@ -33,9 +33,6 @@ public interface PaymentJourney {
     default PaymentJourney cardHolderDetailsPage() {
         String email = RandomUtils.email();
         FeeCardHolderDetailsPage.cardHoldersName(Str.randomWord(3, 8) + " " + Str.randomWord(3, 8));
-//        FeeCardHolderDetailsPage.address(Str.randomWord(4, 11), Str.randomWord(7, 11), Str.randomWord(7, 11));
-  //      FeeCardHolderDetailsPage.county("Nottinghamshire");
-    //    FeeCardHolderDetailsPage.country("UK");
         FeeCardHolderDetailsPage.email(email);
         FeeCardHolderDetailsPage.emailConfirmation(email);
         FeeCardHolderDetailsPage.continueButton();
@@ -45,8 +42,6 @@ public interface PaymentJourney {
 
     default PaymentJourney confirmAndPay() {
         FeePaymentConfirmationPage.makeMayment();
-        //FeeCustomerManagementSystemPage.save();  CPMS page has been updated the way Save card function work . Commenting this out to keep a record
-
         return this;
     }
 
@@ -55,7 +50,6 @@ public interface PaymentJourney {
         driver.switchTo().frame("scp_threeDSecure_iframe");
         FeePaymentConfirmationPage.passwordAuthorisation("Test_6721");
         BasePage.waitAndClick("//input[@id='Continue']", SelectorType.XPATH);
-
         return this;
     }
 }

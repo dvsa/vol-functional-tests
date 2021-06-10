@@ -37,15 +37,6 @@ public class BaseInternalJourney extends BaseJourney {
         return this;
     }
 
-    public BaseInternalJourney openIrhpPermits(int licenceId) {
-        return openIrhpPermits(String.valueOf(licenceId));
-    }
-
-    public BaseInternalJourney openIrhpPermits(String licenceId) {
-        readyBrowser();
-        return go(ApplicationType.INTERNAL, "licence/" + licenceId + "/permits/");
-    }
-
     @Override
     public BaseInternalJourney go(ApplicationType applicationType, String endpoint) {
         return (BaseInternalJourney) super.go(applicationType, endpoint);
@@ -55,22 +46,6 @@ public class BaseInternalJourney extends BaseJourney {
     public BaseInternalJourney go(ApplicationType applicationType) {
         return (BaseInternalJourney) super.go(applicationType);
     }
-
-    public enum User {
-        Admin("usr291"),
-        Normal("usr59");
-
-        private String username;
-
-        User(String username) {
-            this.username = username;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        }
-    }
+}
 
 

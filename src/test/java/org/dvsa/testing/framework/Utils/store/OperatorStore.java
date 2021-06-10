@@ -133,14 +133,6 @@ public class OperatorStore {
         this.passwords.add(password);
         return this;
     }
-    public String getCountry1() {
-        return country1;
-    }
-
-    public OperatorStore setCountry1(String country1) {
-        this.country1 = country1;
-        return this;
-    }
 
 
     public List<LicenceStore> getLicences() {
