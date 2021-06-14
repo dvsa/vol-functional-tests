@@ -16,6 +16,7 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -48,7 +49,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
         And ("^I am on the application submitted page$", () -> {
             clickToPermitTypePage(world);
             ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            SelectYearPage.shortTermValidityPeriod();
+            YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
@@ -85,7 +86,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CommonSteps.clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
                     .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
-            SelectYearPage.shortTermValidityPeriod();
+            YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
@@ -136,7 +137,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CommonSteps.clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
                     .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
-            SelectYearPage.shortTermValidityPeriod();
+            YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
@@ -199,7 +200,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
         And("^I have an ongoing short term ECMT with all fees paid$", () -> {
             clickToPermitTypePage(world);
             ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            SelectYearPage.shortTermValidityPeriod();
+            YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
             OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);

@@ -16,6 +16,7 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -34,7 +35,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             CommonSteps.clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
                     .permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            SelectYearPage.shortTermValidityPeriod();
+            YearSelectionPage.selectShortTermValidityPeriod();
             PeriodSelectionPage.selectFirstAvailablePermitPeriod();
             PeriodSelectionPage.saveAndContinue();
             ECMTShortTermJourney.getInstance()

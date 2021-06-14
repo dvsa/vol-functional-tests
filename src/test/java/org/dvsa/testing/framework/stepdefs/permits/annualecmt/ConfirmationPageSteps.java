@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
@@ -61,7 +62,7 @@ org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
             CommonSteps.clickToPermitTypePage(world);
             EcmtApplicationJourney.getInstance()
                     .permitType(PermitType.ECMT_ANNUAL, operatorStore);
-            YearSelectionPage.EcmtValidityPeriod();
+            YearSelectionPage.selectECMTValidityPeriod();
             EcmtApplicationJourney.getInstance()
                     .licencePage(operatorStore, world);
             LicenceStore licenceStore = completeUpToCheckYourAnswersPage(world, operatorStore);

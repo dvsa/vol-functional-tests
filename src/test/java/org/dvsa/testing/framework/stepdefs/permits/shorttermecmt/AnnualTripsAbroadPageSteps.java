@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
@@ -25,9 +26,8 @@ public class AnnualTripsAbroadPageSteps implements En {
     public AnnualTripsAbroadPageSteps(OperatorStore operatorStore, World world) {
         And("^I am on short term ECMT annual trips abroad page$", () -> {
             CommonSteps.clickToPermitTypePage(world);
-            ECMTShortTermJourney.getInstance()
-                    .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
-            SelectYearPage.shortTermValidityPeriod();
+            ECMTShortTermJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
+            YearSelectionPage.selectShortTermValidityPeriod();
             ECMTShortTermJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ECMTShortTermJourney.getInstance(). licencePage(operatorStore,world);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);

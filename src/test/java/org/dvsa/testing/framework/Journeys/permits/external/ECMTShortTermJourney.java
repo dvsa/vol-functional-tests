@@ -5,7 +5,6 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 
 public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJourney {
 
@@ -47,20 +46,10 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
         return (ECMTShortTermJourney) super.permitType();
     }
 
-    @Override
-
-    public ECMTShortTermJourney yearSelection() {
-        return (ECMTShortTermJourney) super.yearSelection();
-    }
 
     @Override
     public ECMTShortTermJourney permitType(PermitType type, OperatorStore operator) {
         return (ECMTShortTermJourney) super.permitType(type, operator);
-    }
-
-    @Override
-    public ECMTShortTermJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator) {
-        return (ECMTShortTermJourney) super.yearSelection(yearSelection, operator);
     }
 
     @Override

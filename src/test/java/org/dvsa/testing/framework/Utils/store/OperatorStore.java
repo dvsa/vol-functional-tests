@@ -1,13 +1,10 @@
 package org.dvsa.testing.framework.Utils.store;
 
 import activesupport.number.Int;
-import activesupport.string.Str;
 import apiCalls.Utils.eupaBuilders.external.PersonModel;
 import apiCalls.Utils.eupaBuilders.organisation.ResultModel;
-import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +25,8 @@ public class OperatorStore {
     private ResultModel eligibleEcmtLicences;
     private String currentLicence;
     private PermitType currentPermitType;
-    private YearSelectionPage.YearSelection currentYearSelection;
     private PeriodType currentShortTermType;
-    private String country1;
     private String journeyType;
-    private String journeyType1;
     private String permitsvalue;
 
     public String getPermitsvalue() {
@@ -210,24 +204,12 @@ public class OperatorStore {
         this.currentPermitType = currentPermitType;
     }
 
-    public void setCurrentYearSelection(YearSelectionPage.YearSelection currentYearSelection){
-        this.currentYearSelection = currentYearSelection;
-    }
-
     public void setCurrentShortTermType(PeriodType currentShortTermType){
         this.currentShortTermType = currentShortTermType;
     }
 
-    public Optional<YearSelectionPage.YearSelection>getCurrentYearSelection(){
-        return currentYearSelection == null ? Optional.empty() : Optional.of(currentYearSelection);
-    }
-
     public Optional<PermitType> getCurrentPermitType() {
         return currentPermitType == null ? Optional.empty() : Optional.of(currentPermitType);
-    }
-
-    public boolean hasCurrentYearSelection(YearSelectionPage.YearSelection yearSelection){
-        return getCurrentYearSelection().isPresent() && getCurrentYearSelection().get().equals(yearSelection);
     }
 
     public boolean hasCurrentPermitType(PermitType type) {

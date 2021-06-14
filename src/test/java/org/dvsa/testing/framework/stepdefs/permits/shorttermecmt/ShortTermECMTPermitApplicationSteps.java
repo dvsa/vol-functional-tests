@@ -5,9 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.SelectYearPage;
-import org.junit.Assert;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 
@@ -23,18 +21,18 @@ public class ShortTermECMTPermitApplicationSteps implements En {
         });
 
         When("^I am selecting a year for short term ecmt permit$", () -> {
-            SelectYearPage.shortTermValidityPeriod();
+            YearSelectionPage.selectShortTermValidityPeriod();
         });
 
         When("^I Should see select year page message displayed correctly$", () -> {
-            Assert.assertTrue(SelectYearPage.yearMessage());
+            YearSelectionPage.hasShortTermECMTHeading();
         });
 
         When("^I Should see warning displayed correctly$", () -> {
-            Assert.assertTrue(SelectYearPage.warningMessage());
+            YearSelectionPage.hasShortTermWarningMessage();
         });
 
-        When("^I Should see one or more years to select to display correctly$", SelectYearPage::shortTermValidityPeriod);
+        When("^I Should see one or more years to select to display correctly$", YearSelectionPage::selectShortTermValidityPeriod);
 
     }
 }

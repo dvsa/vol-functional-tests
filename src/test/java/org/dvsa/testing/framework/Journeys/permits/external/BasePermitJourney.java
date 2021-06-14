@@ -11,7 +11,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SelectALicencePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,10 +46,6 @@ public class BasePermitJourney extends BaseJourney {
 
     public BasePermitJourney permitType() {
         return permitType(PermitType.ECMT_ANNUAL, new OperatorStore());
-    }
-
-    public BasePermitJourney yearSelection() {
-        return yearSelection(YearSelectionPage.YearSelection.YEAR_2019, new OperatorStore());
     }
 
     public BasePermitJourney permitType(PermitType type, OperatorStore operator) {
@@ -89,18 +84,6 @@ public class BasePermitJourney extends BaseJourney {
         operator.withLicences(licence);
         org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.bilateralPeriodType(bilateralPeriodType);
         //PeriodSelectionPage.continueButton();
-        return this;
-    }
-    public BasePermitJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator){
-        Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
-        LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
-        operator.withLicences(licence);
-        licence.getEcmt().setYear(yearSelection);
-        operator.setCurrentYearSelection(yearSelection);
-        operator.withLicences(licence);
-
-        YearSelectionPage.type(yearSelection);
-        YearSelectionPage.continueButton();
         return this;
     }
 

@@ -16,7 +16,6 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
 import Injectors.World;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
@@ -24,6 +23,7 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -149,7 +149,7 @@ public class CommonSteps extends BasePage implements En {
             HomePage.applyForLicenceButton();
             EcmtApplicationJourney.getInstance()
                     .permitType(PermitType.ECMT_ANNUAL, operator);
-            YearSelectionPage.EcmtValidityPeriod();
+            YearSelectionPage.selectECMTValidityPeriod();
 
         });
         When("^I login to self-serve on VOL$", () -> {
@@ -299,12 +299,10 @@ public class CommonSteps extends BasePage implements En {
     }
 
     public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) {
-        LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-
         clickToPermitTypePage(world);
         EcmtApplicationJourney.getInstance()
                 .permitType(PermitType.ECMT_ANNUAL, operatorStore);
-        YearSelectionPage.EcmtValidityPeriod();
+        YearSelectionPage.selectECMTValidityPeriod();
         EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
     }
 }

@@ -11,7 +11,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDateTime;
@@ -98,19 +97,8 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
     @Override
-
-    public EcmtApplicationJourney yearSelection() {
-        return (EcmtApplicationJourney) super.yearSelection();
-    }
-
-    @Override
     public EcmtApplicationJourney permitType(PermitType type, OperatorStore operator) {
         return (EcmtApplicationJourney) super.permitType(type, operator);
-    }
-
-    @Override
-    public EcmtApplicationJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator) {
-        return (EcmtApplicationJourney) super.yearSelection(yearSelection, operator);
     }
 
     @Override

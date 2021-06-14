@@ -8,7 +8,6 @@ import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
@@ -135,7 +134,6 @@ public class LicenceStore extends OperatorStore {
 
     public class Ecmt {
         private PermitType type;
-        private YearSelectionPage.YearSelection year;
         private PeriodType shortTermType;
         private boolean certificatesRequired;
         private String referenceNumber;
@@ -163,9 +161,6 @@ public class LicenceStore extends OperatorStore {
             return type == null ? Optional.empty() : Optional.of(type);
         }
 
-        public Optional<YearSelectionPage.YearSelection> getYear(){
-            return year == null ? Optional.empty() : Optional.of(year);
-        }
         public Optional<PeriodType> getShortTermType(){
             return shortTermType == null ? Optional.empty() : Optional.of(shortTermType);
         }
@@ -174,17 +169,8 @@ public class LicenceStore extends OperatorStore {
             return getType().isPresent() && getType().get().equals(type);
         }
 
-        public boolean hasYear(YearSelectionPage.YearSelection year){
-            return getYear().isPresent() && getYear().get().equals(year);
-        }
-
         public Ecmt setType(PermitType type) {
             this.type = type;
-            return this;
-        }
-
-        public Ecmt setYear(YearSelectionPage.YearSelection year){
-            this.year = year;
             return this;
         }
 
