@@ -28,4 +28,4 @@ Feature: Short term ECMT APSG with sectors Euro emission standards page
     Scenario: Save and continue after confirming emission standards navigates to next page
       When I confirm the emissions standards checkbox
       And  I save and continue
-      Then I am navigated to annual trips abroad page
+      Then the page heading on short term ECMT Annual Trips Abroad page is displayed correctly

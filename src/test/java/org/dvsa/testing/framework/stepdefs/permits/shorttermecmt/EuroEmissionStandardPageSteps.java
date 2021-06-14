@@ -65,10 +65,5 @@ public class EuroEmissionStandardPageSteps implements En {
         Then("^the user is navigated to the short term overview page with the status of emissions displayed as completed$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards,PermitStatus.COMPLETED);
         });
-
-        Then("^I am navigated to annual trips abroad page", () -> {
-
-           AnnualTripsAbroadPage.pageHeading();
-        });
     }
 }
