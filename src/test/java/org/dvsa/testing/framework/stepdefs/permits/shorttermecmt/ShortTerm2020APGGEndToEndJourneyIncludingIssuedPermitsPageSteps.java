@@ -8,6 +8,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
@@ -18,7 +19,6 @@ import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.ApplicationIssuingFeePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.Permits;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;
 
@@ -36,7 +36,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete APGG Cabotage page section and click save and continue$", () -> {
-            CabotagePage.cabotageConfirmation();
+            CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
         });
         Then("^I am navigated back to the permits dashboard page with my application status shown as Not yet Submitted", () -> {

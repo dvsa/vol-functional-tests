@@ -9,11 +9,11 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -31,15 +31,15 @@ public class CabotagePageSteps implements En {
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });
-        Then("^the page heading on the cabotage page is displayed correctly$", CabotagePage::hasPageHeading);
+        Then("^the page heading on the cabotage page is displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.CabotagePage::hasShortTermECMTPageHeading);
         Then("^the short term ecmt cabotage page has application reference number$",  () -> {
             String message = "Expected there to be a reference number displayed in the correct format but it wasn't";
-            Assert.assertTrue(message,CabotagePage.hasReference());
+            Assert.assertTrue(message, CabotagePage.hasReference());
         });
-        Then("^I should get the cabotage page error message$", CabotagePage::hasErrorMessage);
+        Then("^I should get the cabotage page error message$", org.dvsa.testing.lib.newPages.permits.pages.CabotagePage::hasErrorText);
         Then("^the shortterm ecmt cabotage page has advisory messages$", CabotagePage::hasAdvisoryText);
 
-        Then("^I confirm not undertaking cabotage journey$", CabotagePage::cabotageConfirmation);
+        Then("^I confirm not undertaking cabotage journey$", CabotagePage::confirmWontUndertakeCabotage);
         Then("^the user is navigated to the overview page with the status as completed$", () -> {
             OverviewPage.checkStatus(OverviewSection.Cabotage,PermitStatus.COMPLETED);
             OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits ,PermitStatus.COMPLETED);

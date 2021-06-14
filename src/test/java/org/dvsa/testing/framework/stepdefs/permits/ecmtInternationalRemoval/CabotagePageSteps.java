@@ -34,7 +34,7 @@ public class CabotagePageSteps implements En {
         });
         When("^save and continue  button is selected without selecting the checkbox$", BasePermitPage::saveAndContinue);
         Then("^I should get the user defined error message$", CabotagePage::hasErrorText);
-        When ("^the cabotage checkbox is selected$", CabotagePage::confirmCabotage);
+        When ("^the cabotage checkbox is selected$", CabotagePage::confirmWontUndertakeCabotage);
         Then("^I should be taken to certificates required page", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/st-certificates/"));
         });

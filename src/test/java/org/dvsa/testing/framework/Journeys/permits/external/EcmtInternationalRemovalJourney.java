@@ -48,7 +48,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
     }
 
     public EcmtInternationalRemovalJourney cabotagePage() {
-        CabotagePage.confirmCabotage();
+        CabotagePage.confirmWontUndertakeCabotage();
         saveAndContinue();
         return this;
     }

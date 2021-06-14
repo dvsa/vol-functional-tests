@@ -16,6 +16,7 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -26,7 +27,6 @@ import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection;
-import static org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CabotagePage.cabotageConfirmation;
 
 public class AwaitingFeePermitSteps extends BasePermitPage implements En {
 
@@ -45,7 +45,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
             CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
-            cabotageConfirmation();
+            CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();

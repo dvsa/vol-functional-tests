@@ -6,11 +6,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
-import org.dvsa.testing.lib.pages.external.permit.CabotagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDateTime;
@@ -39,11 +35,9 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     }
 
     public EcmtApplicationJourney cabotagePage(LicenceStore licenceStore) {
-        boolean cabotage = true;
 
-        CabotagePage.wontCarryCabotage(cabotage);
+        CabotagePage.confirmWontUndertakeCabotage();
         CabotagePage.saveAndContinue();
-        licenceStore.getEcmt().setCabotage(cabotage);
         return this;
     }
 
