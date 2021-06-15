@@ -17,6 +17,7 @@ import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.GrantedPermitRestrictionsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
@@ -94,7 +95,6 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         });
         And("^the user is taken to the awaiting fee page$", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/awaiting-fee/"));
-//            Browser.Wait.untilUrlMatches("/permits/application/\\d+/awaiting-fee/", 1000L, ChronoUnit.SECONDS);
         });
         And("^I select Decline Permits button$", () -> {
             scrollAndClick("//*[contains(text(), 'Decline permits')]", SelectorType.XPATH);
@@ -116,15 +116,17 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         });
         And("^I select accept and continue button without confirming decline checkbox$", DeclineAwardedPermitPage::acceptAndContinue);
         And("^the error message is displayed$", DeclineAwardedPermitPage::errorText);
-        And("^I click the view permit restriction link$", CandidatePermitsPage::viewPermitRestrictionLink);
+        And("^I click the view permit restriction link$", () -> {
+            PermitFeePage.clickPermitRestrictionLink();
+        });
         And("^the user is taken to the allocated candidate permit view page$", () -> {
             isPath("/application/\\d+/unpaid-permits/");
         });
         And("^the details are displayed as expected$", () -> {
-             CandidatePermitsPage.pageHeading();
-             CandidatePermitsPage.tableCheck();
+             GrantedPermitRestrictionsPage.pageHeading();
+             GrantedPermitRestrictionsPage.tableCheck();
         });
-        And("^I select the return to fee overview link$", CandidatePermitsPage::returnToFeeOverview);
+        And("^I select the return to fee overview link$", GrantedPermitRestrictionsPage::returnToFeeSummaryPage);
 
     }
 }
