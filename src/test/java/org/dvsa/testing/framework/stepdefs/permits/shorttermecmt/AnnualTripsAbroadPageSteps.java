@@ -21,7 +21,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.junit.Assert;
 
 import static org.hamcrest.CoreMatchers.containsString;

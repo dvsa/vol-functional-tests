@@ -18,7 +18,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 
 import java.util.concurrent.TimeUnit;
 

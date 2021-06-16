@@ -18,13 +18,13 @@ import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -65,7 +65,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Countries with limited permits section and click save and continue$", () -> {
-            ShortTermEcmt2020EndToEndJourney.ShortTermRestrictedCountries();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Number of permits required section and click save and continue$", () -> {
