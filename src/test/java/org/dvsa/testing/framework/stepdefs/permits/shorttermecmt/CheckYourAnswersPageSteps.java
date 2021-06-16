@@ -13,6 +13,7 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
@@ -54,7 +55,7 @@ public class CheckYourAnswersPageSteps implements En {
             BasePermitPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();

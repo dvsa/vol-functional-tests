@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
@@ -40,7 +41,7 @@ public class ProportionOfInternationalJourneySteps implements En {
             BasePermitPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();

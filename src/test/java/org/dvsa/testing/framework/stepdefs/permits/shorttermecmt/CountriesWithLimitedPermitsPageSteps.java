@@ -10,6 +10,7 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -44,17 +45,17 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertThat(actualReferenceNumber, containsString(expectedLicenceNumber));
         });
-        And("^the page heading on short term  countries with limited countries page is Shown Correctly$", CountriesWithLimitedPermitsPage::pageHeading);
-        And("^the advisory text on short term countries with limited countries page is Shown Correctly$", CountriesWithLimitedPermitsPage::advisoryText);
+        And("^the page heading on short term  countries with limited countries page is Shown Correctly$", CountriesWithLimitedPermitsPage::hasPageHeading);
+        And("^the advisory text on short term countries with limited countries page is Shown Correctly$", CountriesWithLimitedPermitsPage::hasAdvisoryText);
         And ("^I select save and continue without confirming$", BasePermitPage::saveAndContinue);
-        And ("^I should get the relevant error message$", CountriesWithLimitedPermitsPage::errorText);
+        And ("^I should get the relevant error message$", CountriesWithLimitedPermitsPage::hasErrorText);
         And ("^I select save and return to overview link without confirming$", BasePermitPage::overview);
         And ("^I select the countries with limited permits hyperlink$", () -> {
             ShorttermECMTJourney.getInstance().overview(OverviewSection.CountriesWithLimitedPermits);
         });
         And ("^I should be on the countries with limited permits page$", CountriesWithLimitedPermitsPage::untilOnPage);
         When ("^I have selected some short term countries with limited permits and clicked save and continue$", () -> {
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         });
     }
 }

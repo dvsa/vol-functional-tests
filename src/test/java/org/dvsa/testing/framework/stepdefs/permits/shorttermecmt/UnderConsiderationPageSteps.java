@@ -15,6 +15,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -42,7 +43,7 @@ public class UnderConsiderationPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.saveAndContinue();
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterAuthorisedVehicles();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();

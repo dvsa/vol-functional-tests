@@ -9,9 +9,9 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 
 public class AnnualTripsAbroadPageSteps extends BasePage implements En {
 
@@ -27,7 +27,7 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
             CabotagePage.confirmWontUndertakeCabotage();
             CertificatesRequiredPage.confirmCertificateRequired();
             CertificatesRequiredPage.saveAndContinue();
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             BasePermitPage.saveAndContinue();
             EmissionStandardsPage.confirmCheckbox();

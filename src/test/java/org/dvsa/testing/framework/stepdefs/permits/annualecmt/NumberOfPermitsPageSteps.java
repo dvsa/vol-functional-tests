@@ -9,13 +9,13 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckIfYouNeedECMTPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
@@ -31,7 +31,7 @@ public class NumberOfPermitsPageSteps implements En {
             CabotagePage.confirmWontUndertakeCabotage();
             CertificatesRequiredPage.confirmCertificateRequired();
             CertificatesRequiredPage.saveAndContinue();
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         });
         And("^the page heading on the ECMT number of permits page is displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::hasPageHeading);
         And("^the advisory texts are displayed correctly$", () -> {
