@@ -40,9 +40,6 @@ public class PercentageOfInternationalBusinessSteps implements En {
             NumberOfTripsPage.enterNumberOfTripsValue();
             BasePermitPage.saveAndContinue();
         });
-        When("^I confirm percentage international$", () -> {
-            PercentageOfInternationalJourneysPage.proportionconfirmation(JourneyProportion.random());
-        });
         When("^I select my percentage of business that's international$", () -> {
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
@@ -55,13 +52,6 @@ public class PercentageOfInternationalBusinessSteps implements En {
         });
         Then("^I should get the appropriate warning message$", () -> {
            PercentageOfInternationalJourneysPage.intensityMessage();
-        });
-        And("^I save and return to overview from percentage of international business page$", () -> {
-            PercentageOfInternationalJourneysPage.overview();
-            if (JourneyProportion.random()==JourneyProportion.MoreThan90Percent)
-            {
-             PercentageOfInternationalJourneysPage.overview();
-            }
         });
     }
 

@@ -83,7 +83,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Percentage of International journeys section and click save and continue$", () -> {
-            ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
+            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete sectors page and click on save and continue$", () -> {
@@ -136,7 +136,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             EmissionStandardsPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
+            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();

@@ -16,12 +16,6 @@ Feature: Percentage of business that is international
     And I save and continue
     Then I should be able to navigate to the next page
 
-  @EXTERNAL @OLCS-21123 @ECMT @Test3 @Deprecated
-  Scenario: Passes validation when returning to overview
-    When I confirm percentage international
-    And I save and return to overview from percentage of international business page
-    Then I should be on the Annual ECMT overview page
-
   @EXTERNAL @OLCS-21123 @ECMT @Test3 @olcs-27581 @Deprecated
   Scenario: Application back button
     When I go back

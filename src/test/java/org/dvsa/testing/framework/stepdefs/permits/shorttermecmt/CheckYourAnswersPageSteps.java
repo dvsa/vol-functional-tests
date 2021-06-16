@@ -62,7 +62,7 @@ public class CheckYourAnswersPageSteps implements En {
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
+            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
         });
         Then("^short term permit check your answers page has correct heading label$", () -> {

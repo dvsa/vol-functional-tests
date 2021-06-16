@@ -47,7 +47,7 @@ public class FeePageSteps implements En {
             BasePermitPage.saveAndContinue();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
+            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();

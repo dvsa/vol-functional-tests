@@ -66,7 +66,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     }
 
     public AnnualMultilateralJourney submit() {
-        ProportionOfInternationalJourneyPage.untilElementIsPresent("//h2[@class='govuk-heading-m']", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
+        untilElementIsPresent("//h2[@class='govuk-heading-m']", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
         SubmittedPage.goToPermitsDashboard();
         return this;
     }

@@ -49,16 +49,16 @@ public class ProportionOfInternationalJourneySteps implements En {
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
         });
-        And("^the page heading on short term international journey page is displayed correctly$", ProportionOfInternationalJourneyPage::pageHeading);
-        And("^the error message should be displayed$", ProportionOfInternationalJourneyPage::errorText);
+        And("^the page heading on short term international journey page is displayed correctly$", ProportionOfInternationalJourneyPage::hasPageHeading);
+        And("^the error message should be displayed$", ProportionOfInternationalJourneyPage::hasErrorText);
         When("^I select proportion of International Journey and save and continue$", () -> {
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
             licence.getEcmt().setInternationalBusiness(JourneyProportion.random());
-            ProportionOfInternationalJourneyPage.proportion(licence.getEcmt().getInternationalBusiness());
+            ProportionOfInternationalJourneyPage.chooseDesiredProportion(licence.getEcmt().getInternationalBusiness());
         });
         When("^I specify  high percentage of international journey$", () -> {
-           ProportionOfInternationalJourneyPage.proportion(JourneyProportion.MoreThan90Percent);
+           ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.MoreThan90Percent);
         });
         When("^the high intensity warning message is displayed$", ProportionOfInternationalJourneyPage::hasIntensityMessage);
 
