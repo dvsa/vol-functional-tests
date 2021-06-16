@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
+import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.vehiclesCertificateOfRoadworthiness.*;
 
@@ -45,17 +46,17 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         });
 
         Then("^I check content and complete Certificate  of Compliance section and click save and continue$", () -> {
-            CertificateOfComplianceNumberPage.untilOnCertificatePage();
+            CertificateOfComplianceNumberPage.untilOnPage();
             CertificateOfComplianceNumberPage.hasVehiclePageHeading();
             BasePermitPage.getReferenceFromPage();
-            CertificateOfComplianceNumberPage.ComplianceNumber();
+            CertificateOfComplianceNumberPage.enterComplianceNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle make and model section and click save and continue$", () -> {
-            MakeAndModelPage.untilOnMakeAndModelPage();
-            MakeAndModelPage.hasPageHeading();
+            MakeAndModelPage.untilOnPage();
+            MakeAndModelPage.hasVehiclePageHeading();
             BasePermitPage.getReferenceFromPage();
-            MakeAndModelPage.MakeAndModel();
+            MakeAndModelPage.enterMakeAndModel();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section and click save and continue$", () -> {
@@ -109,6 +110,6 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             untilAnyPermitStatusMatch(PermitStatus.VALID);
         });
 
-    } //TODO Possible refactoring to be done here
+    } //TODO Possible refactoring to be done here. See if it can be combined with trailers?
 }
 
