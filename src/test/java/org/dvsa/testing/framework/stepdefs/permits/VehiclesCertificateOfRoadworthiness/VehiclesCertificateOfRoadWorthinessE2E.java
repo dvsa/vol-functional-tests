@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.vehiclesCertificateOfRoadworthiness.*;
 
@@ -45,7 +46,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
 
         Then("^I check content and complete Certificate  of Compliance section and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnCertificatePage();
-            CertificateOfComplianceNumberPage.hasPageHeading();
+            CertificateOfComplianceNumberPage.hasVehiclePageHeading();
             BasePermitPage.getReferenceFromPage();
             CertificateOfComplianceNumberPage.ComplianceNumber();
             BasePermitPage.saveAndContinue();
