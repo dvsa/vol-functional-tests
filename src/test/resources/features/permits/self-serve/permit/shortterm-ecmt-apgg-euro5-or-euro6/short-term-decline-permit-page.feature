@@ -11,7 +11,7 @@ Feature: Short term APGG decline page permit page
     Then the user is taken to the awaiting fee page
     When I decline payment
     Then I should be on the short term decline awarded permits page
-    And I should see all the relevant advisory texts
+    And I should see all the relevant texts on permits declined page
     And I select accept and continue button without confirming decline checkbox
     Then the error message is displayed
     And I select the decline confirmation checkbox and confirm

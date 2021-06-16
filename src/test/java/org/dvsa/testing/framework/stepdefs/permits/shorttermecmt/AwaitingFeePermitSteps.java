@@ -100,23 +100,22 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         And("^I select Decline Permits button$", () -> {
             scrollAndClick("//*[contains(text(), 'Decline permits')]", SelectorType.XPATH);
         });
-        And("^I should be on the short term decline awarded permits page$", DeclineAwardedPermitPage::untilOnPage);
-        And("^I should see all the relevant advisory texts$", DeclineAwardedPermitPage::advisoryText);
-        And("^I select the decline confirmation checkbox and confirm$", () -> {
-            DeclineAwardedPermitPage.declineConfirmation();
-            DeclineAwardedPermitPage.acceptAndContinue();
+        And("^I should be on the short term decline awarded permits page$", () -> {
+            DeclineGrantedPermitPage.untilOnPage();
         });
-        And("^I am taken to the permits declined page$", PermitsDeclinedPage::untilOnPage);
-        And("^I should see all the relevant texts on permits declined page$", PermitsDeclinedPage::advisoryText);
-        //Guidance link removed from the permits decline page
-        //And("^the guidance on permits link opens in a new window$", () -> PermitsDeclinedPage.guidanceOnPermitsLink(1000L, ChronoUnit.MILLIS));
+        And("^I select the decline confirmation checkbox and confirm$", () -> {
+            DeclineGrantedPermitPage.confirmDeclineOfPermits();
+            DeclineGrantedPermitPage.saveAndContinue();
+        });
+        And("^I am taken to the permits declined page$", DeclineGrantedPermitPage::untilOnPage);
+        And("^I should see all the relevant texts on permits declined page$", DeclineGrantedPermitPage::hasAdvisoryText);
         And("^the declined permit application is not displayed on the permit dashboard$", () -> {
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             String permitLicence= String.valueOf(HomePage.PermitsTab.permitsWithStatus(HomePage.PermitsTab.Table.ongoing, PermitStatus.AWAITING_FEE));
             Assert.assertNotEquals(licence1,permitLicence);
         });
-        And("^I select accept and continue button without confirming decline checkbox$", DeclineAwardedPermitPage::acceptAndContinue);
-        And("^the error message is displayed$", DeclineAwardedPermitPage::errorText);
+        And("^I select accept and continue button without confirming decline checkbox$", DeclineGrantedPermitPage::saveAndContinue);
+        And("^the error message is displayed$", DeclineGrantedPermitPage::hasErrorText);
         And("^I click the view permit restriction link$", () -> {
             PermitFeePage.clickPermitRestrictionLink();
         });
