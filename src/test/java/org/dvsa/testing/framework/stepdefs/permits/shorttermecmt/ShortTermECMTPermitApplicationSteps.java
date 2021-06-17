@@ -8,6 +8,8 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class ShortTermECMTPermitApplicationSteps implements En {
@@ -25,11 +27,12 @@ public class ShortTermECMTPermitApplicationSteps implements En {
         });
 
         When("^I Should see select year page message displayed correctly$", () -> {
-            YearSelectionPage.hasShortTermECMTHeading();
+            String heading = YearSelectionPage.getPageHeading();
+            assertEquals("Permits requested will be valid for 2021", heading);
         });
 
         When("^I Should see warning displayed correctly$", () -> {
-            YearSelectionPage.hasShortTermWarningMessage();
+            assertTrue(YearSelectionPage.isShortTermWarningMessagePresent());
         });
 
         When("^I Should see one or more years to select to display correctly$", YearSelectionPage::selectShortTermValidityPeriod);

@@ -15,7 +15,7 @@ Feature: Short term APGG decline page permit page
     And I select accept and continue button without confirming decline checkbox
     Then the error message is displayed
     And I select the decline confirmation checkbox and confirm
-    Then I am taken to the permits declined page
+    Then I should be on the short term decline awarded permits page
     And I should see all the relevant texts on permits declined page
     And I select finish button
     Then I should be taken to the permits dashboard

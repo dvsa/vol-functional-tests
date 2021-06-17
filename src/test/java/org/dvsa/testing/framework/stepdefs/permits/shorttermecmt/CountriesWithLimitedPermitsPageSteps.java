@@ -18,6 +18,8 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CountriesWithLimitedPermitsPageSteps implements En {
 
@@ -44,10 +46,18 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertThat(actualReferenceNumber, containsString(expectedLicenceNumber));
         });
-        And("^the page heading on short term  countries with limited countries page is Shown Correctly$", CountriesWithLimitedPermitsPage::hasPageHeading);
-        And("^the advisory text on short term countries with limited countries page is Shown Correctly$", CountriesWithLimitedPermitsPage::hasAdvisoryText);
+        And("^the page heading on short term  countries with limited countries page is Shown Correctly$", () -> {
+            String heading = CountriesWithLimitedPermitsPage.getPageHeading();
+            assertEquals("Will you be transporting goods to Greece, Hungary, Italy or Russia?", heading);
+        });
+        And("^the advisory text on short term countries with limited countries page is Shown Correctly$", () -> {
+            assertTrue(CountriesWithLimitedPermitsPage.isAdvisoryTextPresent());
+        });
         And ("^I select save and continue without confirming$", BasePermitPage::saveAndContinue);
-        And ("^I should get the relevant error message$", CountriesWithLimitedPermitsPage::hasErrorText);
+        And ("^I should get the relevant error message$", () -> {
+            String errorText = CountriesWithLimitedPermitsPage.getErrorText();
+            assertEquals("Value is required", errorText);
+        });
         And ("^I select save and return to overview link without confirming$", BasePermitPage::overview);
         And ("^I select the countries with limited permits hyperlink$", () -> {
             ShorttermECMTJourney.getInstance().overview(OverviewSection.CountriesWithLimitedPermits);

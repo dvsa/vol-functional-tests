@@ -49,7 +49,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Certificate  of Compliance section and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnPage();
             String heading = CertificateOfComplianceNumberPage.getPageHeading();
-            Assert.assertEquals(heading,"Enter the vehicle Certificate of Compliance number (optional)");
+            Assert.assertEquals("Enter the vehicle Certificate of Compliance number (optional)", heading);
             BasePermitPage.getReferenceFromPage();
             CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
             BasePermitPage.saveAndContinue();

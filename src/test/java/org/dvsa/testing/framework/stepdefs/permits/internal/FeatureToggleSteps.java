@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.lib.newPages.enums.Action;
 import org.dvsa.testing.lib.newPages.enums.AdminOption;
 import org.dvsa.testing.lib.pages.internal.NavigationBar;

@@ -28,7 +28,11 @@ import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;
 
+import java.util.List;
+
 import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AwaitingFeePermitSteps extends BasePermitPage implements En {
 
@@ -102,20 +106,25 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         });
         And("^I should be on the short term decline awarded permits page$", () -> {
             DeclineGrantedPermitPage.untilOnPage();
+            String heading = DeclineGrantedPermitPage.getPageHeading();
+            assertEquals("Decline granted permits", heading);
         });
         And("^I select the decline confirmation checkbox and confirm$", () -> {
             DeclineGrantedPermitPage.confirmDeclineOfPermits();
             DeclineGrantedPermitPage.saveAndContinue();
         });
-        And("^I am taken to the permits declined page$", DeclineGrantedPermitPage::untilOnPage);
-        And("^I should see all the relevant texts on permits declined page$", DeclineGrantedPermitPage::hasAdvisoryText);
+        And("^I should see all the relevant texts on permits declined page$", () -> {
+            assertTrue(DeclineGrantedPermitPage.getAdvisoryText());
+        });
         And("^the declined permit application is not displayed on the permit dashboard$", () -> {
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             String permitLicence= String.valueOf(HomePage.PermitsTab.permitsWithStatus(HomePage.PermitsTab.Table.ongoing, PermitStatus.AWAITING_FEE));
             Assert.assertNotEquals(licence1,permitLicence);
         });
         And("^I select accept and continue button without confirming decline checkbox$", DeclineGrantedPermitPage::saveAndContinue);
-        And("^the error message is displayed$", DeclineGrantedPermitPage::hasErrorText);
+        And("^the error message is displayed$", () -> {
+            assertTrue(DeclineGrantedPermitPage.isErrorTextPresent());
+        });
         And("^I click the view permit restriction link$", () -> {
             PermitFeePage.clickPermitRestrictionLink();
         });
@@ -123,8 +132,12 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             isPath("/application/\\d+/unpaid-permits/");
         });
         And("^the details are displayed as expected$", () -> {
-             GrantedPermitRestrictionsPage.pageHeading();
-             GrantedPermitRestrictionsPage.tableCheck();
+            String heading = GrantedPermitRestrictionsPage.getPageHeading();
+            assertEquals("Granted permits restrictions", heading);
+            List<String> tableHeadings = GrantedPermitRestrictionsPage.getTableRowHeadings();
+            Assert.assertEquals("Permit", tableHeadings.get(1));
+            Assert.assertEquals("Minimum emission standard", tableHeadings.get(2));
+            Assert.assertEquals("Not valid to travel to", tableHeadings.get(3));
         });
         And("^I select the return to fee overview link$", GrantedPermitRestrictionsPage::returnToFeeSummaryPage);
 

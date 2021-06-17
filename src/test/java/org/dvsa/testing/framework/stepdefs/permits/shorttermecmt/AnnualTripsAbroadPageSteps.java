@@ -24,6 +24,7 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertEquals;
 
 public class AnnualTripsAbroadPageSteps implements En {
 
@@ -47,8 +48,19 @@ public class AnnualTripsAbroadPageSteps implements En {
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
         });
-        And("^the page heading on short term ECMT Annual Trips Abroad page is displayed correctly$", AnnualTripsAbroadPage::hasPageHeading);
-        And("^the warning message on short term ECMT Annual Trips Abroad Page is displayed correctly$", AnnualTripsAbroadPage::hasWarningText);
+        And("^the page heading on short term ECMT Annual Trips Abroad page is displayed correctly$", () -> {
+            String heading = AnnualTripsAbroadPage.getPageHeading();
+            assertEquals("How many international trips did you make in 2019 using this licence?", heading);
+        });
+        And("^the warning message on short term ECMT Annual Trips Abroad Page is displayed correctly$", () -> {
+            String firstGuidanceText = AnnualTripsAbroadPage.getFirstGuidanceText();
+            assertEquals("You can use the number of trips done in 2020 if you did not operate during 2019 or if you are a new operator.\n"
+                    + "If you have not done any international trips, you are unlikely to be awarded an ECMT permit. We intend to prioritise applications from hauliers who make the most international journeys.\n"
+                    + "You will be required to provide evidence of the trips you made.", firstGuidanceText);
+
+            String secondGuidanceText = AnnualTripsAbroadPage.getSecondGuidanceText();
+            assertEquals("Help calculating your international trips", secondGuidanceText);
+        });
         And("^the reference number on Short term ECMT Annual Trips Abroad Page is displayed correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
@@ -61,12 +73,17 @@ public class AnnualTripsAbroadPageSteps implements En {
             Assert.assertFalse(AnnualTripsAbroadPage.isSummaryTextPresent());
         });
         When ("^I select save and continue without entering any value$", BasePermitPage::saveAndContinue);
-        When ("^I should see the error message$", AnnualTripsAbroadPage::hasErrorText);
+        When ("^I should see the error message$", () -> {
+            String errorText = AnnualTripsAbroadPage.getErrorText();
+            assertEquals("Enter the number of trips you carried out over the past 12 months", errorText);
+        });
         When ("^I select save and return to overview without entering any value$", BasePermitPage::overview);
         When ("^I specify an invalid ([\\w\\-]+) of annual trips in short term 2020$", (StepdefBody.A1<String>) AnnualTripsAbroadPage::quantity);
-        Then  ("^I should get the specific validation message for invalid value$", AnnualTripsAbroadPage::hasNegativeNumberErrorText);
+        Then  ("^I should get the specific validation message for invalid value$", () -> {
+            String errorText = AnnualTripsAbroadPage.getErrorText();
+            assertEquals("You must enter a valid whole number", errorText);
+        });
         And  ("^I specify more than 6 digit ([\\w\\-]+) of annual trips in short term ECMT$", (StepdefBody.A1<String>) AnnualTripsAbroadPage::quantity);
-        Then  ("^I should get the specific validation message for invalid input$", AnnualTripsAbroadPage::hasNegativeNumberErrorText);
         Given("^I specify a valid input in short term ECMT annual trips abroad page$", () -> {
             AnnualTripsAbroadPage.quantity(Int.random(0,999999));
         });

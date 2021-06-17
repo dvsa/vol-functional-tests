@@ -50,6 +50,7 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
+import static org.junit.Assert.assertEquals;
 
 public class AnnualBilateralSteps extends BasePage implements En {
     public AnnualBilateralSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
@@ -144,7 +145,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             SubmittedPage.goToPermitsDashboard();
             untilAnyPermitStatusMatch(PermitStatus.VALID);
             String titleText = getText("//h2[contains(text(),'Issued permits and certificates')]", SelectorType.XPATH);
-            Assert.assertEquals(titleText, "Issued permits and certificates");
+            assertEquals(titleText, "Issued permits and certificates");
         });
 
         Given("^I have (a valid |applied for an )annual bilateral noway cabotage only permit$", (String notValid) -> {
@@ -390,18 +391,23 @@ public class AnnualBilateralSteps extends BasePage implements En {
             ValidAnnualBilateralPermitsPage.untilOnPage();
         });
         And("the relevant error message for annual bilateral number of permits page is displayed", () -> {
-            Assert.assertEquals(getElementValueByText("//p[@class='error__text']",SelectorType.XPATH),"Enter the number of permits you require");
+            assertEquals(getElementValueByText("//p[@class='error__text']", SelectorType.XPATH),"Enter the number of permits you require");
         });
-        And("the user is in the annual bilateral list page", ValidAnnualBilateralPermitsPage::untilOnPage);
+        And("the user is in the annual bilateral list page", () -> {
+            ValidAnnualBilateralPermitsPage.untilOnPage();
+            String heading = ValidAnnualBilateralPermitsPage.getPageHeading();
+            assertEquals("Bilateral permits", heading);
+        });
 
         And("^the licence number is displayed in Annual bilateral list page$", () -> {
             String expectedReference = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
             String actual = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(expectedReference, actual);
+            assertEquals(expectedReference, actual);
         });
 
         When("I select Norway in the filter list and click Apply filter", () -> {
-           ValidAnnualBilateralPermitsPage.filter();
+            String label = ValidAnnualBilateralPermitsPage.getFilterLabel();
+            assertEquals("Filter by country", label);
             ValidAnnualBilateralPermitsPage.selectNorway();
         });
         Then("^the table of annual bilateral permits is as expected$", () -> {
@@ -519,19 +525,19 @@ public class AnnualBilateralSteps extends BasePage implements En {
         Then("the page heading and the advisory text are displayed correctly according to the selection", () -> {
             String actual = String.valueOf(licenceStore.getEcmt().getJourneyType());
             String actual1 = actual.toLowerCase().substring(0,actual.length()-1);
-            Assert.assertEquals(getElementValueByText("//div[contains(@class,'field')]//label",SelectorType.XPATH),"Cabotage"+" "+actual1+" "+"permit");
+            assertEquals(getElementValueByText("//div[contains(@class,'field')]//label",SelectorType.XPATH),"Cabotage"+" "+actual1+" "+"permit");
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
             NumberOfPermitsPage.hasBilateralAdvisoryText();
         });
         Then("the page heading and the advisory text on standard permits no cabotage page are displayed correctly according to the selection", () -> {
             String actual = String.valueOf(licenceStore.getEcmt().getJourneyType());
             String actual1 = actual.toLowerCase().substring(0,actual.length()-1);
-            Assert.assertEquals(getElementValueByText("//div[contains(@class,'field')]//label",SelectorType.XPATH),"Standard"+" "+actual1+" "+"permit");
+            assertEquals(getElementValueByText("//div[contains(@class,'field')]//label",SelectorType.XPATH),"Standard"+" "+actual1+" "+"permit");
             if(actual1.contains("multiple")) {
-                Assert.assertEquals(getElementValueByText("//p[@class='hint']", SelectorType.XPATH), "Allows an unlimited number of journeys to, and transits through, this country.");
+                assertEquals(getElementValueByText("//p[@class='hint']", SelectorType.XPATH), "Allows an unlimited number of journeys to, and transits through, this country.");
             }
             else
-                Assert.assertEquals(getElementValueByText("//p[@class='hint']",SelectorType.XPATH),"Valid for one outward and return journey and transit.");
+                assertEquals(getElementValueByText("//p[@class='hint']",SelectorType.XPATH),"Valid for one outward and return journey and transit.");
             org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
         });
     }

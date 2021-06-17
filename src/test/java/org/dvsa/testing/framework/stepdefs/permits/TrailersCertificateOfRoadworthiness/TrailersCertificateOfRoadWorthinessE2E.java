@@ -15,7 +15,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificat
 import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.trailersCertificateOfRoadworthiness.*;
-import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -54,7 +53,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Certificate  of Compliance section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnPage();
             String heading = CertificateOfComplianceNumberPage.getPageHeading();
-            assertEquals(heading,"Enter the trailer Certificate of Compliance number (optional)");
+            assertEquals("Enter the trailer Certificate of Compliance number (optional)", heading);
             BasePermitPage.getReferenceFromPage();
             CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
             CertificateOfComplianceNumberPage.saveAndContinue();
@@ -62,7 +61,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete vehicle make and model section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             MakeAndModelPage.untilOnPage();
             String heading = MakeAndModelPage.getPageHeading();
-            assertEquals(heading, "Enter the trailer make and model");
+            assertEquals("Enter the trailer make and model", heading);
             BasePermitPage.getReferenceFromPage();
             MakeAndModelPage.enterMakeAndModel("BD51SMR");
             MakeAndModelPage.saveAndContinue();
