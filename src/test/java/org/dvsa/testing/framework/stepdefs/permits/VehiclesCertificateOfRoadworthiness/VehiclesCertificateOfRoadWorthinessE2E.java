@@ -15,6 +15,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificat
 import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.vehiclesCertificateOfRoadworthiness.*;
+import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -47,16 +48,18 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
 
         Then("^I check content and complete Certificate  of Compliance section and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnPage();
-            CertificateOfComplianceNumberPage.hasVehiclePageHeading();
+            String heading = CertificateOfComplianceNumberPage.getPageHeading();
+            Assert.assertEquals(heading,"Enter the vehicle Certificate of Compliance number (optional)");
             BasePermitPage.getReferenceFromPage();
-            CertificateOfComplianceNumberPage.enterComplianceNumber();
+            CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle make and model section and click save and continue$", () -> {
             MakeAndModelPage.untilOnPage();
-            MakeAndModelPage.hasVehiclePageHeading();
+            String heading = MakeAndModelPage.getPageHeading();
+            Assert.assertEquals(heading,"Enter the vehicle make and model");
             BasePermitPage.getReferenceFromPage();
-            MakeAndModelPage.enterMakeAndModel();
+            MakeAndModelPage.enterMakeAndModel("BD51SMR");
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section and click save and continue$", () -> {

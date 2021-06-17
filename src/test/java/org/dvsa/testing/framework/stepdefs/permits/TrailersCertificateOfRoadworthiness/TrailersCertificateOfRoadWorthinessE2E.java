@@ -15,11 +15,13 @@ import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificat
 import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.trailersCertificateOfRoadworthiness.*;
+import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration;
 import static org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.hasCheckboxText;
+import static org.junit.Assert.assertEquals;
 
 public class TrailersCertificateOfRoadWorthinessE2E implements En {
     public TrailersCertificateOfRoadWorthinessE2E(OperatorStore operatorStore, World world) {
@@ -51,17 +53,19 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
 
         Then("^I check content and complete Certificate  of Compliance section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnPage();
-            CertificateOfComplianceNumberPage.hasTrailerPageHeading();
+            String heading = CertificateOfComplianceNumberPage.getPageHeading();
+            assertEquals(heading,"Enter the trailer Certificate of Compliance number (optional)");
             BasePermitPage.getReferenceFromPage();
-            CertificateOfComplianceNumberPage.enterComplianceNumber();
-            BasePermitPage.saveAndContinue();
+            CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
+            CertificateOfComplianceNumberPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle make and model section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             MakeAndModelPage.untilOnPage();
-            MakeAndModelPage.hasTrailerPageHeading();
+            String heading = MakeAndModelPage.getPageHeading();
+            assertEquals(heading, "Enter the trailer make and model");
             BasePermitPage.getReferenceFromPage();
-            MakeAndModelPage.enterMakeAndModel();
-            BasePermitPage.saveAndContinue();
+            MakeAndModelPage.enterMakeAndModel("BD51SMR");
+            MakeAndModelPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnIdentificationPage();
