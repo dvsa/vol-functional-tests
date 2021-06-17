@@ -15,4 +15,4 @@ Feature: ECMT Permit Application
   Scenario: Displays validation error summary box
     Given I have completed an ECMT application
     When I withdraw without confirming
-    Then I should see the validation error message for the withdraw application page
+    Then I should get an error message on cancel application page

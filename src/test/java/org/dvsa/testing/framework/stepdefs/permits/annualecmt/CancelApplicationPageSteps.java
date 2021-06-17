@@ -12,6 +12,8 @@ import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
+import static org.junit.Assert.assertEquals;
+
 
 public class CancelApplicationPageSteps implements En {
 
@@ -23,8 +25,8 @@ public class CancelApplicationPageSteps implements En {
         And("^I have not confirmed I would like to cancel$", () -> {
             // Here for readability and to stop cucumber from throwing an exception
         });
-        Then("^I should see the validation error message for the cancel application page$", () -> {
-            CancellationPage.hasErrorMessage();
+        Then("^I should get an error message on cancel application page$", () -> {
+            assertEquals("You must select the checkbox to continue", CancellationPage.getErrorMessageText());
         });
         When("^I cancel my ECMT application$", CancellationPage::clickCancelCheckbox);
         Then("^I navigate to the Bilaterals cabotage page$", () -> {
@@ -32,7 +34,7 @@ public class CancelApplicationPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
+            PeriodSelectionPage.untilOnPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
@@ -41,6 +43,8 @@ public class CancelApplicationPageSteps implements En {
         });
         Then("^I am navigated to cabotage page$", () -> {
             CabotagePage.ECMTRemovalsUntilOnPage();
+            String heading = CabotagePage.getPageHeading();
+            assertEquals("ECMT permits do not allow you to carry out cabotage", heading);
         });
     }
 

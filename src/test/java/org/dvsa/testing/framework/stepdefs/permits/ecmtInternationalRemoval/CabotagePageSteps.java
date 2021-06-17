@@ -12,6 +12,7 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
+import static org.junit.Assert.assertEquals;
 
 public class CabotagePageSteps implements En {
     public CabotagePageSteps(World world, OperatorStore operatorStore) {
@@ -28,12 +29,14 @@ public class CabotagePageSteps implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        Then("^the ECMT international removal cabotage heading should be correct$", CabotagePage::hasShortTermECMTPageHeading);
+        Then("^the ECMT international removal cabotage heading should be correct$", () -> {
+            String heading = CabotagePage.getPageHeading();
+            assertEquals("ECMT permits do not allow you to carry out cabotage", heading);
+        });
         Then ("^the correct text is displayed next to the checkbox in ECMT Removal cabotage page", () -> {
             //TODO: Previous code didn't make any sense being here.
         });
         When("^save and continue  button is selected without selecting the checkbox$", BasePermitPage::saveAndContinue);
-        Then("^I should get the user defined error message$", CabotagePage::hasErrorText);
         When ("^the cabotage checkbox is selected$", CabotagePage::confirmWontUndertakeCabotage);
         Then("^I should be taken to certificates required page", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/st-certificates/"));

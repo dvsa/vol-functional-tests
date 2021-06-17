@@ -23,7 +23,7 @@ Feature: Annual bilateral Cabotage Page
     When I select 'no' button
     Then the relevant advisory text message is displayed
     When I save and continue
-    Then I am on the cancel application page for Annual Bilateral page
+    Then I am navigated to the cancel application page
 
   @EXTERNAL @OLCS-27071 @bilateral_cabotage_only @OLCS-27781
   Scenario: Behaviour of save and continue button with no option for multiple country selection

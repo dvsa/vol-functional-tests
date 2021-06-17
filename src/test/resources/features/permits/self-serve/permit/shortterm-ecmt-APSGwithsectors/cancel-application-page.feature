@@ -14,13 +14,12 @@ Feature: Short term ECMT APSG with sectors Cancel application Page
 
   @EXTERNAL @OLCS-25131 @OLCS-28226
   Scenario: Cancel application page details are displayed correctly
-    Then the short term ECMT CancelApplication page heading should be correct
-    And the short term  CancelApplication page displays the correct advisory text
+    Then I am navigated to the cancel application page
+    And the cancel application page displays the correct text
     And I select cancel application button
-    Then I should get an error message on short term ECMT cancel application page
+    Then I should get an error message on cancel application page
     When the checkbox is selected
     And  I select cancel application button
     Then I should be taken to cancel confirmation page
-    And I see the advisory text as per the AC
     And I select finish button
     Then I should be taken to the permits dashboard

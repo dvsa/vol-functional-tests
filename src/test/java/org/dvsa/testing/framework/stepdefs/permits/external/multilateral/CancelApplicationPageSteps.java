@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJo
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.CancellationConfirmationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
@@ -17,6 +16,8 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
+
+import static org.junit.Assert.assertEquals;
 
 public class CancelApplicationPageSteps extends BasePage implements En {
     public CancelApplicationPageSteps(OperatorStore operator, World world) {
@@ -39,26 +40,17 @@ public class CancelApplicationPageSteps extends BasePage implements En {
         });
         Then("^the annual multilateral Cancel Application page has a reference number$", () -> {
             String expectedReference = operator.getCurrentLicence().get().getReferenceNumber();
-            Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
-        });
-        Then("^the annual multilateral Cancel Application page has expected text$", () -> {
-            CancellationPage.hasPageHeading();
-            CancellationPage.assertAdvisoryTextOnCancelApplicationPage();
-            CancellationPage.hasConfirmCheckboxText();
+            assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
         });
         Then("^the annual multilateral Cancel Application confirmation checkbox is unselected by default$", () -> {
             String message = "Expected checkbox to be unselected but it was selected";
             Assert.assertFalse(message, CancellationPage.isConfirmed());
         });
         When("^I cancel my Annual Multilateral application without confirming$", CancellationPage::clickCancelButton);
-        Then("^I should get the expected error message for annual multilateral Cancel Application page$", () -> {
-            CancellationPage.hasErrorMessage();
-        });
         When("^I confirm and cancel my annual multilateral permit$", () -> {
             CancellationPage.clickCancelCheckbox();
             CancellationPage.clickCancelButton();
         });
-        Then("^I am taken to the application cancelled page$", CancellationConfirmationPage::untilOnPage);
         And("^there are no fees for the permit$", () -> {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
             Assert.assertFalse(HomePage.FeesTab.hasOutstandingFees());

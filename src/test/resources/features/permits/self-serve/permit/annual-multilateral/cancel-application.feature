@@ -17,10 +17,10 @@ Feature: Cancel application
   @OLCS-23026
   Scenario: Cancel application page functionality works as expected
     Then the annual multilateral Cancel Application page has a reference number
-    And  the annual multilateral Cancel Application page has expected text
+    And the cancel application page displays the correct text
     And  the annual multilateral Cancel Application confirmation checkbox is unselected by default
     When I cancel my Annual Multilateral application without confirming
-    Then I should get the expected error message for annual multilateral Cancel Application page
+    Then I should get an error message on cancel application page
     When I confirm and cancel my annual multilateral permit
-    Then I am taken to the application cancelled page
+    Then I should be taken to cancel confirmation page
     And there are no fees for the permit

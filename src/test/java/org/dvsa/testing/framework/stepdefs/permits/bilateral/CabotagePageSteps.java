@@ -18,6 +18,7 @@ import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertTrue;
 
 public class CabotagePageSteps extends BasePermitPage implements En {
 
@@ -64,7 +65,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
             }
             else {
                 CancellationPage.untilOnPage();
-                CancellationPage.assertAdvisoryTextOnCancelApplicationPage();
+                assertTrue(CancellationPage.isAdvisoryTextPresent());
             }
         });
         And ("^the advisory texts on the bilateral standard and cabotage permits page are displayed correctly", BilateralJourneySteps::assertStandardAndCabotagePermitsAdvisoryTexts);

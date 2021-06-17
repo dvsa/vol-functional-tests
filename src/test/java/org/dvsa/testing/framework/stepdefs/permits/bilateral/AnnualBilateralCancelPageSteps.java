@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AnnualBilateralCancelPageSteps extends BasePage implements En {
@@ -25,24 +26,23 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        Then("^the bilateral CancelApplication heading should be correct$", CancellationPage::untilOnPage);
 
         When("^I should see the correct text displayed next to the checkbox", () -> {
             assertTrue(isElementPresent("//label[@class='form-control form-control--checkbox']", SelectorType.XPATH));
         });
         When("the checkbox is selected", CancellationPage::clickCancelCheckbox);
-        Then("^the bilateral CancelApplication page displays the correct advisory text$", CancellationPage::assertAdvisoryTextOnCancelApplicationPage);
         When("^the cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
         Then ("I should be taken to cancel confirmation page", () -> {
             CancellationConfirmationPage.untilOnPage();
-            CancellationConfirmationPage.assertReferenceOnCancelConfirmationPage(world.applicationDetails.getLicenceNumber());
-            CancellationConfirmationPage.assertCancelConfirmationPageAdvisoryText();
+            assertEquals("Application cancelled", CancellationConfirmationPage.getPageHeading());
+            assertEquals(world.applicationDetails.getLicenceNumber(), CancellationConfirmationPage.getReferenceNumberHeading());
+            assertEquals("What happens now", CancellationConfirmationPage.getAdvisoryHeadingPresent());
+            assertEquals("You have cancelled your application and you will no longer be able to view or access it.", CancellationConfirmationPage.getAdvisoryTextPresent());
         });
         And("I select cancel application button", CancellationPage::clickCancelButton);
         //Guidance link no more displayed on the page,changed the assertion
         Then("I select finish button", BilateralJourneySteps::clickFinishButton);
         And("^I click cancel application link for bilateral application$", BilateralJourneySteps::bilateralCancel);
-        And("^I am on the cancel application page for Annual Bilateral page$", CancellationPage::untilOnPage);
     }
 }
 

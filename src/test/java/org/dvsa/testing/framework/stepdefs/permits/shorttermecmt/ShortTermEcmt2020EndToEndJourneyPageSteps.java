@@ -30,6 +30,7 @@ import org.junit.Assert;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.pages.BasePage.untilExpectedTextInElement;
+import static org.junit.Assert.assertEquals;
 
 public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
     public ShortTermEcmt2020EndToEndJourneyPageSteps(OperatorStore operatorStore, World world)  {
@@ -55,7 +56,6 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         });
         Then("^I complete Cabotage page section and click save and continue$", () -> {
-            CabotagePage.hasShortTermECMTPageHeading();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
         });
@@ -114,7 +114,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         Then("^I am navigated back to the permits dashboard page with my application status shown as Under Consideration", () -> {
             String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
-            Assert.assertEquals(getElementValueByText("//span[@class='status orange']",SelectorType.XPATH),"UNDER CONSIDERATION");
+            assertEquals(getElementValueByText("//span[@class='status orange']",SelectorType.XPATH),"UNDER CONSIDERATION");
         });
         Then("^I apply and pay for a short term APSG without sectors application", () -> {
             clickToPermitTypePage(world);

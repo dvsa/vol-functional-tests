@@ -45,4 +45,4 @@ Feature: Annual multilateral permit overview page
   Scenario: Cancels annual multilateral permit application
     When I click cancel link on the multilateral overview page
     And I confirm and cancel my annual multilateral permit
-    Then I am taken to the application cancelled page
+    Then I should be taken to cancel confirmation page

@@ -7,6 +7,8 @@ import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.TurkeyThirdCountryPage;
 import org.junit.Assert;
 
+import static org.junit.Assert.assertEquals;
+
 public class TurkeyThirdCountrySteps implements En {
     public TurkeyThirdCountrySteps(OperatorStore operatorStore, World world) {
 
@@ -15,7 +17,7 @@ public class TurkeyThirdCountrySteps implements En {
             TurkeyThirdCountryPage.untilOnPage();
 
             //checking the Country name displayed on the page is Turkey
-            Assert.assertEquals(TurkeyThirdCountryPage.getCountry(),operatorStore.getCountry());
+            assertEquals(TurkeyThirdCountryPage.getCountry(),operatorStore.getCountry());
 
             //checking the Page heading on the Turkey third country page is correct
             TurkeyThirdCountryPage.hasPageHeading();
@@ -29,7 +31,11 @@ public class TurkeyThirdCountrySteps implements En {
         When("^I select Yes radio button on the Turkey third country page$", TurkeyThirdCountryPage::clickYesToRadioButton);
         When("^I select No radio button on the Turkey third country page$", TurkeyThirdCountryPage::clickNoToRadioButton);
         When("^I get advisory text that I don't need Turkey permits$", TurkeyThirdCountryPage::noSelectionAdvisoryText);
-        When("^I am navigated to the cancel application page$", CancellationPage::untilOnPage);
+        When("^I am navigated to the cancel application page$", () -> {
+            CancellationPage.untilOnPage();
+            String heading = CancellationPage.getPageHeading();
+            assertEquals("Cancel application", heading);
+        });
     }
 }
 

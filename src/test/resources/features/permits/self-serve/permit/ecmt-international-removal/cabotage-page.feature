@@ -18,7 +18,7 @@ Feature: ECMT International Cabotage Page
     And  the ECMT international removal cabotage heading should be correct
     And  the correct text is displayed next to the checkbox in ECMT Removal cabotage page
     When save and continue  button is selected without selecting the checkbox
-    Then I should get the user defined error message
+    Then I should get the cabotage page error message
     When the cabotage checkbox is selected
     And I save and continue
     Then I should be taken to certificates required page
