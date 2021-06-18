@@ -4,6 +4,7 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -27,6 +28,8 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements En {
     public AnnualBilateralDeclarationPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
@@ -54,8 +57,8 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             String actualReference = BasePermitPage.getReferenceFromPage();
             licenceStore.setReferenceNumber(actualReference);
             Assert.assertTrue(String.valueOf(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,17))),true);
-            DeclarationPage.hasPageHeading();
-            DeclarationPage.hasBilateralAdvisoryTexts();
+            DeclarationPageJourneySteps.hasPageHeading();
+            assertTrue(DeclarationPage.isBilateralAdvisoryTextPresent());
         });
         Then("^I select the declaration link on the overview page$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
@@ -119,10 +122,9 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
         });
-        Then("^I am taken to the bilateral declaration Page$", DeclarationPage::hasPageHeading);
         Then("^there's a guidance notes link to the correct gov page$", EcmtJourneySteps::hasInternationalAuthorisationGovGuidanceLink);
         When("^I submit my annual bilateral declaration$", () -> {
-            AnnualBilateralJourney.getInstance().declare(true);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
     }
 }

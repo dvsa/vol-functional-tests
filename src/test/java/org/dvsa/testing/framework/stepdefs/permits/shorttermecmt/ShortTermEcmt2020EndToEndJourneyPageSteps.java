@@ -6,6 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -92,8 +93,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
         });
         Then("^I click on Accept and continue on the Declaration page$", () -> {
-            DeclarationPage.confirmDeclaration();
-            DeclarationPage.saveAndContinue();
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         Then("^I click on Submit and Pay button on the Permit fee page and complete the payment", () -> {
             PermitFeePage.submitAndPay();
@@ -136,8 +136,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPage.confirmDeclaration();
-            DeclarationPage.saveAndContinue();
+            DeclarationPageJourneySteps.completeDeclaration();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()

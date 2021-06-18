@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -47,7 +48,8 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            AnnualBilateralJourney.getInstance().declare(true)
+            DeclarationPageJourneySteps.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                     .permitFee();
 
             EcmtApplicationJourney.getInstance()
@@ -70,7 +72,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            AnnualBilateralJourney.getInstance().declare(true);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         Then("^I should not see the view receipt link$", () -> {
             Assert.assertFalse("'View  Receipt' link  should NOT be displayed but was", SubmittedPage.hasViewReceipt()
@@ -97,7 +99,8 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            AnnualBilateralJourney.getInstance().declare(true)
+            DeclarationPageJourneySteps.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                     .permitFee();
 
             EcmtApplicationJourney.getInstance()
@@ -124,7 +127,8 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            AnnualBilateralJourney.getInstance().declare(true)
+            DeclarationPageJourneySteps.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                     .permitFee();
 
             EcmtApplicationJourney.getInstance()

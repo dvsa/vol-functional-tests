@@ -77,7 +77,6 @@ public class CheckYourAnswersPageSteps implements En {
             String s = toShortTermPermitUsage(CheckYourAnswersPageSteps.permitUsage.get("permit.usage"));
             Assert.assertEquals(s,actualPermitUsage);
         });
-        Then("^I am navigated to the short term declaration page$", org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage::untilOnPage);
         Then("^I am on the short term permits overview page with check your answers section marked as complete$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);

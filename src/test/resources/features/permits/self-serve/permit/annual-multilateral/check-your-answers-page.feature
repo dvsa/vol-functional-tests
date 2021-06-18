@@ -27,8 +27,8 @@ Feature: Check your answers page
   @OLCS-23016
   Scenario: Saving and continuing takes the user to the declaration page and marks section as complete
       And I confirm and continue
-      And I should be on the Annual Multilateral Declaration page
-      When I make my declaration
+      And I should be on the declaration page
+      When I confirm the declaration
       And I save and return to overview
       Then the section is marked as complete on annual multilateral overview page
 

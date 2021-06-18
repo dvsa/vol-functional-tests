@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.VehiclesCertificateOfRoadwor
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.VehiclesCertificateOfRoadworthinessJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -19,7 +20,6 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration;
 import static org.junit.Assert.assertEquals;
 
 
@@ -98,10 +98,9 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         });
         Then("^I check content and Accept and continue on the Declaration page$", () -> {
             DeclarationPage.untilOnPage();
-            DeclarationPage.hasCheckboxText();
-            DeclarationPage.hasPageHeading();
-            DeclarationPage.confirmDeclaration();
-            DeclarationPage.saveAndContinue();
+            DeclarationPageJourneySteps.hasPageHeading();
+            DeclarationPageJourneySteps.hasCheckboxText();
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         Then("^I check content of the Submitted page$", () -> {
             SubmittedPage.untilOnPage();

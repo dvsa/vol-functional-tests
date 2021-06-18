@@ -8,6 +8,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
@@ -137,7 +138,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
             CheckYourAnswerPage.saveAndContinue();
             OverviewPage.untilOnPage();
             OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            AnnualBilateralJourney.getInstance().declare(true)
+            DeclarationPageJourneySteps.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                     .permitFee();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()
@@ -174,7 +176,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
                 OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
                 licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
-                AnnualBilateralJourney.getInstance().declare(true)
+                DeclarationPageJourneySteps.completeDeclaration();
+                AnnualBilateralJourney.getInstance()
                             .permitFee();
                  EcmtApplicationJourney.getInstance()
                             .cardDetailsPage()
@@ -214,7 +217,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
                 licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
-                AnnualBilateralJourney.getInstance().declare(true)
+            DeclarationPageJourneySteps.completeDeclaration();
+                AnnualBilateralJourney.getInstance()
                         .permitFee();
                 EcmtApplicationJourney.getInstance()
                             .cardDetailsPage()
@@ -252,7 +256,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
-            AnnualBilateralJourney.getInstance().declare(true)
+            DeclarationPageJourneySteps.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                         .permitFee();
              EcmtApplicationJourney.getInstance()
                         .cardDetailsPage()
@@ -297,13 +302,12 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPage.untilOnPage();
 
             // Checking declaration page content
-            DeclarationPage.hasPageHeading();
-            DeclarationPage.hasBilateralAdvisoryTexts();
-            DeclarationPage.hasWarningText();
+            DeclarationPageJourneySteps.hasPageHeading();
+            assertTrue(DeclarationPage.isBilateralAdvisoryTextPresent());
+            assertTrue(DeclarationPage.isWarningTextPresent());
             DeclarationPage.saveAndContinue();
-            DeclarationPage.hasErrorText();
-            DeclarationPage.confirmDeclaration();
-            DeclarationPage.saveAndContinue();
+            DeclarationPageJourneySteps.hasErrorText();
+            DeclarationPageJourneySteps.completeDeclaration();
             PermitFeePage.untilOnPage();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
@@ -329,7 +333,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
-        Then("^I should be on the bilateral declaration page$", DeclarationPage::untilOnPage);
         When("^I save and continue on bilateral check your answers page$", CheckYourAnswerPage::saveAndContinue);
         And("^I have completed (an|all) annual bilateral application$", (String oneOrAll) -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            int quantity = oneOrAll.equalsIgnoreCase("all") ? operatorStore.getLicences().size() : 1;
@@ -343,8 +346,9 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 OverviewPage.clickOverviewSection(OverviewSection.Countries);
                 AnnualBilateralJourney.getInstance().countries(operatorStore)
                             .numberOfPermits(operatorStore)
-                            .checkYourAnswers()
-                            .declare(true)
+                            .checkYourAnswers();
+                DeclarationPageJourneySteps.completeDeclaration();
+                AnnualBilateralJourney.getInstance()
                             .permitFee();
                  EcmtApplicationJourney.getInstance()
                             .cardDetailsPage()

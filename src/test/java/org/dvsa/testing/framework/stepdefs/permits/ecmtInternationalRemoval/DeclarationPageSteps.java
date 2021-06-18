@@ -5,6 +5,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -38,16 +39,12 @@ public class DeclarationPageSteps extends BasePage implements En {
                     .numberOfPermits()
                     .checkYourAnswers();
         });
-        Then ("^the page heading on Ecmt Removal declaration page is displayed correctly", DeclarationPage::untilOnPage);
-        And ("^the Ecmt removal declaration page has reference number", DeclarationPage::hasReference);
-        And ("^the Ecmt removal declaration page has correct link under guidance notes", DeclarationPage::hasGuidanceNotesLinkPresent);
-        And ("^the advisory text on removal declaration page is displayed correctly", DeclarationPage::hasECMTAdvisoryText);
-        And ("^the Ecmt removal declaration page checkbox has the correct text and displayed unselected by default", DeclarationPage::hasCheckboxText);
-        And ("^I should see the validation error message on the Ecmt removal declaration page", DeclarationPage::hasErrorText);
+        And ("^the declaration page has correct link under guidance notes", DeclarationPage::isGuidanceNotesLinkPresent);
+        And ("^the declaration page checkbox has the correct text and displayed unselected by default", DeclarationPageJourneySteps::hasCheckboxText);
         And ("^I click declaration link on the Ecmt removal overview page again", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.Declaration);
         });
-        When  ("^I confirm the ECMT removal declaration", DeclarationPage::confirmDeclaration);
+        When("^I confirm the declaration$", DeclarationPage::confirmDeclaration);
         Then("^I am on ECMT removal permits overview page with Declaration section marked as complete$", () -> {
             OverviewPage.untilOnPage();
             OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);

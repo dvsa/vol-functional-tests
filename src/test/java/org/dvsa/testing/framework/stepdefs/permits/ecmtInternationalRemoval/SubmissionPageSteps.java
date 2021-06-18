@@ -4,6 +4,7 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -35,8 +36,8 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
                     .certificatesRequiredPage()
                     .permitStartDatePage()
                     .numberOfPermits()
-                    .checkYourAnswers()
-                    .declaration();
+                    .checkYourAnswers();
+            DeclarationPageJourneySteps.completeDeclaration();
             EcmtApplicationJourney.getInstance()
                     .feeOverviewPage()
                     .cardDetailsPage()
@@ -89,16 +90,16 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             HomePage.selectTab(Tab.PERMITS);
             clickByLinkText(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.Declaration)
-                    .declare(true);
+                    .overview(OverviewSection.Declaration);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         And ("^I proceed with the application", () -> {
             HomePage.selectTab(Tab.PERMITS);
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.Declaration)
-                    .declare(true);
+                    .overview(OverviewSection.Declaration);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
 
     }

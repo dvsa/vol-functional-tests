@@ -31,7 +31,7 @@ Feature: Annual Bilateral Application Overview Page
     And I have completed till check your answers page
     Then the status of answers questions for individual countries as complete
     When I select the declaration link on the overview page
-    Then I am taken to the bilateral declaration Page
+    Then I should see the correct heading on the declaration page
     When I declare and save and return to overview
     Then I am taken to the overview page with the status as completed
     When I select submit and pay link

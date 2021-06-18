@@ -8,6 +8,7 @@ import cucumber.api.java8.En;
 import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
@@ -142,8 +143,9 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         EcmtApplicationJourney.getInstance().licencePage(operator, world);
 
         EcmtApplicationJourney.getInstance()
-                .checkYourAnswersPage()
-                .declaration(true)
+                .checkYourAnswersPage();
+        DeclarationPageJourneySteps.completeDeclaration();
+        EcmtApplicationJourney.getInstance()
                 .feeOverviewPage()
                 .cardDetailsPage()
                 .cardHolderDetailsPage()
@@ -162,8 +164,9 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
                 .licencePage(operator, world);
 
         EcmtApplicationJourney.getInstance()
-                .checkYourAnswersPage()
-                .declaration(true)
+                .checkYourAnswersPage();
+        DeclarationPageJourneySteps.completeDeclaration();
+        EcmtApplicationJourney.getInstance()
                 .feeOverviewPage()
                 .cardDetailsPage()
                 .cardHolderDetailsPage()

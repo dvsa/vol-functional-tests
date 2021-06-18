@@ -11,13 +11,10 @@ import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.junit.Assert;
 
+import static org.junit.Assert.assertTrue;
+
 public class DeclarationPageSteps implements En {
     public DeclarationPageSteps(OperatorStore operator, World world) {
-        When("I should be on the Annual Multilateral Declaration page", org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage::untilOnPage);
-        When("^I make my declaration$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
-        });
         And("I am on the annual multilateral declaration page", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
@@ -28,20 +25,15 @@ public class DeclarationPageSteps implements En {
                     .numberOfPermitsPage(operator)
                     .checkYourAnswers();
 
-            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.untilOnPage();
-        });
-        Then("^the annual multilateral declaration page has an application reference number$", () -> {
-            String message = "Expected Annual Multilateral page to possess reference number but" +
-                    " unable to find one with the write format";
-            Assert.assertTrue(message, DeclarationPage.hasReference());
+            DeclarationPage.untilOnPage();
         });
         Then("^annual multilateral declaration page has advisory messages$", () -> {
-            DeclarationPage.hasMultilateralAdvisoryText();
-            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.hasGuidanceNotesLinkPresent();
+            assertTrue(DeclarationPage.isMultilateralAdvisoryTextPresent());
+            assertTrue(DeclarationPage.isGuidanceNotesLinkPresent());
         });
         Then("^the annual multilateral declaration checkbox is unselected$", () -> {
             String message = "Expected the checkbox to be unselected but it was";
-            Assert.assertTrue(message, org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.declarationIsNotConfirmed());
+            assertTrue(message, DeclarationPage.declarationIsNotConfirmed());
         });
         Then("^the status for the declaration section in annual multilateral is complete$", () -> {
             OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);

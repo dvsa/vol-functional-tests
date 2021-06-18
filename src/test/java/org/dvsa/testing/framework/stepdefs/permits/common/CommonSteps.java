@@ -14,6 +14,7 @@ import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.internal.CaseWorkerAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -88,8 +89,7 @@ public class CommonSteps extends BasePage implements En {
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
-            DeclarationPage.saveAndContinue();
+            DeclarationPageJourneySteps.completeDeclaration();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()

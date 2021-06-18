@@ -4,6 +4,7 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
@@ -39,8 +40,8 @@ public class ValidPermitPageSteps implements En {
                     .certificatesRequiredPage()
                     .permitStartDatePage()
                     .numberOfPermits()
-                    .checkYourAnswers()
-                    .declaration();
+                    .checkYourAnswers();
+            DeclarationPageJourneySteps.completeDeclaration();
             EcmtApplicationJourney.getInstance()
                     .feeOverviewPage()
                     .cardDetailsPage()

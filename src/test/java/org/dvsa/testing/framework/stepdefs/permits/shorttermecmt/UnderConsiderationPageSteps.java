@@ -5,6 +5,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -52,8 +53,7 @@ public class UnderConsiderationPageSteps implements En {
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPage.confirmDeclaration();
-            DeclarationPage.saveAndContinue();
+            DeclarationPageJourneySteps.completeDeclaration();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()

@@ -6,6 +6,7 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -42,8 +43,9 @@ public class SubmittedPageSteps implements En {
                     .licencePage(operator, world)
                     .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
-                    .checkYourAnswers()
-                    .declaration(true)
+                    .checkYourAnswers();
+            DeclarationPageJourneySteps.completeDeclaration();
+            AnnualMultilateralJourney.INSTANCE
                     .feeOverviewPage()
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
@@ -86,7 +88,7 @@ public class SubmittedPageSteps implements En {
 
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
             OverviewPage.clickOverviewSection(OverviewSection.Declaration);
-            AnnualMultilateralJourney.INSTANCE.declaration(true);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         Then("^there shouldn't be a view receipt link on the multilateral submitted page$", () -> {
             Assert.assertFalse(SubmittedPage.hasViewReceipt());

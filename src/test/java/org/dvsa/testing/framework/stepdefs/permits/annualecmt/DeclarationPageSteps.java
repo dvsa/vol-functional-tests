@@ -19,10 +19,7 @@ public class DeclarationPageSteps implements En {
         });
         Then("^I should see the validation error message for the declaration page$", () -> Assert.assertTrue(DeclarationPage.hasErrorMessagePresent()));
         When("^I save and continue on the declaration page$", DeclarationPage::saveAndContinue);
-        And("^I should see the ECMT declaration advisory texts$", org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage::hasECMTAdvisoryText);
-        When("^I make my ECMT declaration$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
-        });
+        And("^I should see the declaration advisory texts$", DeclarationPage::isECMTAdvisoryTextPresent);
         When("^I accept and continue$", DeclarationPage::saveAndContinue);
         When("^I should be on the ECMT permit fee page$", PermitFeePage::pageHeading);
         Then("^the status for the declaration section in annual ECMT is complete$", () -> {

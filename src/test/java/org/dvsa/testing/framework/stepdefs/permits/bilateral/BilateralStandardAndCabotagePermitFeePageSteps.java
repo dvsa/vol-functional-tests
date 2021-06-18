@@ -4,6 +4,7 @@ import activesupport.string.Str;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -48,7 +49,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             AnnualBilateralJourney.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            AnnualBilateralJourney.getInstance().declare(true);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         And("^I'm on the annual bilateral standard and cabotage permit fee page with Cabotage selected on Cabotage page$", () -> {
             clickToPermitTypePage(world);
@@ -71,7 +72,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            AnnualBilateralJourney.getInstance().declare(true);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         And("^I'm on the annual bilateral standard permit no cabotage fee page$", () -> {
             clickToPermitTypePage(world);
@@ -92,7 +93,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             BasePermitPage.saveAndContinue();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            AnnualBilateralJourney.getInstance().declare(true);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         Then("^the application details on the bilateral standard and cabotage fee page are displayed correctly in fee page table$", () ->
         {

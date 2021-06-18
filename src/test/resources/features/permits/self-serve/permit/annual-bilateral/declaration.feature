@@ -25,7 +25,7 @@ Feature: Annual bilateral declaration page
   @EXTERNAL @OLCS-22910 @bilateral_cabotage_only @OLCS-26045 @OLCS-27317
   Scenario: Section becomes complete when users save and accept after declaring on overview page
     And  I'm on the annual bilateral cabotage only declaration page
-    And  I make my declaration
+    And  I confirm the declaration
     And I save and return to overview
     Then the status for the declaration section is complete
 

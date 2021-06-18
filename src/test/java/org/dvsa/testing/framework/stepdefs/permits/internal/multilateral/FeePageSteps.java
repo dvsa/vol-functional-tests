@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -34,8 +35,8 @@ public class FeePageSteps implements En {
                     .licencePage(operator, world)
                     .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
-                    .checkYourAnswers()
-                    .declaration(true);
+                    .checkYourAnswers();
+            DeclarationPageJourneySteps.completeDeclaration();
 
             PermitFeePage.untilOnPage();
         });

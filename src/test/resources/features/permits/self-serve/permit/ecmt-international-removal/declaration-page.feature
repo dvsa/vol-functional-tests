@@ -7,21 +7,20 @@ Feature: ECMT International Declaration Page
 
   @EXTERNAL @OLCS-24980 @ecmt_removal @olcs-28201
   Scenario: Declaration page functionality works as expected
-    Then the page heading on Ecmt Removal declaration page is displayed correctly
-    And  the Ecmt removal declaration page has reference number
-    And  the Ecmt removal declaration page has correct link under guidance notes
-    And  the advisory text on removal declaration page is displayed correctly
-    Then the Ecmt removal declaration page checkbox has the correct text and displayed unselected by default
+    Then I should see the correct heading on the declaration page
+    And  the declaration page has a reference number
+    And  the declaration page has correct link under guidance notes
+    And  I should see the declaration advisory texts
+    Then the declaration page checkbox has the correct text and displayed unselected by default
     When I accept and continue
-    Then I should see the validation error message on the Ecmt removal declaration page
+    Then I should get the correct error message on the declaration page
     When I save and return to overview
-    Then I should see the validation error message on the Ecmt removal declaration page
+    Then I should get the correct error message on the declaration page
     When I go back
     Then I should be on the ECMT International Overview Page
     And  I click declaration link on the Ecmt removal overview page again
-    Then I am on ECMT Removal Declaration page
-    Then I am directed back to the Declaration page
-    When I confirm the ECMT removal declaration
+    Then I should be on the declaration page
+    When I confirm the declaration
     And  I save and return to overview
     Then I am on ECMT removal permits overview page with Declaration section marked as complete
     When I click declaration link on the Ecmt removal overview page again

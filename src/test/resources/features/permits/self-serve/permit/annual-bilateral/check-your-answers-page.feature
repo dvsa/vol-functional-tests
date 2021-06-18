@@ -17,7 +17,7 @@ Feature: Annual bilateral check your answers page
   @EXTERNAL @OLCS-22909 @OLCS-26819
   Scenario: Verify that Save and continue, Save and return to overview button functionality works as expected
     When I save and continue on bilateral check your answers page
-    Then I should be on the bilateral declaration page
+    Then I should be on the declaration page
     When I go back
     Then I navigate to the annual bilateral overview page
     When I click Check your answers link on the overview page again

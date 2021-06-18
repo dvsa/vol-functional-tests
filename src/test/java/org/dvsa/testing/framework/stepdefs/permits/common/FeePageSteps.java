@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.common;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -33,9 +34,7 @@ public class FeePageSteps implements En {
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
             ECMTPermitApplicationSteps.saveAndContinue();
-            DeclarationPage.confirmDeclaration();
-            DeclarationPage.saveAndContinue();
-          //  FeeOverviewPage.untilOnPage(Duration.MEDIUM, ChronoUnit.SECONDS);
+            DeclarationPageJourneySteps.completeDeclaration();
         });
         When("^I submit and pay$", PermitFeePage::saveAndContinue);
         When("^I save and return to overview from fee page$", PermitFeePage::returnToOverview);

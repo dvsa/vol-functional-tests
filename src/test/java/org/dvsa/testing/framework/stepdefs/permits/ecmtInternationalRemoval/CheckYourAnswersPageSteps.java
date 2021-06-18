@@ -49,7 +49,7 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
         And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers));
-        Then("^I am on ECMT Removal Declaration page$", DeclarationPage::untilOnPage);
+        Then("^I should be on the declaration page$", DeclarationPage::untilOnPage);
         Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> {
             CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.RemovalsEligibility);
         });

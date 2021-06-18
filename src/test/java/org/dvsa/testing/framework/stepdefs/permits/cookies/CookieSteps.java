@@ -4,6 +4,7 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
@@ -190,8 +191,8 @@ public class CookieSteps extends DriverUtils implements En {
 
             And("^I should see the same cookies list in ECMT Removal valid Page$", () -> {
                 EcmtInternationalRemovalJourney.getInstance()
-                        .checkYourAnswers()
-                        .declaration();
+                        .checkYourAnswers();
+                DeclarationPageJourneySteps.completeDeclaration();
                 EcmtApplicationJourney.getInstance()
                         .feeOverviewPage()
                         .cardDetailsPage()

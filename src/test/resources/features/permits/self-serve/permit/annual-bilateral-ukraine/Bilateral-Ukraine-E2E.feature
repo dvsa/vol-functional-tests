@@ -31,7 +31,7 @@ Feature: Bilaterals Ukraine end to end happy path journey including validations
     When I click on read declaration on the application overview page
     Then I am taken to the bilateral declaration Page with correct information and content
     When I click on Accept and continue on the Declaration page without selecting declaration checkbox
-    Then I should get the validation error message on the declaration page
+    Then I should get the correct error message on the declaration page
     When I click on Accept and continue on the Declaration page
     Then I am on the permit fee page for annual bilateral ukraine application with correct information and content
     When I submit and pay the Bilateral fee

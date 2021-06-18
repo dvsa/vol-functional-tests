@@ -14,6 +14,8 @@ import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class AnnualBilateralJourney extends BasePermitJourney {
 
     private static volatile AnnualBilateralJourney instance = null;
@@ -109,13 +111,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     public AnnualBilateralJourney checkYourAnswers(){
         CheckYourAnswerPage.untilOnPage();
         CheckYourAnswerPage.saveAndContinue();
-        return this;
-    }
-
-    public AnnualBilateralJourney declare(boolean declaration){
-        DeclarationPage.untilOnPage();
-        DeclarationPage.confirmDeclaration();
-        DeclarationPage.saveAndContinue();
         return this;
     }
 

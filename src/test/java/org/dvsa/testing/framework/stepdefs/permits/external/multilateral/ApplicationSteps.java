@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
@@ -63,8 +64,10 @@ public class ApplicationSteps extends BasePage implements En {
                     .licencePage(operator, world)
                     .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
                     .numberOfPermitsPage(operator)
-                    .checkYourAnswers()
-                    .declaration(true)
+                    .checkYourAnswers();
+
+             DeclarationPageJourneySteps.completeDeclaration();
+             AnnualMultilateralJourney.INSTANCE
                     .feeOverviewPage()
                     .cardDetailsPage()
                     .cardHolderDetailsPage()

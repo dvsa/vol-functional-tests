@@ -7,6 +7,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
@@ -94,9 +95,9 @@ public class ValidPermitsPageSteps extends BasePage implements En {
                     .overview(OverviewSection.Countries)
                     .countries(operatorStore)
                     .numberOfPermits(operatorStore)
-                    .checkYourAnswers()
-                    .declare(true)
-                    .permitFee();
+                    .checkYourAnswers();
+            DeclarationPageJourneySteps.completeDeclaration();
+            AnnualBilateralJourney.getInstance().permitFee();
 
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()

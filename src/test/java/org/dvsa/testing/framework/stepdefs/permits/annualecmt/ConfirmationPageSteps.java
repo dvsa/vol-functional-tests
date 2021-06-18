@@ -4,6 +4,7 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -82,8 +83,7 @@ org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
             HomePage.PermitsTab.selectOngoing(licence);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers);
             BasePermitPage.saveAndContinue();
-            DeclarationPage.confirmDeclaration();
-            DeclarationPage.saveAndContinue();
+            DeclarationPageJourneySteps.completeDeclaration();
 
         });
 

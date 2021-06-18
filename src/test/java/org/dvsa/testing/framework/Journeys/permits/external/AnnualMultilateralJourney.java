@@ -53,12 +53,6 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
         return this;
     }
 
-    public AnnualMultilateralJourney declaration(boolean declaration) {
-        org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration();
-        DeclarationPage.saveAndContinue();
-        return this;
-    }
-
     public AnnualMultilateralJourney feeOverviewPage() {
         PermitFeePage.saveAndContinue();
         return this;

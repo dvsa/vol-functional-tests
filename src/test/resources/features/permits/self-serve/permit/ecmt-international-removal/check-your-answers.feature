@@ -17,7 +17,7 @@ Feature: ECMT International Number Check your answers Page
     Then I am on the ECMT removals permits overview page with check your answers section marked as complete
     When I click the ECMT Removals Check your answers link on the overview page again
     Then I check content and click save and continue on the Check Your Answers page
-    Then I am on ECMT Removal Declaration page
+    Then I should be on the declaration page
 
   Scenario: Verify that clicking Change links on ECMT International removals Check Your Answers page, takes the user to the respective pages as per the ACs
     And   I choose to change the ECMT Removals Permits Eligibility  section

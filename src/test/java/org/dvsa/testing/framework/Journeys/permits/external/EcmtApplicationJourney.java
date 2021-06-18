@@ -64,12 +64,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
         return this;
     }
 
-    public EcmtApplicationJourney declaration(boolean declaration) {
-        DeclarationPage.confirmDeclaration();
-        DeclarationPage.saveAndContinue();
-        return this;
-    }
-
     public EcmtApplicationJourney feeOverviewPage() {
         PermitFeePage.saveAndContinue();
         return this;
