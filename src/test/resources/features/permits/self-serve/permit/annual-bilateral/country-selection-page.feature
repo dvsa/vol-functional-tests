@@ -10,7 +10,7 @@ Feature: Annual bilateral country selection page
   Scenario: Verify Annual Bilateral country selection page contents , country display , validation message functionality
     Given I am on the country selection page
     Then bilateral country selection page licence reference number is correct
-    And  the page heading on bilateral country selection  page is correct
+    And  the page heading on bilateral country selection page is correct
     And countries are displayed in alphabetical order
     When I select save and continue button on select countries page
     Then the bilateral countries page should display its error message
@@ -33,5 +33,5 @@ Feature: Annual bilateral country selection page
   Scenario: Remembers answer when you change your answer
     Given I'm on the bilateral check your answers page
     When I choose to change the bilateral countries section
-    Then I should be on the bilateral countries page
+    Then I am on the Bilaterals country selection page
     And my previously selected countries should be remembered

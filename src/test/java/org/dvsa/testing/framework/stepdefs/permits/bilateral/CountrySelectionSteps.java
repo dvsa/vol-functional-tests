@@ -8,6 +8,8 @@ import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
 import org.hamcrest.text.MatchesPattern;
 import org.junit.Assert;
 
+import static org.junit.Assert.assertEquals;
+
 public class CountrySelectionSteps implements En {
     public CountrySelectionSteps(OperatorStore operatorStore, World world) {
         Then("^bilateral country selection page licence reference number is correct$", () -> {
@@ -15,10 +17,11 @@ public class CountrySelectionSteps implements En {
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertThat(actualReferenceNumber, MatchesPattern.matchesPattern(expectedLicenceNumber.concat(" / \\d+")));
         });
-        Then("^the page heading on bilateral country selection  page is correct$", CountrySelectionPage::hasPageHeading);
-
+        Then("^the page heading on bilateral country selection page is correct$", () -> {
+            String heading = CountrySelectionPage.getPageHeading();
+            assertEquals("Select the countries you are transporting goods to or transiting through", heading);
+        });
         Then("^I am on the Bilaterals country selection page$", CountrySelectionPage::untilOnPage);
-
     }
 }
 

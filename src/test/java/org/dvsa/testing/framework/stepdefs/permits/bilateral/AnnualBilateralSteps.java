@@ -51,6 +51,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AnnualBilateralSteps extends BasePage implements En {
     public AnnualBilateralSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
@@ -87,7 +88,9 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 Assert.assertTrue(countries.get(idx).substring(0, 1).compareTo(countries.get(idx + 1).substring(0, 1)) <= 0);
             }
         });
-        Then("^the bilateral countries page should display its error message$", CountrySelectionPage::hasErrorMessage);
+        Then("^the bilateral countries page should display its error message$", () -> {
+            assertTrue(CountrySelectionPage.isErrorMessagePresent());
+        });
         When("^I select a country from the bilateral countries page$", () -> {
             CountrySelectionPage.untilOnPage();
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
@@ -107,7 +110,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             CheckYourAnswerPage.untilOnPage();
             CheckYourAnswerPage.clickChangeAnswer(BilateralSection.Country);
         });
-        Then("^I should be on the bilateral countries page$", CountrySelectionPage::untilOnPage);
         And("^my previously selected countries should be remembered$", () -> {
             List<Country> countries = operatorStore.getLatestLicence().get().getEcmt().getRestrictedCountriesName();
             List<String> expectedCountries = countries.stream().map(Country::toString).collect(Collectors.toList());
