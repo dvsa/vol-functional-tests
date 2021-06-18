@@ -4,7 +4,9 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
-import org.junit.Assert;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UkraineEmissionsStandardsSteps implements En {
     public UkraineEmissionsStandardsSteps(OperatorStore operatorStore, World world) {
@@ -14,13 +16,14 @@ public class UkraineEmissionsStandardsSteps implements En {
             EmissionStandardsPage.untilOnPage();
 
             //checking the Country name displayed on the page is Ukraine
-            Assert.assertEquals(EmissionStandardsPage.getCountry(), operatorStore.getCountry());
+            assertEquals(EmissionStandardsPage.getCountry(), operatorStore.getCountry());
 
             //checking the Page heading on the Ukraine emissions standards page is correct
-            EmissionStandardsPage.hasEuroChoicePageHeading();
+            String heading = EmissionStandardsPage.getPageHeading();
+            assertEquals("Which vehicle euro emission standard will you use?", heading);
 
             //checking the  YES and NO radio buttons  with display of respective help texts on selection
-            EmissionStandardsPage.hasEuro3To6RadioButtonsChoices();
+            assertTrue(EmissionStandardsPage.isEuro3To6RadioButtonsChoices());
         });
 
         When("^I save and continue on the Ukraine emissions standards page$", () -> {

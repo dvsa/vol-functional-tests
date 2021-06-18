@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -74,7 +75,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Euro emissions standard page section and click save and continue$", () -> {
-            EmissionStandardsPage.hasPageHeading();
+            EmissionStandardsPageJourneySteps.hasPageHeading();
             EmissionStandardsPage.confirmCheckbox();
             BasePermitPage.saveAndContinue();
         });

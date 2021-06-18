@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.lib.pages.BasePage.getURL;
 import static org.dvsa.testing.lib.pages.BasePage.untilUrlPathIs;
+import static org.junit.Assert.assertEquals;
 
 public class Euro6Steps implements En {
 
@@ -56,7 +57,8 @@ public class Euro6Steps implements En {
         });
 
         Then("^I should see the validation errors for euro 6 page$", () -> {
-            EmissionStandardsPage.hasErrorMessage();
+            String errorText = EmissionStandardsPage.getErrorMessage();
+            assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
         });
         Then("^I see the application reference number is displayed correctly$", () -> {
             String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);

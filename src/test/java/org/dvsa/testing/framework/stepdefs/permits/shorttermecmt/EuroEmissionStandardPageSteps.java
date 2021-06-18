@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -19,6 +20,8 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class EuroEmissionStandardPageSteps implements En {
 
@@ -46,15 +49,20 @@ public class EuroEmissionStandardPageSteps implements En {
         });
         Then("^the euro emissions  page has the relevant information$", () -> {
             EmissionStandardsPage.untilElementIsPresent("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH,10, TimeUnit.SECONDS);
-            EmissionStandardsPage.hasPageHeading();
+            EmissionStandardsPageJourneySteps.hasPageHeading();
         });
         Then("^the short term emissions page has got the correct advisory text$", () -> {
-            EmissionStandardsPage.hasAdvisoryText();
+            EmissionStandardsPageJourneySteps.hasPageHeading();
+            assertTrue(EmissionStandardsPage.isAdvisoryTextPresent());
         });
         Then("^the short term emissions page checkbox has the correct text and displayed unselected by default", () -> {
-            EmissionStandardsPage.hasCheckbox();
+            String heading = EmissionStandardsPage.getCheckboxText();
+            assertEquals("I confirm that I will only use my ECMT permits with vehicles that meet the minimum euro emissions standards allowed.", heading);
         });
-        Then("I should get the emissions  page error message", EmissionStandardsPage::hasErrorMessage);
+        Then("I should get the emissions  page error message", () -> {
+            String errorText = EmissionStandardsPage.getErrorMessage();
+            assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
+        });
 
         When("^I confirm the emissions standards checkbox", () -> {
             EmissionStandardsPage.confirmCheckbox();
