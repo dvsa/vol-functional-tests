@@ -20,6 +20,7 @@ import org.junit.Assert;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration;
+import static org.junit.Assert.assertEquals;
 
 
 public class VehiclesCertificateOfRoadWorthinessE2E implements En {
@@ -91,7 +92,8 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         });
         Then("^I check content and click save and continue on the Check Your Answers page$", () -> {
             CheckYourAnswerPage.untilOnPage();
-            CheckYourAnswerPage.hasPageHeading();
+            String heading = CheckYourAnswerPage.getPageHeading();
+            assertEquals("Check your answers", heading);
             CheckYourAnswerPage.saveAndContinue();
         });
         Then("^I check content and Accept and continue on the Declaration page$", () -> {

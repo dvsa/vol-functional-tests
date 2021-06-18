@@ -19,7 +19,7 @@ Feature: ECMT International Number of permits Page
     And I enter number of permits more than the authorised vehicles and click save and continue
     Then I should get the ECMT Removals number of permits page validation error message
     And I enter valid number of permits on the removals number of permits page and click save and continue
-   Then I am navigated to the ECMT Removals check your answers page
+   Then the page heading on check your answers page is correct
 
   Scenario: Number of permits page ECMT Removal- Check Navigation and section status
     And I am on the ECMT Removal number of permits page

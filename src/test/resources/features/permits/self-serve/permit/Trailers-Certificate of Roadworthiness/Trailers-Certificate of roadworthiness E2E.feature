@@ -15,7 +15,7 @@ Feature: Certificate of roadworthiness for Trailers end to end happy path journe
     Then I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue
     Then I check content and complete MOT DATE section Certificate of Roadworthiness for trailers and click save and continue
     Then I check content and complete Certificate  of Compliance section Certificate of Roadworthiness for trailers and click save and continue
-    Then I check content and click save and continue on the Check Your Answers page for Certificate of Roadworthiness for trailers
+    Then I check content and click save and continue on the Check Your Answers page
     Then I check content and Accept and continue on the Declaration page for Certificate of Roadworthiness for trailers page
     Then I check content of the Submitted page for Certificate of Roadworthiness for trailers
     When I select finish button

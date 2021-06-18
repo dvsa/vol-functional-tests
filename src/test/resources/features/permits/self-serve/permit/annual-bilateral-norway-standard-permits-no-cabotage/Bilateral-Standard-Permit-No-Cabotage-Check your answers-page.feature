@@ -9,7 +9,7 @@ Feature: Annual bilateral standard permits no cabotage- Check your answers page 
   @EXTERNAL @OLCS-27316 @olcs-27581 @olcs-28201
   Scenario: Verify Standard Permits no cabotage check your answers page contents
     Then Country name displayed on the Bilateral check your answers page is the one clicked on the overview page
-    And  the page heading on bilateral check your answers page is correct
+    And  the page heading on the check your answers page is correct
     Then I see three sections displayed on the table correctly
 
   @EXTERNAL @OLCS-27316

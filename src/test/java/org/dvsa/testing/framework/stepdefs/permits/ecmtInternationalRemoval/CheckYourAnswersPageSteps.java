@@ -36,7 +36,6 @@ public class CheckYourAnswersPageSteps implements En {
                     .numberOfPermits();
 
         });
-        Then("^ECMT Removals permit check your answers page has correct heading label$", () -> CheckYourAnswerPage.hasPageHeading());
         And("^the ECMT Removals check your answers page has reference number$", BasePermitPage::getReferenceFromPage);
         And("^the ECMT Removals application answers are displayed on the check your answers page$", () -> {
             String licence = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Licence);
@@ -50,10 +49,6 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
         And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers));
-        Then("^I am navigated to the ECMT Removals check your answers page$", () ->{
-                CheckYourAnswerPage.untilOnPage();
-                CheckYourAnswerPage.hasPageHeading();
-        });
         Then("^I am on ECMT Removal Declaration page$", DeclarationPage::untilOnPage);
         Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> {
             CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.RemovalsEligibility);

@@ -20,6 +20,7 @@ import org.junit.Assert;
 import java.net.MalformedURLException;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CheckYourAnswersPageSteps extends BasePage implements En {
@@ -49,8 +50,10 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             Assert.assertEquals(country, operatorStore.getCountry());
         });
 
-        Then("^the page heading on bilateral check your answers page is correct$", () -> {
-            CheckYourAnswerPage.hasPageHeading();
+        Then("^the page heading on the check your answers page is correct$", () -> {
+            CheckYourAnswerPage.untilOnPage();
+            String heading = CheckYourAnswerPage.getPageHeading();
+            assertEquals("Check your answers", heading);
         });
         Then("^I see four sections displayed on the table correctly$", () -> {
             BilateralJourneySteps.assertSectionsExist(true);

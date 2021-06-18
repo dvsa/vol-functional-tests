@@ -1,17 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
@@ -26,7 +24,6 @@ import org.junit.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.external.permit.enums.sections.ShortTermApplicationSection.*;
@@ -64,10 +61,6 @@ public class CheckYourAnswersPageSteps implements En {
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
         });
-        Then("^short term permit check your answers page has correct heading label$", () -> {
-            CheckYourAnswerPage.untilElementIsPresent("//h1[@class='govuk-heading-xl']", SelectorType.XPATH,10, TimeUnit.SECONDS);
-            CheckYourAnswerPage.hasPageHeading();
-        });
         Then("^the short term check your answers page has reference number$", () -> {
             BasePermitPage.getReferenceFromPage();
         });
@@ -93,7 +86,6 @@ public class CheckYourAnswersPageSteps implements En {
         And("^I click Check your answers link on the overview page again$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers);
         });
-        Then("^I am navigated to the short term check your answers page$", CheckYourAnswerPage::hasPageHeading);
     }
 
     private static String toShortTermPermitUsage(@NotNull PermitUsage permitUsage) {
