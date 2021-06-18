@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
@@ -54,8 +55,7 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
     }
 
     public EcmtInternationalRemovalJourney certificatesRequiredPage() {
-        org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-        saveAndContinue();
+        CertificatesRequiredPage.completePage();
         return this;
     }
 

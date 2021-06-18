@@ -19,7 +19,6 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.hasCheckBoxText;
 import static org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.confirmDeclaration;
 
 
@@ -97,9 +96,9 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         });
         Then("^I check content and Accept and continue on the Declaration page$", () -> {
             DeclarationPage.untilOnPage();
-            hasCheckBoxText();
+            DeclarationPage.hasCheckboxText();
             DeclarationPage.hasPageHeading();
-            confirmDeclaration();
+            DeclarationPage.confirmDeclaration();
             DeclarationPage.saveAndContinue();
         });
         Then("^I check content of the Submitted page$", () -> {

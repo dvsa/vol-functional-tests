@@ -25,7 +25,6 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
-import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
@@ -60,9 +59,9 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Certificates required page section and click save and continue$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.hasPageHeading();
-            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.saveAndContinue();
+            String heading = CertificatesRequiredPage.getPageHeading();
+            assertEquals("Mandatory certificates for vehicles and trailers you intend to use", heading);
+            CertificatesRequiredPage.completePage();
         });
         Then("^I complete Countries with limited permits section and click save and continue$", () -> {
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
@@ -127,8 +126,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             BasePermitPage.saveAndContinue();

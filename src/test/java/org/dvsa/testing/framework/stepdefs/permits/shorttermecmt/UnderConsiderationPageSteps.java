@@ -41,8 +41,7 @@ public class UnderConsiderationPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterAuthorisedVehicles();
             BasePermitPage.saveAndContinue();

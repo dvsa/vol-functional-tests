@@ -178,8 +178,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
         CheckIfYouNeedECMTPermitsPage.saveAndContinue();
         CabotagePage.confirmWontUndertakeCabotage();
-        org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-        CertificatesRequiredPage.saveAndContinue();
+        CertificatesRequiredPage.completePage();
         CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
         NumberOfPermitsPage.saveAndContinue();

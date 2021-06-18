@@ -58,8 +58,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
@@ -95,8 +94,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
@@ -146,8 +144,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
@@ -209,8 +206,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();

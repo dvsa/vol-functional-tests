@@ -25,8 +25,7 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
             CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
-            CertificatesRequiredPage.confirmCertificateRequired();
-            CertificatesRequiredPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             BasePermitPage.saveAndContinue();

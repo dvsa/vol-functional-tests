@@ -9,15 +9,15 @@ Feature: Certificates required Page
   @External @OLCS-24977 @ECMT @Tets1 @olcs-27581 @OLCS-28275
     Scenario: Check that page  functionality and contents are as per the AC
     And The application reference is displayed on the page
-    And The main page heading is as per the AC
+    And the certificates required page heading is as per the AC
     #And The guidance notes link text is correct and links to the correct url -- guidance notes link removed ----
-    And Correct advisory text is shown below the page heading
+    And the advisory texts on certificates required page are displayed
     And The advisory text contains bold characters at the right places
     And There is one checkbox with right label and not checked by default
     And  if I don't select the checkbox and click Save and Continue button
-    Then I am presented with a validation error message
+    Then I should get the certificates required page error message
     And  if I don't select the checkbox and click Save and Return to Overview button
-    Then I am presented with same validation error message
+    Then I should get the certificates required page error message
     And  if I select the checkbox and click Save and Return to Overview button
     Then  I should be on the Annual ECMT overview page
 

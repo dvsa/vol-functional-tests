@@ -25,8 +25,7 @@ public class RestrictedCountriesPageSteps implements En {
             CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
-            CertificatesRequiredPage.confirmCertificateRequired();
-            CertificatesRequiredPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
         });
         Given("^I have selected some restricted countries$", () -> {
             RestrictedCountriesPage.countries(RestrictedCountry.random());

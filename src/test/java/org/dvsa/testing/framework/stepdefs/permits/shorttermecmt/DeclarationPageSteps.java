@@ -39,8 +39,7 @@ public class DeclarationPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
             BasePermitPage.saveAndContinue();
@@ -53,16 +52,16 @@ public class DeclarationPageSteps implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
         });
         Then("^I should see correct heading label on ECMT declaration page$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.hasPageHeading();
+            DeclarationPage.hasPageHeading();
         });
         Then("^the short term declarations page has reference number", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage.hasReference();
+            DeclarationPage.hasReference();
         });
         Then("^the short term declarations page has got the correct advisory text$", () -> {
             DeclarationPage.hasShortTermECMTAdvisoryText();
         });
-        Then("^the short term declaration page has correct link under guidance notes$", org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage::hasGuidanceNotesLinkPresent);
-        Then("^the short term declaration page checkbox has the correct text and displayed unselected by default$", org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage::hasCheckboxText);
+        Then("^the short term declaration page has correct link under guidance notes$", DeclarationPage::hasGuidanceNotesLinkPresent);
+        Then("^the short term declaration page checkbox has the correct text and displayed unselected by default$", DeclarationPage::hasCheckboxText);
         Then("^I should see the validation error message on the short term declaration page$", () -> {
             DeclarationPage.hasErrorMessagePresent();
         });
@@ -71,8 +70,8 @@ public class DeclarationPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.Declaration);
         });
 
-        Then("^I am directed back to the Declaration page$", org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage::untilOnPage);
-        When("^I make my short term ECMT declaration$", org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage::confirmDeclaration);
+        Then("^I am directed back to the Declaration page$", DeclarationPage::untilOnPage);
+        When("^I make my short term ECMT declaration$", DeclarationPage::confirmDeclaration);
 
         Then("^I am on the short term permits overview page with Declaration section marked as complete$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();

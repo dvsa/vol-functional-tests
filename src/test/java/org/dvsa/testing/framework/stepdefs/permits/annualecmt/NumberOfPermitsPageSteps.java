@@ -29,8 +29,7 @@ public class NumberOfPermitsPageSteps implements En {
             CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
-            CertificatesRequiredPage.confirmCertificateRequired();
-            CertificatesRequiredPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         });
         And("^the page heading on the ECMT number of permits page is displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::hasPageHeading);

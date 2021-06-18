@@ -34,8 +34,7 @@ public class SpecialistHaulagePageSteps implements En {
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
-            CertificatesRequiredPage.confirmCertificateRequired();
-            CertificatesRequiredPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             BasePermitPage.saveAndContinue();

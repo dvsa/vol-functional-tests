@@ -79,8 +79,7 @@ public class CommonSteps extends BasePage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.confirmCertificateRequired();
-            CertificatesRequiredPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             BasePermitPage.saveAndContinue();
             RestrictedCountriesPage.deliverToRestrictedCountry(false);
             RestrictedCountriesPage.saveAndContinue();

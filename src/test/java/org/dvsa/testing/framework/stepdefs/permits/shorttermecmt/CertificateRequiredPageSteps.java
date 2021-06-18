@@ -17,6 +17,9 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.dvsa.testing.lib.pages.BasePage.hasErrorMessagePresent;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CertificateRequiredPageSteps implements En {
 
@@ -35,14 +38,18 @@ public class CertificateRequiredPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^the certificates required page has the relevant information$", () -> {
-            CertificatesRequiredPage.hasPageHeading();
-            CertificatesRequiredPage.hasAdvisoryTexts();
-            String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber= BasePermitPage.getReferenceFromPage();
+            String heading = CertificatesRequiredPage.getPageHeading();
+            assertEquals("Mandatory certificates for vehicles and trailers you intend to use", heading);
+            assertTrue(CertificatesRequiredPage.isAdvisoryTextPresent());
+            String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
+            String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
-        Then("^I should get the certificates required page error message$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::hasErrorText);
-        Then("^I confirm the Certificates Required checkbox$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::confirmCertificateRequired);
+        Then("^I should get the certificates required page error message$", () -> {
+            String errorText = CertificatesRequiredPage.getErrorText();
+            assertEquals(errorText, "Tick to confirm you understand that each vehicle and trailer must have the matching certificates.");
+        });
+        Then("^I confirm the Certificates Required checkbox$", CertificatesRequiredPage::confirmCertificateRequired);
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
             String error = "Expected the status of certificates required page to be complete but it wasn't";
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();

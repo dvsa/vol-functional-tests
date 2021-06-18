@@ -29,8 +29,7 @@ public class Euro6Steps implements En {
             CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             org.dvsa.testing.lib.newPages.permits.pages.CabotagePage.confirmWontUndertakeCabotage();
-            CertificatesRequiredPage.confirmCertificateRequired();
-            CertificatesRequiredPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
             BasePermitPage.saveAndContinue();

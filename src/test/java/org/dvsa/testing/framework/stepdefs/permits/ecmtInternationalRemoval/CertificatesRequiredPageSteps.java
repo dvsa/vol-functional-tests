@@ -12,6 +12,7 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
+import static org.junit.Assert.assertTrue;
 
 public class CertificatesRequiredPageSteps implements En {
 
@@ -30,11 +31,12 @@ public class CertificatesRequiredPageSteps implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        And ("^the page heading should be correct$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::hasPageHeading);
-        And ("^the advisory texts on certificates required page are displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::hasAdvisoryTexts);
-        And ("^the correct text is displayed next to the checkbox$", CertificatesRequiredPage::hasCheckBoxText);
-        And ("^I should get the correct validation message$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::hasErrorText);
-        And ("^I select the certificate required checkbox$", org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage::confirmCertificateRequired);
+        And ("^the advisory texts on certificates required page are displayed", () -> {
+            assertTrue(CertificatesRequiredPage.isAdvisoryTextPresent());
+        });
+        And ("^the correct text is displayed next to the checkbox$", () -> {
+            assertTrue(CertificatesRequiredPage.isCheckboxTextPresent());
+        });
         And ("^I am on the ecmt removals permit start date page$", () -> {
             isPath("/application/\\d+/permit-start-date/");
         });
