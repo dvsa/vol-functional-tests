@@ -24,8 +24,8 @@
         <pico-container-version>6.10.4</pico-container-version>
         <testNG-version>7.4.0</testNG-version>
 
-        <allure-cucumber4-jvm.version>2.13.2</allure-cucumber4-jvm.version>
-        <allure-report-version>2.13.5</allure-report-version>
+        <allure-cucumber4-jvm.version>2.14.0</allure-cucumber4-jvm.version>
+        <allure-report-version>2.14.0</allure-report-version>
 
         <slf4j.version>2.12.1</slf4j.version>
         <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
@@ -106,59 +106,6 @@
                     <reportVersion>${allure-report-version}</reportVersion>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>com.trivago.rta</groupId>-->
-<!--                <artifactId>cucable-plugin</artifactId>-->
-<!--                <version>${cucable-plugin.version}</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>generate-test-resources</id>-->
-<!--                        <phase>generate-test-resources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>parallel</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash; Required properties &ndash;&gt;-->
-<!--                    <sourceRunnerTemplateFile>src/test/resources/parallel/cucable.template</sourceRunnerTemplateFile>-->
-<!--                    <sourceFeatures>src/test/resources/features</sourceFeatures>-->
-<!--                    <generatedFeatureDirectory>${project.basedir}/target/parallel/features-->
-<!--                    </generatedFeatureDirectory>-->
-<!--                    <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>-->
-<!--                    <includeScenarioTags>${tag.name}</includeScenarioTags>-->
-<!--                    <desiredNumberOfRunners>3</desiredNumberOfRunners>-->
-<!--                    <includeScenarioTags>-->
-<!--                        not (@skip-->
-<!--                        or @WIP-->
-<!--                        or @Deprecated-->
-<!--                        or @Accessibility-->
-<!--                        or @Jenkins-->
-<!--                        or @CLOSES-WINDOW-->
-<!--                        or @TOGGLE-ECMT)-->
-<!--                    </includeScenarioTags>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>build-helper-maven-plugin</artifactId>-->
-<!--                <version>${build.helper.plugin.version}</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>add-test-source</id>-->
-<!--                        <phase>generate-test-sources</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>add-test-source</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--                <configuration>-->
-<!--                    <sources>-->
-<!--                        <source>${project.build.directory}/parallel/runners</source>-->
-<!--                    </sources>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -171,7 +118,7 @@
                         </goals>
                         <configuration>
                             <parallel>classes</parallel>
-                            <threadCount>5</threadCount>
+                            <threadCount>10</threadCount>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
@@ -203,26 +150,22 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java8</artifactId>
-            <scope>test</scope>
             <version>${cucumber-java.version}</version>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <scope>test</scope>
             <version>${cucumber-junit.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testNG-version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-testng</artifactId>
             <version>${cucumber-testNG.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
