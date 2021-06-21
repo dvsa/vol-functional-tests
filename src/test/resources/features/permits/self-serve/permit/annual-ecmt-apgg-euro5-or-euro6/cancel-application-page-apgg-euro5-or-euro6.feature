@@ -1,4 +1,4 @@
-@EXTERNAL @annual_ecmt_apgg_euro5_or_euro6
+@EXTERNAL @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
 Feature: Cancel application page
 
   Background:
