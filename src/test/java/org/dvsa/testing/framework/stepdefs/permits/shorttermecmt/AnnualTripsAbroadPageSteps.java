@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import activesupport.number.Int;
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;
+import io.cucumber.java8.StepDefinitionBody;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -56,9 +56,9 @@ public class AnnualTripsAbroadPageSteps implements En {
         When ("^I select save and continue without entering any value$", BasePermitPage::saveAndContinue);
         When ("^I should see the error message$", AnnualTripsAbroadPage::errorText);
         When ("^I select save and return to overview without entering any value$", BasePermitPage::overview);
-        When ("^I specify an invalid ([\\w\\-]+) of annual trips in short term 2020$", (StepdefBody.A1<String>) AnnualTripsAbroadPage::quantity);
+        When ("^I specify an invalid ([\\w\\-]+) of annual trips in short term 2020$", (StepDefinitionBody.A1<String>) AnnualTripsAbroadPage::quantity);
         Then  ("^I should get the specific validation message for invalid value$", AnnualTripsAbroadPage::negativeErrorText);
-        And  ("^I specify more than 6 digit ([\\w\\-]+) of annual trips in short term ECMT$", (StepdefBody.A1<String>) AnnualTripsAbroadPage::quantity);
+        And  ("^I specify more than 6 digit ([\\w\\-]+) of annual trips in short term ECMT$", (StepDefinitionBody.A1<String>) AnnualTripsAbroadPage::quantity);
         Then  ("^I should get the specific validation message for invalid input$", AnnualTripsAbroadPage::inValidErrorText);
         Given("^I specify a valid input in short term ECMT annual trips abroad page$", () -> {
             AnnualTripsAbroadPage.quantity(Int.random(0,999999));

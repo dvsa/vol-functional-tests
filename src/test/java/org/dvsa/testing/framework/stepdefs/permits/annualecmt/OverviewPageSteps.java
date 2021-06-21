@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import cucumber.api.PendingException;
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;
+import io.cucumber.java8.PendingException;
+import io.cucumber.java8.StepDefinitionBody;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.common.CommonPatterns;
 import org.dvsa.testing.framework.Utils.common.World;
@@ -121,7 +121,7 @@ public class OverviewPageSteps implements En {
             Assert.assertTrue(error, guidanceLink);
         });
         When("^I select (Licence number|Number of permits required) from multilateral overview page$",
-                (StepdefBody.A1<String>) org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage::select);
+                (StepDefinitionBody.A1<String>) org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage::select);
         Then("^I am navigated to the corresponding page for ([\\w\\s]+)$", (String section) -> {
             switch (section.toLowerCase()) {
                 // Licence change function on overview page is deprecated

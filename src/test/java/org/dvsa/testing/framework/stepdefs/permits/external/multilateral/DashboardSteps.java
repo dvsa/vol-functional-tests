@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;

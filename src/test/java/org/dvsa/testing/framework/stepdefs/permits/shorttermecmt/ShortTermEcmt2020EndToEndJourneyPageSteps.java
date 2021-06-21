@@ -1,8 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
-
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;
+import io.cucumber.java8.StepDefinitionBody;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
@@ -45,7 +44,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         Then("^I select any licence number for short term permit$", () -> {
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
         });
-        Then("^I am on short term ECMT Application overview Page$", (StepdefBody.A0) OverviewPage::untilOnPage);
+        Then("^I am on short term ECMT Application overview Page$", (StepDefinitionBody.A0) OverviewPage::untilOnPage);
         Then("^I complete the How will you use the permits section and click save and continue$", () -> {
             OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());

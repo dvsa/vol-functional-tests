@@ -23,7 +23,7 @@ public class ApplicationVerifyJourney extends BasePage {
 
     @Given("i have an application in progress")
     public void iHaveAnApplicationInProgress() {
-        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+        world.createApplication.setOperatorType(OperatorType.GOODS.name());
         world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourneySteps.createApplication();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

@@ -5,7 +5,7 @@ import activesupport.string.Str;
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenByCountryModel;
 import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import com.google.common.collect.Lists;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;

@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.TrailersCertificateOfRoadworthiness;
 
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.TrailersCertificateOfRoadworthinessJourney;
 import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;

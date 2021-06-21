@@ -6,7 +6,7 @@ import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.Utils.generic.Utils;
 import apiCalls.enums.UserType;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.lib.pages.BasePage;

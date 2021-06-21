@@ -14,7 +14,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.internal.CaseWorkerAPI;
 import com.typesafe.config.Config;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.VolAccountJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;

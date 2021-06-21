@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import cucumber.api.PendingException;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
+import io.cucumber.java8.PendingException;
 
 public class EmailSteps implements En {
     public EmailSteps() {

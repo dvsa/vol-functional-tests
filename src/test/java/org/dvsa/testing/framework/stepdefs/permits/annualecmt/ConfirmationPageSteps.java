@@ -3,9 +3,9 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.OrganisationModel;
 import apiCalls.eupaActions.OrganisationAPI;
-import cucumber.api.PendingException;
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;
+import io.cucumber.java8.PendingException;
+import io.cucumber.java8.StepDefinitionBody;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -119,6 +119,6 @@ BaseApplicationSubmitPage.untilSubmittedPageLoad();
         Then("^I will taken to the permit dashboard$", () -> {
             throw new PendingException();
         });
-        Then("^I'm taken to the cancel confirmation page$", (StepdefBody.A0) CancelApplicationPage::untilOnPage);
+        Then("^I'm taken to the cancel confirmation page$", (StepDefinitionBody.A0) CancelApplicationPage::untilOnPage);
     }
 }

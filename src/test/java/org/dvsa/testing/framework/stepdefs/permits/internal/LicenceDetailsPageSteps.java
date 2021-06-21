@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import apiCalls.eupaActions.OrganisationAPI;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;

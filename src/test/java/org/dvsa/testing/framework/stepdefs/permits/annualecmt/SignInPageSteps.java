@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import org.dvsa.testing.lib.pages.LoginPage;
 import org.dvsa.testing.lib.pages.external.SignInPage;
 import org.junit.Assert;

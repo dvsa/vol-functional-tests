@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal.StockCreation;
 
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;
 import org.dvsa.testing.lib.pages.enums.Action;
 import org.dvsa.testing.lib.pages.enums.AdminOption;
 import org.dvsa.testing.lib.pages.internal.NavigationBar;

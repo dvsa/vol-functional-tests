@@ -1,10 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import apiCalls.eupaActions.OrganisationAPI;
-import cucumber.api.PendingException;
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;
 import edu.emory.mathcs.backport.java.util.Collections;
+import io.cucumber.java8.PendingException;
+import io.cucumber.java8.StepDefinitionBody;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.World;
@@ -73,7 +73,7 @@ public class NumberOfPermitPageSteps implements En {
             boolean isComplete = org.dvsa.testing.lib.pages.external.permit.multilateral.OverviewPage.checkStatus(OverviewPage.Section.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
             Assert.assertTrue("The 'Number of Permits Required' section status is not complete", isComplete);
         });
-        Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswersPage::untilOnPage);
+        Then("^the user is on annual multilateral check your answers page$", (StepDefinitionBody.A0) CheckYourAnswersPage::untilOnPage);
         When("^the case worker is viewing current fees$", () -> {
             LicenceStore licence = operatorStore.getCurrentLicence().get();
             BaseInternalJourney.getInstance().openLicence(

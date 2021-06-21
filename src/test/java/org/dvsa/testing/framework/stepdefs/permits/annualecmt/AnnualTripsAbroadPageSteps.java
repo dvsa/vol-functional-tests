@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;
+import io.cucumber.java8.StepDefinitionBody;
 import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -35,7 +35,7 @@ public class AnnualTripsAbroadPageSteps implements En {
         Given("^I don't specify an amount for annual trips$", () -> {
             // Here for readability
         });
-        Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepdefBody.A1<String>) NumberOfTripsPage::quantity);
+        Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepDefinitionBody.A1<String>) NumberOfTripsPage::quantity);
         Then("^I should see text informing me not to include NI journeys$", () -> {
             Assert.assertTrue(
                     "The text informing users not to include NI journeys was not found",

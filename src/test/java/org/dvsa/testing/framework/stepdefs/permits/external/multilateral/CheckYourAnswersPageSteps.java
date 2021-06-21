@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import apiCalls.Utils.eupaBuilders.organisation.OrganisationModel;
 import apiCalls.eupaActions.OrganisationAPI;
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;
+import io.cucumber.java8.StepDefinitionBody;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -53,6 +53,6 @@ public class CheckYourAnswersPageSteps implements En {
                     CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.NumberOfPermits)
             );
         });
-        Then("I am navigated to annual multilateral check your answers page", (StepdefBody.A0) CheckYourAnswersPage::untilOnPage);
+        Then("I am navigated to annual multilateral check your answers page", (StepDefinitionBody.A0) CheckYourAnswersPage::untilOnPage);
     }
 }
