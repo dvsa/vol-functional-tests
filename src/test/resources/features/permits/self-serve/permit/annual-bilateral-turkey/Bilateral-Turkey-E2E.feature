@@ -1,4 +1,4 @@
-@bilateral_turkey
+@bilateral_turkey @eupa_regression
 Feature: Bilaterals Turkey end to end happy path journey including validations
 
   Background:

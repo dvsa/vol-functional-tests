@@ -1,3 +1,4 @@
+@eupa_regression
 Feature: Licence checks on submit
 
   @EXTERNAL @OLCS-22701 @annual_ecmt_apgg_euro5_or_euro6

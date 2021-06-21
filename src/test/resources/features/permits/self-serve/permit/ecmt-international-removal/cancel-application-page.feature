@@ -1,4 +1,4 @@
-@EXTERNAL @ecmt_removal
+@EXTERNAL @ecmt_removal @eupa_regression
 Feature: ECMT International Removal Cancel application Page
 
   Background:

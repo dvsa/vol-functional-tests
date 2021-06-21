@@ -3,7 +3,7 @@ Feature:  HTML snapshot
   Background:
     Given I have valid Goods standard_international VOL licence
 
-  @INTERNAL @OLCS-20958 @ECMT @annual_ecmt_apgg_euro5_or_euro6
+  @INTERNAL @OLCS-20958 @ECMT @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
   Scenario: Doc is generated from ECMT permit application submitted externally
     And I am on the VOL self-serve site
     And I have completed an ECMT application

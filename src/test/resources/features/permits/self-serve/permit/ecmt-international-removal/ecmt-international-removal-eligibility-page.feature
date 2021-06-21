@@ -1,4 +1,4 @@
-@ecmt_removal
+@ecmt_removal @eupa_regression
 Feature: ECMT International Removal Eligiblity page
 
   Background:

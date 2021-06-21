@@ -1,4 +1,4 @@
-@smoketest
+@smoketest @eupa_regression
 Feature: ECMT International Removal Self Service End to End Smoke test
 
   Background:

@@ -1,4 +1,4 @@
-@bilateral_morocco
+@bilateral_morocco @eupa_regression
 Feature: Bilaterals Morocco Application Path for Empty Entry Single Journey
 
   Background:

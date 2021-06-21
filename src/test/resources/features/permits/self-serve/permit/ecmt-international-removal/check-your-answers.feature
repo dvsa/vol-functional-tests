@@ -1,4 +1,4 @@
-@ecmt_removal
+@ecmt_removal @eupa_regression
 Feature: ECMT International Number Check your answers Page
 
   Background:
@@ -6,7 +6,7 @@ Feature: ECMT International Number Check your answers Page
     And I am on the VOL self-serve site
     And I am on ECMT Removal check your answers page
 
-  @EXTERNAL @OLCS-24979a @ecmt_removal @olcs-27581
+  @EXTERNAL @OLCS-24979a @olcs-27581
   Scenario: Verify the contents and functionality on ECMT International removals page is as per the ACs
     Then ECMT Removals permit check your answers page has correct heading label
     And the ECMT Removals check your answers page has reference number
@@ -22,7 +22,7 @@ Feature: ECMT International Number Check your answers Page
     And I confirm and continue
     Then I am on ECMT Removal Declaration page
 
-  @EXTERNAL @OLCS-24979a @ecmt_removal @olcs-27581
+  @EXTERNAL @OLCS-24979a @olcs-27581
   Scenario: Verify that clicking Change links on ECMT International removals Check Your Answers page, takes the user to the respective pages as per the ACs
     And   I choose to change the ECMT Removals Permits Eligibility  section
     And   I save and return to overview

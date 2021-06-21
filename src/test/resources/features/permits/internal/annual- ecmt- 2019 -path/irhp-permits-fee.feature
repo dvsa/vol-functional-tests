@@ -7,7 +7,7 @@ Feature: Internal IRHP permits fee validation
     And I am viewing a licences IRHP section
     And  I apply for an ECMT APGG Euro5 or Euro 6 application
 
-  @INTERNAL @OLCS-20954 @WIP @internal_annual_ecmt_apgg_euro5_or_euro6 @olcs-27682
+  @INTERNAL @OLCS-20954 @WIP @internal_annual_ecmt_apgg_euro5_or_euro6 @olcs-27682 @eupa_regression
   Scenario: View permit fee calculated correctly in fee tab
     And I'm  viewing my saved application in internal
     When I am on the fee tab page
@@ -20,7 +20,7 @@ Feature: Internal IRHP permits fee validation
     Then I should see Fee Amount calculated correctly
     And I should see Outstanding balance calculated correctly
 
-  @INTERNAL @OLCS-20954 @WIP @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6
+  @INTERNAL @OLCS-20954 @WIP @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
   Scenario: View permit fee calculated correctly in Permit details Page
     And  I'm  viewing my saved application in internal
     When I am on the fee tab page
@@ -29,7 +29,7 @@ Feature: Internal IRHP permits fee validation
     And In Details page, I should see Outstanding balance calculated correctly
 
 
-  @INTERNAL @OLCS-20954 @WIP @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6
+  @INTERNAL @OLCS-20954 @WIP @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
   Scenario: View permit fee calculated correctly when paying fee
     And I'm  viewing my saved application in internal
     When I am on the fee tab page

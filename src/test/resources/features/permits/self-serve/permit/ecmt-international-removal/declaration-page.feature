@@ -1,3 +1,4 @@
+@ecmt_removal @eupa_regression
 Feature: ECMT International Declaration Page
 
   Background:
@@ -5,7 +6,7 @@ Feature: ECMT International Declaration Page
     And I am on the VOL self-serve site
     And I am on  the ECMT Removal Declaration page
 
-  @EXTERNAL @OLCS-24980 @ecmt_removal @olcs-28201
+  @EXTERNAL @OLCS-24980 @olcs-28201
   Scenario: Declaration page functionality works as expected
     Then the page heading on Ecmt Removal declaration page is displayed correctly
     And  the Ecmt removal declaration page has reference number
@@ -28,7 +29,7 @@ Feature: ECMT International Declaration Page
     And I accept and continue
     Then I am directed to the ECMT removals permit fee page
 
-  @EXTERNAL @OLCS-24980 @ecmt_removal
+  @EXTERNAL @OLCS-24980
   Scenario: When fees is waived Declaration page confirmation navigates to submission page
     And I'm viewing my saved ECMT International application in internal
     And I am on the fee details page
@@ -40,7 +41,7 @@ Feature: ECMT International Declaration Page
     And I accept and continue
     Then I am on the ECMT removal application submitted page
 
-  @EXTERNAL @OLCS-24980 @ecmt_removal @olcs-27502 @olcs-27581 @OLCS-27781
+  @EXTERNAL @OLCS-24980 @olcs-27502 @olcs-27581 @OLCS-27781
   Scenario: When fees is paid Declaration page confirmation navigates to submission page
     And I go back
     Then I should be on the ECMT International Overview Page
