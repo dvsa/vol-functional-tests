@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
@@ -18,15 +19,11 @@ public class UkraineNumberOfPermitsSteps implements En {
             Assert.assertEquals(EmissionStandardsPage.getCountry(),operatorStore.getCountry());
 
             //checking the Page heading on the Turkey number of permits page is correct
-            NumberOfPermitsPage.hasPageHeading();
+            NumberOfPermitsPageJourneySteps.hasPageHeading();
 
             //checking the Number of permits label
             NumberOfPermitsPage.hasTurkeyAndUkraineBilateralStandardSingleInformation();
         });
-
-        When("^I save and continue on the Ukraine number of permits page$", NumberOfPermitsPage::saveAndContinue);
-
-        Then("^I enter the valid number of permits required for Ukraine permit$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::setNumberOfPermitsAndSetRespectiveValues);
     }
 }
 

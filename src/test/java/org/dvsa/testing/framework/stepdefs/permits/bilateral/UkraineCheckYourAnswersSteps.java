@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
@@ -29,7 +30,7 @@ public class UkraineCheckYourAnswersSteps extends BasePage implements En {
             Assert.assertEquals(emissionStandard,"Euro 3 or Euro 4");
 
             //Number of permits should be the same as entered on the number of permits page
-            String permitValue = String.valueOf(NumberOfPermitsPage.getPermitValue());
+            String permitValue = String.valueOf(NumberOfPermitsPageJourneySteps.getPermitValue());
             Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitValue + " Standard single journey permits");
         });
 

@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -46,19 +47,19 @@ public class UkraineFeePageSteps implements En {
 
             // Number of permits required check
             String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
-            String expectedNumberOfPermits = String.valueOf(NumberOfPermitsPage.permitValue);
+            String expectedNumberOfPermits = String.valueOf(NumberOfPermitsPageJourneySteps.permitValue);
             Assert.assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
 
             // Total fee to be paid check
             int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
-            int  numberOfPermits = Integer.parseInt(String.valueOf(NumberOfPermitsPage.permitValue));
+            int  numberOfPermits = Integer.parseInt(String.valueOf(NumberOfPermitsPageJourneySteps.permitValue));
             int expectedTotal= numberOfPermits *8 ;
             Assert.assertEquals(actualTotal,expectedTotal);
 
             //Fee breakdown check
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Type']",SelectorType.XPATH),"Standard single journey");
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH),operatorStore.getCountry());
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']",SelectorType.XPATH),NumberOfPermitsPage.getPermitValue());
+            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']",SelectorType.XPATH),NumberOfPermitsPageJourneySteps.getPermitValue());
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£"+expectedTotal);
         });
 

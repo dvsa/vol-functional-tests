@@ -58,10 +58,4 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
         return this;
     }
 
-    public EcmtInternationalRemovalJourney numberOfPermits() {
-        org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-        saveAndContinue();
-        return this;
-    }
-
 }

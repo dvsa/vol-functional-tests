@@ -5,6 +5,7 @@ import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -44,7 +45,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
                     .getReferenceNumber();
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(expectedLicenceNumber, actualReferenceNumber);
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
+            NumberOfPermitsPageJourneySteps.hasPageHeading();
         });
         Then("^should see the text box for each year for Annual Multilateral permit stock with an open window$", () -> {
             //need to add steps later

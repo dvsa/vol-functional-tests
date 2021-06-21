@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -35,19 +36,17 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
-            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-            AnnualBilateralJourney.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completePage();
         });
 
         Then("^I see three sections displayed on the table correctly$", () -> {
             BilateralJourneySteps.assertSectionsExist(false);
         });
 
-
         Then("^For bilateral standard permits no cabotage permit type,the value of how many permits you need, will be as per the ones saved on the number of permits page$", () -> {
-            String permitlabel = NumberOfPermitsPage.getLabel();
-            String permitvalue = String.valueOf(NumberOfPermitsPage.getPermitValue());
-            Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(), permitvalue + " " + permitlabel + "s");
+            String permitLabel = NumberOfPermitsPageJourneySteps.getLabel();
+            String permitValue = String.valueOf(NumberOfPermitsPageJourneySteps.getPermitValue());
+            Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(), permitValue + " " + permitLabel + "s");
         });
     }
 }

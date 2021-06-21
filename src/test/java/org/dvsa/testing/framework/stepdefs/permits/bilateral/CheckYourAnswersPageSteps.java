@@ -4,6 +4,7 @@ import activesupport.IllegalBrowserException;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -41,8 +42,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             PermitUsagePage.saveAndContinue();
             BilateralJourneySteps.clickYesToCabotage();
             BilateralJourneySteps.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-            AnnualBilateralJourney.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completePage();
         });
         Then("^Country name displayed on the Bilateral check your answers page is the one clicked on the overview page$", () -> {
             CheckYourAnswerPage.untilOnPage();
@@ -69,8 +69,8 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             BilateralJourneySteps.assertCabotageValueYes();
         });
         Then("^Value of How many permits you need, will be the one saved on the number of permits page$", () -> {
-            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
-            String permitvalue =String.valueOf(NumberOfPermitsPage.getPermitValue());
+            String permitlabel = NumberOfPermitsPageJourneySteps.getLabel();
+            String permitvalue = String.valueOf(NumberOfPermitsPageJourneySteps.getPermitValue());
             Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitvalue+" "+permitlabel+"s");
         });
         When("^I click Confirm and return to overview$", () -> {
@@ -98,8 +98,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
           PermitUsagePage.saveAndContinue();
           BilateralJourneySteps.clickNoToCabotage();
           BilateralJourneySteps.saveAndContinue();
-          org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-          AnnualBilateralJourney.saveAndContinue();
+          NumberOfPermitsPageJourneySteps.completePage();
           CheckYourAnswerPage.untilOnPage();
         });
         And("^I change period to be Bilateral Standard permits no Cabotage on the period selection and continue to be on the check your answers page$", () -> {
@@ -109,8 +108,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-            AnnualBilateralJourney.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completePage();
             CheckYourAnswerPage.untilOnPage();
         });
 
@@ -121,9 +119,9 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             assertTrue(isElementNotPresent("//dt[contains(text(),'Do you need to carry out cabotage?')]", SelectorType.XPATH));
         });
         Then("^Value of How many permits you need, will be the one saved on the number of permits page for Bileterals Standard permits no Cabotage$", () -> {
-            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
-            String permitvalue =String.valueOf(NumberOfPermitsPage.getPermitValue());
-            Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(),permitvalue+" "+permitlabel+"s");
+            String permitLabel = NumberOfPermitsPageJourneySteps.getLabel();
+            String permitValue = String.valueOf(NumberOfPermitsPageJourneySteps.getPermitValue());
+            Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(),permitValue + " " + permitLabel + "s");
         });
     }
 }

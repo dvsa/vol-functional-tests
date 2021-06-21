@@ -4,6 +4,7 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -32,7 +33,7 @@ public class NumberOfPermitsPageSteps implements En {
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
         });
-        And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPage::hasECMTPageHeading);
+        And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPageJourneySteps::hasECMTPageHeading);
         And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPage::hasFeeText);
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {

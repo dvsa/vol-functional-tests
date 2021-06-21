@@ -20,12 +20,12 @@ Feature: Short term ECMT APSG with sectors number of permits page
     And I enter the number of permits required more than the authorised vehicles
     And I save and continue
     Then I should get the validation error message
-    And I enter the valid number of permits required
+    And I enter the valid number of short term permits required
     And I save and continue
     Then the user is navigated to the next page
 
   @OLCS-25088
   Scenario: Save and continue to overview updates the status as completed
-    When I enter the valid number of permits required
+    When I enter the valid number of short term permits required
     And I select save and return overview link
     Then the user is navigated to the overview page with the number of permits page status as completed

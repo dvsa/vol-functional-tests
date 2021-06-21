@@ -6,6 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -35,8 +36,9 @@ public class DeclarationPageSteps extends BasePage implements En {
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
-                    .permitStartDatePage()
-                    .numberOfPermits()
+                    .permitStartDatePage();
+            NumberOfPermitsPageJourneySteps.completePage();
+            EcmtInternationalRemovalJourney.getInstance()
                     .checkYourAnswers();
         });
         And ("^the declaration page has correct link under guidance notes", DeclarationPage::isGuidanceNotesLinkPresent);

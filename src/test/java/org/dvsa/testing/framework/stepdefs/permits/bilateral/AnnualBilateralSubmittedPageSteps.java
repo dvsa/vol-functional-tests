@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -44,8 +45,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourneySteps.completeDeclaration();
@@ -95,8 +95,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
             BasePermitPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourneySteps.completeDeclaration();
@@ -123,8 +122,7 @@ public class AnnualBilateralSubmittedPageSteps implements En {
             PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourneySteps.completeDeclaration();

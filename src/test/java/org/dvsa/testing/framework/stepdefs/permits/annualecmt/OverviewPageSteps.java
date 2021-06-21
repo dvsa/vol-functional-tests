@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.common.CommonPatterns;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -73,7 +74,7 @@ public class OverviewPageSteps implements En {
         Then("^I am navigated to the corresponding page for ([\\w\\s]+)$", (String section) -> {
             switch (section.toLowerCase()) {
                 case "number of permits required":
-                    NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
+                    NumberOfPermitsPageJourneySteps.setNumberOfPermitsAndSetRespectiveValues();
                     break;
                 default:
                     throw new IllegalArgumentException("Unsupported section: '" + section + "'");

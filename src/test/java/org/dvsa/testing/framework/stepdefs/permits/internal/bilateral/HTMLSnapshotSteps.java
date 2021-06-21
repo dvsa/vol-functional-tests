@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
@@ -73,9 +74,9 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             Assert.assertEquals(BasePage.getElementValueByText("//dl[6]//dd[1]",SelectorType.XPATH),"I only need permits for cabotage");
 
             //How many permits do you need?
-            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
-            String permitvalue =String.valueOf(NumberOfPermitsPage.getPermitValue());
-            String expected3= permitvalue+" "+permitlabel+"s";
+            String permitLabel = NumberOfPermitsPageJourneySteps.getLabel();
+            String permitValue = String.valueOf(NumberOfPermitsPageJourneySteps.getPermitValue());
+            String expected3= permitValue + " " + permitLabel + "s";
             Assert.assertEquals(BasePage.getElementValueByText("//dl[7]//dt[1]",SelectorType.XPATH),"How many permits do you need?");
             Assert.assertEquals(BasePage.getElementValueByText("//dl[7]//dd[1]",SelectorType.XPATH),expected3);
 

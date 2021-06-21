@@ -23,8 +23,7 @@ Feature: Bilaterals Ukraine end to end happy path journey including validations
     Then I am on the annual bilateral Ukraine number of permit page with correct information and content
     When I save and continue on the Ukraine number of permits page
     Then I should get the validation error message on the number of permits page
-    When I enter the valid number of permits required for Ukraine permit
-    And  I save and continue on the Ukraine number of permits page
+    When I enter the number of bilateral permits required
     Then I am on the Annual Bilateral Ukraine check your answers page with correct information and content
     When I click Confirm and return to overview
     And  the status of answers questions for individual countries as complete

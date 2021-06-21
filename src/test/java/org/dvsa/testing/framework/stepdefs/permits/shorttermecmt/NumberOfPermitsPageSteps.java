@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -43,15 +44,15 @@ public class NumberOfPermitsPageSteps implements En {
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         });
         Then("^the page heading on the short term number of permits page is displayed correctly$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
-           org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasAdvisoryText();
+            NumberOfPermitsPageJourneySteps.hasPageHeading();
+            NumberOfPermitsPage.hasAdvisoryText();
         });
         Then("^I should get the number of permits page error message$", () ->{
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasShortTermECMTEmissionErrorText();
+            NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
+            NumberOfPermitsPage.hasShortTermECMTEmissionErrorText();
         });
 
-        Then("^I enter the valid number of permits required$", () -> {
+        Then("^I enter the valid number of short term permits required$", () -> {
             NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
         });
         Then("^I enter the number of permits required more than the authorised vehicles$",() ->{
@@ -63,7 +64,8 @@ public class NumberOfPermitsPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
         Then("^I am taken back to short term number of permits page$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasPageHeading();
+            NumberOfPermitsPage.untilOnPage();
+            NumberOfPermitsPageJourneySteps.hasPageHeading();
         });
         Then("^the user is navigated to the overview page with the number of permits page status as not started yet$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.hasPageHeading();

@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -32,8 +33,8 @@ public class CheckYourAnswersPageSteps implements En {
                     .removalsEligibility(true)
                      .cabotagePage()
                     .certificatesRequiredPage()
-                    .permitStartDatePage()
-                    .numberOfPermits();
+                    .permitStartDatePage();
+            NumberOfPermitsPageJourneySteps.completePage();
 
         });
         And("^the ECMT Removals check your answers page has reference number$", BasePermitPage::getReferenceFromPage);
@@ -55,6 +56,9 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("^I choose to change the ECMT Removals Permits Cabotage section$", () -> CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.Cabotage));
         Then("^I choose to change the ECMT Removals Permits Number of permits section$", () -> CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.NumberOfPermits));
-        Then("^I should be on the ECMT international removal number of permits page$", NumberOfPermitsPage::hasECMTPageHeading);
+        Then("^I should be on the ECMT international removal number of permits page$", () -> {
+            NumberOfPermitsPage.untilOnPage();
+            NumberOfPermitsPageJourneySteps.hasECMTPageHeading();
+        });
     }
 }

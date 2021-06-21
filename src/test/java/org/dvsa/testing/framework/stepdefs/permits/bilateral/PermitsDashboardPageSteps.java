@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
@@ -39,7 +40,7 @@ public class PermitsDashboardPageSteps extends BasePage implements En {
 
             //Verifying that number of permits displayed on the dashboard is same as entered on number of permits page
             String dashboardNumberOfPermits = findElement("(//table)[count(//table)]//td[2][@data-heading='Number of permits']", SelectorType.XPATH).getText();
-            Assert.assertEquals(dashboardNumberOfPermits, org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel());
+            Assert.assertEquals(dashboardNumberOfPermits, NumberOfPermitsPageJourneySteps.getLabel());
 
             //Verifying that the permit type displayed on the dashboard is same as chosen while making an application
             String dashboardPermitType = findElement("(//table)[count(//table)]//td[3][@data-heading='Type']", SelectorType.XPATH).getText();
@@ -77,7 +78,7 @@ public class PermitsDashboardPageSteps extends BasePage implements En {
 
             //Verifying that number of permits displayed on the dashboard is same as entered on number of permits page
             String dashboardNumberOfIssuedPermits = findElement("//div[3]//table[1]//tbody[1]//tr[1]//td[2]", SelectorType.XPATH).getText();
-            Assert.assertEquals(dashboardNumberOfIssuedPermits, org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel());
+            Assert.assertEquals(dashboardNumberOfIssuedPermits, NumberOfPermitsPageJourneySteps.getLabel());
 
             //Verifying that the permit type displayed on the dashboard is same as chosen while making an application
             String dashboardIssuedType = findElement("//div[3]//table[1]//tbody[1]//tr[1]//td[3]", SelectorType.XPATH).getText();

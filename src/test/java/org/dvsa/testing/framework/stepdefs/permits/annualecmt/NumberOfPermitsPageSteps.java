@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -32,14 +33,14 @@ public class NumberOfPermitsPageSteps implements En {
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         });
-        And("^the page heading on the ECMT number of permits page is displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::hasPageHeading);
+        And("^the page heading on the ECMT number of permits page is displayed correctly$", NumberOfPermitsPageJourneySteps::hasPageHeading);
         And("^the advisory texts are displayed correctly$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasAdvisoryText();
+            NumberOfPermitsPage.hasAdvisoryText();
         });
 
         Given("^I have specified a number greater than the number of authorised vehicles$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::exceedAuthorisedVehicle);
         And ("^I should get the ECMT number of permits page error message$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
+            NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
         });
         Given("^I specify the number of permits$", NumberOfPermitsPage::enterEuro5OrEuro6permitsValue);
         Then("^I am on the annual ECMT overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);

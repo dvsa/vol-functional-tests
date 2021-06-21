@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -38,12 +39,11 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
             BilateralJourneySteps.clickYesToCabotage();
             BilateralJourneySteps.yesAndCabotagePermitConfirmation();
             BilateralJourneySteps.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.setNumberOfPermitsAndSetRespectiveValues();
-            AnnualBilateralJourney.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completePage();
         });
 
         Then("^Value of do you need to carry out cabotage, will always be as per the value selected on the cabotage page$", () -> {
-            int count = NumberOfPermitsPage.getFieldCount();
+            int count = NumberOfPermitsPageJourneySteps.getFieldCount();
             String value = getText("//*[@id='main-content']//dl/div[3]/dd[1]", SelectorType.XPATH);
             if(count == 1) {
                Assert.assertEquals("Yes\nI only need permits for cabotage", value);
@@ -54,13 +54,13 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
         });
 
         Then("^For Bilateral Standard and cabotage permits ,the Value of How many permits you need, will be as per the ones saved on the number of permits page$", () -> {
-            int count = NumberOfPermitsPage.getFieldCount();
-            String permitlabel = org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.getLabel();
+            int count = NumberOfPermitsPageJourneySteps.getFieldCount();
+            String permitlabel = NumberOfPermitsPageJourneySteps.getLabel();
             String permitstandardlabel = String.valueOf(NumberOfPermitsPage.getStandardLabel());
             String permitcabotagelabel = String.valueOf(NumberOfPermitsPage.getCabotageLabel());
-            String permitCabotage = String.valueOf(NumberOfPermitsPage.getCabotageValue());
-            String permitStandard = String.valueOf(NumberOfPermitsPage.getStandardValue());
-            String permitvalue = String.valueOf(NumberOfPermitsPage.getPermitValue());
+            String permitCabotage = String.valueOf(NumberOfPermitsPageJourneySteps.getCabotageValue());
+            String permitStandard = String.valueOf(NumberOfPermitsPageJourneySteps.getStandardValue());
+            String permitvalue = String.valueOf(NumberOfPermitsPageJourneySteps.getPermitValue());
 
             if(count == 1) {
                 Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitvalue + " " + permitlabel + "s");
