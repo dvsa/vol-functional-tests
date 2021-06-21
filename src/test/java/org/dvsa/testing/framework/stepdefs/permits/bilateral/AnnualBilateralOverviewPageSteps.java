@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -103,11 +104,10 @@ public class AnnualBilateralOverviewPageSteps implements En {
         When("^I submit the application on selection of Morocco link on overview page$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Morocco);
             EssentialInformationPage.untilOnPage();
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            EssentialInformationPage.hasPageHeading();
-            EssentialInformationPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasMoroccoPageHeading();
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(getCountry(), operatorStore.getCountry());
+            EssentialInformationPageJourneySteps.completePage();
+            PeriodSelectionPage.hasMoroccoPageHeading();
+            Assert.assertEquals(getCountry(), operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.MoroccoStandardMultipleJourney,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
@@ -124,11 +124,10 @@ public class AnnualBilateralOverviewPageSteps implements En {
         When("^I submit the application for standard single journey on selection of Morocco link on overview page$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Morocco);
             EssentialInformationPage.untilOnPage();
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            EssentialInformationPage.hasPageHeading();
-            EssentialInformationPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasMoroccoPageHeading();
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(getCountry(), operatorStore.getCountry());
+            EssentialInformationPageJourneySteps.completePage();
+            PeriodSelectionPage.hasMoroccoPageHeading();
+            Assert.assertEquals(getCountry(), operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.MoroccoStandardSingleJourney,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
@@ -145,11 +144,10 @@ public class AnnualBilateralOverviewPageSteps implements En {
         When("^I submit the application for empty entry single journey on selection of Morocco link on overview page$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Morocco);
             EssentialInformationPage.untilOnPage();
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
-            EssentialInformationPage.hasPageHeading();
-            EssentialInformationPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasMoroccoPageHeading();
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(getCountry(), operatorStore.getCountry());
+            EssentialInformationPageJourneySteps.completePage();
+            PeriodSelectionPage.hasMoroccoPageHeading();
+            Assert.assertEquals(getCountry(), operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.MoroccoEmptyEntry,operatorStore);
             PeriodSelectionPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
@@ -167,9 +165,8 @@ public class AnnualBilateralOverviewPageSteps implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Morocco);
             EssentialInformationPage.untilOnPage();
             Assert.assertEquals(getCountry(), operatorStore.getCountry());
-            EssentialInformationPage.hasPageHeading();
-            EssentialInformationPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasMoroccoPageHeading();
+            EssentialInformationPageJourneySteps.completePage();
+            PeriodSelectionPage.hasMoroccoPageHeading();
             Assert.assertEquals(getCountry(), operatorStore.getCountry());
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.MoroccoHorsContingency, operatorStore);
             PeriodSelectionPage.saveAndContinue();
