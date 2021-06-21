@@ -92,6 +92,7 @@ public class SurrenderJourneySteps extends BasePage {
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
 
+
     public void submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
         acknowledgeDestroyPage();
