@@ -4,12 +4,12 @@ Feature: Search and add a vehicle
 
   Scenario: Check page contents
     Given I have a "goods" "standard_national" licence
-    When I navigate to manage vehicle page on an application
+    When I navigate to manage vehicle page on a licence
     And choose to add a "Y23WSH" vehicle
     Then the add vehicle page should display licence number
     And "Add a vehicle" heading
 
-  Scenario Outline: Add a vehicle to application (This or the one below?)
+  Scenario Outline: Add a vehicle to an application
     Given I have a "<Operator>" application with 0 vehicles and a vehicleAuthority of 5
     When I navigate to manage vehicle page on an application
     And choose to add a "<VRM>" vehicle
@@ -18,31 +18,9 @@ Feature: Search and add a vehicle
       | Operator | VRM     |
       | goods    | S679ASX |
 
-  Scenario: Add a vehicle registration mark on an application
-    Given I have a "goods" "standard_national" licence
-    When I navigate to manage vehicle page on an application
-    When I search for a valid "F95 JGE" registration
-    Then the vehicle summary should be displayed on the page:
-      | Vehicle information       |
-      | Vehicle Registration Mark |
-      | Gross plated weight in kg |
-      | Make                      |
-    And the vehicle details should not be empty
-
   Scenario: Add a vehicle registration mark on a licence
     Given I have a "goods" "standard_national" licence
-    When I navigate to manage vehicle page on an application
-    When I search for a valid "F95 JGE" registration
-    Then the vehicle summary should be displayed on the page:
-      | Vehicle information       |
-      | Vehicle Registration Mark |
-      | Gross plated weight in kg |
-      | Make                      |
-    And the vehicle details should not be empty
-
-  Scenario: Add a vehicle registration mark on a variation
-    Given I have a "goods" "standard_national" licence
-    When I navigate to manage vehicle page on an application
+    When I navigate to manage vehicle page on a licence
     When I search for a valid "F95 JGE" registration
     Then the vehicle summary should be displayed on the page:
       | Vehicle information       |
