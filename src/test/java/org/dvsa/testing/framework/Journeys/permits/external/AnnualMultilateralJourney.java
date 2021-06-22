@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
@@ -30,21 +31,6 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
         permit.setReference(BasePermitPage.getReferenceFromPage());
 
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
-        return this;
-    }
-
-    public AnnualMultilateralJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) {
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        licence.getLatestAnnualMultilateral().get().setNumberOfPermits(org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.quantity(maxNumberOfPermits, PermitType.ANNUAL_MULTILATERAL));
-        NumberOfPermitsPage.saveAndContinue();
-        return this;
-    }
-
-    public AnnualMultilateralJourney numberOfPermitsPage(OperatorStore operatorStore) {
-        int authVehicles = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).getNumberOfAuthorisedVehicles();
-        numberOfPermitsPage(authVehicles, operatorStore);
-
-        operatorStore.getCurrentLicence().get().getLatestAnnualMultilateral().get().setApplicationDate();
         return this;
     }
 

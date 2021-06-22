@@ -5,6 +5,7 @@ import activesupport.string.Str;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -33,8 +34,9 @@ public class FeePageSteps implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                    .numberOfPermitsPage(operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
+            NumberOfPermitsPageJourneySteps.completeMultilateralPage();
+            AnnualMultilateralJourney.INSTANCE
                     .checkYourAnswers();
             DeclarationPageJourneySteps.completeDeclaration();
 
@@ -52,7 +54,7 @@ public class FeePageSteps implements En {
 
             // Application date check
             DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-            LocalDateTime expectedDateTime = permit.getApplicationDate();
+            LocalDateTime expectedDateTime = NumberOfPermitsPageJourneySteps.getApplicationDate();
             String actualDate = PermitFeePage.getTableSectionValue(FeeSection.ApplicationDate);
             String expectedDate = expectedDateTime.format(format);
 

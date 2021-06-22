@@ -5,6 +5,8 @@ import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -38,10 +40,8 @@ public class AnnualTripsAbroadPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
-            EmissionStandardsPage.confirmCheckbox();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
+            EmissionStandardsPageJourneySteps.completePage();
         });
         And("^the page heading on short term ECMT Annual Trips Abroad page is displayed correctly$", () -> {
             String heading = AnnualTripsAbroadPage.getPageHeading();

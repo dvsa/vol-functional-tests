@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -46,8 +47,7 @@ public class UnderConsiderationPageSteps implements En {
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPage.enterAuthorisedVehicles();
             BasePermitPage.saveAndContinue();
-            EmissionStandardsPage.confirmCheckbox();
-            BasePermitPage.saveAndContinue();
+            EmissionStandardsPageJourneySteps.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);

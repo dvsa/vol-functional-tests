@@ -72,13 +72,11 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         });
         Then("^I complete Number of permits required section and click save and continue$", () -> {
             NumberOfPermitsPageJourneySteps.hasPageHeading();
-            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
         });
         Then("^I complete Euro emissions standard page section and click save and continue$", () -> {
             EmissionStandardsPageJourneySteps.hasPageHeading();
-            EmissionStandardsPage.confirmCheckbox();
-            BasePermitPage.saveAndContinue();
+            EmissionStandardsPageJourneySteps.completePage();
         });
         Then("^I complete Annual trips abroad page section and click save and continue$", () -> {
             AnnualTripsAbroadPage.quantity(10);
@@ -130,10 +128,8 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
-            BasePermitPage.saveAndContinue();
-            EmissionStandardsPage.confirmCheckbox();
-            EmissionStandardsPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
+            EmissionStandardsPageJourneySteps.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);

@@ -20,8 +20,8 @@ Feature: Bilaterals Turkey end to end happy path journey including validations
     Then I should get the validation error message to select one option
     When I select Yes radio button on the Turkey third country page
     And  I save and continue on the Turkey third country page
-    Then I am on the annual bilateral Turkey number of permit page with correct information and content
-    When I save and continue on the Turkey number of permits page
+    Then I am on the annual bilateral number of permits page with correct information and content
+    And I save and continue
     Then I should get the validation error message on the number of permits page
     When I enter the number of bilateral permits required
     Then I am on the Annual Bilateral Turkey check your answers page with correct information and content

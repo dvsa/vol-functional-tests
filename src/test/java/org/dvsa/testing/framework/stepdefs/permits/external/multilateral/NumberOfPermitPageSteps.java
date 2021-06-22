@@ -65,9 +65,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
                Assert.assertTrue(expectedPermits.stream().anyMatch(p::equals));
            });
         });
-        When("^I specify my number of multilateral permits$", () -> {
-            AnnualMultilateralJourney.INSTANCE.numberOfPermitsPage(operatorStore);
-        });
+        When("^I specify my number of multilateral permits$", NumberOfPermitsPageJourneySteps::completeMultilateralPage);
         Then("^the number of permits section on the annual multilateral overview page is complete$", () -> {
             OverviewPage.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
         });
@@ -86,9 +84,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
             findAll("//*[contains(@class, 'field')]//input[@type='text']", SelectorType.XPATH)
                     .stream().forEach(x -> {x.sendKeys("0");});
         });
-        And("^I specify the number of permits I require for my multilateral permit$", () -> {
-            AnnualMultilateralJourney.INSTANCE.numberOfPermitsPage(operatorStore);
-        });
+        And("^I specify the number of permits I require for my multilateral permit$", NumberOfPermitsPageJourneySteps::completeMultilateralPage);
         When("^I update the number of permits for my multilateral permit$", () -> {
             IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
             IrhpPermitsApplyPage.viewApplication();

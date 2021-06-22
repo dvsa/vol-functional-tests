@@ -20,6 +20,7 @@ import org.dvsa.testing.lib.pages.external.permit.*;
 import org.junit.Assert;
 
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
+import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 
@@ -35,14 +36,10 @@ public class NumberOfPermitsPageSteps implements En {
         });
         And("^the page heading on the ECMT number of permits page is displayed correctly$", NumberOfPermitsPageJourneySteps::hasPageHeading);
         And("^the advisory texts are displayed correctly$", () -> {
-            NumberOfPermitsPage.hasAdvisoryText();
+            assertTrue(NumberOfPermitsPage.isAdvisoryTextPresent());
         });
 
-        Given("^I have specified a number greater than the number of authorised vehicles$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::exceedAuthorisedVehicle);
-        And ("^I should get the ECMT number of permits page error message$", () -> {
-            NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
-        });
-        Given("^I specify the number of permits$", NumberOfPermitsPage::enterEuro5OrEuro6permitsValue);
+        Given("^I have specified a number greater than the number of authorised vehicles$", NumberOfPermitsPage::exceedAuthorisedVehicle);
         Then("^I am on the annual ECMT overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
         Then("^I select the fee tab and pay the outstanding fees$", () -> {
             HomePage.selectTab(Tab.FEES);

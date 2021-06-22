@@ -13,6 +13,6 @@ public class EssentialInformationPageJourneySteps extends BasePermitJourney {
 
     public static void completePage() {
         hasPageHeading();
-        EssentialInformationPage.saveAndContinue();
+        saveAndContinue();
     }
 }

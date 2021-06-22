@@ -15,6 +15,7 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 
@@ -34,28 +35,20 @@ public class NumberOfPermitsPageSteps implements En {
             NumberOfPermitsPage.untilOnPage();
         });
         And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPageJourneySteps::hasECMTPageHeading);
-        And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPage::hasFeeText);
+        And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", () -> {
+            assertTrue(NumberOfPermitsPage.isFeeTextPresent());
+        });
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
-
         });
         Given("^I have not entered anything in number of  permits field$", () -> {
             // Here for readability
         });
-        Then("^I should get the ECMT Removals number of permits page error message$", () -> {
-            NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
-        });
-
-
         And("^I enter number of permits more than the authorised vehicles and click save and continue$", () -> {
             NumberOfPermitsPage.exceedAuthorisedVehicle();
             BasePermitPage.saveAndContinue();
-        });
-        Then("^I should get the ECMT Removals number of permits page validation error message$", () -> {
-            NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
-
         });
         And("^I enter valid number of permits on the removals number of permits page and click save and continue$", () -> {
             NumberOfPermitsPage.enterAuthorisedVehicles();

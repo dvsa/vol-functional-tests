@@ -5,6 +5,7 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
@@ -38,8 +39,8 @@ public class ApplicationSteps extends BasePage implements En {
                     AnnualMultilateralJourney.INSTANCE
                                .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                                .licencePage(operator, world)
-                               .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                               .numberOfPermitsPage(operator);
+                               .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
+                   NumberOfPermitsPageJourneySteps.completeMultilateralPage();
                    get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
                    HomePage.selectTab(Tab.PERMITS);
             });
@@ -62,8 +63,9 @@ public class ApplicationSteps extends BasePage implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                    .numberOfPermitsPage(operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
+             NumberOfPermitsPageJourneySteps.completeMultilateralPage();
+             AnnualMultilateralJourney.INSTANCE
                     .checkYourAnswers();
 
              DeclarationPageJourneySteps.completeDeclaration();

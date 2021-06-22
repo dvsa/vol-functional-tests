@@ -5,6 +5,7 @@ import apiCalls.Utils.eupaBuilders.organisation.OrganisationModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
@@ -27,8 +28,8 @@ public class CheckYourAnswersPageSteps implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             AnnualMultilateralJourney.INSTANCE
                     .beginApplication().permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
-                    .licencePage(operatorStore, world).overviewPage(OverviewSection.NumberOfPaymentsRequired, operatorStore)
-                    .numberOfPermitsPage(operatorStore);
+                    .licencePage(operatorStore, world).overviewPage(OverviewSection.NumberOfPaymentsRequired, operatorStore);
+            NumberOfPermitsPageJourneySteps.completeMultilateralPage();
         });
         Then("the annual bilateral check your answers page has an application reference displayed", () -> {
             String message = "Expected there to be a reference number displayed in the correct format but it wasn't";

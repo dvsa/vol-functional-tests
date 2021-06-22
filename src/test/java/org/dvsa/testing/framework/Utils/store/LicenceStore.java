@@ -146,7 +146,6 @@ public class LicenceStore extends OperatorStore {
         private JourneyProportion internationalBusiness;
         private Sector sector;
         private LocalDateTime submitDate;
-        private List<Permit> permitsPerCountry;
         private PermitUsage usage;
         private String journeyType;
         private List<JourneyType> journeyTypeName;
@@ -291,14 +290,6 @@ public class LicenceStore extends OperatorStore {
 
         public void setSubmitDate(LocalDateTime submitDate) {
             this.submitDate = submitDate;
-        }
-
-        public List<Permit> getPermitsPerCountry() {
-            return permitsPerCountry;
-        }
-
-        public void setPermitsPerCountry(List<Permit> permitsPerCountry) {
-            this.permitsPerCountry = permitsPerCountry;
         }
 
         public PermitUsage getPermitusage(){

@@ -13,11 +13,11 @@ Feature: ECMT International Number of permits Page
     And the advisory text on the ECMT removals number of permits page is displayed correctly
     When I have not entered anything in number of  permits field
     And  I save and continue
-    Then I should get the ECMT Removals number of permits page error message
+    Then I should get the number of permits page error message
     And I save and return to overview
-    Then I should get the ECMT Removals number of permits page error message
+    Then I should get the number of permits page error message
     And I enter number of permits more than the authorised vehicles and click save and continue
-    Then I should get the ECMT Removals number of permits page validation error message
+    Then I should get the number of permits page error message
     And I enter valid number of permits on the removals number of permits page and click save and continue
    Then the page heading on check your answers page is correct
 

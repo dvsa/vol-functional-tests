@@ -4,6 +4,7 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
@@ -43,8 +44,9 @@ public class HtmlSnapshotSteps extends BasePage implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                    .numberOfPermitsPage(operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
+            NumberOfPermitsPageJourneySteps.completeMultilateralPage();
+            AnnualMultilateralJourney.INSTANCE
                     .checkYourAnswers();
             DeclarationPageJourneySteps.completeDeclaration();
             AnnualMultilateralJourney.INSTANCE

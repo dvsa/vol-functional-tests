@@ -11,4 +11,9 @@ public class EmissionStandardsPageJourneySteps extends BasePermitJourney {
         String heading = EmissionStandardsPage.getPageHeading();
         assertEquals("You must only use the Euro emission standard vehicles that the permit allows", heading);
     }
+
+    public static void completePage() {
+        EmissionStandardsPage.confirmCheckbox();
+        EmissionStandardsPage.saveAndContinue();
+    }
 }

@@ -7,6 +7,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -37,13 +38,7 @@ public class SubmittedPageSteps implements En {
     public SubmittedPageSteps(OperatorStore operator, World world) {
         And("I am on the annual multilateral submitted page", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            AnnualMultilateralJourney.INSTANCE
-                    .beginApplication()
-                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
-                    .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                    .numberOfPermitsPage(operator)
-                    .checkYourAnswers();
+            completeMultilateralJourneyUntilDeclaration(operator, world);
             DeclarationPageJourneySteps.completeDeclaration();
             AnnualMultilateralJourney.INSTANCE
                     .feeOverviewPage()
@@ -68,13 +63,7 @@ public class SubmittedPageSteps implements En {
         });
         And("^I have an ongoing annual multilateral with all fees paid$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            AnnualMultilateralJourney.INSTANCE
-                    .beginApplication()
-                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
-                    .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                    .numberOfPermitsPage(operator)
-                    .checkYourAnswers();
+            completeMultilateralJourneyUntilDeclaration(operator, world);
 
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
 
@@ -95,13 +84,7 @@ public class SubmittedPageSteps implements En {
         });
         When("^a case worker worker pays all fees for my ongoing multilateral permit application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            AnnualMultilateralJourney.INSTANCE
-                    .beginApplication()
-                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
-                    .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                    .numberOfPermitsPage(operator)
-                    .checkYourAnswers();
+            completeMultilateralJourneyUntilDeclaration(operator, world);
 
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
@@ -126,13 +109,7 @@ public class SubmittedPageSteps implements En {
        });
         When("^a case worker worker waives all fees for my ongoing multilateral permit application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            AnnualMultilateralJourney.INSTANCE
-                    .beginApplication()
-                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
-                    .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                    .numberOfPermitsPage(operator)
-                    .checkYourAnswers();
+            completeMultilateralJourneyUntilDeclaration(operator, world);
 
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
@@ -154,5 +131,16 @@ public class SubmittedPageSteps implements En {
         Then("^all the multilateral submitted advisory text is present$", () -> {
             SubmittedPage.hasMultilateralAdvisoryText();
         });
+    }
+
+    private void completeMultilateralJourneyUntilDeclaration(OperatorStore operator, World world) {
+        AnnualMultilateralJourney.INSTANCE
+                .beginApplication()
+                .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
+                .licencePage(operator, world)
+                .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
+        NumberOfPermitsPageJourneySteps.completeMultilateralPage();
+        AnnualMultilateralJourney.INSTANCE
+                .checkYourAnswers();
     }
 }

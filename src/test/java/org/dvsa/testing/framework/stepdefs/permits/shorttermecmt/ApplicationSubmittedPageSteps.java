@@ -9,6 +9,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
@@ -61,10 +63,8 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
-            EmissionStandardsPage.confirmCheckbox();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
+            EmissionStandardsPageJourneySteps.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
@@ -96,8 +96,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             refreshPage();
@@ -122,8 +121,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
             OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
-            EmissionStandardsPage.confirmCheckbox();
-            BasePermitPage.saveAndContinue();
+            EmissionStandardsPageJourneySteps.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
@@ -145,8 +143,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
@@ -168,8 +165,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
             OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
 
-            EmissionStandardsPage.confirmCheckbox();
-            BasePermitPage.saveAndContinue();
+            EmissionStandardsPageJourneySteps.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
@@ -206,8 +202,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
             HomePage.FeesTab.outstanbding(true);
             HomePage.FeesTab.pay();
@@ -220,8 +215,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
             OverviewPage.clickOverviewSection(OverviewSection.EuroEmissionStandards);
-            EmissionStandardsPage.confirmCheckbox();
-            BasePermitPage.saveAndContinue();
+            EmissionStandardsPageJourneySteps.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);

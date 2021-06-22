@@ -6,6 +6,7 @@ import cucumber.api.java8.En;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -29,8 +30,8 @@ public class CheckYourAnswersSteps implements En {
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance()
                     .overview(OverviewSection.Countries)
-                    .countries(operatorStore)
-                    .numberOfPermits(operatorStore);
+                    .countries(operatorStore);
+            NumberOfPermitsPageJourneySteps.completeBilateralPage();
 
             CheckYourAnswerPage.untilOnPage();
         });
@@ -43,7 +44,7 @@ public class CheckYourAnswersSteps implements En {
         Then("^the bilateral check your answers page heading should be correct$", CheckYourAnswerPage::untilOnPage);
         Then("^all of the answers displayed match the answers I gave$", () -> {
             LicenceStore licenceStore = operatorStore.getCurrentLicence().get();
-            Collections.reverse(licenceStore.getEcmt().getPermitsPerCountry());
+            Collections.reverse(NumberOfPermitsPageJourneySteps.getPermitsPerCountry());
 
             String expectedPermitType = licenceStore.getEcmt().getType().get().toString();
             LicenceModel licenceModel = OrganisationAPI.dashboard(operatorStore.getOrganisationId())
@@ -51,7 +52,7 @@ public class CheckYourAnswersSteps implements En {
             String expectedLicence = licenceModel.getLicNo().concat("\n" + licenceModel.getTrafficArea().getName());
 
             List<String> deliveryCountries =
-                    licenceStore.getEcmt().getPermitsPerCountry().stream().map(permit -> permit.getCountry().toString()).collect(Collectors.toList());
+                    NumberOfPermitsPageJourneySteps.getPermitsPerCountry().stream().map(permit -> permit.getCountry().toString()).collect(Collectors.toList());
             Collections.reverse(deliveryCountries);
             String expectedDeliveryCountry = String.join(", ", deliveryCountries);
 
@@ -59,7 +60,7 @@ public class CheckYourAnswersSteps implements En {
             Assert.assertEquals(expectedLicence, CheckYourAnswerPage.getAnswer(BilateralSection.Licence));
             Assert.assertEquals(expectedDeliveryCountry, CheckYourAnswerPage.getAnswer(BilateralSection.Country));
 
-            licenceStore.getEcmt().getPermitsPerCountry().sort((o1, o2) -> {
+            NumberOfPermitsPageJourneySteps.getPermitsPerCountry().sort((o1, o2) -> {
                 int result = o1.getCountry().toString().substring(0, 1).compareTo(o2.getCountry().toString().substring(0, 1));
 
                 if (result == 0 && Integer.parseInt(o1.getYear()) < Integer.parseInt(o2.getYear())) {
@@ -71,7 +72,7 @@ public class CheckYourAnswersSteps implements En {
                 return result;
             });
 
-            String expectedPermits = licenceStore.getEcmt().getPermitsPerCountry().stream().map(permits -> String.format("%d permits for %s in %s", permits.getQuantity(), permits.getCountry(), permits.getYear())).collect(Collectors.joining("\n"));
+            String expectedPermits = NumberOfPermitsPageJourneySteps.getPermitsPerCountry().stream().map(permits -> String.format("%d permits for %s in %s", permits.getQuantity(), permits.getCountry(), permits.getYear())).collect(Collectors.joining("\n"));
 
             Assert.assertEquals(expectedPermits, CheckYourAnswerPage.getAnswer(BilateralSection.Permits));
         });

@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -96,15 +97,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     public AnnualBilateralJourney overview(OverviewSection section) {
         org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
         OverviewPage.clickOverviewSection(section);
-        return this;
-    }
-
-    public AnnualBilateralJourney numberOfPermits(OperatorStore operatorStore){
-        LicenceStore licenceStore =
-                operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-
-        licenceStore.getEcmt().setPermitsPerCountry(org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.quantity(1, PermitType.ANNUAL_BILATERAL)); // To pass test
-        NumberOfPermitsPage.saveAndContinue();
         return this;
     }
 

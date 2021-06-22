@@ -20,6 +20,8 @@ import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 
@@ -45,21 +47,21 @@ public class NumberOfPermitsPageSteps implements En {
         });
         Then("^the page heading on the short term number of permits page is displayed correctly$", () -> {
             NumberOfPermitsPageJourneySteps.hasPageHeading();
-            NumberOfPermitsPage.hasAdvisoryText();
+            assertTrue(NumberOfPermitsPage.isAdvisoryTextPresent());
         });
         Then("^I should get the number of permits page error message$", () ->{
-            NumberOfPermitsPage.hasEnterNumberOfPermitsErrorText();
-            NumberOfPermitsPage.hasShortTermECMTEmissionErrorText();
+            assertTrue(NumberOfPermitsPage.isEnterNumberOfPermitsErrorTextPresent());
+            assertTrue(NumberOfPermitsPage.isShortTermECMTEmissionErrorTextPresent());
         });
 
-        Then("^I enter the valid number of short term permits required$", () -> {
-            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
-        });
+        Then("^I enter the valid number of short term permits required$", NumberOfPermitsPage::enterEuro5OrEuro6permitsValue);
         Then("^I enter the number of permits required more than the authorised vehicles$",() ->{
             NumberOfPermitsPage.euro5OrEuro6Select();
             NumberOfPermitsPage.exceedAuthorisedVehicle();
         });
-        Then("^I should get the validation error message$", org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage::hasShortTermECMTMaximumPermitsErrorText);
+        Then("^I should get the validation error message$", () -> {
+            assertEquals("You have exceeded the maximum you can apply for", NumberOfPermitsPage.getShortTermECMTMaximumPermitsErrorText());
+        });
         Then("^the user is navigated to the overview page with the number of permits page status as completed$", () -> {
             org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });

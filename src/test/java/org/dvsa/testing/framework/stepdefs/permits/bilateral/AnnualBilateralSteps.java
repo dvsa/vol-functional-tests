@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -103,8 +104,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
         Given("^I'm on the bilateral check your answers page$", () -> {
             AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
             OverviewPage.clickOverviewSection(OverviewSection.Countries);
-            AnnualBilateralJourney.getInstance().countries(operatorStore)
-                    .numberOfPermits(operatorStore);
+            AnnualBilateralJourney.getInstance().countries(operatorStore);
+            NumberOfPermitsPageJourneySteps.completeBilateralPage();
             CheckYourAnswerPage.untilOnPage();
         });
         When("^I choose to change the bilateral countries section$", () -> {
@@ -125,8 +126,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
+            EssentialInformationPageJourneySteps.completePage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
@@ -164,7 +164,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 AnnualBilateralJourney.getInstance().norway(operatorStore);
                 OverviewPage.untilOnPage();
                 OverviewPage.clickCountrySection(Country.Norway);
-                EssentialInformationPage.saveAndContinue();
+                EssentialInformationPageJourneySteps.completePage();
                 AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
                 PermitUsagePage.untilOnPage();
                 AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -202,8 +202,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
+            EssentialInformationPageJourneySteps.completePage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
@@ -241,8 +240,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
+            EssentialInformationPageJourneySteps.completePage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
             PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -340,9 +338,9 @@ public class AnnualBilateralSteps extends BasePage implements En {
                             .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
                 AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
                 OverviewPage.clickOverviewSection(OverviewSection.Countries);
-                AnnualBilateralJourney.getInstance().countries(operatorStore)
-                            .numberOfPermits(operatorStore)
-                            .checkYourAnswers();
+                AnnualBilateralJourney.getInstance().countries(operatorStore);
+                NumberOfPermitsPageJourneySteps.completeBilateralPage();
+                AnnualBilateralJourney.getInstance().checkYourAnswers();
                 DeclarationPageJourneySteps.completeDeclaration();
                 AnnualBilateralJourney.getInstance()
                             .permitFee();
@@ -352,7 +350,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
                             .confirmAndPay()
                             .submitApplication(operatorStore.getLatestLicence().get(), world);
             });
-            System.out.println("WOO");
         });
         And("^I have partial annual bilateral applications$", () -> {
             clickToPermitTypePage(world);
@@ -362,8 +359,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().norway(operatorStore);
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
+            EssentialInformationPageJourneySteps.completePage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -460,8 +456,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
+            EssentialInformationPageJourneySteps.completePage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -476,8 +471,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
+            EssentialInformationPageJourneySteps.completePage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
             PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -490,8 +484,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
+            EssentialInformationPageJourneySteps.completePage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
@@ -506,8 +499,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().allCountries(operatorStore);
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
+            EssentialInformationPageJourneySteps.completePage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
@@ -528,7 +520,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             String actual1 = actual.toLowerCase().substring(0,actual.length()-1);
             assertEquals(getElementValueByText("//div[contains(@class,'field')]//label",SelectorType.XPATH),"Cabotage"+" "+actual1+" "+"permit");
             NumberOfPermitsPageJourneySteps.hasPageHeading();
-            NumberOfPermitsPage.hasBilateralAdvisoryText();
+            assertTrue(NumberOfPermitsPage.isBilateralAdvisoryTextPresent());
         });
         Then("the page heading and the advisory text on standard permits no cabotage page are displayed correctly according to the selection", () -> {
             String actual = String.valueOf(licenceStore.getEcmt().getJourneyType());

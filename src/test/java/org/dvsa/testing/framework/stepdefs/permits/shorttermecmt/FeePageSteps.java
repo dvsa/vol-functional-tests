@@ -5,6 +5,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -41,10 +43,8 @@ public class FeePageSteps implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPage.enterEuro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
-            EmissionStandardsPage.confirmCheckbox();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
+            EmissionStandardsPageJourneySteps.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);

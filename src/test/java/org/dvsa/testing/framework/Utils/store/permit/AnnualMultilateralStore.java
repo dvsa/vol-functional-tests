@@ -10,7 +10,6 @@ import java.util.Objects;
 public class AnnualMultilateralStore {
     String reference;
     List<Permit> numberOfPermits = new ArrayList<>();
-    private LocalDateTime applicationDate;
 
     public String getReference() {
         return reference;
@@ -31,15 +30,6 @@ public class AnnualMultilateralStore {
 
     public AnnualMultilateralStore setNumberOfPermits(List<Permit> numberOfPermits) {
         this.numberOfPermits = numberOfPermits;
-        return this;
-    }
-
-    public LocalDateTime getApplicationDate() {
-        return applicationDate;
-    }
-
-    public AnnualMultilateralStore setApplicationDate() {
-        this.applicationDate = LocalDateTime.now();
         return this;
     }
 

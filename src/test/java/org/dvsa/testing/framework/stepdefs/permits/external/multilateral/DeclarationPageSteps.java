@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -21,8 +22,9 @@ public class DeclarationPageSteps implements En {
                     .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator)
-                    .numberOfPermitsPage(operator)
+                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
+            NumberOfPermitsPageJourneySteps.completeMultilateralPage();
+            AnnualMultilateralJourney.INSTANCE
                     .checkYourAnswers();
 
             DeclarationPage.untilOnPage();

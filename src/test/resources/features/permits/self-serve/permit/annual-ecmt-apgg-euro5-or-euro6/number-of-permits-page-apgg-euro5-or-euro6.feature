@@ -11,10 +11,10 @@ Feature: Number of permits required page
     And the page heading on the ECMT number of permits page is displayed correctly
     And the advisory texts are displayed correctly
     And I save and continue
-    And I should get the ECMT number of permits page error message
+    And I should get the number of permits page error message
     And I select save and return overview link
-    And I should get the ECMT number of permits page error message
-    And I specify the number of permits
+    And I should get the number of permits page error message
+    And I enter the valid number of short term permits required
     And I select save and return overview link
     Then I should be on the Annual ECMT overview page
 
@@ -31,7 +31,7 @@ Feature: Number of permits required page
 
   @EXTERNAL @OLCS-17815 @ECMT @Test3 @olcs-27581 @OLCS-27781 @OLCS-28275
   Scenario: Pay Fees from Fee Tab on Self serve screen
-    And I specify the number of permits
+    And I enter the valid number of short term permits required
     When  I select save and return overview link
     Then I am on the annual ECMT overview page
     When I go back

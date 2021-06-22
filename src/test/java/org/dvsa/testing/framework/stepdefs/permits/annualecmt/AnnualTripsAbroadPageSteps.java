@@ -3,6 +3,8 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -27,10 +29,8 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
             CabotagePage.confirmWontUndertakeCabotage();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPage.selectEuroAndEnterPermitsValue();
-            BasePermitPage.saveAndContinue();
-            EmissionStandardsPage.confirmCheckbox();
-            EmissionStandardsPage.saveAndContinue();
+            NumberOfPermitsPageJourneySteps.completeECMTPage();
+            EmissionStandardsPageJourneySteps.completePage();
 
         });
         Given("^I specify a valid amount of annual trips$", NumberOfTripsPage::enterNumberOfTripsValue);

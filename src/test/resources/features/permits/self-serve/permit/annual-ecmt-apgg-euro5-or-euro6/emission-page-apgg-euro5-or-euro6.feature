@@ -20,6 +20,6 @@ Feature: ECMT Permit Euro Emission Standard Page
     Then I should see the validation errors for euro 6 page
     When I select save and return overview link
     Then I should get an error message
-    And I select the emission checkbox
+    And I confirm the emissions standards checkbox
     When I select save and return overview link
     Then I should see the overview page with updated changes
