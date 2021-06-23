@@ -11,6 +11,8 @@ import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.junit.Assert;
 
+import static org.junit.Assert.assertEquals;
+
 public class DeclarationPageSteps implements En {
 
     public DeclarationPageSteps(World world, OperatorStore operatorStore) {
@@ -22,7 +24,9 @@ public class DeclarationPageSteps implements En {
         When("^I save and continue on the declaration page$", DeclarationPage::saveAndContinue);
         And("^I should see the declaration advisory texts$", DeclarationPage::isECMTAdvisoryTextPresent);
         When("^I accept and continue$", DeclarationPage::saveAndContinue);
-        When("^I should be on the ECMT permit fee page$", PermitFeePage::pageHeading);
+        When("^I should be on the ECMT permit fee page$", () -> {
+            assertEquals("Permit fee", PermitFeePage.getPageHeading());
+        });
         Then("^the status for the declaration section in annual ECMT is complete$", () -> {
             OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });

@@ -62,25 +62,6 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         }
         switch (page) {
             case "View":
-                switch (type.toLowerCase()) {
-                    case "licence":
-                        waitForTitleToBePresent("View and amend your licence");
-                        break;
-                    case "application":
-                        if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                            waitForTitleToBePresent("Apply for a new licence");
-                        } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                            waitForTextToBePresent("What you need to do next");
-                        }
-                        break;
-                    case "variation":
-                        if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                            waitForTitleToBePresent("Apply to change a licence");
-                        } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                            waitForTextToBePresent("What happens next?");
-                        }
-                        break;
-                }
                 break;
             case "Vehicles":
                 clickByLinkText("Vehicles");

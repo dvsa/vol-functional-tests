@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class CheckCorrespondence extends BasePage implements En {
     public CheckCorrespondence(World world) {
         And("^i have logged in to self serve$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         });
         When("^i open the documents tab$", () -> {
            click("//a[@href='/correspondence/']", SelectorType.XPATH);

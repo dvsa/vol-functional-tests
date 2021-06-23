@@ -21,6 +21,7 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 import static org.dvsa.testing.lib.pages.BasePage.getURL;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 public class FeePageSteps implements En {
 
@@ -58,7 +59,7 @@ public class FeePageSteps implements En {
             Assert.assertThat(getURL().getHost(), StringContains.containsString("e-paycapita"));
         });
         Then("^the page heading and alert message on the fee page is displayed correctly$", () -> {
-            PermitFeePage.pageHeading();
+            assertEquals("Permit fee", PermitFeePage.getPageHeading());
             PermitFeePage.hasAlertMessage();
             PermitFeePage.subHeading();
         });
@@ -66,7 +67,7 @@ public class FeePageSteps implements En {
             PermitFeePage.tableCheck();
             String expectedDateTime = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
             String actualDate = PermitFeePage.getTableSectionValue(FeeSection.ApplicationDate);
-            Assert.assertEquals(expectedDateTime,actualDate);
+            assertEquals(expectedDateTime,actualDate);
         });
     }
 
