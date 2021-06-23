@@ -13,13 +13,13 @@ public class PSVApplication implements En {
             world.createApplication.setOperatorType(operator);
             world.createApplication.setLicenceType(licenceType);
             if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
-                world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-                world.APIJourneySteps.createSpecialRestrictedLicence();
+                world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+                world.APIJourney.createSpecialRestrictedLicence();
             }
             else if (world.createApplication.getApplicationId() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-                world.APIJourneySteps.createApplication();
-                world.APIJourneySteps.submitApplication();
+                world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+                world.APIJourney.createApplication();
+                world.APIJourney.submitApplication();
             }
         });
 
@@ -28,9 +28,9 @@ public class PSVApplication implements En {
             world.createApplication.setOperatorType(vehicleType);
             world.createApplication.setLicenceType(typeOfLicence);
             if (world.createApplication.getApplicationId() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-                world.APIJourneySteps.createApplication();
-                world.APIJourneySteps.submitApplication();
+                world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+                world.APIJourney.createApplication();
+                world.APIJourney.submitApplication();
             }
         });
     }

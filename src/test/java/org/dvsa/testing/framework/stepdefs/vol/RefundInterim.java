@@ -20,13 +20,13 @@ public class RefundInterim extends BasePage implements En {
             world.createApplication.setOperatorType(operatorType);
             world.createApplication.setLicenceType(licenceType);
             world.createApplication.setIsInterim("Y");
-            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
-                world.APIJourneySteps.createSpecialRestrictedLicence();
+                world.APIJourney.createSpecialRestrictedLicence();
             }
             else if (world.createApplication.getApplicationId() == null) {
-                world.APIJourneySteps.createApplication();
-                world.APIJourneySteps.submitApplication();
+                world.APIJourney.createApplication();
+                world.APIJourney.submitApplication();
             }
         });
         When("^the interim fee has been paid$", () -> {
@@ -70,13 +70,13 @@ public class RefundInterim extends BasePage implements En {
             assertFalse(world.genericUtils.returnFeeStatus("CANCELLED"));
         });
         And("^the licence is granted$", () -> {
-            world.APIJourneySteps.grantLicenceAndPayFees();
+            world.APIJourney.grantLicenceAndPayFees();
         });
         And("^the interim is granted$", () -> {
             world.updateLicence.grantInterimApplication(world.createApplication.getApplicationId());
         });
         When("^i pay for the interim application$", () -> {
-            world.UIJourneySteps.payForInterimApp();
+            world.UIJourney.payForInterimApp();
             waitForTitleToBePresent("Application overview");
         });
         And("^the variation application has been refused$", () -> {

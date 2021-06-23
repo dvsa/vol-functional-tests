@@ -14,11 +14,11 @@ import java.time.Duration;
 
 import static activesupport.driver.Browser.navigate;
 
-public class SelfServeNavigationalJourneySteps extends BasePage {
+public class SelfServeNavigational extends BasePage {
 
     public World world;
 
-    public SelfServeNavigationalJourneySteps(World world) {
+    public SelfServeNavigational(World world) {
         this.world = world;
     }
 

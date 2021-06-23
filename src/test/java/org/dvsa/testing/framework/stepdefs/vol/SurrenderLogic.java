@@ -25,15 +25,15 @@ public class SurrenderLogic extends BasePage implements En {
 
     public SurrenderLogic(World world) {
         And("^i have started a surrender$", () -> {
-            world.surrenderJourneySteps.navigateToSurrendersStartPage();
-            world.surrenderJourneySteps.startSurrender();
+            world.surrenderJourney.navigateToSurrendersStartPage();
+            world.surrenderJourney.startSurrender();
         });
         Given("^i update my address details on my licence$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
             clickByLinkText("Home");
             clickByLinkText(world.applicationDetails.getLicenceNumber());
             clickByLinkText("Addresses");
-            world.UIJourneySteps.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
+            world.UIJourney.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
             replaceText("phone_primary", SelectorType.ID, contactNumber);
             waitAndClick("form-actions[save]", SelectorType.ID);
         });
@@ -50,15 +50,15 @@ public class SurrenderLogic extends BasePage implements En {
             assertEquals(expectedChangedText, actualChangeText);
         });
         Given("^i remove a disc to my licence$", () -> {
-            world.surrenderJourneySteps.removeDisc();
+            world.surrenderJourney.removeDisc();
         });
         And("^the new correspondence details are displayed on correspondence page$", () -> {
             click("//*[contains(text(),'Review')]", SelectorType.XPATH);
-            assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s",
+            assertEquals(world.surrenderJourney.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s",
                     address.get("addressLine1"), address.get("addressLine2"), address.get("addressLine3"), address.get("addressLine4")));
         });
         Given("^i add a disc to my licence$", () -> {
-            world.UIJourneySteps.addDisc();
+            world.UIJourney.addDisc();
         });
         Given("^i am on the surrenders review contact details page$", () -> {
             assertTrue(Browser.navigate().getCurrentUrl().contains("review-contact-details"));
@@ -70,7 +70,7 @@ public class SurrenderLogic extends BasePage implements En {
         And("^user is taken to review contact page on clicking continue application$", () -> {
             clickByLinkText("Continue");
             assertTrue(Browser.navigate().getCurrentUrl().contains("review-contact-details"));
-            assertEquals(world.surrenderJourneySteps.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s", world.createApplication.getCorrespondenceAddressLine1(), world.createApplication.getCorrespondenceAddressLine2(), world.createApplication.getCorrespondenceAddressLine3(), world.createApplication.getCorrespondenceAddressLine4()));
+            assertEquals(world.surrenderJourney.getSurrenderAddressLine1(), String.format("%s\n%s\n%s\n%s", world.createApplication.getCorrespondenceAddressLine1(), world.createApplication.getCorrespondenceAddressLine2(), world.createApplication.getCorrespondenceAddressLine3(), world.createApplication.getCorrespondenceAddressLine4()));
         });
         Given("^i am on the surrenders current discs page$", () -> {
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
@@ -82,7 +82,7 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the operator licence page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation();
+            world.surrenderJourney.addDiscInformation();
             waitForTextToBePresent("In your possession");
             assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
         });
@@ -93,9 +93,9 @@ public class SurrenderLogic extends BasePage implements En {
         And("^i am on the community licence page$", () -> {
             if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 waitAndClick("form-actions[submit]", SelectorType.ID);
-                world.surrenderJourneySteps.addDiscInformation();
+                world.surrenderJourney.addDiscInformation();
                 waitForTextToBePresent("In your possession");
-                world.surrenderJourneySteps.addOperatorLicenceDetails();
+                world.surrenderJourney.addOperatorLicenceDetails();
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             } else {
                 throw new InvalidArgumentException("Only a goods standard international licence has community pages");
@@ -107,12 +107,12 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the disc and doc review page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation();
+            world.surrenderJourney.addDiscInformation();
             waitForTextToBePresent("In your possession");
-            world.surrenderJourneySteps.addOperatorLicenceDetails();
+            world.surrenderJourney.addOperatorLicenceDetails();
             if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
-                world.surrenderJourneySteps.addCommunityLicenceDetails();
+                world.surrenderJourney.addCommunityLicenceDetails();
             }
             assertTrue(Browser.navigate().getCurrentUrl().contains("review"));
         });
@@ -122,24 +122,24 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^i am on the destroy disc page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation();
+            world.surrenderJourney.addDiscInformation();
             waitForTextToBePresent("In your possession");
-            world.surrenderJourneySteps.addOperatorLicenceDetails();
+            world.surrenderJourney.addOperatorLicenceDetails();
             if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
-                world.surrenderJourneySteps.addCommunityLicenceDetails();
+                world.surrenderJourney.addCommunityLicenceDetails();
             }
             waitAndClick("form-actions[submit]", SelectorType.NAME);
             assertTrue(Browser.navigate().getCurrentUrl().contains("destroy"));
         });
         And("^i am on the declaration page$", () -> {
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            world.surrenderJourneySteps.addDiscInformation();
+            world.surrenderJourney.addDiscInformation();
             waitForTextToBePresent("In your possession");
-            world.surrenderJourneySteps.addOperatorLicenceDetails();
+            world.surrenderJourney.addOperatorLicenceDetails();
             if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
                 assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
-                world.surrenderJourneySteps.addCommunityLicenceDetails();
+                world.surrenderJourney.addCommunityLicenceDetails();
             }
             waitAndClick("form-actions[submit]", SelectorType.NAME);
             waitAndClick("form-actions[submit]", SelectorType.NAME);
@@ -147,16 +147,16 @@ public class SurrenderLogic extends BasePage implements En {
         });
         And("^my application to surrender is under consideration$", () -> {
             world.updateLicence.printLicenceDiscs();
-            world.surrenderJourneySteps.submitSurrender();
+            world.surrenderJourney.submitSurrender();
         });
         When("^the caseworker approves the surrender$", () -> {
-            world.surrenderJourneySteps.caseworkManageSurrender();
+            world.surrenderJourney.caseworkManageSurrender();
             // Refresh page
             javaScriptExecutor("location.reload(true)");
             waitAndClick("actions[surrender]", SelectorType.ID);
         });
         Then("^the licence status should be \"([^\"]*)\"$", (String status) -> {
-            world.UIJourneySteps.checkLicenceStatus(status);
+            world.UIJourney.checkLicenceStatus(status);
         });
         And("^the surrender menu should be hidden in internal$", () -> {
             assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender"));
@@ -165,7 +165,7 @@ public class SurrenderLogic extends BasePage implements En {
             assertTrue(isTextPresent(page, 40));
         });
         When("^the caseworker attempts to withdraw the surrender$", () -> {
-            world.surrenderJourneySteps.caseworkManageSurrender();
+            world.surrenderJourney.caseworkManageSurrender();
             waitForElementToBeClickable("actions[surrender]", SelectorType.ID);
             waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
         });
@@ -193,7 +193,7 @@ public class SurrenderLogic extends BasePage implements En {
             assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 30));
         });
         And("^the user should be able to re apply for a surrender in internal$", () -> {
-            world.surrenderJourneySteps.submitSurrender();
+            world.surrenderJourney.submitSurrender();
         });
         Then("^the quick actions and decision buttons are not displayed for the menu items listed$", (DataTable buttons) -> {
             assertFalse(isTextPresent("Quick actions",30));
@@ -211,11 +211,11 @@ public class SurrenderLogic extends BasePage implements En {
             waitForTextToBePresent("The licence surrender has been undone");
         });
         Then("^the change history has the surrender under consideration$", () -> {
-            world.UIJourneySteps.navigateToChangeHistory();
+            world.UIJourney.navigateToChangeHistory();
             checkForPartialMatch("Surrender Under Consideration");
         });
         Then("^the change history shows the surrender and its withdrawal$", () -> {
-            world.UIJourneySteps.navigateToChangeHistory();
+            world.UIJourney.navigateToChangeHistory();
             checkForPartialMatch("Surrender Application Withdrawn");
             checkForPartialMatch("Surrender Under Consideration");
         });

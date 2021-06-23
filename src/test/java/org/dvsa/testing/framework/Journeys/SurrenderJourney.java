@@ -1,21 +1,18 @@
 package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import apiCalls.enums.LicenceType;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.junit.Assert;
 
-import java.net.MalformedURLException;
-
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 
-public class SurrenderJourneySteps extends BasePage {
+public class SurrenderJourney extends BasePage {
 
     private World world;
     private String discsToDestroy = "2";
@@ -39,7 +36,7 @@ public class SurrenderJourneySteps extends BasePage {
 
     public void setUpdatedTown(String updatedTown) { this.updatedTown = updatedTown; }
 
-    public SurrenderJourneySteps(World world){
+    public SurrenderJourney(World world){
         this.world = world;
     }
 
@@ -86,11 +83,11 @@ public class SurrenderJourneySteps extends BasePage {
         submitSurrenderUntilChoiceOfVerification();
         if (navigate().getCurrentUrl().contains("qa")) {
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify();
+            world.UIJourney.signWithVerify();
             checkVerifyConfirmation();
         } else {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            world.UIJourneySteps.signManually();
+            world.UIJourney.signManually();
         }
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
@@ -114,7 +111,7 @@ public class SurrenderJourneySteps extends BasePage {
     }
 
     public void caseworkManageSurrender() {
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         clickByLinkText("Surrender");

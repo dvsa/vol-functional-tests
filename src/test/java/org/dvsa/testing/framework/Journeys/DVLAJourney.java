@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class DVLAJourneySteps extends BasePage {
+public class DVLAJourney extends BasePage {
 
     private World world;
     public String VRM;
@@ -23,7 +23,7 @@ public class DVLAJourneySteps extends BasePage {
     public List<String> allPreviousDiscNumbers = new ArrayList<String>();
     public String newDiscNumber;
 
-    public DVLAJourneySteps(World world){ this.world = world; }
+    public DVLAJourney(World world){ this.world = world; }
 
     public void navigateToManageVehiclesPage(String licenceStatus) {
         world.selfServeNavigation.navigateToPage(licenceStatus, "Vehicles");

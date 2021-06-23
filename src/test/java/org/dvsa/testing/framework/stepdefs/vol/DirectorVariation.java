@@ -1,17 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
-import org.dvsa.testing.framework.Journeys.DirectorJourneySteps;
+import org.dvsa.testing.framework.Journeys.DirectorJourney;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DirectorVariation extends BasePage {
 
     World world;
-    private DirectorJourneySteps directorJourney;
+    private DirectorJourney directorJourney;
 
     public DirectorVariation(World world) {
         this.world = world;
-        directorJourney = world.directorJourneySteps;
+        directorJourney = world.directorJourney;
     }
 
     @And("i navigate to the directors page")
