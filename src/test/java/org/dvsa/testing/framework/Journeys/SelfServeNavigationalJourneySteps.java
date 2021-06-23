@@ -119,33 +119,34 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         waitForTitleToBePresent("Apply for a new licence");
         clickByLinkText("Type of licence");
         waitForTitleToBePresent("Type of licence");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Business type");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Business details");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Addresses");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Directors");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Transport Managers");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Vehicle details");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         if (isTitlePresent("Vehicle declarations", 30)) {
-            waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+            waitAndClick(saveAndContinue, SelectorType.XPATH);
         }
         waitForTitleToBePresent("Safety and compliance");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Financial history");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Licence history");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Convictions and Penalties");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
     }
 }
