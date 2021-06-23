@@ -6,6 +6,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -118,7 +119,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
         EssentialInformationPage.untilOnPage();
         Assert.assertEquals(getCountry(), operatorStore.getCountry());
         EssentialInformationPageJourneySteps.completePage();
-        PeriodSelectionPage.hasMoroccoPageHeading();
+        PeriodSelectionPageJourneySteps.hasMoroccoPageHeading();
         Assert.assertEquals(getCountry(), operatorStore.getCountry());
         AnnualBilateralJourney.getInstance().bilateralPeriodType(typeOfMoroccoJourney, operatorStore);
         PeriodSelectionPage.saveAndContinue();

@@ -65,9 +65,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
         Then("^Journey type displayed on the check your answers page is the one I selected on the Permits usage$", () -> {
             Assert.assertEquals(BilateralJourneySteps.getJourney(),PermitUsagePage.getJourney());
         });
-        Then("^Value of do you need to carry out cabotage, will always be 'YES'$", () -> {
-            BilateralJourneySteps.assertCabotageValueYes();
-        });
+        Then("^Value of do you need to carry out cabotage, will always be 'YES'$", BilateralJourneySteps::assertCabotageValueYes);
         Then("^Value of How many permits you need, will be the one saved on the number of permits page$", () -> {
             String permitlabel = NumberOfPermitsPageJourneySteps.getLabel();
             String permitvalue = String.valueOf(NumberOfPermitsPageJourneySteps.getPermitValue());
@@ -86,12 +84,10 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
                 scrollAndClick("//div[1]/dd[2]/a[1]", SelectorType.XPATH);
             }
         });
-        Then("^I am navigated to the Bilateral period selection page$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
-        });
+        Then("^I am navigated to the Bilateral period selection page$", PeriodSelectionPage::untilOnPage);
         And("^I change period to be Bilateral and Standard permits on the period selection and continue to be on the check your answers page$", () -> {
           AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits, operatorStore);
-          org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasWarningText();
+          assertTrue(PeriodSelectionPage.isWarningTextPresent());
           PeriodSelectionPage.saveAndContinue();
           PermitUsagePage.untilOnPage();
           PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
@@ -103,7 +99,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
         });
         And("^I change period to be Bilateral Standard permits no Cabotage on the period selection and continue to be on the check your answers page$", () -> {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage, operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.hasWarningText();
+            assertTrue(PeriodSelectionPage.isWarningTextPresent());
             PeriodSelectionPage.saveAndContinue();
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
@@ -112,9 +108,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             CheckYourAnswerPage.untilOnPage();
         });
 
-        Then("^Value of Do you need to carry out cabotage, will be as per the selection after changing the period selection to Bilaterals Standard and Cabotage permits$", () -> {
-            BilateralJourneySteps.assertStandardAndCabotageValueNo();
-        });
+        Then("^Value of Do you need to carry out cabotage, will be as per the selection after changing the period selection to Bilaterals Standard and Cabotage permits$", BilateralJourneySteps::assertStandardAndCabotageValueNo);
         Then("^Do you need to carry out cabotage, will not be displayed if the period type is Bilaterals Standard permits no Cabotage$", () -> {
             assertTrue(isElementNotPresent("//dt[contains(text(),'Do you need to carry out cabotage?')]", SelectorType.XPATH));
         });

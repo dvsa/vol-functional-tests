@@ -71,7 +71,7 @@ public class BasePermitJourney extends BaseJourney {
         operator.setCurrentShortTermType(shortTermType);
         operator.withLicences(licence);
 
-        PeriodSelectionPage.shortTermType(shortTermType);
+        PeriodSelectionPage.selectShortTermType(shortTermType);
         PeriodSelectionPage.saveAndContinue();
         return this;
     }
@@ -82,7 +82,7 @@ public class BasePermitJourney extends BaseJourney {
         operator.setCurrentBilateralPeriodType(bilateralPeriodType);
 
         operator.withLicences(licence);
-        org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.bilateralPeriodType(bilateralPeriodType);
+        PeriodSelectionPage.bilateralPeriodType(bilateralPeriodType);
         //PeriodSelectionPage.continueButton();
         return this;
     }
