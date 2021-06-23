@@ -67,7 +67,7 @@ public class EuroEmissionStandardPageSteps implements En {
 
         When("^I confirm the emissions standards checkbox", EmissionStandardsPage::confirmCheckbox);
         Then("^the user is navigated to the short term overview page with the status of emissions displayed as completed$", () -> {
-            OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards,PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.EuroEmissionStandards,PermitStatus.COMPLETED);
         });
     }
 }

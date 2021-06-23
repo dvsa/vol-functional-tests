@@ -68,7 +68,7 @@ public class PermitUsagePageSteps extends BasePermitPage implements En {
         When("^I confirm the permit usage$", () -> PermitUsagePage.permitUsage(PermitUsage.random()));
 
         Then("^the user is navigated to the overview page with the permits usage section status displayed as completed$", () -> {
-            OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.HowWillYouUseThePermits, PermitStatus.COMPLETED);
         });
 
     }

@@ -6,6 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
@@ -53,7 +54,7 @@ public class ApplicationSteps extends BasePage implements En {
         });
         And("^the section is marked as complete on annual multilateral overview page$", () -> {
             OverviewPage.untilOnPage();
-            OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
         });
          When("^(?:I submit an annual multilateral permit on external$|" +
                 "I have an annual multilateral permit|" +

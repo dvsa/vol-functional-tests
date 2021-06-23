@@ -53,8 +53,8 @@ public class CabotagePageSteps implements En {
 
         Then("^I confirm not undertaking cabotage journey$", CabotagePage::confirmWontUndertakeCabotage);
         Then("^the user is navigated to the overview page with the status as completed$", () -> {
-            OverviewPage.checkStatus(OverviewSection.Cabotage,PermitStatus.COMPLETED);
-            OverviewPage.checkStatus(OverviewSection.HowWillYouUseThePermits ,PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Cabotage,PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.HowWillYouUseThePermits ,PermitStatus.COMPLETED);
         });
     }
 }

@@ -60,15 +60,15 @@ public class NumberOfPermitsPageSteps implements En {
             assertEquals("You have exceeded the maximum you can apply for", NumberOfPermitsPage.getShortTermECMTMaximumPermitsErrorText());
         });
         Then("^the user is navigated to the overview page with the number of permits page status as completed$", () -> {
-            OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
         Then("^I am taken back to short term number of permits page$", () -> {
             NumberOfPermitsPage.untilOnPage();
             NumberOfPermitsPageJourneySteps.hasPageHeading();
         });
         Then("^the user is navigated to the overview page with the number of permits page status as not started yet$", () -> {
-            OverviewPage.hasPageHeading();
-            OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.NOT_STARTED_YET);
+            OverviewPageJourneySteps.hasPageHeading();
+            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.NOT_STARTED_YET);
         });
 
     }

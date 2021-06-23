@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -38,7 +39,7 @@ public class DeclarationPageSteps implements En {
             assertTrue(message, DeclarationPage.declarationIsNotConfirmed());
         });
         Then("^the status for the declaration section in annual multilateral is complete$", () -> {
-            OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });
     }
 }

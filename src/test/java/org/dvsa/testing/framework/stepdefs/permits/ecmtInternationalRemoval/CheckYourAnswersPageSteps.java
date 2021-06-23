@@ -49,7 +49,7 @@ public class CheckYourAnswersPageSteps implements En {
             String Cabotage = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Cabotage);
             Assert.assertEquals(Cabotage, "I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.");
         });
-        Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
+        Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPageJourneySteps.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
         And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckYourAnswers));
         Then("^I should be on the declaration page$", DeclarationPage::untilOnPage);
         Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> {

@@ -85,7 +85,7 @@ public class AnnualTripsAbroadPageSteps implements En {
         });
         Given("^I select save and return overview link on annual trips abroad page$", AnnualTripsAbroadPage::returnToOverview);
         Then("^the user is navigated to the short term ECMT overview page with the status as completed$", () -> {
-            OverviewPage.checkStatus(OverviewSection.AnnualTripsAbroad, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.AnnualTripsAbroad, PermitStatus.COMPLETED);
         });
 
   }

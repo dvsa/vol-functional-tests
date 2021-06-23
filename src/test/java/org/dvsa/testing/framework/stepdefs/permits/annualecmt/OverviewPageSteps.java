@@ -19,6 +19,7 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.hamcrest.Matchers.isIn;
+import static org.junit.Assert.assertTrue;
 
 public class OverviewPageSteps implements En {
 
@@ -32,7 +33,7 @@ public class OverviewPageSteps implements En {
         });
         Then("^only the expected status labels are displayed$", () -> {
             for (OverviewSection section : OverviewSection.values()){
-                Assert.assertThat(OverviewPage.statusOfSection(section), isIn(PermitStatus.values()));
+                Assert.assertThat(OverviewPage.getStatusOfSection(section), isIn(PermitStatus.values()));
             }
         });
         When("^I select '([\\w ]+)'$", (String overviewSection) -> {
@@ -43,23 +44,23 @@ public class OverviewPageSteps implements En {
             OverviewSection sectionEnum = OverviewSection.toEnum(section);
             Assert.assertFalse(
                     sectionEnum.toString() + " should NOT be active but is",
-                    OverviewPage.isActive(sectionEnum)
+                    OverviewPage.isSectionActive(sectionEnum)
             );
 
-            OverviewPage.checkStatus(sectionEnum, PermitStatus.CANT_START_YET);
+            OverviewPageJourneySteps.checkStatus(sectionEnum, PermitStatus.CANT_START_YET);
         });
         When("^I fill all steps preceding steps to check your answers$", () -> {
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
         });
         Then("^the (check your answers|declaration) section should be enabled$", (String section) -> {
             OverviewSection sectionEnum = OverviewSection.toEnum(section);
-            Assert.assertTrue(OverviewPage.isActive(sectionEnum));
+            assertTrue(OverviewPage.isSectionActive(sectionEnum));
         });
         When("^I fill all steps preceding steps to declaration$", () -> {
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
             ECMTPermitApplicationSteps.saveAndContinue();
         });
-        When("^the overview page heading is displayed correctly$", OverviewPage::hasPageHeading);
+        When("^the overview page heading is displayed correctly$", OverviewPageJourneySteps::hasPageHeading);
         When("^I'm on the annual multilateral overview page$", () -> {
             EcmtApplicationJourney.getInstance().permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
              .licencePage(operatorStore, world);
@@ -82,20 +83,19 @@ public class OverviewPageSteps implements En {
             }
         });
         Then("^the default section statuses are as expected$", () -> {
-            OverviewPage.checkStatus(
+            OverviewPageJourneySteps.checkStatus(
                     OverviewSection.NumberOfPaymentsRequired, PermitStatus.NOT_STARTED_YET);
 
-            OverviewPage.checkStatus(
+            OverviewPageJourneySteps.checkStatus(
                     OverviewSection.CheckYourAnswers, PermitStatus.CANT_START_YET);
 
-            OverviewPage.checkStatus(
+            OverviewPageJourneySteps.checkStatus(
                     OverviewSection.Declaration,
                     PermitStatus.CANT_START_YET);
         });
         Then("^future sections beyond the next following step from currently completed section are disabled$", () -> {
-            String error = "Expected not to find a link to the '%s' page but there was one";
-            OverviewPage.hasActiveLink(OverviewSection.CheckYourAnswers);
-            OverviewPage.hasActiveLink(OverviewSection.Declaration);
+            assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.CheckYourAnswers));
+            assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.Declaration));
         });
 
         When("^I click cancel link on the multilateral overview page$", OverviewPage::clickCancelApplication);

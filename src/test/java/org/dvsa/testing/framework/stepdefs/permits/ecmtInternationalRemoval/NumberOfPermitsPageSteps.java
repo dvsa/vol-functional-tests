@@ -61,7 +61,7 @@ public class NumberOfPermitsPageSteps implements En {
         Then("^the number of permits section on the ECMT Removals Overview page is complete$", () -> {
             OverviewPage.untilOnPage();
             NumberOfPermitsPage.untilOnPage();
-            OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
     }
 }

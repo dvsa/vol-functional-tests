@@ -69,7 +69,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         Then("^I should be on the overview page$", () -> {
             OverviewPage.untilOnPage();
-            OverviewPage.hasPageHeading();
+            OverviewPageJourneySteps.hasPageHeading();
         });
         Then("^I select the fee tab on the selfserve$", () -> {
              waitAndClick("//a[contains(text(),'Home')]",SelectorType.XPATH);

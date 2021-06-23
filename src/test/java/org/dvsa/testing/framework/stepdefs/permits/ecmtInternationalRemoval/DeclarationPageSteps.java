@@ -50,7 +50,7 @@ public class DeclarationPageSteps extends BasePage implements En {
         When("^I confirm the declaration$", DeclarationPage::confirmDeclaration);
         Then("^I am on ECMT removal permits overview page with Declaration section marked as complete$", () -> {
             OverviewPage.untilOnPage();
-            OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });
         Then("^I am directed to the ECMT removals permit fee page$", PermitFeePage::untilOnPage);
         Then("^I'm viewing my saved ECMT International application in internal$", () -> {

@@ -36,13 +36,13 @@ public class Euro6Steps implements En {
 
         Then("^should see the overview page without updating any changes$",() -> {
             OverviewPage.untilOnPage();
-            OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
         });
 
         When("^I select save and return overview link$", BasePermitPage::overview);
 
         Then("^I should see the overview page with updated changes$", () -> {
-            OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
         });
 
         Then("^I should be able to navigate to the next page$", () -> {

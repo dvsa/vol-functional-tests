@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -23,7 +24,7 @@ public class DeclarationPageSteps implements En {
         When("^I accept and continue$", DeclarationPage::saveAndContinue);
         When("^I should be on the ECMT permit fee page$", PermitFeePage::pageHeading);
         Then("^the status for the declaration section in annual ECMT is complete$", () -> {
-            OverviewPage.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });
     }
 

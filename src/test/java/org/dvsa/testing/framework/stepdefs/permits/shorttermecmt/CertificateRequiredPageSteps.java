@@ -55,7 +55,7 @@ public class CertificateRequiredPageSteps implements En {
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
             String error = "Expected the status of certificates required page to be complete but it wasn't";
             OverviewPage.untilOnPage();
-            OverviewPage.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
         });
 
     }

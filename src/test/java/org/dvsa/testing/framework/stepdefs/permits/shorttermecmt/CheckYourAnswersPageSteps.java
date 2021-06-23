@@ -80,9 +80,11 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("^I am on the short term permits overview page with check your answers section marked as complete$", () -> {
             OverviewPage.untilOnPage();
-            OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
         });
-        Then("^the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET$", OverviewPage::declarationIsNotStartedYet);
+        Then("^the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET$", () -> {
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.NOT_STARTED_YET);
+        });
         And("^I click Check your answers link on the overview page again$", () -> {
             OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckYourAnswers);
         });

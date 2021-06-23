@@ -67,7 +67,7 @@ public class DeclarationPageSteps implements En {
 
         Then("^I am on the short term permits overview page with Declaration section marked as complete$", () -> {
             OverviewPage.untilOnPage();
-            OverviewPage.checkStatus(OverviewSection.Declaration,PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration,PermitStatus.COMPLETED);
         });
 
         Then("^I am directed to the short term permit fee page$", PermitFeePage::untilOnPage);

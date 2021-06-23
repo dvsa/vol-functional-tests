@@ -14,6 +14,7 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCancelApplication;
+import static org.junit.Assert.assertTrue;
 
 
 public class OverviewPageSteps implements En {
@@ -32,10 +33,10 @@ public class OverviewPageSteps implements En {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber()
                     .orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
-            Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
+            assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
         And("^future sections beyond the current step are disabled$", () -> {
-            OverviewPage.hasActiveLink(OverviewSection.LicenceNumber);
+            assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.LicenceNumber));
         });
 
     }

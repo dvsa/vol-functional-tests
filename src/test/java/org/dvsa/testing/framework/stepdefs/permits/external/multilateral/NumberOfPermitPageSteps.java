@@ -6,6 +6,7 @@ import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -67,7 +68,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
         });
         When("^I specify my number of multilateral permits$", NumberOfPermitsPageJourneySteps::completeMultilateralPage);
         Then("^the number of permits section on the annual multilateral overview page is complete$", () -> {
-            OverviewPage.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
         });
         Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswerPage::untilOnPage);
         When("^the case worker is viewing current fees$", () -> {

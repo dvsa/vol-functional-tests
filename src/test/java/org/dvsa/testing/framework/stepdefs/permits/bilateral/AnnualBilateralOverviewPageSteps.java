@@ -64,7 +64,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
         });
         Then("^the status of Morocco under answers questions for individual countries section is marked as Completed$", () -> {
-            OverviewPage.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
         });
         Then("^I select submit and pay link$", () -> {
             OverviewPageJourneySteps.clickOverviewSection(OverviewSection.SubmitAndPay);
