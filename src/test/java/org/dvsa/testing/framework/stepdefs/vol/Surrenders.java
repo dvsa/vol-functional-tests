@@ -2,15 +2,12 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.system.Properties;
-import cucumber.api.java.en.Given;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
-import org.apache.http.HttpStatus;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
@@ -26,19 +23,19 @@ public class Surrenders extends BasePage implements En {
 
     public Surrenders(World world) {
         When("^i surrender my licence to the review discs and documentation page$", () -> {
-            world.surrenderJourneySteps.submitSurrenderUntilReviewPage();
+            world.surrenderJourney.submitSurrenderUntilReviewPage();
         });
         Then("^the correct destroyed disc details should be displayed$", () -> {
             String destroyedDiscs = getText("//dt[contains(text(),'Number to be destroyed')]//..//dd", SelectorType.XPATH);
-            assertEquals(world.surrenderJourneySteps.getDiscsToDestroy(), destroyedDiscs);
+            assertEquals(world.surrenderJourney.getDiscsToDestroy(), destroyedDiscs);
         });
         And("^the correct lost disc details should be displayed$", () -> {
             String lostDiscs = getText("//dt[contains(text(),'Number lost')]//..//dd", SelectorType.XPATH);
-            assertEquals(world.surrenderJourneySteps.getDiscsLost(), lostDiscs);
+            assertEquals(world.surrenderJourney.getDiscsLost(), lostDiscs);
         });
         And("^the correct stolen disc details should be displayed$", () -> {
             String stolenDiscs = getText("//dt[contains(text(),'Number stolen')]//..//dd", SelectorType.XPATH);
-            assertEquals(world.surrenderJourneySteps.getDiscsStolen(), stolenDiscs);
+            assertEquals(world.surrenderJourney.getDiscsStolen(), stolenDiscs);
         });
         And("^the correct operator details should be displayed$", () -> {
             String operatorLicenceDocumentStatus = getText("//dt[contains(text(),'Licence document')]//..//dd", SelectorType.XPATH);
@@ -64,39 +61,39 @@ public class Surrenders extends BasePage implements En {
             isTextPresent("ECMS has been checked",30);
         });
         Then("^the surrender print and sign page is displayed$", () -> {
-            world.UIJourneySteps.signManually();
+            world.UIJourney.signManually();
         });
         When("^a caseworker views the surrender$", () -> {
-            world.surrenderJourneySteps.caseworkManageSurrender();
+            world.surrenderJourney.caseworkManageSurrender();
         });
         And("^an open case and bus reg are created$", () -> {
-            world.busRegistrationJourneySteps.internalSiteAddBusNewReg(5);
+            world.busRegistrationJourney.internalSiteAddBusNewReg(5);
             world.updateLicence.createCase();
         });
         Given("^i have a valid \"([^\"]*)\" \"([^\"]*)\" licence with an open case and bus reg$", (String operatorType, String licenceType) -> {
-            world.busRegistrationJourneySteps.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
+            world.busRegistrationJourney.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
         });
         When("^a caseworker views the surrender details$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             waitAndClick("menu-licence_surrender", SelectorType.ID);
         });
 
         And("^i choose to surrender my licence with \"([^\"]*)\"$", (String surrenderMethod) -> {
-            world.surrenderJourneySteps.submitSurrenderUntilChoiceOfVerification();
+            world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
             EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
             if (surrenderMethod.equalsIgnoreCase("verify")) {
                 if (GenericUtils.isVerifySupportedPlatform(env.name())) {
                     waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-                    world.UIJourneySteps.signWithVerify();
-                    world.surrenderJourneySteps.checkVerifyConfirmation();
+                    world.UIJourney.signWithVerify();
+                    world.surrenderJourney.checkVerifyConfirmation();
                    } else {
                     fail("Verify not supported on this platform");
                 }
             } else {
                 waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-                world.UIJourneySteps.signManually();
+                world.UIJourney.signManually();
                 javaScriptExecutor("location.reload(true)");
             }
             assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
@@ -110,11 +107,11 @@ public class Surrenders extends BasePage implements En {
         And("^the open case and bus reg is closed$", () -> {
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Cases");
-            world.UIJourneySteps.closeCase();
+            world.UIJourney.closeCase();
             waitForTextToBePresent("Case closed");
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Bus registrations");
-            world.busRegistrationJourneySteps.closeBusReg();
+            world.busRegistrationJourney.closeBusReg();
         });
         And("^the tick boxes are checked$", () -> {
             boolean isDigital = isElementPresent("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
@@ -135,7 +132,7 @@ public class Surrenders extends BasePage implements En {
             assertTrue(isElementPresent("//*[contains(text(),'Surrendered')]", SelectorType.XPATH));
         });
         When("^the caseworker checks the case and bus reg is visible in surrenders$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             waitForTextToBePresent("Overview");

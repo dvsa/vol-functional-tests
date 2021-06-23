@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -9,7 +8,6 @@ import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DirectorJourneySteps extends BasePage {
+public class DirectorJourney extends BasePage {
 
     private World world;
     private FakerUtils faker = new FakerUtils();
@@ -62,7 +60,7 @@ public class DirectorJourneySteps extends BasePage {
     public String convictionsAndPenaltiesValidation = "validation message not decided yet";
 
 
-    public DirectorJourneySteps(World world){
+    public DirectorJourney(World world){
         this.world = world;
     }
 
@@ -115,7 +113,7 @@ public class DirectorJourneySteps extends BasePage {
         } else {
             findSelectAllRadioButtonsByValue("Y");
             click("add", SelectorType.ID);
-            world.UIJourneySteps.addPreviousConviction();
+            world.UIJourney.addPreviousConviction();
         }
     }
 
@@ -124,34 +122,34 @@ public class DirectorJourneySteps extends BasePage {
             findSelectAllRadioButtonsByValue("N");
         } else {
             findSelectAllRadioButtonsByValue("Y");
-            enterText(world.directorJourneySteps.additionalInformation, Str.randomWord(150), SelectorType.XPATH);
+            enterText(world.directorJourney.additionalInformation, Str.randomWord(150), SelectorType.XPATH);
         }
     }
 
     public void assertTaskCheckBoxSelected() {
-        String isSelected = findElement(world.directorJourneySteps.internalUrgentCheckboxLabel, SelectorType.XPATH, 30).getAttribute("class");
+        String isSelected = findElement(world.directorJourney.internalUrgentCheckboxLabel, SelectorType.XPATH, 30).getAttribute("class");
         assertEquals("selected", isSelected);
     }
 
     public void assertTaskCheckBoxUnselected() {
-        String isSelected = findElement(world.directorJourneySteps.internalUrgentCheckboxLabel, SelectorType.XPATH, 30).getAttribute("class");
+        String isSelected = findElement(world.directorJourney.internalUrgentCheckboxLabel, SelectorType.XPATH, 30).getAttribute("class");
         assertEquals("", isSelected);
     }
 
     public void assertDirectorCount(int count) {
-        waitForTitleToBePresent(world.directorJourneySteps.directorsTitle);
-        List<WebElement> directors = listOfWebElements(world.directorJourneySteps.directorLinks, SelectorType.XPATH);
+        waitForTitleToBePresent(world.directorJourney.directorsTitle);
+        List<WebElement> directors = listOfWebElements(world.directorJourney.directorLinks, SelectorType.XPATH);
         long directorCount = directors.size();
         assertEquals(count, directorCount);
     }
 
     public void assertLastDirectorTaskNotCreated() {
-        List<WebElement> directors = world.UIJourneySteps.getTableBodyRowList();
+        List<WebElement> directors = world.UIJourney.getTableBodyRowList();
         assertFalse(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 
     public void assertLastDirectorTaskCreated() {
-        List<WebElement> directors = world.UIJourneySteps.getTableBodyRowList();
+        List<WebElement> directors = world.UIJourney.getTableBodyRowList();
         assertTrue(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 

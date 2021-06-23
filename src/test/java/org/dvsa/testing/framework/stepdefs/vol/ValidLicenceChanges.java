@@ -37,7 +37,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             click("//a[@class='add-another-trigger']", SelectorType.XPATH);
             enterText("//*[@id='data[tradingNames][1][name]']", tradingName2, SelectorType.XPATH);
             replaceText("//*[@id='natureOfBusiness']", natureOfBusiness);
-            world.UIJourneySteps.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
+            world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
             click("//*[@id='add']", SelectorType.XPATH);
             waitAndEnterText("//*[@id='name']", SelectorType.XPATH,companyName);
             enterText("//*[@id='companyNo']", companyNumber, SelectorType.XPATH);
@@ -50,7 +50,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             checkValue("//*[@id='data[tradingNames][0][name]']",SelectorType.XPATH,tradingName);
             checkValue("//*[@id='data[tradingNames][1][name]']",SelectorType.XPATH,tradingName2);
             checkValue("//*[@id='natureOfBusiness']",SelectorType.XPATH,natureOfBusiness);
-            world.UIJourneySteps.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
+            world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
             checkValue("//td[1]//input[@type='submit']",SelectorType.XPATH,companyName);
             Assert.assertEquals(Browser.navigate().findElement(By.xpath("//td[2]")).getText(),companyNumber);
             Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
@@ -58,15 +58,15 @@ public class ValidLicenceChanges extends BasePage implements En {
         When("^i make changes to the addresses page$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Addresses");
             replaceText("//*[@id='correspondence[fao]']",forAttentionOf);
-            world.UIJourneySteps.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
+            world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
             selectValueFromDropDownByIndex("//*[@id='correspondence_address[countryCode]']",SelectorType.XPATH,5);
             replaceText("//*[@id='phone_primary']", phoneNumber);
             replaceText("//*[@id='$phone_secondary']", secondaryPhoneNumber);
             replaceText("//*[@id='email']", email);
-            world.UIJourneySteps.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "establishment_address");
+            world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "establishment_address");
             click("//*[@id='consultant[add-transport-consultant]']", SelectorType.XPATH);
             replaceText("//*[@id='consultant[transportConsultantName]']", transportConsultantName);
-            world.UIJourneySteps.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
+            world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
             selectValueFromDropDownByIndex("//*[@id='consultantAddress[countryCode]']",SelectorType.XPATH,5);
             replaceText("//*[@id='tc_phone_primary']",phoneNumber);
             replaceText("//*[@id='tc_phone_secondary']",secondaryPhoneNumber);
@@ -76,15 +76,15 @@ public class ValidLicenceChanges extends BasePage implements En {
         Then("^the changes to the addresses page are made$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Addresses");
             checkValue("//*[@id='correspondence[fao]']",SelectorType.XPATH,forAttentionOf);
-            world.UIJourneySteps.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
+            world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
             checkValue("//*[@id='phone_primary']",SelectorType.XPATH,phoneNumber);
             checkValue("//*[@id='$phone_secondary']",SelectorType.XPATH,secondaryPhoneNumber);
             checkValue("//*[@id='email']",SelectorType.XPATH,email);
-            world.UIJourneySteps.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "establishment_address");
+            world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "establishment_address");
             Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='consultant[add-transport-consultant]']")).isSelected());
             Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='written-permission-to-engage']")).isSelected());
             checkValue("//*[@id='consultant[transportConsultantName]']",SelectorType.XPATH,transportConsultantName);
-            world.UIJourneySteps.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
+            world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
             checkValue("//*[@id='tc_phone_primary']",SelectorType.XPATH,phoneNumber);
             checkValue("//*[@id='tc_phone_secondary']",SelectorType.XPATH,secondaryPhoneNumber);
             checkValue("//*[@id='consultantContact[email]']",SelectorType.XPATH,email);
@@ -147,7 +147,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             click("//*[contains(text(),'An owner or employee')]", SelectorType.XPATH);
             enterText("//*[@id='contactDetails[fao]']",safetyInspector,SelectorType.XPATH);
             clickByLinkText("Enter the address yourself");
-            world.UIJourneySteps.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
+            world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             waitForTextToBePresent("Safety inspectors");
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);

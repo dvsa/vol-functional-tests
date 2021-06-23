@@ -4,7 +4,6 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import apiCalls.Utils.generic.Utils;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
 import org.apache.logging.log4j.LogManager;
@@ -23,7 +22,7 @@ public class ManageUsersPage extends BasePage implements En {
 
     public ManageUsersPage(World world) {
         Given("^i have an admin account to add users$", () -> {
-            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         });
         When("^i navigate to the manage users page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -59,7 +58,7 @@ public class ManageUsersPage extends BasePage implements En {
             String foreName = faker.generateFirstName();
             String familyName = faker.generateLastName();
             String userName = String.format("%s.%s%s", foreName, familyName, Int.random(1000, 9999));
-            world.UIJourneySteps.addUser(userName, foreName, familyName, userName.concat("@dvsa.org"));
+            world.UIJourney.addUser(userName, foreName, familyName, userName.concat("@dvsa.org"));
         });
         Then("^user text should displaying current users$", () -> {
             Assert.assertEquals("2 Current users", getText("h2", SelectorType.CSS));

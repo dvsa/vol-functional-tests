@@ -36,13 +36,13 @@ import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 
 
-public class UIJourneySteps extends BasePage {
+public class UIJourney extends BasePage {
 
     private World world;
     private FakerUtils faker = new FakerUtils();
 
 
-    public UIJourneySteps(World world) {
+    public UIJourney(World world) {
         this.world = world;
     }
 
@@ -215,17 +215,17 @@ public class UIJourneySteps extends BasePage {
 
     public void addUser(String operatorUser, String operatorForeName, String operatorFamilyName,
                         String operatorUserEmail)  {
-        world.TMJourneySteps.setOperatorUser(operatorUser);
-        world.TMJourneySteps.setOperatorForeName(operatorForeName);
-        world.TMJourneySteps.setOperatorFamilyName(operatorFamilyName);
-        world.TMJourneySteps.setOperatorUserEmail(operatorUserEmail);
+        world.TMJourney.setOperatorUser(operatorUser);
+        world.TMJourney.setOperatorForeName(operatorForeName);
+        world.TMJourney.setOperatorFamilyName(operatorFamilyName);
+        world.TMJourney.setOperatorUserEmail(operatorUserEmail);
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", world.TMJourneySteps.getOperatorUser(), SelectorType.ID);
-        enterText("forename", world.TMJourneySteps.getOperatorForeName(), SelectorType.ID);
-        enterText("familyName", world.TMJourneySteps.getOperatorFamilyName(), SelectorType.ID);
-        enterText("main[emailAddress]", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
-        enterText("main[emailConfirm]", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
+        enterText("username", world.TMJourney.getOperatorUser(), SelectorType.ID);
+        enterText("forename", world.TMJourney.getOperatorForeName(), SelectorType.ID);
+        enterText("familyName", world.TMJourney.getOperatorFamilyName(), SelectorType.ID);
+        enterText("main[emailAddress]", world.TMJourney.getOperatorUserEmail(), SelectorType.ID);
+        enterText("main[emailConfirm]", world.TMJourney.getOperatorUserEmail(), SelectorType.ID);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
@@ -308,11 +308,11 @@ public class UIJourneySteps extends BasePage {
         enterText("interim[goodsApplicationInterimReason]", "Testing", SelectorType.NAME);
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-        world.feeAndPaymentJourneySteps.customerPaymentModule();
+        world.feeAndPaymentJourney.customerPaymentModule();
     }
 
     public void addNewOperatingCentre()  {
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         clickByLinkText("Operating centres and authorisation");

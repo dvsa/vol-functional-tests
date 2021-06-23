@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import static activesupport.database.DBUnit.*;
 import static java.lang.Thread.sleep;
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.APIJourneySteps.*;
+import static org.dvsa.testing.framework.Journeys.APIJourney.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -37,21 +37,21 @@ public class RemoveTM extends BasePage implements En {
             if (world.createApplication.getOperatorType() == null) {
                 world.createApplication.setOperatorType("public");
             }
-            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.createApplication();
+            world.APIJourney.submitApplication();
         });
         When("^the internal user goes to remove the last transport manager$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
-            world.TMJourneySteps.promptRemovalOfInternalTransportManager();
+            world.TMJourney.promptRemovalOfInternalTransportManager();
         });
         When("^the transport manager has been removed by an internal user$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
-            world.TMJourneySteps.removeInternalTransportManager();
+            world.TMJourney.removeInternalTransportManager();
         });
         Then("^a pop up message should be displayed$", () -> {
             waitForTextToBePresent(alertHeaderValue);

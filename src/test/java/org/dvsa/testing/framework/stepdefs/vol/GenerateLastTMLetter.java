@@ -22,7 +22,7 @@ public class GenerateLastTMLetter extends BasePage implements En {
     public GenerateLastTMLetter(World world) {
 
         Given("^i have a valid \"([^\"]*)\" \"([^\"]*)\" licence$", (String operatorType, String licenceType) -> {
-            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             world.licenceCreation.createLicence(operatorType, licenceType);
         });
         Then("^a pop up should be displayed advising the user that they are about to remove the last TM$", () -> {

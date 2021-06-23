@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
@@ -15,17 +14,16 @@ import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
 
-public class BusRegistrationJourneySteps extends BasePage {
+public class BusRegistrationJourney extends BasePage {
 
     private World world;
     private static final String zipFilePath = "/src/test/resources/ESBR.zip";
 
-    public BusRegistrationJourneySteps(World world){
+    public BusRegistrationJourney(World world){
         this.world = world;
     }
 
@@ -82,8 +80,8 @@ public class BusRegistrationJourneySteps extends BasePage {
 
     public void payFeesAndGrantNewBusReg()  {
         clickByLinkText("Fees");
-        world.feeAndPaymentJourneySteps.selectFee();
-        world.feeAndPaymentJourneySteps.payFee("60", "cash");
+        world.feeAndPaymentJourney.selectFee();
+        world.feeAndPaymentJourney.payFee("60", "cash");
         long kickOutTime = System.currentTimeMillis() + 60000;
         do {
             javaScriptExecutor("location.reload(true)");
@@ -110,17 +108,17 @@ public class BusRegistrationJourneySteps extends BasePage {
         world.createApplication.setTrafficArea(TrafficArea.valueOf(TrafficArea.NORTH_EAST.name()));
         world. createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name()));
         world.createApplication.setOperatorType(operatorType);
-        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.APIJourneySteps.createApplication();
-        world.APIJourneySteps.submitApplication();
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.createApplication();
+        world.APIJourney.submitApplication();
         if (String.valueOf(operatorType).equals("public")) {
-            world.APIJourneySteps.grantLicenceAndPayFees();
+            world.APIJourney.grantLicenceAndPayFees();
             System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         } else {
-            world.APIJourneySteps.grantLicenceAndPayFees();
+            world.APIJourney.grantLicenceAndPayFees();
             System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         }
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         internalSiteAddBusNewReg(5);

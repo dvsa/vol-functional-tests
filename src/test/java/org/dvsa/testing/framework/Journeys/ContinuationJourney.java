@@ -6,7 +6,6 @@ import activesupport.driver.Browser;
 import activesupport.file.TestResourceReader;
 import activesupport.system.Properties;
 import apiCalls.enums.LicenceType;
-import apiCalls.enums.OperatorType;
 import com.typesafe.config.Config;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
@@ -15,16 +14,15 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-public class ContinuationJourneySteps extends BasePage {
+public class ContinuationJourney extends BasePage {
 
     private World world;
     private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
-    public ContinuationJourneySteps(World world) {
+    public ContinuationJourney(World world) {
         this.world = world;
     }
 
@@ -94,7 +92,7 @@ public class ContinuationJourneySteps extends BasePage {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             click("submitAndPay", SelectorType.ID);
             click("form-actions[pay]", SelectorType.ID);
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
         } else {
             click("submit", SelectorType.ID);
         }
@@ -110,7 +108,7 @@ public class ContinuationJourneySteps extends BasePage {
     public void completeContinuationsSignPage()  {
         click("content[signatureOptions]", SelectorType.ID);
         click("sign", SelectorType.ID);
-        world.UIJourneySteps.signWithVerify();
+        world.UIJourney.signWithVerify();
         waitForTextToBePresent("Declaration signed through GOV.UK Verify");
     }
 

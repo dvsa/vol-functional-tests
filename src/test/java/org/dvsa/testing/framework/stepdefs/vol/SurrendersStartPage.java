@@ -10,7 +10,7 @@ import static junit.framework.TestCase.assertTrue;
 public class SurrendersStartPage extends BasePage implements En {
     public SurrendersStartPage(World world) {
         When("^i click on apply to surrender licence$", () -> {
-            world.surrenderJourneySteps.navigateToSurrendersStartPage();
+            world.surrenderJourney.navigateToSurrendersStartPage();
         });
         Then("^the correct page heading for \"([^\"]*)\" should be displayed$", (String licenceType) -> {
             if(licenceType.equals("public"))
