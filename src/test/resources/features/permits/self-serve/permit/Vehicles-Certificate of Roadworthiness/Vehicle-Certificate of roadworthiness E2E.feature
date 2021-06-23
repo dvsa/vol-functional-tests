@@ -9,7 +9,7 @@ Feature: Certificate of roadworthiness for Vehicles end to end happy path journe
 
   @EXTERNAL @OLCS-26817
   Scenario: Verify that Certificate of Roadworthiness for vehicles application flow is correct and application is submitted successfully with status of Valid
-    Then I am on Certificate of Roadworthiness for vehicles Application overview Page
+    Then I should be on the overview page
     Then I check content and complete Registration number section and click save and continue
     Then I check content and complete vehicle make and model section and click save and continue
     Then I check content and complete Vehicle identification number section and click save and continue

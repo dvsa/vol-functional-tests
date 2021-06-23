@@ -11,7 +11,7 @@ Feature: ECMT International Removal Eligiblity page
   @EXTERNAL @OLCS-24816
   Scenario:Back Button
     When I click the back link
-    Then  I should be on the ECMT International Overview Page
+    Then I should be on the overview page
 
   @EXTERNAL @OLCS-24816 @r222gremovalsfix
   Scenario: Eligibility page details are displayed correctly
@@ -31,4 +31,4 @@ Feature: ECMT International Removal Eligiblity page
   Scenario: The user is taken to Overview page when the 'Save and return to overview' link is selected
     When the checkbox is ticked
     And I save and return to overview
-    Then  I should be on the ECMT International Overview Page
+    Then I should be on the overview page

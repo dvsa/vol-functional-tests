@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -37,7 +38,7 @@ public class EuroEmissionStandardPageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
@@ -66,7 +67,7 @@ public class EuroEmissionStandardPageSteps implements En {
 
         When("^I confirm the emissions standards checkbox", EmissionStandardsPage::confirmCheckbox);
         Then("^the user is navigated to the short term overview page with the status of emissions displayed as completed$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards,PermitStatus.COMPLETED);
+            OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards,PermitStatus.COMPLETED);
         });
     }
 }

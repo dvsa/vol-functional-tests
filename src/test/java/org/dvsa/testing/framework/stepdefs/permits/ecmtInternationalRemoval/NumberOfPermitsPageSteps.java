@@ -5,6 +5,7 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -25,8 +26,8 @@ public class NumberOfPermitsPageSteps implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -60,7 +61,7 @@ public class NumberOfPermitsPageSteps implements En {
         Then("^the number of permits section on the ECMT Removals Overview page is complete$", () -> {
             OverviewPage.untilOnPage();
             NumberOfPermitsPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
+            OverviewPage.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
     }
 }

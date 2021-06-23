@@ -28,14 +28,12 @@ public class OverviewPageSteps implements En {
             operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
             clickCancelApplication();
         });
-        Then("^I should be on the ECMT International Overview Page$", OverviewPage::untilOnPage);
         And("^the application number is displayed correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber()
                     .orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
-        And("^the page heading on ECMT International Removal is correct$", OverviewPage::hasPageHeading);
         And("^future sections beyond the current step are disabled$", () -> {
             OverviewPage.hasActiveLink(OverviewSection.LicenceNumber);
         });

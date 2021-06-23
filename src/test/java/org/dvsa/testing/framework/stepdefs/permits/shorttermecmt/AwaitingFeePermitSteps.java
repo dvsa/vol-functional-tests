@@ -6,6 +6,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
@@ -52,8 +53,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
-            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
-            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
+            CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();

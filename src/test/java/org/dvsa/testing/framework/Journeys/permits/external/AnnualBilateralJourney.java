@@ -94,11 +94,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         licenceStore.getEcmt().setNoCabotage(String.valueOf(noCabotage));
         return this;
     }
-    public AnnualBilateralJourney overview(OverviewSection section) {
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-        OverviewPage.clickOverviewSection(section);
-        return this;
-    }
 
     public AnnualBilateralJourney checkYourAnswers(){
         CheckYourAnswerPage.untilOnPage();

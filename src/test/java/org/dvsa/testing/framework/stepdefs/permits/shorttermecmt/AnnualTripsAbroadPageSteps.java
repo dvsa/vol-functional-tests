@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -33,7 +34,7 @@ public class AnnualTripsAbroadPageSteps implements En {
             YearSelectionPage.selectShortTermValidityPeriod();
             ECMTShortTermJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ECMTShortTermJourney.getInstance(). licencePage(operatorStore,world);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();

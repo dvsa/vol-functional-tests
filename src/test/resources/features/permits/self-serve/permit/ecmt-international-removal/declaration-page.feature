@@ -17,7 +17,7 @@ Feature: ECMT International Declaration Page
     When I save and return to overview
     Then I should get the correct error message on the declaration page
     When I click the back link
-    Then I should be on the ECMT International Overview Page
+    Then I should be on the overview page
     And  I click declaration link on the Ecmt removal overview page again
     Then I should be on the declaration page
     When I confirm the declaration
@@ -42,7 +42,7 @@ Feature: ECMT International Declaration Page
   @EXTERNAL @OLCS-24980 @ecmt_removal @olcs-27502 @olcs-27581 @OLCS-27781
   Scenario: When fees is paid Declaration page confirmation navigates to submission page
     And I click the back link
-    Then I should be on the ECMT International Overview Page
+    Then I should be on the overview page
     And I click the back link
     Then I should be on the permits dashboard page with an ongoing application
     And I select the fee tab and pay the outstanding fees

@@ -15,9 +15,4 @@ public class ShorttermECMTJourney extends BasePermitJourney {
 
         return instance;
     }
-    public ShorttermECMTJourney overview(OverviewSection section) {
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-        OverviewPage.clickOverviewSection(section);
-        return this;
-    }
 }

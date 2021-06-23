@@ -20,14 +20,14 @@ Feature: Annual bilateral country selection page
     Given I am on the country selection page
     When I select a country from the bilateral countries page
     And I select save and continue button on select countries page
-    Then I should be on the bilateral overview page
+    Then I should be on the overview page
 
   @EXTERNAL @OLCS-22906  @Deprecated
   Scenario: Save and return to overview goes to bilateral overview page
    Given I am on the country selection page
    And I select a country from the bilateral countries page
    When I save and return to overview
-   Then I should be on the bilateral overview page
+   Then I should be on the overview page
 
   @EXTERNAL @OLCS-22906  @Deprecated
   Scenario: Remembers answer when you change your answer

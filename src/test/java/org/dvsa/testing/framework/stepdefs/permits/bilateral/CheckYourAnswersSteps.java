@@ -7,6 +7,7 @@ import edu.emory.mathcs.backport.java.util.Collections;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -28,8 +29,8 @@ public class CheckYourAnswersSteps implements En {
             AnnualBilateralJourney.getInstance()
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Countries);
             AnnualBilateralJourney.getInstance()
-                    .overview(OverviewSection.Countries)
                     .countries(operatorStore);
             NumberOfPermitsPageJourneySteps.completeBilateralPage();
 

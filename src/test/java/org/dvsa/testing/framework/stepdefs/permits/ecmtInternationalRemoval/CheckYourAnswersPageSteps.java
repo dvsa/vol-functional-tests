@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -28,8 +29,8 @@ public class CheckYourAnswersPageSteps implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true)
                      .cabotagePage()
                     .certificatesRequiredPage()
@@ -49,7 +50,7 @@ public class CheckYourAnswersPageSteps implements En {
             Assert.assertEquals(Cabotage, "I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.");
         });
         Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
-        And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers));
+        And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckYourAnswers));
         Then("^I should be on the declaration page$", DeclarationPage::untilOnPage);
         Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> {
             CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.RemovalsEligibility);

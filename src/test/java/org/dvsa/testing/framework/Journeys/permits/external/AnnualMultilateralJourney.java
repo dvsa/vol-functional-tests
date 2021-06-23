@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
@@ -20,7 +21,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     public static final AnnualMultilateralJourney INSTANCE = new AnnualMultilateralJourney();
 
     public AnnualMultilateralJourney overviewPage(OverviewSection section, OperatorStore operatorStore) {
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+        OverviewPage.untilOnPage();
 
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
         licence.setReferenceNumber(BasePermitPage.getReferenceFromPage());
@@ -30,7 +31,7 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
         licence.addAnnualMultilateral(permit);
         permit.setReference(BasePermitPage.getReferenceFromPage());
 
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
+        OverviewPageJourneySteps.clickOverviewSection(section);
         return this;
     }
 

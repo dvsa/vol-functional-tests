@@ -6,9 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -46,16 +44,14 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         Then("^I select any licence number for short term permit$", () -> {
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
         });
-        Then("^I am on short term ECMT Application overview Page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::untilOnPage);
         Then("^I complete the How will you use the permits section and click save and continue$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete the Check if you need ECMT permits section and click save and continue$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
-            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
         });
         Then("^I complete Cabotage page section and click save and continue$", () -> {
             CabotagePage.confirmWontUndertakeCabotage();
@@ -121,7 +117,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithoutSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();

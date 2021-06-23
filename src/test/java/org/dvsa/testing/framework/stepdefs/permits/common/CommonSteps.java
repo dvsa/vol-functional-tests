@@ -17,6 +17,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -79,7 +80,7 @@ public class CommonSteps extends BasePage implements En {
             clickToPermitTypePage(world);
         });
         Then ("^I submit the annual ECMT APGG application$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
@@ -292,7 +293,7 @@ public class CommonSteps extends BasePage implements En {
 
     public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull OverviewSection section) {
         beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
+        OverviewPageJourneySteps.clickOverviewSection(section);
     }
 
     public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) {

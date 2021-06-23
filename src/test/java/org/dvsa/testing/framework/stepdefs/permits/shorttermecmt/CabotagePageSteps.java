@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -28,7 +29,7 @@ public class CabotagePageSteps implements En {
             YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });

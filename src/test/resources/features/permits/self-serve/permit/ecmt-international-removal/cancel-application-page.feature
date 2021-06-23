@@ -11,7 +11,7 @@ Feature: ECMT International Removal Cancel application Page
   @OLCS-24814
   Scenario: Application back button in ECMT International Removal Cancel Page
     When I click the back link
-    Then I should be on the ECMT International Overview Page
+    Then I should be on the overview page
 
   @OLCS-24814 @r222gremovalsfix  @OLCS-27781  @OLCS-28352
   Scenario: Cancel Application page details are displayed correctly

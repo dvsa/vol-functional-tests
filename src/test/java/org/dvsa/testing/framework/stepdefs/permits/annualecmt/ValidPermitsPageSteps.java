@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
@@ -92,8 +93,8 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance()
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Countries);
             AnnualBilateralJourney.getInstance()
-                    .overview(OverviewSection.Countries)
                     .countries(operatorStore);
             NumberOfPermitsPageJourneySteps.completeBilateralPage();
             AnnualBilateralJourney.getInstance().checkYourAnswers();

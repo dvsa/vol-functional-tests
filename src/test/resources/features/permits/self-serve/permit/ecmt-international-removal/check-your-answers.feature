@@ -22,11 +22,11 @@ Feature: ECMT International Number Check your answers Page
   Scenario: Verify that clicking Change links on ECMT International removals Check Your Answers page, takes the user to the respective pages as per the ACs
     And   I choose to change the ECMT Removals Permits Eligibility  section
     And   I save and return to overview
-    Then I should be on the ECMT International Overview Page
+    Then I should be on the overview page
     When  I click the ECMT Removals Check your answers link on the overview page again
     And  I choose to change the ECMT Removals Permits Cabotage section
     And   I save and return to overview
-    Then I should be on the ECMT International Overview Page
+    Then I should be on the overview page
     When  I click the ECMT Removals Check your answers link on the overview page again
     And  I choose to change the ECMT Removals Permits Number of permits section
     Then  I should be on the ECMT international removal number of permits page

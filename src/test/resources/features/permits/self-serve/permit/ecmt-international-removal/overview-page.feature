@@ -20,7 +20,7 @@ Feature: ECMT International Removal  overview page
   #AC03,#AC04
   @EXTERNAL @OLCS-24817
   Scenario: Page Heading is displayed correctly
-    Then the page heading on ECMT International Removal is correct
+    Then the overview page heading is displayed correctly
 
   #AC09
   @EXTERNAL @OLCS-24817

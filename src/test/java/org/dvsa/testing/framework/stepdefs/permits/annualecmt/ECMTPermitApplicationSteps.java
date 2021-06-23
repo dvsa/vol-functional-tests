@@ -8,9 +8,7 @@ import cucumber.api.java8.En;
 import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
@@ -94,7 +92,6 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
         });
-        Then ("^I am on the annual ECMT application overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
@@ -179,9 +176,8 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
     public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) {
         LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
         store.withLicences(licenceStore);
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-        CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
-        CheckIfYouNeedECMTPermitsPage.saveAndContinue();
+        OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+        CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
         CabotagePage.confirmWontUndertakeCabotage();
         CertificatesRequiredPage.completePage();
         CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();

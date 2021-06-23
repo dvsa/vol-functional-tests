@@ -8,12 +8,12 @@ Feature: Annual Bilateral Application Overview Page
   @EXTERNAL @OLCS-27065
   Scenario: To verify the overview functionalites works as expected
    And I'm on bilateral overview page
-   And the page heading is displayed correctly
+   And the overview page heading is displayed correctly
    And the status of select countries you need for hyper link is marked as complete
    When the hyperlink for select countries is selected
    Then I am navigated to the relevant page
    And  I select save and continue button on select countries page
-   Then I m navigated to bilateral overview page
+   Then the overview page heading is displayed correctly
 
   @EXTERNAL @OLCS-27315
   Scenario: Countries selected are listed in alphabetical order

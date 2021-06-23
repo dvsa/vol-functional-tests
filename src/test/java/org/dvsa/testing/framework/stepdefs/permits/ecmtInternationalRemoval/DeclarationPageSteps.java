@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -31,8 +32,8 @@ public class DeclarationPageSteps extends BasePage implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewSection.RemovalsEligibility)
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
@@ -44,7 +45,7 @@ public class DeclarationPageSteps extends BasePage implements En {
         And ("^the declaration page has correct link under guidance notes", DeclarationPage::isGuidanceNotesLinkPresent);
         And ("^the declaration page checkbox has the correct text and displayed unselected by default", DeclarationPageJourneySteps::hasCheckboxText);
         And ("^I click declaration link on the Ecmt removal overview page again", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.Declaration);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
         });
         When("^I confirm the declaration$", DeclarationPage::confirmDeclaration);
         Then("^I am on ECMT removal permits overview page with Declaration section marked as complete$", () -> {

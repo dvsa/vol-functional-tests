@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -12,6 +13,7 @@ import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
@@ -31,7 +33,7 @@ public class CertificateRequiredPageSteps implements En {
             YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
@@ -52,8 +54,8 @@ public class CertificateRequiredPageSteps implements En {
         Then("^I confirm the Certificates Required checkbox$", CertificatesRequiredPage::confirmCertificateRequired);
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
             String error = "Expected the status of certificates required page to be complete but it wasn't";
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
+            OverviewPage.untilOnPage();
+            OverviewPage.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
         });
 
     }

@@ -13,6 +13,7 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -28,8 +29,8 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);

@@ -6,15 +6,13 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourn
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.*;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
@@ -36,8 +34,8 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
@@ -48,7 +46,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             BilateralJourneySteps.saveAndContinue();
             NumberOfPermitsPageJourneySteps.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourneySteps.completeDeclaration();
         });
         And("^I'm on the annual bilateral standard and cabotage permit fee page with Cabotage selected on Cabotage page$", () -> {
@@ -57,8 +55,8 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
@@ -70,7 +68,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPageJourneySteps.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourneySteps.completeDeclaration();
         });
         And("^I'm on the annual bilateral standard permit no cabotage fee page$", () -> {
@@ -79,8 +77,8 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
@@ -90,7 +88,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps implements En
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPageJourneySteps.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourneySteps.completeDeclaration();
         });
         Then("^the application details on the bilateral standard and cabotage fee page are displayed correctly in fee page table$", () ->

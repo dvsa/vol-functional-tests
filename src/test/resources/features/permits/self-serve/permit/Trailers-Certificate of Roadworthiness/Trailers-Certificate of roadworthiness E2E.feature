@@ -9,7 +9,7 @@ Feature: Certificate of roadworthiness for Trailers end to end happy path journe
 
   @EXTERNAL @OLCS-26817
   Scenario: Verify that Certificate of Roadworthiness for trailers application flow is correct and application is submitted successfully with status of Valid
-    Then I am on Certificate of Roadworthiness for trailers Application overview Page
+    Then I should be on the overview page
     Then I check content and complete Registration number section for  Certificate of Roadworthiness for trailers and click save and continue
     Then I check content and complete vehicle make and model section Certificate of Roadworthiness for trailers and click save and continue
     Then I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue

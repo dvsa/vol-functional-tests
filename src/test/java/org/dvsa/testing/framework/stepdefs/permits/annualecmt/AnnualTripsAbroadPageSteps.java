@@ -3,8 +3,10 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -23,9 +25,8 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
         And("^I am on the annual trips abroad page$", () -> {
             LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
             store.withLicences(licenceStore);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
-            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();

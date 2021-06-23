@@ -32,6 +32,6 @@ Feature: Application overview page
   #AC03
   Scenario: Application overview functionalities are displayed correctly
     Then only the expected status labels are displayed
-    And  the page heading is displayed correctly
+    And  the overview page heading is displayed correctly
     When I click the back link
     Then I should be taken to the permits dashboard

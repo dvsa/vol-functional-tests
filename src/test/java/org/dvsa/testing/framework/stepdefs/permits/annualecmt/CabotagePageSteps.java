@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -16,9 +18,8 @@ public class CabotagePageSteps implements En {
     public CabotagePageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the cabotage Page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
-            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
 
         });
         When("^I declare not to undertake cabotage$", () -> {

@@ -21,7 +21,7 @@ Feature: Self-serve dashboard
   Scenario: Selection of Not yet Submitted application navigates to application overview page
     And I have a partial completed ECMT application
     When I view the application from ongoing permit application table
-    Then I am on the annual ECMT application overview page
+    Then the overview page heading is displayed correctly
 
   @EXTERNAL @OLCS-25664 @OLCS-28275
   Scenario: Selection of awaiting fee ECMT application navigates to awaiting fee page

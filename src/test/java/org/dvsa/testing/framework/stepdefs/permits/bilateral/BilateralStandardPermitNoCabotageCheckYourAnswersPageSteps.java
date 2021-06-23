@@ -28,7 +28,7 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();

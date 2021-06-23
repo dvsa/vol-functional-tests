@@ -2,10 +2,11 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
@@ -14,10 +15,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.junit.Assert;
 
-import java.util.concurrent.TimeUnit;
-
 import static org.dvsa.testing.lib.pages.BasePage.getURL;
-import static org.dvsa.testing.lib.pages.BasePage.untilUrlPathIs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -26,9 +24,8 @@ public class Euro6Steps implements En {
     public Euro6Steps(OperatorStore operatorStore, World world) {
         And("^I am on the euro emission standard page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.checkNeedECMTPermits();
-            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
@@ -45,7 +42,7 @@ public class Euro6Steps implements En {
         When("^I select save and return overview link$", BasePermitPage::overview);
 
         Then("^I should see the overview page with updated changes$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
+            OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
         });
 
         Then("^I should be able to navigate to the next page$", () -> {

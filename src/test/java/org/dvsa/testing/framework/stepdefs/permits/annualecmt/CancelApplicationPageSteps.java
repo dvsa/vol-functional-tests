@@ -30,8 +30,8 @@ public class CancelApplicationPageSteps implements En {
         });
         When("^I cancel my ECMT application$", CancellationPage::clickCancelCheckbox);
         Then("^I navigate to the Bilaterals cabotage page$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             PeriodSelectionPage.untilOnPage();

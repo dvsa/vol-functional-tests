@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJo
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -76,7 +77,7 @@ public class SubmittedPageSteps implements En {
             HomePage.selectTab(Tab.PERMITS);
 
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPage.clickOverviewSection(OverviewSection.Declaration);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
             DeclarationPageJourneySteps.completeDeclaration();
         });
         Then("^there shouldn't be a view receipt link on the multilateral submitted page$", () -> {
@@ -105,7 +106,7 @@ public class SubmittedPageSteps implements En {
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPage.clickOverviewSection(OverviewSection.Declaration);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
        });
         When("^a case worker worker waives all fees for my ongoing multilateral permit application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -126,11 +127,9 @@ public class SubmittedPageSteps implements En {
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPage.clickOverviewSection(OverviewSection.Declaration);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
         });
-        Then("^all the multilateral submitted advisory text is present$", () -> {
-            SubmittedPage.hasMultilateralAdvisoryText();
-        });
+        Then("^all the multilateral submitted advisory text is present$", SubmittedPage::hasMultilateralAdvisoryText);
     }
 
     private void completeMultilateralJourneyUntilDeclaration(OperatorStore operator, World world) {

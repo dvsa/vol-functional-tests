@@ -32,8 +32,8 @@ Feature: Number of permits required page
   @EXTERNAL @OLCS-17815 @ECMT @Test3 @olcs-27581 @OLCS-27781 @OLCS-28275
   Scenario: Pay Fees from Fee Tab on Self serve screen
     And I enter the valid number of short term permits required
-    When  I select save and return overview link
-    Then I am on the annual ECMT overview page
+    When I select save and return overview link
+    Then the overview page heading is displayed correctly
     When I click the back link
     Then I should be on the permits dashboard page with an ongoing application
     When I select the fee tab and pay the outstanding fees

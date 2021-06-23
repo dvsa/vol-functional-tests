@@ -9,7 +9,7 @@ Feature: ECMT International Removals Certificates required  Page
   @EXTERNAL @r222gremovalsfix
   Scenario: Application back button takes back to overview page
     When I click the back link
-    Then I should be on the ECMT International Overview Page
+    Then I should be on the overview page
 
   @EXTERNAL @r222gremovalsfix
   Scenario: Permit Start Date Page functionalities work properly

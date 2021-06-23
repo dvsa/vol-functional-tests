@@ -5,6 +5,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -45,7 +46,7 @@ public class CheckYourAnswersPageSteps implements En {
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore).licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             CheckYourAnswersPageSteps.permitUsage.put("permit.usage", licence.getEcmt().getPermitusage());
@@ -78,12 +79,12 @@ public class CheckYourAnswersPageSteps implements En {
             Assert.assertEquals(s,actualPermitUsage);
         });
         Then("^I am on the short term permits overview page with check your answers section marked as complete$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
+            OverviewPage.untilOnPage();
+            OverviewPage.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
         });
         Then("^the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET$", OverviewPage::declarationIsNotStartedYet);
         And("^I click Check your answers link on the overview page again$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.CheckYourAnswers);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckYourAnswers);
         });
     }
 

@@ -6,6 +6,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
@@ -14,10 +15,7 @@ import org.dvsa.testing.lib.newPages.common.type.Fee;
 import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.*;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
@@ -36,8 +34,8 @@ public class PermitFeePageSteps extends BasePermitPage implements En {
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
@@ -47,11 +45,11 @@ public class PermitFeePageSteps extends BasePermitPage implements En {
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPageJourneySteps.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourneySteps.completeDeclaration();
         });
         And("^I select the submit and pay link from overview page$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.SubmitAndPay);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.SubmitAndPay);
         });
         Then("^I select return to overview link on the permit fee page$", PermitFeePage::returnToOverview);
         Then("^I should be on the permit fee page$", PermitFeePage::untilOnPage);

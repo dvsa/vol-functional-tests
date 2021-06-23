@@ -14,7 +14,7 @@ Feature: Annual bilateral declaration page
     When I save and return to overview
     Then I should get an error message
     When I click the back link
-    Then I should be on the bilateral overview page
+    Then I should be on the overview page
 
   @EXTERNAL @OLCS-22910 @bilateral_cabotage_only @OLCS-26045 @OLCS-27317
   Scenario: Taken to the permit fee page

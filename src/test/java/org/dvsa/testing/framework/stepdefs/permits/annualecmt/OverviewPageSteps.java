@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.common.CommonPatterns;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -31,21 +32,21 @@ public class OverviewPageSteps implements En {
         });
         Then("^only the expected status labels are displayed$", () -> {
             for (OverviewSection section : OverviewSection.values()){
-                Assert.assertThat(org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.statusOfSection(section), isIn(PermitStatus.values()));
+                Assert.assertThat(OverviewPage.statusOfSection(section), isIn(PermitStatus.values()));
             }
         });
         When("^I select '([\\w ]+)'$", (String overviewSection) -> {
             OverviewSection section = OverviewSection.toEnum(overviewSection);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(section);
+            OverviewPageJourneySteps.clickOverviewSection(section);;
         });
         Then("^the (check your answers|declaration) section should be disabled$", (String section) -> {
             OverviewSection sectionEnum = OverviewSection.toEnum(section);
             Assert.assertFalse(
                     sectionEnum.toString() + " should NOT be active but is",
-                    org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.isActive(sectionEnum)
+                    OverviewPage.isActive(sectionEnum)
             );
 
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(sectionEnum, PermitStatus.CANT_START_YET);
+            OverviewPage.checkStatus(sectionEnum, PermitStatus.CANT_START_YET);
         });
         When("^I fill all steps preceding steps to check your answers$", () -> {
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
@@ -58,18 +59,18 @@ public class OverviewPageSteps implements En {
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
             ECMTPermitApplicationSteps.saveAndContinue();
         });
-        When("^the page heading is displayed correctly$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::hasPageHeading);
+        When("^the overview page heading is displayed correctly$", OverviewPage::hasPageHeading);
         When("^I'm on the annual multilateral overview page$", () -> {
             EcmtApplicationJourney.getInstance().permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
              .licencePage(operatorStore, world);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+            OverviewPage.untilOnPage();
         });
         Then("^the application reference number should be on the annual multilateral overview page$", () -> {
             String reference = BasePermitPage.getReferenceFromPage();
             Assert.assertThat(reference, MatchesPattern.matchesPattern(CommonPatterns.REFERENCE_NUMBER));
         });
         When("^I select (Licence number|Number of permits required) from multilateral overview page$", (String section) -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.toEnum(section));
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.toEnum(section));
         });
         Then("^I am navigated to the corresponding page for ([\\w\\s]+)$", (String section) -> {
             switch (section.toLowerCase()) {
@@ -81,22 +82,22 @@ public class OverviewPageSteps implements En {
             }
         });
         Then("^the default section statuses are as expected$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(
+            OverviewPage.checkStatus(
                     OverviewSection.NumberOfPaymentsRequired, PermitStatus.NOT_STARTED_YET);
 
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(
+            OverviewPage.checkStatus(
                     OverviewSection.CheckYourAnswers, PermitStatus.CANT_START_YET);
 
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(
+            OverviewPage.checkStatus(
                     OverviewSection.Declaration,
                     PermitStatus.CANT_START_YET);
         });
         Then("^future sections beyond the next following step from currently completed section are disabled$", () -> {
             String error = "Expected not to find a link to the '%s' page but there was one";
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.hasActiveLink(OverviewSection.CheckYourAnswers);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.hasActiveLink(OverviewSection.Declaration);
+            OverviewPage.hasActiveLink(OverviewSection.CheckYourAnswers);
+            OverviewPage.hasActiveLink(OverviewSection.Declaration);
         });
 
-        When("^I click cancel link on the multilateral overview page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::clickCancelApplication);
+        When("^I click cancel link on the multilateral overview page$", OverviewPage::clickCancelApplication);
     }
 }

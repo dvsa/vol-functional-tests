@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.VehiclesCertificateOfRoadworthinessJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -11,6 +12,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
 import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
@@ -35,10 +37,9 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             VehiclesCertificateOfRoadworthinessJourney.getInstance().licencePage(operatorStore, world);
         });
 
-        Then("^I am on Certificate of Roadworthiness for vehicles Application overview Page$", org.dvsa.testing.lib.newPages.permits.pages.OverviewPage::untilOnPage);
 
         Then("^I check content and complete Registration number section and click save and continue$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection(OverviewSection.RegistrationNumber);
+            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RegistrationNumber);
             VehicleRegistrationNumberPage.untilOnRegistrationPage();
             VehicleRegistrationNumberPage.hasPageHeading();
             BasePermitPage.getReferenceFromPage();

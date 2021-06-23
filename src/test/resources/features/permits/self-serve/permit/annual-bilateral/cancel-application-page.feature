@@ -16,7 +16,7 @@ Feature: Annual Bilateral Application Cancel application page
     Then I should see the correct text displayed next to the checkbox
     When the cancel application button is selected without checkbox ticked
     When I click the back link
-    Then I should be on the bilateral overview page
+    Then I should be on the overview page
 
   @OLCS-23233 @EXTERNAL @OLCS-26819 @OLCS-27781
   Scenario: Verify Annual Bilateral Cancel  application page , cancel confirmation page contents and functionality
@@ -30,7 +30,7 @@ Feature: Annual Bilateral Application Cancel application page
   @EXTERNAL @OLCS-27364 @OLCS-27781
   Scenario: Verify the back button functionality on Cancel application page when clicked from country selection page
      And I click the back link
-     Then I should be on the bilateral overview page
+     Then I should be on the overview page
      When I select the edit countries button
      Then I am on the Bilaterals country selection page
      When I click cancel application link for bilateral application
@@ -41,7 +41,7 @@ Feature: Annual Bilateral Application Cancel application page
   @EXTERNAL @OLCS-27364
   Scenario: Verify the back button functionality on Cancel application page for Bilateral cabotage permits only , when clicked from Cabotage page
     When I click the back link
-    Then I should be on the bilateral overview page
+    Then I should be on the overview page
     And  I navigate to the Bilaterals cabotage page
     When I select 'no' button
     And I click save and continue on cabotage page

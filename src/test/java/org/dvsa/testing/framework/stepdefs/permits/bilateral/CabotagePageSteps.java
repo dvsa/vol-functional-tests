@@ -9,10 +9,7 @@ import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.CountrySelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
@@ -60,7 +57,7 @@ public class CabotagePageSteps extends BasePermitPage implements En {
         });
         Then("^I m navigated to the correct page depending upon whether there is just one country selected or more than one", () -> {
             if(this.numberOfCountries > 1) {
-                org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
+                OverviewPage.untilOnPage();
                 isElementNotPresent("//a[contains(text(),'Norway')]",SelectorType.XPATH);
             }
             else {
@@ -105,8 +102,8 @@ public class CabotagePageSteps extends BasePermitPage implements En {
     }
 
     private void annualBilateralOverviewPageUntilPeriodSelectionPage() {
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.untilOnPage();
-        org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCountrySection(Country.Norway);
+        OverviewPage.untilOnPage();
+        OverviewPage.clickCountrySection(Country.Norway);
         EssentialInformationPage.untilOnPage();
         saveAndContinue();
         org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();

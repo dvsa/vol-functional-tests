@@ -10,7 +10,7 @@ Feature: ECMT International Cabotage Page
   @OLCS-24815
   Scenario: Application back button in ECMT International Removal cabotage Page
     When I click the back link
-    Then I should be on the ECMT International Overview Page
+    Then I should be on the overview page
 
   @OLCS-24815
   Scenario: Cabotage page details for ECMT removals are displayed correctly

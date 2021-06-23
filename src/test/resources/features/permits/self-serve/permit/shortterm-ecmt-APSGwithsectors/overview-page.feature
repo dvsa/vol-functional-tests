@@ -8,7 +8,7 @@ Feature: Short term Ecmt APSG with sectors overview page feature
 
   @OLCS-25093  @olcs-27581
   Scenario: Page Heading and advisory texts are displayed
-    And the page heading on short term Ecmt is displayed correctly
+    And the overview page heading is displayed correctly
     #And the advisory texts on shortterm overview page are displayed correctly --- Advisory text removed from overview page
     #And there is a guidance on permits link -- Guidance link removed from overview page
     And the default section status are displayed as expected

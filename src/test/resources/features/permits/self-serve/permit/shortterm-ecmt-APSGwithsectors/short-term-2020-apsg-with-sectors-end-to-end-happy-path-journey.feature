@@ -11,7 +11,7 @@ Feature: Short term APSG with sectors end to end happy path journey
 
   @EXTERNAL @OLCS-25904 @olcs-27581
   Scenario: Verify that ECMT short term 2020 application flow is correct and application is submitted successfully
-    Then I am on short term ECMT Application overview Page
+    Then I should be on the overview page
     Then I complete the How will you use the permits section and click save and continue
     Then I complete Cabotage page section and click save and continue
     Then I complete Certificates required page section and click save and continue

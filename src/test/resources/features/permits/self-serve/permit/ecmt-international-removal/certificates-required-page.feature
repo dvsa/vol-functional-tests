@@ -10,7 +10,7 @@ Feature: ECMT International Removals Certificates required  Page
   @r222gremovalsfix
   Scenario: Application back button in ECMT Removals certificates required page
     When I click the back link
-    Then I should be on the ECMT International Overview Page
+    Then I should be on the overview page
 
   @r222gremovalsfix
   Scenario: Certificate required page details are displayed correctly
