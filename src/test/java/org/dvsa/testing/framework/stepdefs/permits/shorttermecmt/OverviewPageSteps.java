@@ -21,14 +21,11 @@ public class OverviewPageSteps implements En {
         Then("^there is a guidance on permits link$", OverviewPage::isGuidanceOnPermitsLinkPresent);
         Then("^the default section status are displayed as expected$", () -> {
 
-            OverviewPageJourneySteps.checkStatus(
-                    OverviewSection.HowWillYouUseThePermits, PermitStatus.NOT_STARTED_YET);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.HowWillYouUseThePermits, PermitStatus.NOT_STARTED_YET);
 
-            OverviewPageJourneySteps.checkStatus(
-                    OverviewSection.Cabotage, PermitStatus.CANT_START_YET);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Cabotage, PermitStatus.CANT_START_YET);
 
-            OverviewPageJourneySteps.checkStatus(
-                    OverviewSection.CertificatesRequired, PermitStatus.CANT_START_YET);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.CertificatesRequired, PermitStatus.CANT_START_YET);
 
             OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.CANT_START_YET);
 

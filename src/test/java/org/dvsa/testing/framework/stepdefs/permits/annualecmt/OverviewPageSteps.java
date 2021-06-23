@@ -83,21 +83,15 @@ public class OverviewPageSteps implements En {
             }
         });
         Then("^the default section statuses are as expected$", () -> {
-            OverviewPageJourneySteps.checkStatus(
-                    OverviewSection.NumberOfPaymentsRequired, PermitStatus.NOT_STARTED_YET);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.NOT_STARTED_YET);
 
-            OverviewPageJourneySteps.checkStatus(
-                    OverviewSection.CheckYourAnswers, PermitStatus.CANT_START_YET);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.CANT_START_YET);
 
-            OverviewPageJourneySteps.checkStatus(
-                    OverviewSection.Declaration,
-                    PermitStatus.CANT_START_YET);
+            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.CANT_START_YET);
         });
         Then("^future sections beyond the next following step from currently completed section are disabled$", () -> {
             assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.CheckYourAnswers));
             assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.Declaration));
         });
-
-        When("^I click cancel link on the multilateral overview page$", OverviewPage::clickCancelApplication);
     }
 }

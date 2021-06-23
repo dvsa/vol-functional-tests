@@ -32,7 +32,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
         });
         When("the checkbox is selected", CancellationPage::clickCancelCheckbox);
         When("^the cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
-        Then ("I should be taken to cancel confirmation page", () -> {
+        Then ("^I should be taken to cancel confirmation page$", () -> {
             CancellationConfirmationPage.untilOnPage();
             assertEquals("Application cancelled", CancellationConfirmationPage.getPageHeading());
             assertEquals(world.applicationDetails.getLicenceNumber(), CancellationConfirmationPage.getReferenceNumberHeading());
