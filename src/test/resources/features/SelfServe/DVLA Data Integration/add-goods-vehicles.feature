@@ -9,6 +9,15 @@ Feature: Search and add a vehicle
     Then the add vehicle page should display licence number
     And "Add a vehicle" heading
 
+  Scenario Outline: Add a vehicle to a licence
+    Given I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
+    When I navigate to manage vehicle page on a licence
+    And choose to add a "<VRM>" vehicle
+    Then the "<VRM>" should be displayed on the page
+    Examples:
+      | Operator | VRM     |
+      | goods    | S679ASX |
+
   Scenario Outline: Add a vehicle to an application
     Given I have a "<Operator>" application with 0 vehicles and a vehicleAuthority of 5
     When I navigate to manage vehicle page on an application
