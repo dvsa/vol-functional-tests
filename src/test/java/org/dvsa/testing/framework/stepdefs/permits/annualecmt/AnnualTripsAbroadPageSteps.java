@@ -38,7 +38,7 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
             scrollAndEnterField("//input[@type ='text']", SelectorType.XPATH, "1000000");
         });
 
-        Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepdefBody.A1<String>) org.dvsa.testing.lib.newPages.permits.pages.NumberOfTripsPage::quantity);
+        Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepdefBody.A1<String>) NumberOfTripsPage::quantity);
     }
 
 }

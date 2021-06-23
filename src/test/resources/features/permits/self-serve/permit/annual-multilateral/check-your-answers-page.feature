@@ -10,7 +10,7 @@ Feature: Check your answers page
   #AC01
   @OLCS-23016
   Scenario: Back button returns to overview page
-    When I go back
+    When I click the back link
     Then I should be on the Annual Multilateral overview page
 
   #AC02

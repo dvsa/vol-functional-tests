@@ -8,7 +8,7 @@ Feature: Restricted countries page
 
   @EXTERNAL @OLCS-24822 @ECMT @Test3 @olcs-27581 @OLCS-28275
   Scenario: Back button
-    When I go back
+    When I click the back link
     Then I should be on the Annual ECMT overview page
 
    @EXTERNAL @OLCS-24822 @ECMT @Test3 @OLCS-28275

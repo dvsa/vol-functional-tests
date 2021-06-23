@@ -10,7 +10,7 @@ Feature: Declaration page
   #AC01
   @OLCS-23017
   Scenario: Application back button
-    When I go back
+    When I click the back link
     Then I should be on the Annual Multilateral overview page
 
   #AC02

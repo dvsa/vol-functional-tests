@@ -11,7 +11,7 @@ Feature: Annual ECMT Fee page
   Scenario: Reference number matches what's on overview
     And the page heading and alert message on the fee page is displayed correctly
     And the table contents matches as per AC
-    And I go back
+    And I click the back link
     Then I should be on the Annual ECMT overview page
 
   @EXTERNAL @OLCS-21129 @ECMT @OLCS-24975 @annual_ecmt_apgg_euro5_or_euro6e2e @Test2 @olcs-27581

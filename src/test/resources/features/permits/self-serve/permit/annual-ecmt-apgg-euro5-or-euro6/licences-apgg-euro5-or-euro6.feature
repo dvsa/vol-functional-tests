@@ -33,7 +33,7 @@ Feature: Licence page
   @EXTERNAL @OLCS-24820 @ECMT @Test2 @olcs-27581
   Scenario: Back button
     And I am on the Annual ECMT licence selection page
-    When I use the application back button
+    When I click the back link
     Then I should be taken to the permits dashboard
 
   @EXTERNAL @OLCS-21461 @Deprecated

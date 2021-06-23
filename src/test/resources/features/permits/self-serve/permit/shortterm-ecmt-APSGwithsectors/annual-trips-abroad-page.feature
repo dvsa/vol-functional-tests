@@ -44,7 +44,7 @@ Feature: Short term ECMT APSG with sectors Annual Trips Abroad Page
     And  I specify more than 6 digit <value> of annual trips in short term ECMT
     When I save and continue
     Then I should get the specific validation message for invalid input
-    And  I go back
+    And  I click the back link
     Then I should be taken to the permits dashboard
 
     Examples:

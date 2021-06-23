@@ -18,7 +18,7 @@ Feature: Percentage of business that is international
 
   @EXTERNAL @OLCS-21123 @ECMT @Test3 @olcs-27581 @Deprecated
   Scenario: Application back button
-    When I go back
+    When I click the back link
     Then I should be on the Annual ECMT overview page
 
   @OLCS-21460 @EXTERNAL @OLCS-21123 @ECMT @Test3 @olcs-27581 @Deprecated

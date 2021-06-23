@@ -8,7 +8,7 @@ Feature: ECMT Permit Euro Emission Standard Page
   @EXTERNAL @OLC-20557,@OLCS-24818 @ECMT @Test2 @olcs-27581 @OLCS-28275
   Scenario: Successful navigation of back link
     And I am on the euro emission standard page
-    When I select the back hyperlink
+    When I click the back link
     Then should see the overview page without updating any changes
 
   @EXTERNAL @OLC-20557,@OLCS-24818 @ECMT @Test2 @olcs-27581 @OLCS-28275

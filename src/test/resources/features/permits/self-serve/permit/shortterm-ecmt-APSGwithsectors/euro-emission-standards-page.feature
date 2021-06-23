@@ -15,7 +15,7 @@ Feature: Short term ECMT APSG with sectors Euro emission standards page
     Then I should get the emissions  page error message
     When I save and return to overview
     Then I should get the emissions  page error message
-    When I go back
+    When I click the back link
     Then I should be on the short term ECMT overview page
 
    @OLCS-25593

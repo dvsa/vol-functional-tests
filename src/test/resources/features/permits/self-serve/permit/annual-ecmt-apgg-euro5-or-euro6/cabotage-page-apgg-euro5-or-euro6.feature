@@ -20,7 +20,7 @@ Feature: Cabotage Page
     And I save and return to overview
     And I should get an error message
     And I should not be taken to the next section
-    And I go back
+    And I click the back link
     And I should be on the Annual ECMT overview page
 
   @EXTERNAL @OLCS-21119 @ECMT @Test1 @OLCS-28275

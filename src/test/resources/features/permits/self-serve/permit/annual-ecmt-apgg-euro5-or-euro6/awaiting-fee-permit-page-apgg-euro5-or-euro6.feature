@@ -18,7 +18,7 @@ Feature: Awaiting fee permit page
 
   @EXTERNAL @OLCS-21462 @OLCS-28275
   Scenario: back button returns to permits dashboard
-    When I go back
+    When I click the back link
     Then I should be on the permits dashboard page
 
   @EXTERNAL @OLCS-21462 @OLCS-28275

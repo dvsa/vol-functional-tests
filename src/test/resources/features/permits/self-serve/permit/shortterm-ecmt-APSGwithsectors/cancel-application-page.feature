@@ -9,7 +9,7 @@ Feature: Short term ECMT APSG with sectors Cancel application Page
 
   @EXTERNAL @OLCS-25131
   Scenario: Application back button in short term ECMT Page
-    And I go back
+    And I click the back link
     Then I should be taken back to short Term Overview Page
 
   @EXTERNAL @OLCS-25131 @OLCS-28226

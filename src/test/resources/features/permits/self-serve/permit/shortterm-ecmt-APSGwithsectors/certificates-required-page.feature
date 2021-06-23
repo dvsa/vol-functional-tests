@@ -13,7 +13,7 @@ Feature: Short term APSG with sectors Certificate required page
     And I should get the certificates required page error message
     And I select save and return overview link
     And  I should get the certificates required page error message
-    When I go back
+    When I click the back link
     Then I should be on the short term ECMT overview page
 
   @OLCS-25099

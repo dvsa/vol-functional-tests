@@ -8,7 +8,7 @@ Feature: Annual ECMT APGG Euro5|Euro6 with Cross trade(3 options)application flo
 
   @EXTERNAL @annualECMTAPGG @OLCS-27819 @Deprecated
   Scenario: Verify ECMT Annual APGG application flow
-    When I go back
+    When I click the back link
     Then I am navigated back to the permits dashboard page with my application status shown as Not yet Submitted
     Then I submit the APGG application with cross trade
     Then I am navigated back to the permits dashboard page with my application status shown as Under Consideration

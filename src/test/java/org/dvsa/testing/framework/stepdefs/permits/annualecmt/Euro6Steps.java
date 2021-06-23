@@ -10,8 +10,8 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
 import org.junit.Assert;
 
 import java.util.concurrent.TimeUnit;
@@ -35,11 +35,11 @@ public class Euro6Steps implements En {
             NumberOfPermitsPageJourneySteps.completeECMTPage();
         });
 
-        When("^I select the back hyperlink$", BasePermitPage::back);
+        When("^I click the back link", BasePermitPage::back);
 
         Then("^should see the overview page without updating any changes$",() -> {
-            untilUrlPathIs(OverviewPage.RESOURCE, TimeUnit.SECONDS, Duration.MEDIUM);
-            org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
+            OverviewPage.untilOnPage();
+            OverviewPage.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
         });
 
         When("^I select save and return overview link$", BasePermitPage::overview);

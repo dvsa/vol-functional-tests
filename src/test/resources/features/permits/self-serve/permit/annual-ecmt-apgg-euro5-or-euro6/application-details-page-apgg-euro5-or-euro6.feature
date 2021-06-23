@@ -12,7 +12,7 @@ Feature: Application details page
   Scenario: Application that's under consideration
     Then all the information should match that which was entered during the application process
     And the advisory text on ECMT under consideration page is displayed correctly
-    And I go back
+    And I click the back link
     Then I should be on the permits dashboard page with an ongoing application
     And I am viewing an application
     And I select return to permits dashboard hyperlink

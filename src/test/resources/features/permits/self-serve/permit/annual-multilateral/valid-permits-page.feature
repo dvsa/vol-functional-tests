@@ -19,5 +19,5 @@ Feature: Annual Multilateral valid permits page checks
   @OLCS-24423
   Scenario: Back button takes back to Permit dashboard
     When the user is in the annual multilateral list page
-    And  I go back
+    And  I click the back link
     Then I should be taken to the permits dashboard

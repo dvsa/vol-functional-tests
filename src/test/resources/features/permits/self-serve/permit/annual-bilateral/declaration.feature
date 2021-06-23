@@ -13,7 +13,7 @@ Feature: Annual bilateral declaration page
     Then I should get an error message
     When I save and return to overview
     Then I should get an error message
-    When I go back
+    When I click the back link
     Then I should be on the bilateral overview page
 
   @EXTERNAL @OLCS-22910 @bilateral_cabotage_only @OLCS-26045 @OLCS-27317

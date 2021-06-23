@@ -13,7 +13,7 @@ Feature: ECMT International Number Check your answers Page
     When I save and return to overview
     Then I am on the ECMT removals permits overview page with check your answers section marked as complete
     And  I click the ECMT Removals Check your answers link on the overview page again
-    When I go back
+    When I click the back link
     Then I am on the ECMT removals permits overview page with check your answers section marked as complete
     When I click the ECMT Removals Check your answers link on the overview page again
     Then I check content and click save and continue on the Check Your Answers page

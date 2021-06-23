@@ -8,7 +8,7 @@ Feature: Annual bilaterals standard and cabotage permits fee page
   @EXTERNAL @OLCS-27367
   Scenario: Verify that bilateral standard and cabotage permits fee page and contents are displayed correctly when cabotage is not selected
     And I'm on the annual bilateral standard and cabotage permit fee page
-    When I go back
+    When I click the back link
     Then I should be on the bilateral overview page
     When I select the submit and pay link from overview page
     Then I should be on the permit fee page
@@ -24,7 +24,7 @@ Feature: Annual bilaterals standard and cabotage permits fee page
   @EXTERNAL @OLCS-27367
   Scenario: Verify that bilateral standard and cabotage permits fee page and contents are displayed correctly when Cabotage is selected
     And I'm on the annual bilateral standard and cabotage permit fee page with Cabotage selected on Cabotage page
-    When I go back
+    When I click the back link
     Then I should be on the bilateral overview page
     When I select the submit and pay link from overview page
     Then I should be on the permit fee page

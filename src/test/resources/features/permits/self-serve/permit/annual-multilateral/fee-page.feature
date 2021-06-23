@@ -13,7 +13,7 @@ Feature: Annual multilateral permits fee page
     Then the application details are displayed in fee page table
     And  the Fee-breakdown sub-heading can be seen below the fee summary table
     And  my fee should be tiered as expected
-    When I go back
+    When I click the back link
     Then I should be on the Annual Multilateral overview page
 
   #AC05

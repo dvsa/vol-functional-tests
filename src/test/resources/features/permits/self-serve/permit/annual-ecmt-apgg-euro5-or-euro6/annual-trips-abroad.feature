@@ -38,5 +38,5 @@ Feature: Annual trips abroad page
     Given I am on the VOL self-serve site
     And  I am on the application overview page
     And I am on the annual trips abroad page
-    When I go back
+    When I click the back link
     Then I should be on the Annual ECMT overview page

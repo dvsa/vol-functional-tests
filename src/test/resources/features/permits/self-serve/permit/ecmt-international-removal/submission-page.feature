@@ -36,6 +36,6 @@ Feature: ECMT International Removal submission page
     And I have partial ECMT international removal application
     And I navigate to permit dashboard page
     When  I select the fee tab and pay the outstanding fees
-    And I go back
+    And I click the back link
     When  I proceed with the application
     Then I should not see the view receipt link

@@ -13,5 +13,5 @@ Feature: Short term Ecmt APSG with sectors overview page feature
     #And there is a guidance on permits link -- Guidance link removed from overview page
     And the default section status are displayed as expected
     And future sections on shortterm overview page beyond the current step are disabled
-    And I go back
+    And I click the back link
     Then I should be taken to the permits dashboard

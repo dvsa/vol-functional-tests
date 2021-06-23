@@ -8,7 +8,7 @@ Feature: Annual Ecmt Year Selection Page
 
   @EXTERNAL @OLCS-24972 @ECMT @Test3
   Scenario: Application Back button
-    When I go back
+    When I click the back link
     Then the user is navigated to the permit type page
 
   @EXTERNAL @OLCS-24972 @ECMT @Test3

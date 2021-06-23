@@ -164,7 +164,6 @@ public class CommonSteps extends BasePage implements En {
         Then("^I will get an error message on the licence page$", () -> {
             Assert.assertTrue(SelectALicencePage.hasErrorMessagePresent());
         });
-        When("^I use the application back button$", BasePermitPage::back);
         Then("^I should be taken to the next section$", () -> {
             java.net.URL url = CommonSteps.origin.get("origin");
             Assert.assertThat(getURL(), is(not(equalTo(url))));
@@ -178,7 +177,6 @@ public class CommonSteps extends BasePage implements En {
              Assert.assertTrue("Error message was not displayed on the page", hasError);
         });
         When("^I save and return to overview$", BasePermitPage::overview);
-        When("^I go back$", BasePermitPage::back);
         When("^I sign on as an external user$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });

@@ -10,7 +10,7 @@ Feature: Annual Multilateral permit number-of-permits page
   #AC01
   @OLCS-24290
   Scenario:Back button return to the 'Multilateral permits Application overview' page
-    When I go back
+    When I click the back link
     Then I should be on the Annual Multilateral overview page
 
   #AC02/AC03:

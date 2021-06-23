@@ -10,7 +10,7 @@ Feature: ECMT International Removal Eligiblity page
 
   @EXTERNAL @OLCS-24816
   Scenario:Back Button
-    When I go back
+    When I click the back link
     Then  I should be on the ECMT International Overview Page
 
   @EXTERNAL @OLCS-24816 @r222gremovalsfix

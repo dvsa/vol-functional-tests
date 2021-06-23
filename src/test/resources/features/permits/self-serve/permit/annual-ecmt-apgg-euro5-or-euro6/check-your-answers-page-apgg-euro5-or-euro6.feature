@@ -33,7 +33,7 @@ Feature:Check your answers page
 
   @EXTERNAL @OLCS-21128 @ECMT @OLCS-24973 @Test2
   Scenario: Application cancel button
-    When I go back
+    When I click the back link
     Then I should be on the Annual ECMT overview page
 
   @OLCS-21281 @EXTERNAL @ECMT @OLCS-24973 @Test2 @olcs-27581

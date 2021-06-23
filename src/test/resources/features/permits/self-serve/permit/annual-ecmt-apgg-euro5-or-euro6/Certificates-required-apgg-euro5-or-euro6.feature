@@ -28,5 +28,5 @@ Feature: Certificates required Page
 
   @External @OLCS-24977 @ECMT @Test1 @OLCS-28275
   Scenario: Check that back button functions correctly on the certificates required page
-    When I go back
+    When I click the back link
     Then I should be on the Annual ECMT overview page

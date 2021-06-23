@@ -10,7 +10,7 @@ Feature: Cancel application
   #AC01
   @OLCS-23026
   Scenario: Application back button
-    When I go back
+    When I click the back link
     Then I should be on the Annual Multilateral overview page
 
   #AC02

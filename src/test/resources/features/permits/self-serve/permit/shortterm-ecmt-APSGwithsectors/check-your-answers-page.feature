@@ -15,5 +15,5 @@ Feature: Short term ECMT APSG with sectors Check your answers page
     Then I am on the short term permits overview page with check your answers section marked as complete
     Then the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET
     And  I click Check your answers link on the overview page again
-    When I go back
+    When I click the back link
     Then  I am on the short term permits overview page with check your answers section marked as complete

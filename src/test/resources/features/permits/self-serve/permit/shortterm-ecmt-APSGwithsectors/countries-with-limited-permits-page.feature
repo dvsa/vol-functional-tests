@@ -15,7 +15,7 @@ Feature: Short term ECMT APSG with sectors countries with limited permits page
     Then I should get the relevant error message
     When I select save and return to overview link without confirming
     Then I should get the relevant error message
-    And I go back
+    And I click the back link
     Then I should be on the short term ECMT overview page
     And  I select the countries with limited permits hyperlink
     Then I should be on the countries with limited permits page

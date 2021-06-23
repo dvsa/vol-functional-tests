@@ -26,7 +26,7 @@ Feature: Number of permits required page
 
   @EXTERNAL @OLCS-21286 @ECMT @DEV @Test3 @olcs-27581 @OLCS-28275
   Scenario: Application back button
-    When I go back
+    When I click the back link
     Then I should be on the Annual ECMT overview page
 
   @EXTERNAL @OLCS-17815 @ECMT @Test3 @olcs-27581 @OLCS-27781 @OLCS-28275
@@ -34,7 +34,7 @@ Feature: Number of permits required page
     And I enter the valid number of short term permits required
     When  I select save and return overview link
     Then I am on the annual ECMT overview page
-    When I go back
+    When I click the back link
     Then I should be on the permits dashboard page with an ongoing application
     When I select the fee tab and pay the outstanding fees
     Then I am taken to the payment successful page

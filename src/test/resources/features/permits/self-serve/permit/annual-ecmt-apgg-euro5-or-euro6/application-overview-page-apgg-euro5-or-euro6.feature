@@ -19,13 +19,13 @@ Feature: Application overview page
   @EXTERNAL @ECMT @OLCS-24821 @Test1 @olcs-27581
   Scenario: Check your answers is enabled if all preceding steps are completed
     When I fill all steps preceding steps to check your answers
-    And I use the application back button
+    And I click the back link
     Then the check your answers section should be enabled
 
   @EXTERNAL @ECMT @OLCS-24821 @Test1 @olcs-27581
   Scenario: Declaration is enabled if all preceding steps are completed
     When I fill all steps preceding steps to declaration
-    And I use the application back button
+    And I click the back link
     Then the declaration section should be enabled
 
   @EXTERNAL @ECMT @OLCS-24821 @Test1 @olcs-27581
@@ -33,5 +33,5 @@ Feature: Application overview page
   Scenario: Application overview functionalities are displayed correctly
     Then only the expected status labels are displayed
     And  the page heading is displayed correctly
-    When I use the application back button
+    When I click the back link
     Then I should be taken to the permits dashboard

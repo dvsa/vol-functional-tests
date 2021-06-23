@@ -11,7 +11,7 @@ Feature: Annual multilateral permit overview page
   #AC01
   @OLCS-23013 @olcs-27581
   Scenario: Back link returns to permits dashboard
-    When I go back
+    When I click the back link
     Then I should be on the permits dashboard page with an ongoing application
 
   #AC02

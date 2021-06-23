@@ -9,7 +9,7 @@ Feature: ECMT International Removal  overview page
   #AC01
   @EXTERNAL @OLCS-24817
   Scenario: Application back button
-    When I go back
+    When I click the back link
     Then the user is on self-serve permits dashboard
 
   #AC02:

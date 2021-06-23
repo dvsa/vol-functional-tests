@@ -8,7 +8,7 @@ Feature: Annual bilaterals permits fee page
   @EXTERNAL @OLCS-27362 @bilateral_cabotage_only
   Scenario: Verify that bilateral cabotage only permits fee page and contents are displayed correctly
     And I'm on the annual bilateral cabotage only permit fee page
-    When I go back
+    When I click the back link
     Then I should be on the bilateral overview page
     When I select the submit and pay link from overview page
     Then I should be on the permit fee page

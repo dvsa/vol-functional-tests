@@ -8,7 +8,7 @@ Feature: Annual bilaterals standard and cabotage permits fee page
   @EXTERNAL @OLCS-27367
   Scenario: Verify that bilateral standard permits no cabotage fee page and contents are displayed correctly
     And I'm on the annual bilateral standard permit no cabotage fee page
-    When I go back
+    When I click the back link
     Then I should be on the bilateral overview page
     When I select the submit and pay link from overview page
     Then I should be on the permit fee page

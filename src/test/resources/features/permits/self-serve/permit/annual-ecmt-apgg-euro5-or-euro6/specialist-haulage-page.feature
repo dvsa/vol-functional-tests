@@ -24,5 +24,5 @@ Feature: Specialist Haulage page
 
   @EXTERNAL @OLCS-21272 @ECMT @Test3 @olcs-27581
   Scenario: Application back button
-    When I go back
+    When I click the back link
     Then I should be on the Annual ECMT overview page
