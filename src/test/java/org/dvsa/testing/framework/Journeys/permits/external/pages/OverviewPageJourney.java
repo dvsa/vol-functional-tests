@@ -1,11 +1,9 @@
 package org.dvsa.testing.framework.Journeys.permits.external.pages;
 
-import com.amazonaws.util.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

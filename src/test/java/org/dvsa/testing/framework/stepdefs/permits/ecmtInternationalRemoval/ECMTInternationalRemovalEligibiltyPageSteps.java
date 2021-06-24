@@ -7,7 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.RemovalsEligibilityPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.RemovalsEligibilityPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 

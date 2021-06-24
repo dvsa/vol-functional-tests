@@ -10,9 +10,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
@@ -44,6 +43,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             BilateralJourneySteps.saveAndContinue();
             NumberOfPermitsPageJourney.completePage();
         });
+
         Then("^Country name displayed on the Bilateral check your answers page is the one clicked on the overview page$", () -> {
             CheckYourAnswerPage.untilOnPage();
             String country = getText("//div[@class='govuk-caption-xl']", SelectorType.XPATH);
@@ -55,25 +55,33 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             String heading = CheckYourAnswerPage.getPageHeading();
             assertEquals("Check your answers", heading);
         });
+
         Then("^I see four sections displayed on the table correctly$", () -> {
-            BilateralJourneySteps.assertSectionsExist(true);
+            assertTrue(BilateralJourneySteps.areSectionsPresent(true));
         });
 
         Then("^Period type displayed on the check your answers page is the one I selected on the Period selection page$", () -> {
             Assert.assertEquals(BilateralJourneySteps.getPeriodText(), operatorStore.getCurrentBilateralPeriodType().toString());
         });
+
         Then("^Journey type displayed on the check your answers page is the one I selected on the Permits usage$", () -> {
             Assert.assertEquals(BilateralJourneySteps.getJourney(),PermitUsagePage.getJourney());
         });
-        Then("^Value of do you need to carry out cabotage, will always be 'YES'$", BilateralJourneySteps::assertCabotageValueYes);
+
+        Then("^Value of do you need to carry out cabotage, will always be 'YES'$", () -> {
+            assertEquals("Yes", BilateralJourneySteps.getCabotageValue());
+        });
+
         Then("^Value of How many permits you need, will be the one saved on the number of permits page$", () -> {
             String permitlabel = NumberOfPermitsPageJourney.getLabel();
             String permitvalue = String.valueOf(NumberOfPermitsPageJourney.getPermitValue());
             Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitvalue+" "+permitlabel+"s");
         });
+
         When("^I click Confirm and return to overview$", () -> {
             CheckYourAnswerPage.saveAndContinue();
         });
+
         Then("^the status of Answer questions for individual countries section for the selected country is set as complete$", () -> {
             String s1 = BasePage.getElementValueByText("//li[2]//ul[1]//li[1]//span[2]",SelectorType.XPATH);
             Assert.assertEquals(s1,"COMPLETED");
@@ -84,7 +92,9 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
                 scrollAndClick("//div[1]/dd[2]/a[1]", SelectorType.XPATH);
             }
         });
+
         Then("^I am navigated to the Bilateral period selection page$", PeriodSelectionPage::untilOnPage);
+
         And("^I change period to be Bilateral and Standard permits on the period selection and continue to be on the check your answers page$", () -> {
           AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits, operatorStore);
           assertTrue(PeriodSelectionPage.isWarningTextPresent());
@@ -97,6 +107,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
           NumberOfPermitsPageJourney.completePage();
           CheckYourAnswerPage.untilOnPage();
         });
+
         And("^I change period to be Bilateral Standard permits no Cabotage on the period selection and continue to be on the check your answers page$", () -> {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage, operatorStore);
             assertTrue(PeriodSelectionPage.isWarningTextPresent());
@@ -108,14 +119,18 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             CheckYourAnswerPage.untilOnPage();
         });
 
-        Then("^Value of Do you need to carry out cabotage, will be as per the selection after changing the period selection to Bilaterals Standard and Cabotage permits$", BilateralJourneySteps::assertStandardAndCabotageValueNo);
+        Then("^Value of Do you need to carry out cabotage, will be as per the selection after changing the period selection to Bilaterals Standard and Cabotage permits$", () -> {
+            assertEquals("No", BilateralJourneySteps.getCabotageValue());
+        });
+
         Then("^Do you need to carry out cabotage, will not be displayed if the period type is Bilaterals Standard permits no Cabotage$", () -> {
             assertTrue(isElementNotPresent("//dt[contains(text(),'Do you need to carry out cabotage?')]", SelectorType.XPATH));
         });
+
         Then("^Value of How many permits you need, will be the one saved on the number of permits page for Bileterals Standard permits no Cabotage$", () -> {
             String permitLabel = NumberOfPermitsPageJourney.getLabel();
             String permitValue = String.valueOf(NumberOfPermitsPageJourney.getPermitValue());
-            Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(),permitValue + " " + permitLabel + "s");
+            Assert.assertEquals(BilateralJourneySteps.getCabotageValue(),permitValue + " " + permitLabel + "s");
         });
     }
 }

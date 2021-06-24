@@ -10,8 +10,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
@@ -55,9 +55,7 @@ public class NumberOfPermitsPageSteps implements En {
             NumberOfPermitsPage.enterAuthorisedVehicles();
             BasePermitPage.saveAndContinue();
         });
-        And("^I enter valid number of permits on the removals number of permits page$", () -> {
-            NumberOfPermitsPage.enterAuthorisedVehicles();
-        });
+        And("^I enter valid number of permits on the removals number of permits page$", NumberOfPermitsPage::enterAuthorisedVehicles);
         Then("^the number of permits section on the ECMT Removals Overview page is complete$", () -> {
             OverviewPage.untilOnPage();
             NumberOfPermitsPage.untilOnPage();

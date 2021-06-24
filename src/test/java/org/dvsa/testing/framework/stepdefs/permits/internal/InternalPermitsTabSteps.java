@@ -4,7 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;

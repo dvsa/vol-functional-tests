@@ -6,9 +6,9 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.junit.Assert;
 

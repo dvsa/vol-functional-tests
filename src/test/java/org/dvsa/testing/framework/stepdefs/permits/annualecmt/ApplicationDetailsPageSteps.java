@@ -5,7 +5,6 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.WithdrawApplicationPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.permits.pages.WithdrawApplicationPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.ApplicationDetailsPage;
 import org.junit.Assert;

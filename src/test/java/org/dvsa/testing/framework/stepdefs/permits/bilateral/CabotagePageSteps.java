@@ -8,8 +8,8 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
@@ -37,13 +37,17 @@ public class CabotagePageSteps extends BasePermitPage implements En {
         Then("^the page heading on the bilateral cabotage page is displayed correctly$", () -> {
             Assert.assertEquals(getText("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH),"Do you need to carry out cabotage?");
         });
-        And ("^the advisory texts on the bilateral cabotage page are displayed correctly$", BilateralJourneySteps::assertBilateralCabotageAdvisoryTexts);
+        And ("^the advisory texts on the bilateral cabotage page are displayed correctly$", () -> {
+            assertTrue(BilateralJourneySteps.isBilateralCabotageAdvisoryTextPresent());
+        });
         When("^select save and continue without confirming$", BasePermitPage::saveAndContinue);
         Then("^the cabotage relevant error message is displayed$", () -> {
             Assert.assertEquals(getText("//p[@class='error__text']", SelectorType.XPATH),"Please select one option");
         });
         When("^I select 'no' button$", BilateralJourneySteps::clickNoToCabotage);
-        Then("^the relevant advisory text message is displayed$", BilateralJourneySteps::assertNonCabotageConfirmationAdvisoryTexts);
+        Then("^the relevant advisory text message is displayed$", () -> {
+            assertTrue(BilateralJourneySteps.isNonCabotageConfirmationAdvisoryTextPresent());
+        });
         When("^I select 'yes' button and save and continue$", BilateralJourneySteps::clickYesToCabotage);
         And ("^I am on the Bilateral Cabotage Page with norway selection", () -> {
             clickToPermitTypePage(world);
@@ -65,7 +69,9 @@ public class CabotagePageSteps extends BasePermitPage implements En {
                 assertTrue(CancellationPage.isAdvisoryTextPresent());
             }
         });
-        And ("^the advisory texts on the bilateral standard and cabotage permits page are displayed correctly", BilateralJourneySteps::assertStandardAndCabotagePermitsAdvisoryTexts);
+        And ("^the advisory texts on the bilateral standard and cabotage permits page are displayed correctly", () -> {
+            assertTrue(BilateralJourneySteps.isStandardAndCabotagePermitsAdvisoryTextPresent());
+        });
         And ("^I am on the cabotage page for standard and cabotage permits with more than one countries selected", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
@@ -106,6 +112,6 @@ public class CabotagePageSteps extends BasePermitPage implements En {
         OverviewPage.clickCountrySection(Country.Norway);
         EssentialInformationPage.untilOnPage();
         saveAndContinue();
-        org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
+        PeriodSelectionPage.untilOnPage();
     } // Could look a another method where it does the journey with differences in if statements
 } // TODO REPETITION.

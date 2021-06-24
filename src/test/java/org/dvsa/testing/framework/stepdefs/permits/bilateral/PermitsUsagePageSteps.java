@@ -8,10 +8,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
@@ -29,9 +26,9 @@ public class PermitsUsagePageSteps implements En {
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
+            PeriodSelectionPage.untilOnPage();
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.untilOnPage();
+            PermitUsagePage.untilOnPage();
         });
         Then("^Country name displayed on the Permits Usage page is the one clicked on the overview page$", () -> {
             Assert.assertEquals(PermitUsagePage.getCountry(),operatorStore.getCountry());
@@ -42,6 +39,6 @@ public class PermitsUsagePageSteps implements En {
             PermitUsagePage.journeyType(JourneyType.random());
         });
         Then("^I am taken to the Bilateral Cabotage page$", CabotagePage::AnnualBilateralUntilOnPage);
-        Then("^I get error message if there is more than one Journey types available to select and I click continue without making any selection$", org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage::permitUsageError);
+        Then("^I get error message if there is more than one Journey types available to select and I click continue without making any selection$", PermitUsagePage::permitUsageError);
     }
 }

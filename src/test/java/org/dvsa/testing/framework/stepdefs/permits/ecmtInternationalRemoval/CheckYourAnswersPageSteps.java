@@ -8,9 +8,9 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.ECMTRemovalsSection;
 import org.hamcrest.core.StringContains;

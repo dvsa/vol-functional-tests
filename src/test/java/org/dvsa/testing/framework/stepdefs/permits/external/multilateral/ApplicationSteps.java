@@ -14,7 +14,7 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.url.webapp.URL;

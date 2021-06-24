@@ -6,8 +6,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.ValidPermitsPa
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.ValidPermit.ValidAnnualMultilateralPermit;
-import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
+import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidAnnualMultilateralPermit;
+import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.junit.Assert;
 

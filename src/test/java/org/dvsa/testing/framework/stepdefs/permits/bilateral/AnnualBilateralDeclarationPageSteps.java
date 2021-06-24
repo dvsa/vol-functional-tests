@@ -16,9 +16,11 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.EcmtJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -118,7 +120,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
         });
-        Then("^there's a guidance notes link to the correct gov page$", EcmtJourneySteps::hasInternationalAuthorisationGovGuidanceLink);
+        Then("^there's a guidance notes link to the correct gov page$", BasePermitPage::hasInternationalAuthorisationGovGuidanceLink);
         When("^I submit my annual bilateral declaration$", () -> {
             DeclarationPageJourney.completeDeclaration();
         });

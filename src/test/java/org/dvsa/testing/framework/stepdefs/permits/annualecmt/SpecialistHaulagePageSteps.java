@@ -10,10 +10,11 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.NumberOfTripsPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;

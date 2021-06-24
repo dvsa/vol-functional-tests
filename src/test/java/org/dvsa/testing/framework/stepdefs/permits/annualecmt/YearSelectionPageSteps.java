@@ -6,7 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.junit.Assert;
 

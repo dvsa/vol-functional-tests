@@ -12,9 +12,12 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;

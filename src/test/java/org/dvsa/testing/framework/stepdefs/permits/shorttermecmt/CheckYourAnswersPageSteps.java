@@ -12,11 +12,11 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
@@ -62,9 +62,7 @@ public class CheckYourAnswersPageSteps implements En {
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             SectorPage.sector(Sector.random());
         });
-        Then("^the short term check your answers page has reference number$", () -> {
-            BasePermitPage.getReferenceFromPage();
-        });
+        Then("^the short term check your answers page has reference number$", BasePermitPage::getReferenceFromPage);
         Then("^Short term application answers are displayed on the check your answers page$", () -> {
             String licence = CheckYourAnswerPage.getAnswer(Licence);
             assertThat(licence, StringContains.containsString(operatorStore.getCurrentLicence().get().getLicenceNumber()));

@@ -8,7 +8,10 @@ import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 

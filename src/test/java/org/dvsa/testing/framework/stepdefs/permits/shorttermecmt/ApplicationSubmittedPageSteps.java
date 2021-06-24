@@ -16,12 +16,11 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -178,7 +177,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             SubmittedPageJourney.hasShortTermECMTAdvisoryText();
             assertTrue(SubmittedPage.isWarningMessagePresent());
         });
-        Then("^I select view receipt from short term application submitted page$", org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage::openReceipt);
+        Then("^I select view receipt from short term application submitted page$", SubmittedPage::openReceipt);
         Then("^the view receipt hyperlink opens in a new window$", () -> {
             WebDriver driver = getDriver();
             String[] windows = driver.getWindowHandles().toArray(new String[0]);

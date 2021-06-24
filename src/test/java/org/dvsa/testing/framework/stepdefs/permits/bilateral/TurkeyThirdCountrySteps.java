@@ -3,9 +3,8 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.permits.pages.CancellationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.TurkeyThirdCountryPage;
-import org.junit.Assert;
+import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.external.pages.TurkeyThirdCountryPage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

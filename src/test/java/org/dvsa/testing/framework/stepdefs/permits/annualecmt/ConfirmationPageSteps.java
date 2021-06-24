@@ -14,8 +14,8 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -40,7 +40,7 @@ public class ConfirmationPageSteps implements En {
         });
 
         Then("^the reference number on the annual ECMT submitted page  is as expected$", () -> {
-org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
+            SubmittedPage.untilOnPage();
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
             assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
@@ -51,7 +51,7 @@ org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
             assertTrue(SubmittedPage.isWarningMessagePresent());
         });
 
-        Then("^I select view receipt from Annual ECMT application submitted page$", org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage::openReceipt);
+        Then("^I select view receipt from Annual ECMT application submitted page$", SubmittedPage::openReceipt);
 
         Then("^the view receipt of Annual ECMT hyperlink opens in a new window$", () -> {
             WebDriver driver = getDriver();
@@ -86,11 +86,10 @@ org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckYourAnswers);
             BasePermitPage.saveAndContinue();
             DeclarationPageJourney.completeDeclaration();
-
         });
 
         Then("^there shouldn't be a view receipt link on the Annual ECMT submitted page$", () -> {
-            Assert.assertFalse(org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.hasViewReceipt());
+            Assert.assertFalse(SubmittedPage.hasViewReceipt());
         });
     }
 }

@@ -7,8 +7,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.SelectALicencePage;
+import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.SelectALicencePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 

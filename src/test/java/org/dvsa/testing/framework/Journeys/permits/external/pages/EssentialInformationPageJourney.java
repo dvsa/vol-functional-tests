@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Journeys.permits.external.pages;
 
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
 import org.junit.Assert;
 
 public class EssentialInformationPageJourney extends BasePermitJourney {

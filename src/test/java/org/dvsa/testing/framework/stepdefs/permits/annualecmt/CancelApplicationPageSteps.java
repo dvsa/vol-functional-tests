@@ -7,10 +7,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
-import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,9 +36,7 @@ public class CancelApplicationPageSteps implements En {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
-        Then("^I click save and continue on cabotage page$", () -> {
-           BilateralJourneySteps.saveAndContinue();
-        });
+        Then("^I click save and continue on cabotage page$", CabotagePage::saveAndContinue);
         Then("^I am navigated to cabotage page$", () -> {
             CabotagePage.ECMTRemovalsUntilOnPage();
             String heading = CabotagePage.getPageHeading();

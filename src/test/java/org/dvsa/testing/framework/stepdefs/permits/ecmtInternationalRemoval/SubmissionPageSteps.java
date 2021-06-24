@@ -13,7 +13,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;

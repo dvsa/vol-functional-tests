@@ -7,7 +7,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.permits.pages.SelectALicencePage;
+import org.dvsa.testing.lib.newPages.external.pages.SelectALicencePage;
 import org.hamcrest.text.IsEqualIgnoringCase;
 import org.junit.Assert;
 

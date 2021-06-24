@@ -11,10 +11,10 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
-import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
+import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
+import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.trailersCertificateOfRoadworthiness.*;
 

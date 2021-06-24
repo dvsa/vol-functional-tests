@@ -6,7 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
@@ -67,7 +67,7 @@ public class CheckYourAnswersPageSteps implements En {
             case RestrictedCountries:
                 RestrictedCountry restrictedCountry = RestrictedCountry.random();
 
-                org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage.countries(restrictedCountry);
+                RestrictedCountriesPage.countries(restrictedCountry);
                 BasePermitPage.saveAndContinue();
 
                 break;

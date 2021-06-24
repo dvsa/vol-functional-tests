@@ -4,7 +4,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
 
 public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJourney {
 

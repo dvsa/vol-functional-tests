@@ -10,11 +10,11 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
@@ -52,7 +52,6 @@ public class CertificateRequiredPageSteps implements En {
         });
         Then("^I confirm the Certificates Required checkbox$", CertificatesRequiredPage::confirmCertificateRequired);
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
-            String error = "Expected the status of certificates required page to be complete but it wasn't";
             OverviewPage.untilOnPage();
             OverviewPageJourney.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
         });

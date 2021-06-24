@@ -16,10 +16,9 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
@@ -56,7 +55,8 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         Then("^I should be taken to the permits dashboard$", () -> Assert.assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
         And("^I have completed (an|all) ECMT application$", (String arg) -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePage.selectTab(Tab.PERMITS);
             HomePage.applyForLicenceButton();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
         });

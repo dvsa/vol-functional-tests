@@ -4,9 +4,8 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.PermitUsagePageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
-import org.junit.Assert;
+import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
 
 import static org.junit.Assert.assertEquals;
 
@@ -14,7 +13,7 @@ public class TurkeyPermitsUsagePageSteps implements En {
     public TurkeyPermitsUsagePageSteps(OperatorStore operatorStore, World world) {
         Then("^I am on the Bilateral Turkey Permit usage page with correct information and content$", () -> {
 
-            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.untilOnPage();
+            PermitUsagePage.untilOnPage();
 
             //Country name displayed on the Permits Usage page is the one clicked on the overview page
             assertEquals(PermitUsagePage.getCountry(), operatorStore.getCountry());

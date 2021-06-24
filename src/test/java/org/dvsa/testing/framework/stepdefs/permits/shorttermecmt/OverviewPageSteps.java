@@ -6,7 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

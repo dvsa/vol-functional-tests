@@ -7,11 +7,10 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickCancelApplication;
 import static org.junit.Assert.assertTrue;
 
 
@@ -25,7 +24,7 @@ public class OverviewPageSteps implements En {
         });
         And("^I click cancel application link on the International removal overview page$", () -> {
             operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
-            clickCancelApplication();
+            OverviewPage.clickCancelApplication();
         });
         And("^the application number is displayed correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber()

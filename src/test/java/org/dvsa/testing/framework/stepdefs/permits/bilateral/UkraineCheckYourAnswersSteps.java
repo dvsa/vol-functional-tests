@@ -5,8 +5,8 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.junit.Assert;
 

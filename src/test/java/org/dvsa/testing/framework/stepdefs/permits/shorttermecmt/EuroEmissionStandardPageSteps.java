@@ -14,9 +14,12 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.EmissionStandardsPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 
 import java.util.concurrent.TimeUnit;

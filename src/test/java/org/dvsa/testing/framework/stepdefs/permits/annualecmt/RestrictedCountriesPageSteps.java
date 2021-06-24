@@ -8,7 +8,9 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCoun
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.lib.newPages.external.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
 import org.junit.Assert;

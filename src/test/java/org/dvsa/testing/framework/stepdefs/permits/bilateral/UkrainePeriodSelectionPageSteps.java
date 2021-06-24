@@ -6,7 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectio
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 

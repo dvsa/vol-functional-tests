@@ -6,10 +6,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -18,14 +15,13 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.permits.pages.*;
-import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.DeclineGrantedPermitPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.GrantedPermitRestrictionsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.DeclineGrantedPermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.GrantedPermitRestrictionsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
+import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
@@ -34,7 +30,6 @@ import org.junit.Assert;
 
 import java.util.List;
 
-import static org.dvsa.testing.lib.newPages.permits.pages.OverviewPage.clickOverviewSection;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -50,7 +45,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             PeriodSelectionPage.saveAndContinue();
             ECMTShortTermJourney.getInstance()
                     .licencePage(operatorStore, world);
-            clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
             CheckIfYouNeedECMTPermitsPageJourney.completePage();

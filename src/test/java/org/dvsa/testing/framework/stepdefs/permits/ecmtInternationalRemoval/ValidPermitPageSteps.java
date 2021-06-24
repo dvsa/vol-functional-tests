@@ -12,11 +12,11 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.ValidPermit.ValidECMTInternationalPermit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
+import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidECMTInternationalPermit;
+import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
@@ -52,7 +52,7 @@ public class ValidPermitPageSteps implements En {
                     .confirmAndPay()
                     .passwordAuthorisation();
             SubmittedPage.untilElementIsPresent("//h1[@class='govuk-panel__title']", SelectorType.XPATH,10,TimeUnit.SECONDS);
-            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.goToPermitsDashboard();
+            SubmittedPage.goToPermitsDashboard();
 
             HomePage.PermitsTab.untilPermitHasStatus(
                     world.applicationDetails.getLicenceNumber(),

@@ -9,10 +9,10 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
@@ -30,7 +30,7 @@ public class PeriodSelectionPageSteps extends BasePermitPage implements En {
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage.untilOnPage();
+            PeriodSelectionPage.untilOnPage();
         });
         Then("^Country name displayed on the page is the one clicked on the overview page$", () -> {
             Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());
