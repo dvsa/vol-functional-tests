@@ -1,12 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
-import cucumber.api.java8.En;
 import Injectors.World;
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.ValidPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.ValidPermit.ValidAnnualMultilateralPermit;
-import org.dvsa.testing.lib.newPages.permits.pages.multilateralsOnly.ValidAnnualMultilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.junit.Assert;
 
@@ -15,17 +16,21 @@ import java.util.stream.IntStream;
 
 public class ValidPermitPageSteps implements En {
     public ValidPermitPageSteps(OperatorStore operator, World world) {
-        Then("^the user is in the annual multilateral list page$", ValidAnnualMultilateralPermitsPage::untilOnPage);
+        Then("^the user is in the annual multilateral list page$", () -> {
+            ValidPermitsPage.untilOnPage();
+            ValidPermitsPageJourneySteps.hasMultilateralHeading();
+        });
         And("^I am viewing an issued annual multilateral permit on self-serve$", () -> {
             LicenceStore licence = operator.getCurrentLicence()
                     .orElseThrow(IllegalStateException::new);
             HomePage.PermitsTab.select(licence.getLicenceNumber());
-            ValidAnnualMultilateralPermitsPage.untilOnPage();
+            ValidPermitsPage.untilOnPage();
+            ValidPermitsPageJourneySteps.hasMultilateralHeading();
         });
         Then("^the Multilateral permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'pending'";
             OperatorStore store = operator;
-            List<ValidAnnualMultilateralPermit> permits = ValidAnnualMultilateralPermitsPage.permits();
+            List<ValidAnnualMultilateralPermit> permits = ValidPermitsPage.annualMultilateralPermits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isBefore(permits.get(idx + 1).getExpiryDate()) ||

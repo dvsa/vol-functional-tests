@@ -23,5 +23,5 @@ Feature:Bilateral standard no cabotage permits: Annual bilateral valid permit-de
   @EXTERNAL  @bilateral_standard_permits_no_cabotage @olcs-27365
   Scenario:Bilateral standard no cabotage permits: Return to permit dashboard takes back to permit dashboard
     When the user is in the annual bilateral list page
-    And I select returns to permit dashboard hyperlink
+    And I select return to permit dashboard hyperlink
     Then I should be taken to the permits dashboard

@@ -8,10 +8,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
@@ -28,7 +25,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
-import org.dvsa.testing.lib.newPages.permits.pages.bilateralsOnly.ValidAnnualBilateralPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -389,15 +385,15 @@ public class AnnualBilateralSteps extends BasePage implements En {
             LicenceStore licence = operatorStore.getLatestLicence()
                     .orElseThrow(IllegalStateException::new);
             HomePage.PermitsTab.select(licence.getLicenceNumber());
-            ValidAnnualBilateralPermitsPage.untilOnPage();
+            ValidPermitsPage.untilOnPage();
         });
         And("the relevant error message for annual bilateral number of permits page is displayed", () -> {
             assertEquals(getElementValueByText("//p[@class='error__text']", SelectorType.XPATH),"Enter the number of permits you require");
         });
         And("the user is in the annual bilateral list page", () -> {
-            ValidAnnualBilateralPermitsPage.untilOnPage();
-            String heading = ValidAnnualBilateralPermitsPage.getPageHeading();
-            assertEquals("Bilateral permits", heading);
+            ValidPermitsPage.untilOnPage();
+            ValidPermitsPageJourneySteps.hasBilateralHeading();
+
         });
 
         And("^the licence number is displayed in Annual bilateral list page$", () -> {
@@ -407,15 +403,14 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
 
         When("I select Norway in the filter list and click Apply filter", () -> {
-            String label = ValidAnnualBilateralPermitsPage.getFilterLabel();
+            String label = ValidPermitsPage.getFilterLabel();
             assertEquals("Filter by country", label);
-            ValidAnnualBilateralPermitsPage.selectNorway();
+            ValidPermitsPage.filterToNorway();
         });
         Then("^the table of annual bilateral permits is as expected$", () -> {
             OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
             String message =  "Expected all permits to have a status of 'Pending' but one or more DIDN'T!!!";
-            OperatorStore store = operatorStore;
-            List<ValidAnnualBilateralPermit> permits = ValidAnnualBilateralPermitsPage.permits();
+            List<ValidAnnualBilateralPermit> permits = ValidPermitsPage.annualBilateralPermits();
 
             List<OpenWindowModel> windows = stock.openWindowsFor(permits.stream().map(p -> p.getCountry().toString()).toArray(String[]::new));
 
@@ -424,7 +419,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
 
             // Verify that Type is displayed as per the selection
-            Assert.assertTrue(NumberOfPermitsPageJourneySteps.getLabel().contains(ValidAnnualBilateralPermitsPage.type()));
+            Assert.assertTrue(NumberOfPermitsPageJourneySteps.getLabel().contains(ValidPermitsPage.getType()));
 
             // Check permit number is in ascending order grouped by country
             Map<Country, List<String>> grouped = permits.stream().collect(

@@ -4,9 +4,9 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.permits.Permits;
 import org.junit.Assert;
 
 import java.util.concurrent.TimeUnit;
@@ -31,7 +31,7 @@ public class InternalPermitsTabSteps implements En {
        //     Assert.assertThat(Permits.annualBilateralPermits().size(), is(greaterThanOrEqualTo(1)));
         });
         Then("^the annual ECMT permit table has the expected format$", () -> {
-           Assert.assertThat(Permits.annualEcmtPermits().size(), is(greaterThanOrEqualTo(1)));
+           Assert.assertThat(ValidPermitsPage.annualECMTPermits().size(), is(greaterThanOrEqualTo(1)));
         });
     }
 }

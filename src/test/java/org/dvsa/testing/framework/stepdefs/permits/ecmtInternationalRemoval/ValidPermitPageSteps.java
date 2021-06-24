@@ -15,8 +15,8 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.ValidPermit.ValidECMTInternationalPermit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.permits.pages.ECMTInternationalRemovalOnly.ValidECMTRemovalPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
@@ -65,9 +65,9 @@ public class ValidPermitPageSteps implements En {
             LicenceStore licence = operatorStore.getLatestLicence()
                     .orElseThrow(IllegalStateException::new);
             HomePage.PermitsTab.select(licence.getLicenceNumber());
-            ValidECMTRemovalPermitsPage.untilOnPage();
+            ValidPermitsPage.untilOnPage();
         });
-        Then("^I am on the ECMT removal Permit list page$", ValidECMTRemovalPermitsPage::untilOnPage);
+        Then("^I am on the ECMT removal Permit list page$", ValidPermitsPage::untilOnPage);
         And("^the licence number is displayed in ECMT removals list page$", () -> {
             String expectedReference = world.applicationDetails.getLicenceNumber();
             String actual = BasePermitPage.getReferenceFromPage();
@@ -75,7 +75,7 @@ public class ValidPermitPageSteps implements En {
         });
         And("^the table of ECMT removal permits is as expected$", () -> {
             String message = "Expected all permits to have a status of 'VALID'";
-            List<ValidECMTInternationalPermit> permits = ValidECMTRemovalPermitsPage.permits();
+            List<ValidECMTInternationalPermit> permits = ValidPermitsPage.annualECMTPermits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isEqual(permits.get(idx).getStartDate().plusDays(364))));

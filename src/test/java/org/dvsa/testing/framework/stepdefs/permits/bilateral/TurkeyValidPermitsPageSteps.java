@@ -8,7 +8,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.ValidPermit.ValidAnnualBilateralPermit;
-import org.dvsa.testing.lib.newPages.permits.pages.bilateralsOnly.ValidAnnualBilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
 import org.junit.Assert;
 
 import java.time.LocalDate;
@@ -27,8 +27,7 @@ public class TurkeyValidPermitsPageSteps implements En {
 
             OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
             String message =  "Expected all permits to have a status of 'VALID' but one or more DIDN'T!!!";
-            OperatorStore store = operatorStore;
-            List<ValidAnnualBilateralPermit> permits = ValidAnnualBilateralPermitsPage.permits();
+            List<ValidAnnualBilateralPermit> permits = ValidPermitsPage.annualBilateralPermits();
 
             List<OpenWindowModel> windows = stock.openWindowsFor(permits.stream().map(p -> p.getCountry().toString()).toArray(String[]::new));
 
@@ -36,7 +35,7 @@ public class TurkeyValidPermitsPageSteps implements En {
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
 
             // Verify that Type is displayed is always Standard single journey for Turkey
-            Assert.assertEquals("Standard single journey",ValidAnnualBilateralPermitsPage.type());
+            Assert.assertEquals("Standard single journey", ValidPermitsPage.getType());
 
             IntStream.range(0, permits.size() - 1).forEach((idx) -> {
                 List<LocalDate> expiryDates = stock.openWindowsFor(permits.get(idx).getCountry().toString())

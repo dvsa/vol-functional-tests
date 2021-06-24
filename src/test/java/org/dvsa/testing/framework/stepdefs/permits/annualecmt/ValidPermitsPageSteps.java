@@ -18,8 +18,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.ValidPermit.ValidAnnualMultilateralPermit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.permits.pages.bilateralsOnly.ValidAnnualBilateralPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.multilateralsOnly.ValidAnnualMultilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -111,7 +110,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             String title = BasePage.getElementValueByText("h1.govuk-heading-l",SelectorType.CSS).trim();
             Assert.assertEquals("Annual ECMT", title);
         });
-        And ("^I select returns to permit dashboard hyperlink", ValidAnnualBilateralPermitsPage::permitDashboard);
+        And ("^I select return to permit dashboard hyperlink", ValidPermitsPage::returnToPermitDashboard);
         Then ("^the licence number is displayed above the page heading",  () ->{
             String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
@@ -124,7 +123,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         Then("^the ECMT permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'valid'";
             OperatorStore store = operatorStore;
-            List<ValidAnnualMultilateralPermit> permits = ValidAnnualMultilateralPermitsPage.permits();
+            List<ValidAnnualMultilateralPermit> permits = ValidPermitsPage.annualMultilateralPermits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isBefore(permits.get(idx + 1).getExpiryDate()) ||

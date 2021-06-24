@@ -7,8 +7,8 @@ import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.permits.pages.bilateralsOnly.ValidAnnualBilateralPermitsPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
+import org.dvsa.testing.lib.pages.external.permit.Permits;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,12 +26,9 @@ public class TurkeyDashboardPageSteps implements En {
         Then("^I click on my licence on the permits dashboard page$", () -> {
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             HomePage.PermitsTab.select(licence.getLicNo());
-
         });
 
-        Then("^I am navigated back to permits dashboard page$", () -> {
-            ValidAnnualBilateralPermitsPage.untilOnDashboardPage();
-        });
+        Then("^I am navigated back to permits dashboard page$", Permits::untilOnPage);
 
 
     }

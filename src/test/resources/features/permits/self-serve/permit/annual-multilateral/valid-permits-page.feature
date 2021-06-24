@@ -13,7 +13,7 @@ Feature: Annual Multilateral valid permits page checks
     Then the user is in the annual multilateral list page
     And  the licence number is displayed above the page heading
     And  the Multilateral permit list page table should display all relevant fields
-    And I select returns to permit dashboard hyperlink
+    And I select return to permit dashboard hyperlink
     Then I should be taken to the permits dashboard
 
   @OLCS-24423
