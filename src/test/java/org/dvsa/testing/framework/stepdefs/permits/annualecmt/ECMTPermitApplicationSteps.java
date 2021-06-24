@@ -119,8 +119,9 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
         });
-        Then ("^the user is navigated to under consideration page$", () -> {
+        Then ("^the user is on the under consideration page$", () -> {
             UnderConsiderationPage.untilOnPage();
+            UnderConsiderationPageJourney.hasPageHeading();
         });
         Then ("^the user is navigated to awaiting fee page$", () -> isPath("/permits/\\d+/ecmt-awaiting-fee/"));
 

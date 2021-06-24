@@ -63,14 +63,12 @@ public class UnderConsiderationPageSteps implements En {
             String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.select(licence);
         });
-        Then ("^the page heading on under consideration page is displayed correctly$", UnderConsiderationPage::untilOnPage);
         And("^the table of contents in the short term  under consideration page are displayed correctly$", UnderConsiderationPage::tableCheck);
         And("^the warning message is displayed correctly$", () -> {
             UnderConsiderationPage.warningMessage();
         });
         When ("^I select withdraw application button$", UnderConsiderationPage::clickWithdrawApplication);
         Then("^I am taken to the Withdraw Application page$", WithdrawApplicationPage::untilOnPage);
-        Then("^I am taken back to Under Consideration Page$", UnderConsiderationPage::untilOnPage);
         When ("^I go back to the permit application$", () -> {
             String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.select(licence);

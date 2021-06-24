@@ -8,13 +8,13 @@ Feature: Short term ECMT APSG with sectors under consideration page
 
   @OLCS-25670
   Scenario: Under Consideration page details are displayed correctly
-    Then the page heading on under consideration page is displayed correctly
+    Then the user is on the under consideration page
     And the table of contents in the short term  under consideration page are displayed correctly
     And the warning message is displayed correctly
     When I select withdraw application button
     Then I am taken to the Withdraw Application page
     When I click the back link
-    Then I am taken back to Under Consideration Page
+    Then the user is on the under consideration page
     When I click the back link
     Then the user is on self-serve permits dashboard
     When I go back to the permit application
