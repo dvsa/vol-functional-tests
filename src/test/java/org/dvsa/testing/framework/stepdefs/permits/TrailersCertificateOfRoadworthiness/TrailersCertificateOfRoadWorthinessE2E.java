@@ -16,6 +16,7 @@ import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
 import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
 import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.VehicleIdentificationNumberPage;
+import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.VehicleMotPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.trailersCertificateOfRoadworthiness.*;
 
@@ -76,7 +77,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
 
         Then("^I check content and complete MOT DATE section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleMotPage.untilOnMotPage();
-            VehicleMotPage.hasPageHeading();
+            assertEquals("Enter the trailer's vehicle MOT expiry date", VehicleMotPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
             VehicleMotPage.motDate();
             BasePermitPage.saveAndContinue();
