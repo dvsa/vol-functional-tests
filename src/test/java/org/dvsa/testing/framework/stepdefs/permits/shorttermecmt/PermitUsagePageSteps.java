@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.PermitUsagePageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -19,6 +20,7 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.*;
 
 public class PermitUsagePageSteps extends BasePermitPage implements En {
 
@@ -36,27 +38,25 @@ public class PermitUsagePageSteps extends BasePermitPage implements En {
         });
         Then("^the shortterm ecmt permit usage page has an application reference number$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            System.out.println(actualReference);
+            assertNotNull(actualReference);
             String aa = operatorStore.getCurrentLicenceNumber().toString();
-            System.out.println(aa);
+            assertNotNull(aa);
         });
-        And("^the page heading on the permit usage page is displayed correctly$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.hasPageHeading();
-        });
+        And("^the page heading on the permit usage page is displayed correctly$", PermitUsagePageJourney::hasPageHeading);
         And("^the short term ecmt permit usage buttons are displayed  unselected by default$", () -> {
             Assert.assertTrue("not selected", !isSelected("//input[@type='radio']", SelectorType.XPATH));
         });
 
         Then("^the shortterm ecmt permit usage page has advisory messages$", () -> {
             PermitUsagePage.hasAdvisoryMessages();
-            PermitUsagePage.checkAdvisoryText();
-            PermitUsagePage.hasLinkNotPresent();
+            assertTrue(PermitUsagePage.isAdvisoryTextPresent());
+            assertTrue(PermitUsagePage.isLinkNotPresent());
         });
 
         And("^when I save and continue without selecting any radio button$", BasePermitPage::saveAndContinue);
 
         Then("^I should get error message on the permit usage page$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.hasErrorText();
+            assertEquals("Please select one option", PermitUsagePage.getErrorText());
         });
 
         And("^when I save and return to overview without selecting any radio button$", BasePermitPage::saveAndContinue);

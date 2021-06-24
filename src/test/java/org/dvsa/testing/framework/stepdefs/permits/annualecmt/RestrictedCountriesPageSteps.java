@@ -4,6 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCountriesPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -14,6 +15,7 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.lib.pages.BasePage.getURL;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertEquals;
 
 public class RestrictedCountriesPageSteps implements En {
 
@@ -33,8 +35,13 @@ public class RestrictedCountriesPageSteps implements En {
             boolean deliverToRestricted = deliverToRestrictedCountries.equals("do ");
             RestrictedCountriesPage.deliverToRestrictedCountry(deliverToRestricted);
         });
-        Then("^the Advisory text on Annual ECMT countries with limited countries page is Shown Correctly$", RestrictedCountriesPage::hasAdvisoryText);
-        Then("^the page heading on Annual ECMT countries with limited countries page is Shown Correctly$", RestrictedCountriesPage::hasECMTPageHeading);
+        Then("^the Advisory text on Annual ECMT countries with limited countries page is Shown Correctly$", () -> {
+                String advisoryText = RestrictedCountriesPage.getAdvisoryText();
+                assertEquals("There is a very small number of permits available for these countries.\n" +
+                        "We cannot guarantee if you receive a permit that it will allow you to travel to these countries.\n" +
+                        "Annual ECMT Euro 5 permits are not valid for journeys to or through Austria.", advisoryText);
+        });
+        Then("^the page heading on Annual ECMT countries with limited countries page is Shown Correctly$", RestrictedCountriesPageJourney::hasPageHeading);
         Then("^the application reference number is shown correctly$", () -> {
             String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();

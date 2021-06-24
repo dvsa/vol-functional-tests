@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.PermitUsagePageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.Country;
@@ -36,11 +37,9 @@ public class PermitsUsagePageSteps implements En {
             Assert.assertEquals(PermitUsagePage.getCountry(),operatorStore.getCountry());
         });
 
-        Then("^the page heading on bilateral permits usage  page is correct$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.hasPageHeading();
-        });
+        Then("^the page heading on bilateral permits usage  page is correct$", PermitUsagePageJourney::hasPageHeading);
         Then("^I select a random Journey type and click continue$", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage.journeyType(JourneyType.random());
+            PermitUsagePage.journeyType(JourneyType.random());
         });
         Then("^I am taken to the Bilateral Cabotage page$", CabotagePage::AnnualBilateralUntilOnPage);
         Then("^I get error message if there is more than one Journey types available to select and I click continue without making any selection$", org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage::permitUsageError);

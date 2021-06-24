@@ -4,12 +4,14 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourneySteps;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCountriesPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 
 import static org.junit.Assert.assertEquals;
@@ -25,9 +27,7 @@ public class CertificatesRequiredPageSteps implements En {
             CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
         });
-        And("^The application reference is displayed on the page$",() -> {
-            CertificatesRequiredPage.getReferenceFromPage();
-        });
+        And("^The application reference is displayed on the page$", CertificatesRequiredPage::getReferenceFromPage);
         And("^the certificates required page heading is as per the AC$",() -> {
             String heading = CertificatesRequiredPage.getPageHeading();
             assertEquals("Mandatory certificates for vehicles and trailers you intend to use", heading);
@@ -38,15 +38,13 @@ public class CertificatesRequiredPageSteps implements En {
         And("^There is one checkbox with right label and not checked by default$", () ->
             assertTrue(CertificatesRequiredPage.checkboxNotConfirmed())
         );
-        And("^if I don't select the checkbox and click Save and Continue button$", () -> BasePermitPage.saveAndContinue());
-        And("^if I don't select the checkbox and click Save and Return to Overview button$", () -> BasePermitPage.overview());
+        And("^if I don't select the checkbox and click Save and Continue button$", BasePermitPage::saveAndContinue);
+        And("^if I don't select the checkbox and click Save and Return to Overview button$", BasePermitPage::overview);
         And("^if I select the checkbox and click Save and Return to Overview button$", () -> {
             CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.overview();
         });
-        And("^I select the checkbox and click Save and Continue button$", () -> {
-            CertificatesRequiredPage.completePage();
-        });
-        Then("^I am taken to the Restricted countries page$", () -> org.dvsa.testing.lib.newPages.permits.pages.RestrictedCountriesPage.hasECMTPageHeading());
+        And("^I select the checkbox and click Save and Continue button$", CertificatesRequiredPage::completePage);
+        Then("^I am taken to the Restricted countries page$", RestrictedCountriesPageJourney::hasPageHeading);
     }
 }
