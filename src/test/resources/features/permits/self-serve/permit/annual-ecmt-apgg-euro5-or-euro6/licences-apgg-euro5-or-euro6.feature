@@ -40,7 +40,7 @@ Feature: Licence page
   Scenario: Applied against all licences
     And I have completed an ECMT application
     When I try applying for an annual ECMT again
-    Then I should be notified that I have applied against all valid licences
+    Then I should be informed that there is already an active permit application for this licence
 
   @EXTERNAL @OLCS-21938 @ECMT @Test2 @olcs-27581
   Scenario: Type of licence text is displayed next to licences

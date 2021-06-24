@@ -27,9 +27,6 @@ public class LicencePageSteps implements En {
             Assert.assertThat(actualLicenceNumber, new IsEqualIgnoringCase(expectedLicenceNumber));
         });
         When("^I select any licence number$", () -> EcmtApplicationJourney.getInstance().licencePage(operatorStore, world));
-        Then("^I should be notified that I have applied against all valid licences$", () -> {
-            SelectALicencePage.hasActivePermitMessage();
-        });
         Then("^I should see the type of licence next to each licence$", () -> {
             List<LicenceModel> expectedLicences = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences();
 

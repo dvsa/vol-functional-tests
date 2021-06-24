@@ -10,7 +10,7 @@ public class LicencePageSteps implements En {
         Then("^My licence should be an option to apply for multilateral permit$", () -> {
             SelectALicencePage.untilOnPage();
             operatorStore.getLicences().forEach(l -> {
-                    Assert.assertTrue(SelectALicencePage.hasLicence(l.getLicenceNumber()));
+                    Assert.assertTrue(SelectALicencePage.isLicencePresent(l.getLicenceNumber()));
 
             });
         });

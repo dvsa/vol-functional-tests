@@ -101,18 +101,18 @@ public class BasePermitJourney extends BaseJourney {
                 operator.hasCurrentPermitType(PermitType.ANNUAL_MULTILATERAL) ||
                 operator.hasCurrentPermitType(PermitType.SHORT_TERM_ECMT) ||
                 operator.hasCurrentPermitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)) {
-            SelectALicencePage.licence(world.applicationDetails.getLicenceNumber());
+            SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
             licenceNumber = selectedLicence.getLicenceNumber();
         }
 
         else if (SelectALicencePage.numberOfLicences() > 1) {
-            SelectALicencePage.licence(selectedLicence.getLicenceNumber());
+            SelectALicencePage.clickLicence(selectedLicence.getLicenceNumber());
             licenceNumber = selectedLicence.getLicenceNumber();
         }
 
         else {
             licenceNumber = world.applicationDetails.getLicenceNumber();
-            SelectALicencePage.licence(licenceNumber);
+            SelectALicencePage.clickLicence(licenceNumber);
         }
 
         operator.setCurrentLicenceNumber(licenceNumber);

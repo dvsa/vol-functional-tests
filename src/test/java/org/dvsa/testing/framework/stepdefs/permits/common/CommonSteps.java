@@ -162,7 +162,7 @@ public class CommonSteps extends BasePage implements En {
             Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());
         });
         Then("^I will get an error message on the licence page$", () -> {
-            Assert.assertTrue(SelectALicencePage.hasErrorMessagePresent());
+            Assert.assertTrue(SelectALicencePage.isErrorMessagePresent());
         });
         Then("^I should be taken to the next section$", () -> {
             java.net.URL url = CommonSteps.origin.get("origin");

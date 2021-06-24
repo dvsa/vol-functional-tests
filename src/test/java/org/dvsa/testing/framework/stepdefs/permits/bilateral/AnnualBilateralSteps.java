@@ -318,10 +318,13 @@ public class AnnualBilateralSteps extends BasePage implements En {
             HomePage.applyForLicenceButton();
             AnnualBilateralJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             LicenceStore licence = operatorStore.getLicences().get(0);
-            SelectALicencePage.licence(licence.getLicenceNumber());
+            SelectALicencePage.clickLicence(licence.getLicenceNumber());
             SelectALicencePage.saveAndContinue();
         });
-        Then("^I should be informed that there is already an active permit application for this licence$", SelectALicencePage::hasActivePermitMessage);
+        Then("^I should be informed that there is already an active permit application for this licence$", () -> {
+            String message = SelectALicencePage.getActivePermitMessage();
+            assertTrue(message.contains("You've already started an application using this licence. Click 'Save and continue' to access this application"));
+        });
         Then("^I should be on the bilateral overview page for the active application already on the licence$", () -> {
             OverviewPage.untilOnPage();
             String actualReference = BasePermitPage.getReferenceFromPage();

@@ -130,7 +130,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             EcmtApplicationJourney.getInstance()
                     .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.selectECMTValidityPeriod();
-            SelectALicencePage.licence(world.applicationDetails.getLicenceNumber());
+            SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
             SelectALicencePage.saveAndContinue();
         });
     }
