@@ -17,6 +17,7 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
+import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.external.permit.PayFeesPage;
 import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
@@ -33,8 +34,10 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.lib.pages.BasePage.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class SubmittedPageSteps implements En {
+public class SubmittedPageSteps extends BasePermitPage implements En {
     public SubmittedPageSteps(OperatorStore operator, World world) {
         And("I am on the annual multilateral submitted page", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -51,7 +54,7 @@ public class SubmittedPageSteps implements En {
         Then("^the reference number on the multilateral submitted page is as expected$", () -> {
             SubmittedPage.untilOnPage();
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
-            Assert.assertEquals(actualReference.contains(operator.getCurrentLicenceNumber().toString().substring(9,18)),true);
+            assertEquals(actualReference.contains(operator.getCurrentLicenceNumber().toString().substring(9,18)),true);
         });
 
         When("I select view receipt from application submitted page", () -> {
@@ -128,7 +131,12 @@ public class SubmittedPageSteps implements En {
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         });
-        Then("^all the multilateral submitted advisory text is present$", SubmittedPage::hasMultilateralAdvisoryText);
+        Then("^all the multilateral submitted advisory text is present$", () -> {
+            String heading = SubmittedPage.getSubHeading();
+            assertEquals("What happens next", heading);
+            assertTrue(isTextPresent("Your valid permits will be grouped together under the same licence number that you applied with."));
+            assertTrue(isTextPresent("We will now post your paper permit and corresponding logbook within the next 3 working days."));
+        });
     }
 
     private void completeMultilateralJourneyUntilDeclaration(OperatorStore operator, World world) {

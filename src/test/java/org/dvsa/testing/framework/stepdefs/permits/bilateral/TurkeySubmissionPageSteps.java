@@ -8,6 +8,8 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 
+import static org.junit.Assert.assertTrue;
+
 public class TurkeySubmissionPageSteps implements En {
 
     public TurkeySubmissionPageSteps(World world, OperatorStore operatorStore) {
@@ -19,13 +21,13 @@ public class TurkeySubmissionPageSteps implements En {
 
             // the application reference number is displayed correctly;
             String referenceNumber=BasePage.getElementValueByText("//div[@class='govuk-panel__body']",SelectorType.XPATH);
-            Assert.assertTrue(referenceNumber.contains("Your reference number"));
+            assertTrue(referenceNumber.contains("Your reference number"));
             String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber= BasePage.getElementValueByText("//div/strong",SelectorType.XPATH);
-            Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
+            assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
 
             // the texts on the submission page are displayed correctly
-            SubmittedPage.bilateralAdvisoryTexts();
+            assertTrue(SubmittedPage.isBilateralAdvisoryTextPresent());
 
             //the view receipt of Annual Bilateral  hyperlink opens in a new window
             SubmittedPage.openReceipt();

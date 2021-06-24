@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.VehiclesCertificateO
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -22,6 +23,7 @@ import org.junit.Assert;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class VehiclesCertificateOfRoadWorthinessE2E implements En {
@@ -104,9 +106,10 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         });
         Then("^I check content of the Submitted page$", () -> {
             SubmittedPage.untilOnPage();
-            SubmittedPage.hasPageHeading();
-            SubmittedPage.hasCertificateAdvisoryText();
-            SubmittedPage.hasWarningMessage();
+            SubmittedPageJourney.hasPageHeading();
+            SubmittedPageJourney.hasSubHeading();
+            assertTrue(SubmittedPage.isCertificateAdvisoryTextPresent());
+            assertTrue(SubmittedPage.isWarningMessagePresent());
         });
         Then("^I am navigated back to the permits dashboard page with my application status shown as Valid", () -> {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);

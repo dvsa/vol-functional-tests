@@ -98,11 +98,11 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay()
                     .passwordAuthorisation();
-            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
+            SubmittedPage.untilOnPage();
         });
         Then("^I click on the Finish button on the Application submitted page", () -> {
-            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
-            org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.hasPageHeading();
+            SubmittedPage.untilOnPage();
+            SubmittedPageJourney.hasPageHeading();
             untilExpectedTextInElement("//a[contains(text(),'Go to permits dashboard')]",SelectorType.XPATH,"Go to permits dashboard",1000);
             BilateralJourneySteps.clickFinishButton();
         });;
@@ -136,7 +136,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
                     .cardDetailsPage()
                     .cardHolderDetailsPage()
                     .confirmAndPay();
-            SubmittedPage.hasShortTermECMTAdvisoryText();
+            SubmittedPageJourney.hasShortTermECMTAdvisoryText();
             BilateralJourneySteps.clickFinishButton();
         });
 

@@ -8,10 +8,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
@@ -45,6 +42,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertTrue;
 
 public class ApplicationSubmittedPageSteps extends BasePage implements En {
 
@@ -176,9 +174,9 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             Assert.assertFalse(SubmittedPage.hasViewReceipt());
         });
         And ("^all advisory texts on short term ECMT submitted page is displayed correctly$", () -> {
-            SubmittedPage.hasPageHeading();
-            SubmittedPage.hasShortTermECMTAdvisoryText();
-            SubmittedPage.hasWarningMessage();
+            SubmittedPageJourney.hasPageHeading();
+            SubmittedPageJourney.hasShortTermECMTAdvisoryText();
+            assertTrue(SubmittedPage.isWarningMessagePresent());
         });
         Then("^I select view receipt from short term application submitted page$", org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage::openReceipt);
         Then("^the view receipt hyperlink opens in a new window$", () -> {

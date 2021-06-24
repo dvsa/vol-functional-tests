@@ -60,7 +60,17 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             String actualReferenceNumber= BasePage.getElementValueByText("//div/strong",SelectorType.XPATH);
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
-        And ("^the texts on the submission page are displayed correctly", SubmittedPage::hasECMTAdvisoryText);
+        And ("^the texts on the submission page are displayed correctly", () -> {
+            String expectedHeading = SubmittedPage.getSubHeading();
+            String expectedAdvisoryText1 = getText("//p[contains(text(),'We will now post your paper permit within the next')]", SelectorType.XPATH);
+            String expectedAdvisoryText2 = getText("//p[contains(text(),'Your valid permits will be grouped together under')]", SelectorType.XPATH);
+            String expectedWarningMessage = getText("//strong[@class='govuk-warning-text__text']", SelectorType.XPATH);
+
+            Assert.assertEquals("What happens next", expectedHeading);
+            Assert.assertEquals("We will now post your paper permit within the next 3 working days.", expectedAdvisoryText1);
+            Assert.assertEquals("Your valid permits will be grouped together under the same licence number that you applied with.", expectedAdvisoryText2);
+            Assert.assertEquals("Warning" +"\n"+"Make sure your correspondence address is correct on all your operator licences and your email address is up-to-date on your account.", expectedWarningMessage);
+        });
         Then ("^the view receipt of ECMT International hyperlink opens in a new window", () -> {
             WebDriver driver = getDriver();
             String[] windows = driver.getWindowHandles().toArray(new String[0]);

@@ -6,6 +6,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -27,6 +28,7 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.getDriver;
+import static org.junit.Assert.assertTrue;
 
 public class ConfirmationPageSteps implements En {
 
@@ -40,13 +42,13 @@ public class ConfirmationPageSteps implements En {
         Then("^the reference number on the annual ECMT submitted page  is as expected$", () -> {
 org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
-            Assert.assertEquals(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,18)),true);
+            assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
 
         Then("^all advisory texts on Annual ECMT submitted page is displayed correctly$", () -> {
-            SubmittedPage.hasPageHeading();
-            SubmittedPage.hasShortTermECMTAdvisoryText();
-            SubmittedPage.hasWarningMessage();
+            SubmittedPageJourney.hasPageHeading();
+            SubmittedPageJourney.hasShortTermECMTAdvisoryText();
+            assertTrue(SubmittedPage.isWarningMessagePresent());
         });
 
         Then("^I select view receipt from Annual ECMT application submitted page$", org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage::openReceipt);
