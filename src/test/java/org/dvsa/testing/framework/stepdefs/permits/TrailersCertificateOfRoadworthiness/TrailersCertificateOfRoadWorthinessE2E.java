@@ -13,12 +13,8 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.VehicleIdentificationNumberPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.VehicleMotPage;
+import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.trailersCertificateOfRoadworthiness.*;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -40,13 +36,13 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
 
         Then("^I check content and complete Registration number section for  Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.RegistrationNumber);
-            VehicleRegistrationNumberPage.untilOnRegistrationPage();
-            VehicleRegistrationNumberPage.hasPageHeading();
+            VehicleRegistrationNumberPage.untilOnPage();
+            assertEquals("Enter the DVLA trailer registration number", VehicleRegistrationNumberPage.getPageHeading());
             // Check the new validation
             BasePermitPage.saveAndContinue();
-            VehicleRegistrationNumberPage.hasRequiredFieldValidation();
+            assertEquals("Enter the registration number plate", VehicleRegistrationNumberPage.getRequiredFieldValidation());
             BasePermitPage.getReferenceFromPage();
-            VehicleRegistrationNumberPage.registrationNumber();
+            VehicleRegistrationNumberPage.enterRegistrationNumber();
 
             BasePermitPage.saveAndContinue();
         });
@@ -68,7 +64,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             MakeAndModelPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
-            VehicleIdentificationNumberPage.untilOnIdentificationPage();
+            VehicleIdentificationNumberPage.untilOnPage();
             assertEquals("Enter the trailer's vehicle identification number (VIN)", VehicleIdentificationNumberPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
             VehicleIdentificationNumberPage.enterIdentificationNumber();
@@ -76,10 +72,10 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         });
 
         Then("^I check content and complete MOT DATE section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
-            VehicleMotPage.untilOnMotPage();
+            VehicleMotPage.untilOnPage();
             assertEquals("Enter the trailer's vehicle MOT expiry date", VehicleMotPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
-            VehicleMotPage.motDate();
+            VehicleMotPage.enterMOTDate();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and Accept and continue on the Declaration page for Certificate of Roadworthiness for trailers page$", () -> {

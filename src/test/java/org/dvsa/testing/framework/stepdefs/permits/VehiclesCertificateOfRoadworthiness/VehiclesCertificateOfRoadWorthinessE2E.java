@@ -14,10 +14,7 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.VehicleIdentificationNumberPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.VehicleMotPage;
+import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.vehiclesCertificateOfRoadworthiness.*;
 import org.junit.Assert;
@@ -43,10 +40,10 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
 
         Then("^I check content and complete Registration number section and click save and continue$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.RegistrationNumber);
-            VehicleRegistrationNumberPage.untilOnRegistrationPage();
-            VehicleRegistrationNumberPage.hasPageHeading();
+            VehicleRegistrationNumberPage.untilOnPage();
+            assertEquals("Enter the vehicle registration number", VehicleRegistrationNumberPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
-            VehicleRegistrationNumberPage.registrationNumber();
+            VehicleRegistrationNumberPage.enterRegistrationNumber();
             BasePermitPage.saveAndContinue();
         });
 
@@ -67,7 +64,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section and click save and continue$", () -> {
-            VehicleIdentificationNumberPage.untilOnIdentificationPage();
+            VehicleIdentificationNumberPage.untilOnPage();
             assertEquals("Enter the vehicle identification number (VIN)", VehicleIdentificationNumberPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
             VehicleIdentificationNumberPage.enterIdentificationNumber();
@@ -88,10 +85,10 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete MOT DATE section and click save and continue$", () -> {
-            VehicleMotPage.untilOnMotPage();
+            VehicleMotPage.untilOnPage();
             assertEquals("Enter the vehicle's MOT expiry date", VehicleMotPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
-            VehicleMotPage.motDate();
+            VehicleMotPage.enterMOTDate();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and click save and continue on the Check Your Answers page$", () -> {
