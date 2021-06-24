@@ -17,7 +17,7 @@ import java.util.List;
 import static org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage.*;
 import static org.junit.Assert.assertEquals;
 
-public class NumberOfPermitsPageJourneySteps extends BasePermitJourney {
+public class NumberOfPermitsPageJourney extends BasePermitJourney {
 
     private static World world;
     public static int fieldCount;
@@ -36,7 +36,7 @@ public class NumberOfPermitsPageJourneySteps extends BasePermitJourney {
     }
 
     public static void setFieldCount(int fieldCount) {
-        NumberOfPermitsPageJourneySteps.fieldCount = fieldCount;
+        NumberOfPermitsPageJourney.fieldCount = fieldCount;
     }
 
     public static String getCabotageLabel() {
@@ -44,7 +44,7 @@ public class NumberOfPermitsPageJourneySteps extends BasePermitJourney {
     }
 
     public static void setCabotageLabel(String cabotageLabel) {
-        NumberOfPermitsPageJourneySteps.cabotageLabel = cabotageLabel;
+        NumberOfPermitsPageJourney.cabotageLabel = cabotageLabel;
     }
 
     public static String getCabotageValue() {
@@ -52,11 +52,11 @@ public class NumberOfPermitsPageJourneySteps extends BasePermitJourney {
     }
 
     public static void setCabotageValue(String cabotageValue) {
-        NumberOfPermitsPageJourneySteps.cabotageValue = cabotageValue;
+        NumberOfPermitsPageJourney.cabotageValue = cabotageValue;
     }
 
     public static String getLabel() {
-        return NumberOfPermitsPageJourneySteps.label;
+        return NumberOfPermitsPageJourney.label;
     }
 
     public static String getPermitValue() {
@@ -64,7 +64,7 @@ public class NumberOfPermitsPageJourneySteps extends BasePermitJourney {
     }
 
     public static void setPermitValue(String permitValue) {
-        NumberOfPermitsPageJourneySteps.permitValue = permitValue;
+        NumberOfPermitsPageJourney.permitValue = permitValue;
     }
 
     public static String getStandardLabel() {
@@ -72,7 +72,7 @@ public class NumberOfPermitsPageJourneySteps extends BasePermitJourney {
     }
 
     public static void setStandardLabel(String standardLabel) {
-        NumberOfPermitsPageJourneySteps.standardLabel = standardLabel;
+        NumberOfPermitsPageJourney.standardLabel = standardLabel;
     }
 
     public static String getStandardValue() {
@@ -80,23 +80,23 @@ public class NumberOfPermitsPageJourneySteps extends BasePermitJourney {
     }
 
     public static void setStandardValue(String standardValue) {
-        NumberOfPermitsPageJourneySteps.standardValue = standardValue;
+        NumberOfPermitsPageJourney.standardValue = standardValue;
     }
 
     public static void setPermitsPerCountry(List<Permit> permitsPerCountry) {
-        NumberOfPermitsPageJourneySteps.permitsPerCountry = permitsPerCountry;
+        NumberOfPermitsPageJourney.permitsPerCountry = permitsPerCountry;
     }
 
     public static List<Permit> getPermitsPerCountry() {
-        return NumberOfPermitsPageJourneySteps.permitsPerCountry;
+        return NumberOfPermitsPageJourney.permitsPerCountry;
     }
 
     public static void setApplicationDate(LocalDateTime applicationDate) {
-        NumberOfPermitsPageJourneySteps.applicationDate = applicationDate;
+        NumberOfPermitsPageJourney.applicationDate = applicationDate;
     }
 
     public static LocalDateTime getApplicationDate() {
-        return NumberOfPermitsPageJourneySteps.applicationDate;
+        return NumberOfPermitsPageJourney.applicationDate;
     }
 
     public static void hasPageHeading() {

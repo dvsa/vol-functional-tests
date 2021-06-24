@@ -3,15 +3,13 @@ package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
-import org.junit.Assert;
 
 import static org.junit.Assert.assertTrue;
 
@@ -24,7 +22,7 @@ public class DeclarationPageSteps implements En {
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
-            NumberOfPermitsPageJourneySteps.completeMultilateralPage();
+            NumberOfPermitsPageJourney.completeMultilateralPage();
             AnnualMultilateralJourney.INSTANCE
                     .checkYourAnswers();
 
@@ -39,7 +37,7 @@ public class DeclarationPageSteps implements En {
             assertTrue(message, DeclarationPage.declarationIsNotConfirmed());
         });
         Then("^the status for the declaration section in annual multilateral is complete$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });
     }
 }

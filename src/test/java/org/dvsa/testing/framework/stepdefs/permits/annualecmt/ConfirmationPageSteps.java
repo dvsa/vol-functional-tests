@@ -4,8 +4,8 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -13,9 +13,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
@@ -83,9 +81,9 @@ org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage.untilOnPage();
 
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckYourAnswers);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckYourAnswers);
             BasePermitPage.saveAndContinue();
-            DeclarationPageJourneySteps.completeDeclaration();
+            DeclarationPageJourney.completeDeclaration();
 
         });
 

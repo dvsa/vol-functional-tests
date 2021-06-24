@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
@@ -12,8 +12,8 @@ import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsSteps implements En {
     public NumberOfPermitsSteps(OperatorStore operatorStore, World world) {
-        Then("^I should get the validation error message on the number of permits page$", NumberOfPermitsPageJourneySteps::hasBilateralErrorMessage);
-        When("^I enter the number of bilateral permits required", NumberOfPermitsPageJourneySteps::completePage);
+        Then("^I should get the validation error message on the number of permits page$", NumberOfPermitsPageJourney::hasBilateralErrorMessage);
+        When("^I enter the number of bilateral permits required", NumberOfPermitsPageJourney::completePage);
         Then("^I am on the annual bilateral number of permits page with correct information and content$", () -> {
             // Make sure the page has loaded before any further checks
             NumberOfPermitsPage.untilOnPage();
@@ -22,7 +22,7 @@ public class NumberOfPermitsSteps implements En {
             Assert.assertEquals(BasePermitPage.getCountry(), operatorStore.getCountry());
 
             //checking the Page heading on the Turkey number of permits page is correct
-            NumberOfPermitsPageJourneySteps.hasPageHeading();
+            NumberOfPermitsPageJourney.hasPageHeading();
 
             //checking the Number of permits label
             assertTrue(NumberOfPermitsPage.isTurkeyAndUkraineBilateralStandardSingleInformationPresent());

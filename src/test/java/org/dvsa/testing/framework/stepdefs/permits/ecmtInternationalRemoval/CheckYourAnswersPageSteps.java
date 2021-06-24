@@ -3,15 +3,14 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.ECMTRemovalsSection;
 import org.hamcrest.core.StringContains;
@@ -29,13 +28,13 @@ public class CheckYourAnswersPageSteps implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RemovalsEligibility);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)
                      .cabotagePage()
                     .certificatesRequiredPage()
                     .permitStartDatePage();
-            NumberOfPermitsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completePage();
 
         });
         And("^the ECMT Removals check your answers page has reference number$", BasePermitPage::getReferenceFromPage);
@@ -49,8 +48,8 @@ public class CheckYourAnswersPageSteps implements En {
             String Cabotage = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Cabotage);
             Assert.assertEquals(Cabotage, "I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.");
         });
-        Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPageJourneySteps.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
-        And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckYourAnswers));
+        Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPageJourney.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
+        And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPageJourney.clickOverviewSection(OverviewSection.CheckYourAnswers));
         Then("^I should be on the declaration page$", DeclarationPage::untilOnPage);
         Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> {
             CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.RemovalsEligibility);
@@ -59,7 +58,7 @@ public class CheckYourAnswersPageSteps implements En {
         Then("^I choose to change the ECMT Removals Permits Number of permits section$", () -> CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.NumberOfPermits));
         Then("^I should be on the ECMT international removal number of permits page$", () -> {
             NumberOfPermitsPage.untilOnPage();
-            NumberOfPermitsPageJourneySteps.hasECMTPageHeading();
+            NumberOfPermitsPageJourney.hasECMTPageHeading();
         });
     }
 }

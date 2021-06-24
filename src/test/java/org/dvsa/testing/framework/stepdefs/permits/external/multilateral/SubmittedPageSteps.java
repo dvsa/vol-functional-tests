@@ -6,16 +6,15 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
@@ -40,7 +39,7 @@ public class SubmittedPageSteps implements En {
         And("I am on the annual multilateral submitted page", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             completeMultilateralJourneyUntilDeclaration(operator, world);
-            DeclarationPageJourneySteps.completeDeclaration();
+            DeclarationPageJourney.completeDeclaration();
             AnnualMultilateralJourney.INSTANCE
                     .feeOverviewPage()
                     .cardDetailsPage()
@@ -77,8 +76,8 @@ public class SubmittedPageSteps implements En {
             HomePage.selectTab(Tab.PERMITS);
 
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
-            DeclarationPageJourneySteps.completeDeclaration();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
+            DeclarationPageJourney.completeDeclaration();
         });
         Then("^there shouldn't be a view receipt link on the multilateral submitted page$", () -> {
             Assert.assertFalse(SubmittedPage.hasViewReceipt());
@@ -106,7 +105,7 @@ public class SubmittedPageSteps implements En {
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
        });
         When("^a case worker worker waives all fees for my ongoing multilateral permit application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -127,7 +126,7 @@ public class SubmittedPageSteps implements En {
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
             HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         });
         Then("^all the multilateral submitted advisory text is present$", SubmittedPage::hasMultilateralAdvisoryText);
     }
@@ -138,7 +137,7 @@ public class SubmittedPageSteps implements En {
                 .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                 .licencePage(operator, world)
                 .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
-        NumberOfPermitsPageJourneySteps.completeMultilateralPage();
+        NumberOfPermitsPageJourney.completeMultilateralPage();
         AnnualMultilateralJourney.INSTANCE
                 .checkYourAnswers();
     }

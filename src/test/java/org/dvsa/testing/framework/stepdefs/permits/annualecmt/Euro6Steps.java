@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -24,25 +24,25 @@ public class Euro6Steps implements En {
     public Euro6Steps(OperatorStore operatorStore, World world) {
         And("^I am on the euro emission standard page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourneySteps.completeECMTPage();
+            NumberOfPermitsPageJourney.completeECMTPage();
         });
 
         When("^I click the back link", BasePermitPage::back);
 
         Then("^should see the overview page without updating any changes$",() -> {
             OverviewPage.untilOnPage();
-            OverviewPageJourneySteps.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
+            OverviewPageJourney.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
         });
 
         When("^I select save and return overview link$", BasePermitPage::overview);
 
         Then("^I should see the overview page with updated changes$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
         });
 
         Then("^I should be able to navigate to the next page$", () -> {

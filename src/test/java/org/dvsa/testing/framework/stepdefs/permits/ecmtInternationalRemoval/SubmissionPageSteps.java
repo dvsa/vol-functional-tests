@@ -4,9 +4,9 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -31,16 +31,16 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RemovalsEligibility);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
                     .permitStartDatePage();
-            NumberOfPermitsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completePage();
             EcmtInternationalRemovalJourney.getInstance()
                     .checkYourAnswers();
-            DeclarationPageJourneySteps.completeDeclaration();
+            DeclarationPageJourney.completeDeclaration();
             EcmtApplicationJourney.getInstance()
                     .feeOverviewPage()
                     .cardDetailsPage()
@@ -72,13 +72,13 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RemovalsEligibility);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)
                     .cabotagePage()
                     .certificatesRequiredPage()
                     .permitStartDatePage();
-            NumberOfPermitsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completePage();
             EcmtInternationalRemovalJourney.getInstance()
                     .checkYourAnswers();
         });
@@ -93,15 +93,15 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
             clickByLinkText(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
-            DeclarationPageJourneySteps.completeDeclaration();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
+            DeclarationPageJourney.completeDeclaration();
         });
         And ("^I proceed with the application", () -> {
             HomePage.selectTab(Tab.PERMITS);
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Declaration);
-            DeclarationPageJourneySteps.completeDeclaration();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
+            DeclarationPageJourney.completeDeclaration();
         });
 
     }

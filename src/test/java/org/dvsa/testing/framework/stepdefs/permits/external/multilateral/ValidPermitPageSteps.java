@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.ValidPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.ValidPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -18,14 +18,14 @@ public class ValidPermitPageSteps implements En {
     public ValidPermitPageSteps(OperatorStore operator, World world) {
         Then("^the user is in the annual multilateral list page$", () -> {
             ValidPermitsPage.untilOnPage();
-            ValidPermitsPageJourneySteps.hasMultilateralHeading();
+            ValidPermitsPageJourney.hasMultilateralHeading();
         });
         And("^I am viewing an issued annual multilateral permit on self-serve$", () -> {
             LicenceStore licence = operator.getCurrentLicence()
                     .orElseThrow(IllegalStateException::new);
             HomePage.PermitsTab.select(licence.getLicenceNumber());
             ValidPermitsPage.untilOnPage();
-            ValidPermitsPageJourneySteps.hasMultilateralHeading();
+            ValidPermitsPageJourney.hasMultilateralHeading();
         });
         Then("^the Multilateral permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'pending'";

@@ -5,7 +5,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.EmissionStandardsPage;
 
 import static org.junit.Assert.assertEquals;
 
-public class EmissionStandardsPageJourneySteps extends BasePermitJourney {
+public class EmissionStandardsPageJourney extends BasePermitJourney {
 
     public static void hasPageHeading() {
         String heading = EmissionStandardsPage.getPageHeading();

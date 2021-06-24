@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -19,7 +19,6 @@ import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.hasErrorMessagePresent;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -33,7 +32,7 @@ public class CertificateRequiredPageSteps implements En {
             YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
@@ -55,7 +54,7 @@ public class CertificateRequiredPageSteps implements En {
         Then("^the user is navigated to the short term overview page with the status as completed$", () -> {
             String error = "Expected the status of certificates required page to be complete but it wasn't";
             OverviewPage.untilOnPage();
-            OverviewPageJourneySteps.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.CertificatesRequired,PermitStatus.COMPLETED);
         });
 
     }

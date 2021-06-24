@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -12,7 +12,6 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
@@ -29,7 +28,7 @@ public class CabotagePageSteps implements En {
             YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });
@@ -53,8 +52,8 @@ public class CabotagePageSteps implements En {
 
         Then("^I confirm not undertaking cabotage journey$", CabotagePage::confirmWontUndertakeCabotage);
         Then("^the user is navigated to the overview page with the status as completed$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.Cabotage,PermitStatus.COMPLETED);
-            OverviewPageJourneySteps.checkStatus(OverviewSection.HowWillYouUseThePermits ,PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.Cabotage,PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.HowWillYouUseThePermits ,PermitStatus.COMPLETED);
         });
     }
 }

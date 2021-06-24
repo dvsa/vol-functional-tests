@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
@@ -18,7 +18,7 @@ public class TurkeyPeriodSelectionPageSteps extends BasePermitPage implements En
             PeriodSelectionPage.untilOnPage();
 
             // Checking Page heading
-            PeriodSelectionPageJourneySteps.hasPageHeading();
+            PeriodSelectionPageJourney.hasPageHeading();
 
            //Checking Country name displayed on the page is the one clicked on the overview page
             Assert.assertEquals(PeriodSelectionPage.getCountry(), operatorStore.getCountry());

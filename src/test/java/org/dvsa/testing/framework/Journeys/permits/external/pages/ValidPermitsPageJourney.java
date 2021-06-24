@@ -5,7 +5,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.ValidPermitsPage;
 
 import static org.junit.Assert.assertEquals;
 
-public class ValidPermitsPageJourneySteps extends BasePermitJourney {
+public class ValidPermitsPageJourney extends BasePermitJourney {
 
     public static void hasBilateralHeading() {
         String heading = ValidPermitsPage.getHeading();

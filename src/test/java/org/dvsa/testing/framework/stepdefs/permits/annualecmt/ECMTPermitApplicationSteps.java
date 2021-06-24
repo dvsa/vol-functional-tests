@@ -143,7 +143,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
 
         EcmtApplicationJourney.getInstance()
                 .checkYourAnswersPage();
-        DeclarationPageJourneySteps.completeDeclaration();
+        DeclarationPageJourney.completeDeclaration();
         EcmtApplicationJourney.getInstance()
                 .feeOverviewPage()
                 .cardDetailsPage()
@@ -164,7 +164,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
 
         EcmtApplicationJourney.getInstance()
                 .checkYourAnswersPage();
-        DeclarationPageJourneySteps.completeDeclaration();
+        DeclarationPageJourney.completeDeclaration();
         EcmtApplicationJourney.getInstance()
                 .feeOverviewPage()
                 .cardDetailsPage()
@@ -176,13 +176,13 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
     public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) {
         LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
         store.withLicences(licenceStore);
-        OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-        CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
+        OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+        CheckIfYouNeedECMTPermitsPageJourney.completePage();
         CabotagePage.confirmWontUndertakeCabotage();
         CertificatesRequiredPage.completePage();
         CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-        NumberOfPermitsPageJourneySteps.completeECMTPage();
-        EmissionStandardsPageJourneySteps.completePage();
+        NumberOfPermitsPageJourney.completeECMTPage();
+        EmissionStandardsPageJourney.completePage();
         licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
         ECMTPermitApplicationSteps.applicationReference.put("application.reference",licenceStore.getReferenceNumber());
         store.withLicences(licenceStore);

@@ -5,9 +5,9 @@ import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -34,15 +34,15 @@ public class AnnualTripsAbroadPageSteps implements En {
             YearSelectionPage.selectShortTermValidityPeriod();
             ECMTShortTermJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ECMTShortTermJourney.getInstance(). licencePage(operatorStore,world);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourneySteps.completeECMTPage();
-            EmissionStandardsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completeECMTPage();
+            EmissionStandardsPageJourney.completePage();
         });
         And("^the page heading on short term ECMT Annual Trips Abroad page is displayed correctly$", () -> {
             String heading = AnnualTripsAbroadPage.getPageHeading();
@@ -85,7 +85,7 @@ public class AnnualTripsAbroadPageSteps implements En {
         });
         Given("^I select save and return overview link on annual trips abroad page$", AnnualTripsAbroadPage::returnToOverview);
         Then("^the user is navigated to the short term ECMT overview page with the status as completed$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.AnnualTripsAbroad, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.AnnualTripsAbroad, PermitStatus.COMPLETED);
         });
 
   }

@@ -5,8 +5,8 @@ import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -16,7 +16,6 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.permits.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
@@ -46,7 +45,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
                     .getReferenceNumber();
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(expectedLicenceNumber, actualReferenceNumber);
-            NumberOfPermitsPageJourneySteps.hasPageHeading();
+            NumberOfPermitsPageJourney.hasPageHeading();
         });
         Then("^should see the text box for each year for Annual Multilateral permit stock with an open window$", () -> {
             //need to add steps later
@@ -66,9 +65,9 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
                Assert.assertTrue(expectedPermits.stream().anyMatch(p::equals));
            });
         });
-        When("^I specify my number of multilateral permits$", NumberOfPermitsPageJourneySteps::completeMultilateralPage);
+        When("^I specify my number of multilateral permits$", NumberOfPermitsPageJourney::completeMultilateralPage);
         Then("^the number of permits section on the annual multilateral overview page is complete$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
         });
         Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswerPage::untilOnPage);
         When("^the case worker is viewing current fees$", () -> {
@@ -85,7 +84,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
             findAll("//*[contains(@class, 'field')]//input[@type='text']", SelectorType.XPATH)
                     .stream().forEach(x -> {x.sendKeys("0");});
         });
-        And("^I specify the number of permits I require for my multilateral permit$", NumberOfPermitsPageJourneySteps::completeMultilateralPage);
+        And("^I specify the number of permits I require for my multilateral permit$", NumberOfPermitsPageJourney::completeMultilateralPage);
         When("^I update the number of permits for my multilateral permit$", () -> {
             IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
             IrhpPermitsApplyPage.viewApplication();

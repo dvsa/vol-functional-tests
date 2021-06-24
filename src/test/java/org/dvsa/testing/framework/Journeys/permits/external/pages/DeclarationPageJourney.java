@@ -5,7 +5,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
 
 import static org.junit.Assert.assertEquals;
 
-public class DeclarationPageJourneySteps extends BasePermitJourney {
+public class DeclarationPageJourney extends BasePermitJourney {
 
     public static void hasPageHeading() {
         String heading = DeclarationPage.getPageHeading();

@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
@@ -26,7 +26,7 @@ public class NorwayEssentialInformationSteps implements En {
             Assert.assertEquals(getCountry(),operatorStore.getCountry());
         });
         And("^the page heading on Bilateral essential information  page is correct$", () -> {
-            EssentialInformationPageJourneySteps.hasPageHeading();
+            EssentialInformationPageJourney.hasPageHeading();
         });
         And("^the page content on Bilateral essential information  page is correct$", () -> {
             assertTrue(EssentialInformationPage.isPageContentPresent());

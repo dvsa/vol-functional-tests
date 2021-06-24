@@ -10,7 +10,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class OverviewPageJourneySteps extends BasePermitJourney {
+public class OverviewPageJourney extends BasePermitJourney {
 
     public static void clickOverviewSection(OverviewSection section) {
         OverviewPage.untilOnPage();

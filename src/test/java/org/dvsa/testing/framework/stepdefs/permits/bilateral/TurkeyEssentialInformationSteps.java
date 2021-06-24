@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
 import org.junit.Assert;
@@ -21,7 +21,7 @@ public class TurkeyEssentialInformationSteps implements En {
             Assert.assertEquals(getCountry(), operatorStore.getCountry());
 
             //checking the Page heading on the Turkey essential information page is correct
-            EssentialInformationPageJourneySteps.hasPageHeading();
+            EssentialInformationPageJourney.hasPageHeading();
 
             //checking the page content on Bilateral essential information  page is correct
             assertTrue(EssentialInformationPage.isTurkeyPageContentPresent());

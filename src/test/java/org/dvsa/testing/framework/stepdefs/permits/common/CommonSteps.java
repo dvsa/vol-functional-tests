@@ -14,10 +14,10 @@ import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.internal.CaseWorkerAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -29,7 +29,6 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.*;
 import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -80,17 +79,17 @@ public class CommonSteps extends BasePage implements En {
             clickToPermitTypePage(world);
         });
         Then ("^I submit the annual ECMT APGG application$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             BasePermitPage.saveAndContinue();
             RestrictedCountriesPage.deliverToRestrictedCountry(false);
             RestrictedCountriesPage.saveAndContinue();
-            NumberOfPermitsPageJourneySteps.completeECMTPage();
-            EmissionStandardsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completeECMTPage();
+            EmissionStandardsPageJourney.completePage();
             BasePermitPage.saveAndContinue();
-            DeclarationPageJourneySteps.completeDeclaration();
+            DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()
@@ -293,7 +292,7 @@ public class CommonSteps extends BasePage implements En {
 
     public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull OverviewSection section) {
         beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-        OverviewPageJourneySteps.clickOverviewSection(section);
+        OverviewPageJourney.clickOverviewSection(section);
     }
 
     public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) {

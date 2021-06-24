@@ -3,9 +3,9 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -46,7 +46,7 @@ public class CheckYourAnswersPageSteps implements En {
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore).licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             CheckYourAnswersPageSteps.permitUsage.put("permit.usage", licence.getEcmt().getPermitusage());
@@ -55,8 +55,8 @@ public class CheckYourAnswersPageSteps implements En {
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourneySteps.completeECMTPage();
-            EmissionStandardsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completeECMTPage();
+            EmissionStandardsPageJourney.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
@@ -80,13 +80,13 @@ public class CheckYourAnswersPageSteps implements En {
         });
         Then("^I am on the short term permits overview page with check your answers section marked as complete$", () -> {
             OverviewPage.untilOnPage();
-            OverviewPageJourneySteps.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
         });
         Then("^the declaration section gets enabled to be clicked and section status changes to NOT STARTED YET$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.NOT_STARTED_YET);
+            OverviewPageJourney.checkStatus(OverviewSection.Declaration, PermitStatus.NOT_STARTED_YET);
         });
         And("^I click Check your answers link on the overview page again$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckYourAnswers);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckYourAnswers);
         });
     }
 

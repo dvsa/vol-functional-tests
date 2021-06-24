@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -14,7 +14,6 @@ import org.dvsa.testing.lib.newPages.permits.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.permits.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
@@ -35,7 +34,7 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
@@ -62,7 +61,7 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
         });
         And ("^I select save and return to overview link without confirming$", BasePermitPage::overview);
         And ("^I select the countries with limited permits hyperlink$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CountriesWithLimitedPermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CountriesWithLimitedPermits);
         });
         And ("^I should be on the countries with limited permits page$", CountriesWithLimitedPermitsPage::untilOnPage);
         When ("^I have selected some short term countries with limited permits and clicked save and continue$", CountriesWithLimitedPermitsPage::noCountriesWithLimitedPermits);

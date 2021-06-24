@@ -4,8 +4,8 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -26,7 +26,7 @@ public class NumberOfPermitsPageSteps implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RemovalsEligibility);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)
                     .cabotagePage()
@@ -35,7 +35,7 @@ public class NumberOfPermitsPageSteps implements En {
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPage.untilOnPage();
         });
-        And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPageJourneySteps::hasECMTPageHeading);
+        And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPageJourney::hasECMTPageHeading);
         And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", () -> {
             assertTrue(NumberOfPermitsPage.isFeeTextPresent());
         });
@@ -61,7 +61,7 @@ public class NumberOfPermitsPageSteps implements En {
         Then("^the number of permits section on the ECMT Removals Overview page is complete$", () -> {
             OverviewPage.untilOnPage();
             NumberOfPermitsPage.untilOnPage();
-            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
     }
 }

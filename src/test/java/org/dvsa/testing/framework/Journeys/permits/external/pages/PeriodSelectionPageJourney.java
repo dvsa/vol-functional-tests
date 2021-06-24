@@ -5,7 +5,7 @@ import org.dvsa.testing.lib.newPages.permits.pages.PeriodSelectionPage;
 
 import static org.junit.Assert.assertEquals;
 
-public class PeriodSelectionPageJourneySteps extends BasePermitJourney {
+public class PeriodSelectionPageJourney extends BasePermitJourney {
 
     public static void hasPageHeading() {
         String heading = PeriodSelectionPage.getPageHeading();

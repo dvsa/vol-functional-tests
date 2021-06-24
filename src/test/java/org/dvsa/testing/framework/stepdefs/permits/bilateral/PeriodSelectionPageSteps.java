@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.Country;
@@ -37,7 +37,7 @@ public class PeriodSelectionPageSteps extends BasePermitPage implements En {
         });
 
         Then("^the page heading on bilateral period selection  page is correct$", () -> {
-            PeriodSelectionPageJourneySteps.hasPageHeading();
+            PeriodSelectionPageJourney.hasPageHeading();
         });
         Then("^I select BilateralCabotagePermitsOnly period and click continue$", () -> {
             AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);

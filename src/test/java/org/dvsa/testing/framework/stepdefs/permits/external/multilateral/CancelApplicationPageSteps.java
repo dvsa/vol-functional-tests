@@ -4,7 +4,7 @@ import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -31,7 +31,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
                             .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                             .licencePage(operator, world)
                             .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
-                NumberOfPermitsPageJourneySteps.completeMultilateralPage();
+                NumberOfPermitsPageJourney.completeMultilateralPage();
                 NumberOfPermitsPage.overview();
                 OverviewPage.clickCancelApplication();
                 CancellationPage.untilOnPage();

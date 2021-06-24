@@ -2,12 +2,11 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitFeePage;
 import org.junit.Assert;
 
@@ -28,7 +27,7 @@ public class DeclarationPageSteps implements En {
             assertEquals("Permit fee", PermitFeePage.getPageHeading());
         });
         Then("^the status for the declaration section in annual ECMT is complete$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });
     }
 

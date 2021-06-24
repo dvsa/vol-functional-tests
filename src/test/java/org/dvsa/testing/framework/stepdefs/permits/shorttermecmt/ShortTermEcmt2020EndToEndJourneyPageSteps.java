@@ -45,13 +45,13 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
         });
         Then("^I complete the How will you use the permits section and click save and continue$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete the Check if you need ECMT permits section and click save and continue$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPageJourneySteps.completePage();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            CheckIfYouNeedECMTPermitsPageJourney.completePage();
         });
         Then("^I complete Cabotage page section and click save and continue$", () -> {
             CabotagePage.confirmWontUndertakeCabotage();
@@ -67,12 +67,12 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Number of permits required section and click save and continue$", () -> {
-            NumberOfPermitsPageJourneySteps.hasPageHeading();
-            NumberOfPermitsPageJourneySteps.completeECMTPage();
+            NumberOfPermitsPageJourney.hasPageHeading();
+            NumberOfPermitsPageJourney.completeECMTPage();
         });
         Then("^I complete Euro emissions standard page section and click save and continue$", () -> {
-            EmissionStandardsPageJourneySteps.hasPageHeading();
-            EmissionStandardsPageJourneySteps.completePage();
+            EmissionStandardsPageJourney.hasPageHeading();
+            EmissionStandardsPageJourney.completePage();
         });
         Then("^I complete Annual trips abroad page section and click save and continue$", () -> {
             AnnualTripsAbroadPage.quantity(10);
@@ -89,7 +89,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
         });
         Then("^I click on Accept and continue on the Declaration page$", () -> {
-            DeclarationPageJourneySteps.completeDeclaration();
+            DeclarationPageJourney.completeDeclaration();
         });
         Then("^I click on Submit and Pay button on the Permit fee page and complete the payment", () -> {
             PermitFeePage.submitAndPay();
@@ -117,20 +117,20 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithoutSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourneySteps.completeECMTPage();
-            EmissionStandardsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completeECMTPage();
+            EmissionStandardsPageJourney.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPageJourneySteps.completeDeclaration();
+            DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
             EcmtApplicationJourney.getInstance()
                     .cardDetailsPage()

@@ -3,10 +3,10 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -61,14 +61,14 @@ public class AnnualBilateralOverviewPageSteps implements En {
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
         });
         Then("^the status of Morocco under answers questions for individual countries section is marked as Completed$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
         });
         Then("^I select submit and pay link$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.SubmitAndPay);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.SubmitAndPay);
         });
         Then("^I am taken to the overview page with the status as completed$", () -> {
             String s1 = BasePage.getElementValueByText("//li[3]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
@@ -79,7 +79,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             Assert.assertEquals(s1, "COMPLETED");
         });
         Then("^I select the edit countries button$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.EditCountrySelection);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.EditCountrySelection);
         });
         Then("^I declare and save and return to overview$", () -> {
             DeclarationPage.confirmDeclaration();
@@ -89,7 +89,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
             isPath("/permits/application/\\d+/countries/\\d+");
         });
         When("^the hyperlink for select countries is selected$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.Countries);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.Countries);
         });
         Then("^I am navigated to the relevant page$", () -> {
             isPath("//permits/application/\\d+/countries/");
@@ -118,17 +118,17 @@ public class AnnualBilateralOverviewPageSteps implements En {
         OverviewPage.clickCountrySection(Country.Morocco);
         EssentialInformationPage.untilOnPage();
         Assert.assertEquals(getCountry(), operatorStore.getCountry());
-        EssentialInformationPageJourneySteps.completePage();
-        PeriodSelectionPageJourneySteps.hasMoroccoPageHeading();
+        EssentialInformationPageJourney.completePage();
+        PeriodSelectionPageJourney.hasMoroccoPageHeading();
         Assert.assertEquals(getCountry(), operatorStore.getCountry());
         AnnualBilateralJourney.getInstance().bilateralPeriodType(typeOfMoroccoJourney, operatorStore);
         PeriodSelectionPage.saveAndContinue();
         NumberOfPermitsPage.untilOnPage();
         Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), operatorStore.getCountry());
-        NumberOfPermitsPageJourneySteps.hasPageHeading();
+        NumberOfPermitsPageJourney.hasPageHeading();
         BasePermitPage.saveAndContinue();
-        NumberOfPermitsPageJourneySteps.hasBilateralErrorMessage();
-        NumberOfPermitsPageJourneySteps.completePage();
+        NumberOfPermitsPageJourney.hasBilateralErrorMessage();
+        NumberOfPermitsPageJourney.completePage();
         CheckYourAnswerPage.untilOnPage();
         CheckYourAnswerPage.saveAndContinue();
     }

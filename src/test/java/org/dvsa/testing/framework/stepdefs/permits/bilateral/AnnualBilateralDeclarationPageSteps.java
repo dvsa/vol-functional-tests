@@ -4,9 +4,9 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -47,19 +47,19 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^the application reference number and advisory text are displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
             licenceStore.setReferenceNumber(actualReference);
             Assert.assertTrue(String.valueOf(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,17))),true);
-            DeclarationPageJourneySteps.hasPageHeading();
+            DeclarationPageJourney.hasPageHeading();
             assertTrue(DeclarationPage.isBilateralAdvisoryTextPresent());
         });
         Then("^I select the declaration link on the overview page$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I am on the Annual Bilateral application submitted page$", () -> {
             isPath("/permits/application/\\d+/submitted/");
@@ -88,9 +88,9 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I'm on the annual bilateral StandardAndCabotagePermits only declaration page$", () -> {
             clickToPermitTypePage(world);
@@ -108,9 +108,9 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I continue with the on-going Annual Bilateral application$", () -> {
             BasePermitPage.back();
@@ -120,7 +120,7 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
         });
         Then("^there's a guidance notes link to the correct gov page$", EcmtJourneySteps::hasInternationalAuthorisationGovGuidanceLink);
         When("^I submit my annual bilateral declaration$", () -> {
-            DeclarationPageJourneySteps.completeDeclaration();
+            DeclarationPageJourney.completeDeclaration();
         });
     }
 }

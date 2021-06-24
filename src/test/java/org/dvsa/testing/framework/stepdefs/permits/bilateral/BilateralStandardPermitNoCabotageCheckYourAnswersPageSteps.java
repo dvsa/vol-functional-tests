@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -11,10 +11,8 @@ import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.permits.BilateralJourneySteps;
 import org.dvsa.testing.lib.newPages.permits.pages.EssentialInformationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.PermitUsagePage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.junit.Assert;
 
@@ -36,7 +34,7 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
-            NumberOfPermitsPageJourneySteps.completePage();
+            NumberOfPermitsPageJourney.completePage();
         });
 
         Then("^I see three sections displayed on the table correctly$", () -> {
@@ -44,8 +42,8 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implemen
         });
 
         Then("^For bilateral standard permits no cabotage permit type,the value of how many permits you need, will be as per the ones saved on the number of permits page$", () -> {
-            String permitLabel = NumberOfPermitsPageJourneySteps.getLabel();
-            String permitValue = String.valueOf(NumberOfPermitsPageJourneySteps.getPermitValue());
+            String permitLabel = NumberOfPermitsPageJourney.getLabel();
+            String permitValue = String.valueOf(NumberOfPermitsPageJourney.getPermitValue());
             Assert.assertEquals(BilateralJourneySteps.getPermitValueForNonCabotage(), permitValue + " " + permitLabel + "s");
         });
     }

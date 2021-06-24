@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
@@ -33,7 +33,7 @@ public class NumberOfPermitsPageSteps implements En {
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
@@ -43,7 +43,7 @@ public class NumberOfPermitsPageSteps implements En {
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         });
         Then("^the page heading on the short term number of permits page is displayed correctly$", () -> {
-            NumberOfPermitsPageJourneySteps.hasPageHeading();
+            NumberOfPermitsPageJourney.hasPageHeading();
             assertTrue(NumberOfPermitsPage.isAdvisoryTextPresent());
         });
         Then("^I should get the number of permits page error message$", () ->{
@@ -60,15 +60,15 @@ public class NumberOfPermitsPageSteps implements En {
             assertEquals("You have exceeded the maximum you can apply for", NumberOfPermitsPage.getShortTermECMTMaximumPermitsErrorText());
         });
         Then("^the user is navigated to the overview page with the number of permits page status as completed$", () -> {
-            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
         Then("^I am taken back to short term number of permits page$", () -> {
             NumberOfPermitsPage.untilOnPage();
-            NumberOfPermitsPageJourneySteps.hasPageHeading();
+            NumberOfPermitsPageJourney.hasPageHeading();
         });
         Then("^the user is navigated to the overview page with the number of permits page status as not started yet$", () -> {
-            OverviewPageJourneySteps.hasPageHeading();
-            OverviewPageJourneySteps.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.NOT_STARTED_YET);
+            OverviewPageJourney.hasPageHeading();
+            OverviewPageJourney.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.NOT_STARTED_YET);
         });
 
     }

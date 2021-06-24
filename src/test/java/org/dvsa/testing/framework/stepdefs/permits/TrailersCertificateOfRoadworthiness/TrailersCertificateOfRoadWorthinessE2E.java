@@ -3,15 +3,14 @@ package org.dvsa.testing.framework.stepdefs.permits.TrailersCertificateOfRoadwor
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.TrailersCertificateOfRoadworthinessJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourneySteps;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourneySteps;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.permits.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.permits.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.permits.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
 import org.dvsa.testing.lib.newPages.permits.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
@@ -37,7 +36,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         });
 
         Then("^I check content and complete Registration number section for  Certificate of Roadworthiness for trailers and click save and continue$", () -> {
-            OverviewPageJourneySteps.clickOverviewSection(OverviewSection.RegistrationNumber);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.RegistrationNumber);
             VehicleRegistrationNumberPage.untilOnRegistrationPage();
             VehicleRegistrationNumberPage.hasPageHeading();
             // Check the new validation
@@ -82,10 +81,10 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         });
         Then("^I check content and Accept and continue on the Declaration page for Certificate of Roadworthiness for trailers page$", () -> {
             DeclarationPage.untilOnPage();
-            DeclarationPageJourneySteps.hasPageHeading();
+            DeclarationPageJourney.hasPageHeading();
             assertTrue(DeclarationPage.isTrailersCertificateAdvisoryMessagePresent());
-            DeclarationPageJourneySteps.hasCheckboxText();
-            DeclarationPageJourneySteps.completeDeclaration();
+            DeclarationPageJourney.hasCheckboxText();
+            DeclarationPageJourney.completeDeclaration();
         });
         Then("^I check content of the Submitted page for Certificate of Roadworthiness for trailers$", () -> {
             SubmittedPage.untilOnPage();
