@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.WithdrawApplicationPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -64,11 +65,12 @@ public class UnderConsiderationPageSteps implements En {
             HomePage.PermitsTab.select(licence);
         });
         And("^the table of contents in the short term  under consideration page are displayed correctly$", UnderConsiderationPage::tableCheck);
-        And("^the warning message is displayed correctly$", () -> {
-            UnderConsiderationPage.warningMessage();
-        });
+        And("^the warning message is displayed correctly$", UnderConsiderationPage::warningMessage);
         When ("^I select withdraw application button$", UnderConsiderationPage::clickWithdrawApplication);
-        Then("^I am taken to the Withdraw Application page$", WithdrawApplicationPage::untilOnPage);
+        Then("^I am taken to the Withdraw Application page$", () -> {
+            WithdrawApplicationPage.untilOnPage();
+            WithdrawApplicationPageJourney.hasPageHeading();
+        });
         When ("^I go back to the permit application$", () -> {
             String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.select(licence);

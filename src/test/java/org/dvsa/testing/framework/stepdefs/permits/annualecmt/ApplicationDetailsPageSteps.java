@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.WithdrawApplicationPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.permits.pages.WithdrawApplicationPage;
@@ -15,6 +16,7 @@ import java.util.Date;
 
 import static org.dvsa.testing.lib.pages.external.permit.ApplicationDetailsPage.ApplicationDetail.*;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 
 public class ApplicationDetailsPageSteps implements En {
 
@@ -39,7 +41,7 @@ public class ApplicationDetailsPageSteps implements En {
         When("^I select return to permits dashboard hyperlink$", ApplicationDetailsPage::returnToPermitsDashboard);
         And("^the advisory text on ECMT under consideration page is displayed correctly$", ApplicationDetailsPage::advisoryText);
         And("^I select the withdraw application button$", ApplicationDetailsPage::withdraw);
-        And("^I should be navigated to the withdraw application page$", WithdrawApplicationPage::hasPageHeading);
+        And("^I should be navigated to the withdraw application page$", WithdrawApplicationPageJourney::hasPageHeading);
     }
 
 }
