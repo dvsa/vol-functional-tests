@@ -16,6 +16,7 @@ import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.CertificateOfComplianceNumberPage;
 import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.MakeAndModelPage;
+import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.VehicleIdentificationNumberPage;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.vehiclesCertificateOfRoadworthiness.*;
 import org.junit.Assert;
@@ -66,9 +67,9 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         });
         Then("^I check content and complete Vehicle identification number section and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnIdentificationPage();
-            VehicleIdentificationNumberPage.hasPageHeading();
+            assertEquals("Enter the vehicle identification number (VIN)", VehicleIdentificationNumberPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
-            VehicleIdentificationNumberPage.identificationNumber();
+            VehicleIdentificationNumberPage.enterIdentificationNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle Engine number section and click save and continue$", () -> {
