@@ -16,7 +16,6 @@ import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
 import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.vehiclesCertificateOfRoadworthiness.*;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
@@ -71,17 +70,17 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle Engine number section and click save and continue$", () -> {
-            VehicleEngineNumberPage.untilOnEngineNumberPage();
-            VehicleEngineNumberPage.hasPageHeading();
+            VehicleEngineNumberPage.untilOnPage();
+            assertEquals("Enter the vehicle engine number", VehicleEngineNumberPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
-            VehicleEngineNumberPage.engineNumber();
+            VehicleEngineNumberPage.enterEngineNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle engine type section and click save and continue$", () -> {
-            VehicleEngineTypePage.untilOnEngineTypePage();
-            VehicleEngineTypePage.hasPageHeading();
+            VehicleEngineTypePage.untilOnPage();
+            assertEquals("Enter the vehicle engine type", VehicleEngineTypePage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
-            VehicleEngineTypePage.engineType();
+            VehicleEngineTypePage.enterEngineType();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete MOT DATE section and click save and continue$", () -> {

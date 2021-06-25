@@ -13,9 +13,9 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.external.permit.ApplicationDetailsPage;
 import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.ResultsPage;
@@ -49,7 +49,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
         });
         Then("^the no issued permits message should be displayed$", () -> Assert.assertTrue("Unable to find the no issued permits message", IrhpPermitsDetailsPage.hasNoPermitsMessage()));
-        And("^the no permits applications message should be displayed$", () -> IrhpPermitsDetailsPage.hasNoPermitApplicationsMessage());
+        And("^the no permits applications message should be displayed$", IrhpPermitsDetailsPage::hasNoPermitApplicationsMessage);
         Then("^the ongoing permit application is to be as expected$", () -> {
             List<PermitApplication> applications = IrhpPermitsDetailsPage.getApplications();
             LicenceStore licence = operator.getCurrentLicence().get();

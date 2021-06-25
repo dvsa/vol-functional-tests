@@ -16,4 +16,10 @@ public class PermitUsagePageJourney extends BasePermitJourney {
             assertEquals("Permit usage", heading);
         }
     }
+
+    public static void hasECMTPageHeading() {
+        String heading = PermitUsagePage.getPageHeading();
+        assertEquals("How will you use your permits?", heading);
+    }
+
 }

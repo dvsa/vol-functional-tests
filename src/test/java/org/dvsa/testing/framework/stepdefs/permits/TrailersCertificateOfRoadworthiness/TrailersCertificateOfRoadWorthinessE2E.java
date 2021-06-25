@@ -55,6 +55,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
             CertificateOfComplianceNumberPage.saveAndContinue();
         });
+
         Then("^I check content and complete vehicle make and model section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             MakeAndModelPage.untilOnPage();
             String heading = MakeAndModelPage.getPageHeading();
@@ -63,6 +64,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             MakeAndModelPage.enterMakeAndModel("BD51SMR");
             MakeAndModelPage.saveAndContinue();
         });
+
         Then("^I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnPage();
             assertEquals("Enter the trailer's vehicle identification number (VIN)", VehicleIdentificationNumberPage.getPageHeading());
@@ -78,6 +80,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             VehicleMotPage.enterMOTDate();
             BasePermitPage.saveAndContinue();
         });
+
         Then("^I check content and Accept and continue on the Declaration page for Certificate of Roadworthiness for trailers page$", () -> {
             DeclarationPage.untilOnPage();
             DeclarationPageJourney.hasPageHeading();
@@ -85,6 +88,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             DeclarationPageJourney.hasCheckboxText();
             DeclarationPageJourney.completeDeclaration();
         });
+
         Then("^I check content of the Submitted page for Certificate of Roadworthiness for trailers$", () -> {
             SubmittedPage.untilOnPage();
             SubmittedPageJourney.hasPageHeading();
@@ -92,6 +96,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             assertTrue(SubmittedPage.isCertificateAdvisoryTextPresent());
             assertTrue(SubmittedPage.isWarningMessagePresent());
         });
+
         Then("^I am navigated back to the permits dashboard page for Certificate of Roadworthiness for trailers with my application status shown as Valid", () -> {
             String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
             untilAnyPermitStatusMatch(PermitStatus.VALID);
