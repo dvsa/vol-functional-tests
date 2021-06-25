@@ -74,11 +74,8 @@ public class ConfirmationPageSteps implements En {
 
             HomePage.FeesTab.outstanbding(true);
             HomePage.FeesTab.pay();
-            PayFeesPage.payNow();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            HomePage.FeesTab.payNowButton();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
             HomePage.selectTab(Tab.PERMITS);
 

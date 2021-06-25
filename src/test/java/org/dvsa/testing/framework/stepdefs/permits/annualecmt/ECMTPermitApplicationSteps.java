@@ -145,12 +145,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         EcmtApplicationJourney.getInstance()
                 .checkYourAnswersPage();
         DeclarationPageJourney.completeDeclaration();
-        EcmtApplicationJourney.getInstance()
-                .feeOverviewPage()
-                .cardDetailsPage()
-                .cardHolderDetailsPage()
-                .confirmAndPay()
-                .passwordAuthorisation();
+        world.feeAndPaymentJourneySteps.customerPaymentModule();
         SubmittedPage.untilPageLoad();
         SubmittedPage.goToPermitsDashboard();
 
@@ -166,12 +161,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         EcmtApplicationJourney.getInstance()
                 .checkYourAnswersPage();
         DeclarationPageJourney.completeDeclaration();
-        EcmtApplicationJourney.getInstance()
-                .feeOverviewPage()
-                .cardDetailsPage()
-                .cardHolderDetailsPage()
-                .confirmAndPay()
-                .passwordAuthorisation();
+        world.feeAndPaymentJourneySteps.customerPaymentModule();
     }
 
     public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) {

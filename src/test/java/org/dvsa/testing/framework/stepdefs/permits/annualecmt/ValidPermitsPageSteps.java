@@ -1,12 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
+import Injectors.World;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
@@ -16,16 +15,15 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidAnnualMultilateralPermit;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationIssuingFeePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -39,7 +37,6 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import static java.lang.Thread.sleep;
-import static org.hamcrest.CoreMatchers.is;
 
 public class ValidPermitsPageSteps extends BasePage implements En {
 
@@ -76,11 +73,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             ApplicationIssuingFeePage.acceptAndPay();
 
             // pay for application
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
-                    .passwordAuthorisation();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
 
@@ -102,10 +95,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance().permitFee();
 
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
         });
         Then("^the user is in the annual ECMT list page$",()  ->{
             Assert.assertTrue(isPath("/permits/valid/\\d+"));

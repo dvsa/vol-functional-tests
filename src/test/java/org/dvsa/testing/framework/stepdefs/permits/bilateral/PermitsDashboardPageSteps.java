@@ -59,10 +59,7 @@ public class PermitsDashboardPageSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                     .permitFee();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
             untilElementIsPresent("//h2[contains(text(),'Issued permits and certificates')]", SelectorType.XPATH, 10L, TimeUnit.SECONDS);

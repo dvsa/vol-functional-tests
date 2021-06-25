@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal.bilateral;
 
+import Injectors.World;
 import activesupport.number.Int;
 import activesupport.string.Str;
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenByCountryModel;
@@ -13,7 +14,6 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.*;
 import org.dvsa.testing.lib.pages.internal.details.irhp.InternalAnnualBilateralPermitApplicationPage;
@@ -30,6 +30,8 @@ import java.util.stream.IntStream;
 import static org.hamcrest.number.OrderingComparison.*;
 
 public class AnnualBilateralInternalApplicationSteps implements En {
+
+    public World world;
     public AnnualBilateralInternalApplicationSteps(OperatorStore operatorStore) {
         Then("^the date received should have today's date$", () -> {
             InternalAnnualBilateralPermitApplicationPage.untilOnPage();
@@ -179,8 +181,7 @@ public class AnnualBilateralInternalApplicationSteps implements En {
             BaseModel.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
 
             IrhpPermitsApplyPage.selectCardPayment();
-            EcmtApplicationJourney.getInstance().cardDetailsPage().cardHolderDetailsPage();
-            FeePaymentConfirmationPage.makeMayment();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             IrhpPermitsDetailsPage.untilStatusIs(licence.getLatestAnnualBilateral().orElseThrow(IllegalStateException::new).getReference(), PermitStatus.VALID, Duration.LONG, TimeUnit.MINUTES);
         });
         Then("^the maximum number of permits should account of the number of permits I've applied for in other permits$", () -> {

@@ -92,11 +92,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         });
         Then("^I click on Submit and Pay button on the Permit fee page and complete the payment", () -> {
             PermitFeePage.submitAndPay();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
-                    .passwordAuthorisation();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
         Then("^I click on the Finish button on the Application submitted page", () -> {
@@ -131,10 +127,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPageJourney.hasShortTermECMTAdvisoryText();
             BilateralJourneySteps.clickFinishButton();
         });

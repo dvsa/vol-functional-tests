@@ -6,7 +6,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
 
-public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJourney {
+public class ECMTShortTermJourney extends BasePermitJourney  {
 
     private static volatile ECMTShortTermJourney instance = null;
 
@@ -61,20 +61,4 @@ public class ECMTShortTermJourney extends BasePermitJourney implements PaymentJo
     public ECMTShortTermJourney shortTermType(PeriodType shortTermType, OperatorStore operator) {
         return (ECMTShortTermJourney) super.shortTermType(shortTermType, operator);
     }
-
-    @Override
-    public ECMTShortTermJourney cardDetailsPage() {
-        return (ECMTShortTermJourney) PaymentJourney.super.cardDetailsPage();
-    }
-
-    @Override
-    public ECMTShortTermJourney cardHolderDetailsPage() {
-        return (ECMTShortTermJourney) PaymentJourney.super.cardHolderDetailsPage();
-    }
-
-    @Override
-    public ECMTShortTermJourney confirmAndPay() {
-        return (ECMTShortTermJourney) PaymentJourney.super.confirmAndPay();
-    }
-
 }

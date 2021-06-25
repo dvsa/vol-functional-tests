@@ -60,11 +60,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             saveAndContinue();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
-                    .passwordAuthorisation();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
             BilateralJourneySteps.clickFinishButton();
 

@@ -51,11 +51,8 @@ public class AnnualMultilateralInternalApplicationSteps extends BasePage impleme
           isPath("//licence/\\d+/fees/");
         });
         And("^I pay all the fees$", () -> {
-           IrhpPermitsApplyPage.selectCardPayment();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            IrhpPermitsApplyPage.selectCardPayment();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
         });
         When ("^I select continue$", IrhpPermitFeesPage::makePaymentButton);
         And("^I pay the balance by cash$", () -> {

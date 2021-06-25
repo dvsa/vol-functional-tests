@@ -68,11 +68,8 @@ public class ApplicationSteps extends BasePage implements En {
                     .checkYourAnswers();
 
              DeclarationPageJourney.completeDeclaration();
+             world.feeAndPaymentJourneySteps.customerPaymentModule();
              AnnualMultilateralJourney.INSTANCE
-                    .feeOverviewPage()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
                     .submit();
             HomePage.PermitsTab.untilPermitHasStatus(
                     operator.getCurrentLicence().get().getReferenceNumber(),

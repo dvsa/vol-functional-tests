@@ -136,10 +136,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                     .permitFee();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilPageLoad();
             SubmittedPage.goToPermitsDashboard();
             untilAnyPermitStatusMatch(PermitStatus.VALID);
@@ -173,13 +170,9 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 DeclarationPageJourney.completeDeclaration();
                 AnnualBilateralJourney.getInstance()
                             .permitFee();
-                 EcmtApplicationJourney.getInstance()
-                            .cardDetailsPage()
-                            .cardHolderDetailsPage()
-                            .confirmAndPay();
+                world.feeAndPaymentJourneySteps.customerPaymentModule();
                 SubmittedPage.untilOnPage();
                 SubmittedPage.goToPermitsDashboard();
-                String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
                 HomePage.PermitsTab.untilPermitHasStatus(
                         operatorStore.getCurrentLicence().get().getReferenceNumber(),
                         PermitStatus.VALID,
@@ -208,14 +201,11 @@ public class AnnualBilateralSteps extends BasePage implements En {
             NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
-                licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
+            licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
             DeclarationPageJourney.completeDeclaration();
-                AnnualBilateralJourney.getInstance()
+            AnnualBilateralJourney.getInstance()
                         .permitFee();
-                EcmtApplicationJourney.getInstance()
-                            .cardDetailsPage()
-                            .cardHolderDetailsPage()
-                            .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
                 String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
@@ -249,10 +239,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                         .permitFee();
-             EcmtApplicationJourney.getInstance()
-                        .cardDetailsPage()
-                        .cardHolderDetailsPage()
-                        .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
             String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
@@ -300,11 +287,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.untilOnPage();
             PermitFeePage.submitAndPay();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
-                    .passwordAuthorisation();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
 
         });
@@ -343,10 +326,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 DeclarationPageJourney.completeDeclaration();
                 AnnualBilateralJourney.getInstance()
                             .permitFee();
-                 EcmtApplicationJourney.getInstance()
-                            .cardDetailsPage()
-                            .cardHolderDetailsPage()
-                            .confirmAndPay()
+                world.feeAndPaymentJourneySteps.customerPaymentModule();
+                EcmtApplicationJourney.getInstance()
                             .submitApplication(operatorStore.getLatestLicence().get(), world);
             });
         });

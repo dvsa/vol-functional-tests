@@ -41,12 +41,9 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .checkYourAnswers();
             DeclarationPageJourney.completeDeclaration();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             EcmtApplicationJourney.getInstance()
-                    .feeOverviewPage()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
-                    .passwordAuthorisation();
+                    .feeOverviewPage();
             SubmittedPage.untilOnPage();
         });
         Then ("^the page heading on the submission page is displayed correctly", () -> {

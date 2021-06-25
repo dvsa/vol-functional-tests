@@ -16,7 +16,6 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.ResultsPage;
 import org.dvsa.testing.lib.pages.internal.SearchNavBar;
@@ -101,7 +100,9 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
                     IrhpPermitsDetailsPage.Tab.hasTab(BaseDetailsPage.DetailsTab.IrhpPermits)
             );
         });
-        And("^pay outstanding fees$", IRHPPermitsPageSteps::payOutstandingFees);
+        And("^pay outstanding fees$", () -> {
+            IRHPPermitsPageSteps.payOutstandingFees(world);
+        });
         Then("^my application should be under consideration$", () -> {
             ApplicationDetailsPage.Header.BREADCRUMB.statusIs(PermitStatus.UNDER_CONSIDERATION);
         });
@@ -114,7 +115,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
         });
     }
 
-    public static void payOutstandingFees() {
+    public static void payOutstandingFees(World world) {
         waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
         refreshPage();
         LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
@@ -123,10 +124,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
         FeesDetailsPage.pay();
         BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
         IrhpPermitsApplyPage.selectCardPayment();
-        EcmtApplicationJourney.getInstance()
-                .cardDetailsPage()
-                .cardHolderDetailsPage();
-        FeePaymentConfirmationPage.makeMayment();
+        world.feeAndPaymentJourneySteps.customerPaymentModule();
         FeesDetailsPage.untilFeePaidNotification();
     }
 

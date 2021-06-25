@@ -5,7 +5,6 @@ import activesupport.string.Str;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
@@ -18,8 +17,6 @@ import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
-import org.dvsa.testing.lib.pages.external.permit.PayFeesPage;
 import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
@@ -42,12 +39,7 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             completeMultilateralJourneyUntilDeclaration(operator, world);
             DeclarationPageJourney.completeDeclaration();
-            AnnualMultilateralJourney.INSTANCE
-                    .feeOverviewPage()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
-
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
         Then("^the reference number on the multilateral submitted page is as expected$", () -> {
@@ -71,9 +63,9 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
 
             HomePage.FeesTab.outstanbding(true);
             HomePage.FeesTab.pay();
-            PayFeesPage.payNow();
+            HomePage.FeesTab.payNowButton();
 
-            AnnualMultilateralJourney.INSTANCE.cardDetailsPage().cardHolderDetailsPage().confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
             HomePage.selectTab(Tab.PERMITS);
 
@@ -99,10 +91,7 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             FeesDetailsPage.pay();
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             IrhpPermitsApplyPage.selectCardPayment();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage();
-            FeePaymentConfirmationPage.makeMayment();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);

@@ -13,7 +13,6 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidECMTInternationalPermit;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
@@ -45,12 +44,9 @@ public class ValidPermitPageSteps implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .checkYourAnswers();
             DeclarationPageJourney.completeDeclaration();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             EcmtApplicationJourney.getInstance()
-                    .feeOverviewPage()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
-                    .passwordAuthorisation();
+                    .feeOverviewPage();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
 

@@ -195,11 +195,7 @@ public class CookieSteps extends DriverUtils implements En {
                 EcmtInternationalRemovalJourney.getInstance()
                         .checkYourAnswers();
                 DeclarationPageJourney.completeDeclaration();
-                EcmtApplicationJourney.getInstance()
-                        .feeOverviewPage()
-                        .cardDetailsPage()
-                        .cardHolderDetailsPage()
-                        .confirmAndPay();
+                world.feeAndPaymentJourneySteps.customerPaymentModule();
                 Set<Cookie> cookies = getDriver().manage().getCookies();
                 Cookie cookiePHP = getDriver().manage().getCookieNamed("PHPSESSID");
                 String secureToken = getDriver().manage().getCookieNamed("secureToken").getValue();

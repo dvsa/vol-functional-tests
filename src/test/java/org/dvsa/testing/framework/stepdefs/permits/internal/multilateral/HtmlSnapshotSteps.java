@@ -49,11 +49,8 @@ public class HtmlSnapshotSteps extends BasePage implements En {
             AnnualMultilateralJourney.INSTANCE
                     .checkYourAnswers();
             DeclarationPageJourney.completeDeclaration();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             AnnualMultilateralJourney.INSTANCE
-                    .feeOverviewPage()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
                     .submit();
 
             HomePage.PermitsTab.untilPermitHasStatus(

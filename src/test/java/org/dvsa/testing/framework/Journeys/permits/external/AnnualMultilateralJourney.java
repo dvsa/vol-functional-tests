@@ -18,7 +18,7 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import java.util.concurrent.TimeUnit;
 
-public class AnnualMultilateralJourney extends BasePermitJourney implements PaymentJourney {
+public class AnnualMultilateralJourney extends BasePermitJourney {
 
     public static final AnnualMultilateralJourney INSTANCE = new AnnualMultilateralJourney();
 
@@ -88,21 +88,6 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     @Override
     public AnnualMultilateralJourney licencePage(OperatorStore operator, World world) {
         return (AnnualMultilateralJourney) super.licencePage(operator, world);
-    }
-
-    @Override
-    public AnnualMultilateralJourney cardDetailsPage() {
-        return (AnnualMultilateralJourney) PaymentJourney.super.cardDetailsPage();
-    }
-
-    @Override
-    public AnnualMultilateralJourney cardHolderDetailsPage() {
-        return (AnnualMultilateralJourney) PaymentJourney.super.cardHolderDetailsPage();
-    }
-
-    @Override
-    public AnnualMultilateralJourney confirmAndPay() {
-        return (AnnualMultilateralJourney) PaymentJourney.super.confirmAndPay();
     }
 
 }

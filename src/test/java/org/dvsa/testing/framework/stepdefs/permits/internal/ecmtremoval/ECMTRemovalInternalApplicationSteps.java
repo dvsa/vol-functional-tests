@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal.ecmtremoval;
 
+import Injectors.World;
 import activesupport.number.Int;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
@@ -9,7 +10,6 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.BaseApplicationDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
@@ -23,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 import static org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage.*;
 
 public class ECMTRemovalInternalApplicationSteps implements En {
+    public World world;
+
     public ECMTRemovalInternalApplicationSteps(OperatorStore operatorStore) {
 
         And("^the case worker apply for an ECMT Removal application$", () -> {
@@ -59,10 +61,7 @@ public class ECMTRemovalInternalApplicationSteps implements En {
             IrhpPermitsApplyPage.selectApplication();
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             selectCardPayment();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage();
-            FeePaymentConfirmationPage.makeMayment();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
         });
 

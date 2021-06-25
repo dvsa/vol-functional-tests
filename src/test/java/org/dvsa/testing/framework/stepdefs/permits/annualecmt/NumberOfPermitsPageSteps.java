@@ -46,13 +46,7 @@ public class NumberOfPermitsPageSteps implements En {
             HomePage.FeesTab.outstanbding(true);
             HomePage.FeesTab.pay();
             HomePage.FeesTab.payNowButton();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
-                    .passwordAuthorisation();
-            FeePaymentSuccessful.untilFeePaid();
-
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
         });
         Then("^I am taken to the payment successful page$", () -> {
             isPath("//fees/receipt/");

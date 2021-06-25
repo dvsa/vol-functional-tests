@@ -16,7 +16,6 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.enums.ShortTermRestrictedCountry;
@@ -204,8 +203,7 @@ public class SubmitPermitApplicationSteps implements En {
             permitsSelectFeeTab();
             selectApplication();
             selectCardPayment();
-            EcmtApplicationJourney.getInstance().cardDetailsPage().cardHolderDetailsPage();
-            FeePaymentConfirmationPage.makeMayment();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
 
         });
         And("^the ECMT APGG application goes to valid status$", () -> {
@@ -344,10 +342,7 @@ public class SubmitPermitApplicationSteps implements En {
             //Pay Fee
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             selectCardPayment();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage();
-            FeePaymentConfirmationPage.makeMayment();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
         });
 
@@ -366,8 +361,7 @@ public class SubmitPermitApplicationSteps implements En {
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
 
             selectCardPayment();
-            EcmtApplicationJourney.getInstance().cardDetailsPage().cardHolderDetailsPage();
-            FeePaymentConfirmationPage.makeMayment();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
         });
         //apply application
         When("^I apply for a new permit application$", () -> {

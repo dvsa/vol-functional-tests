@@ -65,13 +65,9 @@ public class TurkeyFeePageSteps implements En {
         });
 
         When("^I submit and pay the Bilateral fee$", () -> {
-
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             EcmtApplicationJourney.getInstance()
-                    .feeOverviewPage()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay()
-                    .passwordAuthorisation();
+                    .feeOverviewPage();
             SubmittedPage.untilOnPage();
         });
 

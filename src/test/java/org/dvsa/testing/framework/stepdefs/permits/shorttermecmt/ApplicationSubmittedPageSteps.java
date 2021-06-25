@@ -70,10 +70,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
         });
         Then("^the reference number on the short term ECMT submitted page  is as expected$", () -> {
             SubmittedPage.untilElementIsPresent("//h1[@class='govuk-panel__title']",SelectorType.XPATH,10,TimeUnit.SECONDS);
@@ -106,10 +103,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             FeesDetailsPage.pay();
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             IrhpPermitsApplyPage.selectCardPayment();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage();
-            FeePaymentConfirmationPage.makeMayment();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
 
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
@@ -203,9 +197,9 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
             HomePage.FeesTab.outstanbding(true);
             HomePage.FeesTab.pay();
-            PayFeesPage.payNow();
+            HomePage.FeesTab.payNowButton();
 
-            AnnualMultilateralJourney.INSTANCE.cardDetailsPage().cardHolderDetailsPage().confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
             HomePage.selectTab(Tab.PERMITS);
 

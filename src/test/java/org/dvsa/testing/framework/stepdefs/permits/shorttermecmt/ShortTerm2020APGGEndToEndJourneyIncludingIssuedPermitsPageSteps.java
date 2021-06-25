@@ -1,13 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+import Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationIssuingFeePage;
 import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
@@ -15,8 +16,6 @@ import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.Permits;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
@@ -35,16 +34,18 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
             PermitStartDatePage.permitDate();
             BasePermitPage.saveAndContinue();
         });
+
         Then("^I complete APGG Cabotage page section and click save and continue$", () -> {
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
         });
+
         Then("^I am navigated back to the permits dashboard page with my application status shown as Not yet Submitted", () -> {
             String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             Assert.assertEquals(getElementValueByText("//span[@class='status grey']",SelectorType.XPATH),"NOT YET SUBMITTED");
             HomePage.PermitsTab.selectOngoing(licence);
-
         });
+
         When("^I'm  viewing my saved Short term ECMT APGG application in internal and Granting Permit$", () -> {
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
@@ -60,8 +61,6 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
             IrhpPermitsApplyPage.continueButton();
         });
 
-
-
         When("^I login back to the External to view the application in status of awaiting fee", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePage.selectTab(Tab.PERMITS);
@@ -74,7 +73,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
         When("^I accept and pay the APGG issuing fee", ApplicationIssuingFeePage::acceptAndPay);
 
         And("^I make card payment", () -> {
-            EcmtApplicationJourney.getInstance().cardDetailsPage().cardHolderDetailsPage().confirmAndPay().passwordAuthorisation();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
         });

@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
-public class EcmtApplicationJourney extends BasePermitJourney implements PaymentJourney {
+public class EcmtApplicationJourney extends BasePermitJourney {
 
     private static volatile EcmtApplicationJourney instance = null;
 
@@ -95,26 +95,6 @@ public class EcmtApplicationJourney extends BasePermitJourney implements Payment
     @Override
     public EcmtApplicationJourney licencePage(OperatorStore operator, World world) {
         return (EcmtApplicationJourney) super.licencePage(operator, world);
-    }
-
-    @Override
-    public EcmtApplicationJourney cardDetailsPage() {
-        return (EcmtApplicationJourney) PaymentJourney.super.cardDetailsPage();
-    }
-
-    @Override
-    public EcmtApplicationJourney cardHolderDetailsPage() {
-        return (EcmtApplicationJourney) PaymentJourney.super.cardHolderDetailsPage();
-    }
-
-    @Override
-    public EcmtApplicationJourney confirmAndPay() {
-        return (EcmtApplicationJourney) PaymentJourney.super.confirmAndPay();
-    }
-
-    @Override
-    public EcmtApplicationJourney passwordAuthorisation() {
-        return (EcmtApplicationJourney) PaymentJourney.super.passwordAuthorisation();
     }
 
     public EcmtApplicationJourney submitApplication(LicenceStore licenceStore, World world) {

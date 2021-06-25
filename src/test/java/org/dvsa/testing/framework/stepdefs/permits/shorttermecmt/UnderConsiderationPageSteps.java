@@ -55,10 +55,7 @@ public class UnderConsiderationPageSteps implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             BilateralJourneySteps.clickFinishButton();
             String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.select(licence);

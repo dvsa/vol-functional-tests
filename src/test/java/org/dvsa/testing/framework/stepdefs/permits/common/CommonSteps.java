@@ -91,10 +91,7 @@ public class CommonSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.goToPermitsDashboard();
         });
         And("^I Grant the application on internal$", () -> {
@@ -122,7 +119,7 @@ public class CommonSteps extends BasePage implements En {
             String licence1= operator.getCurrentLicenceNumber().toString().substring(9,18);
             HomePage.PermitsTab.selectOngoing(licence1);
             ApplicationIssuingFeePage.acceptAndPay();
-            EcmtApplicationJourney.getInstance().cardDetailsPage().cardHolderDetailsPage().confirmAndPay();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.goToPermitsDashboard();
             HomePage.PermitsTab.untilPermitHasStatus(
                     operator.getCurrentLicence().get().getReferenceNumber(),
@@ -193,7 +190,7 @@ public class CommonSteps extends BasePage implements En {
         And("^A case worker begins to process my fee payment$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            payOutstandingFees();
+            payOutstandingFees(world);
             FeesDetailsPage.pay();
         });
         And("^I am on the permits dashboard on external$", () -> {
