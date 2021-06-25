@@ -17,8 +17,8 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidECMTInternationalPermit;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -51,7 +51,7 @@ public class ValidPermitPageSteps implements En {
                     .cardHolderDetailsPage()
                     .confirmAndPay()
                     .passwordAuthorisation();
-            SubmittedPage.untilElementIsPresent("//h1[@class='govuk-panel__title']", SelectorType.XPATH,10,TimeUnit.SECONDS);
+            SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
 
             HomePage.PermitsTab.untilPermitHasStatus(

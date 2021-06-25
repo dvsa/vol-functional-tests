@@ -8,9 +8,9 @@ import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.getCountry;
 import static org.junit.Assert.assertTrue;
 
 public class NorwayEssentialInformationSteps implements En {
@@ -21,7 +21,7 @@ public class NorwayEssentialInformationSteps implements En {
 
         When("^I am on the Norway essential information page$", EssentialInformationPage::untilOnPage);
         Then("^Country name displayed on the Bilateral permit essential information page is the one clicked on the overview page$", () -> {
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(BasePermitPage.getCountry(),operatorStore.getCountry());
         });
         And("^the page heading on Bilateral essential information  page is correct$", EssentialInformationPageJourney::hasPageHeading);
         And("^the page content on Bilateral essential information  page is correct$", () -> {

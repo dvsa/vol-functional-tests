@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SubmittedPageJourney extends BasePermitJourney {
 
     public static void hasPageHeading() {
-        assertEquals("Application submitted", SubmittedPage.getPageHeading());
+        assertEquals("Application submitted", SubmittedPage.getPanelHeading());
     }
 
     public static void hasSubHeading() {

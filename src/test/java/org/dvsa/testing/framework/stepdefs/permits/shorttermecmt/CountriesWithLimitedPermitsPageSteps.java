@@ -15,7 +15,7 @@ import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -59,7 +59,7 @@ public class CountriesWithLimitedPermitsPageSteps implements En {
             String errorText = CountriesWithLimitedPermitsPage.getErrorText();
             assertEquals("Value is required", errorText);
         });
-        And ("^I select save and return to overview link without confirming$", BasePermitPage::overview);
+        And ("^I select save and return to overview link without confirming$", BasePermitPage::clickReturnToOverview);
         And ("^I select the countries with limited permits hyperlink$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.CountriesWithLimitedPermits);
         });

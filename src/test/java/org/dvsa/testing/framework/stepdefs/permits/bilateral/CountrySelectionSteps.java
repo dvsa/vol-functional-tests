@@ -4,7 +4,7 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.external.pages.CountrySelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.hamcrest.text.MatchesPattern;
 import org.junit.Assert;
 

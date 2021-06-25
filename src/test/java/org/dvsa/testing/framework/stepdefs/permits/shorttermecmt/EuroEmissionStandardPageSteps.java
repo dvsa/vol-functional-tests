@@ -20,7 +20,7 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Cou
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -64,7 +64,7 @@ public class EuroEmissionStandardPageSteps implements En {
             assertEquals("I confirm that I will only use my ECMT permits with vehicles that meet the minimum euro emissions standards allowed.", heading);
         });
         Then("I should get the emissions  page error message", () -> {
-            String errorText = EmissionStandardsPage.getErrorMessage();
+            String errorText = EmissionStandardsPage.getErrorText();
             assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
         });
 

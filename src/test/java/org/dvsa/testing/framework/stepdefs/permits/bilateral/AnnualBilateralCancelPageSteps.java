@@ -7,9 +7,9 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.CancellationConfirmationPage;
 import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;
@@ -34,7 +34,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
         When("^the cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
         Then ("^I should be taken to cancel confirmation page$", () -> {
             CancellationConfirmationPage.untilOnPage();
-            assertEquals("Application cancelled", CancellationConfirmationPage.getPageHeading());
+            assertEquals("Application cancelled", CancellationConfirmationPage.getPanelHeading());
             assertEquals(world.applicationDetails.getLicenceNumber(), CancellationConfirmationPage.getReferenceNumberHeading());
             assertEquals("What happens now", CancellationConfirmationPage.getAdvisoryHeadingPresent());
             assertEquals("You have cancelled your application and you will no longer be able to view or access it.", CancellationConfirmationPage.getAdvisoryTextPresent());

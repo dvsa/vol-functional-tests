@@ -11,9 +11,9 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -32,7 +32,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
                             .licencePage(operator, world)
                             .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
                 NumberOfPermitsPageJourney.completeMultilateralPage();
-                NumberOfPermitsPage.overview();
+                NumberOfPermitsPage.clickReturnToOverview();
                 OverviewPage.clickCancelApplication();
                 CancellationPage.untilOnPage();
             });

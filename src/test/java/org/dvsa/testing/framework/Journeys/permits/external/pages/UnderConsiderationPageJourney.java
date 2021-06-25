@@ -8,6 +8,6 @@ import static org.junit.Assert.assertEquals;
 public class UnderConsiderationPageJourney extends BasePermitJourney {
 
     public static void hasPageHeading() {
-        assertEquals("Application details", UnderConsiderationPage.getPageHeading());
+        assertEquals("Application under consideration", UnderConsiderationPage.getPageHeading());
     }
 }

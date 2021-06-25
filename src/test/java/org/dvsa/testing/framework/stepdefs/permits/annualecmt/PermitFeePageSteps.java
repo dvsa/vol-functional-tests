@@ -18,8 +18,8 @@ import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import java.time.LocalDateTime;
@@ -54,7 +54,7 @@ public class PermitFeePageSteps extends BasePermitPage implements En {
         And("^I select the submit and pay link from overview page$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.SubmitAndPay);
         });
-        Then("^I select return to overview link on the permit fee page$", PermitFeePage::returnToOverview);
+        Then("^I select return to overview link on the permit fee page$", PermitFeePage::clickReturnToOverview);
         Then("^I should be on the permit fee page$", PermitFeePage::untilOnPage);
         Then("^the page heading is displayed correctly on the fee page$", PermitFeePage::untilOnPage);
         Then("^the Fee-breakdown sub-heading can be seen below the fee summary table$", () -> {

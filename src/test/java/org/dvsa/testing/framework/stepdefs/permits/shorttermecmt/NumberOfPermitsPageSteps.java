@@ -18,7 +18,7 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Cou
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
@@ -60,7 +60,7 @@ public class NumberOfPermitsPageSteps implements En {
             NumberOfPermitsPage.exceedAuthorisedVehicle();
         });
         Then("^I should get the validation error message$", () -> {
-            assertEquals("You have exceeded the maximum you can apply for", NumberOfPermitsPage.getShortTermECMTMaximumPermitsErrorText());
+            assertEquals("You have exceeded the maximum you can apply for", NumberOfPermitsPage.getErrorText());
         });
         Then("^the user is navigated to the overview page with the number of permits page status as completed$", () -> {
             OverviewPageJourney.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);

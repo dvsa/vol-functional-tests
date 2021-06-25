@@ -8,12 +8,13 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 
 import static org.junit.Assert.assertEquals;
 
 
-public class CancelApplicationPageSteps implements En {
+public class CancelApplicationPageSteps extends BasePermitPage implements En {
 
     public CancelApplicationPageSteps(World world, OperatorStore operatorStore) {
         Given("^I am on the cancel application page$", () -> {
@@ -24,7 +25,7 @@ public class CancelApplicationPageSteps implements En {
             // Here for readability and to stop cucumber from throwing an exception
         });
         Then("^I should get an error message on cancel application page$", () -> {
-            assertEquals("You must select the checkbox to continue", CancellationPage.getErrorMessageText());
+            assertEquals("You must select the checkbox to continue", CancellationPage.getErrorText());
         });
         When("^I cancel my ECMT application$", CancellationPage::clickCancelCheckbox);
         Then("^I navigate to the Bilaterals cabotage page$", () -> {

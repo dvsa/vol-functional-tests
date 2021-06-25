@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -35,7 +35,7 @@ public class PermitStartDatePageSteps implements En {
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
         And ("^the page heading on permit start date page should be correct$", ()-> {
-            String heading = PermitStartDatePage.getECMTRemovalPageHeading();
+            String heading = PermitStartDatePage.getPageHeading();
             assertEquals("When do you need your permits to be valid from?", heading);
         });
         And ("^the advisory texts on permit start date page are displayed correctly$", () -> {

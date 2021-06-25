@@ -16,8 +16,8 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.FeePaymentConfirmationPage;
 import org.dvsa.testing.lib.pages.external.permit.PayFeesPage;
 import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
@@ -33,7 +33,6 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.lib.pages.BasePage.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

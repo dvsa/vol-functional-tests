@@ -15,16 +15,15 @@ import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.getCountry;
 
 public class AnnualBilateralOverviewPageSteps implements En {
     public AnnualBilateralOverviewPageSteps(LicenceStore licenceStore, OperatorStore operatorStore, World world) {
@@ -83,7 +82,7 @@ public class AnnualBilateralOverviewPageSteps implements En {
         });
         Then("^I declare and save and return to overview$", () -> {
             DeclarationPage.confirmDeclaration();
-            BasePermitPage.overview();
+            BasePermitPage.clickReturnToOverview();
         });
         Then("^I'm navigated to countries selection page$", () -> {
             isPath("/permits/application/\\d+/countries/\\d+");
@@ -117,10 +116,10 @@ public class AnnualBilateralOverviewPageSteps implements En {
     public void completeMoroccoBilateralJourneyUntilDeclarationPage(PeriodType typeOfMoroccoJourney, OperatorStore operatorStore) {
         OverviewPage.clickCountrySection(Country.Morocco);
         EssentialInformationPage.untilOnPage();
-        Assert.assertEquals(getCountry(), operatorStore.getCountry());
+        Assert.assertEquals(BasePermitPage.getCountry(), operatorStore.getCountry());
         EssentialInformationPageJourney.completePage();
         PeriodSelectionPageJourney.hasMoroccoPageHeading();
-        Assert.assertEquals(getCountry(), operatorStore.getCountry());
+        Assert.assertEquals(BasePermitPage.getCountry(), operatorStore.getCountry());
         AnnualBilateralJourney.getInstance().bilateralPeriodType(typeOfMoroccoJourney, operatorStore);
         PeriodSelectionPage.saveAndContinue();
         NumberOfPermitsPage.untilOnPage();

@@ -38,7 +38,7 @@ public class FeePageSteps implements En {
             DeclarationPageJourney.completeDeclaration();
         });
         When("^I submit and pay$", PermitFeePage::saveAndContinue);
-        When("^I save and return to overview from fee page$", PermitFeePage::returnToOverview);
+        When("^I save and return to overview from fee page$", PermitFeePage::clickReturnToOverview);
         Then("^I expect the reference number to match$", () -> {
             String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
             String expectedReference = ECMTPermitApplicationSteps.applicationReference.get("application.reference");

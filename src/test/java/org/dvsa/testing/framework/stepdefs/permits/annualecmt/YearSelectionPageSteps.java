@@ -7,11 +7,10 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.junit.Assert;
 
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.saveAndContinue;
 import static org.junit.Assert.assertEquals;
 
 public class YearSelectionPageSteps implements En {
@@ -31,7 +30,7 @@ public class YearSelectionPageSteps implements En {
         });
         And("^I select continue button$", YearSelectionPage::saveAndContinue);
         And("^the validity error message is displayed$", () -> {
-            saveAndContinue();
+            BasePermitPage.saveAndContinue();
             String errorText = YearSelectionPage.getErrorText();
             assertEquals( "You must select one year to continue", errorText);
         });
@@ -39,7 +38,7 @@ public class YearSelectionPageSteps implements En {
             if (YearSelectionPage.isYearChoicePresent()) {
                 YearSelectionPage.selectECMTValidityPeriod();
             } else {
-                saveAndContinue();
+                BasePermitPage.saveAndContinue();
             }
         });
         When ("^the user is navigated to licence selection page$", () -> {

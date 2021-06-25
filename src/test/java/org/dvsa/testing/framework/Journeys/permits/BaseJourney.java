@@ -1,13 +1,9 @@
 package org.dvsa.testing.framework.Journeys.permits;
 
-import activesupport.IllegalBrowserException;
 import activesupport.system.Properties;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-
-import java.net.MalformedURLException;
 
 
 public class BaseJourney  extends BasePermitPage {

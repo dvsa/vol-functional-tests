@@ -28,6 +28,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
@@ -175,7 +176,7 @@ public class CommonSteps extends BasePage implements En {
             boolean hasError = BasePage.hasErrorMessagePresent();
              Assert.assertTrue("Error message was not displayed on the page", hasError);
         });
-        When("^I save and return to overview$", BasePermitPage::overview);
+        When("^I save and return to overview$", BasePermitPage::clickReturnToOverview);
         When("^I sign on as an external user$", () -> {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });

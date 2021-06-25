@@ -21,7 +21,7 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Ann
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -75,7 +75,7 @@ public class AnnualTripsAbroadPageSteps implements En {
             String errorText = AnnualTripsAbroadPage.getErrorText();
             assertEquals("Enter the number of trips you carried out over the past 12 months", errorText);
         });
-        When ("^I select save and return to overview without entering any value$", BasePermitPage::overview);
+        When ("^I select save and return to overview without entering any value$", BasePermitPage::clickReturnToOverview);
         When ("^I specify an invalid ([\\w\\-]+) of annual trips in short term 2020$", (StepdefBody.A1<String>) AnnualTripsAbroadPage::quantity);
         Then  ("^I should get the specific validation message for invalid value$", () -> {
             String errorText = AnnualTripsAbroadPage.getErrorText();
@@ -85,7 +85,7 @@ public class AnnualTripsAbroadPageSteps implements En {
         Given("^I specify a valid input in short term ECMT annual trips abroad page$", () -> {
             AnnualTripsAbroadPage.quantity(Int.random(0,999999));
         });
-        Given("^I select save and return overview link on annual trips abroad page$", AnnualTripsAbroadPage::returnToOverview);
+        Given("^I select save and return overview link on annual trips abroad page$", AnnualTripsAbroadPage::clickReturnToOverview);
         Then("^the user is navigated to the short term ECMT overview page with the status as completed$", () -> {
             OverviewPageJourney.checkStatus(OverviewSection.AnnualTripsAbroad, PermitStatus.COMPLETED);
         });

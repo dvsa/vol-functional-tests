@@ -7,7 +7,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.getCountry;
+import static org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage.getCountry;
 import static org.junit.Assert.assertTrue;
 
 public class TurkeyEssentialInformationSteps implements En {

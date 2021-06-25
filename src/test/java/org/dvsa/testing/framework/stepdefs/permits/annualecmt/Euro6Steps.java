@@ -14,6 +14,7 @@ import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.junit.Assert;
 
@@ -41,7 +42,7 @@ public class Euro6Steps implements En {
             OverviewPageJourney.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
         });
 
-        When("^I select save and return overview link$", BasePermitPage::overview);
+        When("^I select save and return overview link$", BasePermitPage::clickReturnToOverview);
 
         Then("^I should see the overview page with updated changes$", () -> {
             OverviewPageJourney.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
@@ -52,7 +53,7 @@ public class Euro6Steps implements En {
         });
 
         Then("^I should see the validation errors for euro 6 page$", () -> {
-            String errorText = EmissionStandardsPage.getErrorMessage();
+            String errorText = EmissionStandardsPage.getErrorText();
             assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
         });
         Then("^I see the application reference number is displayed correctly$", () -> {

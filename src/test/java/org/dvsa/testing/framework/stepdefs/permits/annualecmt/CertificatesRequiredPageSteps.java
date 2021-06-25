@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 
 import static org.junit.Assert.assertEquals;
@@ -37,10 +38,10 @@ public class CertificatesRequiredPageSteps implements En {
             assertTrue(CertificatesRequiredPage.checkboxNotConfirmed())
         );
         And("^if I don't select the checkbox and click Save and Continue button$", BasePermitPage::saveAndContinue);
-        And("^if I don't select the checkbox and click Save and Return to Overview button$", BasePermitPage::overview);
+        And("^if I don't select the checkbox and click Save and Return to Overview button$", BasePermitPage::clickReturnToOverview);
         And("^if I select the checkbox and click Save and Return to Overview button$", () -> {
             CertificatesRequiredPage.confirmCertificateRequired();
-            BasePermitPage.overview();
+            BasePermitPage.clickReturnToOverview();
         });
         And("^I select the checkbox and click Save and Continue button$", CertificatesRequiredPage::completePage);
         Then("^I am taken to the Restricted countries page$", RestrictedCountriesPageJourney::hasPageHeading);

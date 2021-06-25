@@ -5,9 +5,9 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.BasePermitPage.getCountry;
 import static org.junit.Assert.assertTrue;
 
 public class UkraineEssentialInformationSteps implements En {
@@ -18,7 +18,7 @@ public class UkraineEssentialInformationSteps implements En {
             EssentialInformationPage.untilOnPage();
 
             //checking the Country name displayed on the page is Turkey
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(BasePermitPage.getCountry(),operatorStore.getCountry());
 
             //checking the Page heading on the Turkey essential information page is correct
             EssentialInformationPageJourney.hasPageHeading();

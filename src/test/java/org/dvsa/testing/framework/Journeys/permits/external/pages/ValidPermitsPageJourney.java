@@ -8,17 +8,17 @@ import static org.junit.Assert.assertEquals;
 public class ValidPermitsPageJourney extends BasePermitJourney {
 
     public static void hasBilateralHeading() {
-        String heading = ValidPermitsPage.getHeading();
+        String heading = ValidPermitsPage.getPageHeading();
         assertEquals("Bilateral permits", heading);
     }
 
     public static void hasMultilateralHeading() {
-        String heading = ValidPermitsPage.getHeading();
+        String heading = ValidPermitsPage.getPageHeading();
         assertEquals("Annual Multilateral (EU and EEA)", heading);
     }
 
     public static void hasAnnualECMTHeading() {
-        String heading = ValidPermitsPage.getHeading();
+        String heading = ValidPermitsPage.getPageHeading();
         assertEquals("ECMT International Removal", heading);
     }
 
