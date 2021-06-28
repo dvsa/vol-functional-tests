@@ -28,7 +28,6 @@ import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.ChangeYourPasswordPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
@@ -140,13 +139,6 @@ public class CommonSteps extends BasePage implements En {
                     .permitType(PermitType.ECMT_ANNUAL, operator);
             YearSelectionPage.selectECMTValidityPeriod();
 
-        });
-        When("^I login to self-serve on VOL$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            if (ChangeYourPasswordPage.onPage()) {
-                operator.setPassword(Str.randomWord(7).concat("1Pp"));
-                ChangeYourPasswordPage.update(operator.getPreviousPassword(), operator.getPassword());
-            }
         });
         Then("^the user is navigated to the next page$", () -> {
             Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());

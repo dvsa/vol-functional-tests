@@ -12,7 +12,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.external.CookiesPage;
+import org.dvsa.testing.lib.newPages.external.pages.CookiesPage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 import org.openqa.selenium.Cookie;
@@ -20,9 +20,9 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.Set;
 
+import static org.dvsa.testing.lib.newPages.external.pages.CookiesPage.*;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.external.CookiesPage.*;
 
 
 public class CookieSteps extends DriverUtils implements En {
