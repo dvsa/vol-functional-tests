@@ -20,7 +20,7 @@ Feature: Short term APSG with sectors end to end happy path journey
     Then I complete Euro emissions standard page section and click save and continue
     Then I complete Annual trips abroad page section and click save and continue
     Then I complete Percentage of International journeys section and click save and continue
-    Then I complete sectors page and click on save and continue
+    Then I complete sectors page and click save and continue
     Then I click confirm and continue on the Check your answers page
     Then I click on Accept and continue on the Declaration page
     Then I click on Submit and Pay button on the Permit fee page and complete the payment

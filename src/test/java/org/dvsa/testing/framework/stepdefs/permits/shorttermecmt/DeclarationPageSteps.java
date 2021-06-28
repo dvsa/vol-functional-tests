@@ -50,7 +50,7 @@ public class DeclarationPageSteps implements En {
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            SectorPage.sector(Sector.random());
+            SectorPage.selectSectionAndContinue(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
         });
         Then("^I should see the correct heading on the declaration page$", DeclarationPageJourney::hasPageHeading);

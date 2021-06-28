@@ -49,7 +49,7 @@ public class UnderConsiderationPageSteps implements En {
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            SectorPage.sector(Sector.random());
+            SectorPage.selectSectionAndContinue(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();

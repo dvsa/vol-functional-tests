@@ -60,7 +60,7 @@ public class CheckYourAnswersPageSteps implements En {
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            SectorPage.sector(Sector.random());
+            SectorPage.selectSectionAndContinue(Sector.random());
         });
         Then("^the short term check your answers page has reference number$", BasePermitPage::getReferenceFromPage);
         Then("^Short term application answers are displayed on the check your answers page$", () -> {

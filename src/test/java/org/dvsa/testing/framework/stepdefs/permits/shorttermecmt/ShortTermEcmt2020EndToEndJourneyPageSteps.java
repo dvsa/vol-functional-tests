@@ -79,8 +79,8 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
             BasePermitPage.saveAndContinue();
         });
-        Then("^I complete sectors page and click on save and continue$", () -> {
-            SectorPage.sector(Sector.random());
+        Then("^I complete sectors page and click save and continue$", () -> {
+            SectorPage.selectSectionAndContinue(Sector.random());
         });
         Then("^I click confirm and continue on the Check your answers page$", () -> {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();

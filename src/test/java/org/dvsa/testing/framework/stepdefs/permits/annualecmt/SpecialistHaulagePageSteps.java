@@ -48,7 +48,6 @@ public class SpecialistHaulagePageSteps implements En {
             BasePermitPage.saveAndContinue();
             PercentageOfInternationalJourneysPage.selectProportion(JourneyProportion.LessThan60Percent);
         });
-        Given("^I have specified a type of good to deliver$", () -> SectorPage.sector(Sector.random()));
         Then("^Non other sectors should be in alphabetical order$", () -> {
             List<String> sectorTitles = SectorPage.getSectorsOnPage().stream()
                     .filter((String sector) -> !sector.equals("Other non-metallic mineral products")
