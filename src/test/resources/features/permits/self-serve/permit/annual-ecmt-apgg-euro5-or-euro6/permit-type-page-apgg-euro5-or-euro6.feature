@@ -7,7 +7,7 @@ Feature: Permit Type Page
     And I am on the permit type page
 
   Scenario: Page heading is displayed correctly
-    Then the page heading is displayed as per the story
+    Then the user is navigated to the permit type page
     When continue button is selected without confirming the permit type
     Then the error message is displayed in the permit type page
     When continue button is selected after confirming the permit type

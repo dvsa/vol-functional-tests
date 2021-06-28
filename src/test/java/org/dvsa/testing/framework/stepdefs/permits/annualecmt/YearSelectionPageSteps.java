@@ -7,8 +7,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitTypePage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.junit.Assert.assertEquals;
@@ -20,7 +20,10 @@ public class YearSelectionPageSteps implements En {
            CommonSteps.clickToPermitTypePage(world);
            EcmtApplicationJourney.getInstance().permitType(PermitType.ECMT_ANNUAL,operatorStore);
         });
-        And("^the user is navigated to the permit type page$", PermitTypePage::permitTypePageHeading);
+        And("^the user is navigated to the permit type page$", () -> {
+            String pageHeading = PermitTypePage.getPageHeading();
+            assertEquals("Select a permit type or certificate to apply for", pageHeading);
+        });
         And("^the page heading on Annual Ecmt Year selection page is displayed correctly$", () -> {
             if (YearSelectionPage.isYearChoicePresent()) {
                 assertEquals(YearSelectionPage.getPageHeading(), "Select which year you want permits for");

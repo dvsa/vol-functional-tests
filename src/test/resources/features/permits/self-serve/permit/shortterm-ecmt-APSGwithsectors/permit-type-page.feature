@@ -8,7 +8,7 @@ Feature: ShortTerm ECMT Permit Page
 
   @OLCS-25129
   Scenario: Permit type page details are displayed correctly
-    Then the shortterm ECMT page heading is displayed as per the story
+    Then the user is navigated to the permit type page
     When continue button is selected without confirming the permit type
     Then the error message is displayed in the permit type page
     When I click cancel button

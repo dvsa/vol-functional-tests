@@ -7,8 +7,8 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitTypePage;
 import org.dvsa.testing.lib.newPages.external.pages.SelectALicencePage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,8 +50,8 @@ public class BasePermitJourney extends BaseJourney {
         operator.setCurrentPermitType(type);
         operator.withLicences(licence);
 
-        PermitTypePage.type(type);
-        PermitTypePage.continueButton();
+        PermitTypePage.selectType(type);
+        PermitTypePage.clickContinue();
         return this;
     }
 
