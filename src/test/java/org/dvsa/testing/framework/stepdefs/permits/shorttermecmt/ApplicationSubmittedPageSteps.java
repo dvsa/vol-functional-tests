@@ -22,7 +22,6 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Pro
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
@@ -72,7 +71,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
         Then("^the reference number on the short term ECMT submitted page  is as expected$", () -> {
             SubmittedPage.untilElementIsPresent("//h1[@class='govuk-panel__title']",SelectorType.XPATH,10,TimeUnit.SECONDS);
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body'] ", SelectorType.XPATH);
-            Assert.assertEquals(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,18)),true);
+            assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
         When ("^a case worker worker pays all fees for my ongoing short term  permit application$", () -> {
             CommonSteps.clickToPermitTypePage(world);
@@ -168,8 +167,9 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             assertTrue(SubmittedPage.isWarningMessagePresent());
         });
         Then("^I select view receipt from short term application submitted page$", SubmittedPage::openReceipt);
-        Then("^the view receipt hyperlink opens in a new window$", () -> {
+        Then("^I open the receipt and it should open in a new window$", () -> {
             WebDriver driver = getDriver();
+            SubmittedPage.openReceipt();
             String[] windows = driver.getWindowHandles().toArray(new String[0]);
             driver.switchTo().window(windows[1]);
             ReceiptPage.untilOnPage();

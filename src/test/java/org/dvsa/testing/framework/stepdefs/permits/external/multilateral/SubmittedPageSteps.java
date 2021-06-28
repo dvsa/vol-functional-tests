@@ -17,7 +17,6 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
@@ -26,7 +25,6 @@ import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 
 import java.util.concurrent.TimeUnit;
 
@@ -46,14 +44,6 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             SubmittedPage.untilOnPage();
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
             assertEquals(actualReference.contains(operator.getCurrentLicenceNumber().toString().substring(9,18)),true);
-        });
-
-        When("I select view receipt from application submitted page", () -> {
-            WebDriver driver = getDriver();
-            SubmittedPage.openReceipt();
-            String[] windows = driver.getWindowHandles().toArray(new String[0]);
-            driver.switchTo().window(windows[1]);
-            ReceiptPage.untilOnPage();
         });
         And("^I have an ongoing annual multilateral with all fees paid$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

@@ -10,8 +10,7 @@ Feature: Annual ECMT Application Confirmation Page
     When I am on the Annual ECMT application submitted page
     Then the reference number on the annual ECMT submitted page  is as expected
     And all advisory texts on Annual ECMT submitted page is displayed correctly
-    When I select view receipt from Annual ECMT application submitted page
-    Then the view receipt of Annual ECMT hyperlink opens in a new window
+    Then I open the receipt and it should open in a new window
     When I select finish button
     Then the user is on self-serve permits dashboard
 

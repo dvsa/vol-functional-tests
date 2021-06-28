@@ -18,16 +18,13 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Yea
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
-import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.getDriver;
 import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.junit.Assert.assertTrue;
 
@@ -51,16 +48,6 @@ public class ConfirmationPageSteps implements En {
             SubmittedPageJourney.hasShortTermECMTAdvisoryText();
             assertTrue(SubmittedPage.isWarningMessagePresent());
         });
-
-        Then("^I select view receipt from Annual ECMT application submitted page$", SubmittedPage::openReceipt);
-
-        Then("^the view receipt of Annual ECMT hyperlink opens in a new window$", () -> {
-            WebDriver driver = getDriver();
-            String[] windows = driver.getWindowHandles().toArray(new String[0]);
-            driver.switchTo().window(windows[1]);
-            ReceiptPage.untilOnPage();
-            driver.switchTo().window(windows[0]);
-                 });
 
         Then("^I have an ongoing Annual ECMT with all fees paid", () -> {
             CommonSteps.clickToPermitTypePage(world);

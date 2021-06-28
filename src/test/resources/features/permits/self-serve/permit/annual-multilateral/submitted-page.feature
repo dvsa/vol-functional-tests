@@ -11,8 +11,8 @@ Feature: Submitted page
   Scenario: Has reference number and advisory text
     And I am on the annual multilateral submitted page
     Then the reference number on the multilateral submitted page is as expected
-    And  all the multilateral submitted advisory text is present
-    And  I select view receipt from application submitted page
+    And all the multilateral submitted advisory text is present
+    And I open the receipt and it should open in a new window
 
   #AC04a
   @OLCS-23019
