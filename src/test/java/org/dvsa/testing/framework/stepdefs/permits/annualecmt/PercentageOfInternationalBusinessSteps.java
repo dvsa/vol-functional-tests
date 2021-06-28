@@ -16,11 +16,13 @@ import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfTripsPage;
+import org.dvsa.testing.lib.newPages.external.pages.PercentageOfInternationalJourneysPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertTrue;
 
 public class PercentageOfInternationalBusinessSteps implements En {
 
@@ -47,13 +49,13 @@ public class PercentageOfInternationalBusinessSteps implements En {
             operatorStore.withLicences(licence);
             licence.getEcmt().setInternationalBusiness(JourneyProportion.random());
 
-            PercentageOfInternationalJourneysPage.proportion(licence.getEcmt().getInternationalBusiness());
+            PercentageOfInternationalJourneysPage.selectProportion(licence.getEcmt().getInternationalBusiness());
         });
         When("^I specify a high percentage$", () -> {
-            PercentageOfInternationalJourneysPage.proportion(JourneyProportion.MoreThan90Percent);
+            PercentageOfInternationalJourneysPage.selectProportion(JourneyProportion.MoreThan90Percent);
         });
         Then("^I should get the appropriate warning message$", () -> {
-           PercentageOfInternationalJourneysPage.intensityMessage();
+           assertTrue(PercentageOfInternationalJourneysPage.isIntensityMessagePresent());
         });
     }
 

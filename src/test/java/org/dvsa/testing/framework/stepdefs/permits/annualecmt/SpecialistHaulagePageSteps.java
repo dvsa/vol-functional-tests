@@ -15,6 +15,7 @@ import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfTripsPage;
+import org.dvsa.testing.lib.newPages.external.pages.PercentageOfInternationalJourneysPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
@@ -45,7 +46,7 @@ public class SpecialistHaulagePageSteps implements En {
             EmissionStandardsPageJourney.completePage();
             NumberOfTripsPage.enterNumberOfTripsValue();
             BasePermitPage.saveAndContinue();
-            PercentageOfInternationalJourneysPage.proportion(JourneyProportion.LessThan60Percent);
+            PercentageOfInternationalJourneysPage.selectProportion(JourneyProportion.LessThan60Percent);
         });
         Given("^I have specified a type of good to deliver$", () -> SectorPage.sector(Sector.random()));
         Then("^Non other sectors should be in alphabetical order$", () -> {
