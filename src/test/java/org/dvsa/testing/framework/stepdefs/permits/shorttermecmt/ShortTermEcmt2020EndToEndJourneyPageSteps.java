@@ -4,7 +4,6 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -21,7 +20,6 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Pro
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
@@ -87,9 +85,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         Then("^I click confirm and continue on the Check your answers page$", () -> {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
         });
-        Then("^I click on Accept and continue on the Declaration page$", () -> {
-            DeclarationPageJourney.completeDeclaration();
-        });
+        Then("^I click on Accept and continue on the Declaration page$", DeclarationPageJourney::completeDeclaration);
         Then("^I click on Submit and Pay button on the Permit fee page and complete the payment", () -> {
             PermitFeePage.submitAndPay();
             world.feeAndPaymentJourneySteps.customerPaymentModule();
@@ -102,8 +98,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
             BilateralJourneySteps.clickFinishButton();
         });;
         Then("^I am navigated back to the permits dashboard page with my application status shown as Under Consideration", () -> {
-            String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             assertEquals(getElementValueByText("//span[@class='status orange']",SelectorType.XPATH),"UNDER CONSIDERATION");
         });
         Then("^I apply and pay for a short term APSG without sectors application", () -> {

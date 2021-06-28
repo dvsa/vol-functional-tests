@@ -32,11 +32,6 @@ public class ECMTShortTermJourney extends BasePermitJourney  {
     }
 
     @Override
-    public ECMTShortTermJourney beginApplication() {
-        return (ECMTShortTermJourney) super.beginApplication();
-    }
-
-    @Override
     public ECMTShortTermJourney permitType(OperatorStore operatorStore) {
         return (ECMTShortTermJourney) super.permitType(operatorStore);
     }

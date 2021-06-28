@@ -4,16 +4,17 @@ import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -26,8 +27,8 @@ public class CancelApplicationPageSteps extends BasePage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
             operator.getLicences().forEach((licence) -> {
+                HomePageJourney.beginPermitApplication();
                 AnnualMultilateralJourney.INSTANCE
-                            .beginApplication()
                             .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                             .licencePage(operator, world)
                             .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
@@ -53,7 +54,7 @@ public class CancelApplicationPageSteps extends BasePage implements En {
         });
         And("^there are no fees for the permit$", () -> {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
-            Assert.assertFalse(HomePage.FeesTab.hasOutstandingFees());
+            Assert.assertFalse(HomePage.FeesTab.areOutstandingFeesPresent());
         });
     }
 }

@@ -1,21 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
+import Injectors.World;
 import activesupport.number.Int;
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.AnnualBilateralJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.external.HomePage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.external.permit.enums.ShortTermRestrictedCountry;
@@ -34,9 +33,8 @@ import org.junit.Assert;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.lib.pages.BasePage.*;
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
-import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.*;
+import static org.dvsa.testing.lib.pages.BasePage.*;
 import static org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

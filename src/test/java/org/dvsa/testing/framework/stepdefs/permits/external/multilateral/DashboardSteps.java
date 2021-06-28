@@ -6,7 +6,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.external.HomePage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -19,8 +19,8 @@ public class DashboardSteps implements En {
             LicenceStore licence = operator.getCurrentLicence().orElseThrow(IllegalStateException::new);
             AnnualMultilateralStore permit = licence.getLatestAnnualMultilateral()
                     .orElseThrow(IllegalAccessError::new);
-            List<PermitApplication> actualPermits = HomePage.PermitsTab.issuedPermitApplications();
-            HomePage.PermitsTab.select(licence.getLicenceNumber());
+            List<PermitApplication> actualPermits = HomePage.PermitsTab.getIssuedPermitApplications();
+            HomePage.PermitsTab.selectFirstValidPermit();
 
 
             actualPermits.forEach( p -> {
@@ -34,7 +34,7 @@ public class DashboardSteps implements En {
             LicenceStore licence = operator.getCurrentLicence().orElseThrow(IllegalStateException::new);
             AnnualMultilateralStore permit = licence.getLatestAnnualMultilateral()
                     .orElseThrow(IllegalAccessError::new);
-            List<PermitApplication> actualPermits = HomePage.PermitsTab.ongoingPermitApplications();
+            List<PermitApplication> actualPermits = HomePage.PermitsTab.getOngoingPermitApplications();
 
             actualPermits.forEach( p -> {
                 Assert.assertEquals(permit.getReference(), p.getReferenceNumber());
@@ -43,8 +43,6 @@ public class DashboardSteps implements En {
                 Assert.assertEquals(PermitStatus.NOT_YET_SUBMITTED, p.getStatus());
             });
         });
-        When("^I select my annual multilateral permit application from external dashboard$", () -> {
-            HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().orElseThrow(IllegalStateException::new).getLatestAnnualMultilateral().get().getReference());
-        });
+        When("^I select my annual multilateral permit application from external dashboard$", HomePage.PermitsTab::selectFirstOngoingApplication);
     }
 }

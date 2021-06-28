@@ -7,7 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
 import org.dvsa.testing.lib.newPages.enums.ApplicationDetail;
-import org.dvsa.testing.lib.pages.external.HomePage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.junit.Assert;
 
 import java.text.DateFormat;
@@ -25,7 +25,7 @@ public class ApplicationDetailsPageSteps implements En {
         And("^I am viewing an application$", () -> {
             LicenceStore licence = operatorStore.getLatestLicence()
                     .orElseThrow(IllegalStateException::new);
-            HomePage.PermitsTab.selectOngoing(licence.getLicenceNumber());
+            HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         Then("^all the information should match that which was entered during the application process$", () -> {
             LicenceStore licence = operatorStore.getLatestLicence().orElseThrow(IllegalStateException::new);

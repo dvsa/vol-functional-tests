@@ -6,10 +6,8 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.SelectALicencePage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
 
 import java.util.Optional;
@@ -32,12 +30,6 @@ public class BasePermitJourney extends BaseJourney {
         }
 
         return instance;
-    }
-
-    public BasePermitJourney beginApplication()  {
-        HomePage.selectTab(Tab.PERMITS);
-        HomePage.applyForLicenceButton();
-        return this;
     }
 
     public BasePermitJourney permitType(OperatorStore operatorStore) {

@@ -1,40 +1,34 @@
 package org.dvsa.testing.framework.stepdefs.permits.common;
 
+import Injectors.World;
 import activesupport.string.Str;
 import activesupport.system.Properties;
+import apiCalls.Utils.eupaBuilders.enums.Boolean;
 import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
 import apiCalls.Utils.eupaBuilders.external.StandardResponseModel;
 import apiCalls.Utils.eupaBuilders.internal.*;
 import apiCalls.Utils.eupaBuilders.internal.enums.PaymentMethod;
 import apiCalls.Utils.eupaBuilders.internal.enums.Status;
-import apiCalls.Utils.eupaBuilders.enums.Boolean;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.internal.CaseWorkerAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
-import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.ChangeYourPasswordPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
@@ -54,6 +48,7 @@ import java.util.concurrent.TimeUnit;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.internal.IRHPPermitsPageSteps.payOutstandingFees;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertTrue;
 
 public class CommonSteps extends BasePage implements En {
 
@@ -114,10 +109,9 @@ public class CommonSteps extends BasePage implements En {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
-            String licence1= operator.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             ApplicationIssuingFeePage.acceptAndPay();
             world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.goToPermitsDashboard();
@@ -141,8 +135,7 @@ public class CommonSteps extends BasePage implements En {
         });
         And("^I am on the Annual ECMT licence selection page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.getInstance()
                     .permitType(PermitType.ECMT_ANNUAL, operator);
             YearSelectionPage.selectECMTValidityPeriod();
@@ -159,7 +152,7 @@ public class CommonSteps extends BasePage implements En {
             Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());
         });
         Then("^I will get an error message on the licence page$", () -> {
-            Assert.assertTrue(SelectALicencePage.isErrorMessagePresent());
+            assertTrue(SelectALicencePage.isErrorMessagePresent());
         });
         Then("^I should be taken to the next section$", () -> {
             java.net.URL url = CommonSteps.origin.get("origin");
@@ -167,11 +160,11 @@ public class CommonSteps extends BasePage implements En {
         });
         Then("^I should not be taken to the next section$", () -> {
             java.net.URL url = CommonSteps.origin.get("origin");
-            Assert.assertTrue("The current URL path does not match the expected one", isPath(url.getPath()));
+            assertTrue("The current URL path does not match the expected one", isPath(url.getPath()));
         });
         Then("^I should get an error message$", () -> {
             boolean hasError = BasePage.hasErrorMessagePresent();
-             Assert.assertTrue("Error message was not displayed on the page", hasError);
+             assertTrue("Error message was not displayed on the page", hasError);
         });
         When("^I save and return to overview$", BasePermitPage::clickReturnToOverview);
         When("^I sign on as an external user$", () -> {
@@ -195,11 +188,10 @@ public class CommonSteps extends BasePage implements En {
         });
         And("^I am on the permits dashboard on external$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
         });
         Then("^Information and Text appear correctly$", () -> {
-
-            Permits.permitDashboardText();
+            assertTrue(HomePage.PermitsTab.isPermitDashboardTextPresent());
         });
     }
 
@@ -283,8 +275,7 @@ public class CommonSteps extends BasePage implements En {
 
     public static void clickToPermitTypePage(@NotNull World world) {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        HomePage.selectTab(Tab.PERMITS);
-        HomePage.applyForLicenceButton();
+        HomePageJourney.beginPermitApplication();
     }
 
     public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull OverviewSection section) {

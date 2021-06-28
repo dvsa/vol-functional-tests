@@ -1,10 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
+import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -13,12 +14,11 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.*;
+import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -26,9 +26,9 @@ import org.openqa.selenium.WebDriver;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.getDriver;
+import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.junit.Assert.assertTrue;
 
 public class ConfirmationPageSteps implements En {
@@ -72,15 +72,14 @@ public class ConfirmationPageSteps implements En {
             LicenceStore licenceStore = completeUpToCheckYourAnswersPage(world, operatorStore);
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
 
-            HomePage.FeesTab.outstanbding(true);
+            HomePage.FeesTab.outstanding(true);
             HomePage.FeesTab.pay();
             HomePage.FeesTab.payNowButton();
             world.feeAndPaymentJourneySteps.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
 
-            String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckYourAnswers);
             BasePermitPage.saveAndContinue();
             DeclarationPageJourney.completeDeclaration();

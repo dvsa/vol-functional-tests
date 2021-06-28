@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.stepdefs.permits.cookies;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -12,9 +12,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.pages.external.CookiesPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 import org.openqa.selenium.Cookie;
@@ -37,8 +35,7 @@ public class CookieSteps extends DriverUtils implements En {
         });
         And("^I am on the permit type page before accepting cookies$", () -> {
             world.globalMethods.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            HomePageJourney.beginPermitApplication();
         });
         And("^I should see the cookies list$", () -> {
             Set<Cookie> cookies = getDriver().manage().getCookies();
@@ -167,8 +164,7 @@ public class CookieSteps extends DriverUtils implements En {
             });
 
             And("^I should see the same cookies list in ECMT Removal Check Answers Page$", () -> {
-                HomePage.selectTab(Tab.PERMITS);
-                HomePage.applyForLicenceButton();
+                HomePageJourney.beginPermitApplication();
                 EcmtInternationalRemovalJourney.getInstance()
                         .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                         .licencePage(operatorStore, world);

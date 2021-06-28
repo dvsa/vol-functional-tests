@@ -1,11 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
+import Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -13,11 +14,10 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -62,9 +62,8 @@ public class DeclarationPageSteps extends BasePage implements En {
         });
         Then("^I am continuing on the on-going ECMT removal application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         Then("^I am on the ECMT removal application submitted page$", () -> {
            isPath("/permits/application/\\d+/submitted/");

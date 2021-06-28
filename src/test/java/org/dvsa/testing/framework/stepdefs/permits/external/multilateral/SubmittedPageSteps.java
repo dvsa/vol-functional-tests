@@ -6,6 +6,7 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -13,10 +14,9 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
@@ -61,15 +61,15 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
 
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
 
-            HomePage.FeesTab.outstanbding(true);
+            HomePage.FeesTab.outstanding(true);
             HomePage.FeesTab.pay();
             HomePage.FeesTab.payNowButton();
 
             world.feeAndPaymentJourneySteps.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
 
-            HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
             DeclarationPageJourney.completeDeclaration();
         });
@@ -94,8 +94,9 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             world.feeAndPaymentJourneySteps.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
 
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
-            HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
        });
         When("^a case worker worker waives all fees for my ongoing multilateral permit application$", () -> {
@@ -115,8 +116,9 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
                 FeesDetailsPage.waive(FeesDetailsPage.Decision.Approve);
             }
 
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
-            HomePage.PermitsTab.selectOngoing(operator.getCurrentLicence().get().getReferenceNumber());
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         });
         Then("^all the multilateral submitted advisory text is present$", () -> {
@@ -128,8 +130,8 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
     }
 
     private void completeMultilateralJourneyUntilDeclaration(OperatorStore operator, World world) {
+        HomePageJourney.beginPermitApplication();
         AnnualMultilateralJourney.INSTANCE
-                .beginApplication()
                 .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                 .licencePage(operator, world)
                 .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);

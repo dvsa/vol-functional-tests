@@ -3,12 +3,11 @@ package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.ValidPermitsPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidAnnualMultilateralPermit;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -21,9 +20,7 @@ public class ValidPermitPageSteps implements En {
             ValidPermitsPageJourney.hasMultilateralHeading();
         });
         And("^I am viewing an issued annual multilateral permit on self-serve$", () -> {
-            LicenceStore licence = operator.getCurrentLicence()
-                    .orElseThrow(IllegalStateException::new);
-            HomePage.PermitsTab.select(licence.getLicenceNumber());
+            HomePage.PermitsTab.selectFirstValidPermit();
             ValidPermitsPage.untilOnPage();
             ValidPermitsPageJourney.hasMultilateralHeading();
         });

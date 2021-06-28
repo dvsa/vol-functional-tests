@@ -1,23 +1,21 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.*;
 import org.junit.Assert;
 
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
@@ -42,8 +40,8 @@ public class NumberOfPermitsPageSteps implements En {
         Given("^I have specified a number greater than the number of authorised vehicles$", NumberOfPermitsPage::exceedAuthorisedVehicle);
         Then("^I select the fee tab and pay the outstanding fees$", () -> {
             HomePage.selectTab(Tab.FEES);
-            HomePage.FeesTab.hasOutstandingFees();
-            HomePage.FeesTab.outstanbding(true);
+            assertTrue(HomePage.FeesTab.areOutstandingFeesPresent());
+            HomePage.FeesTab.outstanding(true);
             HomePage.FeesTab.pay();
             HomePage.FeesTab.payNowButton();
             world.feeAndPaymentJourneySteps.customerPaymentModule();

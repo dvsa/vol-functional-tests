@@ -8,16 +8,16 @@ import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Utils.common.TimeUtils;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.AdminOption;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationIssuingFeePage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.internal.admin.permits.BaseAdminPermits;
 import org.dvsa.testing.lib.pages.internal.admin.permits.Permit;
 import org.dvsa.testing.lib.pages.internal.admin.permits.Scoring;
@@ -50,8 +50,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
 
         And("^I am viewing an application that's awaiting fees$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            HomePageJourney.beginPermitApplication();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
@@ -68,11 +67,10 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
             getDriver().get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
             waitForTextToBePresent("Sign in to your Vehicle Operator Licensing account                ");
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
             getDriver().navigate().refresh();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         When("^I cancel and return to dashboard from issuing fee page$", ApplicationIssuingFeePage::cancelAndReturnToDashboard);
         When("^I decline payment$", ApplicationIssuingFeePage::declinePermits);

@@ -73,11 +73,6 @@ public class EcmtApplicationJourney extends BasePermitJourney {
     }
 
     @Override
-    public EcmtApplicationJourney beginApplication() {
-        return (EcmtApplicationJourney) super.beginApplication();
-    }
-
-    @Override
     public EcmtApplicationJourney permitType(OperatorStore operatorStore) {
         return (EcmtApplicationJourney) super.permitType(operatorStore);
     }

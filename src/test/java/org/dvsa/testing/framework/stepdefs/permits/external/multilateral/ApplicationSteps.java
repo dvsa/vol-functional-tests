@@ -5,6 +5,7 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -13,10 +14,10 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
@@ -32,8 +33,7 @@ public class ApplicationSteps extends BasePage implements En {
             int quantity = arg.equals("all") ? VolLicenceSteps.licenceQuantity.get("licence.quantity") : 1;
 
                IntStream.rangeClosed(1, quantity).forEach((i) -> {
-                    HomePage.selectTab(Tab.PERMITS);
-                    HomePage.applyForLicenceButton();
+                   HomePageJourney.beginPermitApplication();
 
                     AnnualMultilateralJourney.INSTANCE
                                .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
@@ -41,12 +41,12 @@ public class ApplicationSteps extends BasePage implements En {
                                .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
                    NumberOfPermitsPageJourney.completeMultilateralPage();
                    get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
-                   HomePage.selectTab(Tab.PERMITS);
+                   HomePageJourney.selectPermitTab();
             });
         });
         When("^I select a licence already with an ongoing annual multilateral permit$", () -> {
+            HomePageJourney.beginPermitApplication();
             AnnualMultilateralJourney.INSTANCE
-                    .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world);
         });
@@ -58,8 +58,8 @@ public class ApplicationSteps extends BasePage implements En {
                 "I have an annual multilateral permit|" +
                 "I have a valid annual multilateral permit)", () -> {
              world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            AnnualMultilateralJourney.INSTANCE
-                    .beginApplication()
+             HomePageJourney.beginPermitApplication();
+             AnnualMultilateralJourney.INSTANCE
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world)
                     .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
@@ -80,7 +80,10 @@ public class ApplicationSteps extends BasePage implements En {
         });
         And("^my annual multilateral permit has 'Not Yet Submitted' status$", () -> {
             String reference = operator.getCurrentLicence().orElseThrow(IllegalStateException::new).getLatestAnnualMultilateral().get().getReference();
-            HomePage.PermitsTab.untilPermitWithStatus(reference, PermitStatus.NOT_YET_SUBMITTED, Duration.MEDIUM, TimeUnit.SECONDS);
+            String selector = String.format(
+                    "//*[contains(text(), '%s')]//ancestor-or-self::td//following-sibling::td[last()]/span[contains(text(), '%s')]",
+                    reference, PermitStatus.NOT_YET_SUBMITTED);
+            untilPresentWithRefresh(selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
         });
     }
 }

@@ -7,17 +7,16 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidECMTInternationalPermit;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -58,9 +57,7 @@ public class ValidPermitPageSteps implements En {
             );
         });
         And("^I am viewing my issued ECMT removal permit on selfserve$", () -> {
-            LicenceStore licence = operatorStore.getLatestLicence()
-                    .orElseThrow(IllegalStateException::new);
-            HomePage.PermitsTab.select(licence.getLicenceNumber());
+            HomePage.PermitsTab.selectFirstValidPermit();
             ValidPermitsPage.untilOnPage();
         });
         Then("^I am on the ECMT removal Permit list page$", ValidPermitsPage::untilOnPage);

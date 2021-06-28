@@ -5,6 +5,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -12,11 +13,10 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
@@ -98,15 +98,14 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
         });
         And ("^I'm on the ECMT international submitted page for my active application", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
             clickByLinkText(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
             DeclarationPageJourney.completeDeclaration();
         });
         And ("^I proceed with the application", () -> {
-            HomePage.selectTab(Tab.PERMITS);
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
             DeclarationPageJourney.completeDeclaration();
         });

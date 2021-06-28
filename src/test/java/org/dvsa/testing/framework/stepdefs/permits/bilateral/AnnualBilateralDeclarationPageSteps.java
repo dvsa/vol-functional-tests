@@ -1,10 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -15,21 +16,15 @@ import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
-import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements En {
@@ -72,9 +67,8 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         Then("^I'm on the annual bilateral StandardPermitsNoCabotage only declaration page$", () -> {
             clickToPermitTypePage(world);
@@ -116,13 +110,10 @@ public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements 
         });
         Then("^I continue with the on-going Annual Bilateral application$", () -> {
             BasePermitPage.back();
-            HomePage.selectTab(Tab.PERMITS);
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         Then("^there's a guidance notes link to the correct gov page$", BasePermitPage::hasInternationalAuthorisationGovGuidanceLink);
-        When("^I submit my annual bilateral declaration$", () -> {
-            DeclarationPageJourney.completeDeclaration();
-        });
+        When("^I submit my annual bilateral declaration$", DeclarationPageJourney::completeDeclaration);
     }
 }

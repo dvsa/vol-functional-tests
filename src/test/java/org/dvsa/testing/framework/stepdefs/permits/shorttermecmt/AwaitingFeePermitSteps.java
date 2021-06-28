@@ -5,7 +5,6 @@ import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -14,7 +13,6 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.DeclineGrantedPermitPage;
@@ -23,7 +21,6 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Yea
 import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;
@@ -84,9 +81,8 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             IrhpPermitsApplyPage.continueButton();
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-            String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         And("^the user is taken to the awaiting fee page$", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/awaiting-fee/"));
@@ -108,16 +104,14 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         });
         And("^the declined permit application is not displayed on the permit dashboard$", () -> {
             String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            String permitLicence= String.valueOf(HomePage.PermitsTab.permitsWithStatus(HomePage.PermitsTab.Table.ongoing, PermitStatus.AWAITING_FEE));
+            String permitLicence= String.valueOf(HomePage.PermitsTab.getPermitsWithStatus(HomePage.PermitsTab.Table.ongoing, PermitStatus.AWAITING_FEE));
             Assert.assertNotEquals(licence1,permitLicence);
         });
         And("^I select accept and continue button without confirming decline checkbox$", DeclineGrantedPermitPage::saveAndContinue);
         And("^the error message is displayed$", () -> {
             assertTrue(DeclineGrantedPermitPage.isErrorTextPresent());
         });
-        And("^I click the view permit restriction link$", () -> {
-            PermitFeePage.clickPermitRestrictionLink();
-        });
+        And("^I click the view permit restriction link$", PermitFeePage::clickPermitRestrictionLink);
         And("^the user is taken to the allocated candidate permit view page$", () -> {
             isPath("/application/\\d+/unpaid-permits/");
         });

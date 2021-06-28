@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
@@ -21,7 +20,6 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Pro
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
@@ -57,8 +55,7 @@ public class UnderConsiderationPageSteps implements En {
             PermitFeePage.submitAndPay();
             world.feeAndPaymentJourneySteps.customerPaymentModule();
             BilateralJourneySteps.clickFinishButton();
-            String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.select(licence);
+            HomePage.PermitsTab.selectFirstValidPermit();
         });
         And("^the table of contents in the short term  under consideration page are displayed correctly$", UnderConsiderationPage::tableCheck);
         And("^the warning message is displayed correctly$", UnderConsiderationPage::warningMessage);
@@ -67,9 +64,6 @@ public class UnderConsiderationPageSteps implements En {
             WithdrawApplicationPage.untilOnPage();
             WithdrawApplicationPageJourney.hasPageHeading();
         });
-        When ("^I go back to the permit application$", () -> {
-            String licence= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.select(licence);
-        });
+        When ("^I go back to the permit application$", HomePage.PermitsTab::selectFirstValidPermit);
     }
 }

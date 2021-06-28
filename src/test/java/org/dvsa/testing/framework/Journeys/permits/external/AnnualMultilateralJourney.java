@@ -66,11 +66,6 @@ public class AnnualMultilateralJourney extends BasePermitJourney {
     }
 
     @Override
-    public AnnualMultilateralJourney beginApplication() {
-        return (AnnualMultilateralJourney) super.beginApplication();
-    }
-
-    @Override
     public AnnualMultilateralJourney permitType(OperatorStore operatorStore) {
         return (AnnualMultilateralJourney) super.permitType(operatorStore);
     }

@@ -5,6 +5,7 @@ import activesupport.string.Str;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
@@ -65,7 +66,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             // Apply for ECMT applications
             IntStream.rangeClosed(1, VolLicenceSteps.licenceQuantity.get("licence.quantity")).forEach((i) -> {
-                EcmtApplicationJourney.getInstance().beginApplication();
+                HomePageJourney.beginPermitApplication();
                 ECMTPermitApplicationSteps.completeEcmtApplication(operator, world);
             });
 

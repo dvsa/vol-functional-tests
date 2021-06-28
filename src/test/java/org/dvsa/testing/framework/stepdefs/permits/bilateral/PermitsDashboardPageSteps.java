@@ -1,10 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -13,11 +13,10 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -29,11 +28,10 @@ public class PermitsDashboardPageSteps extends BasePage implements En {
     public PermitsDashboardPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
         Then("^I navigate to the Permits dashboard page from the Bilaterals Overview page$", () -> {
             world.selfServeNavigation.navigateToNavBarPage("home");
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
         });
         Then("^my Bilaterals permit should be under the ongoing permit application table with correct columns and values$", () -> {
             HomePage.untilOnPage();
-            LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
             //Verifying that Application reference displayed on the Dashboard is the same as on the application overview page
             String referenceNumber = findElement("(//table)[count(//table)]//td[@data-heading='Application reference']", SelectorType.XPATH).getText();
@@ -49,9 +47,9 @@ public class PermitsDashboardPageSteps extends BasePage implements En {
 
             //Verify the status on the ongoing permits table is NOT yet submitted
             String statusTagText = getText("//span[contains(text(),'Not yet submitted')]", SelectorType.XPATH);
-            Assert.assertEquals(statusTagText.equalsIgnoreCase("NOT YET SUBMITTED"), true);
+            Assert.assertTrue(statusTagText.equalsIgnoreCase("NOT YET SUBMITTED"));
 
-            List<PermitApplication> actualPermits = HomePage.PermitsTab.ongoingPermitApplications();
+            List<PermitApplication> actualPermits = HomePage.PermitsTab.getOngoingPermitApplications();
 
         });
         Then("^I Submit my Annual bilateral partial application and navigate to the Permits dashboard$", () -> {

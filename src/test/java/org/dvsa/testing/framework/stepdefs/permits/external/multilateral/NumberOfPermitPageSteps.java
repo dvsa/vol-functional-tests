@@ -5,6 +5,7 @@ import cucumber.api.PendingException;
 import cucumber.api.java8.En;
 import cucumber.api.java8.StepdefBody;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -32,9 +33,9 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
     public NumberOfPermitPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the number of permits required page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.beginPermitApplication();
             AnnualMultilateralJourney
                     .INSTANCE
-                    .beginApplication()
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
                     .licencePage(operatorStore, world)
                     .overviewPage(OverviewSection.NumberOfPaymentsRequired, operatorStore);

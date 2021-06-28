@@ -25,7 +25,6 @@ import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.external.permit.*;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
 import org.dvsa.testing.lib.pages.external.permit.enums.sections.BilateralSection;
@@ -68,8 +67,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
              HomePage.selectTab(Tab.FEES);
         });
         Then("^the outstanding fees are displayed properly$", () -> {
-            HomePage.FeesTab.hasOutstandingFees();
-            HomePage.FeesTab.outstanbding(true);
+            assertTrue(HomePage.FeesTab.areOutstandingFeesPresent());
+            HomePage.FeesTab.outstanding(true);
         });
         Then("^I select save and continue button on select countries page$", CountrySelectionPage::saveAndContinue);
         Then("^countries are displayed in alphabetical order$", () -> {
@@ -147,7 +146,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         Given("^I have (a valid |applied for an )annual bilateral noway cabotage only permit$", (String notValid) -> {
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
 
             int quantity = operatorStore.getLicences().size();
 
@@ -293,8 +292,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         When("^I try applying with a licence that has an existing application$", () -> {
             world.selfServeNavigation.navigateToNavBarPage("home");
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            HomePageJourney.beginPermitApplication();
             AnnualBilateralJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
             LicenceStore licence = operatorStore.getLicences().get(0);
             SelectALicencePage.clickLicence(licence.getLicenceNumber());
@@ -314,8 +312,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            int quantity = oneOrAll.equalsIgnoreCase("all") ? operatorStore.getLicences().size() : 1;
 
             IntStream.rangeClosed(1, quantity).forEach((i) -> {
-                HomePage.selectTab(Tab.PERMITS);
-                HomePage.applyForLicenceButton();
+                HomePageJourney.beginPermitApplication();
                 AnnualBilateralJourney.getInstance()
                             .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
                 AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
@@ -349,7 +346,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
             });
         Then("^ongoing permits should be sorted by reference number in descending order$", () -> {
-            List<PermitApplication> actualApplications = HomePage.PermitsTab.ongoingPermitApplications();
+            List<PermitApplication> actualApplications = HomePage.PermitsTab.getOngoingPermitApplications();
             IntStream.range(0, actualApplications.size() - 1).forEach((i) -> {
                 String ref2 = actualApplications.get(i).getReferenceNumber();
                 String ref1 = actualApplications.get(i + 1).getReferenceNumber();
@@ -362,9 +359,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             OverviewPage.untilOnPage();
         });
         And("I am viewing an issued annual bilateral permit on self-serve", () -> {
-            LicenceStore licence = operatorStore.getLatestLicence()
-                    .orElseThrow(IllegalStateException::new);
-            HomePage.PermitsTab.select(licence.getLicenceNumber());
+            HomePage.PermitsTab.selectFirstValidPermit();
             ValidPermitsPage.untilOnPage();
         });
         And("the relevant error message for annual bilateral number of permits page is displayed", () -> {

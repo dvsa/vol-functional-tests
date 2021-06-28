@@ -1,13 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+import Injectors.World;
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -16,6 +14,7 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
@@ -23,10 +22,8 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Pro
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.*;
+import org.dvsa.testing.lib.pages.external.permit.ReceiptPage;
+import org.dvsa.testing.lib.pages.external.permit.SectorPage;
 import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
@@ -108,10 +105,9 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
 
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
 
-            String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.EuroEmissionStandards);
             EmissionStandardsPageJourney.completePage();
             AnnualTripsAbroadPage.quantity(10);
@@ -150,10 +146,9 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             }
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
 
-            String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.EuroEmissionStandards);
 
             EmissionStandardsPageJourney.completePage();
@@ -195,16 +190,15 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPageJourney.completeECMTPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
-            HomePage.FeesTab.outstanbding(true);
+            HomePage.FeesTab.outstanding(true);
             HomePage.FeesTab.pay();
             HomePage.FeesTab.payNowButton();
 
             world.feeAndPaymentJourneySteps.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
 
-            String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.EuroEmissionStandards);
             EmissionStandardsPageJourney.completePage();
             AnnualTripsAbroadPage.quantity(10);

@@ -5,7 +5,6 @@ import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
-import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
@@ -20,7 +19,6 @@ import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -34,6 +32,8 @@ import java.util.stream.IntStream;
 
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
 
@@ -44,20 +44,19 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             completeEcmtApplication(operatorStore, world);
         });
         Then("^the permits tab should (not )?be displayed$", (String hidden) -> {
-            if (hidden != null && StringUtils.deleteWhitespace(hidden).toLowerCase().equals("not")) {
-                HomePage.tabIsNotPresent(Tab.PERMITS);
+            if (hidden != null) {
+                assertFalse(HomePage.isTabPresent(Tab.PERMITS));
             } else {
-                HomePage.tabIsPresent(Tab.PERMITS);
+                assertTrue(HomePage.isTabPresent(Tab.PERMITS));
             }
         });
-        Then("^There should be no selected licences$", () -> Assert.assertFalse(SelectALicencePage.hasSelectedLicence()));
-        And ("^I save and continue$", () -> BasePermitPage.saveAndContinue());
-        Then("^I should be taken to the permits dashboard$", () -> Assert.assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
+        Then("^There should be no selected licences$", () -> assertFalse(SelectALicencePage.hasSelectedLicence()));
+        And ("^I save and continue$", BasePermitPage::saveAndContinue);
+        Then("^I should be taken to the permits dashboard$", () -> assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
         And("^I have completed (an|all) ECMT application$", (String arg) -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            HomePageJourney.beginPermitApplication();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
         });
         When("^I try applying for an annual ECMT again$", () -> {
@@ -65,12 +64,12 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             AnnualBilateralJourney.getInstance().permitType();
         });
         When("^I withdraw without confirming$", () -> {
-            HomePage.PermitsTab.selectOngoing(ECMTPermitApplicationSteps.applicationReference.get("application.reference"));
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             ApplicationDetailsPage.withdraw();
             WithdrawApplicationPage.clickWithdraw();
         });
         Then("^issued permits should be sorted by reference number in descending order$", () -> {
-            List<PermitApplication> actualApplications = HomePage.PermitsTab.issuedPermitApplications();
+            List<PermitApplication> actualApplications = HomePage.PermitsTab.getIssuedPermitApplications();
             IntStream.range(0, actualApplications.size() - 1).forEach((i) -> {
                 String ref2 = actualApplications.get(i).getReferenceNumber();
                 String ref1 = actualApplications.get(i + 1).getReferenceNumber();
@@ -80,22 +79,17 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         });
         When("^I have a partial completed ECMT application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-          HomePage.applyForLicenceButton();
+            HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.getInstance()
                     .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.selectECMTValidityPeriod();
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
             BasePermitPage.back();
         });
-        When("^I view the application from ongoing permit application table$", () -> {
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
-        });
+        When("^I view the application from ongoing permit application table$", HomePage.PermitsTab::selectFirstOngoingApplication);
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            HomePageJourney.beginPermitApplication();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
@@ -115,7 +109,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
             waitForTextToBePresent("Sign in to your Vehicle Operator Licensing account                ");
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
         });
@@ -126,8 +120,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         Then ("^the user is navigated to awaiting fee page$", () -> isPath("/permits/\\d+/ecmt-awaiting-fee/"));
 
         When("^I try applying with a licence that has an existing annual ECMT application$", () -> {
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.getInstance()
                     .permitType(PermitType.ECMT_ANNUAL, operatorStore);
             YearSelectionPage.selectECMTValidityPeriod();

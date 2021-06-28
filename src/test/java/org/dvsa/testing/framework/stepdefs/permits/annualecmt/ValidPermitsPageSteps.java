@@ -7,6 +7,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -16,14 +17,13 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.enums.external.home.Tab;
 import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidAnnualMultilateralPermit;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationIssuingFeePage;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.HomePage;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -45,8 +45,8 @@ public class ValidPermitsPageSteps extends BasePage implements En {
     public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
         And("^have valid permits$", () -> {
             // TODO: replace steps to issue permits with an API call should devs bother documenting it
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.beginPermitApplication();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
@@ -63,13 +63,12 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
             waitForTitleToBePresent("Sign in to your Vehicle Operator Licensing account");
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePage.selectTab(Tab.PERMITS);
+            HomePageJourney.selectPermitTab();
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
 
             // select one at random
-            String licence1= licence.getLicNo();
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             ApplicationIssuingFeePage.acceptAndPay();
 
             // pay for application
@@ -79,7 +78,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
 
             // Refresh until permit is valid
             untilAnyPermitStatusMatch(PermitStatus.VALID);
-            HomePage.PermitsTab.select(licence1);
+            HomePage.PermitsTab.selectFirstValidPermit();
 
         });
         And("^have valid Annual Bilateral Permits$", () -> {
@@ -122,13 +121,11 @@ public class ValidPermitsPageSteps extends BasePage implements En {
                             permits.get(idx).getExpiryDate().isEqual(permits.get(idx + 1).getExpiryDate())
             ));
         });
-        When ("^the user is on self-serve permits dashboard",  () ->{
-            HomePage.selectTab(Tab.PERMITS);
-        });
+        When ("^the user is on self-serve permits dashboard", HomePageJourney::selectPermitTab);
     }
 
     public static void untilAnyPermitStatusMatch(PermitStatus status) {
-        untilPermitStatusIsNot(HomePage.PermitsTab::anyPermitWithStatus, status );
+        untilPermitStatusIsNot(HomePage.PermitsTab::isAnyPermitWithStatus, status );
     }
 
     private static <T> void untilPermitStatusIsNot(Predicate<T> p, T status) {
