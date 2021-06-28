@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.Utils.store;
 
 import org.dvsa.testing.lib.newPages.common.type.Permit;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
+import org.dvsa.testing.lib.newPages.external.enums.Sector;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

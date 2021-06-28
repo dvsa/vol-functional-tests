@@ -11,6 +11,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
 import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
@@ -18,8 +19,6 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Yea
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfTripsPage;
 import org.dvsa.testing.lib.newPages.external.pages.PercentageOfInternationalJourneysPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertTrue;

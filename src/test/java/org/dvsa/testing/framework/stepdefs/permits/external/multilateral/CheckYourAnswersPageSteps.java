@@ -15,7 +15,7 @@ import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.sections.MultilateralSection;
+import org.dvsa.testing.lib.newPages.external.enums.sections.MultilateralSection;
 import org.dvsa.testing.lib.util.CommonPatterns;
 import org.junit.Assert;
 

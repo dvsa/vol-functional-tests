@@ -4,13 +4,12 @@ import activesupport.string.Str;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualBilateralStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.common.type.Permit;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
-import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyType;
+import org.dvsa.testing.lib.newPages.external.enums.Sector;
 import org.dvsa.testing.lib.pages.internal.details.FeesPage;
 import org.jetbrains.annotations.NotNull;
 

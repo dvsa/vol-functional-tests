@@ -9,8 +9,8 @@ import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.external.permit.enums.RestrictedCountry;
-import org.dvsa.testing.lib.pages.external.permit.enums.sections.ApplicationSection;
+import org.dvsa.testing.lib.newPages.external.enums.RestrictedCountry;
+import org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 
@@ -18,7 +18,7 @@ import java.lang.reflect.Field;
 
 import static org.dvsa.testing.lib.pages.BasePage.getURL;
 import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.external.permit.enums.sections.ApplicationSection.*;
+import static org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CheckYourAnswersPageSteps implements En {

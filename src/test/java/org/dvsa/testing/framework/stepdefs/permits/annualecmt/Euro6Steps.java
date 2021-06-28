@@ -15,7 +15,6 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Cou
 import org.dvsa.testing.lib.newPages.external.pages.EmissionStandardsPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.*;
 import org.junit.Assert;
 
 import static org.dvsa.testing.lib.pages.BasePage.getURL;

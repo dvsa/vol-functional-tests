@@ -18,9 +18,9 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Cou
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.SectorPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
+import org.dvsa.testing.lib.newPages.external.pages.SectorPage;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
+import org.dvsa.testing.lib.newPages.external.enums.Sector;
 import org.hamcrest.core.StringContains;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.external.permit.enums.sections.ShortTermApplicationSection.*;
+import static org.dvsa.testing.lib.newPages.external.enums.sections.ShortTermApplicationSection.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 

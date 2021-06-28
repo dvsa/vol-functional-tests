@@ -12,7 +12,7 @@ import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.sections.ECMTRemovalsSection;
+import org.dvsa.testing.lib.newPages.external.enums.sections.ECMTRemovalsSection;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 
