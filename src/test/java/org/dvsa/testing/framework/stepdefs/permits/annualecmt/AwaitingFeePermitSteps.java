@@ -22,6 +22,7 @@ import org.dvsa.testing.lib.pages.internal.admin.permits.BaseAdminPermits;
 import org.dvsa.testing.lib.pages.internal.admin.permits.Permit;
 import org.dvsa.testing.lib.pages.internal.admin.permits.Scoring;
 import org.dvsa.testing.lib.pages.internal.admin.permits.Window;
+import org.dvsa.testing.lib.pages.internal.admin.permits.enums.DateField;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -122,11 +123,11 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
                             Window.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
 
                             //TODO: Remove edge case when the next time available falls on the next day
-                            List<LocalTime> availableCloseTimes = Window.Model.getAllTimes(Window.Point.To);
+                            List<LocalTime> availableCloseTimes = Window.Model.getAllTimes(DateField.EndDate);
                             LocalDateTime now = LocalDateTime.now();
                             LocalTime closestClosingTime = TimeUtils.closestTimeFrom(now.toLocalTime(), availableCloseTimes);
-                            Window.Model.date(Window.Point.To, now.toLocalDate());
-                            Window.Model.time(Window.Point.To, closestClosingTime);
+                            Window.Model.date(DateField.EndDate, now.toLocalDate());
+                            Window.Model.time(DateField.EndDate, closestClosingTime);
                             Window.save();
                             Window.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
 
