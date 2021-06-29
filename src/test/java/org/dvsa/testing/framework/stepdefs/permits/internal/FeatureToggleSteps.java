@@ -4,8 +4,10 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.lib.newPages.enums.Action;
 import org.dvsa.testing.lib.newPages.enums.AdminOption;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.FeatureTogglesPage;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.FeatureToggleStatus;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.Features;
 import org.dvsa.testing.lib.pages.internal.NavigationBar;
-import org.dvsa.testing.lib.pages.internal.admin.permits.FeatureTogglesPage;
 import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
 
@@ -41,29 +43,29 @@ public class FeatureToggleSteps implements En {
             NavigationBar.adminPanel(Action.OPEN);
             NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
 
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.PermitsAdmin, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalPermits, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfserveEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfservePermits, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendPermits, FeatureTogglesPage.Status.Active);
+            FeatureTogglesPage.toggle(Features.PermitsAdmin, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.InternalEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.InternalPermits, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.SelfserveEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.SelfservePermits, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.BackendEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.BackendPermits, FeatureToggleStatus.Active);
         });
         And("^disable all internal ECMT feature toggles$", () -> {
             NavigationBar.adminPanel(Action.OPEN);
             NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
 
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalEcmt, FeatureTogglesPage.Status.Inactive);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalPermits, FeatureTogglesPage.Status.Inactive);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendEcmt, FeatureTogglesPage.Status.Inactive);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendPermits, FeatureTogglesPage.Status.Inactive);
+            FeatureTogglesPage.toggle(Features.InternalEcmt, FeatureToggleStatus.Inactive);
+            FeatureTogglesPage.toggle(Features.InternalPermits, FeatureToggleStatus.Inactive);
+            FeatureTogglesPage.toggle(Features.BackendEcmt, FeatureToggleStatus.Inactive);
+            FeatureTogglesPage.toggle(Features.BackendPermits, FeatureToggleStatus.Inactive);
         });
         And("^disable all external ECMT feature toggles$", () -> {
             NavigationBar.adminPanel(Action.OPEN);
             NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
 
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfserveEcmt, FeatureTogglesPage.Status.Inactive);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfservePermits, FeatureTogglesPage.Status.Inactive);
+            FeatureTogglesPage.toggle(Features.SelfserveEcmt, FeatureToggleStatus.Inactive);
+            FeatureTogglesPage.toggle(Features.SelfservePermits, FeatureToggleStatus.Inactive);
         });
     }
 }

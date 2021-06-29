@@ -5,13 +5,15 @@ import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import org.dvsa.testing.framework.Utils.common.Util;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.FeatureTogglesPage;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.FeatureToggleStatus;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.Features;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.Action;
 import org.dvsa.testing.lib.newPages.enums.AdminOption;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotDisappearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.pages.internal.NavigationBar;
-import org.dvsa.testing.lib.pages.internal.admin.permits.FeatureTogglesPage;
 import org.junit.jupiter.api.AfterAll;
 
 import java.net.MalformedURLException;
@@ -32,13 +34,13 @@ public class Hooks extends BasePage {
             NavigationBar.adminPanel(Action.OPEN);
             NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
 
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.PermitsAdmin, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalPermits, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfserveEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfservePermits, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendPermits, FeatureTogglesPage.Status.Active);
+            FeatureTogglesPage.toggle(Features.PermitsAdmin, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.InternalEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.InternalPermits, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.SelfserveEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.SelfservePermits, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.BackendEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.BackendPermits, FeatureToggleStatus.Active);
         }
     }
 

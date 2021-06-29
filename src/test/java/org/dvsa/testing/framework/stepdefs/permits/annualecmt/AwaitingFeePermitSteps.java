@@ -17,12 +17,14 @@ import org.dvsa.testing.lib.newPages.enums.AdminOption;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationIssuingFeePage;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.Permit;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.Scoring;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.SideBar;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.Window;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.DateField;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.PermitsSidebarItem;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.ScoringStatus;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.internal.admin.permits.BaseAdminPermits;
-import org.dvsa.testing.lib.pages.internal.admin.permits.Permit;
-import org.dvsa.testing.lib.pages.internal.admin.permits.Scoring;
-import org.dvsa.testing.lib.pages.internal.admin.permits.Window;
-import org.dvsa.testing.lib.pages.internal.admin.permits.enums.DateField;
 import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -112,7 +114,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
                         stocks.get(nthPermit).getValidTo().isEqual(LocalDate.now())) {
                     Permit.nthStock(nthPermit + 1);
 
-                    BaseAdminPermits.SideBar.select(BaseAdminPermits.SideBar.PermitsSidebarItem.Window);
+                    SideBar.select(PermitsSidebarItem.Window);
 
                     // Close windows that end more than 30 minutes from now
                     IntStream.range(0, Window.numOfWindows()).forEach((nthWin) -> {
@@ -137,7 +139,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
                                 e.printStackTrace();
                             }
 
-                            Permit.SideBar.select(BaseAdminPermits.SideBar.PermitsSidebarItem.Scoring);
+                            SideBar.select(PermitsSidebarItem.Scoring);
 
                             getDriver().navigate().refresh();
 
@@ -145,14 +147,14 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
                             Scoring.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
                             Scoring.Model.continueButton();
 
-                            Scoring.untilScoringStatusIs(Scoring.Status.ScoringSuccessful, Duration.CENTURY, TimeUnit.MINUTES);
+                            Scoring.untilScoringStatusIs(ScoringStatus.ScoringSuccessful, Duration.CENTURY, TimeUnit.MINUTES);
 
                             Scoring.accept(Duration.LONG, TimeUnit.MINUTES);
                             Scoring.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
                             Scoring.Model.continueButton();
                             Scoring.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
 
-                            Scoring.untilScoringStatusIs(Scoring.Status.AcceptanceSuccessful, Duration.CENTURY, TimeUnit.MINUTES);
+                            Scoring.untilScoringStatusIs(ScoringStatus.AcceptanceSuccessful, Duration.CENTURY, TimeUnit.MINUTES);
                         }
 
                     });
