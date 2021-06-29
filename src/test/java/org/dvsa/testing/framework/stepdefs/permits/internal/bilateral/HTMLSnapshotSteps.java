@@ -18,6 +18,8 @@ import org.junit.Assert;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.assertEquals;
+
 public class HTMLSnapshotSteps extends BasePage implements En {
 
     public HTMLSnapshotSteps(OperatorStore operator, World world, LicenceStore licenceStore) {
@@ -26,9 +28,9 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             String expectedDescription = DocsAndAttachmentsPage.stapshotTitle(licenceStore.getReferenceNumber(), PermitType.ANNUAL_BILATERAL);
             DocsAndAttachmentsPage.selectSnapshot(licenceStore.getReferenceNumber(),PermitType.ANNUAL_BILATERAL);
             DocsAndAttachmentsPage.Doc actualDoc = DocsAndAttachmentsPage.snapshotDoc(licenceStore.getReferenceNumber(), PermitType.ANNUAL_BILATERAL);
-            Assert.assertEquals(expectedDescription, actualDoc.getDescription());
-            Assert.assertEquals(DocsAndAttachmentsPage.Category.Permits, actualDoc.getCategory());
-            Assert.assertEquals(DocsAndAttachmentsPage.Subcategory.Application, actualDoc.getSubcategory());
+            assertEquals(expectedDescription, actualDoc.getDescription());
+            assertEquals(DocsAndAttachmentsPage.Category.Permits, actualDoc.getCategory());
+            assertEquals(DocsAndAttachmentsPage.Subcategory.Application, actualDoc.getSubcategory());
         });
         Then("^text for annual bilateral snapshot is displayed as expected$", () -> {
 
@@ -43,41 +45,41 @@ public class HTMLSnapshotSteps extends BasePage implements En {
 
             //Verify the page heading is displayed correctly
             String expectedHeading = String.format("%s %s", operator.getOrganisationName(),licenceStore.getReferenceNumber());
-            Assert.assertEquals(expectedHeading, AnnualBilateralSnapshotPage.heading());
-            String actualLicence = AnnualBilateralSnapshotPage.get(AnnualBilateralSnapshotPage.Header.LicenceSelected);
+            assertEquals(expectedHeading, AnnualBilateralSnapshotPage.heading());
+            String actualLicence = AnnualBilateralSnapshotPage.getLicenceSelectedHeading();
 
             //verify the licence number is displayed
             String licence1= operator.getCurrentLicenceNumber().toString().substring(9, 18);
             Assert.assertTrue(String.valueOf(actualLicence.contains(licence1)),true);
 
             //countries selected
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[2]//dt[1]", SelectorType.XPATH),"Countries selected");
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[2]//dd[1]",SelectorType.XPATH),operator.getCountry());
+            assertEquals(BasePage.getElementValueByText("//dl[2]//dt[1]", SelectorType.XPATH),"Countries selected");
+            assertEquals(BasePage.getElementValueByText("//dl[2]//dd[1]",SelectorType.XPATH),operator.getCountry());
 
             //Questions answered for
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[3]//dt[1]",SelectorType.XPATH),"Questions answered for");
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[3]//dd[1]",SelectorType.XPATH),operator.getCountry());
+            assertEquals(BasePage.getElementValueByText("//dl[3]//dt[1]",SelectorType.XPATH),"Questions answered for");
+            assertEquals(BasePage.getElementValueByText("//dl[3]//dd[1]",SelectorType.XPATH),operator.getCountry());
 
             //Period for which you need permits
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[4]//dt[1]",SelectorType.XPATH),"Period for which you need permits");
+            assertEquals(BasePage.getElementValueByText("//dl[4]//dt[1]",SelectorType.XPATH),"Period for which you need permits");
             String expected= String.valueOf(operator.getCurrentBilateralPeriodType());
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[4]//dd[1]",SelectorType.XPATH),expected);
+            assertEquals(BasePage.getElementValueByText("//dl[4]//dd[1]",SelectorType.XPATH),expected);
 
             //What do you need to use your permits for
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[5]//dt[1]",SelectorType.XPATH),"What do you need to use your permits for?");
+            assertEquals(BasePage.getElementValueByText("//dl[5]//dt[1]",SelectorType.XPATH),"What do you need to use your permits for?");
             String expected1= PermitUsagePage.getJourney();
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[5]//dd[1]",SelectorType.XPATH),expected1);
+            assertEquals(BasePage.getElementValueByText("//dl[5]//dd[1]",SelectorType.XPATH),expected1);
 
             //Do you need to carry out cabotage?
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[6]//dt[1]",SelectorType.XPATH),"Do you need to carry out cabotage?");
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[6]//dd[1]",SelectorType.XPATH),"I only need permits for cabotage");
+            assertEquals(BasePage.getElementValueByText("//dl[6]//dt[1]",SelectorType.XPATH),"Do you need to carry out cabotage?");
+            assertEquals(BasePage.getElementValueByText("//dl[6]//dd[1]",SelectorType.XPATH),"I only need permits for cabotage");
 
             //How many permits do you need?
             String permitLabel = NumberOfPermitsPageJourney.getLabel();
             String permitValue = String.valueOf(NumberOfPermitsPageJourney.getPermitValue());
             String expected3= permitValue + " " + permitLabel + "s";
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[7]//dt[1]",SelectorType.XPATH),"How many permits do you need?");
-            Assert.assertEquals(BasePage.getElementValueByText("//dl[7]//dd[1]",SelectorType.XPATH),expected3);
+            assertEquals(BasePage.getElementValueByText("//dl[7]//dt[1]",SelectorType.XPATH),"How many permits do you need?");
+            assertEquals(BasePage.getElementValueByText("//dl[7]//dd[1]",SelectorType.XPATH),expected3);
 
             //advisory text
 
@@ -87,7 +89,8 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             Assert.assertTrue("I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.",true);
 
             //verify the return address
-            AnnualBilateralSnapshotPage.assertAddress();
+            String address = AnnualBilateralSnapshotPage.getAddress();
+            assertEquals("International Road Haulage Permit Office, Hillcrest House, 386 Harehills Lane, Leeds, LS9 6NF", address);
         });
 
     }
