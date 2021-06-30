@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 import activesupport.aws.s3.S3;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -15,6 +14,8 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
@@ -23,8 +24,6 @@ import org.dvsa.testing.lib.pages.internal.SearchNavBar;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
 import javax.mail.MessagingException;
@@ -48,8 +47,8 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             refreshPage();
             LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
         });
-        Then("^the no issued permits message should be displayed$", () -> Assert.assertTrue("Unable to find the no issued permits message", IrhpPermitsDetailsPage.hasNoPermitsMessage()));
-        And("^the no permits applications message should be displayed$", IrhpPermitsDetailsPage::hasNoPermitApplicationsMessage);
+        Then("^the no issued permits message should be displayed$", () -> Assert.assertTrue("Unable to find the no issued permits message", IrhpPermitsDetailsPage.isNoPermitsMessagePresent()));
+        And("^the no permits applications message should be displayed$", IrhpPermitsDetailsPage::isNoPermitApplicationsMessagePresent);
         Then("^the ongoing permit application is to be as expected$", () -> {
             List<PermitApplication> applications = IrhpPermitsDetailsPage.getApplications();
             LicenceStore licence = operator.getCurrentLicence().get();

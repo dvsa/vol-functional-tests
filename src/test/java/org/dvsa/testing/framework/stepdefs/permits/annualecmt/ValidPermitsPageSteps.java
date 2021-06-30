@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPag
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
@@ -23,8 +24,8 @@ import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -50,15 +51,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-
-            world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            IrhpPermitsApplyPage.licence();
-            String browser = String.valueOf(getURL());
-            get(browser+"irhp-application/");
-            IrhpPermitsApplyPage.viewApplication();
-            IrhpPermitsApplyPage.grantApplication();
-            IrhpPermitsApplyPage.continueButton();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
             sleep(5000);
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
             waitForTitleToBePresent("Sign in to your Vehicle Operator Licensing account");

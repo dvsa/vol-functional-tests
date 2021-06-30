@@ -16,6 +16,7 @@ import apiCalls.eupaActions.internal.CaseWorkerAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
+import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
@@ -27,11 +28,11 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
@@ -91,16 +92,7 @@ public class CommonSteps extends BasePage implements En {
         And("^I Grant the application on internal$", () -> {
             LicenceModel licence = OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0);
             operator.setCurrentLicenceNumber(licence.getLicNo());
-
-            world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            IrhpPermitsApplyPage.licence();
-            String browser = String.valueOf(getURL());
-            System.out.println(getURL());
-            get(browser+"irhp-application/");
-            IrhpPermitsApplyPage.viewApplication();
-            IrhpPermitsApplyPage.grantApplication();
-            IrhpPermitsApplyPage.continueButton();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
         });
         And("^I accept and pay the issuing fee on Selfserve$", () -> {
             deleteCookies();

@@ -19,11 +19,11 @@ import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.enums.sections.MultilateralSection;
+import org.dvsa.testing.lib.newPages.internal.irhp.InternalAnnualBilateralPermitApplicationPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.InternalAnnualBilateralPermitApplicationPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
 import java.util.List;

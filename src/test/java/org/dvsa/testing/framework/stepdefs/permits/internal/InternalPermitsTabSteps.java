@@ -5,14 +5,15 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertTrue;
 
 public class InternalPermitsTabSteps implements En {
     public InternalPermitsTabSteps(OperatorStore operatorStore) {
@@ -24,7 +25,8 @@ public class InternalPermitsTabSteps implements En {
             BaseDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
 
             IrhpPermitsDetailsPage.untilOnPage();
-            IrhpPermitsDetailsPage.untilStatusIs(reference, PermitStatus.VALID, Duration.LONG, TimeUnit.MINUTES);
+            String message = "Permit status did not change to the desired status within the specified time limit";
+            assertTrue(message, IrhpPermitsDetailsPage.isStatusPresentForReference(reference, PermitStatus.VALID, Duration.LONG, TimeUnit.MINUTES));
             IrhpPermitsDetailsPage.select(reference);
         });
         Then("^the annual bilateral permit table has the expected format$", () -> {

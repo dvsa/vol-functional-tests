@@ -7,6 +7,7 @@ import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.internal.AnnualBilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
@@ -14,6 +15,8 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitFeesPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
 import org.dvsa.testing.lib.newPages.external.enums.Sector;
@@ -23,9 +26,6 @@ import org.dvsa.testing.lib.pages.internal.details.BaseApplicationDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitFeesPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -34,8 +34,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
-import static org.dvsa.testing.lib.pages.BasePage.*;
-import static org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage.*;
+import static org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -62,10 +61,7 @@ public class SubmitPermitApplicationSteps implements En {
         Then("^save the application$", IrhpPermitsApplyPage::saveIRHP);
         Then("^I apply for an annual bilateral application in internal$", () -> {
             applyforPermit();
-            IrhpPermitsPage.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
-            IrhpPermitsPage.Model.permitType(PermitType.ANNUAL_BILATERAL);
-            IrhpPermitsPage.Model.continueButton();
-            IrhpPermitsPage.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
+            IRHPPageJourney.completeModal(PermitType.ANNUAL_BILATERAL);
             LicenceStore licence = operatorStore.getLatestLicence().orElseThrow(IllegalStateException::new);
             AnnualBilateralJourney.getInstance().numberOfPermits(licence).save(licence);
 
@@ -270,9 +266,7 @@ public class SubmitPermitApplicationSteps implements En {
         When("^I am on the first fee tab page$", ()->{
             BaseDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
         });
-        When("^I click the application link on the fees page$", ()->{
-          IrhpPermitFeesPage.feeDetailsLink();
-        });
+        When("^I click the application link on the fees page$", IrhpPermitFeesPage::clickFeeDetailsLink);
         Then ("^I should be in the edit fee page$", ()->{
             isPath("/licence/\\d+/fees/edit-fee/\\d+/");
         });
@@ -307,7 +301,7 @@ public class SubmitPermitApplicationSteps implements En {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             String expectedOutstandingBalance = String.valueOf(licenceStore.getEcmt().getNumberOfPermits()*10);
             int expectedOutstandingFee = Integer.parseInt(expectedOutstandingBalance);
-            int actualOutstandingBalance = IrhpPermitFeesPage.getFeeOutstanding();
+            int actualOutstandingBalance = IrhpPermitFeesPage.getOutstandingFee();
             assertThat(actualOutstandingBalance, is(expectedOutstandingFee));
         });
 

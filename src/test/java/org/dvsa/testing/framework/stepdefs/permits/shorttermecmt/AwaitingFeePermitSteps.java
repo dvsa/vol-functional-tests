@@ -6,6 +6,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
+import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -21,8 +22,8 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Yea
 import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -65,20 +66,10 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
 
-            world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
+            operatorStore.withLicences(licenceStore);
 
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
-
-        LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-        operatorStore.withLicences(licenceStore);
-
-            IrhpPermitsApplyPage.licence();
-            String browser = String.valueOf(getURL());
-            get(browser+"irhp-application/");
-            IrhpPermitsApplyPage.viewApplication();
-            IrhpPermitsApplyPage.grantApplication();
-            IrhpPermitsApplyPage.continueButton();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();

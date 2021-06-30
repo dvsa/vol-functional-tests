@@ -3,23 +3,23 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.ecmtremoval;
 import Injectors.World;
 import activesupport.number.Int;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.details.BaseApplicationDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsPage;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage.*;
+import static org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage.*;
 
 public class ECMTRemovalInternalApplicationSteps implements En {
     public World world;
@@ -29,10 +29,7 @@ public class ECMTRemovalInternalApplicationSteps implements En {
         And("^the case worker apply for an ECMT Removal application$", () -> {
             LicenceDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
             IrhpPermitsApplyPage.applyforPermit();
-            IrhpPermitsPage.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
-            IrhpPermitsPage.Model.permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL);
-            IrhpPermitsPage.Model.continueButton();
-            IrhpPermitsPage.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
+            IRHPPageJourney.completeModal(PermitType.ECMT_INTERNATIONAL_REMOVAL);
 
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);
@@ -77,10 +74,7 @@ public class ECMTRemovalInternalApplicationSteps implements En {
         And("^the case worker submits partial ECMT Removal application$", () -> {
             LicenceDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
             IrhpPermitsApplyPage.applyforPermit();
-            IrhpPermitsPage.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
-            IrhpPermitsPage.Model.permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL);
-            IrhpPermitsPage.Model.continueButton();
-            IrhpPermitsPage.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
+            IRHPPageJourney.completeModal(PermitType.ECMT_INTERNATIONAL_REMOVAL);
 
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);

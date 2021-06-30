@@ -14,9 +14,9 @@ import org.dvsa.testing.lib.newPages.enums.FeeSection;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.pages.internal.details.FeesPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
 import java.time.LocalDateTime;
