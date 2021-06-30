@@ -10,11 +10,11 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
 import org.dvsa.testing.lib.newPages.internal.bilateral.AnnualBilateralSnapshotPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
+import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Category;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Subcategory;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.internal.doc.PermitApplicationDocPage;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -40,8 +40,7 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             ArrayList<String> tab = new ArrayList<String> (getDriver().getWindowHandles());
             getDriver().switchTo().window(tab.get(tab.size() - 1));
 
-            untilUrlPathIs(PermitApplicationDocPage.RESOURCE, TimeUnit.SECONDS, Duration.LONG);
-            LicenceStore licence = operator.getCurrentLicence().get();
+            DocumentsPage.untilOnPage();
 
             //To verify HTML Snapshot page is displayed
             AnnualBilateralSnapshotPage.untilOnPage();

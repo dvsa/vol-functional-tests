@@ -14,12 +14,12 @@ import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
+import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Category;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Subcategory;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.internal.doc.PermitApplicationDocPage;
 import org.dvsa.testing.lib.pages.internal.multilateral.AnnualMultilateralSnapshotPage;
 import org.junit.Assert;
 
@@ -75,7 +75,7 @@ public class HtmlSnapshotSteps extends BasePage implements En {
             ArrayList<String> tab = new ArrayList<String> (getDriver().getWindowHandles());
             getDriver().switchTo().window(tab.get(tab.size() - 1));
 
-            untilUrlPathIs(PermitApplicationDocPage.RESOURCE, TimeUnit.SECONDS, Duration.LONG);
+            DocumentsPage.untilOnPage();
             LicenceStore licence = operator.getCurrentLicence().get();
 
             //AC03
