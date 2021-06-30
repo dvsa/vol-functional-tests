@@ -7,6 +7,7 @@ import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenByCountryModel
 import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import com.google.common.collect.Lists;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -14,11 +15,13 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesPage;
+import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.InternalAnnualBilateralPermitApplicationPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
-import org.dvsa.testing.lib.pages.internal.details.*;
 import org.junit.Assert;
 
 import java.time.LocalDate;
@@ -48,7 +51,7 @@ public class AnnualBilateralInternalApplicationSteps implements En {
             Assert.assertNotEquals(LocalDate.now(), InternalAnnualBilateralPermitApplicationPage.getDateReceived());
         });
         And("^the case worker (?:has began an|begins another) annual bilateral permit application$", () -> {
-            LicenceDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
             IrhpPermitsApplyPage.applyforPermit();
             IRHPPageJourney.completeModal(PermitType.ANNUAL_BILATERAL);
         });
@@ -118,15 +121,15 @@ public class AnnualBilateralInternalApplicationSteps implements En {
             AnnualBilateralJourney.getInstance().numberOfPermits(licence).save(licence);
         });
         Then("^a fee should be generated$", () -> {
-            BaseApplicationDetailsPage.Tab.select(BaseApplicationDetailsPage.DetailsTab.Fees);
+            LicenceDetailsPageJourney.clickFeesTab();
             assertTrue("Expected there to be a fee but was unable to find one", FeesDetailsPage.hasFee());
         });
         And("^check my current fees$", () -> {
-            IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
+            IrhpPermitsDetailsPage.Tab.select(DetailsTab.Fees);
             operatorStore.getLatestLicence().orElseThrow(IllegalStateException::new).setFees(FeesPage.fees());
         });
         When("^I update the number of permits$", () -> {
-            IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
+            IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
            IrhpPermitsApplyPage.viewApplication();
             List<InternalAnnualBilateralPermitApplicationPage.Window> windows = InternalAnnualBilateralPermitApplicationPage.openWindows();
             int permits = windows.get(0).getNumberOfPermits() < windows.get(0).getMaximumNumberOfPermits() ? windows.get(0).getNumberOfPermits() + 1 : windows.get(0).getNumberOfPermits() - 1;
@@ -136,7 +139,7 @@ public class AnnualBilateralInternalApplicationSteps implements En {
         Then("^new fees are generated$", () -> {
             List<FeesPage.Fee> oldFees = operatorStore.getLatestLicence().get().getFees();
 
-            IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
+            IrhpPermitsDetailsPage.Tab.select(DetailsTab.Fees);
             FeesPage.untilOnPage();
 
             // Checks that the fee numbers on the page now do not match those recorded before

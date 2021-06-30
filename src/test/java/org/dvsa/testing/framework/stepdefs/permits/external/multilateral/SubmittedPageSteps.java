@@ -1,14 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import Injectors.World;
-import activesupport.string.Str;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
@@ -17,11 +13,11 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsPage;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -73,7 +69,7 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
-            IrhpPermitsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
+            IrhpPermitsPage.Tab.select(DetailsTab.Fees);
 
 
             //Pay Fee
@@ -96,16 +92,8 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             untilElementIsPresent("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L, TimeUnit.SECONDS);
-            IrhpPermitsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
-
-            while(FeesDetailsPage.hasFee()) {
-                FeesDetailsPage.select1stFee();
-                FeesDetailsPage.waive(true);
-                FeesDetailsPage.waiveNote(Str.randomWord(180));
-                FeesDetailsPage.recommandWaiver();
-                FeesDetailsPage.waive(FeesDetailsPage.Decision.Approve);
-            }
-
+            IrhpPermitsPage.Tab.select(DetailsTab.Fees);
+            FeeDetailsPageJourney.whileFeesPresentWaveFee();
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
             HomePage.PermitsTab.selectFirstOngoingApplication();

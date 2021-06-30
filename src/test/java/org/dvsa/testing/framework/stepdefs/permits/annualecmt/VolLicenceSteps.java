@@ -20,8 +20,8 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
+import org.dvsa.testing.lib.newPages.internal.details.BaseDetailsPage;
 import org.dvsa.testing.lib.newPages.internal.details.sections.Decisions;
-import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -96,10 +96,10 @@ public class VolLicenceSteps implements En {
 
             switch (state) {
                 case "curtailed":
-                    LicenceDetailsPage.Section.decisions.curtail();
+                    BaseDetailsPage.curtail();
                     break;
                 case "suspended":
-                    LicenceDetailsPage.Section.decisions.suspend();
+                    BaseDetailsPage.suspend();
                     break;
             }
 

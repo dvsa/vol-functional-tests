@@ -6,6 +6,7 @@ import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
@@ -14,18 +15,14 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
+import org.dvsa.testing.lib.newPages.external.enums.ShortTermRestrictedCountry;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitFeesPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
-import org.dvsa.testing.lib.newPages.external.enums.Sector;
-import org.dvsa.testing.lib.newPages.external.enums.ShortTermRestrictedCountry;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
-import org.dvsa.testing.lib.pages.internal.details.BaseApplicationDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -54,7 +51,7 @@ public class SubmitPermitApplicationSteps implements En {
 
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            LicenceDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
             viewApplication();
 
         });
@@ -70,9 +67,7 @@ public class SubmitPermitApplicationSteps implements En {
         When("^I apply for an ECMT APGG Euro5 or Euro 6 application$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
-            boolean cabotage = true;
-            boolean euro6Compliant = true;
+            LicenceDetailsPageJourney.clickIRHPTab();
 
             //apply application
             untilOnPage();
@@ -101,8 +96,7 @@ public class SubmitPermitApplicationSteps implements En {
         When("^I apply for a short term APGG Euro5 or Euro 6 application$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
-            boolean cabotage = true;
+            LicenceDetailsPageJourney.clickIRHPTab();
 
             //apply application
             untilOnPage();
@@ -132,8 +126,7 @@ public class SubmitPermitApplicationSteps implements En {
         When("^I apply for an ECMT permit application without selecting Euro emmissions checkbox$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
-            boolean cabotage = true;
+            LicenceDetailsPageJourney.clickIRHPTab();
 
             //apply application
             untilOnPage();
@@ -156,11 +149,9 @@ public class SubmitPermitApplicationSteps implements En {
             When("^I apply for an Short term APSG permit application$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
 
             int numberOfTrips = Int.random(1, 1000);
-            boolean cabotage = true;
-            boolean euro6Compliant = true;
 
             //apply application
             untilOnPage();
@@ -226,7 +217,7 @@ public class SubmitPermitApplicationSteps implements En {
 
         //withdraw button Exists
         Then("^I am in application details page, I should see withdraw button$", () -> {
-            LicenceDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
             viewApplication();
             isWithdrawButtonPresent();
         });
@@ -234,7 +225,7 @@ public class SubmitPermitApplicationSteps implements En {
         Then("^I am in fee details page, I should see withdraw button$", () -> {
             refreshPage();
             waitUntilElementIsEnabled("//a[@id='menu-licence_irhp_applications-fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
-            LicenceDetailsPage.Tab.select(DetailsTab.Fees);
+            LicenceDetailsPageJourney.clickFeesTab();
             isWithdrawButtonPresent();
         });
         //cancel permit application
@@ -258,14 +249,12 @@ public class SubmitPermitApplicationSteps implements En {
 
         //Go To Fee tab
         When("^I am on the fee tab page$", ()->{
-            BaseApplicationDetailsPage.Tab.select(BaseApplicationDetailsPage.DetailsTab.Fees);
+            LicenceDetailsPageJourney.clickFeesTab();
             submitButtonAPSGExists();
         });
         //Go To first Fee tab
 
-        When("^I am on the first fee tab page$", ()->{
-            BaseDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
-        });
+        When("^I am on the first fee tab page$", LicenceDetailsPageJourney::clickFeesTab);
         When("^I click the application link on the fees page$", IrhpPermitFeesPage::clickFeeDetailsLink);
         Then ("^I should be in the edit fee page$", ()->{
             isPath("/licence/\\d+/fees/edit-fee/\\d+/");
@@ -274,14 +263,14 @@ public class SubmitPermitApplicationSteps implements En {
            Assert.assertEquals(BasePage.getElementValueByText("//span[@class='status red']",SelectorType.XPATH),"CANCELLED");
         });
         When ("^I select application to refund$", () -> {
-            BaseApplicationDetailsPage.Tab.select(BaseApplicationDetailsPage.DetailsTab.Processing);
-            BaseApplicationDetailsPage.Tab.select(BaseApplicationDetailsPage.DetailsTab.Fees);
+            LicenceDetailsPageJourney.clickProcessingTab();
+            LicenceDetailsPageJourney.clickFeesTab();
             String browser = String.valueOf(getURL());
             get(browser+"/?i=e&status=all&sort=id&order=DESC");
             FeesDetailsPage.select1stFee();
             isPath("/licence/\\d+/fees/edit-fee/");
             FeesDetailsPage.refundFeeButton();
-            FeesDetailsPage.refundAccept();
+            FeesDetailsPage.acceptRefund();
         });
         Then("^I should see Fee Amount calculated correctly$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
@@ -320,7 +309,7 @@ public class SubmitPermitApplicationSteps implements En {
             //Go To Fee tab
             refreshPage();
             waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
-            LicenceDetailsPage.Tab.select(DetailsTab.Fees);
+            LicenceDetailsPageJourney.clickFeesTab();
         });
         //Submit Button Exists
         Then("^I should see Submit button$", IrhpPermitsApplyPage::submitButtonExists);
@@ -392,10 +381,8 @@ public class SubmitPermitApplicationSteps implements En {
             Assert.assertEquals(BasePage.getElementValueByText("//p[@class='error__text']", SelectorType.XPATH),"Select one main sector only");
         });
         When("^percentage of international journey checkbox is not selected", () -> {
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
             int numberOfTrips = Int.random(1, 1000);
-            boolean cabotage = true;
-            boolean euro6Compliant = true;
 
             //apply application
             int numberOfPermits = Int.random(1, operatorStore.getLatestLicence().get().getNumberOfAuthorisedVehicles());
@@ -407,13 +394,12 @@ public class SubmitPermitApplicationSteps implements En {
             permitsQuantityInternal(numberOfPermits);
             checkBoxClickedSaveContinue();
             selectTrips(numberOfTrips);
-            Sector sector = sector();
             restrictedCountriesNo();
             declare(true);
         });
 //checking sector page validation
         When("sectors are not selected in internal", () -> {
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
             int numberOfTrips = Int.random(1, 1000);
             boolean cabotage = true;
             boolean euro6Compliant = true;
@@ -436,7 +422,7 @@ public class SubmitPermitApplicationSteps implements En {
         When("declaration checkbox is not selected in internal", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
             boolean cabotage = true;
             boolean euro6Compliant = true;
 

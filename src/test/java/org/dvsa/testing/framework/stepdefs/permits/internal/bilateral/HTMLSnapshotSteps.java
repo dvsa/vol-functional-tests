@@ -9,15 +9,18 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
 import org.dvsa.testing.lib.newPages.internal.bilateral.AnnualBilateralSnapshotPage;
+import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
+import org.dvsa.testing.lib.newPages.internal.details.enums.Category;
+import org.dvsa.testing.lib.newPages.internal.details.enums.Subcategory;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.lib.pages.internal.doc.PermitApplicationDocPage;
 import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import static org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage.snapshotTitle;
 import static org.junit.Assert.assertEquals;
 
 public class HTMLSnapshotSteps extends BasePage implements En {
@@ -25,12 +28,12 @@ public class HTMLSnapshotSteps extends BasePage implements En {
     public HTMLSnapshotSteps(OperatorStore operator, World world, LicenceStore licenceStore) {
 
         Then("^an HTML snapshot for annual bilateral permit is generated$", () -> {
-            String expectedDescription = DocsAndAttachmentsPage.stapshotTitle(licenceStore.getReferenceNumber(), PermitType.ANNUAL_BILATERAL);
+            String expectedDescription = snapshotTitle(licenceStore.getReferenceNumber(), PermitType.ANNUAL_BILATERAL);
             DocsAndAttachmentsPage.selectSnapshot(licenceStore.getReferenceNumber(),PermitType.ANNUAL_BILATERAL);
             DocsAndAttachmentsPage.Doc actualDoc = DocsAndAttachmentsPage.snapshotDoc(licenceStore.getReferenceNumber(), PermitType.ANNUAL_BILATERAL);
             assertEquals(expectedDescription, actualDoc.getDescription());
-            assertEquals(DocsAndAttachmentsPage.Category.Permits, actualDoc.getCategory());
-            assertEquals(DocsAndAttachmentsPage.Subcategory.Application, actualDoc.getSubcategory());
+            assertEquals(Category.Permits, actualDoc.getCategory());
+            assertEquals(Subcategory.Application, actualDoc.getSubcategory());
         });
         Then("^text for annual bilateral snapshot is displayed as expected$", () -> {
 
@@ -82,7 +85,6 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             assertEquals(BasePage.getElementValueByText("//dl[7]//dd[1]",SelectorType.XPATH),expected3);
 
             //advisory text
-
             Assert.assertTrue("You will comply fully with the conditions of use under which the permits may be used.",true);
             Assert.assertTrue("Your driver will carry the permit for the entire outbound and return journey and present it to any competent authority or inspectors.",true);
             Assert.assertTrue("You understand that a permit is required for all countries you are travelling to and transiting through.",true);

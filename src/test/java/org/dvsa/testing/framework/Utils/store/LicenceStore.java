@@ -10,7 +10,7 @@ import org.dvsa.testing.lib.newPages.enums.PermitUsage;
 import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
 import org.dvsa.testing.lib.newPages.external.enums.JourneyType;
 import org.dvsa.testing.lib.newPages.external.enums.Sector;
-import org.dvsa.testing.lib.pages.internal.details.FeesPage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesPage;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;

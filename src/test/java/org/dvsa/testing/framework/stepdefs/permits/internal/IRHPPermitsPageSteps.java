@@ -1,10 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
+import Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
@@ -13,17 +14,16 @@ import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
 import org.dvsa.testing.lib.pages.internal.ResultsPage;
 import org.dvsa.testing.lib.pages.internal.SearchNavBar;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.junit.Assert;
 
 import javax.mail.MessagingException;
@@ -45,7 +45,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
     public IRHPPermitsPageSteps(OperatorStore operator, World world) {
         When("^I am viewing a licences IRHP section$", () -> {
             refreshPage();
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
         });
         Then("^the no issued permits message should be displayed$", () -> Assert.assertTrue("Unable to find the no issued permits message", IrhpPermitsDetailsPage.isNoPermitsMessagePresent()));
         And("^the no permits applications message should be displayed$", IrhpPermitsDetailsPage::isNoPermitApplicationsMessagePresent);
@@ -78,12 +78,12 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             // Search for licence
             viewLicenceOnInternal(world, Str.find("\\w{2}\\d{7}", successfulApplications.get(0)).get());
 
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
 
             successfulPermits = successfulApplications;
         });
         Then("^The issued permit information should be as expected$", () -> {
-            LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
 //            List<LicenceStore> licences = operator.getLicences(world.<List<String>>get("ecmt.application.successful").get(0));
 //TODO: Test has been deprecated so doesn't matter but world.<List<String>>get("ecmt.application.successful" isn't set anywhere.
             List<PermitApplication> applications = IrhpPermitsDetailsPage.getIssuedPermits();
@@ -97,17 +97,17 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
         Then("^internal users should not be able to create ECMT Permit applications$", () -> {
             Assert.assertFalse(
                     "IRHP tab should NOT be present but was",
-                    IrhpPermitsDetailsPage.Tab.hasTab(BaseDetailsPage.DetailsTab.IrhpPermits)
+                    IrhpPermitsDetailsPage.Tab.hasTab(DetailsTab.IrhpPermits)
             );
         });
         And("^pay outstanding fees$", () -> {
             IRHPPermitsPageSteps.payOutstandingFees(world);
         });
         Then("^my application should be under consideration$", () -> {
-            ApplicationDetailsPage.Header.BREADCRUMB.statusIs(PermitStatus.UNDER_CONSIDERATION);
+            ApplicationDetailsPage.untilHeadingStatusIs(PermitStatus.UNDER_CONSIDERATION);
         });
         Then("^my permit application is under consideration$", () -> {
-            IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
+            IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
             IrhpPermitsApplyPage.underConsiderationStatusExists();
         });
         And("^I have an ECMT application that's not yet submitted$", () -> {
@@ -118,8 +118,8 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
     public static void payOutstandingFees(World world) {
         waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
         refreshPage();
-        LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.IrhpPermits);
-        LicenceDetailsPage.Tab.select(LicenceDetailsPage.DetailsTab.Fees);
+        LicenceDetailsPageJourney.clickIRHPTab();
+        LicenceDetailsPageJourney.clickFeesTab();
         FeesDetailsPage.outstanding();
         FeesDetailsPage.pay();
         BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);

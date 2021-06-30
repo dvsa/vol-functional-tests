@@ -7,10 +7,10 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
+import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.lib.pages.internal.doc.PermitApplicationDocPage;
 import org.junit.Assert;
 
@@ -23,7 +23,7 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
 
     public AnnualEcmtPermitsHtmlDoc(World world, OperatorStore operatorStore) {
         When("^I view the annual ECMT Permits documentation$", () -> {
-            IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.DocsAndAttachments);
+            IrhpPermitsDetailsPage.Tab.select(DetailsTab.DocsAndAttachments);
             DocsAndAttachmentsPage.select(
                    operatorStore.getLicences().get(0).getEcmt().getFullReferenceNumber(),
                     Duration.LONG,

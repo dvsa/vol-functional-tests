@@ -28,11 +28,8 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
@@ -155,14 +152,8 @@ public class CommonSteps extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
         And("^all fees have been waived$", () -> {
-            LicenceDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
-            while (FeesDetailsPage.hasFee()) {
-                FeesDetailsPage.select1stFee();
-                FeesDetailsPage.waive(true);
-                FeesDetailsPage.waiveNote(Str.randomWord(180));
-                FeesDetailsPage.recommandWaiver();
-                FeesDetailsPage.waive(FeesDetailsPage.Decision.Approve);
-            }
+            LicenceDetailsPageJourney.clickFeesTab();
+            FeeDetailsPageJourney.whileFeesPresentWaveFee();
         });
         And("^A case worker begins to process my fee payment$", () -> {
             world.APIJourneySteps.createAdminUser();

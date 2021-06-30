@@ -17,8 +17,8 @@ import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 
@@ -70,7 +70,7 @@ public class DeclarationPageSteps extends BasePage implements En {
         });
         Then("^I select the back to home link$", () -> {
            FeesDetailsPage.untilOnFeePage();
-           FeesDetailsPage.backToHomeLink();
+           FeesDetailsPage.clickBackToHome();
         });
 
 

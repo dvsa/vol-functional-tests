@@ -1,12 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
 import org.junit.Assert;
 
 import java.util.concurrent.TimeUnit;
@@ -22,7 +22,7 @@ public class InternalPermitsTabSteps implements En {
                     .orElseThrow(IllegalArgumentException::new)
                     .getReferenceNumber();
 
-            BaseDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
+            LicenceDetailsPageJourney.clickIRHPTab();
 
             IrhpPermitsDetailsPage.untilOnPage();
             String message = "Permit status did not change to the desired status within the specified time limit";

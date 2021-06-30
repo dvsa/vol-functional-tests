@@ -19,11 +19,11 @@ import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.enums.sections.MultilateralSection;
+import org.dvsa.testing.lib.newPages.internal.details.FeesPage;
+import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.InternalAnnualBilateralPermitApplicationPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.FeesPage;
 import org.junit.Assert;
 
 import java.util.List;
@@ -75,7 +75,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
             LicenceStore licence = operatorStore.getCurrentLicence().get();
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
+            IrhpPermitsDetailsPage.Tab.select(DetailsTab.Fees);
 
             licence.setFees(FeesPage.fees());
         });
@@ -87,7 +87,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
         });
         And("^I specify the number of permits I require for my multilateral permit$", NumberOfPermitsPageJourney::completeMultilateralPage);
         When("^I update the number of permits for my multilateral permit$", () -> {
-            IrhpPermitsDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.IrhpPermits);
+            IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
             IrhpPermitsApplyPage.viewApplication();
             InternalAnnualBilateralPermitApplicationPage.numPermits(1, 1);
             InternalAnnualBilateralPermitApplicationPage.save();

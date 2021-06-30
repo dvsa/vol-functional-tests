@@ -21,6 +21,8 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Cou
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsPage;
 import org.dvsa.testing.lib.pages.BasePage;
@@ -28,8 +30,6 @@ import org.dvsa.testing.lib.newPages.external.pages.SectorPage;
 import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
 import org.dvsa.testing.lib.newPages.external.enums.Sector;
 import org.dvsa.testing.lib.pages.internal.BaseModel;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -92,7 +92,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             refreshPage();
             waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
-            IrhpPermitsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
+            IrhpPermitsPage.Tab.select(DetailsTab.Fees);
 
             //Pay Fee
             FeesDetailsPage.outstanding();
@@ -134,15 +134,8 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
-            IrhpPermitsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
-
-            while(FeesDetailsPage.hasFee()) {
-                FeesDetailsPage.select1stFee();
-                FeesDetailsPage.waive(true);
-                FeesDetailsPage.waiveNote(Str.randomWord(180));
-                FeesDetailsPage.recommandWaiver();
-                FeesDetailsPage.waive(FeesDetailsPage.Decision.Approve);
-            }
+            IrhpPermitsPage.Tab.select(DetailsTab.Fees);
+            FeeDetailsPageJourney.whileFeesPresentWaveFee();
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
