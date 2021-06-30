@@ -8,11 +8,11 @@ Feature: ESBR for English, Welsh and Scottish Areas
     Then A short notice flag should be displayed in selfserve
     Examples:
       | Area       | Days |
-      | north_east | 41   |
+#      | north_east | 41   |
       | scotland   | 41   |
-      | wales      | 55   |
-      | east       | 41   |
-      | west       | 41   |
+#      | wales      | 55   |
+#      | east       | 41   |
+#      | west       | 41   |
 
   @ss_regression
   Scenario Outline: ESBR in self-serve

@@ -33,26 +33,26 @@ public class DVLAJourneySteps extends BasePage {
     }
 
     public void navigateToAddVehiclePage() {
-        click("//input[@id='add-vehicle']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//input[@id='add-vehicle']", SelectorType.XPATH);
+        waitAndClick("//*[@type='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Add a vehicle");
     }
 
     public void navigateToRemoveVehiclePage() {
-        click("//input[@id='remove-vehicle']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//input[@id='remove-vehicle']", SelectorType.XPATH);
+        waitAndClick("//*[@type='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Remove a vehicle");
     }
 
     public void navigateToReprintVehicleDiscPage() {
         click("//input[@id='reprint-vehicle']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//*[@id='next']",SelectorType.XPATH);
         waitForTitleToBePresent("Reprint vehicle disc");
     }
 
     public void navigateToTransferVehiclePage() {
         click("//input[@id='transfer-vehicle']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//*[@id='next']",SelectorType.XPATH);
         waitForTitleToBePresent("Transfer vehicles between your licences");
     }
 
