@@ -75,7 +75,7 @@ public class FeePageSteps implements En {
 
             // Total fee to be paid check
             int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
-            int  numberOfPermits = Integer.parseInt(String.valueOf(permit.totalNumberOfPermits()));
+            int numberOfPermits = Integer.parseInt(String.valueOf(permit.totalNumberOfPermits()));
             String feePerPermit= getElementValueByText("//tbody/tr/td[@data-heading='Fee per permit']", SelectorType.XPATH).toString();
             int feePerPermit1= Integer.parseInt(feePerPermit.substring(1));
             int expectedTotal = numberOfPermits * feePerPermit1;

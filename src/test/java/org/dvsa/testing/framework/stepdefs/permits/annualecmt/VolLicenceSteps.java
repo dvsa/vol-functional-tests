@@ -99,12 +99,12 @@ public class VolLicenceSteps implements En {
                     LicenceDetailsPage.Section.decisions.curtail();
                     break;
                 case "suspended":
-                    LicenceDetailsPage.Section.decisions.suspended();
+                    LicenceDetailsPage.Section.decisions.suspend();
                     break;
             }
 
             Decisions.Model.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
-            Decisions.Model.legislation(Decisions.Model.Document.Art82Curtail);
+            Decisions.Model.clickCurtailLegislation();
             Decisions.Model.affectNow();
             Decisions.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
         });
