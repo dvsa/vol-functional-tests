@@ -28,7 +28,7 @@ Feature: Search and add a vehicle
       | goods    | S679ASX |
 
   Scenario: Add a vehicle registration mark on a licence
-    Given I have a "goods" "standard_national" licence
+    Given I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
     When I navigate to manage vehicle page on a licence
     When I search for a valid "F95 JGE" registration
     Then the vehicle summary should be displayed on the page:
