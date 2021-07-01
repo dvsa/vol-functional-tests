@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -41,9 +42,7 @@ public class NumberOfPermitsPageSteps implements En {
         Then("^I select the fee tab and pay the outstanding fees$", () -> {
             HomePage.selectTab(Tab.FEES);
             assertTrue(HomePage.FeesTab.areOutstandingFeesPresent());
-            HomePage.FeesTab.outstanding(true);
-            HomePage.FeesTab.pay();
-            HomePage.FeesTab.payNowButton();
+            HomePageJourney.payAllOutstandingFees();
             world.feeAndPaymentJourneySteps.customerPaymentModule();
         });
         Then("^I am taken to the payment successful page$", () -> {

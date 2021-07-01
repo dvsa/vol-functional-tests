@@ -57,7 +57,7 @@ public class DeclarationPageSteps implements En {
         Then("^the short term declarations page has got the correct advisory text$", () -> {
             assertTrue(DeclarationPage.isShortTermECMTAdvisoryTextPresent());
         });
-        Then("^I should see the validation error message on the short term declaration page$", DeclarationPage::hasErrorMessagePresent);
+        Then("^I should see the validation error message on the short term declaration page$", DeclarationPage::isErrorMessagePresent);
 
         And("^I click declaration link on the overview page again$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);

@@ -22,7 +22,7 @@ public class SurrendersStartPage extends BasePage implements En {
         });
         And("^the correct instructions for \"([^\"]*)\" should be displayed$", (String licenceType) -> {
             if(licenceType.equals("public")) {
-                assertTrue(isTextPresent("You will need to cancel all registered bus services.",40));
+                assertTrue(isTextPresent("You will need to cancel all registered bus services."));
             }
         });
         And("^the correct licence number should be displayed$", () -> {

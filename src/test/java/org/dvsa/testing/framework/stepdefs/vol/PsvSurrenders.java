@@ -49,7 +49,7 @@ public class PsvSurrenders extends BasePage implements En {
             click("//a[contains(text(),'Change')][1]", SelectorType.XPATH);
             waitForTitleToBePresent("Addresses");
             findElement("addressTown", SelectorType.ID, 5).clear();
-            enterText("addressTown", world.surrenderJourneySteps.getUpdatedTown(), SelectorType.ID);
+            enterText("addressTown", SelectorType.ID, world.surrenderJourneySteps.getUpdatedTown());
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
             waitForTitleToBePresent("Review your contact information");
         });
@@ -64,9 +64,9 @@ public class PsvSurrenders extends BasePage implements En {
         Then("^the post verify success page is displayed$", () -> {
             waitForTextToBePresent("What happens next");
             Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber()), 30));
-            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 30));
-            assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 30));
+            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
+            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
+            assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
             waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
         });
         And("^the surrender status is \"([^\"]*)\"$", (String status) -> {

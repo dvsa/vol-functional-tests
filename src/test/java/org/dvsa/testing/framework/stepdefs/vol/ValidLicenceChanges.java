@@ -33,14 +33,14 @@ public class ValidLicenceChanges extends BasePage implements En {
     public ValidLicenceChanges(World world) {
         When("^i make changes to the business details page$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Business details");
-            enterText("//*[@id='data[tradingNames][0][name]']", tradingName,SelectorType.XPATH);
+            enterText("//*[@id='data[tradingNames][0][name]']",SelectorType.XPATH, tradingName);
             click("//a[@class='add-another-trigger']", SelectorType.XPATH);
-            enterText("//*[@id='data[tradingNames][1][name]']", tradingName2, SelectorType.XPATH);
+            enterText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH, tradingName2);
             replaceText("//*[@id='natureOfBusiness']", natureOfBusiness);
             world.UIJourneySteps.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
             click("//*[@id='add']", SelectorType.XPATH);
             waitAndEnterText("//*[@id='name']", SelectorType.XPATH,companyName);
-            enterText("//*[@id='companyNo']", companyNumber, SelectorType.XPATH);
+            enterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             click("//*[@id='allow-email[allowEmail]']", SelectorType.XPATH);
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
@@ -126,7 +126,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             }
             click("//*[@id='add']",SelectorType.XPATH);
             waitForTextToBePresent("How many additional discs are required?");
-            enterText("//*[@id='data[additionalDiscs]']","2",SelectorType.XPATH);
+            enterText("//*[@id='data[additionalDiscs]']", SelectorType.XPATH, "2");
             click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
         });
         Then("^the changes to the licence discs page are made$", () -> {
@@ -142,10 +142,10 @@ public class ValidLicenceChanges extends BasePage implements En {
             replaceText("//*[@id='licence[safetyInsVehicles]']", "6");
             click("//*[@id='licence[safetyInsVaries]']", SelectorType.XPATH);
             click("//*[contains(@value,'tach_external')]", SelectorType.XPATH);
-            enterText("//*[@id='licence[tachographInsName]']", externalAnalysisBureau, SelectorType.XPATH);
+            enterText("//*[@id='licence[tachographInsName]']", SelectorType.XPATH, externalAnalysisBureau);
             click("//*[@id='add']", SelectorType.XPATH);
             click("//*[contains(text(),'An owner or employee')]", SelectorType.XPATH);
-            enterText("//*[@id='contactDetails[fao]']",safetyInspector,SelectorType.XPATH);
+            enterText("//*[@id='contactDetails[fao]']", SelectorType.XPATH, safetyInspector);
             clickByLinkText("Enter the address yourself");
             world.UIJourneySteps.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);

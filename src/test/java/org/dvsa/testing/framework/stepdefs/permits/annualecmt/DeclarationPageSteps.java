@@ -19,7 +19,7 @@ public class DeclarationPageSteps implements En {
             ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world,operatorStore);
             ECMTPermitApplicationSteps.saveAndContinue();
         });
-        Then("^I should see the validation error message for the declaration page$", () -> Assert.assertTrue(DeclarationPage.hasErrorMessagePresent()));
+        Then("^I should see the validation error message for the declaration page$", () -> Assert.assertTrue(DeclarationPage.isErrorMessagePresent()));
         When("^I save and continue on the declaration page$", DeclarationPage::saveAndContinue);
         And("^I should see the declaration advisory texts$", DeclarationPage::isECMTAdvisoryTextPresent);
         When("^I accept and continue$", DeclarationPage::saveAndContinue);

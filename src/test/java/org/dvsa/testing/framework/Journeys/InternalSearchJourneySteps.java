@@ -61,7 +61,7 @@ public class InternalSearchJourneySteps extends BasePage {
         do {
             // - 5 is required because the set start number is for all licences that need printing, not just this licence, and so taking the end number and scaling back makes more sense.
             SearchNavBar.search(SearchType.PsvDisc, String.valueOf(psvDiscNumber));
-        } while (!isTextPresent(String.valueOf(psvDiscNumber), 200) && System.currentTimeMillis() < kickOut);
+        } while (!isTextPresent(String.valueOf(psvDiscNumber)) && System.currentTimeMillis() < kickOut);
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
@@ -81,7 +81,7 @@ public class InternalSearchJourneySteps extends BasePage {
                 world.createApplication.getOperatingCentreAddressLine2(),
                 world.createApplication.getOperatingCentreAddressLine3(),
                 world.createApplication.getOperatingCentreAddressLine4(),
-                world.createApplication.getOperatingCentreTown()), 200)
+                world.createApplication.getOperatingCentreTown()))
                 && System.currentTimeMillis() < kickOut);
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
         clickByLinkText(world.applicationDetails.getLicenceNumber());

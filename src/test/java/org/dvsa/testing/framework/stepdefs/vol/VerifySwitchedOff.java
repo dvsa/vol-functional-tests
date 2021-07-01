@@ -22,7 +22,7 @@ public class VerifySwitchedOff extends BasePage implements En {
             world.APIJourneySteps.createPartialApplication();
         });
         And("^transport manager details approved banner appears$", () -> {
-            assertTrue(isTextPresent("Transport Manager details approved", 10));
+            assertTrue(isTextPresent("Transport Manager details approved"));
             clickByLinkText("Back to Transport Managers");
         });
         And("^transport manager status is \"([^\"]*)\" and \"([^\"]*)\"$", (String classString, String Text) -> {
@@ -56,26 +56,26 @@ public class VerifySwitchedOff extends BasePage implements En {
             click("form-actions[submit]", SelectorType.ID);
         });
         Then("^the print and sign page is displayed$", () -> {
-            Assert.assertTrue(isTextPresent("Transport Manager details approved",30));
-            Assert.assertTrue(isTextPresent("Print, sign and return",30));
+            Assert.assertTrue(isTextPresent("Transport Manager details approved"));
+            Assert.assertTrue(isTextPresent("Print, sign and return"));
         });
         Then("^the 'Awaiting operator review' post signature page is displayed$", () -> {
             waitForTextToBePresent("What happens next?");
             assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            assertTrue(isTextPresent("Awaiting operator review",30));
-            assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")),30));
+            assertTrue(isTextPresent("Awaiting operator review"));
+            assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
         });
         When("^i am on the the TM landing page$", () -> {
             world.TMJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
         });
         Then("^a success message banner should be displayed$", () -> {
-            Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager",30));
+            Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager"));
         });
         And("^i navigate to the declarations page$", () -> {
             world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         Then("^the 'Awaiting operator review' verify off page is displayed$", () -> {
-            assertTrue(isTextPresent("Awaiting operator review",30));
+            assertTrue(isTextPresent("Awaiting operator review"));
         });
     }
 }

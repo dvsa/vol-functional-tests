@@ -29,7 +29,7 @@ public class ESBRupload extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.busRegistrationJourneySteps.internalSearchForBusReg();
-            assertTrue(isTextPresent("Short notice",30));
+            assertTrue(isTextPresent("Short notice"));
         });
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
             world.busRegistrationJourneySteps.viewESBRInExternal();
@@ -44,7 +44,7 @@ public class ESBRupload extends BasePage implements En {
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.busRegistrationJourneySteps.internalSearchForBusReg();
             waitForTextToBePresent("Short notice");
-            assertFalse(isTextPresent("Short notice", 60));
+            assertFalse(isTextPresent("Short notice"));
         });
 
         Given("^i add a new bus registration$", () -> {
@@ -68,7 +68,7 @@ public class ESBRupload extends BasePage implements En {
             waitAndClick("//*[contains(text(),'Grant')]",SelectorType.XPATH);
         });
         Then("^the bus registration should be granted$", () -> {
-            Assert.assertTrue(isTextPresent("Registered",30));
+            Assert.assertTrue(isTextPresent("Registered"));
         });
         And("^the traffic areas should be displayed on the service details page$", () -> {
             clickByLinkText("Service details");

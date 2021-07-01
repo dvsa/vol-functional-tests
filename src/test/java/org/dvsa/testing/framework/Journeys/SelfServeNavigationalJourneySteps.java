@@ -106,7 +106,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         boolean conditionNotTrue = true;
         long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
         while (conditionNotTrue) {
-            conditionNotTrue = !isTextPresent(text, 10);
+            conditionNotTrue = !isTextPresent(text);
             click("submit", SelectorType.ID);
             waitForPageLoad();
             if (System.currentTimeMillis() > kickOut) {

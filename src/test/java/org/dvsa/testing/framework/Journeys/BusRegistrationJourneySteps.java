@@ -41,11 +41,11 @@ public class BusRegistrationJourneySteps extends BasePage {
         clickByLinkText("Bus registrations");
         click(nameAttribute("button", "action"));
         waitForTextToBePresent("Service details");
-        assertTrue(isTextPresent("Service No. & type", 5));
-        enterText("serviceNo", "123", SelectorType.ID);
-        enterText("startPoint", Str.randomWord(9), SelectorType.ID);
-        enterText("finishPoint", Str.randomWord(11), SelectorType.ID);
-        enterText("via", Str.randomWord(5), SelectorType.ID);
+        assertTrue(isTextPresent("Service No. & type"));
+        enterText("serviceNo", SelectorType.ID, "123");
+        enterText("startPoint", SelectorType.ID, Str.randomWord(9));
+        enterText("finishPoint", SelectorType.ID, Str.randomWord(11));
+        enterText("via", SelectorType.ID, Str.randomWord(5));
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
 
@@ -54,9 +54,9 @@ public class BusRegistrationJourneySteps extends BasePage {
         replaceDateFieldsByPartialId("receivedDate", dates);
 
         dates = world.globalMethods.date.getDateHashMap(0, month, 0);
-        enterText("effectiveDate_day", dates.get("day"), SelectorType.ID);
-        enterText("effectiveDate_month", dates.get("month"), SelectorType.ID);
-        enterText("effectiveDate_year", dates.get("year"), SelectorType.ID);
+        enterText("effectiveDate_day", SelectorType.ID, dates.get("day"));
+        enterText("effectiveDate_month", SelectorType.ID, dates.get("month"));
+        enterText("effectiveDate_year", SelectorType.ID, dates.get("year"));
         click(nameAttribute("button", "form-actions[submit]"));
 
         long kickOutTime = System.currentTimeMillis() + 60000;
@@ -65,7 +65,7 @@ public class BusRegistrationJourneySteps extends BasePage {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
         }
-        while (!isTextPresent("Service details", 2) && System.currentTimeMillis() < kickOutTime);
+        while (!isTextPresent("Service details") && System.currentTimeMillis() < kickOutTime);
         if (System.currentTimeMillis() > kickOutTime) {
             throw new TimeoutException("Service details page didn't display as expected within the time limit.");
         }
@@ -75,7 +75,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         clickByLinkText("" + world.applicationDetails.getLicenceNumber() + "");
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
-        enterText("fields[reason]", "Mistake", SelectorType.ID);
+        enterText("fields[reason]", SelectorType.ID, "Mistake");
         click("form-actions[submit]", SelectorType.ID);
     }
 
@@ -134,10 +134,10 @@ public class BusRegistrationJourneySteps extends BasePage {
         do {
             // Refresh page
             javaScriptExecutor("location.reload(true)");
-        } while (isTextPresent("processing", 60) && System.currentTimeMillis() < kickOutTime);
+        } while (isTextPresent("processing") && System.currentTimeMillis() < kickOutTime);
 
         try {
-            Assert.assertTrue(isTextPresent("Successful", 60));
+            Assert.assertTrue(isTextPresent("Successful"));
         } catch (Exception e) {
             throw new NotFoundException("ESBR is still displaying as 'processing' when kick out time was reached.");
         }

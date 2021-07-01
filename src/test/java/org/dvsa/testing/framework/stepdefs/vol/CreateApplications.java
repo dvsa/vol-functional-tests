@@ -26,7 +26,7 @@ public class CreateApplications extends BasePage implements En {
         });
         Then("^the application should be submitted$", () -> {
             waitForTitleToBePresent("Application overview");
-            assertTrue(isTextPresent("Your application reference number is",30));
+            assertTrue(isTextPresent("Your application reference number is"));
         });
         When("^i pay for my application$", () -> {
             waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);

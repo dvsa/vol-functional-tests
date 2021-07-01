@@ -73,13 +73,13 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
     public void promptRemovalOfInternalTransportManager() {
-        assertTrue(isTextPresent("Overview", 60));
-        if (!isLinkPresent("Transport", 60) && isTextPresent("Granted", 60)) {
+        assertTrue(isTextPresent("Overview"));
+        if (!isLinkPresent("Transport", 60) && isTextPresent("Granted")) {
             clickByLinkText(world.applicationDetails.getLicenceNumber());
             tmCount = returnTableRows("//*[@id='lva-transport-managers']/fieldset/div/div[2]/table/tbody/tr", SelectorType.XPATH);
         }
         clickByLinkText("Transport");
-        isTextPresent("TransPort Managers", 60);
+        isTextPresent("TransPort Managers");
         click("//*[@value='Remove']", SelectorType.XPATH);
     }
 
@@ -98,14 +98,14 @@ public class TransportManagerJourneySteps extends BasePage {
         HashMap<String, String> dob;
         dob = world.globalMethods.date.getDateHashMap(0, 0, -25);
         replaceDateFieldsByPartialId("dob", dob);
-        enterText("birthPlace", birthPlace, SelectorType.ID);
+        enterText("birthPlace", SelectorType.ID, birthPlace);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'External')]", SelectorType.XPATH);
         world.genericUtils.findSelectAllRadioButtonsByValue("Y");
 
         //Add Home Address
-        enterText("postcodeInput1", postCode, SelectorType.ID);
+        enterText("postcodeInput1", SelectorType.ID, postCode);
         clickByName("homeAddress[searchPostcode][search]");
         waitAndClick("homeAddress[searchPostcode][addresses]", SelectorType.ID);
         selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
@@ -126,8 +126,8 @@ public class TransportManagerJourneySteps extends BasePage {
         javaScriptExecutor("location.reload(true)");
         waitAndEnterText("licNo", SelectorType.ID, "PB123456");
         selectValueFromDropDown("//*[@id='data[role]']", SelectorType.XPATH, role);
-        enterText("//*[@id='operatingCentres']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='hoursPerWeek']", "1", SelectorType.XPATH);
+        enterText("//*[@id='operatingCentres']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='hoursPerWeek']", SelectorType.XPATH, "1");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
         //Add Other Employment
@@ -144,12 +144,12 @@ public class TransportManagerJourneySteps extends BasePage {
         waitForTextToBePresent("Add convictions and penalties");
         waitAndClick("//*[contains(text(),'Add convictions and penalties')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='conviction-date_day']", SelectorType.XPATH, "03");
-        enterText("//*[@id='conviction-date_month']", "03", SelectorType.XPATH);
-        enterText("//*[@id='conviction-date_year']", "2014", SelectorType.XPATH);
-        enterText("//*[@id='category-text']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='notes']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='court-fpn']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='penalty']", "Test", SelectorType.XPATH);
+        enterText("//*[@id='conviction-date_month']", SelectorType.XPATH, "03");
+        enterText("//*[@id='conviction-date_year']", SelectorType.XPATH, "2014");
+        enterText("//*[@id='category-text']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='notes']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='court-fpn']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='penalty']", SelectorType.XPATH, "Test");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
         waitForTextToBePresent("Add licences");
@@ -266,13 +266,13 @@ public class TransportManagerJourneySteps extends BasePage {
         world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
         click("add", SelectorType.ID);
         waitAndClick("addUser", SelectorType.ID);
-        enterText("forename", world.TMJourneySteps.getOperatorForeName(), SelectorType.ID);
-        enterText("familyName", world.TMJourneySteps.getOperatorFamilyName(), SelectorType.ID);
+        enterText("forename", SelectorType.ID, world.TMJourneySteps.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.TMJourneySteps.getOperatorFamilyName());
         LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
         replaceDateFieldsByPartialId("dob", dob);
-        enterText("username", world.TMJourneySteps.getOperatorUser(), SelectorType.ID);
-        enterText("emailAddress", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
-        enterText("emailConfirm", world.TMJourneySteps.getOperatorUserEmail(), SelectorType.ID);
+        enterText("username", SelectorType.ID, world.TMJourneySteps.getOperatorUser());
+        enterText("emailAddress", SelectorType.ID, world.TMJourneySteps.getOperatorUserEmail());
+        enterText("emailConfirm", SelectorType.ID, world.TMJourneySteps.getOperatorUserEmail());
         click("form-actions[continue]", SelectorType.ID);
         waitForTextToBePresent("user account has been created and a link sent to them");
     }

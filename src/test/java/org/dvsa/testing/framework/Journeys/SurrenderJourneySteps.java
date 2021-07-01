@@ -126,9 +126,9 @@ public class SurrenderJourneySteps extends BasePage {
     public void checkVerifyConfirmation()  {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber()), 10));
-        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
-        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
+        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 

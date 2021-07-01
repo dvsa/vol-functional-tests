@@ -11,7 +11,7 @@ public class LicenceDiscs extends BasePage implements En {
         And("^the licence discs should be present$", () -> {
             int psvDiscNumber = world.DBUtils.getFirstPsvDiscNumber(world.createApplication.getLicenceId(), world.configuration);
             for (int i = 0; i < 5; i++){
-                Assert.assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i),5));
+                Assert.assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i)));
             }
         });
     }

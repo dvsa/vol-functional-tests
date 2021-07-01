@@ -33,7 +33,7 @@ public class ContinuationJourneySteps extends BasePage {
         selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, Integer.parseInt(month) - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
         click("form-actions[generate]", SelectorType.ID);
-        enterText("filters[licenceNo]", licenceNo,  SelectorType.ID);
+        enterText("filters[licenceNo]",  SelectorType.ID, licenceNo);
         click("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
         waitAndClick("id[]", SelectorType.NAME);
@@ -62,7 +62,7 @@ public class ContinuationJourneySteps extends BasePage {
     public void completeContinuationFinancesPage()  {
         if (!(world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString()))) {
             String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]","");
-            enterText("averageBalance", necessaryIncome, SelectorType.ID);
+            enterText("averageBalance", SelectorType.ID, necessaryIncome);
             findSelectAllRadioButtonsByValue("N");
             click("submit", SelectorType.ID);
         }
@@ -73,7 +73,7 @@ public class ContinuationJourneySteps extends BasePage {
         world.internalNavigation.urlSearchAndViewApplication();
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
-        Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
+        Assert.assertTrue(isTextPresent("Digital continuation snapshot"));
         clickByLinkText("Digital continuation snapshot");
         waitForTabsToLoad(2, 60);
         ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
@@ -125,35 +125,35 @@ public class ContinuationJourneySteps extends BasePage {
 
     public void checkPSVRestrictedConditionsAndUndertakingsText() throws FileNotFoundException {
         Config testFile = new TestResourceReader("testResources/PSV/PSVRestrictedConditionsAndUndertakings.properties").getFile();
-        Assert.assertTrue(isTextPresent(testFile.getString("conditionsOne"), 10));
-        Assert.assertTrue(isTextPresent(testFile.getString("conditionsTwo"), 10));
-        Assert.assertTrue(isTextPresent(testFile.getString("conditionsThree"), 10));
-        Assert.assertTrue(isTextPresent(testFile.getString("undertakingsOne"), 10));
-        Assert.assertTrue(isTextPresent(testFile.getString("undertakingsTwo"), 10));
+        Assert.assertTrue(isTextPresent(testFile.getString("conditionsOne")));
+        Assert.assertTrue(isTextPresent(testFile.getString("conditionsTwo")));
+        Assert.assertTrue(isTextPresent(testFile.getString("conditionsThree")));
+        Assert.assertTrue(isTextPresent(testFile.getString("undertakingsOne")));
+        Assert.assertTrue(isTextPresent(testFile.getString("undertakingsTwo")));
     }
 
     public void checkContinuationReviewSections() throws IllegalBrowserException {
-        Assert.assertTrue(isTextPresent("Type of licence", 10));
-        Assert.assertTrue(isTextPresent("Business type", 10));
-        Assert.assertTrue(isTextPresent("Business details", 10));
-        Assert.assertTrue(isTextPresent("Addresses", 10));
-        Assert.assertTrue(isTextPresent("Directors", 10));
+        Assert.assertTrue(isTextPresent("Type of licence"));
+        Assert.assertTrue(isTextPresent("Business type"));
+        Assert.assertTrue(isTextPresent("Business details"));
+        Assert.assertTrue(isTextPresent("Addresses"));
+        Assert.assertTrue(isTextPresent("Directors"));
         if (!world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())){
-            Assert.assertTrue(isTextPresent("Operating centres and authorisation", 10));
-            Assert.assertTrue(isTextPresent("Safety and compliance", 10));
+            Assert.assertTrue(isTextPresent("Operating centres and authorisation"));
+            Assert.assertTrue(isTextPresent("Safety and compliance"));
             if (!world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString())) {
-                Assert.assertTrue(isTextPresent("Transport managers", 10));
+                Assert.assertTrue(isTextPresent("Transport managers"));
             }
         }
         if (world.licenceCreation.isGoodsLicence()) {
             // 'Vehicle' targeting is fine on snapshot.
-            if (isTextPresent("Print this page", 10)) {
-                Assert.assertTrue(isTextPresent("Vehicles", 10));
+            if (isTextPresent("Print this page")) {
+                Assert.assertTrue(isTextPresent("Vehicles"));
             } else {
                 // Selenium is struggling to target Vehicle title on Self Serve.
                 Assert.assertTrue(isElementPresent("vehiclesCheckbox", SelectorType.ID));
             }
         }
-        Assert.assertTrue(isTextPresent("User access",10));
+        Assert.assertTrue(isTextPresent("User access"));
     }
 }

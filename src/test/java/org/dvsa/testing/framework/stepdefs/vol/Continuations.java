@@ -38,7 +38,7 @@ public class Continuations extends BasePage implements En {
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Docs & attachments");
             refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
-            Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
+            Assert.assertTrue(isTextPresent("Digital continuation snapshot"));
         });
         And("^the users of ss should display on the continuation review details page and on the snapshot$", () -> {
             world.selfServeNavigation.navigateToNavBarPage("manage users");
@@ -56,7 +56,7 @@ public class Continuations extends BasePage implements En {
             world.continuationJourneySteps.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
             clickAllCheckboxes();
-            Assert.assertTrue(isTextPresent("User access",10));
+            Assert.assertTrue(isTextPresent("User access"));
             userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
             userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
             userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);

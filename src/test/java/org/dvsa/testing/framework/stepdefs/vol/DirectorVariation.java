@@ -149,8 +149,8 @@ public class DirectorVariation extends BasePage {
         selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
 
         String incorrectNameValue = "!@£$%^";
-        enterText(directorJourney.firstNameField, incorrectNameValue, SelectorType.XPATH);
-        enterText(directorJourney.lastNameField, incorrectNameValue, SelectorType.XPATH);
+        enterText(directorJourney.firstNameField, SelectorType.XPATH, incorrectNameValue);
+        enterText(directorJourney.lastNameField, SelectorType.XPATH, incorrectNameValue);
 
         HashMap<String, String> incorrectDateValues = new HashMap<String,String>();
         incorrectDateValues.put("day", "!@");

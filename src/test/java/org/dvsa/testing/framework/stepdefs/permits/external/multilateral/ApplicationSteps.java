@@ -83,7 +83,7 @@ public class ApplicationSteps extends BasePage implements En {
             String selector = String.format(
                     "//*[contains(text(), '%s')]//ancestor-or-self::td//following-sibling::td[last()]/span[contains(text(), '%s')]",
                     reference, PermitStatus.NOT_YET_SUBMITTED);
-            untilPresentWithRefresh(selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
+            refreshPageUntilElementAppears(selector, SelectorType.XPATH);
         });
     }
 }

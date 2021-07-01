@@ -1,8 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
-import activesupport.driver.Browser;
 import activesupport.http.RestUtils;
 import activesupport.system.Properties;
 import apiCalls.Utils.generic.Headers;
@@ -18,7 +16,6 @@ import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -79,7 +76,7 @@ public class ManageVehicle extends BasePage {
     @Then("An error message should be displayed")
     public void anErrorMessageShouldBeDisplayed() {
         isElementPresent("//div[@class=\"govuk-error-summary\"]", SelectorType.XPATH);
-        isTextPresent("Enter a Vehicle Registration Mark", 60);
+        isTextPresent("Enter a Vehicle Registration Mark");
     }
 
     @When("I search for a valid {string} registration")
@@ -87,15 +84,15 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourneySteps.VRM = vrm;
         waitAndClick("//*[contains(text(),'Add a vehicle')]", SelectorType.XPATH);
         waitAndClick("next", SelectorType.ID);
-        enterText("vehicle-search[search-value]", world.dvlaJourneySteps.VRM, SelectorType.NAME);
+        enterText("vehicle-search[search-value]", SelectorType.NAME, world.dvlaJourneySteps.VRM);
         waitAndClick("vehicle-search[submit]", SelectorType.NAME);
     }
 
     @Then("the vehicle summary should be displayed on the page:")
     public void theVehicleSummaryShouldBeDisplayedOnThePage(List<String> table) {
-        isTextPresent(String.format("A vehicle has been found with registration %s", world.dvlaJourneySteps.VRM), 60);
+        isTextPresent(String.format("A vehicle has been found with registration %s", world.dvlaJourneySteps.VRM));
         for (String columns : table) {
-            isTextPresent(columns, 60);
+            isTextPresent(columns);
         }
     }
 
@@ -110,7 +107,7 @@ public class ManageVehicle extends BasePage {
     @Then("the following should be displayed:")
     public void theFollowingShouldBeDisplayed(List<String> headers) {
         for (String header : headers) {
-            isTextPresent(header, 60);
+            isTextPresent(header);
         }
     }
 
@@ -147,7 +144,7 @@ public class ManageVehicle extends BasePage {
     @When("i transfer a vehicle to an assumed licence")
     public void iTransferAVehiclesToAnAssumedLicence() {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
-        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:", 10));
+        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:"));
         world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "N");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to transfer this vehicle to licence");
     }
@@ -155,7 +152,7 @@ public class ManageVehicle extends BasePage {
     @When("i transfer a vehicle to a specified licence")
     public void iTransferAVehicleAToASpecifiedLicence() {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
-        assertTrue(isTextPresent("Select the licence that you want to transfer your vehicles to", 10));
+        assertTrue(isTextPresent("Select the licence that you want to transfer your vehicles to"));
         Select option = new Select(findElement("//select[@id='select-a-licence']", SelectorType.XPATH));
         assertEquals("Select a licence", option.getFirstSelectedOption().getText());
         selectValueFromDropDownByIndex("select-a-licence", SelectorType.ID, 1);
@@ -166,7 +163,7 @@ public class ManageVehicle extends BasePage {
     @When("i transfer all the vehicles from my licence")
     public void iTransferAllTheVehiclesFromMyLicence() {
         world.dvlaJourneySteps.navigateToTransferVehiclePage();
-        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:", 10));
+        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:"));
         world.dvlaJourneySteps.completeDVLAPageAndStoreAllValues("Y", "N");
         world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to transfer these vehicles to licence");
     }
@@ -233,7 +230,7 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourneySteps.newDiscNumber = getText(
                 String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourneySteps.VRM), SelectorType.XPATH);
         Assert.assertNotEquals(world.dvlaJourneySteps.newDiscNumber, world.dvlaJourneySteps.previousDiscNumber);
-        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber, 10));
+        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber));
     }
 
     @And("i search and the licence discs number should be updated")
@@ -243,7 +240,7 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourneySteps.newDiscNumber = getText(
                 String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourneySteps.VRM), SelectorType.XPATH);
         Assert.assertNotEquals(world.dvlaJourneySteps.newDiscNumber, world.dvlaJourneySteps.previousDiscNumber);
-        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber, 10));
+        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber));
     }
 
     @And("all the licence discs number should be updated")
@@ -253,7 +250,7 @@ public class ManageVehicle extends BasePage {
             world.dvlaJourneySteps.newDiscNumber = getText(
                     String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourneySteps.allVRMs.get(i)), SelectorType.XPATH);
             Assert.assertNotEquals(world.dvlaJourneySteps.newDiscNumber, world.dvlaJourneySteps.previousDiscNumber);
-            Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber, 10));
+            Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber));
         }
     }
 
@@ -307,10 +304,10 @@ public class ManageVehicle extends BasePage {
     @And("i search and the vehicle should no longer be present")
     public void iSearchAndTheVehicleShouldNoLongerBePresent() {
         world.dvlaJourneySteps.navigateToRemoveVehiclePage();
-        enterText("vehicleSearch[search-value]", world.dvlaJourneySteps.VRM, SelectorType.NAME);
+        enterText("vehicleSearch[search-value]", SelectorType.NAME, world.dvlaJourneySteps.VRM);
         click("vehicleSearch[submit]", SelectorType.NAME);
-        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.VRM, 10));
-        Assert.assertTrue(isTextPresent("No vehicle can be found with that Vehicle Registration Mark", 10));
+        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.VRM));
+        Assert.assertTrue(isTextPresent("No vehicle can be found with that Vehicle Registration Mark"));
     }
 
     @And("i remove all my vehicles")
@@ -333,7 +330,7 @@ public class ManageVehicle extends BasePage {
 
     @Then("the {string} should be displayed on the page")
     public void theShouldBeDisplayedOnThePage(String vrm) {
-        isTextPresent(String.format("Vehicle %s has been added", vrm), 60);
+        isTextPresent(String.format("Vehicle %s has been added", vrm));
     }
 
     @After

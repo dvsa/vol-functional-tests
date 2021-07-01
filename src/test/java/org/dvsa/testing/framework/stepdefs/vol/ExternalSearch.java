@@ -21,16 +21,16 @@ public class ExternalSearch extends BasePage implements En {
             findSelectAllRadioButtonsByValue(arg0);
             switch (arg0) {
                 case "address":
-                    enterText("search", world.createApplication.getPostCodeByTrafficArea(), SelectorType.NAME);
+                    enterText("search", SelectorType.NAME, world.createApplication.getPostCodeByTrafficArea());
                     break;
                 case "business":
-                    enterText("search", world.createApplication.getOrganisationName(), SelectorType.NAME);
+                    enterText("search", SelectorType.NAME, world.createApplication.getOrganisationName());
                     break;
                 case "licence":
-                    enterText("search", world.applicationDetails.getLicenceNumber(), SelectorType.NAME);
+                    enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
                     break;
                 case "person":
-                    enterText("search", String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()), SelectorType.NAME);
+                    enterText("search", SelectorType.NAME, String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()));
                     break;
             }
             clickByName("submit");

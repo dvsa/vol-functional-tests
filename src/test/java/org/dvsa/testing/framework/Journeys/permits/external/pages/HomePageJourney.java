@@ -14,4 +14,10 @@ public class HomePageJourney extends BasePermitJourney {
         HomePageJourney.selectPermitTab();
         HomePage.applyForLicenceButton();
     }
+
+    public static void payAllOutstandingFees() {
+        HomePage.FeesTab.selectAllOutstandingFees();
+        HomePage.FeesTab.pay();
+        HomePage.FeesTab.payNowButton();
+    }
 }

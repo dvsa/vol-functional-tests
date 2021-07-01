@@ -36,7 +36,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class SubmitPermitApplicationSteps implements En {
+public class SubmitPermitApplicationSteps extends BasePage implements En {
 
     public SubmitPermitApplicationSteps(World world, OperatorStore operatorStore) {
 
@@ -204,8 +204,8 @@ public class SubmitPermitApplicationSteps implements En {
         });
         When("^I am in Docs and attachments page, I should see the snapshot generate successfully$",() -> {
             viewApplication();
-            BasePage.waitAndClick("//a[@id='menu-licence_irhp_applications-document']",SelectorType.XPATH);
-           untilPresentWithRefresh("//a[contains(text(),'Snapshot (app submitted)')]",SelectorType.XPATH,120L,TimeUnit.SECONDS);
+            BasePage.waitAndClick("//a[@id='menu-licence_irhp_applications-document']", SelectorType.XPATH);
+            refreshPageUntilElementAppears("//a[contains(text(),'Snapshot (app submitted)')]", SelectorType.XPATH);
         });
         //Submit button Exists
         Then("^In application details page, I should see Submit button$", IrhpPermitsApplyPage::submitButtonExists);

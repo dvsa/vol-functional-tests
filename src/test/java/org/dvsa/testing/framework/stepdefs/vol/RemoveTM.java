@@ -67,16 +67,16 @@ public class RemoveTM extends BasePage implements En {
         Then("^the remove TM popup should not be displaying new TM remove text$", () -> {
             waitForTextToBePresent(alertHeaderValue);
             if (Browser.navigate().getCurrentUrl().contains("variation") || Browser.navigate().getCurrentUrl().contains("application")) {
-                assertFalse(isTextPresent(newAlertValue, 60));
-                assertTrue(isTextPresent(applicationVariationTMAlertContent, 60));
+                assertFalse(isTextPresent(newAlertValue));
+                assertTrue(isTextPresent(applicationVariationTMAlertContent));
             }
             if (Browser.navigate().getCurrentUrl().contains("ssap1")) {
                 String alertContent = getElementValueByText("//div[@class='modal__content']/p", SelectorType.XPATH);
                 assertEquals(alertContent, oldAlertValue);
             }
             if (tmCount > 1) {
-                assertFalse(isTextPresent(newAlertValue, 60));
-                assertTrue(isTextPresent(applicationVariationTMAlertContent, 60));
+                assertFalse(isTextPresent(newAlertValue));
+                assertTrue(isTextPresent(applicationVariationTMAlertContent));
             }
         });
         Given("^a self-serve user removes the last TM$", () -> {
@@ -99,7 +99,7 @@ public class RemoveTM extends BasePage implements En {
             waitForTextToBePresent(alertHeaderValue);
             do {
                 // do nothing
-            } while (!isTextPresent("You must select an option", 60));
+            } while (!isTextPresent("You must select an option"));
             isLinkPresent("You must select an option", 60);
         });
 

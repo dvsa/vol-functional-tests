@@ -39,7 +39,7 @@ public class ApplicationVerifyJourney extends BasePage {
     @Then("the application should be signed with verify")
     public void theApplicationShouldBeSignedWithVerify() {
         waitForTitleToBePresent("Review and declarations");
-        assertTrue(isTextPresent("Declaration signed through GOV.UK Verify", 30));
-        assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")), 30));
+        assertTrue(isTextPresent("Declaration signed through GOV.UK Verify"));
+        assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy"))));
     }
 }

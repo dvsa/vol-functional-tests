@@ -65,7 +65,7 @@ public class RefundInterim extends BasePage implements En {
             clickByLinkText("Fees");
             do {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
-            } while (!isTextPresent("Paid",30));
+            } while (!isTextPresent("Paid"));
             assertTrue(checkForPartialMatch("£68.00"));
             assertFalse(world.genericUtils.returnFeeStatus("CANCELLED"));
         });

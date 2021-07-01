@@ -63,7 +63,6 @@ public class PermitsDashboardPageSteps extends BasePage implements En {
             untilElementIsPresent("//h2[contains(text(),'Issued permits and certificates')]", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
         });
         Then("^my Bilaterals permit should be under the Issued permit applications table with correct columns and values$", () -> {
-            //HomePage.untilPresentWithRefresh()
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.VALID);
 

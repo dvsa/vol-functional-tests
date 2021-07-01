@@ -11,15 +11,13 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.InternalBaseJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.common.TimeUtils;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.enums.AdminOption;
+import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationIssuingFeePage;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-import org.dvsa.testing.lib.newPages.internal.NavigationBar;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.Permit;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.Scoring;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.SideBar;
@@ -101,7 +99,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
                 //int lastPage = Permit.currentPage();
 
                 // Checks that type is ECMT and the validity period ends today or after today
-                if (Permit.nthStockTypeIs(nthPermit, org.dvsa.testing.lib.enums.PermitType.ECMT_ANNUAL) &&
+                if (Permit.nthStockTypeIs(nthPermit, PermitType.ECMT_ANNUAL) &&
                         stocks.get(nthPermit).getValidFrom().isBefore(LocalDate.now()) &&
                         stocks.get(nthPermit).getValidTo().isAfter(LocalDate.now()) ||
                         stocks.get(nthPermit).getValidTo().isEqual(LocalDate.now())) {
@@ -117,10 +115,8 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
                             Window.edit();
                             Window.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
 
-                            //TODO: Remove edge case when the next time available falls on the next day
-                            List<LocalTime> availableCloseTimes = Window.Model.getAllTimes(DateField.EndDate);
                             LocalDateTime now = LocalDateTime.now();
-                            LocalTime closestClosingTime = TimeUtils.closestTimeFrom(now.toLocalTime(), availableCloseTimes);
+                            LocalTime closestClosingTime = LocalTime.now().plusMinutes(1);
                             Window.Model.date(DateField.EndDate, now.toLocalDate());
                             Window.Model.time(DateField.EndDate, closestClosingTime);
                             Window.save();
@@ -152,9 +148,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
 
                     });
 
-                    getDriver().get(url);
-
-
+                    get(url);
                     Permit.untilOnPage();
                     Permit.nthPage(lastPage.incrementAndGet());
                 }

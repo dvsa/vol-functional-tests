@@ -183,9 +183,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPageJourney.completeECMTPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
-            HomePage.FeesTab.outstanding(true);
-            HomePage.FeesTab.pay();
-            HomePage.FeesTab.payNowButton();
+            HomePageJourney.payAllOutstandingFees();
 
             world.feeAndPaymentJourneySteps.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());

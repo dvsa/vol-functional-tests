@@ -42,7 +42,7 @@ public class WebDav extends BasePage implements En {
         });
         And("^the document should contain the changes$", () -> {
 
-            Assert.assertTrue(isTextPresent(templateName,30));
+            Assert.assertTrue(isTextPresent(templateName));
             clickByLinkText(templateName);
 
             String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.applicationDetails.getLicenceNumber(), templateName);

@@ -55,11 +55,11 @@ public class GlobalMethods extends BasePage{
             //User is already registered
             signIn(username, getLoginPassword());
         } finally {
-            if (isTextPresent("Current password", 60)) {
+            if (isTextPresent("Current password")) {
                 waitForTextToBePresent("Re-enter new password");
-                enterField(nameAttribute("input", "oldPassword"), password);
-                enterField(nameAttribute("input", "newPassword"), newPassword);
-                enterField(nameAttribute("input", "confirmPassword"), newPassword);
+                enterText(nameAttribute("input", "oldPassword"), SelectorType.CSS, password);
+                enterText(nameAttribute("input", "newPassword"), SelectorType.CSS, newPassword);
+                enterText(nameAttribute("input", "confirmPassword"), SelectorType.CSS, newPassword);
                 click(nameAttribute("input", "submit"));
                 setLoginPassword(newPassword);
             }
@@ -74,8 +74,8 @@ public class GlobalMethods extends BasePage{
     }
 
     private void signIn(String userName, String password) {
-        enterField(emailField, userName);
-        enterField(passwordField, password);
+        enterText(emailField, SelectorType.CSS, userName);
+        enterText(passwordField, SelectorType.CSS, password);
         click(submitButton);
         untilNotInDOM(submitButton,5);
     }

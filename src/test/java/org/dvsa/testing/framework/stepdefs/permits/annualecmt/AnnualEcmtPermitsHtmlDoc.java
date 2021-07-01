@@ -25,11 +25,7 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
     public AnnualEcmtPermitsHtmlDoc(World world, OperatorStore operatorStore) {
         When("^I view the annual ECMT Permits documentation$", () -> {
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.DocsAndAttachments);
-            DocsAndAttachmentsPage.select(
-                   operatorStore.getLicences().get(0).getEcmt().getFullReferenceNumber(),
-                    Duration.LONG,
-                    TimeUnit.MINUTES
-            );
+            DocsAndAttachmentsPage.select(operatorStore.getLicences().get(0).getEcmt().getFullReferenceNumber());
         });
         Then("^the annual ECMT Permits HTML document should have the correct information$", () -> {
             ArrayList<String> tab = new ArrayList<String> (getDriver().getWindowHandles());

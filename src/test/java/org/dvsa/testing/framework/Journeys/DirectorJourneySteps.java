@@ -80,8 +80,8 @@ public class DirectorJourneySteps extends BasePage {
         selectValueFromDropDown(directorTitleDropdown, SelectorType.XPATH, "Dr");
         directorFirstName = faker.generateFirstName();
         directorLastName = faker.generateLastName();
-        enterText(firstNameField, directorFirstName, SelectorType.XPATH);
-        enterText(lastNameField, directorLastName, SelectorType.XPATH);
+        enterText(firstNameField, SelectorType.XPATH, directorFirstName);
+        enterText(lastNameField, SelectorType.XPATH, directorLastName);
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         replaceDateFieldsByPartialId("dob", dates);
         clickByXPath(saveAndContinue);
@@ -122,7 +122,7 @@ public class DirectorJourneySteps extends BasePage {
             findSelectAllRadioButtonsByValue("N");
         } else {
             findSelectAllRadioButtonsByValue("Y");
-            enterText(world.directorJourneySteps.additionalInformation, Str.randomWord(150), SelectorType.XPATH);
+            enterText(world.directorJourneySteps.additionalInformation, SelectorType.XPATH, Str.randomWord(150));
         }
     }
 

@@ -43,7 +43,7 @@ public class PermitUsagePageSteps extends BasePermitPage implements En {
         });
         And("^the page heading on the permit usage page is displayed correctly$", PermitUsagePageJourney::hasPageHeading);
         And("^the short term ecmt permit usage buttons are displayed  unselected by default$", () -> {
-            Assert.assertTrue("not selected", !isSelected("//input[@type='radio']", SelectorType.XPATH));
+            Assert.assertTrue("not selected", findElement("//input[@type='radio']", SelectorType.XPATH).isSelected());
         });
 
         Then("^the shortterm ecmt permit usage page has advisory messages$", () -> {

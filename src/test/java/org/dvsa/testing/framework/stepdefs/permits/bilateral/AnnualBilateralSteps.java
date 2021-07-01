@@ -63,7 +63,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
         Then("^the outstanding fees are displayed properly$", () -> {
             assertTrue(HomePage.FeesTab.areOutstandingFeesPresent());
-            HomePage.FeesTab.outstanding(true);
+            HomePage.FeesTab.selectAllOutstandingFees();
         });
         Then("^I select save and continue button on select countries page$", CountrySelectionPage::saveAndContinue);
         Then("^countries are displayed in alphabetical order$", () -> {

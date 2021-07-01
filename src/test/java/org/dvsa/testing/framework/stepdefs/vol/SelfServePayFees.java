@@ -21,7 +21,7 @@ public class SelfServePayFees extends BasePage implements En {
         });
         Then("^my licence should valid$", () -> {
             clickByLinkText("Home");
-            assertTrue(isTextPresent("Valid",80));
+            assertTrue(isTextPresent("Valid"));
         });
     }
 }
