@@ -10,7 +10,7 @@ Feature: Search and add a vehicle
     And "Add a vehicle" heading
 
   Scenario Outline: Add a vehicle to a licence
-    Given I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
+    Given I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "13"
     When I navigate to manage vehicle page on a licence
     And choose to add a "<VRM>" vehicle
     Then the "<VRM>" should be displayed on the page
