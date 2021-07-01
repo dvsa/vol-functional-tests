@@ -2,12 +2,12 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.newPages.enums.Action;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.InternalBaseJourney;
 import org.dvsa.testing.lib.newPages.enums.AdminOption;
+import org.dvsa.testing.lib.newPages.internal.NavigationBar;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.FeatureTogglesPage;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.FeatureToggleStatus;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.Features;
-import org.dvsa.testing.lib.pages.internal.NavigationBar;
 import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
 
@@ -19,7 +19,7 @@ public class FeatureToggleSteps implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
         Then("^I should be able to see the feature toggle option$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
+            NavigationBar.openAdminPanel();
             NavigationBar.verifyOptionInList(AdminOption.FEATURE_TOGGLE);
         });
         When("^I log in as an internal user with normal privileges$", () -> {
@@ -28,7 +28,7 @@ public class FeatureToggleSteps implements En {
             // Need to add ways of creating users with normal privileges.
         });
         Then("^I should NOT be able to see the feature toggle option$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
+            NavigationBar.openAdminPanel();
             boolean hasPermitToggle = true;
 
             try {
@@ -40,8 +40,7 @@ public class FeatureToggleSteps implements En {
             Assert.assertFalse("Expected permit toggle to not be present but was", hasPermitToggle);
         });
         And("^feature toggle for permits has been enabled$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
-            NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
+            InternalBaseJourney.navigateToAdminFeatureTogglePage();
 
             FeatureTogglesPage.toggle(Features.PermitsAdmin, FeatureToggleStatus.Active);
             FeatureTogglesPage.toggle(Features.InternalEcmt, FeatureToggleStatus.Active);
@@ -52,8 +51,7 @@ public class FeatureToggleSteps implements En {
             FeatureTogglesPage.toggle(Features.BackendPermits, FeatureToggleStatus.Active);
         });
         And("^disable all internal ECMT feature toggles$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
-            NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
+            InternalBaseJourney.navigateToAdminFeatureTogglePage();
 
             FeatureTogglesPage.toggle(Features.InternalEcmt, FeatureToggleStatus.Inactive);
             FeatureTogglesPage.toggle(Features.InternalPermits, FeatureToggleStatus.Inactive);
@@ -61,8 +59,7 @@ public class FeatureToggleSteps implements En {
             FeatureTogglesPage.toggle(Features.BackendPermits, FeatureToggleStatus.Inactive);
         });
         And("^disable all external ECMT feature toggles$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
-            NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
+            InternalBaseJourney.navigateToAdminFeatureTogglePage();
 
             FeatureTogglesPage.toggle(Features.SelfserveEcmt, FeatureToggleStatus.Inactive);
             FeatureTogglesPage.toggle(Features.SelfservePermits, FeatureToggleStatus.Inactive);

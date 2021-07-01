@@ -16,14 +16,12 @@ import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.BaseModel;
 import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.internal.BaseModel;
-import org.dvsa.testing.lib.pages.internal.ResultsPage;
-import org.dvsa.testing.lib.pages.internal.SearchNavBar;
 import org.junit.Assert;
 
 import javax.mail.MessagingException;
@@ -37,7 +35,7 @@ import java.util.stream.IntStream;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.AwaitingFeePermitSteps.triggerPermitIssuing;
 
 public class IRHPPermitsPageSteps extends BasePage implements En {
-    private World world;
+    private static World world;
     LocalDate ld;
 
     public static List<String> successfulPermits;
@@ -76,7 +74,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             List<String> successfulApplications = getAllSuccessfulApplications(operator);
 
             // Search for licence
-            viewLicenceOnInternal(world, Str.find("\\w{2}\\d{7}", successfulApplications.get(0)).get());
+            viewLicenceOnInternal();
 
             LicenceDetailsPageJourney.clickIRHPTab();
 
@@ -137,26 +135,10 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
                 .collect(Collectors.toList());
     }
 
-    public static void viewLicenceOnInternal(World world, String licenceNumber) {
+    public static void viewLicenceOnInternal() {
         world.APIJourneySteps.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-
-        // Keep searching until licence displays on first page of results
-        int maxTriesCount = 30;
-        do {
-            SearchNavBar.search(licenceNumber);
-
-            try {
-                TimeUnit.SECONDS.sleep(Duration.SHORT);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            maxTriesCount--;
-        } while (ResultsPage.isResultNotPresentOnPage(licenceNumber) && maxTriesCount >= 0);
-
-
-        //SearchNavBar.
-        ResultsPage.select(licenceNumber);
+        world.internalNavigation.urlSearchAndViewLicence();
     }
 
 }

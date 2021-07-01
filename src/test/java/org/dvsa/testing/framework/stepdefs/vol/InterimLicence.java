@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.internal.InterimPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.internal.InterimPage;
 import org.joda.time.LocalDate;
 
 import static org.junit.Assert.assertFalse;

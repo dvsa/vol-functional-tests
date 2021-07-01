@@ -9,6 +9,7 @@ import apiCalls.eupaActions.OrganisationAPI;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.InternalBaseJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.common.TimeUtils;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -18,6 +19,7 @@ import org.dvsa.testing.lib.newPages.enums.AdminOption;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationIssuingFeePage;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.lib.newPages.internal.NavigationBar;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.Permit;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.Scoring;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.SideBar;
@@ -25,7 +27,6 @@ import org.dvsa.testing.lib.newPages.internal.admin.permits.Window;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.DateField;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.PermitsSidebarItem;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.ScoringStatus;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -85,8 +86,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
 
         world.APIJourneySteps.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        org.dvsa.testing.lib.pages.internal.NavigationBar.administratorButton();
-        org.dvsa.testing.lib.pages.internal.NavigationBar.administratorList(AdminOption.PERMITS);
+        InternalBaseJourney.navigateToAdminPermitsPage();
 
         String url = getURL().toString();
         // for each Annual ECMT stock

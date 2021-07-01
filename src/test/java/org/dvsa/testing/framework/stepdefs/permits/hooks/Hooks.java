@@ -4,16 +4,14 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.InternalBaseJourney;
 import org.dvsa.testing.framework.Utils.common.Util;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.FeatureTogglesPage;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.FeatureToggleStatus;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.Features;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.Action;
-import org.dvsa.testing.lib.newPages.enums.AdminOption;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotDisappearWithinSpecifiedTimeException;
-import org.dvsa.testing.lib.pages.internal.NavigationBar;
 import org.junit.jupiter.api.AfterAll;
 
 import java.net.MalformedURLException;
@@ -31,8 +29,7 @@ public class Hooks extends BasePage {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
 // Why are they signing into internal at the end of some journeys?
-            NavigationBar.adminPanel(Action.OPEN);
-            NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
+            InternalBaseJourney.navigateToAdminFeatureTogglePage();
 
             FeatureTogglesPage.toggle(Features.PermitsAdmin, FeatureToggleStatus.Active);
             FeatureTogglesPage.toggle(Features.InternalEcmt, FeatureToggleStatus.Active);
