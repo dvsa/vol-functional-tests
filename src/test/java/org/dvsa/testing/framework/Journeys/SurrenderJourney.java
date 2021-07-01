@@ -140,10 +140,10 @@ public class SurrenderJourney extends BasePage {
 
     public void addDiscInformation()  {
         assertTrue(getCurrentUrl().contains("current-discs"));
-        click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
+        clickById("stolenSection[stolen]");
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
-        waitForTextToBePresent("Number of discs you will destroy");
+        waitForTextToBePresent("Number of discs stolen");
         waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, getDiscsToDestroy());
         waitAndEnterText("//*[@id='lostSection[info][number]']", SelectorType.XPATH, getDiscsLost());
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");

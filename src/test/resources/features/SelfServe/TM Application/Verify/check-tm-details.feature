@@ -30,7 +30,7 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
 
   Scenario Outline: Check section contains
     When I click on the "<button>" button
-    Then I should be taken to the "<page>" page
+    Then I should see the "<page>" page
     And page title "<page-title>" should be displayed on page
 
     Examples:
