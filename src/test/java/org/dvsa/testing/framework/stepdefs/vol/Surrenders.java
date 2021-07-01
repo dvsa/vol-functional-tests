@@ -2,15 +2,11 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.system.Properties;
-import cucumber.api.java.en.Given;
 import io.cucumber.java8.En;
-import io.restassured.response.ValidatableResponse;
-import org.apache.http.HttpStatus;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
@@ -19,10 +15,6 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class Surrenders extends BasePage implements En {
-    ValidatableResponse apiResponse;
-    private Integer surrenderId;
-    private String operatorLicence;
-    private String communityLicence;
 
     public Surrenders(World world) {
         When("^i surrender my licence to the review discs and documentation page$", () -> {

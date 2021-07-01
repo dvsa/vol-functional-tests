@@ -1,29 +1,23 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
-import activesupport.driver.Browser;
 import activesupport.http.RestUtils;
 import activesupport.system.Properties;
 import apiCalls.Utils.generic.Headers;
 import apiCalls.Utils.generic.Utils;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.json.JSONObject;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import java.net.MalformedURLException;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -336,7 +330,7 @@ public class ManageVehicle extends BasePage {
         isTextPresent(String.format("Vehicle %s has been added", vrm), 60);
     }
 
-    @After
+    @io.cucumber.java.After
     public void removeVehicleOnLicence() {
         JSONObject json = new JSONObject();
         Map<String, String> queryParams = new HashMap<>();

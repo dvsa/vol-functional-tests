@@ -2,20 +2,17 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.aws.s3.S3;
-import activesupport.faker.FakerUtils;
-import activesupport.number.Int;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
 import java.util.Locale;
 
-import static apiCalls.enums.EnforcementArea.enforcementAreaList;
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 
 public class ManageApplications {

@@ -4,7 +4,6 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import apiCalls.Utils.generic.Utils;
 import apiCalls.enums.UserType;
 import io.cucumber.java8.En;
 import org.apache.logging.log4j.LogManager;
