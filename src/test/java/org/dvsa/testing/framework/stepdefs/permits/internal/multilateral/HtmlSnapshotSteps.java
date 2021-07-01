@@ -17,10 +17,10 @@ import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Category;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
+import org.dvsa.testing.lib.newPages.internal.details.enums.DocumentHeading;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Subcategory;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.internal.multilateral.AnnualMultilateralSnapshotPage;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -79,23 +79,20 @@ public class HtmlSnapshotSteps extends BasePage implements En {
             LicenceStore licence = operator.getCurrentLicence().get();
 
             //AC03
-            AnnualMultilateralSnapshotPage.untilOnPage();
+            DocumentsPage.untilOnPage();
 
             //AC04
             String expectedHeading = String.format("%s %s", operator.getOrganisationName(), licence.getReferenceNumber());
-            Assert.assertEquals(expectedHeading, AnnualMultilateralSnapshotPage.heading());
-            String actualLicence = AnnualMultilateralSnapshotPage.get(AnnualMultilateralSnapshotPage.Header.LicenceSelected);
+            Assert.assertEquals(expectedHeading, DocumentsPage.getSubHeading());
+            String actualLicence = DocumentsPage.getSectionHeading(DocumentHeading.Licence);
 
             //AC06
             String licence1= operator.getCurrentLicenceNumber().toString().substring(9, 18);
             Assert.assertTrue(String.valueOf(actualLicence.contains(licence1)),true);
 
-            //AC07
-          /*  List<Permit> actualPermits = AnnualMultilateralSnapshotPage.permits();
-            Assert.assertThat(actualPermits, Matchers.containsInAnyOrder(licence.getLatestAnnualMultilateral().get().getNumberOfPermits().toArray()));
-*/
             //AC10
-            AnnualMultilateralSnapshotPage.assertAddress();
+            String actualAddress = DocumentsPage.getAddress();
+            Assert.assertEquals("International Road Haulage Permit Office, Hillcrest House, 386 Harehills Lane, Leeds, LS9 6NF", actualAddress);
         });
 
     }

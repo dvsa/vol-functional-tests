@@ -5,20 +5,18 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
-import org.dvsa.testing.lib.newPages.internal.bilateral.AnnualBilateralSnapshotPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Category;
+import org.dvsa.testing.lib.newPages.internal.details.enums.DocumentHeading;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Subcategory;
 import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage.snapshotTitle;
 import static org.junit.Assert.assertEquals;
@@ -43,12 +41,12 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             DocumentsPage.untilOnPage();
 
             //To verify HTML Snapshot page is displayed
-            AnnualBilateralSnapshotPage.untilOnPage();
+            DocumentsPage.untilOnPage();
 
             //Verify the page heading is displayed correctly
             String expectedHeading = String.format("%s %s", operator.getOrganisationName(),licenceStore.getReferenceNumber());
-            assertEquals(expectedHeading, AnnualBilateralSnapshotPage.heading());
-            String actualLicence = AnnualBilateralSnapshotPage.getLicenceSelectedHeading();
+            assertEquals(expectedHeading, DocumentsPage.getSubHeading());
+            String actualLicence = DocumentsPage.getSectionHeading(DocumentHeading.Licence);
 
             //verify the licence number is displayed
             String licence1= operator.getCurrentLicenceNumber().toString().substring(9, 18);
@@ -90,7 +88,7 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             Assert.assertTrue("I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit.",true);
 
             //verify the return address
-            String address = AnnualBilateralSnapshotPage.getAddress();
+            String address = DocumentsPage.getAddress();
             assertEquals("International Road Haulage Permit Office, Hillcrest House, 386 Harehills Lane, Leeds, LS9 6NF", address);
         });
 
