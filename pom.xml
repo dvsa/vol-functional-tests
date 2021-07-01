@@ -24,7 +24,7 @@
         <pico-container-version>6.10.4</pico-container-version>
         <testNG-version>7.4.0</testNG-version>
 
-        <allure-cucumber4-jvm.version>2.14.0</allure-cucumber4-jvm.version>
+        <allure-cucumber5-jvm.version>2.13.5</allure-cucumber5-jvm.version>
         <allure-report-version>2.14.0</allure-report-version>
 
         <slf4j.version>2.12.1</slf4j.version>
@@ -86,7 +86,7 @@
                 <configuration>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                        -Dcucumber.options="--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
+                        -Dcucumber.options="--plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"
                     </argLine>
                 </configuration>
                 <dependencies>
@@ -226,8 +226,8 @@
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-cucumber4-jvm</artifactId>
-            <version>${allure-cucumber4-jvm.version}</version>
+            <artifactId>allure-cucumber5-jvm</artifactId>
+            <version>${allure-cucumber5-jvm.version}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
