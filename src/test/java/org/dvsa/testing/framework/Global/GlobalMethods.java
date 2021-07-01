@@ -60,7 +60,7 @@ public class GlobalMethods extends BasePage{
                 enterText(nameAttribute("input", "oldPassword"), SelectorType.CSS, password);
                 enterText(nameAttribute("input", "newPassword"), SelectorType.CSS, newPassword);
                 enterText(nameAttribute("input", "confirmPassword"), SelectorType.CSS, newPassword);
-                click(nameAttribute("input", "submit"));
+                click(nameAttribute("input", "submit"), SelectorType.CSS);
                 setLoginPassword(newPassword);
             }
         }
@@ -76,11 +76,11 @@ public class GlobalMethods extends BasePage{
     private void signIn(String userName, String password) {
         enterText(emailField, SelectorType.CSS, userName);
         enterText(passwordField, SelectorType.CSS, password);
-        click(submitButton);
+        click(submitButton, SelectorType.CSS);
         untilNotInDOM(submitButton,5);
     }
 
     public void submit() {
-        click(submitButton);
+        click(submitButton, SelectorType.CSS);
     }
 }

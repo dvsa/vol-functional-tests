@@ -39,7 +39,7 @@ public class BusRegistrationJourneySteps extends BasePage {
     public void internalSiteAddBusNewReg(int month)  {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
-        click(nameAttribute("button", "action"));
+        click(nameAttribute("button", "action"), SelectorType.CSS);
         waitForTextToBePresent("Service details");
         assertTrue(isTextPresent("Service No. & type"));
         enterText("serviceNo", SelectorType.ID, "123");
@@ -57,7 +57,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         enterText("effectiveDate_day", SelectorType.ID, dates.get("day"));
         enterText("effectiveDate_month", SelectorType.ID, dates.get("month"));
         enterText("effectiveDate_year", SelectorType.ID, dates.get("year"));
-        click(nameAttribute("button", "form-actions[submit]"));
+        click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
 
         long kickOutTime = System.currentTimeMillis() + 60000;
 
@@ -151,7 +151,7 @@ public class BusRegistrationJourneySteps extends BasePage {
 
         clickByLinkText("Bus registrations");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
-        click(nameAttribute("button", "action"));
+        click(nameAttribute("button", "action"), SelectorType.CSS);
         String workingDir = System.getProperty("user.dir");
         uploadFile("//*[@id='fields[files][file]']", workingDir + zipFilePath, "document.getElementById('fields[files][file]').style.left = 0", SelectorType.XPATH);
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);

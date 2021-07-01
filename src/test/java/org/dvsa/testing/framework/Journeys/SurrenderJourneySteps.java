@@ -160,7 +160,7 @@ public class SurrenderJourneySteps extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
-        untilElementPresent("//*[@id='modal-title']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@id='modal-title']");
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         javaScriptExecutor("location.reload(true)");
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");

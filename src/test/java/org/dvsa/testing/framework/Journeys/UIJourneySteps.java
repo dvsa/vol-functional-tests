@@ -172,14 +172,14 @@ public class UIJourneySteps extends BasePage {
         enterText(nameAttribute("input", "data[noOfVehiclesRequired]"), SelectorType.CSS, noOfVehicles);
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
         if (Integer.parseInt(noOfVehicles) > world.createApplication.getNoOfVehiclesRequested()) {
-            click(nameAttribute("button", "form-actions[submit]"));
+            click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
         }
-        click(nameAttribute("button", "form-actions[submit]"));
+        click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
     }
 
     public void changeVehicleAuth(String noOfAuthVehicles)  {
         enterText(nameAttribute("input", "data[totAuthVehicles]"), SelectorType.CSS, noOfAuthVehicles);
-        click(nameAttribute("button", "form-actions[save]"));
+        click(nameAttribute("button", "form-actions[save]"), SelectorType.CSS);
     }
 
     public void signWithVerify()  {

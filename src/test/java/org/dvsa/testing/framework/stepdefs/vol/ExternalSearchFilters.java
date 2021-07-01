@@ -16,8 +16,8 @@ public class ExternalSearchFilters extends BasePage implements En {
             Browser.navigate().get(myURL);
             findSelectAllRadioButtonsByValue("licence");
             enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
-            click(nameAttribute("input","submit"));
-            do { click(nameAttribute("button","submit"));}
+            click(nameAttribute("input","submit"), SelectorType.CSS);
+            do { click(nameAttribute("button","submit"), SelectorType.CSS);}
             while(!isElementPresent("//*[@class='table__wrapper']",SelectorType.XPATH));
 
         });

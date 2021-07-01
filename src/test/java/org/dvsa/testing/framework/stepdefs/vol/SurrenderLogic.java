@@ -159,7 +159,7 @@ public class SurrenderLogic extends BasePage implements En {
             world.UIJourneySteps.checkLicenceStatus(status);
         });
         And("^the surrender menu should be hidden in internal$", () -> {
-            assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender"));
+            assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender", SelectorType.XPATH));
         });
         And("^the \"([^\"]*)\" page should display$", (String page) -> {
             assertTrue(isTextPresent(page));

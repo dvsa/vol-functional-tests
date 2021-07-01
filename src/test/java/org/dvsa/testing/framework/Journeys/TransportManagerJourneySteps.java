@@ -215,12 +215,12 @@ public class TransportManagerJourneySteps extends BasePage {
         waitAndEnterText("postcodeInput1", SelectorType.ID, "NG23HX");
         clickByName("homeAddress[searchPostcode][search]");
         waitForElementToBeClickable("//*[@name='homeAddress[searchPostcode][search]']", SelectorType.XPATH);
-        untilElementPresent("//*[@name='homeAddress[searchPostcode][addresses]']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@name='homeAddress[searchPostcode][addresses]']");
         selectValueFromDropDownByIndex("//*[@name='homeAddress[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         waitAndEnterText("postcodeInput2", SelectorType.ID, "NG23HX");
         waitAndClick("//*[@id='workAddress[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBeClickable("//*[@id='workAddress[searchPostcode][search]']", SelectorType.XPATH);
-        untilElementPresent("//*[@name='workAddress[searchPostcode][addresses]']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@name='workAddress[searchPostcode][addresses]']");
         selectValueFromDropDownByIndex("//*[@name='workAddress[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursTue]", SelectorType.ID, hours);
