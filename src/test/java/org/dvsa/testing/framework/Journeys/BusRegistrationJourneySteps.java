@@ -7,10 +7,10 @@ import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.internal.SearchNavBar;
 import org.dvsa.testing.lib.newPages.internal.enums.SearchType;
-import org.dvsa.testing.lib.pages.BasePage;
 import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
@@ -18,6 +18,7 @@ import org.openqa.selenium.TimeoutException;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 
 public class BusRegistrationJourneySteps extends BasePage {
 
@@ -47,7 +48,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         enterText("finishPoint", SelectorType.ID, Str.randomWord(11));
         enterText("via", SelectorType.ID, Str.randomWord(5));
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
-        clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
+        findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
 
         HashMap<String, String> dates;
         dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
@@ -63,7 +64,7 @@ public class BusRegistrationJourneySteps extends BasePage {
 
         do {
             // Refresh page
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
         }
         while (!isTextPresent("Service details") && System.currentTimeMillis() < kickOutTime);
         if (System.currentTimeMillis() > kickOutTime) {
@@ -85,7 +86,7 @@ public class BusRegistrationJourneySteps extends BasePage {
         world.feeAndPaymentJourneySteps.payFee("60", "cash");
         long kickOutTime = System.currentTimeMillis() + 60000;
         do {
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
         } while (!isLinkPresent("Register service", 5) && System.currentTimeMillis() < kickOutTime);
         clickByLinkText("Register service");
         findSelectAllRadioButtonsByValue("Y");
@@ -133,7 +134,7 @@ public class BusRegistrationJourneySteps extends BasePage {
 
         do {
             // Refresh page
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
         } while (isTextPresent("processing") && System.currentTimeMillis() < kickOutTime);
 
         try {
@@ -153,7 +154,9 @@ public class BusRegistrationJourneySteps extends BasePage {
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
         String workingDir = System.getProperty("user.dir");
-        uploadFile("//*[@id='fields[files][file]']", workingDir + zipFilePath, "document.getElementById('fields[files][file]').style.left = 0", SelectorType.XPATH);
+        String jScript = "document.getElementById('fields[files][file]').style.left = 0";
+        javaScriptExecutor(jScript);
+        enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, workingDir + zipFilePath);
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
 }

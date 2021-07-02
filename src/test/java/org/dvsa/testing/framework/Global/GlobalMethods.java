@@ -4,7 +4,7 @@ import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
 
-public class GlobalMethods extends BasePage{
+public class GlobalMethods extends BasePage {
 
     private World world;
     private String loginPassword;
@@ -77,7 +77,7 @@ public class GlobalMethods extends BasePage{
         enterText(emailField, SelectorType.CSS, userName);
         enterText(passwordField, SelectorType.CSS, password);
         click(submitButton, SelectorType.CSS);
-        untilNotInDOM(submitButton,5);
+        untilElementIsNotPresent(submitButton, SelectorType.XPATH);
     }
 
     public void submit() {

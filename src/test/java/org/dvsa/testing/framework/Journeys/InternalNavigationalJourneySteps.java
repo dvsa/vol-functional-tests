@@ -2,13 +2,14 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.system.Properties;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import static activesupport.driver.Browser.navigate;
+import static org.junit.Assert.assertTrue;
 
 public class InternalNavigationalJourneySteps extends BasePage {
 
@@ -38,7 +39,7 @@ public class InternalNavigationalJourneySteps extends BasePage {
         urlSearchAndViewApplication();
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
-        isElementEnabled("//body", SelectorType.XPATH);
+        assertTrue(isElementEnabled("//body", SelectorType.XPATH));
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
     public void urlSearchAndViewApplication()  {

@@ -20,7 +20,7 @@ import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DocumentHeading;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Subcategory;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 import java.util.ArrayList;

@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.enums.PermitUsage;
@@ -25,11 +26,9 @@ import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
 import org.dvsa.testing.lib.newPages.external.enums.Sector;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
-import static org.dvsa.testing.lib.pages.BasePage.untilExpectedTextInElement;
 import static org.junit.Assert.assertEquals;
 
-public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
+public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implements En {
     public ShortTermEcmt2020EndToEndJourneyPageSteps(OperatorStore operatorStore, World world)  {
         LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
         And("^I select Short term ecmt permit on the select permit page$", () -> {
@@ -94,7 +93,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps implements En {
         Then("^I click on the Finish button on the Application submitted page", () -> {
             SubmittedPage.untilOnPage();
             SubmittedPageJourney.hasPageHeading();
-            untilExpectedTextInElement("//a[contains(text(),'Go to permits dashboard')]",SelectorType.XPATH,"Go to permits dashboard",1000);
+            waitForElementToBePresent("//a[contains(text(),'Go to permits dashboard')]");
             BilateralJourneySteps.clickFinishButton();
         });;
         Then("^I am navigated back to the permits dashboard page with my application status shown as Under Consideration", () -> {

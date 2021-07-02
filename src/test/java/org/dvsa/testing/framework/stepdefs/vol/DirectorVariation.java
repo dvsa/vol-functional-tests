@@ -7,7 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.Journeys.DirectorJourneySteps;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
@@ -42,7 +42,7 @@ public class DirectorVariation extends BasePage {
     @Then("^a new director should be added to my licence$")
     public void aNewDirectorShouldBeAddedToMyLicence() {
         directorJourney.assertDirectorCount(2);
-        List<WebElement> directors = listOfWebElements(directorJourney.directorLinks, SelectorType.XPATH);
+        List<WebElement> directors = findElements(directorJourney.directorLinks, SelectorType.XPATH);
         assertTrue(directorJourney.isDirectorPresentInDirectorTable(directors, directorJourney.getDirectorName()));
     }
 

@@ -22,7 +22,7 @@ import org.dvsa.testing.lib.newPages.internal.BaseModel;
 import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitFeesPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -34,6 +34,7 @@ import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
 import static org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 
 public class SubmitPermitApplicationSteps extends BasePage implements En {
@@ -177,7 +178,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         });
 
         When("^I am in application details page, I should see application is in UC status$",() -> {
-            submitButtonNotExists();
+            assertTrue(submitButtonNotExists());
             underConsiderationStatusExists();
         });
         When("^I Grant and pay issue fee on Internal$",() -> {
@@ -224,7 +225,6 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         // withdraw button Exists under Fee details section
         Then("^I am in fee details page, I should see withdraw button$", () -> {
             refreshPage();
-            waitUntilElementIsEnabled("//a[@id='menu-licence_irhp_applications-fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
             LicenceDetailsPageJourney.clickFeesTab();
             isWithdrawButtonPresent();
         });
@@ -308,7 +308,6 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         When("^I am on the fee details page$", () -> {
             //Go To Fee tab
             refreshPage();
-            waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
             LicenceDetailsPageJourney.clickFeesTab();
         });
         //Submit Button Exists
@@ -328,7 +327,9 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         });
 
         //Submit Button Exists
-        When("^I am in application details page, I should not see submit button$", IrhpPermitsApplyPage::submitButtonNotExists);
+        When("^I am in application details page, I should not see submit button$", () -> {
+            assertTrue(IrhpPermitsApplyPage.submitButtonNotExists());
+        });
 
         //cancel Button not Exists
         Then("^I should not see cancel button on application details page$", IrhpPermitsApplyPage::cancelButtonNotExists);
@@ -361,7 +362,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         });
 
         Then("^I should get an error message in internal application$", () -> {
-            Assert.assertTrue(hasErrorPresent());
+            assertTrue(hasErrorPresent());
         });
         //checking cabotage validation
         When("^I have not declared not to undertake cabotage in internal", () -> {
@@ -444,7 +445,9 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             licenceStore.getEcmt().setNumberOfPermits(numberOfPermits);
 
         });
-        Then("^I should not see submit button on the application page$", IrhpPermitsApplyPage::submitButtonNotExists);
+        Then("^I should not see submit button on the application page$", () -> {
+            assertTrue(IrhpPermitsApplyPage.submitButtonNotExists());
+        });
     }
 
 }

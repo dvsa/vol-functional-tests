@@ -5,7 +5,7 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 
 import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 import static org.junit.Assert.assertEquals;
 
 public class Surrenders extends BasePage implements En {
@@ -94,14 +95,14 @@ public class Surrenders extends BasePage implements En {
             } else {
                 waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
                 world.UIJourneySteps.signManually();
-                javaScriptExecutor("location.reload(true)");
+                refreshPageWithJavascript();
             }
             assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
         });
 
         Then("^the Surrender button should not be clickable$", () -> {
             if (isElementPresent("//*[contains(@name,'actions[surrender]')]", SelectorType.XPATH)) {
-                isElementEnabled("//*[@id='actions[surrender]']", SelectorType.XPATH);
+                assertTrue(isElementEnabled("//*[@id='actions[surrender]']", SelectorType.XPATH));
             }
         });
         And("^the open case and bus reg is closed$", () -> {

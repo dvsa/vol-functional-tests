@@ -5,18 +5,16 @@ import activesupport.string.Str;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.Duration;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DocumentHeading;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.pages.BasePage;
 import org.junit.Assert;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
 
@@ -30,7 +28,7 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
         Then("^the annual ECMT Permits HTML document should have the correct information$", () -> {
             ArrayList<String> tab = new ArrayList<String> (getDriver().getWindowHandles());
             getDriver().switchTo().window(tab.get(tab.size() - 1));
-            untilUrlPathIs(DocumentsPage.RESOURCE, TimeUnit.SECONDS, Duration.LONG);
+            DocumentsPage.untilOnPage();
             String selectLicence1= operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
             LicenceStore selectedLicence = operatorStore.getLatestLicence().get();
             // Check heading contains correct heading

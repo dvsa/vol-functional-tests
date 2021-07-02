@@ -26,7 +26,7 @@ import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.external.pages.SectorPage;
 import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
 import org.dvsa.testing.lib.newPages.external.enums.Sector;
@@ -91,7 +91,6 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             refreshPage();
-            waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
             IrhpPermitsPage.Tab.select(DetailsTab.Fees);
 
             //Pay Fee
@@ -133,7 +132,6 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             NumberOfPermitsPageJourney.completeECMTPage();
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
             IrhpPermitsPage.Tab.select(DetailsTab.Fees);
             FeeDetailsPageJourney.whileFeesPresentWaveFee();
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);

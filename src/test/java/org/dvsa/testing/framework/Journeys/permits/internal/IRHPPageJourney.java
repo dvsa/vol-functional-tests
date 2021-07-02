@@ -21,7 +21,7 @@ public class IRHPPageJourney extends BasePermitJourney {
         IrhpPermitsPage.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
         IrhpPermitsPage.Model.permitType(permitType);
         IrhpPermitsPage.Model.continueButton();
-        IrhpPermitsPage.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
+        IrhpPermitsPage.Model.untilModalIsGone();
     }
 
     public static void logInToInternalAndIRHPGrantApplication() {

@@ -2,11 +2,13 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import com.typesafe.config.Config;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.BasePage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+
+import static org.junit.Assert.assertTrue;
 
 public class FeeAndPaymentJourneySteps extends BasePage {
 
@@ -107,7 +109,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
             //nothing
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH) && System.currentTimeMillis() < kickOut);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
-        isElementEnabled("//tbody", SelectorType.XPATH);
+        assertTrue(isElementEnabled("//tbody", SelectorType.XPATH));
         waitAndClick("//tbody/tr/td[7]/input", SelectorType.XPATH);
         waitAndClick("//*[@value='Pay']", SelectorType.XPATH);
         waitForTextToBePresent("Pay fee");

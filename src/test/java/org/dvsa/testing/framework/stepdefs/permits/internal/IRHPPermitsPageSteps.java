@@ -10,18 +10,17 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
-import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.PermitApplication;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
 import org.dvsa.testing.lib.newPages.internal.BaseModel;
 import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 import javax.mail.MessagingException;
@@ -114,7 +113,6 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
     }
 
     public static void payOutstandingFees(World world) {
-        waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
         refreshPage();
         LicenceDetailsPageJourney.clickIRHPTab();
         LicenceDetailsPageJourney.clickFeesTab();

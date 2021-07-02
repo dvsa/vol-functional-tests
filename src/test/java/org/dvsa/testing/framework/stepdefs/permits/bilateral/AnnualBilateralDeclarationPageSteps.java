@@ -11,6 +11,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
 import org.dvsa.testing.lib.newPages.enums.Country;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
@@ -24,10 +25,9 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.junit.Assert.assertTrue;
 
-public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements En {
+public class AnnualBilateralDeclarationPageSteps extends BasePage implements En {
     public AnnualBilateralDeclarationPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
         And("^I'm on the annual bilateral cabotage only declaration page$", () -> {
             clickToPermitTypePage(world);

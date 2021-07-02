@@ -6,7 +6,7 @@ import activesupport.system.Properties;
 import activesupport.aws.s3.S3;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 

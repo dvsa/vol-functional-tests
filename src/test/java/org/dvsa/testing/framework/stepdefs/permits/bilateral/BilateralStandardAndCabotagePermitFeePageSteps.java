@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.*;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
@@ -21,10 +22,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 
-
-public class BilateralStandardAndCabotagePermitFeePageSteps implements En
+public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage implements En
 {
     public BilateralStandardAndCabotagePermitFeePageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore)
     {

@@ -4,8 +4,8 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
-import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.PermitApplication;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.junit.Assert;
 

@@ -66,7 +66,6 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
 
             world.APIJourneySteps.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            waitUntilElementIsEnabled("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L,TimeUnit.SECONDS);
             IrhpPermitsPage.Tab.select(DetailsTab.Fees);
 
 

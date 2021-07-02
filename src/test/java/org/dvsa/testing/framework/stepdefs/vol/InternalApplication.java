@@ -3,11 +3,12 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 import static org.junit.Assert.assertNotNull;
 
 public class InternalApplication extends BasePage implements En {
@@ -109,7 +110,7 @@ public class InternalApplication extends BasePage implements En {
 
             do {
                 tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
-                javaScriptExecutor("location.reload(true)");
+                refreshPageWithJavascript();
             } while (tableColumns > 1 && System.currentTimeMillis() < kickoutTime);
 
             if (System.currentTimeMillis() > kickoutTime) {

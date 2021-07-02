@@ -9,7 +9,7 @@ import org.dvsa.testing.framework.Utils.common.Util;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.FeatureTogglesPage;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.FeatureToggleStatus;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.Features;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotDisappearWithinSpecifiedTimeException;
 import org.junit.jupiter.api.AfterAll;

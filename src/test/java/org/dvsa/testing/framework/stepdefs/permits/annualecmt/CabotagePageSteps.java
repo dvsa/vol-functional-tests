@@ -6,12 +6,11 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeed
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
 
-import static org.dvsa.testing.lib.pages.BasePage.getURL;
-
-public class CabotagePageSteps implements En {
+public class CabotagePageSteps extends BasePage implements En {
 
     public CabotagePageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the cabotage Page$", () -> {

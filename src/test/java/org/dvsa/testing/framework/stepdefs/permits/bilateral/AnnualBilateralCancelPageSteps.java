@@ -9,7 +9,7 @@ import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;

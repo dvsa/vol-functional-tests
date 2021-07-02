@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
@@ -17,11 +18,10 @@ import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.BasePage.getURL;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class Euro6Steps implements En {
+public class Euro6Steps extends BasePage implements En {
 
     public Euro6Steps(OperatorStore operatorStore, World world) {
         And("^I am on the euro emission standard page$", () -> {

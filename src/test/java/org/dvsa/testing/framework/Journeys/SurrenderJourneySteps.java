@@ -4,12 +4,13 @@ import Injectors.World;
 import apiCalls.enums.LicenceType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 
 public class SurrenderJourneySteps extends BasePage {
@@ -119,7 +120,7 @@ public class SurrenderJourneySteps extends BasePage {
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
         // Refresh page
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
     }
 
@@ -162,7 +163,7 @@ public class SurrenderJourneySteps extends BasePage {
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='modal-title']");
         waitAndClick("form-actions[submit]", SelectorType.NAME);
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }
 }

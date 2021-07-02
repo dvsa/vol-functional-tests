@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +21,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         });
 
         Then("^a status of update required should be shown next to financial evidence$", () -> {
-        untilExpectedTextInElement("//*[@id=\"overview-item__financial_evidence\"]",  SelectorType.XPATH,"REQUIRES ATTENTION", 10);
+            waitForElementToBePresent("//*[@id='overview-item__financial_evidence']");
         });
 
         When("^A selfserve user increases the vehicle required count by invalid characters$", () -> {

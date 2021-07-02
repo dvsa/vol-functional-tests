@@ -17,15 +17,13 @@ import org.dvsa.testing.lib.newPages.enums.PeriodType;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
 
-public class AnnualBilateralOverviewPageSteps implements En {
+public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
     public AnnualBilateralOverviewPageSteps(LicenceStore licenceStore, OperatorStore operatorStore, World world) {
         Then("^the status for the declaration section is complete$", () -> {
             String s2 = BasePage.getElementValueByText("//li[3]//ul[1]//li[1]//span[@class='overview__status green']", SelectorType.XPATH);

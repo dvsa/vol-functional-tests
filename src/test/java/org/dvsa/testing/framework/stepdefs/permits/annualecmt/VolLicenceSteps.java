@@ -106,7 +106,7 @@ public class VolLicenceSteps implements En {
             Decisions.Model.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             Decisions.Model.clickCurtailLegislation();
             Decisions.Model.affectNow();
-            Decisions.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
+            Decisions.Model.untilModalIsGone();
         });
     }
 

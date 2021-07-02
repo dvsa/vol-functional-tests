@@ -10,17 +10,17 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.hamcrest.text.MatchesPattern;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.hamcrest.Matchers.isIn;
 import static org.junit.Assert.assertTrue;
 
-public class OverviewPageSteps implements En {
+public class OverviewPageSteps extends BasePage implements En {
 
     public OverviewPageSteps(World world, OperatorStore operatorStore) {
         Then("^I should be on the Annual ECMT overview page$", () -> {

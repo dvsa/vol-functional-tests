@@ -25,7 +25,7 @@ import org.dvsa.testing.lib.newPages.internal.admin.permits.Window;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.DateField;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.PermitsSidebarItem;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.ScoringStatus;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -120,7 +120,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
                             Window.Model.date(DateField.EndDate, now.toLocalDate());
                             Window.Model.time(DateField.EndDate, closestClosingTime);
                             Window.save();
-                            Window.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
+                            Window.Model.untilModalIsGone();
 
                             try {
                                 TimeUnit.SECONDS.sleep(LocalTime.now().until(closestClosingTime, ChronoUnit.SECONDS));
@@ -141,7 +141,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
                             Scoring.accept(Duration.LONG, TimeUnit.MINUTES);
                             Scoring.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
                             Scoring.Model.continueButton();
-                            Scoring.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
+                            Scoring.Model.untilModalIsGone();
 
                             Scoring.untilScoringStatusIs(ScoringStatus.AcceptanceSuccessful, Duration.CENTURY, TimeUnit.MINUTES);
                         }

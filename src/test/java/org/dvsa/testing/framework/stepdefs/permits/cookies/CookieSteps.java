@@ -9,7 +9,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermit
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.CookiesPage;
@@ -21,11 +21,10 @@ import org.openqa.selenium.WebDriver;
 import java.util.Set;
 
 import static org.dvsa.testing.lib.newPages.external.pages.CookiesPage.*;
-import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
+import static org.junit.Assert.assertTrue;
 
 
-public class CookieSteps extends DriverUtils implements En {
+public class CookieSteps extends BasePage implements En {
 
     public CookieSteps(World world, OperatorStore operatorStore) {
 
@@ -54,7 +53,9 @@ public class CookieSteps extends DriverUtils implements En {
             selectAllCookies();
         });
 
-        And("^I should see no banner in the page$", CookiesPage::cookiesBannerIsNotPresent);
+        And("^I should see no banner in the page$", () -> {
+            assertTrue(CookiesPage.cookiesBannerIsNotPresent());
+        });
 
         And("^I should see banner in the page$", CookiesPage::cookiesBannerIsPresent);
 
@@ -131,7 +132,7 @@ public class CookieSteps extends DriverUtils implements En {
            /* String langPrefCookie = Browser.getDriver().manage().getCookieNamed("langPref").getValue().trim();
             System.out.println(langPrefCookie);
             Assert.assertEquals(langPrefCookie,"en-GB");*/
-                Assert.assertTrue(getElementValueByText("//a[contains(text(),'Set cookie preferences')]", SelectorType.XPATH), true);
+                assertTrue(getElementValueByText("//a[contains(text(),'Set cookie preferences')]", SelectorType.XPATH), true);
             });
 
             And("^I Should not see settings cookies$", () -> {

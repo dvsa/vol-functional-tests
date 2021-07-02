@@ -2,8 +2,10 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 
 public class GoodVarDecreaseVehicle extends BasePage implements En {
     World world = new World();
@@ -27,12 +29,12 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
             world.UIJourneySteps.changeVehicleAuth("-6");
         });
         Then("^a status of update required should be shown next to Review and declarations$", () -> {
-            untilExpectedTextInElement("//*[@id='overview-item__undertakings']",  SelectorType.XPATH,"REQUIRES ATTENTION", 10);
+            waitForElementToBePresent("//*[@id='overview-item__undertakings']");
         });
         And("^removes a vehicle because of new vehicle cap", () -> {
             world.selfServeNavigation.navigateToPage("variation", "Vehicles");
             world.UIJourneySteps.removeFirstVehicleOnVehiclePage();
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
             waitAndClick("//*[@class='govuk-back-link']",SelectorType.XPATH);
         });
     }

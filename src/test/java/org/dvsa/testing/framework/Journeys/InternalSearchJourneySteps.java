@@ -2,10 +2,10 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import activesupport.database.exception.UnsupportedDatabaseDriverException;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.internal.SearchNavBar;
 import org.dvsa.testing.lib.newPages.internal.enums.SearchType;
-import org.dvsa.testing.lib.pages.BasePage;
 
 import java.sql.SQLException;
 

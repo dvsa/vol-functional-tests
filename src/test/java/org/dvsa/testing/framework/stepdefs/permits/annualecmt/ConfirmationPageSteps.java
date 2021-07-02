@@ -12,6 +12,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
@@ -24,11 +25,9 @@ import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
-import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
 import static org.junit.Assert.assertTrue;
 
-public class ConfirmationPageSteps implements En {
+public class ConfirmationPageSteps extends BasePage implements En {
 
     public ConfirmationPageSteps(OperatorStore operatorStore, World world) {
 

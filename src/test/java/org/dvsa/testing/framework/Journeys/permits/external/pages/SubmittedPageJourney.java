@@ -4,6 +4,8 @@ import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

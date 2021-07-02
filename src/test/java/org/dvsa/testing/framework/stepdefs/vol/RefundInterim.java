@@ -4,11 +4,12 @@ import Injectors.World;
 import apiCalls.enums.UserRoles;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class RefundInterim extends BasePage implements En {
@@ -47,7 +48,7 @@ public class RefundInterim extends BasePage implements En {
             waitForTextToBePresent("Fee details");
             long kickoutTime = System.currentTimeMillis() + 30000;
             do {
-                javaScriptExecutor("location.reload(true)");
+                refreshPageWithJavascript();
             } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
             if (System.currentTimeMillis() > kickoutTime) {
                 throw new TimeoutException("Kickout time for expecting the interim fee to be refunded.");

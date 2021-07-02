@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.Journeys;
 import Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.BasePage;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
@@ -138,7 +138,7 @@ public class DirectorJourneySteps extends BasePage {
 
     public void assertDirectorCount(int count) {
         waitForTitleToBePresent(world.directorJourneySteps.directorsTitle);
-        List<WebElement> directors = listOfWebElements(world.directorJourneySteps.directorLinks, SelectorType.XPATH);
+        List<WebElement> directors = findElements(world.directorJourneySteps.directorLinks, SelectorType.XPATH);
         long directorCount = directors.size();
         assertEquals(count, directorCount);
     }
@@ -154,7 +154,7 @@ public class DirectorJourneySteps extends BasePage {
     }
 
     public void assertDirectorChangeInTable() {
-        List<WebElement> listOfInternalLicenceDocuments = listOfWebElements("//tbody/tr[*]/td[2]", SelectorType.XPATH);
+        List<WebElement> listOfInternalLicenceDocuments = findElements("//tbody/tr[*]/td[2]", SelectorType.XPATH);
         String documentPrefix = world.licenceCreation.isGoodsLicence() ? GVPeopleChangeSnapshot : PSVPeopleChangeSnapshot;
         String peopleChangeDocument = String.format("//a[contains(text(),'%s')]", documentPrefix);
         assertTrue(listOfInternalLicenceDocuments.stream().anyMatch(d -> d.getText().contains("Application")));
@@ -162,7 +162,7 @@ public class DirectorJourneySteps extends BasePage {
     }
 
     public void assertNewDirectorExistsAndMultiplePresent(String director) {
-        List<WebElement> directorList = listOfWebElements("//*/tbody/tr[*]/td[1]/input", SelectorType.XPATH);
+        List<WebElement> directorList = findElements("//*/tbody/tr[*]/td[1]/input", SelectorType.XPATH);
         long directorsCount = directorList.size();
         MatcherAssert.assertThat(directorsCount, greaterThan(1L));
         assertTrue(directorList.stream().anyMatch(d -> d.getAttribute("value").contains(director)));

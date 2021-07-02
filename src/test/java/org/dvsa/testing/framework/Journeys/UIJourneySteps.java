@@ -8,7 +8,7 @@ import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -32,6 +32,7 @@ import java.util.Set;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 
@@ -44,6 +45,10 @@ public class UIJourneySteps extends BasePage {
 
     public UIJourneySteps(World world) {
         this.world = world;
+    }
+
+    public static void refreshPageWithJavascript() {
+        javaScriptExecutor("location.reload(true)");
     }
 
     public void searchAndSelectAddress(String addressSelector, String postcode, int index) {
@@ -232,7 +237,7 @@ public class UIJourneySteps extends BasePage {
 
     public void updateFinancialInformation()  {
         world.selfServeNavigation.navigateToPage("variation", "Financial evidence");
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         click("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
         click("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
@@ -343,7 +348,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void caseWorkerGrantApplication()  {
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
         waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
         click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
@@ -427,7 +432,7 @@ public class UIJourneySteps extends BasePage {
     }
 
     public void changeLicenceForVariation() {
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitForPageLoad();
         waitForElementToBePresent("//*[contains(text(),'change your licence')]");
         waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
@@ -497,8 +502,8 @@ public class UIJourneySteps extends BasePage {
         click("//*[@value='adPlacedLater']", SelectorType.XPATH);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Operating centre added");
-        replaceText("//*[@id='totAuthVehicles']", Integer.toString(vehicles));
-        replaceText("//*[@id='totAuthTrailers']", Integer.toString(vehicles));
+        replaceText("//*[@id='totAuthVehicles']", SelectorType.XPATH, Integer.toString(vehicles));
+        replaceText("//*[@id='totAuthTrailers']", SelectorType.XPATH, Integer.toString(vehicles));
         click("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
@@ -543,6 +548,10 @@ public class UIJourneySteps extends BasePage {
     }
 
     public List<WebElement> getTableBodyRowList() {
-        return listOfWebElements("//tbody", SelectorType.XPATH);
+        return findElements("//tbody", SelectorType.XPATH);
+    }
+
+    public void checkValue(String selector, SelectorType selectorType, String text) {
+        assertEquals(getValue(selector, selectorType), text);
     }
 }

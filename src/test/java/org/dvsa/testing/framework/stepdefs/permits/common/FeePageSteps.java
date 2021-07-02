@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPag
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.FeeSection;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
@@ -17,13 +18,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.getURL;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class FeePageSteps implements En {
+public class FeePageSteps extends BasePage implements En {
 
     public FeePageSteps(World world, OperatorStore operatorStore) {
 

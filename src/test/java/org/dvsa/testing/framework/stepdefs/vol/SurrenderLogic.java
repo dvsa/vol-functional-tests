@@ -6,7 +6,7 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
 
@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -152,7 +153,7 @@ public class SurrenderLogic extends BasePage implements En {
         When("^the caseworker approves the surrender$", () -> {
             world.surrenderJourneySteps.caseworkManageSurrender();
             // Refresh page
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
             waitAndClick("actions[surrender]", SelectorType.ID);
         });
         Then("^the licence status should be \"([^\"]*)\"$", (String status) -> {

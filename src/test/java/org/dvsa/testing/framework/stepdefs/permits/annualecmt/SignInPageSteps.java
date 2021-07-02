@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Global.GlobalMethods;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 public class SignInPageSteps extends BasePage implements En {

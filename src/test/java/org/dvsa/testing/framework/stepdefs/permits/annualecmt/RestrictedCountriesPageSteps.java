@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCountriesPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.enums.RestrictedCountry;
 import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
@@ -15,11 +16,10 @@ import org.dvsa.testing.lib.newPages.external.pages.RestrictedCountriesPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.BasePage.getURL;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 
-public class RestrictedCountriesPageSteps implements En {
+public class RestrictedCountriesPageSteps extends BasePage implements En {
 
     public RestrictedCountriesPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the restricted countries page$", () -> {

@@ -2,9 +2,10 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 import static org.junit.Assert.*;
 
 public class PaymentProcessing extends BasePage implements En {
@@ -44,7 +45,7 @@ public class PaymentProcessing extends BasePage implements En {
         });
         Then("^the fee should be created$", () -> {
             // Refresh page
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
             String newFeeCount = world.genericUtils.stripAlphaCharacters(getElementValueByText("//div[@class='table__header']/h3", SelectorType.XPATH));
             assertEquals(getText("//*[contains(text(),'" + getFeeNumber() + "')]//*[contains(@class,'status')]", SelectorType.XPATH), "OUTSTANDING");
             assertNotEquals(currentFeeCount, newFeeCount);
@@ -52,7 +53,7 @@ public class PaymentProcessing extends BasePage implements En {
         Then("^the fee should be paid and no longer visible in the fees table$", () -> {
             world.internalNavigation.urlSearchAndViewEditFee(getFeeNumber());
             waitForTextToBePresent("Payments and adjustments");
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
             assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
         });
         And("^when i pay for the fee by \"([^\"]*)\"$", (String arg0) -> {

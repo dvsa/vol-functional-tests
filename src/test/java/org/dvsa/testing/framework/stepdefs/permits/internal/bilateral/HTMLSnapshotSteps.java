@@ -12,7 +12,7 @@ import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Category;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DocumentHeading;
 import org.dvsa.testing.lib.newPages.internal.details.enums.Subcategory;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 

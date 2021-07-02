@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.external.enums.RestrictedCountry;
 import org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection;
 import org.hamcrest.core.StringContains;
@@ -16,12 +16,10 @@ import org.junit.Assert;
 
 import java.lang.reflect.Field;
 
-import static org.dvsa.testing.lib.pages.BasePage.getURL;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class CheckYourAnswersPageSteps implements En {
+public class CheckYourAnswersPageSteps extends BasePage implements En {
 
     public CheckYourAnswersPageSteps(OperatorStore operatorStore, World world) {
         And("^I have completed all steps prior to check your answers page$", () -> {

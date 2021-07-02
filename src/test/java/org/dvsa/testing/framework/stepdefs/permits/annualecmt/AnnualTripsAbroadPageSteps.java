@@ -15,7 +15,7 @@ import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfTripsPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 
 public class AnnualTripsAbroadPageSteps extends BasePage implements En {
 

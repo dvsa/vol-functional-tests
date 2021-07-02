@@ -6,7 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.TaskCreationPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;

@@ -6,16 +6,16 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.junit.Assert.assertTrue;
 
-public class CertificatesRequiredPageSteps implements En {
+public class CertificatesRequiredPageSteps extends BasePage implements En {
 
     public CertificatesRequiredPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the ECMT Removals certificates required page$", () -> {

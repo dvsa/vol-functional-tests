@@ -6,14 +6,14 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitTypePage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.junit.Assert.assertEquals;
 
-public class YearSelectionPageSteps implements En {
+public class YearSelectionPageSteps extends BasePage implements En {
 
     public YearSelectionPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the Year Selection Page$", () -> {

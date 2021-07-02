@@ -16,13 +16,12 @@ import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
 import static org.junit.Assert.assertTrue;
 
-public class NumberOfPermitsPageSteps implements En {
+public class NumberOfPermitsPageSteps extends BasePage implements En {
 
     public NumberOfPermitsPageSteps(World world, OperatorStore operatorStore) {
         And("^I am on the number of permits page$", () -> {

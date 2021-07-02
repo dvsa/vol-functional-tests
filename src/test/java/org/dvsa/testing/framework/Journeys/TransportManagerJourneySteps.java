@@ -6,7 +6,7 @@ import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 import java.net.MalformedURLException;
@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 
 public class TransportManagerJourneySteps extends BasePage {
 
@@ -118,12 +119,12 @@ public class TransportManagerJourneySteps extends BasePage {
 
         //Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);
-        enterSameTextIntoMultipleFieldsPartialMatch("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH, "3");
+        enterTextIntoMultipleFields("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH, "3");
 
         //Add Other Licences
         String role = "Transport Manager";
         waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitAndEnterText("licNo", SelectorType.ID, "PB123456");
         selectValueFromDropDown("//*[@id='data[role]']", SelectorType.XPATH, role);
         enterText("//*[@id='operatingCentres']", SelectorType.XPATH, "Test");

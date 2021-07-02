@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicationsRelatedSteps extends BasePage implements En {
@@ -88,7 +89,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     waitForTextToBePresent("Generate");
                 } else {
                     noOfDifferentLicences++;
-                    javaScriptExecutor("location.reload(true)");
+                    refreshPageWithJavascript();
                 }
             }
         });
@@ -131,7 +132,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
                 } else {
                     noOfDifferentLicences++;
-                    javaScriptExecutor("location.reload(true)");
+                    refreshPageWithJavascript();
                 }
             }
             Assert.assertEquals(0,missingLinks);
