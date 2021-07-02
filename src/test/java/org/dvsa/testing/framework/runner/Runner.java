@@ -4,11 +4,11 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 
-@CucumberOptions(plugin = {"pretty","io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm", "json:target/results.json"},
-        features = {"src/test/resources/features"},
+
+@CucumberOptions( features = {"src/test/resources/features"},
         glue = {"org.dvsa.testing.framework.stepdefs"}
 )
-public class RunCucumberTest extends AbstractTestNGCucumberTests {
+public class Runner extends AbstractTestNGCucumberTests {
     @Override
     @DataProvider(parallel = true)
     public Object[][] scenarios() {
