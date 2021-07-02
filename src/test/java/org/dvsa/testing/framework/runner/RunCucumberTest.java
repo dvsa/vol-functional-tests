@@ -6,7 +6,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 
 @CucumberOptions(
         features = {"src/test/resources/features"},
-        glue = {"org.dvsa.testing.framework.stepdefs.vol"},
+        glue = {"org.dvsa.testing.framework.stepdefs"},
         plugin = {"pretty", "io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm", "json:target/results.json"}
 )
 public class RunCucumberTest extends AbstractTestNGCucumberTests {
