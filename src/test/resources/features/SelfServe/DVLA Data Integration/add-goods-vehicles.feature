@@ -1,4 +1,6 @@
 @DVLA @VOL-147
+@ss_regression
+
 
 Feature: Search and add a vehicle
 
