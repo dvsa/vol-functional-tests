@@ -22,9 +22,8 @@ public class TurkeySubmissionPageSteps implements En {
             // the application reference number is displayed correctly;
             String referenceNumber=BasePage.getElementValueByText("//div[@class='govuk-panel__body']",SelectorType.XPATH);
             assertTrue(referenceNumber.contains("Your reference number"));
-            String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber= BasePage.getElementValueByText("//div/strong",SelectorType.XPATH);
-            assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
+            String actualReferenceNumber = BasePage.getElementValueByText("//div/strong",SelectorType.XPATH);
+            assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
 
             // the texts on the submission page are displayed correctly
             assertTrue(SubmittedPage.isBilateralAdvisoryTextPresent());

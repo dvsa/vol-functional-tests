@@ -269,7 +269,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             OverviewPage.untilOnPage();
         });
         Given("^I accept declaration and submit the application$", () -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourney.clickBilateralOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPage.untilOnPage();
 
             // Checking declaration page content

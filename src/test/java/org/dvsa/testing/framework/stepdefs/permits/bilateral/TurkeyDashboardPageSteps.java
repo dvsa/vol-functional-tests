@@ -15,7 +15,7 @@ public class TurkeyDashboardPageSteps implements En {
 
         Then("^The Bilateral Turkey application status on the self service dashboard goes to VALID$", () -> {
             HomePage.PermitsTab.untilPermitHasStatus(
-                    operatorStore.getCurrentLicence().get().getReferenceNumber(),
+                    world.applicationDetails.getLicenceNumber(),
                     PermitStatus.VALID,
                     Duration.LONG,
                     TimeUnit.MINUTES);

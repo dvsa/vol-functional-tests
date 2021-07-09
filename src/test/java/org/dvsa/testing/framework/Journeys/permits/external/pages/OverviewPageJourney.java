@@ -15,6 +15,11 @@ public class OverviewPageJourney extends BasePermitJourney {
         OverviewPage.clickOverviewSection(section);
     }
 
+    public static void clickBilateralOverviewSection(OverviewSection section) {
+        OverviewPage.untilOnPage();
+        OverviewPage.clickBilateralOverviewSection(section);
+    }
+
     public static void hasPageHeading() {
         String heading = OverviewPage.getPageHeading();
         assertEquals("Application overview", heading);
@@ -22,6 +27,11 @@ public class OverviewPageJourney extends BasePermitJourney {
 
     public static void checkStatus(OverviewSection section, PermitStatus status) {
         PermitStatus sectionStatus = OverviewPage.getStatusOfSection(section);
+        assertTrue(sectionStatus.toString().trim().toLowerCase().contains(status.toString().trim().toLowerCase()));
+    }
+
+    public static void checkBilateralStatus(OverviewSection section, PermitStatus status) {
+        PermitStatus sectionStatus = OverviewPage.getBilateralStatusOfSection(section);
         assertTrue(sectionStatus.toString().trim().toLowerCase().contains(status.toString().trim().toLowerCase()));
     }
 

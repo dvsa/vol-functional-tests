@@ -8,7 +8,7 @@ public class TurkeyApplicationOverviewPageSteps implements En {
     public TurkeyApplicationOverviewPageSteps() {
 
         When("^I click on read declaration on the application overview page$", () -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            OverviewPageJourney.clickBilateralOverviewSection(OverviewSection.BilateralDeclaration);
         });
     }
 }

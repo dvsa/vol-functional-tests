@@ -62,7 +62,7 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
         });
         Then("^the status of Morocco under answers questions for individual countries section is marked as Completed$", () -> {
-            OverviewPageJourney.checkStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
+            OverviewPageJourney.checkBilateralStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
         });
         Then("^I select submit and pay link$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.SubmitAndPay);
@@ -127,6 +127,6 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
         NumberOfPermitsPageJourney.hasBilateralErrorMessage();
         NumberOfPermitsPageJourney.completePage();
         CheckYourAnswerPage.untilOnPage();
-        CheckYourAnswerPage.saveAndContinue();
+        CheckYourAnswerPage.clickConfirmAndReturnToOverview();
     }
 }
