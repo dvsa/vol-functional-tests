@@ -4,7 +4,7 @@ Feature: Internal Short Term permits APGG Euro 5 or Euro 6 until UC Status
   Background:
     Given I have a "goods" "standard_international" licence
     And I am on the VOL internal site
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     And I am viewing a licences IRHP section
     And I apply for a short term APGG Euro5 or Euro 6 application
 

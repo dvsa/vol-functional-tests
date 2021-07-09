@@ -43,9 +43,9 @@ public class ValidPermitPageSteps implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .checkYourAnswers();
             DeclarationPageJourney.completeDeclaration();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
             EcmtApplicationJourney.getInstance()
                     .feeOverviewPage();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
 

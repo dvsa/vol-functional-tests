@@ -14,8 +14,8 @@ Feature: ECMT International Removal  overview page
 
   #AC02:
   @EXTERNAL @OLCS-24817
-  Scenario: Application number is shown in overview page
-    Then the application number is displayed correctly
+  Scenario: Licence number is shown in overview page
+    Then the licence number is displayed correctly
 
   #AC03,#AC04
   @EXTERNAL @OLCS-24817

@@ -7,7 +7,7 @@ Feature:  HTML snapshot
   Scenario: Doc is generated from ECMT permit application submitted externally
     And I am on the VOL self-serve site
     And I have completed an ECMT application
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     When I view the annual ECMT Permits documentation
     Then the annual ECMT Permits HTML document should have the correct information
 

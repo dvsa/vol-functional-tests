@@ -41,9 +41,9 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             EcmtInternationalRemovalJourney.getInstance()
                     .checkYourAnswers();
             DeclarationPageJourney.completeDeclaration();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
             EcmtApplicationJourney.getInstance()
                     .feeOverviewPage();
+            world.feeAndPaymentJourneySteps.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
         Then ("^the page heading on the submission page is displayed correctly", () -> {
@@ -51,10 +51,10 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             Assert.assertEquals(BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH),"Application submitted");
         });
         And ("^the application reference number is displayed correctly", () -> {
-            String referenceNumber=BasePage.getElementValueByText("//div[@class='govuk-panel__body']",SelectorType.XPATH);
+            String referenceNumber=BasePage.getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
             Assert.assertTrue(referenceNumber.contains("Your reference number"));
-            String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
-            String actualReferenceNumber= BasePage.getElementValueByText("//div/strong",SelectorType.XPATH);
+            String expectedLicenceNumber = world.applicationDetails.getLicenceNumber();
+            String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
             Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
         });
         And ("^the texts on the submission page are displayed correctly", () -> {
@@ -99,7 +99,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
         And ("^I'm on the ECMT international submitted page for my active application", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
-            clickByLinkText(operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
             DeclarationPageJourney.completeDeclaration();
         });

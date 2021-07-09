@@ -14,9 +14,9 @@ Feature: Short term ECMT APSG with sectors number of permits page
     Then I am taken back to short term number of permits page
     Then the page heading on the short term number of permits page is displayed correctly
     And I save and continue
-    And I should get the number of permits page error message
+    And I should get the number of permits page error message on short term
     And I save and return to overview
-    And I should get the number of permits page error message
+    And I should get the number of permits page error message on short term
     And I enter the number of permits required more than the authorised vehicles
     And I save and continue
     Then I should get the validation error message

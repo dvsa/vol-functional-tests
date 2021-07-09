@@ -11,6 +11,7 @@ import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
@@ -26,15 +27,12 @@ public class OverviewPageSteps implements En {
             operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
             OverviewPage.clickCancelApplication();
         });
-        And("^the application number is displayed correctly$", () -> {
-            String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber()
-                    .orElseThrow(IllegalAccessError::new);
+        And("^the licence number is displayed correctly$", () -> {
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
-            assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
+            assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
         });
         And("^future sections beyond the current step are disabled$", () -> {
-            assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.LicenceNumber));
+            assertFalse(OverviewPage.isActiveLinkPresent(OverviewSection.Cabotage));
         });
-
     }
 }

@@ -32,7 +32,7 @@ public class PermitStartDatePageSteps extends BasePage implements En {
         });
         And ("^the reference number is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
+            Assert.assertEquals(BasePermitPage.getReferenceNumber(), actualReference);
         });
         And ("^the page heading on permit start date page should be correct$", ()-> {
             String heading = PermitStartDatePage.getPageHeading();

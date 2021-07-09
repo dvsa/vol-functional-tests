@@ -17,7 +17,7 @@ public class APIJourneySteps {
     }
 
     public void createAdminUser() throws MissingRequiredArgument {
-        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
+        world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
     public void nIAddressBuilder() {

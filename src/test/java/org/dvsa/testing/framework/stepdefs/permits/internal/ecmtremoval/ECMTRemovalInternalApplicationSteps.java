@@ -22,7 +22,7 @@ import static org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage.*
 public class ECMTRemovalInternalApplicationSteps implements En {
     public World world;
 
-    public ECMTRemovalInternalApplicationSteps(OperatorStore operatorStore) {
+    public ECMTRemovalInternalApplicationSteps(World world, OperatorStore operatorStore) {
 
         And("^the case worker apply for an ECMT Removal application$", () -> {
             LicenceDetailsPageJourney.clickIRHPTab();

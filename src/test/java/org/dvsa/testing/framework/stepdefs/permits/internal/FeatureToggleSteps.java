@@ -17,7 +17,8 @@ public class FeatureToggleSteps implements En {
     public FeatureToggleSteps(World world) {
         When("^I log in as an internal user with admin privileges$", () -> {
             world.APIJourneySteps.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        });
         Then("^I should be able to see the feature toggle option$", () -> {
             NavigationBar.openAdminPanel();
             NavigationBar.verifyOptionInList(AdminOption.FEATURE_TOGGLE);

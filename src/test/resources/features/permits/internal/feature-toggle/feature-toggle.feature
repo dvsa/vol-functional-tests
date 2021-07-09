@@ -19,7 +19,7 @@ Feature: Internal Feature toggle
     Given I have a "goods" "standard_international" licence
     And I log in as an internal user with admin privileges
     And disable all internal ECMT feature toggles
-    When I am viewing a good operating licence on internal
+    When i create an admin and url search for my licence
     Then internal users should not be able to create ECMT Permit applications
 
   @INTERNAL @OLCS-20855 @TOGGLE-ECMT

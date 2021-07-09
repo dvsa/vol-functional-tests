@@ -17,7 +17,7 @@ Feature: Licence checks on submit
   @INTERNAL @OLCS-22701 @internal_annual_ecmt_apgg_euro5_or_euro6
   Scenario Outline: Able to apply for an ECMT permit with allowed licence type on that are valid on internal and without ECMT permit applications already
     Given I have a "goods" "<type>" licence
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     And I apply for an ECMT APGG Euro5 or Euro 6 application
     And submit my ECMT permit application
     Then my permit application is under consideration
@@ -47,7 +47,7 @@ Feature: Licence checks on submit
   Scenario Outline: Able to apply for an ECMT permit with allowed licence type on that are curtailed on internal and without ECMT permit applications already
     Given I have a "goods" "<type>" licence
     And the licence status is "curtailed"
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     And I apply for an ECMT APGG Euro5 or Euro 6 application
     And submit my ECMT permit application
     Then my permit application is under consideration
@@ -77,7 +77,7 @@ Feature: Licence checks on submit
   Scenario Outline: Able to apply for an ECMT permit with allowed licence type on that are suspended on internal and without ECMT permit applications already
     Given I have a "goods" "<type>" licence
     And the licence status is "suspended"
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     When I apply for an ECMT APGG Euro5 or Euro 6 application
     And submit my ECMT permit application
     Then my permit application is under consideration

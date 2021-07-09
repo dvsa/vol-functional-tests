@@ -10,7 +10,7 @@ public class FeeDetailsPageJourney {
             FeesDetailsPage.confirmWaive();
             FeesDetailsPage.enterWaiveNote();
             FeesDetailsPage.clickRecommend();
-            FeesDetailsPage.acceptWaive();
+            FeesDetailsPage.confirmWaive();
         }
     }
 }

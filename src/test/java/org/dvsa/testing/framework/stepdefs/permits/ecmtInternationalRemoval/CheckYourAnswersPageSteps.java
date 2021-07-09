@@ -40,11 +40,11 @@ public class CheckYourAnswersPageSteps implements En {
         And("^the ECMT Removals check your answers page has reference number$", BasePermitPage::getReferenceFromPage);
         And("^the ECMT Removals application answers are displayed on the check your answers page$", () -> {
             String licence = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Licence);
-            assertThat(licence,StringContains.containsString(operatorStore.getCurrentLicence().get().getLicenceNumber()));
+            assertThat(licence,StringContains.containsString(world.applicationDetails.getLicenceNumber()));
             String permitType = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.PermitType);
             Assert.assertEquals(permitType,"ECMT International Removal");
             String RemovalsEligibility = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.RemovalsEligibility);
-            Assert.assertEquals(RemovalsEligibility, "I confirm that I will only use an ECMT international removal permit to move household goods or business possessions and that I will use specialised equipment and staff for removal operations.')]");
+            Assert.assertEquals(RemovalsEligibility, "I confirm that I will only use an ECMT international removal permit to move household goods or business possessions and that I will use specialised equipment and staff for removal operations.");
             String Cabotage = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Cabotage);
             Assert.assertEquals(Cabotage, "I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.");
         });

@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -27,12 +28,11 @@ public class CabotagePageSteps extends BasePage implements En {
                     .removalsEligibility(true);
         });
         And ("^the ECMT International Removal application reference number should be displayed$", () -> {
-            String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
+            Assert.assertEquals(BasePermitJourney.getReferenceNumber(), CabotagePage.getReferenceFromPage());
         });
         Then("^the ECMT international removal cabotage heading should be correct$", () -> {
             String heading = CabotagePage.getPageHeading();
-            assertEquals("ECMT permits do not allow you to carry out cabotage", heading);
+            assertEquals("Removal permits do not allow you to carry out cabotage", heading);
         });
         Then ("^the correct text is displayed next to the checkbox in ECMT Removal cabotage page", () -> {
             //TODO: Previous code didn't make any sense being here.

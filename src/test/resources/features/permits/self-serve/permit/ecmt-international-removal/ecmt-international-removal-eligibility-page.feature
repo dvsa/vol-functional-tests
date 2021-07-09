@@ -22,9 +22,6 @@ Feature: ECMT International Removal Eligiblity page
     And  I save and continue without selecting the checkbox
     And  I save and return to overview without selecting the checkbox
     Then the error message is displayed on ECMT Remove Eligibility Page
-    When the checkbox is ticked
-    And I save and continue
-    Then the user is navigated to the next page
 
   #AC09
   @EXTERNAL @OLCS-24816

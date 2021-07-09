@@ -42,7 +42,7 @@ public class NumberOfPermitsPageSteps implements En {
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
+            Assert.assertEquals(BasePermitPage.getReferenceNumber(), actualReference);
         });
         Given("^I have not entered anything in number of  permits field$", () -> {
             // Here for readability
@@ -58,7 +58,6 @@ public class NumberOfPermitsPageSteps implements En {
         And("^I enter valid number of permits on the removals number of permits page$", NumberOfPermitsPage::enterAuthorisedVehicles);
         Then("^the number of permits section on the ECMT Removals Overview page is complete$", () -> {
             OverviewPage.untilOnPage();
-            NumberOfPermitsPage.untilOnPage();
             OverviewPageJourney.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
         });
     }

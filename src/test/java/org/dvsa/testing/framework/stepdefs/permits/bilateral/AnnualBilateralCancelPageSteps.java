@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.CancellationConfirmationPage;
@@ -35,7 +37,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
         Then ("^I should be taken to cancel confirmation page$", () -> {
             CancellationConfirmationPage.untilOnPage();
             assertEquals("Application cancelled", CancellationConfirmationPage.getPanelHeading());
-            assertEquals(world.applicationDetails.getLicenceNumber(), CancellationConfirmationPage.getReferenceNumberHeading());
+            assertEquals(BasePermitJourney.getReferenceNumber(), CancellationConfirmationPage.getReferenceNumberHeading());
             assertEquals("What happens now", CancellationConfirmationPage.getAdvisoryHeadingPresent());
             assertEquals("You have cancelled your application and you will no longer be able to view or access it.", CancellationConfirmationPage.getAdvisoryTextPresent());
         });

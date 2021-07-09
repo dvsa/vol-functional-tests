@@ -1,3 +1,4 @@
+@ecmt_removal
 Feature: ECMT International Declaration Page
 
   Background:
@@ -5,7 +6,7 @@ Feature: ECMT International Declaration Page
     And I am on the VOL self-serve site
     And I am on  the ECMT Removal Declaration page
 
-  @EXTERNAL @OLCS-24980 @ecmt_removal @olcs-28201
+  @EXTERNAL @OLCS-24980 @olcs-28201
   Scenario: Declaration page functionality works as expected
     Then I should see the correct heading on the declaration page
     And  the declaration page has a reference number
@@ -27,7 +28,7 @@ Feature: ECMT International Declaration Page
     And I accept and continue
     Then I am directed to the ECMT removals permit fee page
 
-  @EXTERNAL @OLCS-24980 @ecmt_removal
+  @EXTERNAL @OLCS-24980
   Scenario: When fees is waived Declaration page confirmation navigates to submission page
     And I'm viewing my saved ECMT International application in internal
     And I am on the fee details page
@@ -35,11 +36,11 @@ Feature: ECMT International Declaration Page
     And I am on the VOL self-serve site
     And I am continuing on the on-going ECMT removal application
     And  I click declaration link on the Ecmt removal overview page again
-    Then I confirm the ECMT removal declaration
+    Then I confirm the declaration
     And I accept and continue
     Then I am on the ECMT removal application submitted page
 
-  @EXTERNAL @OLCS-24980 @ecmt_removal @olcs-27502 @olcs-27581 @OLCS-27781
+  @EXTERNAL @OLCS-24980 @olcs-27502 @olcs-27581 @OLCS-27781
   Scenario: When fees is paid Declaration page confirmation navigates to submission page
     And I click the back link
     Then I should be on the overview page
@@ -49,6 +50,6 @@ Feature: ECMT International Declaration Page
     And I select the back to home link
     And I am continuing on the on-going ECMT removal application
     And I click declaration link on the Ecmt removal overview page again
-    Then I confirm the ECMT removal declaration
+    Then I confirm the declaration
     And I accept and continue
     Then I am on the ECMT removal application submitted page

@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
@@ -13,6 +14,7 @@ import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CertificatesRequiredPageSteps extends BasePage implements En {
@@ -30,10 +32,10 @@ public class CertificatesRequiredPageSteps extends BasePage implements En {
         });
         And ("^the application reference number is displayed$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
+            Assert.assertEquals(BasePermitJourney.getReferenceNumber(), actualReference);
         });
         And ("^the advisory texts on certificates required page are displayed", () -> {
-            assertTrue(CertificatesRequiredPage.isAdvisoryTextPresent());
+            assertEquals("If your permit application is successful, you are required to have the appropriate Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer you intend to use.", CertificatesRequiredPage.getAdvisoryText());
         });
         And ("^the correct text is displayed next to the checkbox$", () -> {
             assertTrue(CertificatesRequiredPage.isCheckboxTextPresent());

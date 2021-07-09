@@ -5,15 +5,15 @@ import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
 
 public class LicenceDetailsPageJourney {
 
-    public static void clickIRHPTab(){
-        BaseDetailsPage.Tab.hasTab(DetailsTab.IrhpPermits);
+    public static void clickIRHPTab() {
+        BaseDetailsPage.Tab.select(DetailsTab.IrhpPermits);
     }
 
-    public static void clickFeesTab(){
-        BaseDetailsPage.Tab.hasTab(DetailsTab.Fees);
+    public static void clickFeesTab() {
+        BaseDetailsPage.Tab.select(DetailsTab.Fees);
     }
 
-    public static void clickProcessingTab(){
-        BaseDetailsPage.Tab.hasTab(DetailsTab.Processing);
+    public static void clickProcessingTab() {
+        BaseDetailsPage.Tab.select(DetailsTab.Processing);
     }
 }

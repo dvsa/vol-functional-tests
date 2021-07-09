@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitTypePage;
 import org.dvsa.testing.lib.newPages.external.pages.SelectALicencePage;
@@ -80,37 +81,23 @@ public class BasePermitJourney extends BaseJourney {
     }
 
     public BasePermitJourney licencePage(OperatorStore operator, World world) {
-        LicenceStore selectedLicence;
+
         String licenceNumber;
-
-        if (operator.getCurrentLicenceNumber().isPresent()) {
-            selectedLicence = operator.getLicences().stream().filter(l -> !l.getLicenceNumber().equals(operator.getCurrentLicenceNumber())).collect(Collectors.toList()).get(0);
-        } else {
-            selectedLicence = operator.randomLicence();
-        }
-
-        if (selectedLicence.getEcmt().hasType(PermitType.ANNUAL_BILATERAL) ||
-                operator.hasCurrentPermitType(PermitType.ANNUAL_MULTILATERAL) ||
-                operator.hasCurrentPermitType(PermitType.SHORT_TERM_ECMT) ||
-                operator.hasCurrentPermitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)) {
-            SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
-            licenceNumber = selectedLicence.getLicenceNumber();
-        }
-
-        else if (SelectALicencePage.numberOfLicences() > 1) {
-            SelectALicencePage.clickLicence(selectedLicence.getLicenceNumber());
-            licenceNumber = selectedLicence.getLicenceNumber();
-        }
+        if (SelectALicencePage.numberOfLicences() > 1) {
+//            SelectALicencePage.clickLicence(selectedLicence.getLicenceNumber());
+//            licenceNumber = selectedLicence.getLicenceNumber();
+        } // Need way of clicking licence when multiple are available. See if test breaks first.
 
         else {
             licenceNumber = world.applicationDetails.getLicenceNumber();
             SelectALicencePage.clickLicence(licenceNumber);
         }
 
-        operator.setCurrentLicenceNumber(licenceNumber);
 
         SelectALicencePage.saveAndContinue();
 
+
+        BasePermitJourney.setReferenceNumber(OverviewPage.getReferenceFromPage());
         return this;
     }
 
