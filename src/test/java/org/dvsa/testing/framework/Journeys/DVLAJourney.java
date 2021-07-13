@@ -27,9 +27,6 @@ public class DVLAJourney extends BasePage {
 
     public void navigateToManageVehiclesPage(String licenceStatus) {
         world.selfServeNavigation.navigateToPage(licenceStatus, "Vehicles");
-        String URL = Browser.navigate().getCurrentUrl();
-        String newURL = URL.substring(0, URL.length()-2);
-        Browser.navigate().get(newURL);
     }
 
     public void navigateToAddVehiclePage() {

@@ -86,7 +86,7 @@ public class SelfServeNavigational extends BasePage {
                 break;
             case "Vehicles":
                 clickByLinkText("Vehicles");
-                waitForTitleToBePresent("Vehicle details");
+                waitForTitleToBePresent("Manage your vehicles");
                 break;
             case "Convictions and penalties":
                 clickByLinkText("Convictions and penalties");
