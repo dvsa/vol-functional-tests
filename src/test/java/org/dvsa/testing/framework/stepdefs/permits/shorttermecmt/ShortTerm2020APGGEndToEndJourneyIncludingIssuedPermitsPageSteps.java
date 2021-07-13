@@ -42,10 +42,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
         });
 
         When("^I'm  viewing my saved Short term ECMT APGG application in internal and Granting Permit$", () -> {
-            LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
-            operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-
-            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
         });
 
         When("^I login back to the External to view the application in status of awaiting fee", () -> {

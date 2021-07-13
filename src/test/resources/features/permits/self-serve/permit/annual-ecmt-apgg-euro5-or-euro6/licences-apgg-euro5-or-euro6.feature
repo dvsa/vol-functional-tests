@@ -27,8 +27,6 @@ Feature: Licence page
     And I am on the Annual ECMT licence selection page
     When I save and continue
     Then I will get an error message on the licence page
-    When  I select any licence number
-    Then the user is navigated to the next page
 
   @EXTERNAL @OLCS-24820 @ECMT @Test2 @olcs-27581
   Scenario: Back button
@@ -46,4 +44,3 @@ Feature: Licence page
   Scenario: Type of licence text is displayed next to licences
     And  I am on the Annual ECMT licence selection page
     Then I should see the type of licence next to each licence
-#    If fails, it did pass in "licences" via a scenario outline but I don't know what it would have changed.

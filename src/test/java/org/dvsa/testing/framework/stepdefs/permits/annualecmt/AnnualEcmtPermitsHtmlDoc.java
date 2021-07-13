@@ -6,6 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
@@ -22,14 +23,16 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
 
     public AnnualEcmtPermitsHtmlDoc(World world, OperatorStore operatorStore) {
         When("^I view the annual ECMT Permits documentation$", () -> {
+            IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
+            String permitApplicationNumber = getText("//td[@data-heading='Reference number']/a", SelectorType.XPATH);
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.DocsAndAttachments);
-            DocsAndAttachmentsPage.select(operatorStore.getLicences().get(0).getEcmt().getFullReferenceNumber());
+            DocsAndAttachmentsPage.select(permitApplicationNumber);
         });
         Then("^the annual ECMT Permits HTML document should have the correct information$", () -> {
             ArrayList<String> tab = new ArrayList<String> (getDriver().getWindowHandles());
             getDriver().switchTo().window(tab.get(tab.size() - 1));
             DocumentsPage.untilOnPage();
-            String selectLicence1= operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
+            String selectLicence1 = world.applicationDetails.getLicenceNumber();
             LicenceStore selectedLicence = operatorStore.getLatestLicence().get();
             // Check heading contains correct heading
             Assert.assertTrue(String.valueOf(BasePermitPage.getReferenceFromPage().contains(selectLicence1)),true);

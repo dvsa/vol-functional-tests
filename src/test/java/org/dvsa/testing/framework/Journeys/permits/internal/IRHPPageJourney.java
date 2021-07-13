@@ -24,7 +24,7 @@ public class IRHPPageJourney extends BasePermitJourney {
         IrhpPermitsPage.Model.untilModalIsGone();
     }
 
-    public static void logInToInternalAndIRHPGrantApplication() {
+    public static void logInToInternalAndIRHPGrantApplication(World world) {
         world.APIJourneySteps.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();

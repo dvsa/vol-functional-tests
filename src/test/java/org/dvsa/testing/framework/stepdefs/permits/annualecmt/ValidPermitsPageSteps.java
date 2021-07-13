@@ -44,16 +44,11 @@ public class ValidPermitsPageSteps extends BasePage implements En {
 
     public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
         And("^have valid permits$", () -> {
-            // TODO: replace steps to issue permits with an API call should devs bother documenting it
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
-            LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
-            operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(5000);
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
-            waitForTitleToBePresent("Sign in to your Vehicle Operator Licensing account");
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
             refreshPage();
@@ -99,13 +94,12 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
         });
         Then ("^the ECMT application licence number is displayed above the page heading",  () ->{
-            String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
+            String expectedReference = world.applicationDetails.getLicenceNumber();
             String actual = BasePermitPage.getElementValueByText("//span[@class='govuk-caption-xl']", SelectorType.XPATH);
             Assert.assertEquals(expectedReference, actual);
         });
         Then("^the ECMT permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'valid'";
-            OperatorStore store = operatorStore;
             List<ValidAnnualMultilateralPermit> permits = ValidPermitsPage.annualMultilateralPermits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(

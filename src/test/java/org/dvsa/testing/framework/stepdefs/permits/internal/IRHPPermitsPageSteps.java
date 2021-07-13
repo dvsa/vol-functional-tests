@@ -14,6 +14,7 @@ import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.PermitApplication;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
 import org.dvsa.testing.lib.newPages.internal.BaseModel;
 import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
@@ -32,6 +33,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.AwaitingFeePermitSteps.triggerPermitIssuing;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class IRHPPermitsPageSteps extends BasePage implements En {
     private static World world;
@@ -44,7 +47,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             refreshPage();
             LicenceDetailsPageJourney.clickIRHPTab();
         });
-        Then("^the no issued permits message should be displayed$", () -> Assert.assertTrue("Unable to find the no issued permits message", IrhpPermitsDetailsPage.isNoPermitsMessagePresent()));
+        Then("^the no issued permits message should be displayed$", () -> assertTrue("Unable to find the no issued permits message", IrhpPermitsDetailsPage.isNoPermitsMessagePresent()));
         And("^the no permits applications message should be displayed$", IrhpPermitsDetailsPage::isNoPermitApplicationsMessagePresent);
         Then("^the ongoing permit application is to be as expected$", () -> {
             List<PermitApplication> applications = IrhpPermitsDetailsPage.getApplications();
@@ -101,7 +104,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             IRHPPermitsPageSteps.payOutstandingFees(world);
         });
         Then("^my application should be under consideration$", () -> {
-            ApplicationDetailsPage.untilHeadingStatusIs(PermitStatus.UNDER_CONSIDERATION);
+            assertEquals("UNDER CONSIDERATION", getText("//*[@class='govuk-summary-list__value']/span", SelectorType.XPATH));
         });
         Then("^my permit application is under consideration$", () -> {
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);

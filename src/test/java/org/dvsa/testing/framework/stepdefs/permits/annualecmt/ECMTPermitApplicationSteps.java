@@ -50,6 +50,10 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
                 assertTrue(HomePage.isTabPresent(Tab.PERMITS));
             }
         });
+        Then("^I expect my application to be submitted$", () -> {
+            HomePage.untilOnPage();
+            untilAnyPermitStatusMatch(PermitStatus.UNDER_CONSIDERATION);
+        });
         Then("^There should be no selected licences$", () -> assertFalse(SelectALicencePage.hasSelectedLicence()));
         And ("^I save and continue$", BasePermitPage::saveAndContinue);
         Then("^I should be taken to the permits dashboard$", () -> assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
@@ -91,13 +95,8 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
-            LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
-            operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(5000);
-            deleteCookies();
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
-            waitForTextToBePresent("Sign in to your Vehicle Operator Licensing account                ");
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
             refreshPage();
@@ -120,15 +119,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
     }
 
     public static void completeEcmtApplication(OperatorStore operator, World world) {
-        EcmtApplicationJourney.getInstance()
-                .permitType(PermitType.ECMT_ANNUAL, operator);
-        YearSelectionPage.selectECMTValidityPeriod();
-        EcmtApplicationJourney.getInstance().licencePage(operator, world);
-
-        EcmtApplicationJourney.getInstance()
-                .checkYourAnswersPage();
-        DeclarationPageJourney.completeDeclaration();
-        world.feeAndPaymentJourneySteps.customerPaymentModule();
+        completeEcmtApplicationConfirmation(operator, world);
         SubmittedPage.untilPageLoad();
         SubmittedPage.goToPermitsDashboard();
 
@@ -138,12 +129,12 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         EcmtApplicationJourney.getInstance()
                 .permitType(PermitType.ECMT_ANNUAL, operator);
         YearSelectionPage.selectECMTValidityPeriod();
-        EcmtApplicationJourney.getInstance()
-                .licencePage(operator, world);
-
-        EcmtApplicationJourney.getInstance()
-                .checkYourAnswersPage();
+        EcmtApplicationJourney.getInstance().licencePage(operator, world);
+        completeUpToCheckYourAnswersPage(world, operator);
+        CheckYourAnswerPage.untilOnPage();
+        CheckYourAnswerPage.saveAndContinue();
         DeclarationPageJourney.completeDeclaration();
+        PermitFeePage.saveAndContinue();
         world.feeAndPaymentJourneySteps.customerPaymentModule();
     }
 
@@ -153,13 +144,12 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
         CheckIfYouNeedECMTPermitsPageJourney.completePage();
         CabotagePage.confirmWontUndertakeCabotage();
+        CabotagePage.saveAndContinue();
         CertificatesRequiredPage.completePage();
         CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         NumberOfPermitsPageJourney.completeECMTPage();
         EmissionStandardsPageJourney.completePage();
         licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
-        ECMTPermitApplicationSteps.applicationReference.put("application.reference",licenceStore.getReferenceNumber());
-        store.withLicences(licenceStore);
         return licenceStore;
 
    }

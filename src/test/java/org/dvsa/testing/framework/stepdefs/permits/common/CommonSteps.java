@@ -89,7 +89,7 @@ public class CommonSteps extends BasePage implements En {
         And("^I Grant the application on internal$", () -> {
             LicenceModel licence = OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0);
             operator.setCurrentLicenceNumber(licence.getLicNo());
-            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
         });
         And("^I accept and pay the issuing fee on Selfserve$", () -> {
             deleteCookies();
@@ -129,19 +129,12 @@ public class CommonSteps extends BasePage implements En {
             YearSelectionPage.selectECMTValidityPeriod();
 
         });
-        Then("^the user is navigated to the next page$", () -> {
-            Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());
-        });
         Then("^I will get an error message on the licence page$", () -> {
             assertTrue(SelectALicencePage.isErrorMessagePresent());
         });
         Then("^I should be taken to the next section$", () -> {
             java.net.URL url = CommonSteps.origin.get("origin");
             Assert.assertThat(getURL(), is(not(equalTo(url))));
-        });
-        Then("^I should not be taken to the next section$", () -> {
-            java.net.URL url = CommonSteps.origin.get("origin");
-            assertTrue("The current URL path does not match the expected one", isPath(url.getPath()));
         });
         Then("^I should get an error message$", () -> {
              boolean hasError = BasePage.isErrorMessagePresent();
@@ -264,5 +257,6 @@ public class CommonSteps extends BasePage implements En {
                 .permitType(PermitType.ECMT_ANNUAL, operatorStore);
         YearSelectionPage.selectECMTValidityPeriod();
         EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
+        OverviewPage.untilOnPage();
     }
 }

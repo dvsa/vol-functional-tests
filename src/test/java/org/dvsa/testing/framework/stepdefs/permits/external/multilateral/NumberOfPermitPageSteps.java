@@ -28,6 +28,8 @@ import org.junit.Assert;
 
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+
 public class NumberOfPermitPageSteps extends BasePermitPage implements En {
 
     public NumberOfPermitPageSteps(World world, OperatorStore operatorStore) {
@@ -63,7 +65,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
                    .getLatestAnnualMultilateral().get().getNumberOfPermits();
 
            actualPermits.stream().forEach(p -> {
-               Assert.assertTrue(expectedPermits.stream().anyMatch(p::equals));
+               assertTrue(expectedPermits.stream().anyMatch(p::equals));
            });
         });
         When("^I specify my number of multilateral permits$", NumberOfPermitsPageJourney::completeMultilateralPage);
@@ -91,6 +93,9 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
             IrhpPermitsApplyPage.viewApplication();
             InternalAnnualBilateralPermitApplicationPage.numPermits(1, 1);
             InternalAnnualBilateralPermitApplicationPage.save();
+        });
+        Then("^I should be on the ECMT number of permits page$", () -> {
+            assertTrue(isTitlePresent("How many permits do you need?",10 ));
         });
     }
 }

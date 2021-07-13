@@ -6,10 +6,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitType;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.external.pages.*;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDateTime;
@@ -59,11 +56,6 @@ public class EcmtApplicationJourney extends BasePermitJourney {
         int authVehicles = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).getNumberOfAuthorisedVehicles();
         numberOfPermitsPage(authVehicles,operatorStore);
         operatorStore.getCurrentLicence().get().getEcmt().setSubmitDate(LocalDateTime.now());
-        return this;
-    }
-
-    public EcmtApplicationJourney checkYourAnswersPage() {
-        EcmtApplicationJourney.saveAndContinue();
         return this;
     }
 

@@ -60,14 +60,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             SubmittedPage.untilOnPage();
             BilateralJourneySteps.clickFinishButton();
 
-
-            LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
-            operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-
-            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
@@ -84,17 +77,25 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             String heading = DeclineGrantedPermitPage.getPageHeading();
             assertEquals("Decline granted permits", heading);
         });
+        And("^I should be on the short term decline awarded permits confirmation page$", () -> {
+            PermitsDeclinedPage.untilOnPage();
+            String heading = PermitsDeclinedPage.getPanelHeading();
+            assertEquals("Permits declined", heading);
+        });
         And("^I select the decline confirmation checkbox and confirm$", () -> {
             DeclineGrantedPermitPage.confirmDeclineOfPermits();
             DeclineGrantedPermitPage.saveAndContinue();
         });
         And("^I should see all the relevant texts on permits declined page$", () -> {
-            assertTrue(DeclineGrantedPermitPage.getAdvisoryText());
+            assertTrue(DeclineGrantedPermitPage.isAdvisoryTextPresent());
+        });
+        And("^I should see all the relevant texts on permits declined confirmation page$", () -> {
+            assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
+            assertTrue(PermitsDeclinedPage.isAdvisoryTextPresent());
         });
         And("^the declined permit application is not displayed on the permit dashboard$", () -> {
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
             String permitLicence= String.valueOf(HomePage.PermitsTab.getPermitsWithStatus(HomePage.PermitsTab.Table.ongoing, PermitStatus.AWAITING_FEE));
-            Assert.assertNotEquals(licence1,permitLicence);
+            Assert.assertNotEquals(world.applicationDetails.getLicenceNumber(), permitLicence);
         });
         And("^I select accept and continue button without confirming decline checkbox$", DeclineGrantedPermitPage::saveAndContinue);
         And("^the error message is displayed$", () -> {
@@ -108,9 +109,9 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             String heading = GrantedPermitRestrictionsPage.getPageHeading();
             assertEquals("Granted permits restrictions", heading);
             List<String> tableHeadings = GrantedPermitRestrictionsPage.getTableRowHeadings();
-            Assert.assertEquals("Permit", tableHeadings.get(1));
-            Assert.assertEquals("Minimum emission standard", tableHeadings.get(2));
-            Assert.assertEquals("Not valid to travel to", tableHeadings.get(3));
+            Assert.assertEquals("Permit", tableHeadings.get(0));
+            Assert.assertEquals("Minimum emission standard", tableHeadings.get(1));
+            Assert.assertEquals("Not valid to travel to", tableHeadings.get(2));
         });
         And("^I select the return to fee overview link$", GrantedPermitRestrictionsPage::returnToFeeSummaryPage);
 

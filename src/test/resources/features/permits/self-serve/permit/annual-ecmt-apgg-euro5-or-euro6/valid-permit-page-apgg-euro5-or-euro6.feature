@@ -6,7 +6,7 @@ Feature: ECMT valid permit page
     And I am on the VOL self-serve site
     And have valid permits
 
-  @EXTERNAL @OLCS-21464 @OLCS-25083 @OLCS-28352
+  @OLCS-21464 @OLCS-25083 @OLCS-28352
   Scenario: Has the correct information displayed
     Then the user is in the annual ECMT list page
     And the ECMT application licence number is displayed above the page heading

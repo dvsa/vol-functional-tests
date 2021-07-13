@@ -40,9 +40,4 @@ public class Hooks extends BasePage {
 //            FeatureTogglesPage.toggle(Features.BackendPermits, FeatureToggleStatus.Active);
 //        }
 //    }
-
-    @AfterAll
-    public static void tearDown() {
-        quit();
-    }
 }

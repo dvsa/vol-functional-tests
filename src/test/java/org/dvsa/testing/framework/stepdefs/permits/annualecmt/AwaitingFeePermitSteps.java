@@ -55,12 +55,9 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
-            LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
-            operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-            IRHPPageJourney.logInToInternalAndIRHPGrantApplication();
+            operatorStore.setCurrentLicenceNumber(world.applicationDetails.getLicenceNumber());
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(3000);
-            getDriver().get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true)).toString());
-            waitForTextToBePresent("Sign in to your Vehicle Operator Licensing account                ");
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
             getDriver().navigate().refresh();

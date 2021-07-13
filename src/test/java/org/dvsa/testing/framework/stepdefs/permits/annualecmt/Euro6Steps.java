@@ -29,6 +29,7 @@ public class Euro6Steps extends BasePage implements En {
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
+            CabotagePage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPageJourney.completeECMTPage();
@@ -56,9 +57,8 @@ public class Euro6Steps extends BasePage implements En {
             assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
         });
         Then("^I see the application reference number is displayed correctly$", () -> {
-            String expectedLicenceNumber= operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber= BasePermitPage.getReferenceFromPage();
-            Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
+            Assert.assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
         });
         Then("^the texts are displayed correctly$", () -> {
             assertTrue(EmissionStandardsPage.isAdvisoryTextPresent());

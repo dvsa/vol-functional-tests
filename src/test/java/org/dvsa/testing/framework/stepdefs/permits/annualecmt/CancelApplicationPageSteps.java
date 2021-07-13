@@ -25,9 +25,9 @@ public class CancelApplicationPageSteps extends BasePermitPage implements En {
             // Here for readability and to stop cucumber from throwing an exception
         });
         Then("^I should get an error message on cancel application page$", () -> {
-            assertEquals("You must select the checkbox to continue", CancellationPage.getErrorText());
+            assertEquals("Tick to confirm you want to withdraw your application", CancellationPage.getErrorText());
         });
-        When("^I cancel my ECMT application$", CancellationPage::clickCancelCheckbox);
+        When("^I cancel my ECMT application$", CancellationPage::saveAndContinue);
         Then("^I navigate to the Bilaterals cabotage page$", () -> {
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);

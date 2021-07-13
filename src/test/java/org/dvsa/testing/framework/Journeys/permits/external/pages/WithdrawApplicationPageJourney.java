@@ -8,6 +8,6 @@ import static org.junit.Assert.assertEquals;
 public class WithdrawApplicationPageJourney extends BasePermitJourney {
 
     public static void hasPageHeading() {
-        assertEquals("Withdraw Application", WithdrawApplicationPage.getPageHeading());
+        assertEquals("Withdraw application", WithdrawApplicationPage.getPageHeading());
     }
 }

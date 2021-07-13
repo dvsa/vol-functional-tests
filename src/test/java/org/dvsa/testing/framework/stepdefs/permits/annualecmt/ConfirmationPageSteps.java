@@ -39,13 +39,12 @@ public class ConfirmationPageSteps extends BasePage implements En {
         Then("^the reference number on the annual ECMT submitted page  is as expected$", () -> {
             SubmittedPage.untilOnPage();
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
-            assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
+            assertTrue(actualReference.contains(world.applicationDetails.getLicenceNumber()));
         });
 
         Then("^all advisory texts on Annual ECMT submitted page is displayed correctly$", () -> {
             SubmittedPageJourney.hasPageHeading();
             SubmittedPageJourney.hasShortTermECMTAdvisoryText();
-            assertTrue(SubmittedPage.isWarningMessagePresent());
         });
 
         Then("^I have an ongoing Annual ECMT with all fees paid", () -> {

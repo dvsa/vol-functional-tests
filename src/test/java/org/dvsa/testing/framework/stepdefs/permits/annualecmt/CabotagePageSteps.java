@@ -17,14 +17,8 @@ public class CabotagePageSteps extends BasePage implements En {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
-
         });
-        When("^I declare not to undertake cabotage$", () -> {
-            CabotagePage.confirmWontUndertakeCabotage();
-        });
-        Given("^I have not declared not to undertake cabotage$", () -> {
-            CommonSteps.origin.put("origin", getURL());
-        });
+        When("^I declare not to undertake cabotage$", CabotagePage::confirmWontUndertakeCabotage);
     }
 
 }

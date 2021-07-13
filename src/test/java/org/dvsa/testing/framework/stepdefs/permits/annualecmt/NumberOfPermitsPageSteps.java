@@ -29,6 +29,7 @@ public class NumberOfPermitsPageSteps extends BasePage implements En {
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
+            CabotagePage.saveAndContinue();
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
         });

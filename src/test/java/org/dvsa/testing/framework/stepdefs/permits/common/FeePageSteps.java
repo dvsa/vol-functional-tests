@@ -39,11 +39,6 @@ public class FeePageSteps extends BasePage implements En {
         });
         When("^I submit and pay$", PermitFeePage::saveAndContinue);
         When("^I save and return to overview from fee page$", PermitFeePage::clickReturnToOverview);
-        Then("^I expect the reference number to match$", () -> {
-            String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
-            String expectedReference = ECMTPermitApplicationSteps.applicationReference.get("application.reference");
-            assertThat(actualReference, is(expectedReference));
-        });
         Then("^the number of permits on the fee overview should match$", () -> {
             String expectedNumberOfPermits = String.valueOf(operatorStore.getLatestLicence().get().getEcmt().getNumberOfPermits());
         });

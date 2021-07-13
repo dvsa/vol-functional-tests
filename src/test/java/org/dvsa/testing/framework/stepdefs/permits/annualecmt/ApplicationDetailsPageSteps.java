@@ -22,11 +22,7 @@ public class ApplicationDetailsPageSteps implements En {
     private World world;
 
     public ApplicationDetailsPageSteps(OperatorStore operatorStore, World world) {
-        And("^I am viewing an application$", () -> {
-            LicenceStore licence = operatorStore.getLatestLicence()
-                    .orElseThrow(IllegalStateException::new);
-            HomePage.PermitsTab.selectFirstOngoingApplication();
-        });
+        And("^I am viewing an application$", HomePage.PermitsTab::selectFirstOngoingApplication);
         Then("^all the information should match that which was entered during the application process$", () -> {
             LicenceStore licence = operatorStore.getLatestLicence().orElseThrow(IllegalStateException::new);
              DateFormat dateFormat= new SimpleDateFormat("dd MMMM yyyy");
@@ -34,7 +30,7 @@ public class ApplicationDetailsPageSteps implements En {
              String expectedDate= dateFormat.format(date);
             Assert.assertThat(ApplicationDetailsPage.details(ApplicationDetail.Status).toLowerCase(), is("under consideration"));
             Assert.assertThat(ApplicationDetailsPage.details(ApplicationDetail.PermitType), is(licence.getEcmt().getType().get().toString()));
-            Assert.assertThat(ApplicationDetailsPage.details(ApplicationDetail.ReferenceNumber), is(licence.getReferenceNumber()));
+            Assert.assertTrue(ApplicationDetailsPage.details(ApplicationDetail.ReferenceNumber).contains(world.applicationDetails.getLicenceNumber()));
             Assert.assertThat(ApplicationDetailsPage.details(ApplicationDetail.ApplicationDate), is(expectedDate));
         });
         When("^I select return to permits dashboard hyperlink$", ApplicationDetailsPage::returnToPermitsDashboard);

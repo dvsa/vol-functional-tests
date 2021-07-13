@@ -17,10 +17,25 @@ import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.hamcrest.text.MatchesPattern;
 import org.junit.Assert;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.isIn;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 public class OverviewPageSteps extends BasePage implements En {
+
+    String[] ECMTAnnualSections = {
+            "Check if you need ECMT permits",
+            "Cabotage",
+            "Certificates required",
+            "Countries with limited permits",
+            "Number of permits required",
+            "Euro emission standards",
+            "Check your answers",
+            "Declaration"
+    };
 
     public OverviewPageSteps(World world, OperatorStore operatorStore) {
         Then("^I should be on the Annual ECMT overview page$", () -> {
@@ -31,8 +46,12 @@ public class OverviewPageSteps extends BasePage implements En {
 
         });
         Then("^only the expected status labels are displayed$", () -> {
-            for (OverviewSection section : OverviewSection.values()){
-                Assert.assertThat(OverviewPage.getStatusOfSection(section), isIn(PermitStatus.values()));
+            List<OverviewSection> overviewSections = new LinkedList<>();
+            for (String section : ECMTAnnualSections) {
+                overviewSections.add(OverviewSection.toEnum(section));
+            }
+            for (OverviewSection section : overviewSections) {
+                assertThat(OverviewPage.getStatusOfSection(section), isIn(PermitStatus.values()));
             }
         });
         When("^I select '([\\w ]+)'$", (String overviewSection) -> {

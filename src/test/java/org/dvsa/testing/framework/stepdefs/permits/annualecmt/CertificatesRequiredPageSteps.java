@@ -24,9 +24,11 @@ public class CertificatesRequiredPageSteps implements En {
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
+            CabotagePage.saveAndContinue();
         });
         And("^The application reference is displayed on the page$", CertificatesRequiredPage::getReferenceFromPage);
         And("^the certificates required page heading is as per the AC$",() -> {
+            CertificatesRequiredPage.untilOnPage();
             String heading = CertificatesRequiredPage.getPageHeading();
             assertEquals("Mandatory certificates for vehicles and trailers you intend to use", heading);
         });

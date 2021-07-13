@@ -27,11 +27,11 @@ public class RestrictedCountriesPageSteps extends BasePage implements En {
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
+            CabotagePage.saveAndContinue();
             CertificatesRequiredPage.completePage();
         });
         Given("^I have selected some restricted countries$", () -> {
             RestrictedCountriesPage.countries(RestrictedCountry.random());
-            CommonSteps.origin.put("origin", getURL());
         });
         Given("^I (do |don't )?plan on delivering to a restricted country$", (String deliverToRestrictedCountries) -> {
             boolean deliverToRestricted = deliverToRestrictedCountries.equals("do ");
@@ -45,9 +45,8 @@ public class RestrictedCountriesPageSteps extends BasePage implements En {
         });
         Then("^the page heading on Annual ECMT countries with limited countries page is Shown Correctly$", RestrictedCountriesPageJourney::hasPageHeading);
         Then("^the application reference number is shown correctly$", () -> {
-            String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
-            Assert.assertThat(actualReferenceNumber, containsString(expectedLicenceNumber));
+            Assert.assertThat(actualReferenceNumber, containsString(world.applicationDetails.getLicenceNumber()));
         });
 
     }
