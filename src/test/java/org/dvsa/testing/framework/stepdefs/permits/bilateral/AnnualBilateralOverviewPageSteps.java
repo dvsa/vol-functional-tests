@@ -127,6 +127,6 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
         NumberOfPermitsPageJourney.hasBilateralErrorMessage();
         NumberOfPermitsPageJourney.completePage();
         CheckYourAnswerPage.untilOnPage();
-        CheckYourAnswerPage.clickReturnToOverview();
+        CheckYourAnswerPage.clickConfirmAndReturnToOverview();
     }
 }

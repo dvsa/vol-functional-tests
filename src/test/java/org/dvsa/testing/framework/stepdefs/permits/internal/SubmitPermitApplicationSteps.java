@@ -362,7 +362,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         });
 
         Then("^I should get an error message in internal application$", () -> {
-            assertTrue(isErrorTextPresent());
+            assertTrue(IrhpPermitsApplyPage.isErrorTextPresent());
         });
         //checking cabotage validation
         When("^I have not declared not to undertake cabotage in internal", () -> {
