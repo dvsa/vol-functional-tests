@@ -67,24 +67,30 @@ public class CreateCase extends BasePage implements En {
         And("^i add a new public inquiry$", () -> {
             click("//*[@id='menu-licence/cases']", SelectorType.XPATH);
             clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
-            world.UIJourneySteps.createPublicInquiry();
+            world.UIJourney.createPublicInquiry();
         });
         And("^i add and publish a hearing$", () -> {
-            world.UIJourneySteps.addAndPublishHearing();
+            world.UIJourney.addAndPublishHearing();
         });
         Then("^the public inquiry should be published$", () -> {
             waitForTextToBePresent("There is currently no decision");
         });
         And("^I delete a case note$", () -> {
-            world.UIJourneySteps.deleteCaseNote();
+            world.UIJourney.deleteCaseNote();
         });
         Then("^the note should be deleted$", () -> {
             waitForTextToBePresent("The table is empty");
         });
         And("^i add a case in internal on the \"([^\"]*)\" page$", (String page) -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.UIJourneySteps.createCaseUI(page);
+            world.UIJourney.createCaseUI(page);
+        });
+        When("^i add a submission$", () -> {
+            world.UIJourney.createAndSubmitSubmission();
+        });
+        Then("^the submission details should be displayed$", () -> {
+            isTextPresent("Bus Registration Submission");
         });
     }
 }

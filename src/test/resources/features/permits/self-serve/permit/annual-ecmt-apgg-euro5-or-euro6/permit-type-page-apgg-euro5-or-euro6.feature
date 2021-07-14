@@ -1,4 +1,4 @@
-@EXTERNAL @ECMT @OLCS-24819 @annual_ecmt_apgg_euro5_or_euro6
+@EXTERNAL @ECMT @OLCS-24819 @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
 Feature: Permit Type Page
 
   Background:

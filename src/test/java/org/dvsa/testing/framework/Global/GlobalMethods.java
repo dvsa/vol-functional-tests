@@ -73,7 +73,7 @@ public class GlobalMethods extends BasePage {
             waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
     }
 
-    private void signIn(String userName, String password) {
+    public void signIn(String userName, String password) {
         replaceText(emailField, SelectorType.CSS, userName);
         replaceText(passwordField, SelectorType.CSS, password);
         click(submitButton, SelectorType.CSS);

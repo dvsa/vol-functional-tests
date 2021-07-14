@@ -77,7 +77,7 @@ public class InterimLicence extends BasePage implements En {
             isTextPresent(noDatesErrorMessage);
         });
         And("^i have logged in to internal$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         });
         When("^I create an interim application with a start and no end date$", () -> {

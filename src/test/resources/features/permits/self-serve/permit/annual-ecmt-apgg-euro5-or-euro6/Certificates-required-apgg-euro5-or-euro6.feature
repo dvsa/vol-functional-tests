@@ -1,4 +1,4 @@
-@EXTERNAL @annual_ecmt_apgg_euro5_or_euro6 @ECMT
+@EXTERNAL @annual_ecmt_apgg_euro5_or_euro6 @ECMT  @eupa_regression
 Feature: Certificates required Page
 
   Background:

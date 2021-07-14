@@ -1,4 +1,4 @@
-@INTERNAL @OLCS-20940 @internal_annual_ecmt_apgg_euro5_or_euro6 @OLCS-25288
+@INTERNAL @OLCS-20940 @internal_annual_ecmt_apgg_euro5_or_euro6 @OLCS-25288 @eupa_regression
 Feature: Internal Licence details page
 
   Background:

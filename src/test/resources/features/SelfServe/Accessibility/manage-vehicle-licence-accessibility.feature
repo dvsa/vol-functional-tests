@@ -1,7 +1,7 @@
 Feature: Check that manage vehicle journey is accessible
 
   Background:
-    Given I have "2" "goods" "standard_national" licences with "2" vehicles and a cap of "6"
+    Given I have "2" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "6"
 
   Scenario: Check that Manage Vehicle page is accessible
     When I navigate to manage vehicle page on a licence

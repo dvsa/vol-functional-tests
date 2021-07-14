@@ -1,10 +1,10 @@
 @SS
 @ss-pay-app
 @ss_regression
+@smoketest
 Feature: Self Serve Apply for licence
 
   @CPMS_tests
-  @smoketest
   Scenario Outline: Create and pay application fees
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_east |
@@ -20,8 +20,8 @@ Feature: Self Serve Apply for licence
   @stored_cards
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
-      | north_east |
       | north_west |
+      | north_east |
     And i choose to print and sign
     When i pay for my application
     Then the application should be submitted
@@ -32,8 +32,8 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
-  @NI_application
-  @smoketest
+  @cross-browser
+    @NI_application
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |

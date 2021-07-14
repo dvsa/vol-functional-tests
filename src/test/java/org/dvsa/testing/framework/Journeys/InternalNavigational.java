@@ -11,14 +11,14 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import static activesupport.driver.Browser.navigate;
 import static org.junit.Assert.assertTrue;
 
-public class InternalNavigationalJourneySteps extends BasePage {
+public class InternalNavigational extends BasePage {
 
     private World world;
     private String myURL = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
     public String taskTitle = "//h2[text()='Edit task']";
 
-    public InternalNavigationalJourneySteps(World world) {
+    public InternalNavigational(World world) {
         this.world = world;
     }
 
@@ -27,14 +27,14 @@ public class InternalNavigationalJourneySteps extends BasePage {
     }
 
     public void logInAndNavigateToDocsTable()  {
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         urlSearchAndViewApplication();
         clickByLinkText("Docs");
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
     public void logInAndNavigateToTask()  {
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         urlSearchAndViewApplication();
         waitForTextToBePresent("Processing");

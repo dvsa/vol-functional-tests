@@ -1,4 +1,4 @@
-@certificateofroadworthiness_vehicles_E2E
+@certificateofroadworthiness_vehicles_E2E @eupa_regression
 Feature: Certificate of roadworthiness for Vehicles end to end happy path journey
 
   Background:

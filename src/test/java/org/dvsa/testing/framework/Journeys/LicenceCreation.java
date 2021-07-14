@@ -18,20 +18,10 @@ public class LicenceCreation {
         world.createApplication.setOperatorType(operatorType);
         world.createApplication.setLicenceType(licenceType);
         if (licenceType.equals(LicenceType.SPECIAL_RESTRICTED.name().toLowerCase(Locale.ROOT))) {
-            world.APIJourneySteps.createSpecialRestrictedApplication();
+            world.APIJourney.createSpecialRestrictedApplication();
         } else {
-            world.APIJourneySteps.createApplication();
+            world.APIJourney.createApplication();
         }
-    }
-
-    public void createSubmittedApplication(String operatorType, String licenceType) {
-        createApplication(operatorType, licenceType);
-        world.APIJourneySteps.submitApplication();
-    }
-
-    public void createLicence(String operatorType, String licenceType) {
-        createSubmittedApplication(operatorType, licenceType);
-        world.APIJourneySteps.grantLicenceAndPayFees();
     }
 
     public void createApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
@@ -43,26 +33,36 @@ public class LicenceCreation {
         createApplication(operatorType, licenceType);
     }
 
-    public void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
-        createSubmittedApplicationWithVehicles(operatorType, licenceType, vehicles);
-        world.APIJourneySteps.grantLicenceAndPayFees();
-    }
-
-    public void createSubmittedApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
-        createApplicationWithVehicles(operatorType, licenceType, vehicles);
-        world.APIJourneySteps.submitApplication();
-    }
-
     public void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
         world.createApplication.setTrafficArea(trafficArea);
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
         createApplication(operatorType, licenceType);
     }
 
+    public void createSubmittedApplication(String operatorType, String licenceType) {
+        createApplication(operatorType, licenceType);
+        world.APIJourney.submitApplication();
+    }
+
+    public void createSubmittedApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
+        createApplicationWithVehicles(operatorType, licenceType, vehicles);
+        world.APIJourney.submitApplication();
+    }
+
+    public void createLicence(String operatorType, String licenceType) {
+        createSubmittedApplication(operatorType, licenceType);
+        world.APIJourney.grantLicenceAndPayFees();
+    }
+
+    public void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
+        createSubmittedApplicationWithVehicles(operatorType, licenceType, vehicles);
+        world.APIJourney.grantLicenceAndPayFees();
+    }
+
     public void createLicenceWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
-        createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
-        world.APIJourneySteps.submitApplication();
-        world.APIJourneySteps.grantLicenceAndPayFees();
+        world.createApplication.setTrafficArea(trafficArea);
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
+        createLicence(operatorType, licenceType);
     }
 
     public void createNILicence(String operatorType, String licenceType) {

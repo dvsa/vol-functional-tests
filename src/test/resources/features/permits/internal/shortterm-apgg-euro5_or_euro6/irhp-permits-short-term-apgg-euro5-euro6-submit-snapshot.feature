@@ -1,4 +1,4 @@
-@internal_short_term_apgg_euro5_or_euro6
+@internal_short_term_apgg_euro5_or_euro6 @eupa_regression
 Feature: Internal Case Worker submits an ECMT APGG Euro5 or Euro 6 Permit application
 
   Background:

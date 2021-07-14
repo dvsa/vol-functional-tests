@@ -1,5 +1,7 @@
-downloadDirectory =
+downloadDirectory
 internalNewPassword =
+partnerUser =
+partnerUserPassword =
 verifyUsername =
 verifyPassword =
 dbUsername =
@@ -8,3 +10,6 @@ cardNumber =
 cardExpiryMonth =
 cardExpiryYear =
 bucketName =
+JENKINS_USERNAME =
+JENKINS_PASSWORD =
+apiHeader =

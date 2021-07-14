@@ -27,7 +27,7 @@ public class TMDetails extends BasePage implements En {
             world.genericUtils.findSelectAllRadioButtonsByValue("Y");
             click(String.format("//*[@data-label=\"%s\"]", button), SelectorType.XPATH);
         });
-        Then("^I should be taken to the \"([^\"]*)\" page$", (String page) -> {
+        Then("^I should see the \"([^\"]*)\" page$", (String page) -> {
             assertTrue(Browser.navigate().getCurrentUrl().contains(page));
         });
         And("^page title \"([^\"]*)\" should be displayed on page$", (String arg0) -> {

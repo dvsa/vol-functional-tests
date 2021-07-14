@@ -14,9 +14,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 
-public class TransportManagerJourneySteps extends BasePage {
+public class TransportManagerJourney extends BasePage {
 
     private World world;
     static int tmCount;
@@ -27,7 +27,7 @@ public class TransportManagerJourneySteps extends BasePage {
     private String operatorForeName;
     private String operatorFamilyName;
 
-    public TransportManagerJourneySteps(World world){
+    public TransportManagerJourney(World world){
         this.world = world;
     }
 
@@ -135,7 +135,7 @@ public class TransportManagerJourneySteps extends BasePage {
         waitForTextToBePresent("Add other employment");
         waitAndClick("//*[contains(text(),'Add other employment')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='tm-employer-name-details[employerName]']", SelectorType.XPATH, "test");
-        world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", postCode, 1);
+        world.UIJourney.searchAndSelectAddress("postcodeInput1", postCode, 1);
         waitAndEnterText("//*[@id='tm-employment-details[position]']", SelectorType.XPATH, "test");
         waitAndEnterText("//*[@id='tm-employment-details[hoursPerWeek]']", SelectorType.XPATH, "Test");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
@@ -179,7 +179,7 @@ public class TransportManagerJourneySteps extends BasePage {
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
             world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
-            world.UIJourneySteps.changeLicenceForVariation();
+            world.UIJourney.changeLicenceForVariation();
         }
         waitForTitleToBePresent("Transport Managers");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
@@ -254,26 +254,26 @@ public class TransportManagerJourneySteps extends BasePage {
     }
 
     public void generateAndAddOperatorUser() {
-        world.TMJourneySteps.generateOperatorValues();
+        world.TMJourney.generateOperatorValues();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.UIJourneySteps.addUser(
-                world.TMJourneySteps.getOperatorUser(),
-                world.TMJourneySteps.getOperatorForeName(),
-                world.TMJourneySteps.getOperatorFamilyName(),
-                world.TMJourneySteps.getOperatorUserEmail());
+        world.UIJourney.addUser(
+                world.TMJourney.getOperatorUser(),
+                world.TMJourney.getOperatorForeName(),
+                world.TMJourney.getOperatorFamilyName(),
+                world.TMJourney.getOperatorUserEmail());
     }
 
     public void addNewPersonAsTransportManager(String licenceType) {
         world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
         click("add", SelectorType.ID);
         waitAndClick("addUser", SelectorType.ID);
-        enterText("forename", SelectorType.ID, world.TMJourneySteps.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.TMJourneySteps.getOperatorFamilyName());
+        enterText("forename", SelectorType.ID, world.TMJourney.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.TMJourney.getOperatorFamilyName());
         LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
         replaceDateFieldsByPartialId("dob", dob);
-        enterText("username", SelectorType.ID, world.TMJourneySteps.getOperatorUser());
-        enterText("emailAddress", SelectorType.ID, world.TMJourneySteps.getOperatorUserEmail());
-        enterText("emailConfirm", SelectorType.ID, world.TMJourneySteps.getOperatorUserEmail());
+        enterText("username", SelectorType.ID, world.TMJourney.getOperatorUser());
+        enterText("emailAddress", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
+        enterText("emailConfirm", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
         click("form-actions[continue]", SelectorType.ID);
         waitForTextToBePresent("user account has been created and a link sent to them");
     }

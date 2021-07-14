@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
-public class DVLAJourneySteps extends BasePage {
+public class DVLAJourney extends BasePage {
 
     private World world;
     public String VRM;
@@ -23,36 +23,33 @@ public class DVLAJourneySteps extends BasePage {
     public List<String> allPreviousDiscNumbers = new ArrayList<String>();
     public String newDiscNumber;
 
-    public DVLAJourneySteps(World world){ this.world = world; }
+    public DVLAJourney(World world){ this.world = world; }
 
     public void navigateToManageVehiclesPage(String licenceStatus) {
         world.selfServeNavigation.navigateToPage(licenceStatus, "Vehicles");
-        String URL = Browser.navigate().getCurrentUrl();
-        String newURL = URL.substring(0, URL.length()-2);
-        Browser.navigate().get(newURL);
     }
 
     public void navigateToAddVehiclePage() {
-        click("//input[@id='add-vehicle']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//input[@id='add-vehicle']", SelectorType.XPATH);
+        waitAndClick("//*[@type='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Add a vehicle");
     }
 
     public void navigateToRemoveVehiclePage() {
-        click("//input[@id='remove-vehicle']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//input[@id='remove-vehicle']", SelectorType.XPATH);
+        waitAndClick("//*[@type='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Remove a vehicle");
     }
 
     public void navigateToReprintVehicleDiscPage() {
         click("//input[@id='reprint-vehicle']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//*[@id='next']",SelectorType.XPATH);
         waitForTitleToBePresent("Reprint vehicle disc");
     }
 
     public void navigateToTransferVehiclePage() {
         click("//input[@id='transfer-vehicle']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//*[@id='next']",SelectorType.XPATH);
         waitForTitleToBePresent("Transfer vehicles between your licences");
     }
 

@@ -1,4 +1,4 @@
-@ecmt_removal @EXTERNAL @OLCS-24979a @olcs-27581
+@ecmt_removal @EXTERNAL @OLCS-24979a @olcs-27581 @eupa_regression
 Feature: ECMT International Number Check your answers Page
 
   Background:

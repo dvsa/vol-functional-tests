@@ -5,7 +5,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 
-import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.*;
 
 public class PaymentProcessing extends BasePage implements En {
@@ -41,7 +41,7 @@ public class PaymentProcessing extends BasePage implements En {
             String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']/h2", SelectorType.XPATH);
             setCurrentFeeCount(world.genericUtils.stripAlphaCharacters(feeCountBeforeAddingNewFee));
             assertEquals("current", findElement("status", SelectorType.ID, 30).getAttribute("value"));
-            world.feeAndPaymentJourneySteps.createAdminFee(amount, arg0);
+            world.feeAndPaymentJourney.createAdminFee(amount, arg0);
         });
         Then("^the fee should be created$", () -> {
             // Refresh page
@@ -60,11 +60,11 @@ public class PaymentProcessing extends BasePage implements En {
             waitForTextToBePresent("Fee No.");
             String feeAmount = String.valueOf(findElement("//*/tbody/tr[1]/td[5]", SelectorType.XPATH, 10).getText()).substring(1);
             setFeeNumber(world.genericUtils.stripAlphaCharacters(String.valueOf(findElement("//*/tbody/tr[1]/td[1]", SelectorType.XPATH, 10).getText())));
-            world.feeAndPaymentJourneySteps.selectFeeById(feeNumber);
+            world.feeAndPaymentJourney.selectFeeById(feeNumber);
             if (arg0.equals("card")) {
-                world.feeAndPaymentJourneySteps.payFee(null, arg0);
+                world.feeAndPaymentJourney.payFee(null, arg0);
             } else {
-                world.feeAndPaymentJourneySteps.payFee(feeAmount, arg0);
+                world.feeAndPaymentJourney.payFee(feeAmount, arg0);
             }
         });
     }

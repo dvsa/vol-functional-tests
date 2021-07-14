@@ -21,7 +21,7 @@ public class ResettingPassword extends BasePage implements En {
             String env = System.getProperty("env");
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             clickByLinkText("Sign out");
-            world.UIJourneySteps.resettingExternalPassword();
+            world.UIJourney.resettingExternalPassword();
             enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
             isTextPresent("Failed");
             click(nameAttribute("input","submit"), SelectorType.CSS);
@@ -30,12 +30,12 @@ public class ResettingPassword extends BasePage implements En {
             }
         });
         And("^i try resetting my password$", () -> {
-            world.UIJourneySteps.resettingExternalPassword();
+            world.UIJourney.resettingExternalPassword();
             enterText(nameAttribute("input", "username"), SelectorType.CSS, Str.randomWord(14));
             click(nameAttribute("input","submit"), SelectorType.CSS);
         });
         And("^i then try reset my password$", () -> {
-            world.UIJourneySteps.resettingExternalPassword();
+            world.UIJourney.resettingExternalPassword();
             enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
             isTextPresent("Failed");
             click(nameAttribute("input","submit"), SelectorType.CSS);

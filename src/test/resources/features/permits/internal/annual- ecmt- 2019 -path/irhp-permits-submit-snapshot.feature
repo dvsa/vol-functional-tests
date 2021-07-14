@@ -1,3 +1,4 @@
+@internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
 Feature: Internal Case Worker submits an ECMT Permit application
 
   Background:
@@ -7,7 +8,7 @@ Feature: Internal Case Worker submits an ECMT Permit application
     And I am viewing a licences IRHP section
     And I apply for an ECMT APGG Euro5 or Euro 6 application
 
-  @INTERNAL @OLCS-20955 @OLCS-25085 @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6
+  @INTERNAL @OLCS-20955 @OLCS-25085 @olcs-27682
   Scenario: To verify that Application status goes to UC and snapshot is generated when case worker successfully submits an Application
     Then In application details page, I should see Submit button
     When I click on submit button

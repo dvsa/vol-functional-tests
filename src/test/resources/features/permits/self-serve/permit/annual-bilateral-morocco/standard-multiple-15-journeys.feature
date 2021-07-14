@@ -1,4 +1,4 @@
-@bilateral_morocco
+@bilateral_morocco @eupa_regression
 Feature: Bilaterals Morocco Application Path for standard multiple 15 journeys
 
   Background:

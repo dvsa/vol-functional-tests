@@ -12,11 +12,11 @@ import java.time.Duration;
 
 import static activesupport.driver.Browser.navigate;
 
-public class SelfServeNavigationalJourneySteps extends BasePage {
+public class SelfServeNavigational extends BasePage {
 
     public World world;
 
-    public SelfServeNavigationalJourneySteps(World world) {
+    public SelfServeNavigational(World world) {
         this.world = world;
     }
 
@@ -65,7 +65,7 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
                 break;
             case "Vehicles":
                 clickByLinkText("Vehicles");
-                waitForTitleToBePresent("Vehicle details");
+                waitForTitleToBePresent("Manage your vehicles");
                 break;
             case "Convictions and penalties":
                 clickByLinkText("Convictions and penalties");
@@ -116,11 +116,11 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
     }
 
     public void navigateThroughApplication()  {
-        waitForTitleToBePresent("Apply for a new licence");
-        clickByLinkText("Type of licence");
-        waitForTitleToBePresent("Type of licence");
+        String workingDir = System.getProperty("user.dir");
+        String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTitleToBePresent("Business type");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Business details");
@@ -130,10 +130,14 @@ public class SelfServeNavigationalJourneySteps extends BasePage {
         waitForTitleToBePresent("Directors");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Financial evidence");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
+
         waitForTitleToBePresent("Transport Managers");
+        waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
+        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
+
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Vehicle details");
         waitAndClick(saveAndContinue, SelectorType.XPATH);

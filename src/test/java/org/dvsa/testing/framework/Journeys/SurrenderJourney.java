@@ -10,10 +10,10 @@ import org.junit.Assert;
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 
-public class SurrenderJourneySteps extends BasePage {
+public class SurrenderJourney extends BasePage {
 
     private World world;
     private String discsToDestroy = "2";
@@ -37,7 +37,7 @@ public class SurrenderJourneySteps extends BasePage {
 
     public void setUpdatedTown(String updatedTown) { this.updatedTown = updatedTown; }
 
-    public SurrenderJourneySteps(World world){
+    public SurrenderJourney(World world){
         this.world = world;
     }
 
@@ -84,11 +84,11 @@ public class SurrenderJourneySteps extends BasePage {
         submitSurrenderUntilChoiceOfVerification();
         if (navigate().getCurrentUrl().contains("qa")) {
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify();
+            world.UIJourney.signWithVerify();
             checkVerifyConfirmation();
         } else {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            world.UIJourneySteps.signManually();
+            world.UIJourney.signManually();
         }
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
@@ -113,7 +113,7 @@ public class SurrenderJourneySteps extends BasePage {
     }
 
     public void caseworkManageSurrender() {
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         clickByLinkText("Surrender");
@@ -142,10 +142,10 @@ public class SurrenderJourneySteps extends BasePage {
 
     public void addDiscInformation()  {
         assertTrue(getCurrentUrl().contains("current-discs"));
-        click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
+        clickById("stolenSection[stolen]");
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         click("//*[contains(text(),'In your possession')]", SelectorType.XPATH);
-        waitForTextToBePresent("Number of discs you will destroy");
+        waitForTextToBePresent("Number of discs stolen");
         waitAndEnterText("//*[@id='possessionSection[info][number]']", SelectorType.XPATH, getDiscsToDestroy());
         waitAndEnterText("//*[@id='lostSection[info][number]']", SelectorType.XPATH, getDiscsLost());
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");

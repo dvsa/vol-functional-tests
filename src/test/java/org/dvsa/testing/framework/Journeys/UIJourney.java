@@ -37,13 +37,13 @@ import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 
 
-public class UIJourneySteps extends BasePage {
+public class UIJourney extends BasePage {
 
     private World world;
     private FakerUtils faker = new FakerUtils();
 
 
-    public UIJourneySteps(World world) {
+    public UIJourney(World world) {
         this.world = world;
     }
 
@@ -220,17 +220,17 @@ public class UIJourneySteps extends BasePage {
 
     public void addUser(String operatorUser, String operatorForeName, String operatorFamilyName,
                         String operatorUserEmail)  {
-        world.TMJourneySteps.setOperatorUser(operatorUser);
-        world.TMJourneySteps.setOperatorForeName(operatorForeName);
-        world.TMJourneySteps.setOperatorFamilyName(operatorFamilyName);
-        world.TMJourneySteps.setOperatorUserEmail(operatorUserEmail);
+        world.TMJourney.setOperatorUser(operatorUser);
+        world.TMJourney.setOperatorForeName(operatorForeName);
+        world.TMJourney.setOperatorFamilyName(operatorFamilyName);
+        world.TMJourney.setOperatorUserEmail(operatorUserEmail);
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", SelectorType.ID, world.TMJourneySteps.getOperatorUser());
-        enterText("forename", SelectorType.ID, world.TMJourneySteps.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.TMJourneySteps.getOperatorFamilyName());
-        enterText("main[emailAddress]", SelectorType.ID, world.TMJourneySteps.getOperatorUserEmail());
-        enterText("main[emailConfirm]", SelectorType.ID, world.TMJourneySteps.getOperatorUserEmail());
+        enterText("username", SelectorType.ID, world.TMJourney.getOperatorUser());
+        enterText("forename", SelectorType.ID, world.TMJourney.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.TMJourney.getOperatorFamilyName());
+        enterText("main[emailAddress]", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
+        enterText("main[emailConfirm]", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
@@ -313,11 +313,11 @@ public class UIJourneySteps extends BasePage {
         enterText("interim[goodsApplicationInterimReason]", SelectorType.NAME, "Testing");
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-        world.feeAndPaymentJourneySteps.customerPaymentModule();
+        world.feeAndPaymentJourney.customerPaymentModule();
     }
 
     public void addNewOperatingCentre()  {
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
         clickByLinkText("Operating centres and authorisation");
@@ -361,9 +361,9 @@ public class UIJourneySteps extends BasePage {
         enterText("//*[@id='fields[agreedDate]_day']", SelectorType.XPATH, "21");
         enterText("//*[@id='fields[agreedDate]_month']", SelectorType.XPATH, "6");
         enterText("//*[@id='fields[agreedDate]_year']", SelectorType.XPATH, "2014");
-        selectValueFromDropDown("//*[@id='fields[agreedByTc]']", SelectorType.XPATH, "Nick Jones");
+        selectValueFromDropDownByIndex("fields[agreedByTc]", SelectorType.ID, 1);
         selectValueFromDropDown("//*[@id='fields[agreedByTcRole]']", SelectorType.XPATH, "Traffic Commissioner");
-        selectValueFromDropDown("//*[@id='assignedCaseworker']", SelectorType.XPATH, "ADRIAN EGMORE");
+        selectValueFromDropDownByIndex("assignedCaseworker", SelectorType.ID, 1);
         click("//*[@id='fields_piTypes__chosen']/ul", SelectorType.XPATH);
         selectFirstValueInList("//*[@id='fields_piTypes__chosen']/ul");
         click("//*[@id='fields_piTypes__chosen']/div/ul/li[1]", SelectorType.XPATH);
@@ -540,11 +540,19 @@ public class UIJourneySteps extends BasePage {
         waitAndClick("next",SelectorType.ID);
     }
 
-
     public void vehicleRemovalConfirmationPage() {
         removeVehicle();
         waitAndClick("//*[@name='table[id][]'][1]",SelectorType.XPATH);
         waitAndClick("formActions[action]",SelectorType.ID);
+    }
+
+    public void createAndSubmitSubmission() {
+        click("//*[@id='menu-licence/cases']", SelectorType.XPATH);
+        clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
+        clickByLinkText("Submissions");
+        waitAndClick("add",SelectorType.ID);
+        selectValueFromDropDownByIndex("fields[submissionSections][submissionType]",SelectorType.NAME,1);
+        waitAndClick("form-actions[submit]",SelectorType.NAME);
     }
 
     public List<WebElement> getTableBodyRowList() {

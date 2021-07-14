@@ -192,7 +192,7 @@ public class CookieSteps extends BasePage implements En {
                 EcmtInternationalRemovalJourney.getInstance()
                         .checkYourAnswers();
                 DeclarationPageJourney.completeDeclaration();
-                world.feeAndPaymentJourneySteps.customerPaymentModule();
+                world.feeAndPaymentJourney.customerPaymentModule();
                 Set<Cookie> cookies = getDriver().manage().getCookies();
                 Cookie cookiePHP = getDriver().manage().getCookieNamed("PHPSESSID");
                 String secureToken = getDriver().manage().getCookieNamed("secureToken").getValue();

@@ -12,11 +12,11 @@ import java.sql.SQLException;
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertTrue;
 
-public class InternalSearchJourneySteps extends BasePage {
+public class InternalSearchJourney extends BasePage {
 
     private World world;
 
-    public InternalSearchJourneySteps(World world) {
+    public InternalSearchJourney(World world) {
         this.world = world;
     }
 

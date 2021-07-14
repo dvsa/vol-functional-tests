@@ -1,4 +1,4 @@
-@INTERNAL @OLCS-20960 @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6
+@INTERNAL @OLCS-20960 @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
 Feature: Internal IRHP permits Cancel Application
 
   Background:

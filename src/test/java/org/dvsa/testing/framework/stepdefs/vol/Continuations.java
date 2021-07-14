@@ -20,20 +20,20 @@ public class Continuations extends BasePage implements En {
     public Continuations(World world) {
 
         When("^i change my continuation and review date on Internal$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             continuationDate = dates.getDateHashMap(10, 0, 0);
-            world.continuationJourneySteps.replaceContinuationAndReviewDates(continuationDate, continuationDate);
+            world.continuationJourney.replaceContinuationAndReviewDates(continuationDate, continuationDate);
         });
         And("^i generate a continuation$", () -> {
-            world.continuationJourneySteps.generateContinuationOnInternal(world.applicationDetails.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDate.get("month"));
+            world.continuationJourney.generateContinuationOnInternal(world.applicationDetails.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDate.get("month"));
         });
         And("^fill in my continuation details on self serve$", () -> {
-            world.continuationJourneySteps.continueLicenceWithVerifyAndPay();
+            world.continuationJourney.continueLicenceWithVerifyAndPay();
         });
         Then("^the continuation should be approved and a snapshot generated on Internal$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Docs & attachments");
@@ -53,7 +53,7 @@ public class Continuations extends BasePage implements En {
                 userEmails[i] = userEmailElements.get(i).getText();
                 userPermissions[i] = userPermissionElements.get(i).getText();
             }
-            world.continuationJourneySteps.clickContinueLicenceOnSelfServe();
+            world.continuationJourney.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
             clickAllCheckboxes();
             Assert.assertTrue(isTextPresent("User access"));
@@ -67,11 +67,11 @@ public class Continuations extends BasePage implements En {
             }
             findSelectAllRadioButtonsByValue("Y");
             click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
-            world.continuationJourneySteps.completeContinuationConditionsAndUndertakingsPage();
-            world.continuationJourneySteps.completeContinuationFinancesPage();
-            world.continuationJourneySteps.completeContinuationsSignPage();
-            world.continuationJourneySteps.completeContinuationPayOrSubmit();
-            world.continuationJourneySteps.viewContinuationSnapshotOnInternal();
+            world.continuationJourney.completeContinuationConditionsAndUndertakingsPage();
+            world.continuationJourney.completeContinuationFinancesPage();
+            world.continuationJourney.completeContinuationsSignPage();
+            world.continuationJourney.completeContinuationPayOrSubmit();
+            world.continuationJourney.viewContinuationSnapshotOnInternal();
             for (int i = 0; i < userNamesElements.size(); i++){
                 Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
                 Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
@@ -81,41 +81,41 @@ public class Continuations extends BasePage implements En {
         });
         Then("^the continuation conditions and undertaking page and snapshot should display the right text$", () -> {
             world.selfServeNavigation.navigateToNavBarPage("manage users");
-            world.continuationJourneySteps.clickContinueLicenceOnSelfServe();
+            world.continuationJourney.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
-            world.continuationJourneySteps.completeContinuationsReviewPage();
+            world.continuationJourney.completeContinuationsReviewPage();
             if (!world.createApplication.getLicenceType().equals("special_restricted")) {
                 if (world.licenceCreation.isPSVLicence() &&
                         (world.createApplication.getLicenceType().equals("restricted") || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large"))) {
                     waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
                     if (world.createApplication.getLicenceType().equals("restricted")) {
-                        world.continuationJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
+                        world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
                     }
                     clickAllCheckboxes();
                     click("submit", SelectorType.ID);
                 }
             }
-            world.continuationJourneySteps.completeContinuationFinancesPage();
-            world.continuationJourneySteps.completeContinuationsSignPage();
-            world.continuationJourneySteps.completeContinuationPayOrSubmit();
-            world.continuationJourneySteps.viewContinuationSnapshotOnInternal();
+            world.continuationJourney.completeContinuationFinancesPage();
+            world.continuationJourney.completeContinuationsSignPage();
+            world.continuationJourney.completeContinuationPayOrSubmit();
+            world.continuationJourney.viewContinuationSnapshotOnInternal();
             if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
                 waitForTextToBePresent("Conditions and undertakings");
-                world.continuationJourneySteps.checkPSVRestrictedConditionsAndUndertakingsText();
+                world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
             }
             closeTabAndFocusTab(0);
         });
         Then("^the correct checks should display on the continuation review details page and continuation snapshot$", () -> {
-            world.continuationJourneySteps.clickContinueLicenceOnSelfServe();
+            world.continuationJourney.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
-            world.continuationJourneySteps.checkContinuationReviewSections();
-            world.continuationJourneySteps.completeContinuationsReviewPage();
-            world.continuationJourneySteps.completeContinuationConditionsAndUndertakingsPage();
-            world.continuationJourneySteps.completeContinuationFinancesPage();
-            world.continuationJourneySteps.completeContinuationsSignPage();
-            world.continuationJourneySteps.completeContinuationPayOrSubmit();
-            world.continuationJourneySteps.viewContinuationSnapshotOnInternal();
-            world.continuationJourneySteps.checkContinuationReviewSections();
+            world.continuationJourney.checkContinuationReviewSections();
+            world.continuationJourney.completeContinuationsReviewPage();
+            world.continuationJourney.completeContinuationConditionsAndUndertakingsPage();
+            world.continuationJourney.completeContinuationFinancesPage();
+            world.continuationJourney.completeContinuationsSignPage();
+            world.continuationJourney.completeContinuationPayOrSubmit();
+            world.continuationJourney.viewContinuationSnapshotOnInternal();
+            world.continuationJourney.checkContinuationReviewSections();
             closeTabAndFocusTab(0);
         });
     }

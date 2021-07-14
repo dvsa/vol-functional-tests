@@ -1,4 +1,4 @@
-@EXTERNAL @shortterm_apgg_euro5_or_euro6
+@EXTERNAL @shortterm_apgg_euro5_or_euro6 @eupa_regression
 Feature: Short term ECMT APGG Euro 5 or Euro 6 end to end happy path journey including issued permits
 
   Background:

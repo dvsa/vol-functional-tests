@@ -10,11 +10,11 @@ import java.util.HashMap;
 
 import static org.junit.Assert.assertTrue;
 
-public class FeeAndPaymentJourneySteps extends BasePage {
+public class FeeAndPaymentJourney extends BasePage {
 
     private World world;
 
-    public FeeAndPaymentJourneySteps(World world){ this.world = world; }
+    public FeeAndPaymentJourney(World world){ this.world = world; }
 
     public void createAdminFee(String amount, String feeType)  {
         waitAndClick("//button[@id='new']", SelectorType.XPATH);
@@ -36,7 +36,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
             case "cash":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
                 if (isTextPresent("Customer reference")) {
-                    world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                    world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
                     waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationCashCustomerRef");
                     clickPayAndConfirm(paymentMethod);
@@ -49,7 +49,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 if (isTextPresent("Customer reference")) {
                     waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationChequeCustomerRef");
                 }
-                world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 waitAndEnterText("details[chequeNo]", SelectorType.NAME, "12345");
                 waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
 
@@ -66,7 +66,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                 if (isTextPresent("Payer name")) {
                     waitAndEnterText("details[payer]",SelectorType.NAME, "Jane Doe");
                 }
-                world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationPostalOrderCustomerRef");
                 waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
                 waitAndEnterText("details[poNo]",SelectorType.NAME, "123456");
@@ -78,7 +78,7 @@ public class FeeAndPaymentJourneySteps extends BasePage {
                     if (isTextPresent("Customer reference")) {
                         waitAndEnterText("details[customerName]",SelectorType.NAME, "Veena Skish");
                         waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCardCustomerRef");
-                        world.UIJourneySteps.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                        world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                         clickPayAndConfirm(paymentMethod);
                     }
                 }

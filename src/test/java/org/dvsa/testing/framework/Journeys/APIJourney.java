@@ -6,13 +6,13 @@ import activesupport.dates.Dates;
 import apiCalls.enums.*;
 import org.joda.time.LocalDate;
 
-public class APIJourneySteps {
+public class APIJourney {
 
     private World world;
     public static int tmCount;
     Dates date = new Dates(LocalDate::new);
 
-    public APIJourneySteps(World world) throws MissingRequiredArgument {
+    public APIJourney(World world) throws MissingRequiredArgument {
         this.world = world;
     }
 
@@ -31,9 +31,9 @@ public class APIJourneySteps {
         world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
-        world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.APIJourneySteps.createApplication();
-        world.APIJourneySteps.submitApplication();
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.createApplication();
+        world.APIJourney.submitApplication();
         world.grantApplication.grantLicence();
         world.grantApplication.payGrantFees();
         world.updateLicence.getLicenceTrafficArea();
@@ -78,8 +78,8 @@ public class APIJourneySteps {
     }
 
     public void createSpecialRestrictedLicence() {
-        world.APIJourneySteps.createSpecialRestrictedApplication();
-        world.APIJourneySteps.submitApplication();
+        world.APIJourney.createSpecialRestrictedApplication();
+        world.APIJourney.submitApplication();
     }
 
     public void createPartialApplication() {

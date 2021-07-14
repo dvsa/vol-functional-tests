@@ -1,4 +1,4 @@
-@INTERNAL @internal_short_term_apgg_euro5_or_euro6
+@INTERNAL @internal_short_term_apgg_euro5_or_euro6 @eupa_regression
 Feature: Internal ECMT APGG Euro5 or Euro 6 permits Application is Withdrawn
 
   Background:

@@ -1,4 +1,4 @@
-@cookies
+@cookies @eupa_regression
 Feature: SelfServe Cookies
 
   Background:

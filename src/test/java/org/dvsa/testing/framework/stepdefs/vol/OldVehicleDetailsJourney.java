@@ -15,6 +15,7 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     World world;
 
+    //deprecated
     public OldVehicleDetailsJourney(World world) {
         this.world = world;
     }
@@ -39,7 +40,9 @@ public class OldVehicleDetailsJourney extends BasePage {
     public void iAmOnTheVehicleDetailsPage() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", "Vehicles");
-    };
+    }
+
+    ;
 
     @When("i add a vehicle to my licence")
     public void iAddAVehicleToMyLicence() {
@@ -105,6 +108,8 @@ public class OldVehicleDetailsJourney extends BasePage {
         assertEquals(firstVRM, valueOfFirstVRMInTable);
     }
 
+
+    //deprecated
     @Then("the {string} alert should appear")
     public void theAlertShouldAppear(String alertText) {
         assertTrue(isTextPresent(alertText));

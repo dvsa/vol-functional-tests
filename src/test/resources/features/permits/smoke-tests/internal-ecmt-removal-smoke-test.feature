@@ -1,4 +1,4 @@
-@smoketest
+@smoketest @eupa_regression
 Feature: ECMT removal application Internal End to End smoke test
 
   Background:

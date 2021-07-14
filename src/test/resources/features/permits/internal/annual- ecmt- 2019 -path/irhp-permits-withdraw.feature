@@ -7,13 +7,13 @@ Feature: Internal permits Withdraw Application
     And I apply for an ECMT APGG Euro5 or Euro 6 application
 
 
-  @INTERNAL @OLCS-21284 @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6
+  @INTERNAL @OLCS-21284 @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
   Scenario: I should see withdraw button under the Application details when application is in status of Under Consideration
     When I click on submit button
     And I pay fee for application
     Then I am in application details page, I should see withdraw button
 
-  @INTERNAL @OLCS-21284 @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6
+  @INTERNAL @OLCS-21284 @olcs-27682 @internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
   Scenario: Verify that an Application status goes to Withdrawn successfully when Application is withdrawn from Internal
     And I click on submit button
     And I pay fee for application

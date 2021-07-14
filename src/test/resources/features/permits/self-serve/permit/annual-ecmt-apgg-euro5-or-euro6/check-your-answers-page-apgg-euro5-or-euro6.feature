@@ -1,4 +1,4 @@
-@EXTERNAL @ECMT @annual_ecmt_apgg_euro5_or_euro6
+@EXTERNAL @ECMT @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
 Feature:Check your answers page
 
   Background:
@@ -18,7 +18,7 @@ Feature:Check your answers page
     Examples:
     | section                             |
     | Euro6                               |
-    | Cabotage                        |
+    | Cabotage                            |
     | RestrictedCountries                 |
 
   @OLCS-21128 @OLCS-24973 @olcs-27581

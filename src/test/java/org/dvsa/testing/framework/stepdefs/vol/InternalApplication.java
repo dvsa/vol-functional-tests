@@ -8,7 +8,7 @@ import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourneySteps.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertNotNull;
 
 public class InternalApplication extends BasePage implements En {
@@ -32,7 +32,7 @@ public class InternalApplication extends BasePage implements En {
         });
 
         When("^i generate a letter$", () -> {
-            world.UIJourneySteps.generateLetter();
+            world.UIJourney.generateLetter();
         });
 
         And("^i save the letter$", () -> {
@@ -43,15 +43,15 @@ public class InternalApplication extends BasePage implements En {
         });
 
         When("^I generate Licence Document$", () -> {
-            world.UIJourneySteps.printLicence();
+            world.UIJourney.printLicence();
         });
 
         When("^I delete a licence document from table$", () -> {
-            world.UIJourneySteps.deleteLicenceDocument();
+            world.UIJourney.deleteLicenceDocument();
         });
 
         When("^I delete generated letter above from the table$", () -> {
-            world.UIJourneySteps.deleteLetterDocument();
+            world.UIJourney.deleteLetterDocument();
         });
 
         When("^the document should be deleted$", () -> {
@@ -59,7 +59,7 @@ public class InternalApplication extends BasePage implements En {
         });
 
         When("^a caseworker adds a new operating centre out of the traffic area$", () -> {
-            world.UIJourneySteps.addNewOperatingCentre();
+            world.UIJourney.addNewOperatingCentre();
         });
 
         Then("^the postcode warning message should be displayed on internal$", () -> {
@@ -74,17 +74,17 @@ public class InternalApplication extends BasePage implements En {
             world.createApplication.setOperatorType(operator);
             world.createApplication.setLicenceType(licenceType);
             if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
-                world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-                world.APIJourneySteps.createSpecialRestrictedLicence();
+                world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+                world.APIJourney.createSpecialRestrictedLicence();
             } else if (world.createApplication.getApplicationId() == null) {
-                world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-                world.APIJourneySteps.createApplication();
+                world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+                world.APIJourney.createApplication();
 
             }
         });
 
         When("^the caseworker completes and submits the application$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewApplication();
             click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
@@ -92,19 +92,19 @@ public class InternalApplication extends BasePage implements En {
 
             waitForTextToBePresent("has been submitted");
 
-            world.UIJourneySteps.caseWorkerCompleteConditionsAndUndertakings();
+            world.UIJourney.caseWorkerCompleteConditionsAndUndertakings();
 
-            world.UIJourneySteps.caseWorkerCompleteReviewAndDeclarations();
+            world.UIJourney.caseWorkerCompleteReviewAndDeclarations();
 
-            world.UIJourneySteps.caseWorkerCompleteOverview();
+            world.UIJourney.caseWorkerCompleteOverview();
         });
 
         And("^grants the application$", () -> {
             int tableColumns;
             waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
-            world.feeAndPaymentJourneySteps.selectFee();
+            world.feeAndPaymentJourney.selectFee();
             String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
-            world.feeAndPaymentJourneySteps.payFee(fee, "cash");
+            world.feeAndPaymentJourney.payFee(fee, "cash");
             waitForTextToBePresent("The payment was made successfully");
             long kickoutTime = System.currentTimeMillis() + 15000;
 
@@ -125,7 +125,7 @@ public class InternalApplication extends BasePage implements En {
 
         Then("^the licence is granted in Internal$", () -> {
             waitForTextToBePresent("Overview");
-            world.UIJourneySteps.checkLicenceStatus("Granted");
+            world.UIJourney.checkLicenceStatus("Granted");
         });
     }
 }
