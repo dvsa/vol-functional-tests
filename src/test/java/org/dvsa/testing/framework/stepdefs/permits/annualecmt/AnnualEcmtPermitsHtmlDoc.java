@@ -11,7 +11,6 @@ import org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection;
 import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
-import org.dvsa.testing.lib.newPages.internal.details.enums.DocumentHeading;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
@@ -38,31 +37,17 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             // Check heading contains correct heading
             Assert.assertTrue(String.valueOf(getText("h2").contains(selectLicence1)),true);
             // Verify Euro 6
-            Assert.assertTrue(
-                    toBool(DocumentsPage.getSectionHeading(DocumentHeading.Euro6))
-            );
+            Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.CheckIfYouNeedECMTPermits).isEmpty());
             // Verify Cabotage
-            Assert.assertTrue(
-                    toBool(DocumentsPage.getSectionHeading(DocumentHeading.Cabotage))
-            );
+            Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Cabotage).isEmpty());
             // Verify restricted countries
             Assert.assertEquals(selectedLicence.getEcmt().hasRestrictedCountries(),
-                    toBool(Str.find("(?i)(yes|no)", DocumentsPage.getSectionHeading(DocumentHeading.RestrictedCountries)).get())
+                    (Str.find("(?i)(yes|no)", DocumentsPage.getSectionBody(ApplicationSection.RestrictedCountries)).get()).trim().equalsIgnoreCase("yes")
             );
             // Verify percentage of international journey
-            Assert.assertEquals(
-                    selectedLicence.getEcmt().getInternationalBusiness().toString(),
-                    DocumentsPage.getSectionHeading(DocumentHeading.PercentageOfInternationalTrips)
-            );
-            Assert.assertEquals(
-                    selectedLicence.getEcmt().getSector().toString(),
-                    DocumentsPage.getSectionHeading(DocumentHeading.Sector)
-            );
+            Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.NumberOfPermits).isEmpty());
+            Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Euro6).isEmpty());
         });
     }
-
-    private boolean toBool(String value) {
-        return value.trim().equalsIgnoreCase("yes");
-    }
-
+// Could improve tests to check matches answers given earlier.
 }
