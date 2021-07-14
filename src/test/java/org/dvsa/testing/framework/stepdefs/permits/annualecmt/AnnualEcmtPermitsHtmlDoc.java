@@ -7,7 +7,7 @@ import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection;
 import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
 import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
@@ -25,7 +25,8 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
         When("^I view the annual ECMT Permits documentation$", () -> {
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
             String permitApplicationNumber = getText("//td[@data-heading='Reference number']/a", SelectorType.XPATH);
-            IrhpPermitsDetailsPage.Tab.select(DetailsTab.DocsAndAttachments);
+            clickByLinkText(permitApplicationNumber);
+            clickByLinkText("Docs & Attachments");
             DocsAndAttachmentsPage.select(permitApplicationNumber);
         });
         Then("^the annual ECMT Permits HTML document should have the correct information$", () -> {
@@ -35,7 +36,7 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             String selectLicence1 = world.applicationDetails.getLicenceNumber();
             LicenceStore selectedLicence = operatorStore.getLatestLicence().get();
             // Check heading contains correct heading
-            Assert.assertTrue(String.valueOf(BasePermitPage.getReferenceFromPage().contains(selectLicence1)),true);
+            Assert.assertTrue(String.valueOf(getText("h2").contains(selectLicence1)),true);
             // Verify Euro 6
             Assert.assertTrue(
                     toBool(DocumentsPage.getSectionHeading(DocumentHeading.Euro6))
