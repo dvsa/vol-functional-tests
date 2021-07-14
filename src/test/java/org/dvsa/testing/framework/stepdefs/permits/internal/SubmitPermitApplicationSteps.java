@@ -74,7 +74,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             untilOnPage();
             applyAnnualEcmtAPGGApplication();
 
-            int numberOfPermits = Int.random(1, licenceStore.getNumberOfAuthorisedVehicles());
+            int numberOfPermits = Int.random(1, 5);
 
             //Fill application
             isPath("/licence/\\d+/irhp-application/edit/\\d+/");
@@ -132,7 +132,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             //apply application
             untilOnPage();
             applyAnnualEcmtAPGGApplication();
-            int numberOfPermits = Int.random(1, licenceStore.getNumberOfAuthorisedVehicles());
+            int numberOfPermits = Int.random(1, 5);
 
             //Fill application
             isPath("/licence/\\d+/irhp-application/edit/\\d+/");
@@ -145,7 +145,6 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             permitsQuantityEcmtAPGGInternal(numberOfPermits);
             licenceStore.getEcmt().setNumberOfPermits(numberOfPermits);
             declare(true);
-            operatorStore.withLicences(licenceStore);
         });
             When("^I apply for an Short term APSG permit application$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
@@ -362,7 +361,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         });
 
         Then("^I should get an error message in internal application$", () -> {
-            assertTrue(hasErrorPresent());
+            assertTrue(isErrorTextPresent());
         });
         //checking cabotage validation
         When("^I have not declared not to undertake cabotage in internal", () -> {
@@ -386,7 +385,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             int numberOfTrips = Int.random(1, 1000);
 
             //apply application
-            int numberOfPermits = Int.random(1, operatorStore.getLatestLicence().get().getNumberOfAuthorisedVehicles());
+            int numberOfPermits = Int.random(1, 5);
             untilOnPage();
             applyAnnualEcmtApplication();
 
@@ -402,11 +401,9 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         When("sectors are not selected in internal", () -> {
             LicenceDetailsPageJourney.clickIRHPTab();
             int numberOfTrips = Int.random(1, 1000);
-            boolean cabotage = true;
-            boolean euro6Compliant = true;
 
             //apply application
-            int numberOfPermits = Int.random(1, operatorStore.getLatestLicence().get().getNumberOfAuthorisedVehicles());
+            int numberOfPermits = Int.random(1, 5);
             untilOnPage();
             applyAnnualEcmtApplication();
 

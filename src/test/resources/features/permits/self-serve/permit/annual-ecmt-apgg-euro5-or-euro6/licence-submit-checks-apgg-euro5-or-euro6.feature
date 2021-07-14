@@ -87,14 +87,3 @@ Feature: Licence checks on submit
       | standard_international |
       | standard_national      |
       | restricted             |
-
-  @INTERNAL @OLCS-22701 @internal_annual_ecmt_apgg_euro5_or_euro6
-  Scenario Outline: Internal user not able to submit an application when the current licence has an ECMT application has a status of not yet submitted
-    Given I have a "goods" "<type>" licence
-    And I have an ECMT application that's not yet submitted
-
-    Examples:
-      | type                   |
-      | standard_international |
-      | standard_national      |
-      | restricted             |

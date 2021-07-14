@@ -51,10 +51,9 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
         And("^the no permits applications message should be displayed$", IrhpPermitsDetailsPage::isNoPermitApplicationsMessagePresent);
         Then("^the ongoing permit application is to be as expected$", () -> {
             List<PermitApplication> applications = IrhpPermitsDetailsPage.getApplications();
-            LicenceStore licence = operator.getCurrentLicence().get();
 
             applications.stream().forEach((permit)->{
-               Assert.assertEquals(permit.getReferenceNumber(), licence.getReferenceNumber());
+               Assert.assertTrue(permit.getReferenceNumber().contains(world.applicationDetails.getLicenceNumber()));
                Assert.assertEquals(permit.getNoOfPermits().intValue(), 1);
                Assert.assertEquals(permit.getType(), PermitType.ECMT_ANNUAL);
                Assert.assertEquals(LocalDate.parse(permit.getRecdDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), LocalDate.now());
