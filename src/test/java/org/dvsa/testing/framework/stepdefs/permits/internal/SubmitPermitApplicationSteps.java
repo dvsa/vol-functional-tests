@@ -104,7 +104,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
 
             applyShortTermAPGGApplication();
 
-            int numberOfPermits = Int.random(1, licenceStore.getNumberOfAuthorisedVehicles());
+            int numberOfPermits = Int.random(1, 5);
 
             //Fill application
             isPath("/licence/\\d+/irhp-application/edit/\\d+/");
@@ -157,7 +157,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             untilOnPage();
             applyShortTermPermitAPSGWithoutSectors();
 
-          int numberOfPermits = Int.random(1, licenceStore.getNumberOfAuthorisedVehicles());
+          int numberOfPermits = Int.random(1, 5);
 
             //Fill application
             permitsQuantityShortTermAPSG(numberOfPermits);

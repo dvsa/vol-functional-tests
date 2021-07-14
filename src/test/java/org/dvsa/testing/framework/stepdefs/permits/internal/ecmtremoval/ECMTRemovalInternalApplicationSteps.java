@@ -34,7 +34,7 @@ public class ECMTRemovalInternalApplicationSteps implements En {
 
             //apply application
 
-            int numberOfPermits = Int.random(1, licenceStore.getNumberOfAuthorisedVehicles());
+            int numberOfPermits = Int.random(1, 5);
 
             //Fill application
             IrhpPermitsApplyPage.removalsEligibility();
@@ -79,7 +79,7 @@ public class ECMTRemovalInternalApplicationSteps implements En {
 
             //apply application
 
-            int numberOfPermits = Int.random(1, licenceStore.getNumberOfAuthorisedVehicles());
+            int numberOfPermits = Int.random(1, 5);
 
             //Fill application
             IrhpPermitsApplyPage.removalsEligibility();
