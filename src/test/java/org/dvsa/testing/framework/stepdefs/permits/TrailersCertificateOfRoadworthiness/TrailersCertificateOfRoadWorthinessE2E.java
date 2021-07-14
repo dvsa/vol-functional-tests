@@ -42,7 +42,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             BasePermitPage.saveAndContinue();
             assertEquals("Enter the registration number plate", VehicleRegistrationNumberPage.getRequiredFieldValidation());
             BasePermitPage.getReferenceFromPage();
-            VehicleRegistrationNumberPage.enterRegistrationNumber();
+            VehicleRegistrationNumberPage.enterTrailerRegistrationNumber();
 
             BasePermitPage.saveAndContinue();
         });
@@ -75,7 +75,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
 
         Then("^I check content and complete MOT DATE section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleMotPage.untilOnPage();
-            assertEquals("Enter the trailer's vehicle MOT expiry date", VehicleMotPage.getPageHeading());
+            assertEquals("Enter the trailer's MOT expiry date", VehicleMotPage.getPageHeading());
             BasePermitPage.getReferenceFromPage();
             VehicleMotPage.enterMOTDate();
             BasePermitPage.saveAndContinue();
@@ -98,7 +98,6 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         });
 
         Then("^I am navigated back to the permits dashboard page for Certificate of Roadworthiness for trailers with my application status shown as Valid", () -> {
-            String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
             untilAnyPermitStatusMatch(PermitStatus.VALID);
         });
 

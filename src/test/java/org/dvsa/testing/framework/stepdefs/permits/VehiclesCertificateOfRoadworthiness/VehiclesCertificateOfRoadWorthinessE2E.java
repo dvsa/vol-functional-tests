@@ -110,7 +110,6 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             assertTrue(SubmittedPage.isWarningMessagePresent());
         });
         Then("^I am navigated back to the permits dashboard page with my application status shown as Valid", () -> {
-            String licence = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
             untilAnyPermitStatusMatch(PermitStatus.VALID);
         });
 
