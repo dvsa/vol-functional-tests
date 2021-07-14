@@ -33,7 +33,7 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             completeMultilateralJourneyUntilDeclaration(operator, world);
             DeclarationPageJourney.completeDeclaration();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
         Then("^the reference number on the multilateral submitted page is as expected$", () -> {
@@ -49,7 +49,7 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
 
             HomePageJourney.payAllOutstandingFees();
 
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
             HomePageJourney.selectPermitTab();
 
@@ -64,7 +64,7 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             completeMultilateralJourneyUntilDeclaration(operator, world);
 
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsPage.Tab.select(DetailsTab.Fees);
 
@@ -74,7 +74,7 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             FeesDetailsPage.pay();
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             IrhpPermitsApplyPage.selectCardPayment();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
 
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -86,7 +86,7 @@ public class SubmittedPageSteps extends BasePermitPage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             completeMultilateralJourneyUntilDeclaration(operator, world);
 
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             untilElementIsPresent("//a[@id='menu-licence_fees']",SelectorType.XPATH,60L, TimeUnit.SECONDS);
             IrhpPermitsPage.Tab.select(DetailsTab.Fees);

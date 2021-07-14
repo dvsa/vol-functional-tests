@@ -47,7 +47,7 @@ public class AnnualBilateralSubmittedPageSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                     .permitFee();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
         Then("^my application reference should be displayed$", () -> {
@@ -92,7 +92,7 @@ public class AnnualBilateralSubmittedPageSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                     .permitFee();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
         And ("^I'm on the annual bilateral StandardPermitsNoCabotage only submitted page$", () -> {
@@ -115,7 +115,7 @@ public class AnnualBilateralSubmittedPageSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                     .permitFee();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
     }

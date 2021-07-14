@@ -68,7 +68,7 @@ public class ApplicationSteps extends BasePage implements En {
                     .checkYourAnswers();
 
              DeclarationPageJourney.completeDeclaration();
-             world.feeAndPaymentJourneySteps.customerPaymentModule();
+             world.feeAndPaymentJourney.customerPaymentModule();
              AnnualMultilateralJourney.INSTANCE
                     .submit();
             HomePage.PermitsTab.untilPermitHasStatus(

@@ -64,7 +64,7 @@ public class TurkeyFeePageSteps extends BasePermitPage implements En {
         When("^I submit and pay the Bilateral fee$", () -> {
             EcmtApplicationJourney.getInstance()
                     .feeOverviewPage();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
 

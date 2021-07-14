@@ -66,7 +66,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
         });
         Then("^the reference number on the short term ECMT submitted page  is as expected$", () -> {
             SubmittedPage.untilElementIsPresent("//h1[@class='govuk-panel__title']",SelectorType.XPATH,10,TimeUnit.SECONDS);
@@ -88,7 +88,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPageJourney.completeECMTPage();
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             refreshPage();
             IrhpPermitsPage.Tab.select(DetailsTab.Fees);
@@ -98,7 +98,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             FeesDetailsPage.pay();
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             IrhpPermitsApplyPage.selectCardPayment();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
 
             ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
@@ -130,7 +130,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             CertificatesRequiredPage.completePage();
             CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
             NumberOfPermitsPageJourney.completeECMTPage();
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsPage.Tab.select(DetailsTab.Fees);
             FeeDetailsPageJourney.whileFeesPresentWaveFee();
@@ -183,7 +183,7 @@ public class ApplicationSubmittedPageSteps extends BasePage implements En {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
             HomePageJourney.payAllOutstandingFees();
 
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
             HomePageJourney.selectPermitTab();
 

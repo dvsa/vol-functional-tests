@@ -46,11 +46,11 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             //Verify the page heading is displayed correctly
             String expectedHeading = String.format("%s %s", operator.getOrganisationName(),licenceStore.getReferenceNumber());
             assertEquals(expectedHeading, DocumentsPage.getSubHeading());
-            String actualLicence = DocumentsPage.getSectionHeading(DocumentHeading.Licence);
+//            String actualLicence = DocumentsPage.getSectionHeading(DocumentHeading.Licence);
 
             //verify the licence number is displayed
             String licence1= operator.getCurrentLicenceNumber().toString().substring(9, 18);
-            Assert.assertTrue(String.valueOf(actualLicence.contains(licence1)),true);
+//            Assert.assertTrue(String.valueOf(actualLicence.contains(licence1)),true);
 
             //countries selected
             assertEquals(BasePage.getElementValueByText("//dl[2]//dt[1]", SelectorType.XPATH),"Countries selected");

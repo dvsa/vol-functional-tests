@@ -87,7 +87,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
         Then("^I click on Accept and continue on the Declaration page$", DeclarationPageJourney::completeDeclaration);
         Then("^I click on Submit and Pay button on the Permit fee page and complete the payment", () -> {
             PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
         Then("^I click on the Finish button on the Application submitted page", () -> {
@@ -121,7 +121,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPageJourney.hasShortTermECMTAdvisoryText();
             BilateralJourneySteps.clickFinishButton();
         });

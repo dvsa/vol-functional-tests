@@ -43,7 +43,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             DeclarationPageJourney.completeDeclaration();
             EcmtApplicationJourney.getInstance()
                     .feeOverviewPage();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
         Then ("^the page heading on the submission page is displayed correctly", () -> {

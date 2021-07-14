@@ -31,6 +31,7 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.get;
+import static org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.DeclineGrantedPermitPage.isErrorTextPresent;
 import static org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -50,7 +51,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
 
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             LicenceDetailsPageJourney.clickIRHPTab();
             viewApplication();
@@ -188,7 +189,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             permitsSelectFeeTab();
             selectApplication();
             selectCardPayment();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
 
         });
         And("^the ECMT APGG application goes to valid status$", () -> {
@@ -321,7 +322,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             //Pay Fee
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             selectCardPayment();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
         });
 
@@ -342,7 +343,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
 
             selectCardPayment();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
         });
         //apply application
         When("^I apply for a new permit application$", () -> {

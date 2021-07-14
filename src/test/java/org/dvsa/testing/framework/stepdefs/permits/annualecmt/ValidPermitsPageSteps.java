@@ -59,7 +59,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             ApplicationIssuingFeePage.acceptAndPay();
 
             // pay for application
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
 
@@ -81,7 +81,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance().permitFee();
 
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
         });
         Then("^the user is in the annual ECMT list page$",()  ->{
             Assert.assertTrue(isPath("/permits/valid/\\d+"));

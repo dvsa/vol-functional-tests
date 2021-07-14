@@ -20,7 +20,7 @@ public class TaskCreationSteps extends BasePage implements En {
     public TaskCreationSteps(World world, OperatorStore operatorStore) {
 
         And("^I am on the internal home page$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             Assert.assertEquals(BasePage.getElementValueByText("//h1[contains(text(),'Home')]", SelectorType.XPATH), "Home");
         });

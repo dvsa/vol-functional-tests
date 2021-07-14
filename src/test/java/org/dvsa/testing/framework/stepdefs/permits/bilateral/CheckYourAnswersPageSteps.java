@@ -78,7 +78,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitvalue+" "+permitlabel+"s");
         });
 
-        When("^I click Confirm and return to overview$", CheckYourAnswerPage::clickConfirmAndReturnToOverview);
+        When("^I click Confirm and return to overview$", CheckYourAnswerPage::clickReturnToOverview);
 
         Then("^the status of Answer questions for individual countries section for the selected country is set as complete$", () -> {
             String s1 = BasePage.getElementValueByText("//li[2]//ul[1]//li[1]//span[2]",SelectorType.XPATH);

@@ -83,7 +83,7 @@ public class CommonSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.goToPermitsDashboard();
         });
         And("^I Grant the application on internal$", () -> {
@@ -101,7 +101,7 @@ public class CommonSteps extends BasePage implements En {
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
             HomePage.PermitsTab.selectFirstOngoingApplication();
             ApplicationIssuingFeePage.acceptAndPay();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.goToPermitsDashboard();
             HomePage.PermitsTab.untilPermitHasStatus(
                     operator.getCurrentLicence().get().getReferenceNumber(),
@@ -142,14 +142,14 @@ public class CommonSteps extends BasePage implements En {
         });
         When("^I save and return to overview$", BasePermitPage::clickReturnToOverview);
         When("^I sign on as an external user$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
         And("^all fees have been waived$", () -> {
             LicenceDetailsPageJourney.clickFeesTab();
             FeeDetailsPageJourney.whileFeesPresentWaveFee();
         });
         And("^A case worker begins to process my fee payment$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             payOutstandingFees(world);
             FeesDetailsPage.pay();

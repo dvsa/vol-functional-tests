@@ -55,7 +55,7 @@ public class ECMTRemovalInternalApplicationSteps implements En {
             IrhpPermitsApplyPage.selectApplication();
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             selectCardPayment();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
         });
 

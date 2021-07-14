@@ -45,7 +45,7 @@ public class ValidPermitPageSteps implements En {
             DeclarationPageJourney.completeDeclaration();
             EcmtApplicationJourney.getInstance()
                     .feeOverviewPage();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
 

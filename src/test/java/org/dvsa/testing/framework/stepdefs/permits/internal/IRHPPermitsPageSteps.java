@@ -60,7 +60,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             });
         });
         And("^I am viewing a licence with an issued ECMT permit on internal$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             // Apply for ECMT applications
             IntStream.rangeClosed(1, VolLicenceSteps.licenceQuantity.get("licence.quantity")).forEach((i) -> {
@@ -122,7 +122,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
         FeesDetailsPage.pay();
         BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
         IrhpPermitsApplyPage.selectCardPayment();
-        world.feeAndPaymentJourneySteps.customerPaymentModule();
+        world.feeAndPaymentJourney.customerPaymentModule();
         FeesDetailsPage.untilFeePaidNotification();
     }
 
@@ -136,7 +136,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
     }
 
     public static void viewLicenceOnInternal() {
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         world.internalNavigation.urlSearchAndViewLicence();
     }

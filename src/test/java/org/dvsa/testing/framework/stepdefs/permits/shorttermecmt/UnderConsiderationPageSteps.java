@@ -52,7 +52,7 @@ public class UnderConsiderationPageSteps implements En {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             BilateralJourneySteps.clickFinishButton();
             HomePage.PermitsTab.selectFirstValidPermit();
         });

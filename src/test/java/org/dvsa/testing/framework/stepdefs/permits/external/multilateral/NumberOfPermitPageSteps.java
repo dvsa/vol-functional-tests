@@ -75,7 +75,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
         Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswerPage::untilOnPage);
         When("^the case worker is viewing current fees$", () -> {
             LicenceStore licence = operatorStore.getCurrentLicence().get();
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.Fees);
 

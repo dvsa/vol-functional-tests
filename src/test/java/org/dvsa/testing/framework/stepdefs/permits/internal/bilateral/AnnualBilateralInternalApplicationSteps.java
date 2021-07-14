@@ -181,7 +181,7 @@ public class AnnualBilateralInternalApplicationSteps implements En {
             BaseModel.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
 
             IrhpPermitsApplyPage.selectCardPayment();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             String message = "Permit status did not change to the desired status within the specified time limit";
             assertTrue(message, IrhpPermitsDetailsPage.isStatusPresentForReference(licence.getLatestAnnualBilateral().orElseThrow(IllegalStateException::new).getReference(), PermitStatus.VALID, Duration.LONG, TimeUnit.MINUTES));
         });

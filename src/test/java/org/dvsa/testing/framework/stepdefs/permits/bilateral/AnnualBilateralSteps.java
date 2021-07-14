@@ -130,7 +130,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                     .permitFee();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilPageLoad();
             SubmittedPage.goToPermitsDashboard();
             untilAnyPermitStatusMatch(PermitStatus.VALID);
@@ -164,7 +164,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 DeclarationPageJourney.completeDeclaration();
                 AnnualBilateralJourney.getInstance()
                             .permitFee();
-                world.feeAndPaymentJourneySteps.customerPaymentModule();
+                world.feeAndPaymentJourney.customerPaymentModule();
                 SubmittedPage.untilOnPage();
                 SubmittedPage.goToPermitsDashboard();
                 HomePage.PermitsTab.untilPermitHasStatus(
@@ -199,7 +199,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                         .permitFee();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
                 String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
@@ -233,7 +233,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                         .permitFee();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
             String reference1 = String.valueOf(operatorStore.getCurrentLicenceNumber());
@@ -281,7 +281,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
             PermitFeePage.untilOnPage();
             PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
 
         });
@@ -318,7 +318,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 DeclarationPageJourney.completeDeclaration();
                 AnnualBilateralJourney.getInstance()
                             .permitFee();
-                world.feeAndPaymentJourneySteps.customerPaymentModule();
+                world.feeAndPaymentJourney.customerPaymentModule();
                 EcmtApplicationJourney.getInstance()
                             .submitApplication(operatorStore.getLatestLicence().get(), world);
             });

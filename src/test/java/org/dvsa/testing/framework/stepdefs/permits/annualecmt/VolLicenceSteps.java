@@ -91,7 +91,7 @@ public class VolLicenceSteps implements En {
             TrafficArea trafficArea = TrafficArea.randomExcept(TrafficArea.NorthernIreland);
             VolLicenceApplicationJourney.getInstance().createLicence(getEnum(licenceType), trafficArea, operator, world);
 
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
 
             switch (state) {

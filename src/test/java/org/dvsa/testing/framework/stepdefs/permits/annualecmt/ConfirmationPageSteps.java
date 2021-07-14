@@ -58,7 +58,7 @@ public class ConfirmationPageSteps extends BasePage implements En {
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
 
             HomePageJourney.payAllOutstandingFees();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
             HomePageJourney.selectPermitTab();
 

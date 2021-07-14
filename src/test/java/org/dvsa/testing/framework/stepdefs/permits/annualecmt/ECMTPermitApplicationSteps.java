@@ -135,7 +135,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         CheckYourAnswerPage.saveAndContinue();
         DeclarationPageJourney.completeDeclaration();
         PermitFeePage.saveAndContinue();
-        world.feeAndPaymentJourneySteps.customerPaymentModule();
+        world.feeAndPaymentJourney.customerPaymentModule();
     }
 
     public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) {

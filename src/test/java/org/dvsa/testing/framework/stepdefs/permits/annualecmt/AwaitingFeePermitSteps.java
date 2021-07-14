@@ -79,7 +79,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         Config config = new Configuration(env.toString()).getConfig();
 
-        world.APIJourneySteps.createAdminUser();
+        world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         InternalBaseJourney.navigateToAdminPermitsPage();
 

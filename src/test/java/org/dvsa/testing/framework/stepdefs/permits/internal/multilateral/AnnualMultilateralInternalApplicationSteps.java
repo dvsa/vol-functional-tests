@@ -22,7 +22,7 @@ public class AnnualMultilateralInternalApplicationSteps extends BasePage impleme
         When("^I'm  viewing my saved application in internal and Granting Permit$", () -> {
             LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
             operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsApplyPage.licence();
             String browser = String.valueOf(getURL());
@@ -65,7 +65,7 @@ public class AnnualMultilateralInternalApplicationSteps extends BasePage impleme
         });
         And("^I pay all the fees$", () -> {
             IrhpPermitsApplyPage.selectCardPayment();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
         });
         When ("^I select continue$", IrhpPermitFeesPage::clickConfirmPaymentButton);
         And("^I pay the balance by cash$", () -> {

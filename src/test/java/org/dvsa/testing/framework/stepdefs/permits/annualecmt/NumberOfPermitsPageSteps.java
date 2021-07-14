@@ -43,7 +43,7 @@ public class NumberOfPermitsPageSteps extends BasePage implements En {
             HomePage.selectTab(Tab.FEES);
             assertTrue(HomePage.FeesTab.areOutstandingFeesPresent());
             HomePageJourney.payAllOutstandingFees();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
         });
         Then("^I am taken to the payment successful page$", () -> {
             isPath("//fees/receipt/");

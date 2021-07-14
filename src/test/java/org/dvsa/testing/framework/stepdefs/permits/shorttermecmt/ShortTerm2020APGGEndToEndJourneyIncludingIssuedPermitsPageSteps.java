@@ -56,7 +56,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
         When("^I accept and pay the APGG issuing fee", ApplicationIssuingFeePage::acceptAndPay);
 
         And("^I make card payment", () -> {
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
         });

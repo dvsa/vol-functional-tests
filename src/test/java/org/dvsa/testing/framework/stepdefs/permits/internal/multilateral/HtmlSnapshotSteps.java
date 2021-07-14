@@ -29,7 +29,7 @@ import static org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsP
 public class HtmlSnapshotSteps extends BasePage implements En {
     public HtmlSnapshotSteps(OperatorStore operator, World world, LicenceStore licenceStore) {
         And("A case worker is reviewing my docs & attachments", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.DocsAndAttachments);
         });
@@ -52,7 +52,7 @@ public class HtmlSnapshotSteps extends BasePage implements En {
             AnnualMultilateralJourney.INSTANCE
                     .checkYourAnswers();
             DeclarationPageJourney.completeDeclaration();
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             AnnualMultilateralJourney.INSTANCE
                     .submit();
 
@@ -63,7 +63,7 @@ public class HtmlSnapshotSteps extends BasePage implements En {
                     TimeUnit.MINUTES
             );
 
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.DocsAndAttachments);
             DocsAndAttachmentsPage.selectSnapshot(operator.getCurrentLicence().get().getReferenceNumber(), PermitType.ANNUAL_MULTILATERAL);
