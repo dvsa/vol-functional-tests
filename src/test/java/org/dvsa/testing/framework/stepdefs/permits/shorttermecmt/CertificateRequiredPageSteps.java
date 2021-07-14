@@ -41,10 +41,9 @@ public class CertificateRequiredPageSteps implements En {
         Then("^the certificates required page has the relevant information$", () -> {
             String heading = CertificatesRequiredPage.getPageHeading();
             assertEquals("Mandatory certificates for vehicles and trailers you intend to use", heading);
-            assertTrue(CertificatesRequiredPage.isAdvisoryTextPresent());
-            String expectedLicenceNumber = operatorStore.getCurrentLicenceNumber().orElseThrow(IllegalAccessError::new);
+            CertificatesRequiredPage.getAdvisoryText(); // Create assert later.
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
-            Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
+            Assert.assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
         });
         Then("^I should get the certificates required page error message$", () -> {
             String errorText = CertificatesRequiredPage.getErrorText();
