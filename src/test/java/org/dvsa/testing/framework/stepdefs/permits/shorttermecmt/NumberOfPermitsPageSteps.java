@@ -56,7 +56,7 @@ public class NumberOfPermitsPageSteps implements En {
             assertTrue(NumberOfPermitsPage.isMaximumNumberOfPermitsExceededErrorTextPresent());
         });
         Then("^I should get the number of permits page error message on short term$", () ->{
-            assertTrue(NumberOfPermitsPage.isEnterNumberOfPermitsErrorTextPresent());
+            assertTrue(NumberOfPermitsPage.isShortTermEnterNumberOfPermitsErrorTextPresent());
             assertTrue(NumberOfPermitsPage.isShortTermECMTEmissionErrorTextPresent());
         });
 

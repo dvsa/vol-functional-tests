@@ -27,6 +27,9 @@ public class CancelApplicationPageSteps extends BasePermitPage implements En {
         Then("^I should get an error message on cancel application page$", () -> {
             assertEquals("Tick to confirm you want to withdraw your application", CancellationPage.getErrorText());
         });
+        Then("^I should get an error message on Annual ECMT cancel application page$", () -> {
+            assertEquals("You must select the checkbox to continue", CancellationPage.getErrorText());
+        });
         When("^I cancel my ECMT application$", CancellationPage::saveAndContinue);
         Then("^I navigate to the Bilaterals cabotage page$", () -> {
             OverviewPage.untilOnPage();

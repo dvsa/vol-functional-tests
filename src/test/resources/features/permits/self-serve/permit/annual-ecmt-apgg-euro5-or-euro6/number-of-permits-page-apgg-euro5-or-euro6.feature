@@ -11,9 +11,9 @@ Feature: Number of permits required page
     And the page heading on the ECMT number of permits page is displayed correctly
     And the advisory texts are displayed correctly
     And I save and continue
-    And I should get the number of permits page error message
+    And I should get the number of permits page error message on short term
     And I select save and return overview link
-    And I should get the number of permits page error message
+    And I should get the number of permits page error message on short term
     And I enter the valid number of short term permits required
     And I select save and return overview link
     Then I should be on the Annual ECMT overview page
