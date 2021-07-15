@@ -42,7 +42,7 @@ public class CabotagePageSteps implements En {
         });
         Then("^I should get the cabotage page error message$", () -> {
             String errorText = CabotagePage.getErrorText();
-            Assert.assertEquals("Tick to confirm your vehicle will not undertake cabotage journeys.", errorText);
+            Assert.assertEquals("Tick to confirm your vehicle will not undertake cabotage journeys", errorText);
         });
         Then("^the shortterm ecmt cabotage page has advisory messages$", () -> {
             String advisoryText = CabotagePage.getAdvisoryText();
