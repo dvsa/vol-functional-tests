@@ -41,6 +41,7 @@ import static java.lang.Thread.sleep;
 public class ValidPermitsPageSteps extends BasePage implements En {
 
     public static Map<String, PermitApplication> userPermitsSelected = new HashMap();
+    private World world;
 
     public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
         And("^have valid permits$", () -> {
