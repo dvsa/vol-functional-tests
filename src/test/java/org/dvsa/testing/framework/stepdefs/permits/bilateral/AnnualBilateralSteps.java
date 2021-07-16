@@ -1,30 +1,26 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
-import activesupport.system.Properties;
+import Injectors.World;
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenByCountryModel;
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenWindowModel;
 import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.PermitApplication;
 import org.dvsa.testing.framework.pageObjects.enums.*;
 import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualBilateralPermit;
+import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
-import org.dvsa.testing.framework.pageObjects.external.enums.sections.BilateralSection;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 
@@ -45,14 +41,6 @@ import static org.junit.Assert.assertTrue;
 
 public class AnnualBilateralSteps extends BasePage implements En {
     public AnnualBilateralSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
-
-        And("^I am on the country selection page$", () -> {
-            PermitTypePage.untilElementIsPresent("//h1[contains(text(),'Select a permit type or certificate to apply for')]", SelectorType.XPATH,10L, TimeUnit.SECONDS);
-            EcmtApplicationJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
-            untilElementIsPresent("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH,10L, TimeUnit.SECONDS);
-            EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-            CountrySelectionPage.untilOnPage();
-        });
         Then("^I should be on the overview page$", () -> {
             OverviewPage.untilOnPage();
             OverviewPageJourney.hasPageHeading();
@@ -65,17 +53,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             assertTrue(HomePage.FeesTab.areOutstandingFeesPresent());
             HomePage.FeesTab.selectAllOutstandingFees();
         });
-        Then("^I select save and continue button on select countries page$", CountrySelectionPage::saveAndContinue);
-        Then("^countries are displayed in alphabetical order$", () -> {
-            List<String> countries = CountrySelectionPage.countries();
-
-            for (int idx = 0; idx < countries.size() - 1; idx++) {
-                Assert.assertTrue(countries.get(idx).substring(0, 1).compareTo(countries.get(idx + 1).substring(0, 1)) <= 0);
-            }
-        });
-        Then("^the bilateral countries page should display its error message$", () -> {
-            assertTrue(CountrySelectionPage.isErrorMessagePresent());
-        });
         When("^I select a country from the bilateral countries page$", () -> {
             CountrySelectionPage.untilOnPage();
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
@@ -83,24 +60,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             List<Country> countries = CountrySelectionPage.randomCountries();
             licence.getEcmt().setRestrictedCountries(countries);
-        });
-        Given("^I'm on the bilateral check your answers page$", () -> {
-            AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.Countries);
-            AnnualBilateralJourney.getInstance().countries(operatorStore);
-            NumberOfPermitsPageJourney.completeBilateralPage();
-            CheckYourAnswerPage.untilOnPage();
-        });
-        When("^I choose to change the bilateral countries section$", () -> {
-            CheckYourAnswerPage.untilOnPage();
-            CheckYourAnswerPage.clickChangeAnswer(BilateralSection.Country);
-        });
-        And("^my previously selected countries should be remembered$", () -> {
-            List<Country> countries = operatorStore.getLatestLicence().get().getEcmt().getRestrictedCountriesName();
-            List<String> expectedCountries = countries.stream().map(Country::toString).collect(Collectors.toList());
-            List<String> actualCountries = CountrySelectionPage.selectedCountries();
-
-            Assert.assertThat(expectedCountries, equalTo(actualCountries));
         });
         Then("^I am able to complete an annual bilateral permit application$", () -> {
             AnnualBilateralJourney.getInstance()
