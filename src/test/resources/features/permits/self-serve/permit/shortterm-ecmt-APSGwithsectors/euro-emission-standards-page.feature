@@ -13,7 +13,6 @@ Feature: Short term ECMT APSG with sectors Euro emission standards page
     Then the short term emissions page checkbox has the correct text and displayed unselected by default
     When I save and continue
     Then I should get the emissions  page error message
-    When I save and return to overview
     Then I should get the emissions  page error message
     When I click the back link
 
