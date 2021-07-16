@@ -33,11 +33,6 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
             NumberOfPermitsPageJourney.completeECMTPage();
             EmissionStandardsPageJourney.completePage();
         });
-        Given("^I specify a valid amount of annual trips$", NumberOfTripsPage::enterNumberOfTripsValue);
-        Given("^I specify an invalid input$", () -> {
-            scrollAndEnterField("//input[@type ='text']", SelectorType.XPATH, "1000000");
-        });
-
         Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepdefBody.A1<String>) NumberOfTripsPage::quantity);
     }
 
