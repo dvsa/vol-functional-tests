@@ -47,17 +47,6 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             refreshPage();
             get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true), "auth/login/").toString());
         });
-        Then("^I'm  viewing my saved application in internal$", () -> {
-            LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
-            operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-
-            world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            LicenceDetailsPageJourney.clickIRHPTab();
-            viewApplication();
-
-        });
-
         When("^I apply for an ECMT APGG Euro5 or Euro 6 application$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licenceStore);
