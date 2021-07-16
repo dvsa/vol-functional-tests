@@ -5,7 +5,6 @@ Feature: Annual Multilateral  permits page checks
   Background:
     Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
-    And I have an annual multilateral permit
     And I am viewing an issued annual multilateral permit on self-serve
 
   #AC01

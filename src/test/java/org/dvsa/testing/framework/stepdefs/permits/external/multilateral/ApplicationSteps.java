@@ -32,28 +32,6 @@ public class ApplicationSteps extends BasePage implements En {
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world);
         });
-         When("^(?:I submit an annual multilateral permit on external$|" +
-                "I have an annual multilateral permit)", () -> {
-             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-             HomePageJourney.beginPermitApplication();
-             AnnualMultilateralJourney.INSTANCE
-                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
-                    .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
-             NumberOfPermitsPageJourney.completeMultilateralPage();
-             AnnualMultilateralJourney.INSTANCE
-                    .checkYourAnswers();
 
-             DeclarationPageJourney.completeDeclaration();
-             world.feeAndPaymentJourney.customerPaymentModule();
-             AnnualMultilateralJourney.INSTANCE
-                    .submit();
-            HomePage.PermitsTab.untilPermitHasStatus(
-                    operator.getCurrentLicence().get().getReferenceNumber(),
-                    PermitStatus.VALID,
-                    Duration.LONG,
-                    TimeUnit.MINUTES
-            );
-        });
     }
 }

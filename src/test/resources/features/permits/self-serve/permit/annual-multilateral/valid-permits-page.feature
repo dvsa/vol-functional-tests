@@ -5,7 +5,6 @@ Feature: Annual Multilateral valid permits page checks
   Background:
     Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
-    And I submit an annual multilateral permit on external
     And I am viewing an issued annual multilateral permit on self-serve
 
   @OLCS-24423 @OLCS-26046 @Multilaterale2e

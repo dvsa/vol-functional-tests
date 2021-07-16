@@ -15,13 +15,9 @@ public class HomePageSteps implements En {
         });
 
         Then("^I should be on the permits dashboard page with an ongoing application$", HomePage.PermitsTab::waitUntilOnGoingApplications);
-        Then("^The application status on the self service dashboard goes to VALID", () -> {
-            untilAnyPermitStatusMatch(PermitStatus.VALID);
-        });
         Then("^The application status on the self service dashboard goes to UNDER CONSIDERATION", () -> {
             untilAnyPermitStatusMatch(PermitStatus.UNDER_CONSIDERATION);
         });
-        Then("^I should be on the permits dashboard page with my application under Issued permits and certificates table$", HomePage.PermitsTab::waitUntilIssuedPermitsAndCertificatesHeading);
     }
 }
 
