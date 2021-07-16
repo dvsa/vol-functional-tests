@@ -225,23 +225,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
                             .submitApplication(operatorStore.getLatestLicence().get(), world);
             });
         });
-        And("^I have partial annual bilateral applications$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            BilateralJourneySteps.clickYesToCabotage();
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
-            BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            });
         Then("^ongoing permits should be sorted by reference number in descending order$", () -> {
             List<PermitApplication> actualApplications = HomePage.PermitsTab.getOngoingPermitApplications();
             IntStream.range(0, actualApplications.size() - 1).forEach((i) -> {
@@ -258,18 +241,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             ValidPermitsPage.untilOnPage();
             ValidPermitsPageJourney.hasBilateralHeading();
 
-        });
-
-        And("^the licence number is displayed in Annual bilateral list page$", () -> {
-            String expectedReference = operatorStore.getCurrentLicenceNumber().toString().substring(9, 18);
-            String actual = BasePermitPage.getReferenceFromPage();
-            assertEquals(expectedReference, actual);
-        });
-
-        When("I select Norway in the filter list and click Apply filter", () -> {
-            String label = ValidPermitsPage.getFilterLabel();
-            assertEquals("Filter by country", label);
-            ValidPermitsPage.filterToNorway();
         });
         Then("^the table of annual bilateral permits is as expected$", () -> {
             OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
