@@ -31,26 +31,7 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 
 public class PermitFeePageSteps extends BasePermitPage implements En {
     public PermitFeePageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
-        And("^I'm on the annual bilateral cabotage only permit fee page$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            BilateralJourneySteps.clickYesToCabotage();
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
-            BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            DeclarationPageJourney.completeDeclaration();
-        });
+
         And("^I select the submit and pay link from overview page$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.SubmitAndPay);
         });
@@ -60,42 +41,6 @@ public class PermitFeePageSteps extends BasePermitPage implements En {
         Then("^the Fee-breakdown sub-heading can be seen below the fee summary table$", () -> {
             String subHeading = getText("//h2[contains(text(),'Fee breakdown')]", SelectorType.XPATH);
             Assert.assertEquals("Fee breakdown", subHeading);
-        });
-        Then("^the application details on the fee page is displayed correctly in fee page table$", () -> {
-            Assert.assertTrue(BasePermitPage.getElementValueByText("//h2[contains(text(),'Fee summary')]",SelectorType.XPATH),true);
-            // Application reference check
-            String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
-            String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            Assert.assertEquals(actualReference.contains(licence1),true);
-            Assert.assertTrue(actualReference.contains(licence1));
-            // Application date check
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-            LocalDateTime expectedDateTime = LocalDateTime.now();
-            String actualDate = PermitFeePage.getTableSectionValue(FeeSection.ApplicationDate);
-            String expectedDate = expectedDateTime.format(format);
-            Assert.assertEquals(expectedDate, actualDate);
-
-            // Permit type check
-            String actualPermitType = PermitFeePage.getTableSectionValue(FeeSection.PermitType);
-            String expectedPermitType = PermitType.ANNUAL_BILATERAL.toString();
-            Assert.assertEquals(expectedPermitType, actualPermitType);
-
-            // Number of permits required check
-            String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
-            String expectedNumberOfPermits = String.valueOf(NumberOfPermitsPageJourney.permitValue);
-            Assert.assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
-
-            // Total fee to be paid check
-            int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
-            int numberOfPermits = Integer.parseInt(String.valueOf(NumberOfPermitsPageJourney.permitValue));
-            int expectedTotal= numberOfPermits *8 ;
-            Assert.assertEquals(actualTotal,expectedTotal);
-
-            //Fee breakdown check
-            Assert.assertTrue(String.valueOf(getElementValueByText("//tbody/tr/td[@data-heading='Type']",SelectorType.XPATH).contains(PermitUsagePage.getJourney())),true);
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH),operatorStore.getCountry());
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']",SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£"+expectedTotal);
         });
         Then("^my fee should be tiered as expected$", () -> {
             List<Fee> feeBreakdowns = PermitFeePage.Fees();
