@@ -3,14 +3,14 @@
 Feature: Check your answers page
 
   Background:
-      Given I have valid Goods standard_national VOL licence
+    Given I have a "goods" "standard_international" licence
       And I am on the VOL self-serve site
       And I am on the annual multilateral check your answers page
 
   #AC01
   @OLCS-23016
   Scenario: Back button returns to overview page
-    When I go back
+    When I click the back link
     Then I should be on the Annual Multilateral overview page
 
   #AC02
@@ -27,8 +27,8 @@ Feature: Check your answers page
   @OLCS-23016
   Scenario: Saving and continuing takes the user to the declaration page and marks section as complete
       And I confirm and continue
-      And I should be on the Annual Multilateral Declaration page
-      When I make my declaration
+      And I should be on the declaration page
+      When I confirm the declaration
       And I save and return to overview
       Then the section is marked as complete on annual multilateral overview page
 

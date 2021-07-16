@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.driver.Browser;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -20,7 +20,7 @@ public class BetaBannerCheck extends BasePage implements En {
         });
 
         Then("^banner colour is blue$", () -> {
-            String bannerColour = getCssValue("//*[@class='phase__tag']", SelectorType.XPATH,"background-color");
+            String bannerColour = findElement("//*[@class='phase__tag']", SelectorType.XPATH).getCssValue("background-color");
             String hex = Color.fromString(bannerColour).asHex();
             Assert.assertEquals("#005ea5", hex);
         });

@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.Journeys;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
@@ -92,14 +92,14 @@ public class DVLAJourney extends BasePage {
     }
 
     public void searchForExactVRM(String vrm)  {
-        enterText("vehicleSearch[search-value]", vrm, SelectorType.NAME);
+        enterText("vehicleSearch[search-value]", SelectorType.NAME, vrm);
         click("vehicleSearch[submit]", SelectorType.NAME);
-        Assert.assertTrue(isTextPresent("vehicle found", 10));
+        Assert.assertTrue(isTextPresent("vehicle found"));
     }
 
     public void completeDVLAConfirmationPageAndCheckVRM(String title) {
         waitForTitleToBePresent(title);
-        assertTrue(isTextPresent(VRM, 10));
+        assertTrue(isTextPresent(VRM));
         click("//input[@id='option-yes']", SelectorType.XPATH);
         click("//*[@type='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Do you want to");
@@ -108,7 +108,7 @@ public class DVLAJourney extends BasePage {
     public void completeDVLAConfirmationPageAndCheckAllVRMs(String title) {
         waitForTitleToBePresent(title);
         for (String VRM: this.allVRMs) {
-            assertTrue(isTextPresent(VRM, 10));
+            assertTrue(isTextPresent(VRM));
         }
         click("//input[@id='option-yes']", SelectorType.XPATH);
         click("//*[@type='submit']", SelectorType.XPATH);

@@ -2,7 +2,7 @@
 Feature: Bilaterals Turkey end to end happy path journey including validations
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I have selected Turkey and I am on the Bilateral application overview page
 
@@ -20,11 +20,10 @@ Feature: Bilaterals Turkey end to end happy path journey including validations
     Then I should get the validation error message to select one option
     When I select Yes radio button on the Turkey third country page
     And  I save and continue on the Turkey third country page
-    Then I am on the annual bilateral Turkey number of permit page with correct information and content
-    When I save and continue on the Turkey number of permits page
+    Then I am on the annual bilateral number of permits page with correct information and content
+    And I save and continue
     Then I should get the validation error message on the number of permits page
-    When I enter the valid number of permits required for Turkey permit
-    And  I save and continue on the Turkey number of permits page
+    When I enter the number of bilateral permits required
     Then I am on the Annual Bilateral Turkey check your answers page with correct information and content
     When I click Confirm and return to overview
     Then the status of Answer questions for individual countries section for the selected country is set as complete
@@ -32,7 +31,7 @@ Feature: Bilaterals Turkey end to end happy path journey including validations
     When I click on read declaration on the application overview page
     Then I am taken to the bilateral declaration Page with correct information and content
     When I click on Accept and continue on the Declaration page without selecting declaration checkbox
-    Then I should get the validation error message on the declaration page
+    Then I should get the correct error message on the declaration page
     When I click on Accept and continue on the Declaration page
     Then I am on the permit fee page for annual permit.bilateral turkey application with correct information and content
     When I submit and pay the Bilateral fee

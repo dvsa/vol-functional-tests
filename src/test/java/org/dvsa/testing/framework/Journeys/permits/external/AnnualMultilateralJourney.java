@@ -1,73 +1,55 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
-import activesupport.IllegalBrowserException;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.multilateral.*;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.ProportionOfInternationalJourneyPage;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
+import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 
-import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
-public class AnnualMultilateralJourney extends BasePermitJourney implements PaymentJourney {
+public class AnnualMultilateralJourney extends BasePermitJourney {
 
     public static final AnnualMultilateralJourney INSTANCE = new AnnualMultilateralJourney();
 
-    public AnnualMultilateralJourney overviewPage(OverviewPage.Section section, OperatorStore operatorStore) {
+    public AnnualMultilateralJourney overviewPage(OverviewSection section, OperatorStore operatorStore) {
         OverviewPage.untilOnPage();
 
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        licence.setReferenceNumber(OverviewPage.reference());
+        licence.setReferenceNumber(BasePermitPage.getReferenceFromPage());
         AnnualMultilateralStore permit = licence
                 .getLatestAnnualMultilateral()
                 .orElseGet(AnnualMultilateralStore::new);
         licence.addAnnualMultilateral(permit);
-        permit.setReference(OverviewPage.reference());
+        permit.setReference(BasePermitPage.getReferenceFromPage());
 
-        OverviewPage.select(section);
-        return this;
-    }
-
-    public AnnualMultilateralJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) {
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-        licence.getLatestAnnualMultilateral().get().setNumberOfPermits(NumberOfPermitsPage.quantity(maxNumberOfPermits));
-        NumberOfPermitsPage.saveAndContinue();
-        return this;
-    }
-
-    public AnnualMultilateralJourney numberOfPermitsPage(OperatorStore operatorStore) {
-        int authVehicles = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).getNumberOfAuthorisedVehicles();
-        numberOfPermitsPage(authVehicles, operatorStore);
-
-        operatorStore.getCurrentLicence().get().getLatestAnnualMultilateral().get().setApplicationDate();
+        OverviewPageJourney.clickOverviewSection(section);
         return this;
     }
 
     public AnnualMultilateralJourney checkYourAnswers() {
-        CheckYourAnswersPage.saveAndContinue();
-        return this;
-    }
-
-    public AnnualMultilateralJourney declaration(boolean declaration) {
-        DeclarationPage.declare(declaration);
-        DeclarationPage.saveAndContinue();
+        CheckYourAnswerPage.saveAndContinue();
         return this;
     }
 
     public AnnualMultilateralJourney feeOverviewPage() {
-        FeeOverviewPage.saveAndContinue();
+        PermitFeePage.saveAndContinue();
         return this;
     }
 
     public AnnualMultilateralJourney submit() {
-        ProportionOfInternationalJourneyPage.untilElementIsPresent("//h2[@class='govuk-heading-m']", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
-        ApplicationSubmitPage.finish();
+        untilElementIsPresent("//h2[@class='govuk-heading-m']", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
+        SubmittedPage.goToPermitsDashboard();
         return this;
     }
 
@@ -84,11 +66,6 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     }
 
     @Override
-    public AnnualMultilateralJourney beginApplication() {
-        return (AnnualMultilateralJourney) super.beginApplication();
-    }
-
-    @Override
     public AnnualMultilateralJourney permitType(OperatorStore operatorStore) {
         return (AnnualMultilateralJourney) super.permitType(operatorStore);
     }
@@ -99,38 +76,13 @@ public class AnnualMultilateralJourney extends BasePermitJourney implements Paym
     }
 
     @Override
-    public AnnualMultilateralJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
+    public AnnualMultilateralJourney permitType(PermitType type, OperatorStore operator) {
         return (AnnualMultilateralJourney) super.permitType(type, operator);
     }
 
     @Override
     public AnnualMultilateralJourney licencePage(OperatorStore operator, World world) {
         return (AnnualMultilateralJourney) super.licencePage(operator, world);
-    }
-
-    @Override
-    public AnnualMultilateralJourney signin(World world) {
-        return (AnnualMultilateralJourney) super.signin(world);
-    }
-
-    @Override
-    public AnnualMultilateralJourney signin(OperatorStore operator, World world) {
-        return (AnnualMultilateralJourney) super.signin(operator, world);
-    }
-
-    @Override
-    public AnnualMultilateralJourney cardDetailsPage() {
-        return (AnnualMultilateralJourney) PaymentJourney.super.cardDetailsPage();
-    }
-
-    @Override
-    public AnnualMultilateralJourney cardHolderDetailsPage() {
-        return (AnnualMultilateralJourney) PaymentJourney.super.cardHolderDetailsPage();
-    }
-
-    @Override
-    public AnnualMultilateralJourney confirmAndPay() {
-        return (AnnualMultilateralJourney) PaymentJourney.super.confirmAndPay();
     }
 
 }

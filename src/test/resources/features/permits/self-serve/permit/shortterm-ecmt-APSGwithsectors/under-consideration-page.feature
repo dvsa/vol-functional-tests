@@ -2,20 +2,20 @@
 Feature: Short term ECMT APSG with sectors under consideration page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And  I am on Short term under consideration page
 
   @OLCS-25670
   Scenario: Under Consideration page details are displayed correctly
-    Then the page heading on under consideration page is displayed correctly
+    Then the user is on the under consideration page
     And the table of contents in the short term  under consideration page are displayed correctly
     And the warning message is displayed correctly
     When I select withdraw application button
     Then I am taken to the Withdraw Application page
-    When I go back
-    Then I am taken back to Under Consideration Page
-    When I go back
+    When I click the back link
+    Then the user is on the under consideration page
+    When I click the back link
     Then the user is on self-serve permits dashboard
     When I go back to the permit application
     And I select return to permits dashboard hyperlink

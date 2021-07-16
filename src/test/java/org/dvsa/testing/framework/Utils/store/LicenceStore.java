@@ -3,17 +3,14 @@ package org.dvsa.testing.framework.Utils.store;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualBilateralStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
-import org.dvsa.testing.lib.pages.common.type.Permit;
-import org.dvsa.testing.lib.pages.enums.Country;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.NumberOfPermitsPage.Permits;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
-import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
-import org.dvsa.testing.lib.pages.internal.details.FeesPage;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyType;
+import org.dvsa.testing.lib.newPages.external.enums.Sector;
+import org.dvsa.testing.lib.newPages.internal.details.FeesPage;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDateTime;
@@ -135,9 +132,8 @@ public class LicenceStore extends OperatorStore {
     }
 
     public class Ecmt {
-        private PermitTypePage.PermitType type;
-        private YearSelectionPage.YearSelection year;
-        private PeriodSelectionPageOne.ShortTermType shortTermType;
+        private PermitType type;
+        private PeriodType shortTermType;
         private boolean certificatesRequired;
         private String referenceNumber;
         private boolean euro6;
@@ -149,7 +145,6 @@ public class LicenceStore extends OperatorStore {
         private JourneyProportion internationalBusiness;
         private Sector sector;
         private LocalDateTime submitDate;
-        private List<Permits> permitsPerCountry;
         private PermitUsage usage;
         private String journeyType;
         private List<JourneyType> journeyTypeName;
@@ -160,36 +155,24 @@ public class LicenceStore extends OperatorStore {
             return Str.find("(?<=\\w{2}\\d{7} / )\\d+", referenceNumber).get();
         }
 
-        public Optional<PermitTypePage.PermitType> getType() {
+        public Optional<PermitType> getType() {
             return type == null ? Optional.empty() : Optional.of(type);
         }
 
-        public Optional<YearSelectionPage.YearSelection> getYear(){
-            return year == null ? Optional.empty() : Optional.of(year);
-        }
-        public Optional<PeriodSelectionPageOne.ShortTermType> getShortTermType(){
+        public Optional<PeriodType> getShortTermType(){
             return shortTermType == null ? Optional.empty() : Optional.of(shortTermType);
         }
 
-        public boolean hasType(PermitTypePage.PermitType type) {
+        public boolean hasType(PermitType type) {
             return getType().isPresent() && getType().get().equals(type);
         }
 
-        public boolean hasYear(YearSelectionPage.YearSelection year){
-            return getYear().isPresent() && getYear().get().equals(year);
-        }
-
-        public Ecmt setType(PermitTypePage.PermitType type) {
+        public Ecmt setType(PermitType type) {
             this.type = type;
             return this;
         }
 
-        public Ecmt setYear(YearSelectionPage.YearSelection year){
-            this.year = year;
-            return this;
-        }
-
-        public Ecmt setShortTermType(PeriodSelectionPageOne.ShortTermType shortTermType){
+        public Ecmt setShortTermType(PeriodType shortTermType){
             this.shortTermType =shortTermType ;
             return this;
         }
@@ -250,10 +233,6 @@ public class LicenceStore extends OperatorStore {
             return restrictedCountries;
         }
 
-        public Ecmt setRestrictedCountries(boolean restrictedCounties) {
-            return setRestrictedCountries(restrictedCounties, null);
-        }
-
         public Ecmt setRestrictedCountries(boolean restrictedCounties, List<Country> countries) {
             this.restrictedCountries = restrictedCounties;
             this.restrictedCountriesName = countries;
@@ -312,16 +291,6 @@ public class LicenceStore extends OperatorStore {
             this.submitDate = submitDate;
         }
 
-        public List<Permits> getPermitsPerCountry() {
-            return permitsPerCountry;
-        }
-
-        public void setPermitsPerCountry(List<Permits> permitsPerCountry) {
-            this.permitsPerCountry = permitsPerCountry;
-        }
-
-        public void setNumberOfPermits(List<Permit> quantity) {
-        }
         public PermitUsage getPermitusage(){
             return usage;
         }

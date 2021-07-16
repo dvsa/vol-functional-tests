@@ -6,10 +6,10 @@ import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;
@@ -46,7 +46,7 @@ public class ManageUsersPage extends BasePage implements En {
             Assert.assertEquals("Add a user", getAttribute("action", SelectorType.NAME, "data-label"));
         });
         Then("^colour of the 'Add a user' button should be green$", () -> {
-            String buttonColour = Color.fromString(getCssValue("action", SelectorType.NAME, "background-color")).asHex();
+            String buttonColour = Color.fromString(findElement("action", SelectorType.NAME).getCssValue("background-color")).asHex();
             Assert.assertEquals("#00823b", buttonColour);
         });
         Then("^remove button column should be named 'Action'$", () -> {

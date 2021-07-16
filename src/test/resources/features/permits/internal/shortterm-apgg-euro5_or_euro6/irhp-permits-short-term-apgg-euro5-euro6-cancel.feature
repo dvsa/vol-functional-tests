@@ -2,9 +2,8 @@
 Feature: Internal admin Cancels Short term APGG Euro5 or Euro 6 permit Application
 
   Background:
-    Given I have valid Goods standard_international VOL licence
-    And I am on the VOL internal site
-    And I am viewing a good operating licence on internal
+    Given I have a "goods" "standard_international" licence
+    And i create an admin and url search for my licence
     And I am viewing a licences IRHP section
     And I apply for a short term APGG Euro5 or Euro 6 application
 

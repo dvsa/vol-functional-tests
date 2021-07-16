@@ -1,139 +1,119 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+import Injectors.World;
 import activesupport.system.Properties;
-import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.Driver.DriverUtils;
-import org.dvsa.testing.lib.pages.LoginPage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.Driver.DriverUtils;
+import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
+import static org.junit.Assert.assertTrue;
 
-public class AnnualBilateralDeclarationPageSteps extends DriverUtils implements En {
+public class AnnualBilateralDeclarationPageSteps extends BasePage implements En {
     public AnnualBilateralDeclarationPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
         And("^I'm on the annual bilateral cabotage only declaration page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            EssentialInformationPage.saveAndContinue();
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^the application reference number and advisory text are displayed correctly$", () -> {
-            String actualReference = DeclarationPage.reference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             licenceStore.setReferenceNumber(actualReference);
             Assert.assertTrue(String.valueOf(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,17))),true);
-            DeclarationPage.pageHeading();
-            DeclarationPage.advisoryTexts();
+            DeclarationPageJourney.hasPageHeading();
+            assertTrue(DeclarationPage.isBilateralAdvisoryTextPresent());
         });
         Then("^I select the declaration link on the overview page$", () -> {
-           OverviewPage.selectDeclaration();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I am on the Annual Bilateral application submitted page$", () -> {
             isPath("/permits/application/\\d+/submitted/");
-        });
-        Then("^I'm viewing my saved bilateral application in internal$", () -> {
-
-            LicenceModel licence = OrganisationAPI.dashboard(operatorStore.getOrganisationId()).getDashboard().getLicences().get(0);
-            operatorStore.setCurrentLicenceNumber(licence.getLicNo());
-
-            BaseInternalJourney.getInstance().openLicence(
-                    licence.getLicenceId()
-            ).signin();
-            refreshPage();
         });
         Then("^I am continuing on the on-going Annual Bilateral application$", () -> {
             deleteCookies();
             refreshPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
 
-            LoginPage.signIn(world.get("username"), world.get("password"));
-            HomePage.selectTab(Tab.PERMITS);
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         Then("^I'm on the annual bilateral StandardPermitsNoCabotage only declaration page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            EssentialInformationPage.saveAndContinue();
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I'm on the annual bilateral StandardAndCabotagePermits only declaration page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            EssentialInformationPage.saveAndContinue();
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         });
         Then("^I continue with the on-going Annual Bilateral application$", () -> {
             BasePermitPage.back();
-            HomePage.selectTab(Tab.PERMITS);
-            String licence1= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
         });
-        Then("^I am taken to the bilateral declaration Page$", () -> {
-              DeclarationPage.pageHeading();
-        });
-        Then("^there's a guidance notes link to the correct gov page$", () -> {
-            Assert.assertTrue("Unable to find guidance notes link", DeclarationPage.hasGuidanceNotes());
-        });
-        When("^I save and continue on annual bilateral declaration page$", DeclarationPage::saveAndContinue);
-        When("^I submit my annual bilateral declaration$", () -> {
-            AnnualBilateralJourney.getInstance().declare(true);
-        });
+        Then("^there's a guidance notes link to the correct gov page$", BasePermitPage::hasInternationalAuthorisationGovGuidanceLink);
+        When("^I submit my annual bilateral declaration$", DeclarationPageJourney::completeDeclaration);
     }
 }

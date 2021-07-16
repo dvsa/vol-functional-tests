@@ -1,14 +1,10 @@
 package org.dvsa.testing.framework.Utils.store;
 
 import activesupport.number.Int;
-import activesupport.string.Str;
 import apiCalls.Utils.eupaBuilders.external.PersonModel;
 import apiCalls.Utils.eupaBuilders.organisation.ResultModel;
-import org.apache.commons.lang.StringUtils;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,23 +24,10 @@ public class OperatorStore {
     private List<LicenceStore> licences = new ArrayList<>();
     private ResultModel eligibleEcmtLicences;
     private String currentLicence;
-    private PermitTypePage.PermitType currentPermitType;
-    private YearSelectionPage.YearSelection currentYearSelection;
-    private PeriodSelectionPageOne.ShortTermType currentShortTermType;
-    private String country1;
+    private PermitType currentPermitType;
+    private PeriodType currentShortTermType;
     private String journeyType;
-    private String journeyType1;
     private String permitsvalue;
-
-    public String getPermit() {
-        return permit;
-    }
-
-    public void setPermit(String permit) {
-        this.permit = permit;
-    }
-
-    private String permit;
 
     public String getPermitsvalue() {
         return permitsvalue;
@@ -62,15 +45,15 @@ public class OperatorStore {
         this.journeyType = journeyType;
     }
 
-    public PeriodSelectionPage.BilateralPeriodType getCurrentBilateralPeriodType() {
+    public PeriodType getCurrentBilateralPeriodType() {
         return currentBilateralPeriodType;
     }
 
-    public void setCurrentBilateralPeriodType(PeriodSelectionPage.BilateralPeriodType currentBilateralPeriodType) {
+    public void setCurrentBilateralPeriodType(PeriodType currentBilateralPeriodType) {
         this.currentBilateralPeriodType = currentBilateralPeriodType;
     }
 
-    private PeriodSelectionPage.BilateralPeriodType currentBilateralPeriodType;
+    private PeriodType currentBilateralPeriodType;
 
     public String getOrganisationId() {
         return organisationId;
@@ -144,14 +127,6 @@ public class OperatorStore {
         this.passwords.add(password);
         return this;
     }
-    public String getCountry1() {
-        return country1;
-    }
-
-    public OperatorStore setCountry1(String country1) {
-        this.country1 = country1;
-        return this;
-    }
 
 
     public List<LicenceStore> getLicences() {
@@ -197,14 +172,6 @@ public class OperatorStore {
                 );
     }
 
-    public boolean hasLicence(String reference) {
-        String licenceNumber = (reference.contains("/")) ? Str.find("\\w{2}\\d{7}(?= /)", reference).get() : reference;
-        return licences.stream()
-                .anyMatch(
-                        (licence) -> StringUtils.equalsIgnoreCase(licence.getLicenceNumber(), licenceNumber)
-                );
-    }
-
     private boolean hasLicence(LicenceStore licence) {
         return licences.stream()
                 .anyMatch(
@@ -233,31 +200,19 @@ public class OperatorStore {
         }
     }
 
-    public void setCurrentPermitType(PermitTypePage.PermitType currentPermitType) {
+    public void setCurrentPermitType(PermitType currentPermitType) {
         this.currentPermitType = currentPermitType;
     }
 
-    public void setCurrentYearSelection(YearSelectionPage.YearSelection currentYearSelection){
-        this.currentYearSelection = currentYearSelection;
-    }
-
-    public void setCurrentShortTermType(PeriodSelectionPageOne.ShortTermType currentShortTermType){
+    public void setCurrentShortTermType(PeriodType currentShortTermType){
         this.currentShortTermType = currentShortTermType;
     }
 
-    public Optional<YearSelectionPage.YearSelection>getCurrentYearSelection(){
-        return currentYearSelection == null ? Optional.empty() : Optional.of(currentYearSelection);
-    }
-
-    public Optional<PermitTypePage.PermitType> getCurrentPermitType() {
+    public Optional<PermitType> getCurrentPermitType() {
         return currentPermitType == null ? Optional.empty() : Optional.of(currentPermitType);
     }
 
-    public boolean hasCurrentYearSelection(YearSelectionPage.YearSelection yearSelection){
-        return getCurrentYearSelection().isPresent() && getCurrentYearSelection().get().equals(yearSelection);
-    }
-
-    public boolean hasCurrentPermitType(PermitTypePage.PermitType type) {
+    public boolean hasCurrentPermitType(PermitType type) {
         return getCurrentPermitType().isPresent() && getCurrentPermitType().get().equals(type);
     }
 

@@ -7,8 +7,8 @@ import activesupport.system.Properties;
 import apiCalls.enums.UserType;
 import com.typesafe.config.Config;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 
 import java.util.HashMap;
 
@@ -26,7 +26,7 @@ public class GenerateLastTMLetter extends BasePage implements En {
             world.licenceCreation.createLicence(operatorType, licenceType);
         });
         Then("^a pop up should be displayed advising the user that they are about to remove the last TM$", () -> {
-            assertTrue(isTextPresent("You are removing your last Transport Manager.",30));
+            assertTrue(isTextPresent("You are removing your last Transport Manager."));
         });
         Given("^the licence status is \"([^\"]*)\"$", (String arg0) -> {
             world.updateLicence.updateLicenceStatus(arg0);

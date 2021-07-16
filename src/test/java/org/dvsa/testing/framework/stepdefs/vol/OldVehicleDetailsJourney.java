@@ -1,16 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.number.Int;
 import apiCalls.Utils.volBuilders.VehiclesBuilder;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-
-import java.net.MalformedURLException;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
 
 import static org.junit.Assert.*;
 
@@ -51,8 +48,8 @@ public class OldVehicleDetailsJourney extends BasePage {
     public void iAddAVehicleToMyLicence() {
         click("add", SelectorType.ID);
         waitForTitleToBePresent("Add vehicle");
-        enterText(VRMField, generatedVRM, SelectorType.XPATH);
-        enterText(weightField, generatedWeight, SelectorType.XPATH);
+        enterText(VRMField, SelectorType.XPATH, generatedVRM);
+        enterText(weightField, SelectorType.XPATH, generatedWeight);
         click(submitButton, SelectorType.XPATH);
     }
 
@@ -72,7 +69,7 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     @Then("the vehicle no longer appears")
     public void theVehicleNoLongerAppears() {
-        assertFalse(isTextPresent(firstVRM, 10));
+        assertFalse(isTextPresent(firstVRM));
     }
 
     @When("i change a vehicle on my licence")
@@ -115,6 +112,6 @@ public class OldVehicleDetailsJourney extends BasePage {
     //deprecated
     @Then("the {string} alert should appear")
     public void theAlertShouldAppear(String alertText) {
-        assertTrue(isTextPresent(alertText, 10));
+        assertTrue(isTextPresent(alertText));
     }
 }

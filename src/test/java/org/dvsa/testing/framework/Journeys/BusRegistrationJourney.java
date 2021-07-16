@@ -7,9 +7,10 @@ import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.internal.SearchNavBar;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.internal.SearchNavBar;
+import org.dvsa.testing.lib.newPages.internal.enums.SearchType;
 import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
@@ -17,6 +18,7 @@ import org.openqa.selenium.TimeoutException;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 
 public class BusRegistrationJourney extends BasePage {
 
@@ -30,7 +32,7 @@ public class BusRegistrationJourney extends BasePage {
     public void internalSearchForBusReg()  {
         selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Bus registrations");
         do {
-            SearchNavBar.search(world.applicationDetails.getLicenceNumber());
+            SearchNavBar.search(SearchType.Licence, world.applicationDetails.getLicenceNumber());
         } while (!isLinkPresent(world.applicationDetails.getLicenceNumber(), 60));
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
@@ -38,33 +40,33 @@ public class BusRegistrationJourney extends BasePage {
     public void internalSiteAddBusNewReg(int month)  {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
-        click(nameAttribute("button", "action"));
+        click(nameAttribute("button", "action"), SelectorType.CSS);
         waitForTextToBePresent("Service details");
-        assertTrue(isTextPresent("Service No. & type", 5));
-        enterText("serviceNo", "123", SelectorType.ID);
-        enterText("startPoint", Str.randomWord(9), SelectorType.ID);
-        enterText("finishPoint", Str.randomWord(11), SelectorType.ID);
-        enterText("via", Str.randomWord(5), SelectorType.ID);
+        assertTrue(isTextPresent("Service No. & type"));
+        enterText("serviceNo", SelectorType.ID, "123");
+        enterText("startPoint", SelectorType.ID, Str.randomWord(9));
+        enterText("finishPoint", SelectorType.ID, Str.randomWord(11));
+        enterText("via", SelectorType.ID, Str.randomWord(5));
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
-        clickFirstElementFound("//*[@class=\"active-result\"]", SelectorType.XPATH);
+        findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
 
         HashMap<String, String> dates;
         dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
         replaceDateFieldsByPartialId("receivedDate", dates);
 
         dates = world.globalMethods.date.getDateHashMap(0, month, 0);
-        enterText("effectiveDate_day", dates.get("day"), SelectorType.ID);
-        enterText("effectiveDate_month", dates.get("month"), SelectorType.ID);
-        enterText("effectiveDate_year", dates.get("year"), SelectorType.ID);
-        click(nameAttribute("button", "form-actions[submit]"));
+        enterText("effectiveDate_day", SelectorType.ID, dates.get("day"));
+        enterText("effectiveDate_month", SelectorType.ID, dates.get("month"));
+        enterText("effectiveDate_year", SelectorType.ID, dates.get("year"));
+        click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
 
         long kickOutTime = System.currentTimeMillis() + 60000;
 
         do {
             // Refresh page
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
         }
-        while (!isTextPresent("Service details", 2) && System.currentTimeMillis() < kickOutTime);
+        while (!isTextPresent("Service details") && System.currentTimeMillis() < kickOutTime);
         if (System.currentTimeMillis() > kickOutTime) {
             throw new TimeoutException("Service details page didn't display as expected within the time limit.");
         }
@@ -74,7 +76,7 @@ public class BusRegistrationJourney extends BasePage {
         clickByLinkText("" + world.applicationDetails.getLicenceNumber() + "");
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
-        enterText("fields[reason]", "Mistake", SelectorType.ID);
+        enterText("fields[reason]", SelectorType.ID, "Mistake");
         click("form-actions[submit]", SelectorType.ID);
     }
 
@@ -84,7 +86,7 @@ public class BusRegistrationJourney extends BasePage {
         world.feeAndPaymentJourney.payFee("60", "cash");
         long kickOutTime = System.currentTimeMillis() + 60000;
         do {
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
         } while (!isLinkPresent("Register service", 5) && System.currentTimeMillis() < kickOutTime);
         clickByLinkText("Register service");
         findSelectAllRadioButtonsByValue("Y");
@@ -132,11 +134,11 @@ public class BusRegistrationJourney extends BasePage {
 
         do {
             // Refresh page
-            javaScriptExecutor("location.reload(true)");
-        } while (isTextPresent("processing", 60) && System.currentTimeMillis() < kickOutTime);
+            refreshPageWithJavascript();
+        } while (isTextPresent("processing") && System.currentTimeMillis() < kickOutTime);
 
         try {
-            Assert.assertTrue(isTextPresent("Successful", 60));
+            Assert.assertTrue(isTextPresent("Successful"));
         } catch (Exception e) {
             throw new NotFoundException("ESBR is still displaying as 'processing' when kick out time was reached.");
         }
@@ -150,9 +152,11 @@ public class BusRegistrationJourney extends BasePage {
 
         clickByLinkText("Bus registrations");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
-        click(nameAttribute("button", "action"));
+        click(nameAttribute("button", "action"), SelectorType.CSS);
         String workingDir = System.getProperty("user.dir");
-        uploadFile("//*[@id='fields[files][file]']", workingDir + zipFilePath, "document.getElementById('fields[files][file]').style.left = 0", SelectorType.XPATH);
+        String jScript = "document.getElementById('fields[files][file]').style.left = 0";
+        javaScriptExecutor(jScript);
+        enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, workingDir + zipFilePath);
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
 }

@@ -2,14 +2,15 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import apiCalls.enums.LicenceType;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 
 public class SurrenderJourney extends BasePage {
@@ -92,6 +93,7 @@ public class SurrenderJourney extends BasePage {
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
 
+
     public void submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
         acknowledgeDestroyPage();
@@ -118,16 +120,16 @@ public class SurrenderJourney extends BasePage {
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
         // Refresh page
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
     }
 
     public void checkVerifyConfirmation()  {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber()), 10));
-        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 20));
-        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 10));
+        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 
@@ -159,9 +161,9 @@ public class SurrenderJourney extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
-        untilElementPresent("//*[@id='modal-title']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@id='modal-title']");
         waitAndClick("form-actions[submit]", SelectorType.NAME);
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }
 }

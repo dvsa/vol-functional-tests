@@ -65,6 +65,11 @@ public class LicenceCreation {
         createLicence(operatorType, licenceType);
     }
 
+    public void createNILicence(String operatorType, String licenceType) {
+        world.createApplication.setNiFlag("Y");
+        createLicence(operatorType, licenceType);
+    }
+
     public boolean isGoodsLicence() {
         return world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString());
     }

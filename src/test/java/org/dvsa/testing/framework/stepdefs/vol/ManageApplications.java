@@ -102,7 +102,7 @@ public class ManageApplications {
     }
 
     @Given("I have a {string} {string} licence")
-    public void iHaveLicenceWithVehicles(String operatorType, String licenceType) {
+    public void iHaveLicence(String operatorType, String licenceType) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicence(operatorType, licenceType);
     }
@@ -111,6 +111,12 @@ public class ManageApplications {
     public void iHaveLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicles);
+    }
+
+    @Given("I have a {string} {string} NI licence")
+    public void iHaveNILicence(String operatorType, String licenceType) {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.licenceCreation.createNILicence(operatorType, licenceType);
     }
 
     @Given("I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")

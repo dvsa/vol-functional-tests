@@ -7,23 +7,21 @@ import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
 import apiCalls.Utils.eupaBuilders.enums.Boolean;
 import apiCalls.Utils.eupaBuilders.external.*;
 import apiCalls.Utils.eupaBuilders.external.enums.*;
-import apiCalls.eupaActions.OrganisationAPI;
 import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.external.UserAPI;
 import apiCalls.eupaActions.internal.LicenceAPI;
 import cucumber.api.java8.En;
+import Injectors.World;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.Journeys.permits.external.VolAccountCreationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.VolLicenceApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
-import org.dvsa.testing.framework.Utils.common.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.sections.Decisions;
+import org.dvsa.testing.lib.newPages.internal.details.BaseDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.details.sections.Decisions;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -33,11 +31,25 @@ import java.util.stream.IntStream;
 
 public class VolLicenceSteps implements En {
 
+    public static Map<String, List<Map<String, Object>>> licences = new HashMap();
+    public static Map<String, String> licenceGroupType = new HashMap();
+    public static Map<String, Integer> licenceQuantity = new HashMap();
+    public static Map<String, String> personFirstName;
+    public static Map<String, java.lang.Boolean> withNI;
+    public static Map<String, TrafficArea> trafficArea;
+    public static Map<String, Integer> numberOfAuthorisedVehicles;
+    public static Map<String, String> organisationId;
+    public static Map<String, String> applicationId;
+    public static Map<String, String> licenceId;
+    public static Map<String, String> organisationName;
+    public static Map<String, String> companyNumber;
+    public static Map<String, Integer> version;
+
     public VolLicenceSteps(OperatorStore operator, World world) {
          Given("^I have (\\d+ )?(?:a )?valid (PublicService|Goods) (standard_international |standard_national |restricted |special_restricted )?VOL (licences?)( including Northern Ireland)?$", (String quantityOfLicences, String licenceGroupType, String licenceType, String multiple, String withNI) -> {
             List<Map<String, Object>> licences = new ArrayList<>();
-            world.put("licences", licences);
-            world.put("licence.type.group", licenceGroupType);
+            VolLicenceSteps.licences.put("licences", licences);
+            VolLicenceSteps.licenceGroupType.put("licence.type.group", licenceGroupType);
 
             // Note that an operator can only have a single licence in any one traffic area
             List<TrafficArea> validTrafficAreas = new LinkedList<>(
@@ -61,49 +73,48 @@ public class VolLicenceSteps implements En {
             VolLicenceSteps.registerUser(world, operator);
 
             IntStream.rangeClosed(1, numOfLicences).forEach((i)-> {
-                TrafficArea trafficArea = (withNI != null && world.get("withNI") == null) ? TrafficArea.NorthernIreland : VolLicenceSteps.uniqueRandTrafficArea(validTrafficAreas);
-                world.put("withNI", true);
-                world.put("trafficArea", trafficArea);
+                TrafficArea trafficArea = (withNI != null && VolLicenceSteps.withNI.get("withNi") == null) ? TrafficArea.NorthernIreland : VolLicenceSteps.uniqueRandTrafficArea(validTrafficAreas);
+                VolLicenceSteps.withNI.put("withNI", true);
+                VolLicenceSteps.trafficArea.put("trafficArea", trafficArea);
                 LicenceType licenceTypeEnum = (licenceType == null) ? LicenceType.random() : getEnum(licenceType);
                 VolLicenceSteps.applyForLicence(operator, world, licenceTypeEnum, trafficArea);
                 CommonSteps.payAndGrantApplication(world);
             });
 
-            world.put("licence.quantity", numOfLicences);
+            VolLicenceSteps.licenceQuantity.put("licence.quantity", numOfLicences);
         });
         Given("^I have a (curtailed|suspended) Goods (standard_international |standard_national |restricted |special_restricted )VOL licence$", (String state, String licenceType) -> {
             // TODO: Remove use of line below
-            world.put("licence.type.group", "Goods");
+            VolLicenceSteps.licenceGroupType.put("licence.type.group", "Goods");
             VolLicenceSteps.registerUser(world, operator);
 
             TrafficArea trafficArea = TrafficArea.randomExcept(TrafficArea.NorthernIreland);
             VolLicenceApplicationJourney.getInstance().createLicence(getEnum(licenceType), trafficArea, operator, world);
 
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
+            world.APIJourney.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
 
             switch (state) {
                 case "curtailed":
-                    LicenceDetailsPage.Section.decisions.curtail();
+                    BaseDetailsPage.curtail();
                     break;
                 case "suspended":
-                    LicenceDetailsPage.Section.decisions.suspended();
+                    BaseDetailsPage.suspend();
                     break;
             }
 
             Decisions.Model.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
-            Decisions.Model.legislation(Decisions.Model.Document.Art82Curtail);
+            Decisions.Model.clickCurtailLegislation();
             Decisions.Model.affectNow();
-            Decisions.Model.untilModalIsGone(Duration.LONG, TimeUnit.SECONDS);
+            Decisions.Model.untilModalIsGone();
         });
     }
 
     private static int setValidQuantity(int quantity){
-        return quantity > 7 ? 7 : quantity;
+        return Math.min(quantity, 7);
     }
 
-    private static void registerUser(@NotNull World world, OperatorStore operator){
+    private static void registerUser(@NotNull World world, OperatorStore operator) {
         // SETUP: User#register
         PersonModel person = new PersonModel()
                 .withTitle(Title.randomEnum())
@@ -111,21 +122,19 @@ public class VolLicenceSteps implements En {
                 .withFamilyName(Str.randomWord(3, 10))
                 .withBirthDate(Int.random(1900, 2018), Int.random(1, 12), Int.random(1, 28));
 
-        world.put("person.firstName", person.getForename());
+        VolLicenceSteps.personFirstName.put("person.firstName", person.getForename());
 
         ContactDetailsModel operatorContactDetails = new ContactDetailsModel()
                 .withEmailAddress(RandomUtils.email())
                 .withPerson(person);
 
         UserRegistrationDetailsModel registeringUser = new UserRegistrationDetailsModel()
-                .withUsername("Test"+Str.randomWord(10,20)+"EUP"+Int.random(100,6000))
+                .withUsername("Test" + Str.randomWord(10, 20) + "EUP" + Int.random(100, 6000))
                 .withContactDetails(operatorContactDetails)
                 .withOrganisationName("automatedTest".concat(Str.randomWord(5)))
                 .withBusinessType(BusinessType.LimitedCompany);
 
         VolAccountCreationJourney.getInstance().register(registeringUser, operator);
-
-        world.put("username", operator.getUsername()).put("password", operator.getPassword()).put("person", operator.getUserDetails());
     }
 
     public static World applyForLicence(OperatorStore operator, @NotNull World world, @NotNull LicenceType licenceType, TrafficArea trafficArea){
@@ -140,8 +149,7 @@ public class VolLicenceSteps implements En {
         String licenceID;
         Integer numVehicles = Int.random(2, 13);
         Integer numTrailers = Int.random(2, numVehicles);
-        world.put("numberOfAuthorisedVehicles", numVehicles);
-        world.put("numberOfAuthorisedTrailers", numTrailers);
+        VolLicenceSteps.numberOfAuthorisedVehicles.put("numberOfAuthorisedVehicles", numVehicles);
 
         licenceStore.setNumberOfAuthorisedVehicles(numVehicles);
         licenceStore.setNumberOfAuthorisedTrailers(numTrailers);
@@ -156,22 +164,22 @@ public class VolLicenceSteps implements En {
                         .getOrganisationId()
         );
         operator.setOrganisationId(organisationId);
-        world.put("organisationId", organisationId);
+        VolLicenceSteps.organisationId.put("organisationId", organisationId);
 
         // SETUP: Application#create
         ApplicationModel application = new ApplicationModel()
-                .withOperatorType(OperatorType.valueOf(world.get("licence.type.group")))
+                .withOperatorType(OperatorType.valueOf(VolLicenceSteps.licenceGroupType.get("licence.type.group")))
                 .withLicenceType(licenceType)
                 .withNiFlag(Boolean.FALSE)
-                .withOrganisation(world.get("organisationId"));
+                .withOrganisation(VolLicenceSteps.organisationId.get("organisationId"));
 
         // Service Calls
         StandardResponseModel response = ApplicationAPI.create(application);
         applicationId = String.valueOf(response.getId().getApplicationId());
         licenceID = String.valueOf(response.getId().getLicenceId());
 
-        world.put("applicationId", applicationId);
-        world.put("licenceNumber", licenceID);
+        VolLicenceSteps.applicationId.put("applicationId", applicationId);
+        VolLicenceSteps.licenceId.put("licenceId", licenceID);
 
         // SETUP: Application#businessDetails
         BusinessTypeModel businessType = new BusinessTypeModel()
@@ -197,16 +205,16 @@ public class VolLicenceSteps implements En {
                 .withVersion(String.valueOf(++version));
 
         String organisationName = getOrRandomOrganisationName(world);
-        world.put("organisationName", organisationName);
+        VolLicenceSteps.organisationName.put("organisationName", organisationName);
         operator.setOrganisationName(organisationName);
         String companyNumber = getOrRandomCompanyNumber(world);
-        world.put("companyNumber", companyNumber);
+        VolLicenceSteps.companyNumber.put("companyNumber", companyNumber);
 
         BusinessDetailsModel businessDetails = new BusinessDetailsModel()
-                .withApplicationId(world.get("applicationId"))
+                .withApplicationId(VolLicenceSteps.applicationId.get("applicationId"))
                 .withCompanyNumber(companyNumber)
                 .withNatureOfBusiness("Automated Test - Nature of Business")
-                .withLicence(world.get("licenceNumber"))
+                .withLicence(VolLicenceSteps.licenceId.get("licenceId"))
                 .withName(organisationName)
                 .withAddress(businessAddress)
                 .withVersion(version - 1);
@@ -220,7 +228,7 @@ public class VolLicenceSteps implements En {
                 .withEmailAddress(RandomUtils.email());
 
         ApplicationContactDetailsModel applicationContactDetails = new ApplicationContactDetailsModel()
-                .withApplicationNumber(world.get("applicationId"))
+                .withApplicationNumber(VolLicenceSteps.applicationId.get("applicationId"))
                 .withConsultant("Automation Test - Consultant ".concat(Str.randomWord(5)))
                 .withContact(companyContactDetails)
                 .withCorrespondenceAddress(businessAddress)
@@ -291,7 +299,7 @@ public class VolLicenceSteps implements En {
                 .withVersion(++version);
 
         // Service Calls
-        if (world.<String>get("licence.type.group").toLowerCase().equals("goods")){
+        if (VolLicenceSteps.licenceGroupType.get("licence.type.group").toLowerCase().equals("goods")){
             ApplicationAPI.goodsVehicles(vehicles);
         } else {
             ApplicationAPI.psvVehicles(vehicles);
@@ -344,7 +352,7 @@ public class VolLicenceSteps implements En {
         ApplicationAPI.safetyAndCompliance(safety);
 
         ContactDetailsModel inspectorContactDetails = new ContactDetailsModel()
-                .withFao(world.get("person.firstName"))
+                .withFao(VolLicenceSteps.personFirstName.get("person.firstName"))
                 .withAddress(businessAddress);
 
         // SETUP: Application#safetyInspector
@@ -389,7 +397,7 @@ public class VolLicenceSteps implements En {
                 .withDeclarationConfirmation(Boolean.TRUE)
                 .withVersion(++version);
 
-        if (world.<String>get("licence.type.group").toLowerCase().equals("goods")){
+        if (VolLicenceSteps.licenceGroupType.get("licence.type.group").toLowerCase().equals("goods")){
             declaration
                     .withInterimReason("Automated Test - ".concat(Str.randomWord(50)))
                     .withInterimRequested(Boolean.TRUE);
@@ -405,7 +413,7 @@ public class VolLicenceSteps implements En {
 
         // Service Calls
         ApplicationAPI.submit(generic);
-        world.put("version", version);
+        VolLicenceSteps.version.put("version", version);
 
         String licenceNumber = LicenceAPI.licenceNumber(licenceID);
 
@@ -422,19 +430,19 @@ public class VolLicenceSteps implements En {
     }
 
     private static void addLicence(World world, Map<String, Object> licence) {
-        List<Map<String, Object>> licences =  world.get("licences");
+        List<Map<String, Object>> licences = VolLicenceSteps.licences.get("licences");
         if (licences != null) {
             licences.add(licence);
-            world.put("licences", licences);
+            VolLicenceSteps.licences.put("licences", licences);
         }
     }
 
     private static String getOrRandomCompanyNumber(World world) {
-        return world.containsKey("companyNumber") ? world.get("companyNumber") : StringUtils.rightPad(String.valueOf(Int.random(99999999)), 8, "0");
+        return VolLicenceSteps.companyNumber.containsKey("companyNumber") ? VolLicenceSteps.companyNumber.get("companyNumber") : StringUtils.rightPad(String.valueOf(Int.random(99999999)), 8, "0");
     }
 
     private static String getOrRandomOrganisationName(@NotNull World world) {
-        return world.containsKey("organisationName") ? world.get("organisationName") : "Automated Test - Business ".concat(Str.randomWord(5));
+        return VolLicenceSteps.organisationName.containsKey("organisationName") ? VolLicenceSteps.organisationName.get("organisationName") : "Automated Test - Business ".concat(Str.randomWord(5));
     }
 
     private static TrafficArea uniqueRandTrafficArea(List<TrafficArea> validTrafficAreas){

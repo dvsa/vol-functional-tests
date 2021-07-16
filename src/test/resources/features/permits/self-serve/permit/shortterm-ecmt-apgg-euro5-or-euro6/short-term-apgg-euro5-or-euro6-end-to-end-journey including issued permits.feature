@@ -2,7 +2,7 @@
 Feature: Short term ECMT APGG Euro 5 or Euro 6 end to end happy path journey including issued permits
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I select Short term ecmt permit on the select permit page
     And I select year on the select year page
@@ -11,8 +11,8 @@ Feature: Short term ECMT APGG Euro 5 or Euro 6 end to end happy path journey inc
 
    @OLCS-25668 @shortterm_apgg_euro5_or_euro6e2e @OLCS-28226 @OLCS-28276
   Scenario: Verify that ECMT short term application flow is correct and application is submitted successfully with status of  Under Consideration
-    Then I am on short term ECMT Application overview Page
-    When I go back
+    Then I should be on the overview page
+    When I click the back link
     Then I am navigated back to the permits dashboard page with my application status shown as Not yet Submitted
     Then I complete the Check if you need ECMT permits section and click save and continue
     Then I complete APGG Cabotage page section and click save and continue

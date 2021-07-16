@@ -2,7 +2,7 @@
 Feature: Annual bilateral essential information page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I'm on bilateral overview page
     And I click on Norway country link on the Application overview page

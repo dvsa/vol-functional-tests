@@ -3,7 +3,7 @@
 Feature: Payment Scenario for Multilateral Permit application
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I am on the annual multilateral check your answers page
     And I am on the VOL internal site
@@ -15,7 +15,7 @@ Feature: Payment Scenario for Multilateral Permit application
     When I select application to pay
     And I pay less fee for application by cash
     Then I should get a warning message
-    When I make payment
+    When I select continue
     And  I should be taken back to the fees page
 
   @OLCS-17418
@@ -43,7 +43,7 @@ Feature: Payment Scenario for Multilateral Permit application
     When I select application to pay
     And I pay less fee for application by cash
     Then I should get a warning message
-    When I make payment
+    When I select continue
     And  I should be taken back to the fees page
     When I am on the VOL internal site
     And  I'm  viewing my saved application in internal

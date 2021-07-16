@@ -1,143 +1,122 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signInAndAcceptCookies;
-import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.untilOnPage;
 
-public class AnnualBilateralSubmittedPageSteps implements En {
+public class AnnualBilateralSubmittedPageSteps extends BasePage implements En {
     public AnnualBilateralSubmittedPageSteps(LicenceStore licenceStore, OperatorStore operatorStore, World world) {
         And("^I'm on the annual bilateral cabotage only submitted  page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
-            untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
+            EssentialInformationPage.untilOnPage();
+            EssentialInformationPage.saveAndContinue();
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
-            AnnualBilateralJourney.getInstance().declare(true)
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            DeclarationPageJourney.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                     .permitFee();
-
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
+            world.feeAndPaymentJourney.customerPaymentModule();
+            SubmittedPage.untilOnPage();
         });
         Then("^my application reference should be displayed$", () -> {
             String actualReference = getElementValueByText("//div[@class='govuk-panel__body'] ", SelectorType.XPATH);
             Assert.assertEquals(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,18)),true);
         });
-        Then("^the submitted page advisory texts are displayed as per AC$", () -> {
-             SubmittedPage.pageHeading();
-             SubmittedPage.subHeading();
-             SubmittedPage.advisoryTexts();
-        });
-        And("^I have not fully paid my outstanding fees$", () -> {
-            // Here to improve scenario readability
-        });
         Then("^I should see the view receipt link$", () -> {
-            Assert.assertTrue("'View  Receipt' link  should be displayed but wasn't", ApplicationSubmitPage.hasViewReceipt());
+            Assert.assertTrue("'View  Receipt' link  should be displayed but wasn't", SubmittedPage.hasViewReceipt());
         });
         And("^I'm on the annual bilateral submitted page for my active application$", () -> {
             BaseJourney.getInstance().go(ApplicationType.EXTERNAL);
-            signInAndAcceptCookies(world);
-            HomePage.selectTab(Tab.PERMITS);
-            String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
-            OverviewPage.selectDeclaration();
-            AnnualBilateralJourney.getInstance().declare(true);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.selectPermitTab();
+            HomePage.PermitsTab.selectFirstOngoingApplication();
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            DeclarationPageJourney.completeDeclaration();
         });
         Then("^I should not see the view receipt link$", () -> {
-            Assert.assertFalse("'View  Receipt' link  should NOT be displayed but was", ApplicationSubmitPage.hasViewReceipt()
+            Assert.assertFalse("'View  Receipt' link  should NOT be displayed but was", SubmittedPage.hasViewReceipt()
             );
         });
-        When("^I select finish$", ApplicationSubmitPage::finish);
+        When("^I select finish$", SubmittedPage::goToPermitsDashboard);
         And ("^I'm on the annual bilateral StandardAndCabotagePermits only submitted page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
-            untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
+            EssentialInformationPage.untilOnPage();
+            EssentialInformationPage.saveAndContinue();
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            CabotagePage.yesButton();
+            BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
-            AnnualBilateralJourney.getInstance().declare(true)
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            DeclarationPageJourney.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                     .permitFee();
-
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
+            world.feeAndPaymentJourney.customerPaymentModule();
+            SubmittedPage.untilOnPage();
         });
         And ("^I'm on the annual bilateral StandardPermitsNoCabotage only submitted page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnOverviewPage();
-            OverviewPage.clickNorway();
-            untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
-            PermitUsagePage.untilOnPermitUsagePage();
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
+            EssentialInformationPage.untilOnPage();
+            EssentialInformationPage.saveAndContinue();
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
+            PermitUsagePage.untilOnPage();
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.numberOfPermits();
-            BasePermitPage.saveAndContinue();
+            NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPage.selectDeclaration();
-            AnnualBilateralJourney.getInstance().declare(true)
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            DeclarationPageJourney.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                     .permitFee();
-
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
+            world.feeAndPaymentJourney.customerPaymentModule();
+            SubmittedPage.untilOnPage();
         });
-
     }
 }

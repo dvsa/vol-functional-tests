@@ -1,15 +1,13 @@
 package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import com.sun.istack.NotNull;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
-import java.net.MalformedURLException;
 import java.time.Duration;
 
 import static activesupport.driver.Browser.navigate;
@@ -64,25 +62,6 @@ public class SelfServeNavigational extends BasePage {
         }
         switch (page) {
             case "View":
-                switch (type.toLowerCase()) {
-                    case "licence":
-                        waitForTitleToBePresent("View and amend your licence");
-                        break;
-                    case "application":
-                        if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                            waitForTitleToBePresent("Apply for a new licence");
-                        } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                            waitForTextToBePresent("What you need to do next");
-                        }
-                        break;
-                    case "variation":
-                        if (applicationStatus.equals("NOT YET SUBMITTED")) {
-                            waitForTitleToBePresent("Apply to change a licence");
-                        } else if (applicationStatus.equals("UNDER CONSIDERATION")) {
-                            waitForTextToBePresent("What happens next?");
-                        }
-                        break;
-                }
                 break;
             case "Vehicles":
                 clickByLinkText("Vehicles");
@@ -127,7 +106,7 @@ public class SelfServeNavigational extends BasePage {
         boolean conditionNotTrue = true;
         long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
         while (conditionNotTrue) {
-            conditionNotTrue = !isTextPresent(text, 10);
+            conditionNotTrue = !isTextPresent(text);
             click("submit", SelectorType.ID);
             waitForPageLoad();
             if (System.currentTimeMillis() > kickOut) {
@@ -139,38 +118,39 @@ public class SelfServeNavigational extends BasePage {
     public void navigateThroughApplication()  {
         String workingDir = System.getProperty("user.dir");
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
+        String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTitleToBePresent("Business type");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Business details");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Addresses");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Directors");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Financial evidence");
+
         waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
         uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
-
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Transport Managers");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Vehicle details");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         if (isTitlePresent("Vehicle declarations", 30)) {
-            waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+            waitAndClick(saveAndContinue, SelectorType.XPATH);
         }
         waitForTitleToBePresent("Safety and compliance");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Financial history");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Licence history");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Convictions and Penalties");
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
     }
 }

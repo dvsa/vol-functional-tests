@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import activesupport.driver.Browser;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
@@ -15,9 +15,9 @@ public class ExternalSearchFilters extends BasePage implements En {
             String myURL = org.dvsa.testing.lib.url.webapp.URL.build(ApplicationType.EXTERNAL, env,"search/find-lorry-bus-operators/").toString();
             Browser.navigate().get(myURL);
             findSelectAllRadioButtonsByValue("licence");
-            enterText("search", world.applicationDetails.getLicenceNumber(),SelectorType.NAME);
-            click(nameAttribute("input","submit"));
-            do { click(nameAttribute("button","submit"));}
+            enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
+            click(nameAttribute("input","submit"), SelectorType.CSS);
+            do { click(nameAttribute("button","submit"), SelectorType.CSS);}
             while(!isElementPresent("//*[@class='table__wrapper']",SelectorType.XPATH));
 
         });

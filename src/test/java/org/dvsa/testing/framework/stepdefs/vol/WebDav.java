@@ -6,8 +6,8 @@ import activesupport.system.Properties;
 import autoitx4java.AutoItX;
 import cucumber.api.java8.En;
 import org.apache.commons.lang.StringUtils;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -42,7 +42,7 @@ public class WebDav extends BasePage implements En {
         });
         And("^the document should contain the changes$", () -> {
 
-            Assert.assertTrue(isTextPresent(templateName,30));
+            Assert.assertTrue(isTextPresent(templateName));
             clickByLinkText(templateName);
 
             String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.applicationDetails.getLicenceNumber(), templateName);

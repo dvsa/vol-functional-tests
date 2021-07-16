@@ -3,7 +3,7 @@
 Feature: Annual multilateral permit overview page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I have began applying for an Annual Multilateral Permit
     And I'm on the annual multilateral overview page
@@ -11,7 +11,7 @@ Feature: Annual multilateral permit overview page
   #AC01
   @OLCS-23013 @olcs-27581
   Scenario: Back link returns to permits dashboard
-    When I go back
+    When I click the back link
     Then I should be on the permits dashboard page with an ongoing application
 
   #AC02
@@ -43,6 +43,6 @@ Feature: Annual multilateral permit overview page
   #AC15
   @OLCS-23013
   Scenario: Cancels annual multilateral permit application
-    When I click cancel link on the multilateral overview page
+    When I click cancel application link on the overview page
     And I confirm and cancel my annual multilateral permit
-    Then I am taken to the application cancelled page
+    Then I should be taken to cancel confirmation page

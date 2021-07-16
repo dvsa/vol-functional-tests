@@ -4,8 +4,8 @@ import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
@@ -38,7 +38,7 @@ public class Continuations extends BasePage implements En {
             world.internalNavigation.urlSearchAndViewLicence();
             clickByLinkText("Docs & attachments");
             refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
-            Assert.assertTrue(isTextPresent("Digital continuation snapshot", 10));
+            Assert.assertTrue(isTextPresent("Digital continuation snapshot"));
         });
         And("^the users of ss should display on the continuation review details page and on the snapshot$", () -> {
             world.selfServeNavigation.navigateToNavBarPage("manage users");
@@ -56,7 +56,7 @@ public class Continuations extends BasePage implements En {
             world.continuationJourney.clickContinueLicenceOnSelfServe();
             click("submit", SelectorType.ID);
             clickAllCheckboxes();
-            Assert.assertTrue(isTextPresent("User access",10));
+            Assert.assertTrue(isTextPresent("User access"));
             userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
             userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
             userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);

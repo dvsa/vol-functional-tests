@@ -4,9 +4,9 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 import java.net.MalformedURLException;
@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 
 public class TransportManagerJourney extends BasePage {
 
@@ -73,13 +74,13 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void promptRemovalOfInternalTransportManager() {
-        assertTrue(isTextPresent("Overview", 60));
-        if (!isLinkPresent("Transport", 60) && isTextPresent("Granted", 60)) {
+        assertTrue(isTextPresent("Overview"));
+        if (!isLinkPresent("Transport", 60) && isTextPresent("Granted")) {
             clickByLinkText(world.applicationDetails.getLicenceNumber());
             tmCount = returnTableRows("//*[@id='lva-transport-managers']/fieldset/div/div[2]/table/tbody/tr", SelectorType.XPATH);
         }
         clickByLinkText("Transport");
-        isTextPresent("TransPort Managers", 60);
+        isTextPresent("TransPort Managers");
         click("//*[@value='Remove']", SelectorType.XPATH);
     }
 
@@ -98,14 +99,14 @@ public class TransportManagerJourney extends BasePage {
         HashMap<String, String> dob;
         dob = world.globalMethods.date.getDateHashMap(0, 0, -25);
         replaceDateFieldsByPartialId("dob", dob);
-        enterText("birthPlace", birthPlace, SelectorType.ID);
+        enterText("birthPlace", SelectorType.ID, birthPlace);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'External')]", SelectorType.XPATH);
         world.genericUtils.findSelectAllRadioButtonsByValue("Y");
 
         //Add Home Address
-        enterText("postcodeInput1", postCode, SelectorType.ID);
+        enterText("postcodeInput1", SelectorType.ID, postCode);
         clickByName("homeAddress[searchPostcode][search]");
         waitAndClick("homeAddress[searchPostcode][addresses]", SelectorType.ID);
         selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
@@ -118,16 +119,16 @@ public class TransportManagerJourney extends BasePage {
 
         //Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);
-        enterSameTextIntoMultipleFieldsPartialMatch("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH, "3");
+        enterTextIntoMultipleFields("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH, "3");
 
         //Add Other Licences
         String role = "Transport Manager";
         waitAndClick("//*[contains(text(),'Add other licence')]", SelectorType.XPATH);
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitAndEnterText("licNo", SelectorType.ID, "PB123456");
         selectValueFromDropDown("//*[@id='data[role]']", SelectorType.XPATH, role);
-        enterText("//*[@id='operatingCentres']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='hoursPerWeek']", "1", SelectorType.XPATH);
+        enterText("//*[@id='operatingCentres']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='hoursPerWeek']", SelectorType.XPATH, "1");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
         //Add Other Employment
@@ -144,12 +145,12 @@ public class TransportManagerJourney extends BasePage {
         waitForTextToBePresent("Add convictions and penalties");
         waitAndClick("//*[contains(text(),'Add convictions and penalties')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='conviction-date_day']", SelectorType.XPATH, "03");
-        enterText("//*[@id='conviction-date_month']", "03", SelectorType.XPATH);
-        enterText("//*[@id='conviction-date_year']", "2014", SelectorType.XPATH);
-        enterText("//*[@id='category-text']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='notes']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='court-fpn']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='penalty']", "Test", SelectorType.XPATH);
+        enterText("//*[@id='conviction-date_month']", SelectorType.XPATH, "03");
+        enterText("//*[@id='conviction-date_year']", SelectorType.XPATH, "2014");
+        enterText("//*[@id='category-text']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='notes']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='court-fpn']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='penalty']", SelectorType.XPATH, "Test");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
         waitForTextToBePresent("Add licences");
@@ -215,12 +216,12 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("postcodeInput1", SelectorType.ID, "NG23HX");
         clickByName("homeAddress[searchPostcode][search]");
         waitForElementToBeClickable("//*[@name='homeAddress[searchPostcode][search]']", SelectorType.XPATH);
-        untilElementPresent("//*[@name='homeAddress[searchPostcode][addresses]']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@name='homeAddress[searchPostcode][addresses]']");
         selectValueFromDropDownByIndex("//*[@name='homeAddress[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         waitAndEnterText("postcodeInput2", SelectorType.ID, "NG23HX");
         waitAndClick("//*[@id='workAddress[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBeClickable("//*[@id='workAddress[searchPostcode][search]']", SelectorType.XPATH);
-        untilElementPresent("//*[@name='workAddress[searchPostcode][addresses]']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@name='workAddress[searchPostcode][addresses]']");
         selectValueFromDropDownByIndex("//*[@name='workAddress[searchPostcode][addresses]']", SelectorType.XPATH, 1);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursTue]", SelectorType.ID, hours);
@@ -266,13 +267,13 @@ public class TransportManagerJourney extends BasePage {
         world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
         click("add", SelectorType.ID);
         waitAndClick("addUser", SelectorType.ID);
-        enterText("forename", world.TMJourney.getOperatorForeName(), SelectorType.ID);
-        enterText("familyName", world.TMJourney.getOperatorFamilyName(), SelectorType.ID);
+        enterText("forename", SelectorType.ID, world.TMJourney.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.TMJourney.getOperatorFamilyName());
         LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
         replaceDateFieldsByPartialId("dob", dob);
-        enterText("username", world.TMJourney.getOperatorUser(), SelectorType.ID);
-        enterText("emailAddress", world.TMJourney.getOperatorUserEmail(), SelectorType.ID);
-        enterText("emailConfirm", world.TMJourney.getOperatorUserEmail(), SelectorType.ID);
+        enterText("username", SelectorType.ID, world.TMJourney.getOperatorUser());
+        enterText("emailAddress", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
+        enterText("emailConfirm", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
         click("form-actions[continue]", SelectorType.ID);
         waitForTextToBePresent("user account has been created and a link sent to them");
     }

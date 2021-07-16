@@ -2,7 +2,7 @@
 Feature: Percentage of business that is international
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And  I am on the percentage of international journeys page
 
@@ -16,15 +16,9 @@ Feature: Percentage of business that is international
     And I save and continue
     Then I should be able to navigate to the next page
 
-  @EXTERNAL @OLCS-21123 @ECMT @Test3 @Deprecated
-  Scenario: Passes validation when returning to overview
-    When I confirm percentage international
-    And I save and return to overview from percentage of international business page
-    Then I should be on the Annual ECMT overview page
-
   @EXTERNAL @OLCS-21123 @ECMT @Test3 @olcs-27581 @Deprecated
   Scenario: Application back button
-    When I go back
+    When I click the back link
     Then I should be on the Annual ECMT overview page
 
   @OLCS-21460 @EXTERNAL @OLCS-21123 @ECMT @Test3 @olcs-27581 @Deprecated

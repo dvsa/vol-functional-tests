@@ -6,8 +6,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.Journeys.DirectorJourney;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
@@ -40,7 +40,7 @@ public class DirectorVariation extends BasePage {
     @Then("^a new director should be added to my licence$")
     public void aNewDirectorShouldBeAddedToMyLicence() {
         directorJourney.assertDirectorCount(2);
-        List<WebElement> directors = listOfWebElements(directorJourney.directorLinks, SelectorType.XPATH);
+        List<WebElement> directors = findElements(directorJourney.directorLinks, SelectorType.XPATH);
         assertTrue(directorJourney.isDirectorPresentInDirectorTable(directors, directorJourney.getDirectorName()));
     }
 
@@ -147,8 +147,8 @@ public class DirectorVariation extends BasePage {
         selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
 
         String incorrectNameValue = "!@£$%^";
-        enterText(directorJourney.firstNameField, incorrectNameValue, SelectorType.XPATH);
-        enterText(directorJourney.lastNameField, incorrectNameValue, SelectorType.XPATH);
+        enterText(directorJourney.firstNameField, SelectorType.XPATH, incorrectNameValue);
+        enterText(directorJourney.lastNameField, SelectorType.XPATH, incorrectNameValue);
 
         HashMap<String, String> incorrectDateValues = new HashMap<String,String>();
         incorrectDateValues.put("day", "!@");

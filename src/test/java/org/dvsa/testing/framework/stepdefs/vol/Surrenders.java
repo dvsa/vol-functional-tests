@@ -5,14 +5,15 @@ import activesupport.system.Properties;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
 import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertEquals;
 
 public class Surrenders extends BasePage implements En {
@@ -49,16 +50,16 @@ public class Surrenders extends BasePage implements En {
             waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         });
         Then("^any open cases should be displayed$", () -> {
-            Assert.assertTrue(isTextPresent("open cases associated with this licence", 10));
+            Assert.assertTrue(isTextPresent("open cases associated with this licence"));
             Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
         });
         And("^any open bus registrations should be displayed$", () -> {
-            Assert.assertTrue(isTextPresent("active bus registrations associated with this licence.", 10));
+            Assert.assertTrue(isTextPresent("active bus registrations associated with this licence."));
             Assert.assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()),10));
         });
         And("^tick boxes should be displayed$", () -> {
-            isTextPresent("Digital signature has been checked",30);
-            isTextPresent("ECMS has been checked",30);
+            isTextPresent("Digital signature has been checked");
+            isTextPresent("ECMS has been checked");
         });
         Then("^the surrender print and sign page is displayed$", () -> {
             world.UIJourney.signManually();
@@ -94,14 +95,14 @@ public class Surrenders extends BasePage implements En {
             } else {
                 waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
                 world.UIJourney.signManually();
-                javaScriptExecutor("location.reload(true)");
+                refreshPageWithJavascript();
             }
             assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
         });
 
         Then("^the Surrender button should not be clickable$", () -> {
             if (isElementPresent("//*[contains(@name,'actions[surrender]')]", SelectorType.XPATH)) {
-                isElementEnabled("//*[@id='actions[surrender]']", SelectorType.XPATH);
+                assertTrue(isElementEnabled("//*[@id='actions[surrender]']", SelectorType.XPATH));
             }
         });
         And("^the open case and bus reg is closed$", () -> {
@@ -136,12 +137,12 @@ public class Surrenders extends BasePage implements En {
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
             waitForTextToBePresent("Overview");
-            if (isTextPresent("Surrender", 10)){
+            if (isTextPresent("Surrender")){
                 clickByLinkText("Surrender");
                 waitForTextToBePresent("Summary: Application to surrender an operator licence");
-                Assert.assertTrue(isTextPresent("open cases associated with this licence", 10));
+                Assert.assertTrue(isTextPresent("open cases associated with this licence"));
                 Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
-                Assert.assertTrue(isTextPresent("active bus registrations associated with this licence.", 10));
+                Assert.assertTrue(isTextPresent("active bus registrations associated with this licence."));
                 Assert.assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()),10));
                 WebElement surrenderButton = findElement("//*[@id='actions[surrender]']", SelectorType.XPATH);
                 Assert.assertTrue(surrenderButton.getAttribute("class").contains("disabled"));

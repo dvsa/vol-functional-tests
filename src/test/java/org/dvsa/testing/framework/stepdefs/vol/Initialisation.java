@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.*;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 
 public class Initialisation extends BasePage implements En {
 

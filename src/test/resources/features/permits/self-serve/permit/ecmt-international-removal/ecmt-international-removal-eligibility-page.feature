@@ -2,7 +2,7 @@
 Feature: ECMT International Removal Eligiblity page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And   I am on the VOL self-serve site
     And  I am on the ECMT International Removal Eligibity page
 
@@ -10,8 +10,8 @@ Feature: ECMT International Removal Eligiblity page
 
   @EXTERNAL @OLCS-24816
   Scenario:Back Button
-    When I go back
-    Then  I should be on the ECMT International Overview Page
+    When I click the back link
+    Then I should be on the overview page
 
   @EXTERNAL @OLCS-24816 @r222gremovalsfix
   Scenario: Eligibility page details are displayed correctly
@@ -22,13 +22,10 @@ Feature: ECMT International Removal Eligiblity page
     And  I save and continue without selecting the checkbox
     And  I save and return to overview without selecting the checkbox
     Then the error message is displayed on ECMT Remove Eligibility Page
-    When the checkbox is ticked
-    And I save and continue
-    Then the user is navigated to the next page
 
   #AC09
   @EXTERNAL @OLCS-24816
   Scenario: The user is taken to Overview page when the 'Save and return to overview' link is selected
     When the checkbox is ticked
     And I save and return to overview
-    Then  I should be on the ECMT International Overview Page
+    Then I should be on the overview page

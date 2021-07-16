@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.internal.InterimPage;
+import org.dvsa.testing.lib.newPages.internal.InterimPage;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.joda.time.LocalDate;
 
 import static org.junit.Assert.assertFalse;
@@ -56,17 +56,17 @@ public class InterimLicence extends BasePage implements En {
 
         Then("^I should get an error when i save the application$", () -> {
             InterimPage.save();
-            assertTrue(isTextPresent(VehicleErrorMessage, 60));
+            assertTrue(isTextPresent(VehicleErrorMessage));
         });
 
         Then("^I should be able to save the application without any errors$", () -> {
             InterimPage.save();
-            assertFalse(isTextPresent(VehicleErrorMessage, 60));
+            assertFalse(isTextPresent(VehicleErrorMessage));
         });
 
         Then("^I should not error when i save the application$", () -> {
             InterimPage.save();
-            assertFalse(isTextPresent(noDatesErrorMessage, 60));
+            assertFalse(isTextPresent(noDatesErrorMessage));
         });
 
         Then("^I should error when i attempt to grant the application$", () -> {
@@ -74,7 +74,7 @@ public class InterimLicence extends BasePage implements En {
             clickByLinkText("Interim details");
             waitForTextToBePresent("Interim application");
             InterimPage.grant();
-            isTextPresent(noDatesErrorMessage, 60);
+            isTextPresent(noDatesErrorMessage);
         });
         And("^i have logged in to internal$", () -> {
             world.APIJourney.createAdminUser();

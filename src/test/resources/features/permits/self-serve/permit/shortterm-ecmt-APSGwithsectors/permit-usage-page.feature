@@ -2,7 +2,7 @@
 Feature: Short term ECMT APSG with sectors permit usage page
 
 Background:
-  Given I have valid Goods standard_international VOL licence
+  Given I have a "goods" "standard_international" licence
   And  I am on the VOL self-serve site
   And I am on the shortterm permit usage page
 
@@ -16,7 +16,7 @@ Background:
     Then I should get error message on the permit usage page
     And when I save and return to overview without selecting any radio button
     Then I should get error message on the permit usage page
-    When I go back
+    When I click the back link
     Then I should be on the short term ECMT overview page
 
   @EXTERNAL @OLCS-25130

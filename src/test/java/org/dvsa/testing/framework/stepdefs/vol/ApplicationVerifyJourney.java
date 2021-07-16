@@ -6,7 +6,7 @@ import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -37,7 +37,7 @@ public class ApplicationVerifyJourney extends BasePage {
     @Then("the application should be signed with verify")
     public void theApplicationShouldBeSignedWithVerify() {
         waitForTitleToBePresent("Review and declarations");
-        assertTrue(isTextPresent("Declaration signed through GOV.UK Verify", 30));
-        assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy")), 30));
+        assertTrue(isTextPresent("Declaration signed through GOV.UK Verify"));
+        assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy"))));
     }
 }

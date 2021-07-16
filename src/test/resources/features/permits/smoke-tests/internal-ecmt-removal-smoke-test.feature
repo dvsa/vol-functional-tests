@@ -2,9 +2,8 @@
 Feature: ECMT removal application Internal End to End smoke test
 
   Background:
-    Given I have valid Goods standard_international VOL licence
-    And I am on the VOL internal site
-    And I am viewing a good operating licence on internal
+    Given I have a "goods" "standard_international" licence
+    And i create an admin and url search for my licence
 
   @OLCS-28261
   Scenario: Case worker submits ECMT removal application successfully via Internal

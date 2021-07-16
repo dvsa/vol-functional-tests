@@ -2,48 +2,49 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.pages.external.permit.CancelApplicationPage;
-import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CabotagePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PermitUsagePage;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyType;
-import org.junit.Assert;
+import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyType;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
+import static org.junit.Assert.assertEquals;
 
-public class CancelApplicationPageSteps implements En {
+
+public class CancelApplicationPageSteps extends BasePermitPage implements En {
 
     public CancelApplicationPageSteps(World world, OperatorStore operatorStore) {
         Given("^I am on the cancel application page$", () -> {
             CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-            OverviewPage.Application.cancel();
+            OverviewPage.clickCancelApplication();
         });
         And("^I have not confirmed I would like to cancel$", () -> {
             // Here for readability and to stop cucumber from throwing an exception
         });
-        Then("^I should see the validation error message for the cancel application page$", () -> {
-            Assert.assertTrue(CancelApplicationPage.hasErrorMessagePresent());
+        Then("^I should get an error message on cancel application page$", () -> {
+            assertEquals("Tick to confirm you want to withdraw your application", CancellationPage.getErrorText());
         });
-        When("^I cancel my ECMT application$", CancelApplicationPage::cancel);
+        Then("^I should get an error message on Annual ECMT cancel application page$", () -> {
+            assertEquals("You must select the checkbox to continue", CancellationPage.getErrorText());
+        });
+        When("^I cancel my ECMT application$", CancellationPage::saveAndContinue);
         Then("^I navigate to the Bilaterals cabotage page$", () -> {
-            org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.untilOnOverviewPage();
-            org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.clickNorway();
-            untilOnPage();
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-            untilOnPeriodSelectionPage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralCabotagePermitsOnly,operatorStore);
+            OverviewPage.untilOnPage();
+            OverviewPage.clickCountrySection(Country.Norway);
+            EssentialInformationPage.untilOnPage();
+            EssentialInformationPage.saveAndContinue();
+            PeriodSelectionPage.untilOnPage();
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
             PermitUsagePage.journeyType(JourneyType.random());
         });
-        Then("^I click save and continue on cabotage page$", () -> {
-           CabotagePage.saveAndContinue();
-        });
+        Then("^I click save and continue on cabotage page$", CabotagePage::saveAndContinue);
         Then("^I am navigated to cabotage page$", () -> {
-            CabotagePage.untilOnCabotage();
+            CabotagePage.ECMTRemovalsUntilOnPage();
+            String heading = CabotagePage.getPageHeading();
+            assertEquals("ECMT permits do not allow you to carry out cabotage", heading);
         });
     }
 

@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +21,7 @@ public class SelfServePayFees extends BasePage implements En {
         });
         Then("^my licence should valid$", () -> {
             clickByLinkText("Home");
-            assertTrue(isTextPresent("Valid",80));
+            assertTrue(isTextPresent("Valid"));
         });
     }
 }

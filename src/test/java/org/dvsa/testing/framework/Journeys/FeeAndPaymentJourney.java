@@ -2,11 +2,13 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import com.typesafe.config.Config;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
+
+import static org.junit.Assert.assertTrue;
 
 public class FeeAndPaymentJourney extends BasePage {
 
@@ -33,7 +35,7 @@ public class FeeAndPaymentJourney extends BasePage {
         switch (payment) {
             case "cash":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
-                if (isTextPresent("Customer reference", 10)) {
+                if (isTextPresent("Customer reference")) {
                     world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     waitAndEnterText("details[customerName]",SelectorType.NAME, "Jane Doe");
                     waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationCashCustomerRef");
@@ -44,7 +46,7 @@ public class FeeAndPaymentJourney extends BasePage {
                 break;
             case "cheque":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cheque");
-                if (isTextPresent("Customer reference", 10)) {
+                if (isTextPresent("Customer reference")) {
                     waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationChequeCustomerRef");
                 }
                 world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
@@ -61,7 +63,7 @@ public class FeeAndPaymentJourney extends BasePage {
                 break;
             case "postal":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Postal Order");
-                if (isTextPresent("Payer name", 10)) {
+                if (isTextPresent("Payer name")) {
                     waitAndEnterText("details[payer]",SelectorType.NAME, "Jane Doe");
                 }
                 world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
@@ -71,9 +73,9 @@ public class FeeAndPaymentJourney extends BasePage {
                 clickPayAndConfirm(paymentMethod);
                 break;
             case "card":
-                if (isTextPresent("Pay fee", 10)) {
+                if (isTextPresent("Pay fee")) {
                     selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
-                    if (isTextPresent("Customer reference", 10)) {
+                    if (isTextPresent("Customer reference")) {
                         waitAndEnterText("details[customerName]",SelectorType.NAME, "Veena Skish");
                         waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCardCustomerRef");
                         world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
@@ -93,7 +95,7 @@ public class FeeAndPaymentJourney extends BasePage {
         waitForElementToBeClickable("status", SelectorType.ID);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         waitForTextToBePresent("Outstanding");
-        if (isTextPresent("50", 10)){
+        if (isTextPresent("50")){
             clickByLinkText("50");
         }
         waitAndClick("//*[@value='" + feeNumber + "']", SelectorType.XPATH);
@@ -107,7 +109,7 @@ public class FeeAndPaymentJourney extends BasePage {
             //nothing
         } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH) && System.currentTimeMillis() < kickOut);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
-        isElementEnabled("//tbody", SelectorType.XPATH);
+        assertTrue(isElementEnabled("//tbody", SelectorType.XPATH));
         waitAndClick("//tbody/tr/td[7]/input", SelectorType.XPATH);
         waitAndClick("//*[@value='Pay']", SelectorType.XPATH);
         waitForTextToBePresent("Pay fee");
@@ -116,15 +118,15 @@ public class FeeAndPaymentJourney extends BasePage {
     public void customerPaymentModule()  {
         Config config = world.configuration.config;
         waitForTextToBePresent("Card Number*");
-        enterText("//*[@id='scp_cardPage_cardNumber_input']", config.getString("cardNumber"), SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_expiryDate_input']", config.getString("cardExpiryMonth"), SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_expiryDate_input2']", config.getString("cardExpiryYear"), SelectorType.XPATH);
-        enterText("//*[@id='scp_cardPage_csc_input']", "123", SelectorType.XPATH);
+        enterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, config.getString("cardNumber"));
+        enterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, config.getString("cardExpiryMonth"));
+        enterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, config.getString("cardExpiryYear"));
+        enterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
         if (isElementPresent("scp_cardPage_storedCard_payment_input", SelectorType.ID)) {
             click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
         }
         click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
-        enterText("//*[@id='scp_additionalInformationPage_cardholderName_input']", "Mr Regression Test", SelectorType.XPATH);
+        enterText("//*[@id='scp_additionalInformationPage_cardholderName_input']", SelectorType.XPATH, "Mr Regression Test");
         click("//*[@id='scp_additionalInformationPage_buttons_continue_button']", SelectorType.XPATH);
         waitForTextToBePresent("Payment Confirmation Page");
         click("//*[@id='scp_confirmationPage_buttons_payment_button']", SelectorType.XPATH);

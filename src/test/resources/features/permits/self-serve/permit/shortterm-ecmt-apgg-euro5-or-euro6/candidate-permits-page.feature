@@ -2,7 +2,7 @@
 Feature: Short term ECMT APGG Euro 5 or Euro 6 Candidate permit page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I have a short term application in awaiting fee status
 

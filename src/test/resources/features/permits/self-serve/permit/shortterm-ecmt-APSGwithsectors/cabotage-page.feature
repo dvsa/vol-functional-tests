@@ -3,7 +3,7 @@
 Feature: Short term ECMT APSG with sectors Cabotage Page
 
   Background:
-    Given  I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I am on the shortterm cabotage page
 
@@ -16,7 +16,7 @@ Feature: Short term ECMT APSG with sectors Cabotage Page
     Then I should get the cabotage page error message
     When I save and return to overview
     Then I should get the cabotage page error message
-    When I go back
+    When I click the back link
     Then I should be on the short term ECMT overview page
 
   Scenario: Save and continue after confirming cabotage navigates to next page

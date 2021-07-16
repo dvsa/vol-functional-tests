@@ -8,8 +8,8 @@ import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.jupiter.api.Assertions;
@@ -32,6 +32,7 @@ import java.util.Set;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 
@@ -46,8 +47,12 @@ public class UIJourney extends BasePage {
         this.world = world;
     }
 
+    public static void refreshPageWithJavascript() {
+        javaScriptExecutor("location.reload(true)");
+    }
+
     public void searchAndSelectAddress(String addressSelector, String postcode, int index) {
-        enterText(addressSelector, postcode, SelectorType.ID);
+        enterText(addressSelector, SelectorType.ID, postcode);
         click("address[searchPostcode][search]", SelectorType.ID);
         waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.NAME);
         selectValueFromDropDownByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
@@ -56,20 +61,20 @@ public class UIJourney extends BasePage {
 
     public void addPreviousConviction()  {
         selectValueFromDropDown("data[title]", SelectorType.ID, "Ms");
-        enterText("data[forename]", Str.randomWord(8), SelectorType.NAME);
-        enterText("data[familyName]", Str.randomWord(8), SelectorType.NAME);
-        enterText("data[notes]", Str.randomWord(30), SelectorType.NAME);
+        enterText("data[forename]", SelectorType.NAME, Str.randomWord(8));
+        enterText("data[familyName]", SelectorType.NAME, Str.randomWord(8));
+        enterText("data[notes]", SelectorType.NAME, Str.randomWord(30));
 
         HashMap<String, String> dates;
         dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
 
-        enterText("dob_day", dates.get("day").toString(), SelectorType.ID);
-        enterText("dob_month", dates.get("month").toString(), SelectorType.ID);
-        enterText("dob_year", dates.get("year").toString(), SelectorType.ID);
+        enterText("dob_day", SelectorType.ID, dates.get("day"));
+        enterText("dob_month", SelectorType.ID, dates.get("month"));
+        enterText("dob_year", SelectorType.ID, dates.get("year"));
 
-        enterText("data[categoryText]", Str.randomWord(50), SelectorType.NAME);
-        enterText("data[courtFpn]", "Clown", SelectorType.NAME);
-        enterText("data[penalty]", "Severe", SelectorType.NAME);
+        enterText("data[categoryText]", SelectorType.NAME, Str.randomWord(50));
+        enterText("data[courtFpn]", SelectorType.NAME, "Clown");
+        enterText("data[penalty]", SelectorType.NAME, "Severe");
         clickByName("form-actions[submit]");
     }
 
@@ -169,24 +174,24 @@ public class UIJourney extends BasePage {
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         waitForTitleToBePresent("Operating centres and authorisation");
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
-        enterField(nameAttribute("input", "data[noOfVehiclesRequired]"), noOfVehicles);
+        enterText(nameAttribute("input", "data[noOfVehiclesRequired]"), SelectorType.CSS, noOfVehicles);
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
         if (Integer.parseInt(noOfVehicles) > world.createApplication.getNoOfVehiclesRequested()) {
-            click(nameAttribute("button", "form-actions[submit]"));
+            click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
         }
-        click(nameAttribute("button", "form-actions[submit]"));
+        click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
     }
 
     public void changeVehicleAuth(String noOfAuthVehicles)  {
-        enterField(nameAttribute("input", "data[totAuthVehicles]"), noOfAuthVehicles);
-        click(nameAttribute("button", "form-actions[save]"));
+        enterText(nameAttribute("input", "data[totAuthVehicles]"), SelectorType.CSS, noOfAuthVehicles);
+        click(nameAttribute("button", "form-actions[save]"), SelectorType.CSS);
     }
 
     public void signWithVerify()  {
         String verifyUsername = world.configuration.config.getString("verifyUsername");
         String verifyPassword = world.configuration.config.getString("verifyPassword");
 
-        if (isTextPresent("The last company selected on this device was Post Office Stub.", 70)) {
+        if (isTextPresent("The last company selected on this device was Post Office Stub.")) {
             waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
         } else {
             waitForTextToBePresent("This is my first time using GOV.UK Verify");
@@ -195,8 +200,8 @@ public class UIJourney extends BasePage {
             click("//*[contains(text(),'Select Post')]", SelectorType.XPATH);
         }
         waitForTextToBePresent("Verified");
-        enterText("username", verifyUsername, SelectorType.NAME);
-        enterText("password", verifyPassword, SelectorType.NAME);
+        enterText("username", SelectorType.NAME, verifyUsername);
+        enterText("password", SelectorType.NAME, verifyPassword);
         while (size("//*[contains(text(),'Verified ID Login')]", SelectorType.XPATH) > 0) {
             click("//*[@value='SignIn']", SelectorType.XPATH);
         }
@@ -221,18 +226,18 @@ public class UIJourney extends BasePage {
         world.TMJourney.setOperatorUserEmail(operatorUserEmail);
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", world.TMJourney.getOperatorUser(), SelectorType.ID);
-        enterText("forename", world.TMJourney.getOperatorForeName(), SelectorType.ID);
-        enterText("familyName", world.TMJourney.getOperatorFamilyName(), SelectorType.ID);
-        enterText("main[emailAddress]", world.TMJourney.getOperatorUserEmail(), SelectorType.ID);
-        enterText("main[emailConfirm]", world.TMJourney.getOperatorUserEmail(), SelectorType.ID);
+        enterText("username", SelectorType.ID, world.TMJourney.getOperatorUser());
+        enterText("forename", SelectorType.ID, world.TMJourney.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.TMJourney.getOperatorFamilyName());
+        enterText("main[emailAddress]", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
+        enterText("main[emailConfirm]", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
 
     public void updateFinancialInformation()  {
         world.selfServeNavigation.navigateToPage("variation", "Financial evidence");
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         click("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
         click("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
@@ -305,7 +310,7 @@ public class UIJourney extends BasePage {
         clickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
-        enterText("interim[goodsApplicationInterimReason]", "Testing", SelectorType.NAME);
+        enterText("interim[goodsApplicationInterimReason]", SelectorType.NAME, "Testing");
         click("submitAndPay", SelectorType.ID);
         click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
         world.feeAndPaymentJourney.customerPaymentModule();
@@ -343,7 +348,7 @@ public class UIJourney extends BasePage {
     }
 
     public void caseWorkerGrantApplication()  {
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
         waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
         click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
@@ -353,10 +358,10 @@ public class UIJourney extends BasePage {
         click("//*[@id='menu-case_hearings_appeals']", SelectorType.XPATH);
         clickByLinkText("Add Public Inquiry");
         waitForTextToBePresent("Add Traffic Commissioner agreement and legislation");
-        enterText("//*[@id='fields[agreedDate]_day']", "21", SelectorType.XPATH);
-        enterText("//*[@id='fields[agreedDate]_month']", "6", SelectorType.XPATH);
-        enterText("//*[@id='fields[agreedDate]_year']", "2014", SelectorType.XPATH);
-        selectValueFromDropDownByIndex("fields[agreedByTc]",SelectorType.ID,1);
+        enterText("//*[@id='fields[agreedDate]_day']", SelectorType.XPATH, "21");
+        enterText("//*[@id='fields[agreedDate]_month']", SelectorType.XPATH, "6");
+        enterText("//*[@id='fields[agreedDate]_year']", SelectorType.XPATH, "2014");
+        selectValueFromDropDownByIndex("fields[agreedByTc]", SelectorType.ID, 1);
         selectValueFromDropDown("//*[@id='fields[agreedByTcRole]']", SelectorType.XPATH, "Traffic Commissioner");
         selectValueFromDropDownByIndex("assignedCaseworker", SelectorType.ID, 1);
         click("//*[@id='fields_piTypes__chosen']/ul", SelectorType.XPATH);
@@ -372,16 +377,16 @@ public class UIJourney extends BasePage {
         clickByLinkText("Add hearing");
         waitForTextToBePresent("Venue");
         selectValueFromDropDown("//*[@id='venue']", SelectorType.XPATH, "Other");
-        enterText("//*[@id='venueOther']", "Test", SelectorType.XPATH);
-        enterText("//*[@id='hearingDate_day']", "21", SelectorType.XPATH);
-        enterText("//*[@id='hearingDate_month']", "6", SelectorType.XPATH);
-        enterText("//*[@id='hearingDate_year']", "2014", SelectorType.XPATH);
+        enterText("//*[@id='venueOther']", SelectorType.XPATH, "Test");
+        enterText("//*[@id='hearingDate_day']", SelectorType.XPATH, "21");
+        enterText("//*[@id='hearingDate_month']", SelectorType.XPATH, "6");
+        enterText("//*[@id='hearingDate_year']", SelectorType.XPATH, "2014");
         selectValueFromDropDown("//*[@id='hearingDate_hour']", SelectorType.XPATH, "16");
         selectValueFromDropDown("//*[@id='hearingDate_minute']", SelectorType.XPATH, "00");
         selectValueFromDropDown("//*[@id='presidingTc']", SelectorType.XPATH, "Nick Jones");
         selectValueFromDropDown("//*[@id='presidedByRole']", SelectorType.XPATH, "Traffic Commissioner");
-        enterText("//*[@id='fields[witnesses]']", "1", SelectorType.XPATH);
-        enterText("//*[@id='fields[drivers]']", "1", SelectorType.XPATH);
+        enterText("//*[@id='fields[witnesses]']", SelectorType.XPATH, "1");
+        enterText("//*[@id='fields[drivers]']", SelectorType.XPATH, "1");
         click("//*[@id='form-actions[publish]']", SelectorType.XPATH);
     }
 
@@ -421,13 +426,13 @@ public class UIJourney extends BasePage {
         click("//*[@id='add']", SelectorType.XPATH);
         waitAndClick("//*[@id='fields_categorys__chosen']/ul", SelectorType.XPATH);
         click("//li[contains(text(),'Convictions')]", SelectorType.XPATH);
-        enterText("//*[@id='fields[description]']", "testing", SelectorType.XPATH);
-        enterText("//*[@id='fields[ecmsNo]']", "12345", SelectorType.XPATH);
+        enterText("//*[@id='fields[description]']", SelectorType.XPATH, "testing");
+        enterText("//*[@id='fields[ecmsNo]']", SelectorType.XPATH, "12345");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
     public void changeLicenceForVariation() {
-        javaScriptExecutor("location.reload(true)");
+        refreshPageWithJavascript();
         waitForPageLoad();
         waitForElementToBePresent("//*[contains(text(),'change your licence')]");
         waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
@@ -485,21 +490,20 @@ public class UIJourney extends BasePage {
         checkValue(String.format("//*[@name='%s[postcode]']", typeOfAddress), SelectorType.XPATH, postcode);
     }
 
-    public void addNewOperatingCentreSelfServe(int vehicles, int trailers) throws
-            IllegalBrowserException, MalformedURLException {
+    public void addNewOperatingCentreSelfServe(int vehicles, int trailers) {
         waitForTitleToBePresent("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
         clickByLinkText("Enter the address yourself");
         addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
-        enterText("//*[@id='noOfVehiclesRequired']", Integer.toString(vehicles), SelectorType.XPATH);
-        enterText("//*[@id='noOfTrailersRequired']", Integer.toString(trailers), SelectorType.XPATH);
+        enterText("//*[@id='noOfVehiclesRequired']", SelectorType.XPATH, Integer.toString(vehicles));
+        enterText("//*[@id='noOfTrailersRequired']", SelectorType.XPATH, Integer.toString(trailers));
         click("//*[@id='permission']", SelectorType.XPATH);
         click("//*[@value='adPlacedLater']", SelectorType.XPATH);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Operating centre added");
-        replaceText("//*[@id='totAuthVehicles']", Integer.toString(vehicles));
-        replaceText("//*[@id='totAuthTrailers']", Integer.toString(vehicles));
+        replaceText("//*[@id='totAuthVehicles']", SelectorType.XPATH, Integer.toString(vehicles));
+        replaceText("//*[@id='totAuthTrailers']", SelectorType.XPATH, Integer.toString(vehicles));
         click("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
@@ -552,6 +556,10 @@ public class UIJourney extends BasePage {
     }
 
     public List<WebElement> getTableBodyRowList() {
-        return listOfWebElements("//tbody", SelectorType.XPATH);
+        return findElements("//tbody", SelectorType.XPATH);
+    }
+
+    public void checkValue(String selector, SelectorType selectorType, String text) {
+        assertEquals(getValue(selector, selectorType), text);
     }
 }

@@ -6,14 +6,15 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.HashMap;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -152,17 +153,17 @@ public class SurrenderLogic extends BasePage implements En {
         When("^the caseworker approves the surrender$", () -> {
             world.surrenderJourney.caseworkManageSurrender();
             // Refresh page
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
             waitAndClick("actions[surrender]", SelectorType.ID);
         });
         Then("^the licence status should be \"([^\"]*)\"$", (String status) -> {
             world.UIJourney.checkLicenceStatus(status);
         });
         And("^the surrender menu should be hidden in internal$", () -> {
-            assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender"));
+            assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender", SelectorType.XPATH));
         });
         And("^the \"([^\"]*)\" page should display$", (String page) -> {
-            assertTrue(isTextPresent(page, 40));
+            assertTrue(isTextPresent(page));
         });
         When("^the caseworker attempts to withdraw the surrender$", () -> {
             world.surrenderJourney.caseworkManageSurrender();
@@ -196,7 +197,7 @@ public class SurrenderLogic extends BasePage implements En {
             world.surrenderJourney.submitSurrender();
         });
         Then("^the quick actions and decision buttons are not displayed for the menu items listed$", (DataTable buttons) -> {
-            assertFalse(isTextPresent("Quick actions",30));
+            assertFalse(isTextPresent("Quick actions"));
             List<String> section_button = buttons.asList(String.class);
             for (String button : section_button) {
                 clickByLinkText(button);

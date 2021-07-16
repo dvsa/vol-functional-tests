@@ -2,7 +2,7 @@
 Feature: Short term APSG with sectors Certificate required page
 
   Background:
-    Given  I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I am on the shortterm certificates required page
 
@@ -13,7 +13,7 @@ Feature: Short term APSG with sectors Certificate required page
     And I should get the certificates required page error message
     And I select save and return overview link
     And  I should get the certificates required page error message
-    When I go back
+    When I click the back link
     Then I should be on the short term ECMT overview page
 
   @OLCS-25099

@@ -1,31 +1,34 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.untilOnPeriodSelectionPage;
+import static org.junit.Assert.assertTrue;
 
-public class UkrainePeriodSelectionPageSteps implements En {
+public class UkrainePeriodSelectionPageSteps extends BasePermitPage implements En {
     public UkrainePeriodSelectionPageSteps(OperatorStore operatorStore, World world) {
         Then("^I am on the Bilateral Ukraine Period Selection page with correct information and content$", () -> {
-            untilOnPeriodSelectionPage();
+            PeriodSelectionPage.untilOnPage();
 
             // Checking Page heading
-            String expectedPageHeading = "Validity period";
-            String actualPageHeading = PeriodSelectionPage.pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
+            PeriodSelectionPageJourney.hasPageHeading();
 
            //Checking Country name displayed on the page is the one clicked on the overview page
             Assert.assertEquals(PeriodSelectionPage.getCountry(),operatorStore.getCountry());
 
             // Check that by default period should always be Ukraine related
-            PeriodSelectionPage.defaultPeriodUkraine();
-            operatorStore.setCurrentBilateralPeriodType(PeriodSelectionPage.BilateralPeriodType.BilateralsUkraine);
+            assertTrue(isElementPresent("//div[contains(text(),'Ukraine')]", SelectorType.XPATH));
+            operatorStore.setCurrentBilateralPeriodType(PeriodType.BilateralsUkraine);
         });
-        When("^I select continue button on the Bilateral Ukraine period selection page$", PeriodSelectionPage::continueButton);
+        When("^I select continue button on the Bilateral Ukraine period selection page$", PeriodSelectionPage::saveAndContinue);
     }
 }
+// TODO Entire class is near identical to TurkerPeriodSelectionpageSteps.
 

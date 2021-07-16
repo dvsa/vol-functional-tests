@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
@@ -15,6 +16,11 @@ public class ScenarioTearDown {
     public void afterClass(Scenario scenario) throws Exception {
         Hooks.attach(scenario);
     }
+
+//    @After
+//    public static void tearDown() {
+//        Browser.navigate().close();
+//    }
 
     @Before
     public void setUpReportConfig() throws IOException {

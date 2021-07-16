@@ -1,44 +1,35 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EssentialInformationPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
+import org.dvsa.testing.lib.newPages.enums.Country;
+import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.lib.pages.external.permit.bilateral.EssentialInformationPage.*;
+import static org.junit.Assert.assertTrue;
 
 public class NorwayEssentialInformationSteps implements En {
     public NorwayEssentialInformationSteps(OperatorStore operatorStore, World world) {
         And("^I click on Norway country link on the Application overview page$", () -> {
-            OverviewPage.clickNorway();
+            OverviewPage.clickCountrySection(Country.Norway);
         });
 
-        When("^I am on the Norway essential information page$", () -> {
-            untilOnPage();
-        });
+        When("^I am on the Norway essential information page$", EssentialInformationPage::untilOnPage);
         Then("^Country name displayed on the Bilateral permit essential information page is the one clicked on the overview page$", () -> {
-            Assert.assertEquals(getCountry(),operatorStore.getCountry());
+            Assert.assertEquals(BasePermitPage.getCountry(),operatorStore.getCountry());
         });
-        And("^the page heading on Bilateral essential information  page is correct$", () -> {
-            String expectedPageHeading = "Essential information";
-            String actualPageHeading = pageHeading().trim();
-            Assert.assertEquals(expectedPageHeading, actualPageHeading);
-        });
+        And("^the page heading on Bilateral essential information  page is correct$", EssentialInformationPageJourney::hasPageHeading);
         And("^the page content on Bilateral essential information  page is correct$", () -> {
-           pageContent();
+            assertTrue(EssentialInformationPage.isPageContentPresent());
         });
-        And("^the GOV.UK link on Bilateral essential information  page is correct$", () -> {
-            link();
-        });
-        And("^I am navigated to Bilaterals period selection page$", () -> {
-            untilOnPeriodSelectionPage();
-        });
-        And("^I select continue button on the Bilateral essential information page$", () -> {
-            EssentialInformationPage.bilateralEssentialInfoContinueButton();
-
-        });
+        And("^the GOV.UK link on Bilateral essential information  page is correct$", EssentialInformationPage::hasInternationalAuthorisationGovGuidanceLink);
+        And("^I am navigated to Bilaterals period selection page$", PeriodSelectionPage::untilOnPage);
+        And("^I select continue button on the Bilateral essential information page$", EssentialInformationPage::saveAndContinue);
     }
 }
 

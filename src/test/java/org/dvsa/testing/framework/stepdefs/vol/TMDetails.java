@@ -4,8 +4,8 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.By;
 
 import java.util.List;
@@ -31,7 +31,7 @@ public class TMDetails extends BasePage implements En {
             assertTrue(Browser.navigate().getCurrentUrl().contains(page));
         });
         And("^page title \"([^\"]*)\" should be displayed on page$", (String arg0) -> {
-            assertTrue(isTextPresent(arg0,30));
+            assertTrue(isTextPresent(arg0));
             clickByLinkText("Back");
         });
         When("^the users attempts to save without entering any data$", () -> {
@@ -46,7 +46,7 @@ public class TMDetails extends BasePage implements En {
         });
         Then("^the guidance text should be displayed$", () -> {
             String notDirectorText = findElement("//*[@id='responsibilities']/fieldset[2]/div[2]", SelectorType.XPATH, 10).getText();
-            assertTrue(isTextPresent(notDirectorText,30));
+            assertTrue(isTextPresent(notDirectorText));
         });
         Then("^the optional wording should not be displayed on the page$", (DataTable arg) -> {
             List<String> sections = arg.asList(String.class);
