@@ -26,24 +26,6 @@ import java.util.stream.IntStream;
 
 public class ApplicationSteps extends BasePage implements En {
     public ApplicationSteps(OperatorStore operator, World world) {
-
-        And("^I have (an|all) ongoing Annual Multilateral Application$", (String arg) -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-
-            int quantity = arg.equals("all") ? VolLicenceSteps.licenceQuantity.get("licence.quantity") : 1;
-
-               IntStream.rangeClosed(1, quantity).forEach((i) -> {
-                   HomePageJourney.beginPermitApplication();
-
-                    AnnualMultilateralJourney.INSTANCE
-                               .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
-                               .licencePage(operator, world)
-                               .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
-                   NumberOfPermitsPageJourney.completeMultilateralPage();
-                   get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
-                   HomePageJourney.selectPermitTab();
-            });
-        });
         When("^I select a licence already with an ongoing annual multilateral permit$", () -> {
             HomePageJourney.beginPermitApplication();
             AnnualMultilateralJourney.INSTANCE
@@ -72,13 +54,6 @@ public class ApplicationSteps extends BasePage implements En {
                     Duration.LONG,
                     TimeUnit.MINUTES
             );
-        });
-        And("^my annual multilateral permit has 'Not Yet Submitted' status$", () -> {
-            String reference = operator.getCurrentLicence().orElseThrow(IllegalStateException::new).getLatestAnnualMultilateral().get().getReference();
-            String selector = String.format(
-                    "//*[contains(text(), '%s')]//ancestor-or-self::td//following-sibling::td[last()]/span[contains(text(), '%s')]",
-                    reference, PermitStatus.NOT_YET_SUBMITTED);
-            refreshPageUntilElementAppears(selector, SelectorType.XPATH);
         });
     }
 }

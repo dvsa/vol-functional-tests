@@ -29,20 +29,6 @@ public class DashboardSteps implements En {
                 Assert.assertEquals(operator.getCurrentPermitType().get().toString(), p.getType().toString());
             });
         });
-        Then("^my annual multilateral permit should be under the ongoing permit application table$", () -> {
-            HomePage.untilOnPage();
-            LicenceStore licence = operator.getCurrentLicence().orElseThrow(IllegalStateException::new);
-            AnnualMultilateralStore permit = licence.getLatestAnnualMultilateral()
-                    .orElseThrow(IllegalAccessError::new);
-            List<PermitApplication> actualPermits = HomePage.PermitsTab.getOngoingPermitApplications();
 
-            actualPermits.forEach( p -> {
-                Assert.assertEquals(permit.getReference(), p.getReferenceNumber());
-                Assert.assertEquals(permit.totalNumberOfPermits(), p.getNoOfPermits().intValue());
-                Assert.assertEquals(operator.getCurrentPermitType().get().toString(), p.getType().toString());
-                Assert.assertEquals(PermitStatus.NOT_YET_SUBMITTED, p.getStatus());
-            });
-        });
-        When("^I select my annual multilateral permit application from external dashboard$", HomePage.PermitsTab::selectFirstOngoingApplication);
     }
 }

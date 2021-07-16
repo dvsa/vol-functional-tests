@@ -225,14 +225,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
                             .submitApplication(operatorStore.getLatestLicence().get(), world);
             });
         });
-        Then("^ongoing permits should be sorted by reference number in descending order$", () -> {
-            List<PermitApplication> actualApplications = HomePage.PermitsTab.getOngoingPermitApplications();
-            IntStream.range(0, actualApplications.size() - 1).forEach((i) -> {
-                String ref2 = actualApplications.get(i).getReferenceNumber();
-                String ref1 = actualApplications.get(i + 1).getReferenceNumber();
-                Assert.assertThat(ref1, Matchers.greaterThanOrEqualTo(ref2));
-            });
-        });
         And("I am viewing an issued annual bilateral permit on self-serve", () -> {
             HomePage.PermitsTab.selectFirstValidPermit();
             ValidPermitsPage.untilOnPage();
