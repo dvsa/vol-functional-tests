@@ -1,4 +1,4 @@
-@EXTERNAL @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+@EXTERNAL @ECMT @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
 Feature: Annual ECMT Declaration page
 
   Background:
@@ -7,7 +7,7 @@ Feature: Annual ECMT Declaration page
     And I am on the application overview page
     And I am on the declaration page
 
-  @EXTERNAL @ECMT  @OLCS-21940 @OLCS-24974 @OLCS-26709 @Test2
+  @OLCS-21940 @OLCS-24974 @OLCS-26709
   Scenario: Displays validation error summary box
     When I save and continue on the declaration page
     Then I should see the validation error message for the declaration page
@@ -17,7 +17,7 @@ Feature: Annual ECMT Declaration page
     And I accept and continue
     Then I should be on the ECMT permit fee page
 
-  @EXTERNAL @ECMT @OLCS-24974 @OLCS-26709 @Test2 @olcs-27581
+  @OLCS-24974 @OLCS-26709 @olcs-27581
   Scenario: Section becomes complete when users save and accept after declaring on overview page
     When I confirm the declaration
     And I save and return to overview

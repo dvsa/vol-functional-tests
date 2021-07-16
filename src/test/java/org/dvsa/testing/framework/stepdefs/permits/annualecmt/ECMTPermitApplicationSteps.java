@@ -63,23 +63,10 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             HomePageJourney.beginPermitApplication();
             ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
         });
-        When("^I try applying for an annual ECMT again$", () -> {
-            HomePage.applyForLicenceButton();
-            AnnualBilateralJourney.getInstance().permitType();
-        });
         When("^I withdraw without confirming$", () -> {
             HomePage.PermitsTab.selectFirstOngoingApplication();
             ApplicationDetailsPage.withdraw();
             WithdrawApplicationPage.clickWithdraw();
-        });
-        Then("^issued permits should be sorted by reference number in descending order$", () -> {
-            List<PermitApplication> actualApplications = HomePage.PermitsTab.getIssuedPermitApplications();
-            IntStream.range(0, actualApplications.size() - 1).forEach((i) -> {
-                String ref2 = actualApplications.get(i).getReferenceNumber();
-                String ref1 = actualApplications.get(i + 1).getReferenceNumber();
-
-                Assert.assertThat(ref1, Matchers.greaterThanOrEqualTo(ref2));
-            });
         });
         When("^I have a partial completed ECMT application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

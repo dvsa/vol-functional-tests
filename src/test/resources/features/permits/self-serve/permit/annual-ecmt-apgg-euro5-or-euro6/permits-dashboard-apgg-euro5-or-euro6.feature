@@ -22,8 +22,3 @@ Feature: Self-serve dashboard
     And  I have an annual ECMT application in awaiting fee status
     When I view the application from ongoing permit application table
     Then the user is navigated to awaiting fee page
-
-  @OLCS-23131 @OLCS-21112 @Deprecated
-  Scenario: Issued annual bilateral displayed in reference descending order
-    And I have completed all annual bilateral application
-    Then issued permits should be sorted by reference number in descending order

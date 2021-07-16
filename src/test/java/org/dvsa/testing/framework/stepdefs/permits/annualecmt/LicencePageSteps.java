@@ -18,10 +18,6 @@ import java.util.stream.IntStream;
 public class LicencePageSteps implements En {
 
     public LicencePageSteps(OperatorStore operatorStore, World world) {
-        Then("^the licence number should be selected$", () -> {
-            String actualLicenceNumber = SelectALicencePage.getLicenceNumber();
-            Assert.assertEquals(actualLicenceNumber, world.applicationDetails.getLicenceNumber());
-        });
         When("^I select any licence number$", () -> EcmtApplicationJourney.getInstance().licencePage(operatorStore, world));
         Then("^I should see the type of licence next to each licence$", () -> {
             List<LicenceModel> expectedLicences = OrganisationAPI.dashboard(world.userDetails.getOrganisationId()).getDashboard().getLicences();
