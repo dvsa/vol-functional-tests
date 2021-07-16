@@ -24,16 +24,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
             operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
             OverviewPage.clickCancelApplication();
         });
-        Then("^the application reference number should be displayed above the heading$", () -> {
-            String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
-        });
-
-        When("^I should see the correct text displayed next to the checkbox", () -> {
-            assertTrue(isElementPresent("//label[@class='form-control form-control--checkbox']", SelectorType.XPATH));
-        });
         When("the checkbox is selected", CancellationPage::clickCancelCheckbox);
-        When("^the cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
         Then ("^I should be taken to cancel confirmation page$", () -> {
             CancellationConfirmationPage.untilOnPage();
             assertEquals("Application cancelled", CancellationConfirmationPage.getPanelHeading());
@@ -44,7 +35,6 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
         And("I select cancel application button", CancellationPage::clickCancelButton);
         //Guidance link no more displayed on the page,changed the assertion
         Then("I select finish button", BilateralJourneySteps::clickFinishButton);
-        And("^I click cancel application link for bilateral application$", BilateralJourneySteps::bilateralCancel);
     }
 }
 

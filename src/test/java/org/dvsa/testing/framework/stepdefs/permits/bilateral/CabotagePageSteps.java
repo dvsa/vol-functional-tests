@@ -21,10 +21,6 @@ public class CabotagePageSteps extends BasePermitPage implements En {
 
     private int numberOfCountries;
 
-    public CabotagePageSteps(OperatorStore operatorStore, World world) {
-        When("^I select 'no' button$", BilateralJourneySteps::clickNoToCabotage);
-    }
-
     private void annualBilateralOverviewPageUntilPeriodSelectionPage() {
         OverviewPage.untilOnPage();
         OverviewPage.clickCountrySection(Country.Norway);

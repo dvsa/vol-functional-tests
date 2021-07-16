@@ -43,9 +43,6 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
             String s1 = BasePage.getElementValueByText("//li[2]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
             Assert.assertEquals(s1, "COMPLETED");
         });
-        Then("^I select the edit countries button$", () -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.EditCountrySelection);
-        });
         And("^I click on Turkey country link on the Application overview page$", () -> {
             OverviewPage.clickCountrySection(Country.Turkey);
         });

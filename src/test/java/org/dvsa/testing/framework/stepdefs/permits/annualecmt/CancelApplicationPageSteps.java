@@ -31,21 +31,6 @@ public class CancelApplicationPageSteps extends BasePermitPage implements En {
             assertEquals("You must select the checkbox to continue", CancellationPage.getErrorText());
         });
         When("^I cancel my ECMT application$", CancellationPage::saveAndContinue);
-        Then("^I navigate to the Bilaterals cabotage page$", () -> {
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
-            PeriodSelectionPage.untilOnPage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.journeyType(JourneyType.random());
-        });
-        Then("^I click save and continue on cabotage page$", CabotagePage::saveAndContinue);
-        Then("^I am navigated to cabotage page$", () -> {
-            CabotagePage.ECMTRemovalsUntilOnPage();
-            String heading = CabotagePage.getPageHeading();
-            assertEquals("ECMT permits do not allow you to carry out cabotage", heading);
-        });
     }
 
 }
