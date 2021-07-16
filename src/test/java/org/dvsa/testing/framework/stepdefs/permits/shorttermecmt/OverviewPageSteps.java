@@ -38,8 +38,5 @@ public class OverviewPageSteps implements En {
         And("^future sections on shortterm overview page beyond the current step are disabled$", () -> {
             assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.LicenceNumber));
         });
-        When("^I select number of permits hyperlink from overview page$", () -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.NumberOfPermits);
-        });
     }
 }
