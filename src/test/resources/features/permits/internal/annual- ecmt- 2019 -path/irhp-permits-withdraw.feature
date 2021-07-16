@@ -21,11 +21,3 @@ Feature: Internal permits Withdraw Application
     Then In application details page, I withdraw Permit Application
     And I am in application details page, I should not see withdraw button
     And I am in application details page, I should see application as withdrawn
-
-  @INTERNAL @OLCS-21284 @Deprecated
-  Scenario: Withdraw application from details page
-    When I click on submit button
-    And I pay fee for application
-    Then In application details page, I withdraw Permit Application
-    And I am in application details page, I should not see withdraw button
-    And I am in application details page, I should see application as withdrawn

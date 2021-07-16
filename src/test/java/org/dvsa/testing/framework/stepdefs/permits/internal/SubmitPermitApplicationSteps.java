@@ -57,14 +57,6 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             viewApplication();
 
         });
-        Then("^save the application$", IrhpPermitsApplyPage::saveIRHP);
-        Then("^I apply for an annual bilateral application in internal$", () -> {
-            applyforPermit();
-            IRHPPageJourney.completeModal(PermitType.ANNUAL_BILATERAL);
-            LicenceStore licence = operatorStore.getLatestLicence().orElseThrow(IllegalStateException::new);
-            AnnualBilateralJourney.getInstance().numberOfPermits(licence).save(licence);
-
-        });
 
         When("^I apply for an ECMT APGG Euro5 or Euro 6 application$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
@@ -259,19 +251,6 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         Then ("^I should be in the edit fee page$", ()->{
             isPath("/licence/\\d+/fees/edit-fee/\\d+/");
         });
-        Then ("^the fee gets refunded with the status updated to cancelled$", ()->{
-           Assert.assertEquals(BasePage.getElementValueByText("//span[@class='status red']",SelectorType.XPATH),"CANCELLED");
-        });
-        When ("^I select application to refund$", () -> {
-            LicenceDetailsPageJourney.clickProcessingTab();
-            LicenceDetailsPageJourney.clickFeesTab();
-            String browser = String.valueOf(getURL());
-            get(browser+"/?i=e&status=all&sort=id&order=DESC");
-            FeesDetailsPage.select1stFee();
-            isPath("/licence/\\d+/fees/edit-fee/");
-            FeesDetailsPage.refundFeeButton();
-            FeesDetailsPage.acceptRefund();
-        });
         Then("^I should see Fee Amount calculated correctly$", () -> {
             LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             String expectedFeeAmount = String.valueOf(licenceStore.getEcmt().getNumberOfPermits()*10);
@@ -372,50 +351,8 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         When("^I have not declared Euro 6 compliance in internal", () -> {
             waitAndClick("//label[contains(text(),'I confirm that I will only use my ECMT permits wit')]",SelectorType.XPATH);
         });
-        When("^I should get the percentage of international journeys error message", () -> {
-         Assert.assertEquals(BasePage.getElementValueByText("//p[contains(text(),'Select the percentage of international')]", SelectorType.XPATH),"Select the percentage of international journeys over the past 12 months");
-        });
-        When("^I should get the sector error message", () -> {
-            Assert.assertEquals(BasePage.getElementValueByText("//p[contains(text(),'Select one main sector only')]", SelectorType.XPATH),"Select one main sector only");
-        });
         When("^I should get the declaration error message", () -> {
             Assert.assertEquals(BasePage.getElementValueByText("//p[@class='error__text']", SelectorType.XPATH),"Select one main sector only");
-        });
-        When("^percentage of international journey checkbox is not selected", () -> {
-            LicenceDetailsPageJourney.clickIRHPTab();
-            int numberOfTrips = Int.random(1, 1000);
-
-            //apply application
-            int numberOfPermits = Int.random(1, 5);
-            untilOnPage();
-            applyAnnualEcmtApplication();
-
-            //Fill application
-            emissionRadioSelectNew();
-            permitsQuantityInternal(numberOfPermits);
-            checkBoxClickedSaveContinue();
-            selectTrips(numberOfTrips);
-            restrictedCountriesNo();
-            declare(true);
-        });
-//checking sector page validation
-        When("sectors are not selected in internal", () -> {
-            LicenceDetailsPageJourney.clickIRHPTab();
-            int numberOfTrips = Int.random(1, 1000);
-
-            //apply application
-            int numberOfPermits = Int.random(1, 5);
-            untilOnPage();
-            applyAnnualEcmtApplication();
-
-            //Fill application
-            emissionRadioSelectNew();
-            permitsQuantityInternal(numberOfPermits);
-            checkBoxClickedSaveContinue();
-            selectTrips(numberOfTrips);
-            JourneyProportion journey = internationalJourneys();
-            restrictedCountriesNo();
-            declare(true);
         });
 //checking declaration page validation
         When("declaration checkbox is not selected in internal", () -> {

@@ -73,13 +73,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 Assert.assertTrue(countries.get(idx).substring(0, 1).compareTo(countries.get(idx + 1).substring(0, 1)) <= 0);
             }
         });
-        Then("^I can see the countries selected is listed in alphabetical order$", () -> {
-            List<String> countries = CountrySelectionPage.countriesSelected();
-
-            for (int idx = 0; idx < countries.size() - 1; idx++) {
-                Assert.assertTrue(countries.get(idx).substring(0, 1).compareTo(countries.get(idx + 1).substring(0, 1)) <= 0);
-            }
-        });
         Then("^the bilateral countries page should display its error message$", () -> {
             assertTrue(CountrySelectionPage.isErrorMessagePresent());
         });

@@ -36,40 +36,8 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
                     .licencePage(operatorStore, world);
             AnnualBilateralJourney.getInstance().norway(operatorStore);
         });
-        And("^I'm on bilateral overview page with multiple countries selected$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().allCountries(operatorStore);
-        });
-        And("^I have completed till check your answers page$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly, operatorStore);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            BilateralJourneySteps.clickYesToCabotage();
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
-            BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-        });
         Then("^the status of Morocco under answers questions for individual countries section is marked as Completed$", () -> {
             OverviewPageJourney.checkBilateralStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
-        });
-        Then("^I select submit and pay link$", () -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.SubmitAndPay);
-        });
-        Then("^I am taken to the overview page with the status as completed$", () -> {
-            String s1 = BasePage.getElementValueByText("//li[3]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
-            Assert.assertEquals(s1, "COMPLETED");
         });
         Then("^the status of answers questions for individual countries as complete$", () -> {
             String s1 = BasePage.getElementValueByText("//li[2]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
@@ -77,19 +45,6 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
         });
         Then("^I select the edit countries button$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.EditCountrySelection);
-        });
-        Then("^I declare and save and return to overview$", () -> {
-            DeclarationPage.confirmDeclaration();
-            BasePermitPage.clickReturnToOverview();
-        });
-        Then("^I'm navigated to countries selection page$", () -> {
-            isPath("/permits/application/\\d+/countries/\\d+");
-        });
-        When("^the hyperlink for select countries is selected$", () -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.Countries);
-        });
-        Then("^I am navigated to the relevant page$", () -> {
-            isPath("//permits/application/\\d+/countries/");
         });
         And("^I click on Turkey country link on the Application overview page$", () -> {
             OverviewPage.clickCountrySection(Country.Turkey);

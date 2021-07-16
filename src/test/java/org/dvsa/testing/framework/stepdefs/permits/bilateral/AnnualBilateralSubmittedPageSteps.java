@@ -26,45 +26,6 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 
 public class AnnualBilateralSubmittedPageSteps extends BasePage implements En {
     public AnnualBilateralSubmittedPageSteps(LicenceStore licenceStore, OperatorStore operatorStore, World world) {
-        And("^I'm on the annual bilateral cabotage only submitted  page$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            BilateralJourneySteps.clickYesToCabotage();
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
-            BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            DeclarationPageJourney.completeDeclaration();
-            AnnualBilateralJourney.getInstance()
-                    .permitFee();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilOnPage();
-        });
-        Then("^my application reference should be displayed$", () -> {
-            String actualReference = getElementValueByText("//div[@class='govuk-panel__body'] ", SelectorType.XPATH);
-            Assert.assertEquals(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9,18)),true);
-        });
-        Then("^I should see the view receipt link$", () -> {
-            Assert.assertTrue("'View  Receipt' link  should be displayed but wasn't", SubmittedPage.hasViewReceipt());
-        });
-        And("^I'm on the annual bilateral submitted page for my active application$", () -> {
-            BaseJourney.getInstance().go(ApplicationType.EXTERNAL);
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.selectPermitTab();
-            HomePage.PermitsTab.selectFirstOngoingApplication();
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            DeclarationPageJourney.completeDeclaration();
-        });
         Then("^I should not see the view receipt link$", () -> {
             Assert.assertFalse("'View  Receipt' link  should NOT be displayed but was", SubmittedPage.hasViewReceipt()
             );
@@ -85,29 +46,6 @@ public class AnnualBilateralSubmittedPageSteps extends BasePage implements En {
             AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BilateralJourneySteps.clickYesToCabotage();
             AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
-            BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            DeclarationPageJourney.completeDeclaration();
-            AnnualBilateralJourney.getInstance()
-                    .permitFee();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilOnPage();
-        });
-        And ("^I'm on the annual bilateral StandardPermitsNoCabotage only submitted page$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
