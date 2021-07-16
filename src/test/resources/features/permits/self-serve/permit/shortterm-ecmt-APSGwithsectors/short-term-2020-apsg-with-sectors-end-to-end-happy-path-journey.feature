@@ -25,4 +25,3 @@ Feature: Short term APSG with sectors end to end happy path journey
     Then I click on Accept and continue on the Declaration page
     Then I click on Submit and Pay button on the Permit fee page and complete the payment
     Then I click on the Finish button on the Application submitted page
-    Then I am navigated back to the permits dashboard page with my application status shown as Under Consideration

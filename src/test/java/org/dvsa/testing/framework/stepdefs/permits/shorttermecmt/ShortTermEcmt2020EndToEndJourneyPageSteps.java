@@ -100,31 +100,5 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
             HomePage.PermitsTab.selectFirstOngoingApplication();
             assertEquals(getElementValueByText("//span[@class='status orange']",SelectorType.XPATH),"UNDER CONSIDERATION");
         });
-        Then("^I apply and pay for a short term APSG without sectors application", () -> {
-            clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithoutSectors,operatorStore);
-            ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
-            PermitUsagePage.permitUsage(PermitUsage.random());
-            BasePermitPage.saveAndContinue();
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourney.completeECMTPage();
-            EmissionStandardsPageJourney.completePage();
-            AnnualTripsAbroadPage.quantity(10);
-            BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPageJourney.completeDeclaration();
-            PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPageJourney.hasShortTermECMTAdvisoryText();
-            BilateralJourneySteps.clickFinishButton();
-        });
-
     }
 }
