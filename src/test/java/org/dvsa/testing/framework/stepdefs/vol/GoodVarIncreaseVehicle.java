@@ -35,8 +35,8 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
 
         When("^A selfserve user increases the vehicle authority by invalid charecters$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested()));
+            world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+            world.UIJourney.changeLicenceForVariation();
             world.UIJourney.changeVehicleAuth("+6");
         });
         Then("^An error should appear$", () -> {

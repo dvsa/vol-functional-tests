@@ -130,14 +130,14 @@ public class SelfServeNavigational extends BasePage {
         waitForTitleToBePresent("Directors");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
-        waitForTitleToBePresent("Financial evidence");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
+        waitForTitleToBePresent("Financial evidence");
 
-        waitForTitleToBePresent("Transport Managers");
         waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
         uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
-
         waitAndClick(saveAndContinue, SelectorType.XPATH);
+        waitForTitleToBePresent("Transport Managers");
+
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Vehicle details");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
