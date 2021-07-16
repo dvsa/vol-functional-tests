@@ -86,36 +86,6 @@ public class CommonSteps extends BasePage implements En {
             world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.goToPermitsDashboard();
         });
-        And("^I Grant the application on internal$", () -> {
-            LicenceModel licence = OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0);
-            operator.setCurrentLicenceNumber(licence.getLicNo());
-            IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
-        });
-        And("^I accept and pay the issuing fee on Selfserve$", () -> {
-            deleteCookies();
-            refreshPage();
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
-
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.selectPermitTab();
-            untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
-            HomePage.PermitsTab.selectFirstOngoingApplication();
-            ApplicationIssuingFeePage.acceptAndPay();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.goToPermitsDashboard();
-            HomePage.PermitsTab.untilPermitHasStatus(
-                    operator.getCurrentLicence().get().getReferenceNumber(),
-                    PermitStatus.VALID,
-                    Duration.LONG,
-                    TimeUnit.MINUTES);
-        });
-        Then("^the application can be viewed in issued permits table$", () -> {
-            HomePage.PermitsTab.untilPermitHasStatus(
-                    operator.getCurrentLicence().get().getReferenceNumber(),
-                    PermitStatus.VALID,
-                    Duration.LONG,
-                    TimeUnit.MINUTES);
-        });
         And("^I am on the (Annual ECMT|Annual Bilateral \\(EU and EEA\\)|Annual Multilateral \\(EU and EEA\\)) licence page$", (String type) -> {
             clickToPermitTypePage(world);
             EcmtApplicationJourney.getInstance().permitType(PermitType.getEnum(type), operator);
