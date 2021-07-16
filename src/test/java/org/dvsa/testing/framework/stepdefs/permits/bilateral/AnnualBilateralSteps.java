@@ -295,7 +295,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
-        When("^I save and continue on bilateral check your answers page$", CheckYourAnswerPage::saveAndContinue);
         And("^I have completed (an|all) annual bilateral application$", (String oneOrAll) -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            int quantity = oneOrAll.equalsIgnoreCase("all") ? operatorStore.getLicences().size() : 1;
 
@@ -340,11 +339,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 String ref1 = actualApplications.get(i + 1).getReferenceNumber();
                 Assert.assertThat(ref1, Matchers.greaterThanOrEqualTo(ref2));
             });
-        });
-        And("^I navigate to the annual bilateral overview page$", () -> {
-            String path = OverviewPage.RESOURCE_URL.replaceFirst("\\\\d\\+", operatorStore.getLatestLicence().get().getEcmt().getReferenceNumber());
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), path).toString());
-            OverviewPage.untilOnPage();
         });
         And("I am viewing an issued annual bilateral permit on self-serve", () -> {
             HomePage.PermitsTab.selectFirstValidPermit();
