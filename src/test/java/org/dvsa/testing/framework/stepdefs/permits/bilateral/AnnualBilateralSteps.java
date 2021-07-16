@@ -61,34 +61,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             List<Country> countries = CountrySelectionPage.randomCountries();
             licence.getEcmt().setRestrictedCountries(countries);
         });
-        Then("^I am able to complete an annual bilateral permit application$", () -> {
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPage();
-            PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
-            PermitUsagePage.saveAndContinue();
-            BilateralJourneySteps.clickYesToCabotage();
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
-            CheckYourAnswerPage.saveAndContinue();
-            OverviewPage.untilOnPage();
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            DeclarationPageJourney.completeDeclaration();
-            AnnualBilateralJourney.getInstance()
-                    .permitFee();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilPageLoad();
-            SubmittedPage.goToPermitsDashboard();
-            untilAnyPermitStatusMatch(PermitStatus.VALID);
-            String titleText = getText("//h2[contains(text(),'Issued permits and certificates')]", SelectorType.XPATH);
-            assertEquals(titleText, "Issued permits and certificates");
-        });
 
         Given("^I have (a valid |applied for an )annual bilateral noway cabotage only permit$", (String notValid) -> {
 
@@ -237,22 +209,9 @@ public class AnnualBilateralSteps extends BasePage implements En {
             SubmittedPage.untilOnPage();
 
         });
-        When("^I try applying with a licence that has an existing application$", () -> {
-            world.selfServeNavigation.navigateToNavBarPage("home");
-            HomePageJourney.beginPermitApplication();
-            AnnualBilateralJourney.getInstance().permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
-            LicenceStore licence = operatorStore.getLicences().get(0);
-            SelectALicencePage.clickLicence(licence.getLicenceNumber());
-            SelectALicencePage.saveAndContinue();
-        });
         Then("^I should be informed that there is already an active permit application for this licence$", () -> {
             String message = SelectALicencePage.getActivePermitMessage();
             assertTrue(message.contains("You've already started an application using this licence. Click 'Save and continue' to access this application"));
-        });
-        Then("^I should be on the bilateral overview page for the active application already on the licence$", () -> {
-            OverviewPage.untilOnPage();
-            String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
         });
         And("^I have completed (an|all) annual bilateral application$", (String oneOrAll) -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());            int quantity = oneOrAll.equalsIgnoreCase("all") ? operatorStore.getLicences().size() : 1;
