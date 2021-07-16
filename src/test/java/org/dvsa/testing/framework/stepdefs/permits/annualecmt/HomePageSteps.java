@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.junit.jupiter.api.Assertions.assertEquals;

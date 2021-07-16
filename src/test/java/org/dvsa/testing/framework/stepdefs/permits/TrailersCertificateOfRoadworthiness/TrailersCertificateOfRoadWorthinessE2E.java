@@ -8,13 +8,13 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJo
 import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;

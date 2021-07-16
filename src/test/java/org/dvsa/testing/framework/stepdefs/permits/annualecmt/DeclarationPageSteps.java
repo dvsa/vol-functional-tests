@@ -4,10 +4,10 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;

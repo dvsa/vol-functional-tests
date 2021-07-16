@@ -5,9 +5,9 @@ import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitFeesPage;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitFeesPage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

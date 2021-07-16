@@ -8,19 +8,19 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermit
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.enums.PermitUsage;
-import org.dvsa.testing.lib.newPages.external.pages.*;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.external.pages.SectorPage;
-import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
-import org.dvsa.testing.lib.newPages.external.enums.Sector;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
+import org.dvsa.testing.framework.pageObjects.enums.PermitUsage;
+import org.dvsa.testing.framework.pageObjects.external.pages.*;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SectorPage;
+import org.dvsa.testing.framework.pageObjects.external.enums.JourneyProportion;
+import org.dvsa.testing.framework.pageObjects.external.enums.Sector;
 import org.hamcrest.core.StringContains;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.dvsa.testing.lib.newPages.external.enums.sections.ShortTermApplicationSection.*;
+import static org.dvsa.testing.framework.pageObjects.external.enums.sections.ShortTermApplicationSection.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
@@ -41,7 +41,7 @@ public class CheckYourAnswersPageSteps implements En {
 
         Then("^I am on the Short term check your answers page$", () -> {
             clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(org.dvsa.testing.lib.enums.PermitType.SHORT_TERM_ECMT, operatorStore);
+            ShorttermECMTJourney.getInstance().permitType(org.dvsa.testing.framework.enums.PermitType.SHORT_TERM_ECMT, operatorStore);
             YearSelectionPage.selectShortTermValidityPeriod();
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore).licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);

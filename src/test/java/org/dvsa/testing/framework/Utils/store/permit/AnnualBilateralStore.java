@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Utils.store.permit;
 
-import org.dvsa.testing.lib.newPages.internal.irhp.InternalAnnualBilateralPermitApplicationPage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.InternalAnnualBilateralPermitApplicationPage;
 
 import java.util.List;
 import java.util.Objects;

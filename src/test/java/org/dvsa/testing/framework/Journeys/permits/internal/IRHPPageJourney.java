@@ -2,10 +2,10 @@ package org.dvsa.testing.framework.Journeys.permits.internal;
 
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsPage;
+import org.dvsa.testing.framework.enums.Duration;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsPage;
 
 import java.util.concurrent.TimeUnit;
 

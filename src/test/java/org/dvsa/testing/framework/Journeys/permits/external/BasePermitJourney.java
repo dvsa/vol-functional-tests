@@ -4,15 +4,14 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.PermitTypePage;
-import org.dvsa.testing.lib.newPages.external.pages.SelectALicencePage;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
+import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitTypePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class BasePermitJourney extends BaseJourney {
     protected static volatile BasePermitJourney instance = null;

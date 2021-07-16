@@ -8,11 +8,11 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourne
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.CookiesPage;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 import org.openqa.selenium.Cookie;
@@ -20,7 +20,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.Set;
 
-import static org.dvsa.testing.lib.newPages.external.pages.CookiesPage.*;
+import static org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage.*;
 import static org.junit.Assert.assertTrue;
 
 

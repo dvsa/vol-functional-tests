@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Journeys.permits.external.pages;
 
-import org.dvsa.testing.lib.newPages.external.pages.RestrictedCountriesPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.RestrictedCountriesPage;
 
 import static org.junit.Assert.assertEquals;
 

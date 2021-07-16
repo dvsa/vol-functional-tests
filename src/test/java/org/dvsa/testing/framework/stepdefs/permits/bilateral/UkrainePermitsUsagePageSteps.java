@@ -4,8 +4,8 @@ import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.PermitUsagePageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 
 import static org.junit.Assert.assertEquals;
 

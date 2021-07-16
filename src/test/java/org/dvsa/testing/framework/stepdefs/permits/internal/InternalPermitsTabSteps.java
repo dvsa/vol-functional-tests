@@ -3,10 +3,10 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
+import org.dvsa.testing.framework.enums.Duration;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
 import java.util.concurrent.TimeUnit;

@@ -4,10 +4,10 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.ValidPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidAnnualMultilateralPermit;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualMultilateralPermit;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
 import org.junit.Assert;
 
 import java.util.List;

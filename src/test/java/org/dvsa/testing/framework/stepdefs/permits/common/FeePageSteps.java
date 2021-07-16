@@ -6,11 +6,11 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.FeeSection;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 

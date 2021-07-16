@@ -19,9 +19,9 @@ import org.dvsa.testing.framework.Utils.common.RandomUtils;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.newPages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.newPages.internal.details.sections.Decisions;
+import org.dvsa.testing.framework.enums.Duration;
+import org.dvsa.testing.framework.pageObjects.internal.details.BaseDetailsPage;
+import org.dvsa.testing.framework.pageObjects.internal.details.sections.Decisions;
 import org.jetbrains.annotations.NotNull;
 
 

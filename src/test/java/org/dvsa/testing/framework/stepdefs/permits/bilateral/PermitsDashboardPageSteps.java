@@ -9,14 +9,14 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermit
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.PermitApplication;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.PermitApplication;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.junit.Assert;
 
 import java.util.List;

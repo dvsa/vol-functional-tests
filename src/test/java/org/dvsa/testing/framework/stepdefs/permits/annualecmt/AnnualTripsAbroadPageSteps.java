@@ -9,13 +9,13 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermit
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.external.pages.NumberOfTripsPage;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfTripsPage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 
 public class AnnualTripsAbroadPageSteps extends BasePage implements En {
 

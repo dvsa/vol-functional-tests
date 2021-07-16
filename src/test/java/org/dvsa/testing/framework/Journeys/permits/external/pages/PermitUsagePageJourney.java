@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.Journeys.permits.external.pages;
 
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 
 import static org.junit.Assert.assertEquals;
 

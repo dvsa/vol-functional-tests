@@ -9,16 +9,16 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermit
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
-import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.NumberOfTripsPage;
-import org.dvsa.testing.lib.newPages.external.pages.PercentageOfInternationalJourneysPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.enums.JourneyProportion;
+import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfTripsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PercentageOfInternationalJourneysPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertTrue;

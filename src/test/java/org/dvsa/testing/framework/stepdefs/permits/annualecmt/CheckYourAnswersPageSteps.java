@@ -6,18 +6,18 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.pages.*;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.external.enums.RestrictedCountry;
-import org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.*;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.external.enums.RestrictedCountry;
+import org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 
 import java.lang.reflect.Field;
 
-import static org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection.*;
+import static org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 

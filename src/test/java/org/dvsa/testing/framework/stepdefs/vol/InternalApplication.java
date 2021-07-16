@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;

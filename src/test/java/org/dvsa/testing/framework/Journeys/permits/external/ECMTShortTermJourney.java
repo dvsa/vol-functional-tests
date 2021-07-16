@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
+import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
 
 public class ECMTShortTermJourney extends BasePermitJourney  {
 

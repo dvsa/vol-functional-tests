@@ -3,18 +3,20 @@ package org.dvsa.testing.framework.Journeys.permits.external.pages;
 import Injectors.World;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.common.type.Permit;
-import org.dvsa.testing.lib.newPages.enums.Country;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
+import org.dvsa.testing.framework.pageObjects.type.Permit;
+import org.dvsa.testing.framework.pageObjects.enums.Country;
 import org.openqa.selenium.WebElement;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage.*;
+import static org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage.getNthCountry;
+import static org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage.numberOfFields;
+import static org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage.*;
 import static org.junit.Assert.assertEquals;
 
 public class NumberOfPermitsPageJourney extends BasePermitJourney {

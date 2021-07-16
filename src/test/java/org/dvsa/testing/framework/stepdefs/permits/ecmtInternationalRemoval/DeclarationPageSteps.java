@@ -10,15 +10,15 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourne
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 

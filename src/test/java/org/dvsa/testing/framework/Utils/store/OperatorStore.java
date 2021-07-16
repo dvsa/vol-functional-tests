@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.Utils.store;
 import activesupport.number.Int;
 import apiCalls.Utils.eupaBuilders.external.PersonModel;
 import apiCalls.Utils.eupaBuilders.organisation.ResultModel;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
 
 import java.util.ArrayList;
 import java.util.List;

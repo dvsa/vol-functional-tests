@@ -3,10 +3,10 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;

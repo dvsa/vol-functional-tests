@@ -1,8 +1,7 @@
 package org.dvsa.testing.framework.Utils.store.permit;
 
-import org.dvsa.testing.lib.newPages.common.type.Permit;
+import org.dvsa.testing.framework.pageObjects.type.Permit;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

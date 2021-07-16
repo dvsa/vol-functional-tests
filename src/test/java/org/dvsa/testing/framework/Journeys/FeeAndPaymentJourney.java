@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import com.typesafe.config.Config;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

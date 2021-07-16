@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Journeys.permits.external.pages;
 
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
 
 import static org.junit.Assert.assertEquals;
 

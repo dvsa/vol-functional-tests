@@ -8,23 +8,23 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourne
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
-import org.dvsa.testing.lib.newPages.internal.details.enums.Category;
-import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
-import org.dvsa.testing.lib.newPages.internal.details.enums.Subcategory;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.enums.Duration;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.internal.details.DocsAndAttachmentsPage;
+import org.dvsa.testing.framework.pageObjects.internal.details.enums.Category;
+import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;
+import org.dvsa.testing.framework.pageObjects.internal.details.enums.Subcategory;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.junit.Assert;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage.snapshotTitle;
+import static org.dvsa.testing.framework.pageObjects.internal.details.DocsAndAttachmentsPage.snapshotTitle;
 
 public class HtmlSnapshotSteps extends BasePage implements En {
     public HtmlSnapshotSteps(OperatorStore operator, World world, LicenceStore licenceStore) {

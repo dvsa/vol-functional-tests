@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.Journeys.permits.internal;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualBilateralStore;
-import org.dvsa.testing.lib.newPages.internal.irhp.InternalAnnualBilateralPermitApplicationPage;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.InternalAnnualBilateralPermitApplicationPage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;
 
 import java.util.stream.IntStream;
 

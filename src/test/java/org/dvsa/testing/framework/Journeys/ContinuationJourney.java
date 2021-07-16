@@ -7,8 +7,8 @@ import activesupport.file.TestResourceReader;
 import activesupport.system.Properties;
 import apiCalls.enums.LicenceType;
 import com.typesafe.config.Config;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -16,6 +16,9 @@ import org.openqa.selenium.By;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import static org.dvsa.testing.framework.pageObjects.Driver.DriverUtils.getWindowHandles;
+import static org.dvsa.testing.framework.pageObjects.Driver.DriverUtils.switchToWindow;
 
 public class ContinuationJourney extends BasePage {
 

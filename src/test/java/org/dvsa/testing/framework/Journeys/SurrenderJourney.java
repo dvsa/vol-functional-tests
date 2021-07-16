@@ -2,9 +2,8 @@ package org.dvsa.testing.framework.Journeys;
 
 import Injectors.World;
 import apiCalls.enums.LicenceType;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
 import static activesupport.driver.Browser.navigate;
@@ -154,7 +153,7 @@ public class SurrenderJourney extends BasePage {
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
     }
 
-    public void removeDisc() throws ElementDidNotAppearWithinSpecifiedTimeException {
+    public void removeDisc() {
         waitAndClick("form-actions[submit]", SelectorType.ID);
         addDiscInformation();
         clickByLinkText("Home");

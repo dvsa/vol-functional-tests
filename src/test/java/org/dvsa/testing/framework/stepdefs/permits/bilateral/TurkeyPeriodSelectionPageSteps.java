@@ -4,10 +4,10 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
 import static org.junit.Assert.assertTrue;

@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.external.pages.SelectALicencePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 import org.junit.Assert;
 
 public class LicencePageSteps implements En {

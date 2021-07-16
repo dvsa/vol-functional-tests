@@ -6,9 +6,9 @@ import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidAnnualBilateralPermit;
-import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualBilateralPermit;
+import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
 import org.junit.Assert;
 
 import java.time.LocalDate;

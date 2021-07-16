@@ -7,10 +7,10 @@ import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.internal.SearchNavBar;
-import org.dvsa.testing.lib.newPages.internal.enums.SearchType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
+import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
@@ -19,6 +19,7 @@ import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.pageObjects.Driver.DriverUtils.findElements;
 
 public class BusRegistrationJourney extends BasePage {
 

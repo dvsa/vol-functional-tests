@@ -1,12 +1,12 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 
-import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
-import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
-import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.RemovalsEligibilityPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.RemovalsEligibilityPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
 public class EcmtInternationalRemovalJourney extends BasePermitJourney {
 

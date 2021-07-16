@@ -3,12 +3,12 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.enums.Country;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.*;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.external.enums.JourneyType;
+import org.dvsa.testing.framework.pageObjects.enums.Country;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.*;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
+import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
 
 import java.util.List;
 

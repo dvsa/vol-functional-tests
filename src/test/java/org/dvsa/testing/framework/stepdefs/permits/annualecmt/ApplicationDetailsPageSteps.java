@@ -5,9 +5,9 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.WithdrawApplicationPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
-import org.dvsa.testing.lib.newPages.enums.ApplicationDetail;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ApplicationDetailsPage;
+import org.dvsa.testing.framework.pageObjects.enums.ApplicationDetail;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.junit.Assert;
 
 import java.text.DateFormat;

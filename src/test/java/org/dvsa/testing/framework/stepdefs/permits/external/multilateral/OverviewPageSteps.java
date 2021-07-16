@@ -2,7 +2,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 
 public class OverviewPageSteps implements En {
     public OverviewPageSteps() {

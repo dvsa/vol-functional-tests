@@ -7,17 +7,17 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetails
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-import org.dvsa.testing.lib.newPages.internal.BaseModel;
-import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.framework.enums.Duration;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
+import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage.*;
+import static org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage.*;
 
 public class ECMTRemovalInternalApplicationSteps implements En {
     public World world;
