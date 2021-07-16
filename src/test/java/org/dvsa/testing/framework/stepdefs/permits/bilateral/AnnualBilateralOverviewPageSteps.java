@@ -25,10 +25,6 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 
 public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
     public AnnualBilateralOverviewPageSteps(LicenceStore licenceStore, OperatorStore operatorStore, World world) {
-        Then("^the status for the declaration section is complete$", () -> {
-            String s2 = BasePage.getElementValueByText("//li[3]//ul[1]//li[1]//span[@class='overview__status green']", SelectorType.XPATH);
-            Assert.assertEquals(s2, "COMPLETED");
-        });
         And("^I'm on bilateral overview page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
