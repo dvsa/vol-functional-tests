@@ -20,7 +20,7 @@ Feature: Internal ECMT permits application validation page
     When I apply for an ECMT APGG Euro5 or Euro 6 application
     When I have not declared not to undertake cabotage in internal
     And I save my IRHP permit
-    Then I should get the cabotage page error message
+    Then I should get the cabotage page error message for Annual ECMTs
 
   @olcs-20952 @olcs-27581 @olcs-27682
   Scenario: Checking Euro6 validation on the application page
