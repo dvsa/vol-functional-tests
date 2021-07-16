@@ -17,4 +17,3 @@ Feature: ShortTerm ECMT Permit Page
   @OLCS-25129
   Scenario: Continue button navigates to the next page
     When continue button is selected after confirming the permit type
-    Then the user is navigated to the next page

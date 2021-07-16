@@ -19,16 +19,6 @@ import static org.junit.Assert.assertTrue;
 public class CancelApplicationPageSteps extends BasePage implements En {
 
     public CancelApplicationPageSteps(OperatorStore operatorStore, World world) {
-        Then("^I am on short term ECMT overview Page$", () -> {
-            clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
-            ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-        });
-        Then("^I should be taken back to short Term Overview Page$", () -> {
-            assertTrue(isPath("/permits/application/\\d+/"));
-        });
         And ("^the cancel application page displays the correct text$", () -> {
             CancellationPage.getPageHeading();
             assertTrue(CancellationPage.isAdvisoryTextPresent());

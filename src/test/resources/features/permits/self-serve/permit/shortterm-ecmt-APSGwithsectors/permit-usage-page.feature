@@ -22,7 +22,6 @@ Background:
   @EXTERNAL @OLCS-25130
   Scenario: Save and continue after confirming usage navigates to next page
     When I confirm the permit usage
-    Then the user is navigated to the next page
 
   @EXTERNAL @OLCS-25130
   Scenario: Save and Return to Overview after confirming navigates to the Overview page

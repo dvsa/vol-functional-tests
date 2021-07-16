@@ -22,7 +22,6 @@ Feature: Short term ECMT APSG with sectors number of permits page
     Then I should get the validation error message
     And I enter the valid number of short term permits required
     And I save and continue
-    Then the user is navigated to the next page
 
   @OLCS-25088
   Scenario: Save and continue to overview updates the status as completed

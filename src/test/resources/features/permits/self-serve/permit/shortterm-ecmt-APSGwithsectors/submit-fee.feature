@@ -12,7 +12,6 @@ Feature: Shortterm ECMT APSG with sectors Fee page
     And the issuing fee per permit link opens in a new window
     And the table contents on short term Fee page is  as per AC
     And I click the back link
-    Then I should be taken back to short Term Overview Page
 
   @OLCS-21129 @OLCS-24975
   Scenario: Successfully submits and pays
@@ -22,4 +21,3 @@ Feature: Shortterm ECMT APSG with sectors Fee page
   @OLCS-21129  @OLCS-24975
   Scenario: Successfully returns to overview
     When I save and return to overview from fee page
-    Then I should be taken back to short Term Overview Page
