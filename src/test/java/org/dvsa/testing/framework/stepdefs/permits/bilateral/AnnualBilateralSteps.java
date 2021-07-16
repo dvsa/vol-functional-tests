@@ -45,14 +45,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             OverviewPage.untilOnPage();
             OverviewPageJourney.hasPageHeading();
         });
-        Then("^I select the fee tab on the selfserve$", () -> {
-             waitAndClick("//a[contains(text(),'Home')]",SelectorType.XPATH);
-             HomePage.selectTab(Tab.FEES);
-        });
-        Then("^the outstanding fees are displayed properly$", () -> {
-            assertTrue(HomePage.FeesTab.areOutstandingFeesPresent());
-            HomePage.FeesTab.selectAllOutstandingFees();
-        });
         When("^I select a country from the bilateral countries page$", () -> {
             CountrySelectionPage.untilOnPage();
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
@@ -262,9 +254,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
             HomePage.PermitsTab.selectFirstValidPermit();
             ValidPermitsPage.untilOnPage();
         });
-        And("the relevant error message for annual bilateral number of permits page is displayed", () -> {
-            assertEquals(getElementValueByText("//p[@class='error__text']", SelectorType.XPATH),"Enter the number of permits you require");
-        });
         And("the user is in the annual bilateral list page", () -> {
             ValidPermitsPage.untilOnPage();
             ValidPermitsPageJourney.hasBilateralHeading();
@@ -321,91 +310,6 @@ public class AnnualBilateralSteps extends BasePage implements En {
                 // Check expiry date matches that of stock window
                 Assert.assertThat(expiryDates, hasItem(permits.get(idx).getExpiryDate()));
             });
-        });
-        And("^I am on the annual bilateral number of permit page$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().allCountries(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralCabotagePermitsOnly,operatorStore);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            BilateralJourneySteps.clickYesToCabotage();
-            BasePermitPage.saveAndContinue();
-        });
-        And("^I am on the annual bilateral number of permit page for bilateral standard permits no cabatoge path$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().allCountries(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-        });
-        And("^I am on the annual bilateral number of permit page for bilateral standard and cabotage permits path$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().allCountries(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
-            BilateralJourneySteps.clickNoToCabotage();
-            BasePermitPage.saveAndContinue();
-        });
-        And("^I am on the annual bilateral number of permit page for bilateral standard and cabotage permits with cabotage confirmation path$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().allCountries(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPage();
-            PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
-            PermitUsagePage.saveAndContinue();
-            BilateralJourneySteps.clickYesToCabotage();
-            AnnualBilateralJourney.getInstance().cabotageConfirmation(world,licenceStore);
-            BasePermitPage.saveAndContinue();
-        });
-        Then("the page heading and the advisory text on standard and cabotage permits for cabotage only page are displayed correctly according to the selection", () -> {
-            String actual = String.valueOf(PermitUsagePage.getJourney());
-            String actual1 = actual.toLowerCase().substring(0,actual.length()-1);
-            Assert.assertTrue(getElementValueByText("//div[contains(@class,'field')]//label", SelectorType.XPATH).contains(actual1 + " " + "permit"));
-            NumberOfPermitsPageJourney.hasPageHeading();
-
-        });
-        Then("the page heading and the advisory text are displayed correctly according to the selection", () -> {
-            String actual = String.valueOf(licenceStore.getEcmt().getJourneyType());
-            String actual1 = actual.toLowerCase().substring(0,actual.length()-1);
-            assertEquals(getElementValueByText("//div[contains(@class,'field')]//label",SelectorType.XPATH),"Cabotage"+" "+actual1+" "+"permit");
-            NumberOfPermitsPageJourney.hasPageHeading();
-            assertTrue(NumberOfPermitsPage.isBilateralAdvisoryTextPresent());
-        });
-        Then("the page heading and the advisory text on standard permits no cabotage page are displayed correctly according to the selection", () -> {
-            String actual = String.valueOf(licenceStore.getEcmt().getJourneyType());
-            String actual1 = actual.toLowerCase().substring(0,actual.length()-1);
-            assertEquals(getElementValueByText("//div[contains(@class,'field')]//label",SelectorType.XPATH),"Standard"+" "+actual1+" "+"permit");
-            if (actual1.contains("multiple")) {
-                assertEquals(getElementValueByText("//p[@class='hint']", SelectorType.XPATH), "Allows an unlimited number of journeys to, and transits through, this country.");
-            }
-            else
-                assertEquals(getElementValueByText("//p[@class='hint']",SelectorType.XPATH),"Valid for one outward and return journey and transit.");
-            NumberOfPermitsPageJourney.hasPageHeading();
         });
     }
     //TODO: This can all be refactored. There is so much duplication.
