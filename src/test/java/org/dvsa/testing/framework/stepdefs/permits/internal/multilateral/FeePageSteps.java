@@ -86,8 +86,5 @@ public class FeePageSteps extends BasePage implements En {
             List<FeesPage.Fee> expectedFees = operator.getCurrentLicence().get().getFees();
             Assert.assertNotEquals(expectedFees, actualFees);
         });
-        Then("^I save and return to overview on multilateral fee page$", () -> {
-            waitAndClick("//a[@class='govuk-link govuk-body']",SelectorType.XPATH);
-        });
     }
 }

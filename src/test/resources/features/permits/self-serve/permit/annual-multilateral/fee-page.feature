@@ -24,4 +24,3 @@ Feature: Annual multilateral permits fee page
   #AC07
   @OLCS-23018
   Scenario: Saves and returns to overview
-    When I save and return to overview on multilateral fee page
