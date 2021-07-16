@@ -79,37 +79,5 @@ public class OverviewPageSteps extends BasePage implements En {
             ECMTPermitApplicationSteps.saveAndContinue();
         });
         When("^the overview page heading is displayed correctly$", OverviewPageJourney::hasPageHeading);
-        When("^I'm on the annual multilateral overview page$", () -> {
-            EcmtApplicationJourney.getInstance().permitType(PermitType.ANNUAL_MULTILATERAL, operatorStore)
-             .licencePage(operatorStore, world);
-            OverviewPage.untilOnPage();
-        });
-        Then("^the application reference number should be on the annual multilateral overview page$", () -> {
-            String reference = BasePermitPage.getReferenceFromPage();
-            Assert.assertThat(reference, MatchesPattern.matchesPattern(CommonPatterns.REFERENCE_NUMBER));
-        });
-        When("^I select (Licence number|Number of permits required) from multilateral overview page$", (String section) -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.toEnum(section));
-        });
-        Then("^I am navigated to the corresponding page for ([\\w\\s]+)$", (String section) -> {
-            switch (section.toLowerCase()) {
-                case "number of permits required":
-                    NumberOfPermitsPageJourney.setNumberOfPermitsAndSetRespectiveValues();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Unsupported section: '" + section + "'");
-            }
-        });
-        Then("^the default section statuses are as expected$", () -> {
-            OverviewPageJourney.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.NOT_STARTED_YET);
-
-            OverviewPageJourney.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.CANT_START_YET);
-
-            OverviewPageJourney.checkStatus(OverviewSection.Declaration, PermitStatus.CANT_START_YET);
-        });
-        Then("^future sections beyond the next following step from currently completed section are disabled$", () -> {
-            assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.CheckYourAnswers));
-            assertTrue(OverviewPage.isActiveLinkPresent(OverviewSection.Declaration));
-        });
     }
 }

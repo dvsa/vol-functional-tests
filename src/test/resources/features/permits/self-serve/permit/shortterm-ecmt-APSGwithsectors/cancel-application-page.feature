@@ -5,7 +5,6 @@ Feature: Short term ECMT APSG with sectors Cancel application Page
     Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I am on short term ECMT overview Page
-    And I click cancel application link on the overview page
 
   @EXTERNAL @OLCS-25131
   Scenario: Application back button in short term ECMT Page

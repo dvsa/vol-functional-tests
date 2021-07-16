@@ -26,7 +26,6 @@ public class CancelApplicationPageSteps extends BasePage implements En {
             ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
         });
-        Then("^I click cancel application link on the overview page$", OverviewPage::clickCancelApplication);
         Then("^I should be taken back to short Term Overview Page$", () -> {
             assertTrue(isPath("/permits/application/\\d+/"));
         });
