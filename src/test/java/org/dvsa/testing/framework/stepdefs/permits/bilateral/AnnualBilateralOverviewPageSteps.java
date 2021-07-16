@@ -25,13 +25,6 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 
 public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
     public AnnualBilateralOverviewPageSteps(LicenceStore licenceStore, OperatorStore operatorStore, World world) {
-        And("^I'm on bilateral overview page$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
-        });
         Then("^the status of Morocco under answers questions for individual countries section is marked as Completed$", () -> {
             OverviewPageJourney.checkBilateralStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
         });
