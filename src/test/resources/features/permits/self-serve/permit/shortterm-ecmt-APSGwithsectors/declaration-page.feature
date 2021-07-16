@@ -18,7 +18,6 @@ Feature: Short term ECMT APSG with sectors Declaration page
     When I save and return to overview
     Then I should see the validation error message on the short term declaration page
     When I click the back link
-    Then I should be on the short term ECMT overview page
     And  I click declaration link on the overview page again
     Then I should be on the declaration page
     When I confirm the declaration

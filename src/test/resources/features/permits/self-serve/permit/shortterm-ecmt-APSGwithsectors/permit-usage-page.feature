@@ -17,7 +17,6 @@ Background:
     And when I save and return to overview without selecting any radio button
     Then I should get error message on the permit usage page
     When I click the back link
-    Then I should be on the short term ECMT overview page
 
   @EXTERNAL @OLCS-25130
   Scenario: Save and continue after confirming usage navigates to next page

@@ -60,10 +60,6 @@ public class PermitUsagePageSteps extends BasePermitPage implements En {
 
         And("^when I save and return to overview without selecting any radio button$", BasePermitPage::saveAndContinue);
 
-        Then("^I should be on the short term ECMT overview page$", () -> {
-            Assert.assertTrue(isPath("/permits/application/\\d+/"));
-        });
-
         When("^I confirm the permit usage$", () -> PermitUsagePage.permitUsage(PermitUsage.random()));
 
         Then("^the user is navigated to the overview page with the permits usage section status displayed as completed$", () -> {
