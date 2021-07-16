@@ -16,19 +16,6 @@ import static org.junit.Assert.assertTrue;
 
 public class DeclarationPageSteps implements En {
     public DeclarationPageSteps(OperatorStore operator, World world) {
-        And("I am on the annual multilateral declaration page", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.beginPermitApplication();
-            AnnualMultilateralJourney.INSTANCE
-                    .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
-                    .licencePage(operator, world)
-                    .overviewPage(OverviewSection.NumberOfPaymentsRequired, operator);
-            NumberOfPermitsPageJourney.completeMultilateralPage();
-            AnnualMultilateralJourney.INSTANCE
-                    .checkYourAnswers();
-
-            DeclarationPage.untilOnPage();
-        });
         Then("^annual multilateral declaration page has advisory messages$", () -> {
             assertTrue(DeclarationPage.isMultilateralAdvisoryTextPresent());
             assertTrue(DeclarationPage.isGuidanceNotesLinkPresent());

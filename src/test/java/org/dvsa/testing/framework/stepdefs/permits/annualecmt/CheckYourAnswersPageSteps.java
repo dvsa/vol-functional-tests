@@ -43,7 +43,6 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             Assert.assertEquals("I confirm that I will not undertake cabotage journeys using an ECMT permit.",cabotage);
             Assert.assertEquals("No",restrictedCountries);
         });
-        When("^I confirm and continue$", CheckYourAnswerPage::saveAndContinue);
         When("^I change the (.+)$", (String section) ->
             CheckYourAnswerPage.clickChangeAnswer(ApplicationSection.valueOf(section))
         );

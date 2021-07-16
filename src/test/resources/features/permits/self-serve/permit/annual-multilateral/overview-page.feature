@@ -44,5 +44,4 @@ Feature: Annual multilateral permit overview page
   @OLCS-23013
   Scenario: Cancels annual multilateral permit application
     When I click cancel application link on the overview page
-    And I confirm and cancel my annual multilateral permit
     Then I should be taken to cancel confirmation page

@@ -24,4 +24,3 @@ Feature: Multilateral licence page
     Given I have a "goods" "standard_national" licence
     And I am on the Annual Multilateral (EU and EEA) licence page
     When I select the licence to apply for an annual multilateral permit with
-    Then I should be on the Annual Multilateral overview page

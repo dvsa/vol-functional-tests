@@ -19,7 +19,6 @@ Feature: Dashboard
     And I have an ongoing Annual Multilateral Application
     And my annual multilateral permit has 'Not Yet Submitted' status
     When I select my annual multilateral permit application from external dashboard
-    Then I should be on the Annual Multilateral overview page
 
   #AC04
   @OLCS-24115

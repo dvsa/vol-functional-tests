@@ -2,16 +2,8 @@
 @MULTILATERAL
 Feature: Declaration page
 
-  Background:
-    Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
-    And I am on the annual multilateral declaration page
-
-  #AC01
-  @OLCS-23017
   Scenario: Application back button
     When I click the back link
-    Then I should be on the Annual Multilateral overview page
 
   #AC02
   @OLCS-23017 @OLCS-26046 @olcs-27502

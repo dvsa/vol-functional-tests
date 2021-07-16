@@ -14,7 +14,6 @@ Feature: Annual multilateral permits fee page
     And  the Fee-breakdown sub-heading can be seen below the fee summary table
     And  my fee should be tiered as expected
     When I click the back link
-    Then I should be on the Annual Multilateral overview page
 
   #AC05
   @OLCS-23018
@@ -26,4 +25,3 @@ Feature: Annual multilateral permits fee page
   @OLCS-23018
   Scenario: Saves and returns to overview
     When I save and return to overview on multilateral fee page
-    Then I should be on the Annual Multilateral overview page

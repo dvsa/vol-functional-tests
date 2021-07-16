@@ -50,10 +50,6 @@ public class ApplicationSteps extends BasePage implements En {
                     .permitType(PermitType.ANNUAL_MULTILATERAL, operator)
                     .licencePage(operator, world);
         });
-        And("^the section is marked as complete on annual multilateral overview page$", () -> {
-            OverviewPage.untilOnPage();
-            OverviewPageJourney.checkStatus(OverviewSection.CheckYourAnswers, PermitStatus.COMPLETED);
-        });
          When("^(?:I submit an annual multilateral permit on external$|" +
                 "I have an annual multilateral permit)", () -> {
              world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
