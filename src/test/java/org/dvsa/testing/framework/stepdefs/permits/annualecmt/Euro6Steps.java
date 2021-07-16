@@ -48,10 +48,6 @@ public class Euro6Steps extends BasePage implements En {
             OverviewPageJourney.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
         });
 
-        Then("^I should be able to navigate to the next page$", () -> {
-            Assert.assertNotEquals(CommonSteps.origin.get("origin"), getURL().toString());
-        });
-
         Then("^I should see the validation errors for euro 6 page$", () -> {
             String errorText = EmissionStandardsPage.getErrorText();
             assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
