@@ -31,46 +31,11 @@ import static org.junit.Assert.assertTrue;
 public class EuroEmissionStandardPageSteps implements En {
 
     public EuroEmissionStandardPageSteps (OperatorStore operatorStore, World world) {
-
-        Then("^I am on the Short term euro emission standard page$", () -> {
-
-            clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore)
-                    .licencePage(operatorStore,world);
-            LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licence);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
-            licence.getEcmt().setPermitUsage(PermitUsage.random());
-            PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
-            BasePermitPage.saveAndContinue();
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourney.completeECMTPage();
-        });
-        Then("^the euro emissions  page has the relevant information$", () -> {
-            EmissionStandardsPage.untilElementIsPresent("//h1[@class='govuk-fieldset__heading']", SelectorType.XPATH,10, TimeUnit.SECONDS);
-            EmissionStandardsPageJourney.hasPageHeading();
-        });
-        Then("^the short term emissions page has got the correct advisory text$", () -> {
-            EmissionStandardsPageJourney.hasPageHeading();
-            assertTrue(EmissionStandardsPage.isAdvisoryTextPresent());
-        });
-        Then("^the short term emissions page checkbox has the correct text and displayed unselected by default", () -> {
-            String heading = EmissionStandardsPage.getCheckboxText();
-            assertEquals("I confirm that I will only use my ECMT permits with vehicles that meet the minimum euro emissions standards allowed.", heading);
-        });
         Then("I should get the emissions  page error message", () -> {
             String errorText = EmissionStandardsPage.getErrorText();
             assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
         });
 
         When("^I confirm the emissions standards checkbox", EmissionStandardsPage::confirmCheckbox);
-        Then("^the user is navigated to the short term overview page with the status of emissions displayed as completed$", () -> {
-            OverviewPageJourney.checkStatus(OverviewSection.EuroEmissionStandards,PermitStatus.COMPLETED);
-        });
     }
 }

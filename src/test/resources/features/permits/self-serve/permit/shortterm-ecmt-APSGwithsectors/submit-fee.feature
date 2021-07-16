@@ -11,7 +11,6 @@ Feature: Shortterm ECMT APSG with sectors Fee page
     And the page heading and alert message on the fee page is displayed correctly
     And the issuing fee per permit link opens in a new window
     And the table contents on short term Fee page is  as per AC
-    And I click the back link
 
   @OLCS-21129 @OLCS-24975
   Scenario: Successfully submits and pays

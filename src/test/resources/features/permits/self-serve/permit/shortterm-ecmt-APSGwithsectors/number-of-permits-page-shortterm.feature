@@ -8,7 +8,6 @@ Feature: Short term ECMT APSG with sectors number of permits page
 
   @OLCS-25088 @OLCS-25087 @OLCS-27781
   Scenario: Page heading and advisory messages are displayed correctly
-    When I click the back link
     Then the user is navigated to the overview page with the number of permits page status as not started yet
     When I select number of permits hyperlink from overview page
     Then I am taken back to short term number of permits page

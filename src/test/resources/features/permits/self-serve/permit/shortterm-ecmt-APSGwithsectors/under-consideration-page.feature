@@ -13,9 +13,7 @@ Feature: Short term ECMT APSG with sectors under consideration page
     And the warning message is displayed correctly
     When I select withdraw application button
     Then I am taken to the Withdraw Application page
-    When I click the back link
     Then the user is on the under consideration page
-    When I click the back link
     Then the user is on self-serve permits dashboard
     When I go back to the permit application
     And I select return to permits dashboard hyperlink
