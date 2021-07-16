@@ -59,40 +59,6 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
                Assert.assertEquals(LocalDate.parse(permit.getRecdDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), LocalDate.now());
             });
         });
-        And("^I am viewing a licence with an issued ECMT permit on internal$", () -> {
-            world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            // Apply for ECMT applications
-            IntStream.rangeClosed(1, VolLicenceSteps.licenceQuantity.get("licence.quantity")).forEach((i) -> {
-                HomePageJourney.beginPermitApplication();
-                ECMTPermitApplicationSteps.completeEcmtApplication(operator, world);
-            });
-
-            // trigger issuing
-            triggerPermitIssuing(world);
-
-            // get list of all successful applications
-            List<String> successfulApplications = getAllSuccessfulApplications(operator);
-
-            // Search for licence
-            viewLicenceOnInternal();
-
-            LicenceDetailsPageJourney.clickIRHPTab();
-
-            successfulPermits = successfulApplications;
-        });
-        Then("^The issued permit information should be as expected$", () -> {
-            LicenceDetailsPageJourney.clickIRHPTab();
-//            List<LicenceStore> licences = operator.getLicences(world.<List<String>>get("ecmt.application.successful").get(0));
-//TODO: Test has been deprecated so doesn't matter but world.<List<String>>get("ecmt.application.successful" isn't set anywhere.
-            List<PermitApplication> applications = IrhpPermitsDetailsPage.getIssuedPermits();
-            IntStream.rangeClosed(0, applications.size()).forEach(idx -> {
-//                Assert.assertEquals(applications.get(idx).getReferenceNumber(), licences.get(idx).getEcmt().getFullReferenceNumber());
-//                Assert.assertEquals(applications.get(idx).getNoOfPermits().intValue(), licences.get(idx).getEcmt().getNumberOfPermits());
-                Assert.assertEquals(applications.get(idx).getType(), PermitType.ECMT_ANNUAL);
-//                Assert.assertEquals(LocalDate.parse(applications.get(idx).getRecdDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy")), licences.get(idx).getEcmt().getSubmitDate().toLocalDate());
-            });
-        });
         Then("^internal users should not be able to create ECMT Permit applications$", () -> {
             Assert.assertFalse(
                     "IRHP tab should NOT be present but was",
