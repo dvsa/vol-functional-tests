@@ -13,6 +13,7 @@ import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.internal.CaseWorkerAPI;
+import cucumber.api.java.en.Given;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
@@ -85,11 +86,6 @@ public class CommonSteps extends BasePage implements En {
             PermitFeePage.submitAndPay();
             world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.goToPermitsDashboard();
-        });
-        And("^I am on the (Annual ECMT|Annual Bilateral \\(EU and EEA\\)|Annual Multilateral \\(EU and EEA\\)) licence page$", (String type) -> {
-            clickToPermitTypePage(world);
-            EcmtApplicationJourney.getInstance().permitType(PermitType.getEnum(type), operator);
-            CommonSteps.origin.put("origin", getURL()); // Used to test a scenario for licence page
         });
         And("^I am on the Annual ECMT licence selection page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

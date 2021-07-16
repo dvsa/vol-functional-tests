@@ -42,17 +42,5 @@ public class PermitFeePageSteps extends BasePermitPage implements En {
             String subHeading = getText("//h2[contains(text(),'Fee breakdown')]", SelectorType.XPATH);
             Assert.assertEquals("Fee breakdown", subHeading);
         });
-        Then("^my fee should be tiered as expected$", () -> {
-            List<Fee> feeBreakdowns = PermitFeePage.Fees();
-
-            AnnualMultilateralStore permit = operatorStore.getCurrentLicence().get().getLatestAnnualMultilateral().get();
-            feeBreakdowns.stream().forEach(fb -> {
-                Assert.assertTrue(permit.getNumberOfPermits().stream().map(Permit::getYear).anyMatch(py -> py.equalsIgnoreCase(fb.getYear())));
-                Permit existingPermit = permit.getNumberOfPermits().stream().filter(ep -> ep.getYear().equals(fb.getYear()))
-                        .findFirst().get();
-                Assert.assertEquals(existingPermit.getFeePerPermit().get().intValue(), fb.getFeePerPermit());
-            });
-
-        });
     }
 }
