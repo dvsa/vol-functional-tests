@@ -98,10 +98,6 @@ public class CommonSteps extends BasePage implements En {
         Then("^I will get an error message on the licence page$", () -> {
             assertTrue(SelectALicencePage.isErrorMessagePresent());
         });
-        Then("^I should be taken to the next section$", () -> {
-            java.net.URL url = CommonSteps.origin.get("origin");
-            Assert.assertThat(getURL(), is(not(equalTo(url))));
-        });
         Then("^I should get an error message$", () -> {
              boolean hasError = BasePage.isErrorMessagePresent();
              assertTrue("Error message was not displayed on the page", hasError);

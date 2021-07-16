@@ -30,28 +30,14 @@ import static org.junit.Assert.assertEquals;
 
 public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implements En {
     public ShortTermEcmt2020EndToEndJourneyPageSteps(OperatorStore operatorStore, World world)  {
-        LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
-        And("^I select Short term ecmt permit on the select permit page$", () -> {
-            clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-        });
         Then("^I select year on the select year page$", YearSelectionPage::selectShortTermValidityPeriod);
 
         Then("^I select any licence number for short term permit$", () -> {
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
         });
-        Then("^I complete the How will you use the permits section and click save and continue$", () -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
-            PermitUsagePage.permitUsage(PermitUsage.random());
-            BasePermitPage.saveAndContinue();
-        });
         Then("^I complete the Check if you need ECMT permits section and click save and continue$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
-        });
-        Then("^I complete Cabotage page section and click save and continue$", () -> {
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
         });
         Then("^I complete Certificates required page section and click save and continue$", () -> {
             String heading = CertificatesRequiredPage.getPageHeading();
@@ -69,17 +55,6 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
         Then("^I complete Euro emissions standard page section and click save and continue$", () -> {
             EmissionStandardsPageJourney.hasPageHeading();
             EmissionStandardsPageJourney.completePage();
-        });
-        Then("^I complete Annual trips abroad page section and click save and continue$", () -> {
-            AnnualTripsAbroadPage.quantity(10);
-            BasePermitPage.saveAndContinue();
-        });
-        Then("^I complete Percentage of International journeys section and click save and continue$", () -> {
-            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            BasePermitPage.saveAndContinue();
-        });
-        Then("^I complete sectors page and click save and continue$", () -> {
-            SectorPage.selectSectionAndContinue(Sector.random());
         });
         Then("^I click confirm and continue on the Check your answers page$", () -> {
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
