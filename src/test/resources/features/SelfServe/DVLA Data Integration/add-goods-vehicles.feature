@@ -5,7 +5,7 @@
 Feature: Search and add a vehicle
 
   Scenario: Check page contents
-    Given I have a "goods" "standard_national" licence
+    Given I have "1" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "3"
     When I navigate to manage vehicle page on a licence
     And choose to add a "Y23WSH" vehicle
     Then the add vehicle page should display licence number
