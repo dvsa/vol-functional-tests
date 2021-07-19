@@ -66,11 +66,9 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
             if(count == 1) {
                 Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitvalue + " " + permitlabel + "s");
             }
-            else
-                {
-                    Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitStandard + " " + permitstandardlabel + "s"+'\n'+permitCabotage + " " + permitcabotagelabel + "s");
-
-                }
+            else {
+                Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitStandard + " " + permitstandardlabel + "s" + '\n' + permitCabotage + " " + permitcabotagelabel + "s");
+            }
         });
     }
 }

@@ -26,23 +26,13 @@ public class UkraineEmissionsStandardsSteps implements En {
             assertTrue(EmissionStandardsPage.isEuro3To6RadioButtonsChoices());
         });
 
-        When("^I save and continue on the Ukraine emissions standards page$", () -> {
-            EmissionStandardsPage.saveAndContinue();
+        When("^I save and continue on the Ukraine emissions standards page$", EmissionStandardsPage::saveAndContinue);
 
-        });
+        When("^I select Euro 3 or Euro 4 radio button on the Ukraine emissions standards page$", EmissionStandardsPage::clickYes);
 
-        When("^I select Euro 3 or Euro 4 radio button on the Ukraine emissions standards page$", () -> {
-            EmissionStandardsPage.clickYes();
-        });
+        When("^I select Euro 5, Euro 6 or higher emission standard radio button on the Ukraine emissions standards page$", EmissionStandardsPage::clickNo);
 
-        When("^I select Euro 5, Euro 6 or higher emission standard radio button on the Ukraine emissions standards page$", () -> {
-            EmissionStandardsPage.clickNo();
-
-        });
-
-        When("^I get advisory text that I don't need Ukraine permits$", () -> {
-            EmissionStandardsPage.ukraineSelectNoAdvisoryText();
-        });
+        When("^I get advisory text that I don't need Ukraine permits$", EmissionStandardsPage::ukraineSelectNoAdvisoryText);
     }
 }
 

@@ -543,7 +543,7 @@ public class UIJourney extends BasePage {
     public void vehicleRemovalConfirmationPage() {
         removeVehicle();
         waitAndClick("//*[@name='table[id][]'][1]",SelectorType.XPATH);
-        waitAndClick("formActions[action]",SelectorType.ID);
+        waitAndClick("action-button",SelectorType.ID);
     }
 
     public void createAndSubmitSubmission() {

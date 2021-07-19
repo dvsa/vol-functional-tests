@@ -1,9 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
-import activesupport.system.Properties;
-import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
@@ -25,8 +22,6 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
 import java.util.HashMap;

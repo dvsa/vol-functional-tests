@@ -1,32 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import activesupport.string.Str;
-import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.Utils.store.permit.AnnualMultilateralStore;
-import org.dvsa.testing.framework.enums.PermitType;
-import org.dvsa.testing.framework.pageObjects.type.Fee;
-import org.dvsa.testing.framework.pageObjects.type.Permit;
-import org.dvsa.testing.framework.pageObjects.enums.*;
-import org.dvsa.testing.framework.pageObjects.external.pages.EssentialInformationPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
-import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.junit.Assert;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 
 
 public class PermitFeePageSteps extends BasePermitPage implements En {

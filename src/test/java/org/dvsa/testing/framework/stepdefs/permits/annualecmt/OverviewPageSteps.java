@@ -1,20 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.common.CommonPatterns;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.framework.enums.PermitStatus;
-import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.hamcrest.text.MatchesPattern;
+import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 
 import java.util.LinkedList;
@@ -54,10 +48,7 @@ public class OverviewPageSteps extends BasePage implements En {
                 assertThat(OverviewPage.getStatusOfSection(section), isIn(PermitStatus.values()));
             }
         });
-        When("^I select '([\\w ]+)'$", (String overviewSection) -> {
-            OverviewSection section = OverviewSection.toEnum(overviewSection);
-            OverviewPageJourney.clickOverviewSection(section);;
-        });
+
         Then("^the (check your answers|declaration) section should be disabled$", (String section) -> {
             OverviewSection sectionEnum = OverviewSection.toEnum(section);
             Assert.assertFalse(

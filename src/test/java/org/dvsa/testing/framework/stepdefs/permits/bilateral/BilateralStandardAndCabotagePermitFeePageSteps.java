@@ -23,8 +23,8 @@ import java.time.format.DateTimeFormatter;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 
-public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage implements En
-{
+public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage implements En {
+
     public BilateralStandardAndCabotagePermitFeePageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore)
     {
         And("^I'm on the annual bilateral standard and cabotage permit fee page$", () -> {
@@ -90,8 +90,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
             OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourney.completeDeclaration();
         });
-        Then("^the application details on the bilateral standard and cabotage fee page are displayed correctly in fee page table$", () ->
-        {
+        Then("^the application details on the bilateral standard and cabotage fee page are displayed correctly in fee page table$", () -> {
             Assert.assertTrue(BasePermitPage.getElementValueByText("//h2[contains(text(),'Fee summary')]",SelectorType.XPATH),true);
 
             // Application reference check
@@ -164,8 +163,6 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
             String actualPermitType = PermitFeePage.getTableSectionValue(FeeSection.PermitType);
             String expectedPermitType = PermitType.ANNUAL_BILATERAL.toString();
             Assert.assertEquals(expectedPermitType, actualPermitType);
-
-
 
             // if the journey is Standard Multiple then total fee is number of permits * 50 and if it's Cabotage multiple then number of permits * 8
             if(NumberOfPermitsPageJourney.getFieldCount() >1) {

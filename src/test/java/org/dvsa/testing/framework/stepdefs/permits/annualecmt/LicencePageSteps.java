@@ -1,14 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
+import Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.Utils.eupaBuilders.organisation.OrganisationModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
-import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
-import org.hamcrest.text.IsEqualIgnoringCase;
 import org.junit.Assert;
 
 import java.util.List;
@@ -18,7 +15,6 @@ import java.util.stream.IntStream;
 public class LicencePageSteps implements En {
 
     public LicencePageSteps(OperatorStore operatorStore, World world) {
-        When("^I select any licence number$", () -> EcmtApplicationJourney.getInstance().licencePage(operatorStore, world));
         Then("^I should see the type of licence next to each licence$", () -> {
             List<LicenceModel> expectedLicences = OrganisationAPI.dashboard(world.userDetails.getOrganisationId()).getDashboard().getLicences();
 

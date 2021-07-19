@@ -12,9 +12,9 @@ import org.junit.Assert;
 
 import static org.junit.Assert.assertTrue;
 
-public class TurkeyPeriodSelectionPageSteps extends BasePermitPage implements En {
-    public TurkeyPeriodSelectionPageSteps(OperatorStore operatorStore, World world) {
-        Then("^I am on the Bilateral Turkey Period Selection page with correct information and content$", () -> {
+public class PeriodSelectionPageSteps extends BasePermitPage implements En {
+    public PeriodSelectionPageSteps(OperatorStore operatorStore, World world) {
+        Then("^I am on the Bilateral (.+) Period Selection page with correct information and content$", (String country) -> {
             PeriodSelectionPage.untilOnPage();
 
             // Checking Page heading
@@ -23,11 +23,15 @@ public class TurkeyPeriodSelectionPageSteps extends BasePermitPage implements En
            //Checking Country name displayed on the page is the one clicked on the overview page
             Assert.assertEquals(PeriodSelectionPage.getCountry(), operatorStore.getCountry());
 
-            // Check that by default period should always be Turkey related
-            assertTrue(isElementPresent("//div[contains(text(),'Turkey')]", SelectorType.XPATH));
-            operatorStore.setCurrentBilateralPeriodType(PeriodType.BilateralsTurkey);
+            assertTrue(isElementPresent(String.format("//div[contains(text(),'%s')]", country), SelectorType.XPATH));
+            if (country.equals("Turkey")) {
+                operatorStore.setCurrentBilateralPeriodType(PeriodType.BilateralsTurkey);
+            } else if (country.equals("Ukraine")) {
+                operatorStore.setCurrentBilateralPeriodType(PeriodType.BilateralsUkraine);
+            }
         });
-        When("^I select continue button on the Bilateral Turkey period selection page$", PeriodSelectionPage::saveAndContinue);
+
+        When("^I select continue button on the Bilateral period selection page$", PeriodSelectionPage::saveAndContinue);
     }
 }
 

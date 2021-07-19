@@ -1,51 +1,26 @@
 package org.dvsa.testing.framework.stepdefs.permits.common;
 
 import Injectors.World;
-import activesupport.string.Str;
 import activesupport.system.Properties;
-import apiCalls.Utils.eupaBuilders.enums.Boolean;
-import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
-import apiCalls.Utils.eupaBuilders.external.StandardResponseModel;
-import apiCalls.Utils.eupaBuilders.internal.*;
-import apiCalls.Utils.eupaBuilders.internal.enums.PaymentMethod;
-import apiCalls.Utils.eupaBuilders.internal.enums.Status;
-import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.eupaActions.OrganisationAPI;
-import apiCalls.eupaActions.external.ApplicationAPI;
-import apiCalls.eupaActions.internal.CaseWorkerAPI;
-import cucumber.api.java.en.Given;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
-import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.common.RandomUtils;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
-import org.dvsa.testing.framework.enums.Duration;
-import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
-import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.internal.IRHPPermitsPageSteps.payOutstandingFees;
-import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertTrue;
 
 public class CommonSteps extends BasePage implements En {
@@ -123,84 +98,6 @@ public class CommonSteps extends BasePage implements En {
         Then("^Information and Text appear correctly$", () -> {
             assertTrue(HomePage.PermitsTab.isPermitDashboardTextPresent());
         });
-    }
-
-    public static void payAndGrantApplication(@NotNull World world) {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        Integer version = VolLicenceSteps.version.get("version");
-
-        // SETUP: CaseWorker#overview
-        TrackingModel tracking = new TrackingModel()
-                .withTrackingId(RandomUtils.number(5))
-                .withAddressesStatus(Status.Unknown)
-                .withBusinessDetailsStatus(Status.Unknown)
-                .withBusinessTypeStatus(Status.Unknown)
-                .withCommunityLicencesStatus(Status.Unknown)
-                .withConditionsUndertakingsStatus(Status.Unknown)
-                .withConvictionsPenaltiesStatus(Status.Unknown)
-                .withFinancialEvidenceStatus(Status.Unknown)
-                .withFinancialHistoryStatus(Status.Unknown)
-                .withLicenceHistoryStatus(Status.Unknown)
-                .withOperatingCentresStatus(Status.Unknown)
-                .withPeopleStatus(Status.Unknown)
-                .withSafetyStatus(Status.Unknown)
-                .withTransportManagersStatus(Status.Unknown)
-                .withTypeOfLicenceStatus(Status.Unknown)
-                .withDeclarationsInternalStatus(Status.Unknown)
-                .withVehiclesDeclarationsStatus(Status.Unknown)
-                .withVehiclesStatus(Status.Unknown)
-                .withVehiclesPsvStatus(Status.Unknown)
-                .withVersion(1);
-
-        String applicationId = VolLicenceSteps.applicationId.get("applicationId");
-        TrafficArea trafficArea = VolLicenceSteps.trafficArea.get("trafficArea");
-        OverviewModel overview = new OverviewModel()
-                .withApplicationId(applicationId)
-                .withLeadTcArea(trafficArea)
-                .withOverrideOppositionDate(Boolean.TRUE)
-                .withTrackingModel(tracking)
-                .withVersion(++version);
-
-        // Service Calls
-        CaseWorkerAPI.overview(overview);
-        ApplicationFeesModel applicationFees = ApplicationAPI.outstandingFees(VolLicenceSteps.applicationId.get("applicationId"));
-        BigDecimal totalOutstandingFee = applicationFees.getTotalGrossAmount();
-
-        List<Integer> feeIds = applicationFees.getOutstandingFeeIds();
-
-
-        // SETUP: CaseWorker#payOutstandingFee
-        FeesModel fees = new FeesModel()
-                .withFeeIds(feeIds)
-                .withOrganisationId(VolLicenceSteps.organisationId.get("organisationId"))
-                .withApplicationId(VolLicenceSteps.applicationId.get("applicationId"))
-                .withPaymentMethod(PaymentMethod.Cash)
-                .withReceived(totalOutstandingFee)
-                .withReceiptDate(LocalDateTime.now().format(dateFormatter))
-                .withPayer(VolLicenceSteps.personFirstName.get("person.firstName"))
-                .withSlipNo(Str.randomNumbers(6));
-
-        // Service Calls
-        ApplicationAPI.payOutstandingFee(fees);
-
-        // SETUP: CaseWorker#grantApplication
-        GrantApplicationModel grantApplication = new GrantApplicationModel()
-                .withId(VolLicenceSteps.applicationId.get("applicationId"))
-                .withDuePeriod("9")
-                .withAuthority("grant_authority_dl")
-                .withCaseworkerNotes(Str.randomWord(50, 100));
-
-        // Service Calls
-        StandardResponseModel responseModel = CaseWorkerAPI.grantApplication(grantApplication);
-
-        totalOutstandingFee = BigDecimal.valueOf(Integer.MAX_VALUE / 10000);
-
-        // Pay grant fee
-        feeIds.clear();
-        feeIds.add(responseModel.getId().getFeeId() == null ? 0 : responseModel.getId().getFeeId());
-        fees.withFeeIds(feeIds);
-        fees.withReceived(totalOutstandingFee);
-        ApplicationAPI.payOutstandingFee(fees);
     }
 
     public static void clickToPermitTypePage(@NotNull World world) {

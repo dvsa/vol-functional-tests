@@ -18,13 +18,12 @@ import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 
-public class TurkeyValidPermitsPageSteps implements En {
+public class ValidPermitsPageSteps implements En {
 
-    public TurkeyValidPermitsPageSteps(OperatorStore operatorStore, World world) {
-        And("^The content and information on Turkey valid permits is correct$", () -> {
+    public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
+        And("^The content and information on valid permits is correct$", () -> {
 
             // the table of annual bilateral permits is as expected
-
             OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
             String message =  "Expected all permits to have a status of 'VALID' but one or more DIDN'T!!!";
             List<ValidAnnualBilateralPermit> permits = ValidPermitsPage.annualBilateralPermits();
@@ -51,11 +50,6 @@ public class TurkeyValidPermitsPageSteps implements En {
                 // Check expiry date matches that of stock window
                 Assert.assertThat(expiryDates, hasItem(permits.get(idx).getExpiryDate()));
             });
-
-
-
         });
-
-
     }
 }

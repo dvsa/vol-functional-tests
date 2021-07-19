@@ -31,7 +31,6 @@ public class YearSelectionPageSteps extends BasePage implements En {
                 assertEquals(YearSelectionPage.getPageHeading(), "Permits requested will be valid for 2021");
             }
         });
-        And("^I select continue button$", YearSelectionPage::saveAndContinue);
         And("^the validity error message is displayed$", () -> {
             BasePermitPage.saveAndContinue();
             String errorText = YearSelectionPage.getErrorText();

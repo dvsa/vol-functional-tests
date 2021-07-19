@@ -1,25 +1,19 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+import Injectors.World;
 import activesupport.IllegalBrowserException;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.enums.PermitType;
-import org.dvsa.testing.framework.pageObjects.enums.Country;
-import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
-import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
-import org.dvsa.testing.framework.pageObjects.external.pages.*;
-import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.junit.Assert;
 
 import java.net.MalformedURLException;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -47,12 +41,6 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
 
         Then("^Journey type displayed on the check your answers page is the one I selected on the Permits usage$", () -> {
             Assert.assertEquals(BilateralJourneySteps.getJourney(),PermitUsagePage.getJourney());
-        });
-
-        Then("^Value of How many permits you need, will be the one saved on the number of permits page$", () -> {
-            String permitlabel = NumberOfPermitsPageJourney.getLabel();
-            String permitvalue = String.valueOf(NumberOfPermitsPageJourney.getPermitValue());
-            Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitvalue+" "+permitlabel+"s");
         });
 
         When("^I click Confirm and return to overview$", CheckYourAnswerPage::clickConfirmAndReturnToOverview);

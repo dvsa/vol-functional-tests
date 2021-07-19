@@ -6,8 +6,8 @@ import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
 
 import static org.junit.Assert.assertTrue;
 
-public class TurkeyDeclarationPageSteps implements En {
-    public TurkeyDeclarationPageSteps() {
+public class DeclarationPageSteps implements En {
+    public DeclarationPageSteps() {
 
         When("^I am taken to the bilateral declaration Page with correct information and content$", () -> {
             DeclarationPage.untilOnPage();

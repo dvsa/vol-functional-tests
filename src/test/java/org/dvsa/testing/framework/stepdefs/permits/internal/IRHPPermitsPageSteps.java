@@ -30,9 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.AwaitingFeePermitSteps.triggerPermitIssuing;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 

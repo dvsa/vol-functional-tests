@@ -9,11 +9,11 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 
 import java.util.concurrent.TimeUnit;
 
-public class TurkeyDashboardPageSteps implements En {
+public class DashboardPageSteps implements En {
 
-    public TurkeyDashboardPageSteps(OperatorStore operatorStore, World world) {
+    public DashboardPageSteps(OperatorStore operatorStore, World world) {
 
-        Then("^The Bilateral Turkey application status on the self service dashboard goes to VALID$", () -> {
+        Then("^The Bilateral (Turkey|Ukraine) application status on the self service dashboard goes to VALID$", () -> {
             HomePage.PermitsTab.untilPermitHasStatus(
                     world.applicationDetails.getLicenceNumber(),
                     PermitStatus.VALID,

@@ -9,9 +9,9 @@ import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 
 import static org.junit.Assert.assertEquals;
 
-public class TurkeyPermitsUsagePageSteps implements En {
-    public TurkeyPermitsUsagePageSteps(OperatorStore operatorStore, World world) {
-        Then("^I am on the Bilateral Turkey Permit usage page with correct information and content$", () -> {
+public class PermitsUsagePageSteps implements En {
+    public PermitsUsagePageSteps(OperatorStore operatorStore, World world) {
+        Then("^I am on the Bilateral Permit usage page with correct information and content$", () -> {
 
             PermitUsagePage.untilOnPage();
 
@@ -25,6 +25,6 @@ public class TurkeyPermitsUsagePageSteps implements En {
             assertEquals("Only single journey permits are available for this country.", PermitUsagePage.getDefaultPeriodOption());
         });
 
-        When("^I select continue button on the Bilateral Turkey permit usage page$", PeriodSelectionPage::saveAndContinue);
+        When("^I select continue button on the Bilateral permit usage page$", PeriodSelectionPage::saveAndContinue);
     }
 }

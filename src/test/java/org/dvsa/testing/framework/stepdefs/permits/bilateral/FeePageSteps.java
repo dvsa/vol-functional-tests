@@ -1,26 +1,27 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+import Injectors.World;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
-import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
-import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class UkraineFeePageSteps extends BasePage implements En {
-    public UkraineFeePageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
+public class FeePageSteps extends BasePermitPage implements En {
+    public FeePageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
 
-        When("^I am on the permit fee page for annual bilateral ukraine application with correct information and content$", () -> {
+        When("^I am on the permit fee page for annual bilateral application with correct information and content$", () -> {
             PermitFeePage.untilOnPage();
 
             // Checking Fee Summary section contents are displayed correctly
@@ -28,9 +29,7 @@ public class UkraineFeePageSteps extends BasePage implements En {
 
             // Application reference check
             String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
-            String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            Assert.assertEquals(actualReference.contains(licence1),true);
-            Assert.assertTrue(actualReference.contains(licence1));
+            Assert.assertTrue(actualReference.contains(world.applicationDetails.getLicenceNumber()));
             // Application date check
             DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMMM yyyy");
             LocalDateTime expectedDateTime = LocalDateTime.now();
@@ -51,14 +50,21 @@ public class UkraineFeePageSteps extends BasePage implements En {
             // Total fee to be paid check
             int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
             int  numberOfPermits = Integer.parseInt(String.valueOf(NumberOfPermitsPageJourney.permitValue));
-            int expectedTotal= numberOfPermits *8 ;
+            int expectedTotal= numberOfPermits * 8 ;
             Assert.assertEquals(actualTotal,expectedTotal);
 
             //Fee breakdown check
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Type']",SelectorType.XPATH),"Standard single journey");
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH),operatorStore.getCountry());
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']",SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£"+expectedTotal);
+            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH),"Standard single journey");
+            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']", SelectorType.XPATH), operatorStore.getCountry());
+            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
+            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£" + expectedTotal);
+        });
+
+        When("^I submit and pay the Bilateral fee$", () -> {
+            EcmtApplicationJourney.getInstance()
+                    .feeOverviewPage();
+            world.feeAndPaymentJourney.customerPaymentModule();
+            SubmittedPage.untilOnPage();
         });
 
     }
