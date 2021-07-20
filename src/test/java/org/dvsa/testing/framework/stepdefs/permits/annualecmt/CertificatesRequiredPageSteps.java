@@ -39,7 +39,6 @@ public class CertificatesRequiredPageSteps implements En {
             assertTrue(CertificatesRequiredPage.checkboxNotConfirmed())
         );
         And("^if I don't select the checkbox and click Save and Continue button$", BasePermitPage::saveAndContinue);
-        And("^if I don't select the checkbox and click Save and Return to Overview button$", BasePermitPage::clickReturnToOverview);
         And("^if I select the checkbox and click Save and Return to Overview button$", () -> {
             CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.clickReturnToOverview();

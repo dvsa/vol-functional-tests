@@ -14,6 +14,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
 import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 
 import java.util.concurrent.TimeUnit;
 
@@ -60,14 +61,7 @@ public class ECMTRemovalInternalApplicationSteps implements En {
         });
 
         And("^the application goes to valid status$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            HomePage.PermitsTab.untilPermitHasStatus(
-                    licenceStore.getLicenceNumber(),
-                    PermitStatus.VALID,
-                    Duration.LONG,
-                    TimeUnit.MINUTES
-            );
+            CommonSteps.waitUntilPermitHasStatus(world);
         });
         And("^the case worker submits partial ECMT Removal application$", () -> {
             LicenceDetailsPageJourney.clickIRHPTab();

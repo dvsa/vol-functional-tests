@@ -1,8 +1,9 @@
 package org.dvsa.testing.framework.stepdefs.permits.TrailersCertificateOfRoadworthiness;
 
+import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.TrailersCertificateOfRoadworthinessJourney;
-import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.BasePermitPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
@@ -41,7 +42,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             // Check the new validation
             BasePermitPage.saveAndContinue();
             assertEquals("Enter the registration number plate", VehicleRegistrationNumberPage.getRequiredFieldValidation());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleRegistrationNumberPage.enterTrailerRegistrationNumber();
 
             BasePermitPage.saveAndContinue();
@@ -51,7 +52,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             CertificateOfComplianceNumberPage.untilOnPage();
             String heading = CertificateOfComplianceNumberPage.getPageHeading();
             assertEquals("Enter the trailer Certificate of Compliance number (optional)", heading);
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
             CertificateOfComplianceNumberPage.saveAndContinue();
         });
@@ -60,7 +61,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             MakeAndModelPage.untilOnPage();
             String heading = MakeAndModelPage.getPageHeading();
             assertEquals("Enter the trailer make and model", heading);
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             MakeAndModelPage.enterMakeAndModel("BD51SMR");
             MakeAndModelPage.saveAndContinue();
         });
@@ -68,7 +69,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnPage();
             assertEquals("Enter the trailer's vehicle identification number (VIN)", VehicleIdentificationNumberPage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleIdentificationNumberPage.enterIdentificationNumber();
             BasePermitPage.saveAndContinue();
         });
@@ -76,7 +77,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete MOT DATE section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleMotPage.untilOnPage();
             assertEquals("Enter the trailer's MOT expiry date", VehicleMotPage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleMotPage.enterMOTDate();
             BasePermitPage.saveAndContinue();
         });

@@ -38,10 +38,8 @@ public class CabotagePageSteps extends BasePage implements En {
             //TODO: Previous code didn't make any sense being here.
         });
         When("^save and continue  button is selected without selecting the checkbox$", BasePermitPage::saveAndContinue);
-        When ("^the cabotage checkbox is selected$", CabotagePage::confirmWontUndertakeCabotage);
         Then("^I should be taken to certificates required page", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/st-certificates/"));
         });
-
     }
 }

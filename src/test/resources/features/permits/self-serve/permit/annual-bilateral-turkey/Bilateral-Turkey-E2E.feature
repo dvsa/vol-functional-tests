@@ -37,7 +37,7 @@ Feature: Bilaterals Turkey end to end happy path journey including validations
     When I submit and pay the Bilateral fee
     Then I am on the Annual Bilateral application submitted page with correct information and content
     When I click 'go to permits' dashboard on the submitted page
-    Then The Bilateral Turkey application status on the self service dashboard goes to VALID
+    Then the application goes to valid status
     When I click on my licence on the permits dashboard page
     Then The content and information on valid permits is correct
     When I select return to permits dashboard hyperlink

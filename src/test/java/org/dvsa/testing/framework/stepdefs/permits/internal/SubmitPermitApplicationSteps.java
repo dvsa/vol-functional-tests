@@ -23,6 +23,7 @@ import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitFeesPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -173,17 +174,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             world.feeAndPaymentJourney.customerPaymentModule();
 
         });
-        And("^the ECMT APGG application goes to valid status$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            HomePage.PermitsTab.untilPermitHasStatus(
-                    licenceStore.getLicenceNumber(),
-                    PermitStatus.VALID,
-                    Duration.LONG,
-                    TimeUnit.MINUTES
-            );
 
-        });
         When("^I am in Docs and attachments page, I should see the snapshot generate successfully$",() -> {
             viewApplication();
             BasePage.waitAndClick("//a[@id='menu-licence_irhp_applications-document']", SelectorType.XPATH);

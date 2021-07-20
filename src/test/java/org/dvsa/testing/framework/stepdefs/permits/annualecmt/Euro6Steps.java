@@ -42,8 +42,6 @@ public class Euro6Steps extends BasePage implements En {
             OverviewPageJourney.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.NOT_STARTED_YET);
         });
 
-        When("^I select save and return overview link$", BasePermitPage::clickReturnToOverview);
-
         Then("^I should see the overview page with updated changes$", () -> {
             OverviewPageJourney.checkStatus(OverviewSection.EuroEmissionStandards, PermitStatus.COMPLETED);
         });
@@ -51,10 +49,6 @@ public class Euro6Steps extends BasePage implements En {
         Then("^I should see the validation errors for euro 6 page$", () -> {
             String errorText = EmissionStandardsPage.getErrorText();
             assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
-        });
-        Then("^I see the application reference number is displayed correctly$", () -> {
-            String actualReferenceNumber= BasePermitPage.getReferenceFromPage();
-            Assert.assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
         });
         Then("^the texts are displayed correctly$", () -> {
             assertTrue(EmissionStandardsPage.isAdvisoryTextPresent());

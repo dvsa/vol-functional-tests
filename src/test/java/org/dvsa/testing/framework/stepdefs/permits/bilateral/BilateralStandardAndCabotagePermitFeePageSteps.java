@@ -32,7 +32,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
             AnnualBilateralJourney.getInstance()
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
+            AnnualBilateralJourney.getInstance().selectCountry(operatorStore, "Norway");
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
@@ -53,7 +53,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
             AnnualBilateralJourney.getInstance()
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
+            AnnualBilateralJourney.getInstance().selectCountry(operatorStore, "Norway");
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
@@ -75,7 +75,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
             AnnualBilateralJourney.getInstance()
                     .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
+            AnnualBilateralJourney.getInstance().selectCountry(operatorStore, "Norway");
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();

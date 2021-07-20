@@ -3,27 +3,31 @@ package org.dvsa.testing.framework.stepdefs.permits.common;
 import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.FeeDetailsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.framework.enums.Duration;
+import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.framework.stepdefs.permits.internal.IRHPPermitsPageSteps.payOutstandingFees;
 import static org.junit.Assert.assertTrue;
 
-public class CommonSteps extends BasePage implements En {
+public class CommonSteps extends BasePermitJourney implements En {
 
     public static Map<String, java.net.URL> origin;
 
@@ -32,35 +36,6 @@ public class CommonSteps extends BasePage implements En {
             deleteCookies();
             refreshPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
-        });
-
-        Given("^I am on the VOL self-serve site with cookies$", () -> {
-            refreshPage();
-            String ssl="//*[@id='details-button']";
-            String proceed="#proceed-link";
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
-            waitAndClick(ssl, SelectorType.XPATH);
-            waitAndClick(proceed, SelectorType.CSS);
-        });
-
-        Given("^I have began applying for an (?:ECMT|Annual Bilateral|Annual Multilateral|Short-term ECMT) Permit$", () -> {
-            clickToPermitTypePage(world);
-        });
-        Then ("^I submit the annual ECMT APGG application$", () -> {
-            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
-            BasePermitPage.saveAndContinue();
-            RestrictedCountriesPage.deliverToRestrictedCountry(false);
-            RestrictedCountriesPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completeECMTPage();
-            EmissionStandardsPageJourney.completePage();
-            BasePermitPage.saveAndContinue();
-            DeclarationPageJourney.completeDeclaration();
-            PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.goToPermitsDashboard();
         });
         And("^I am on the Annual ECMT licence selection page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -85,29 +60,15 @@ public class CommonSteps extends BasePage implements En {
             LicenceDetailsPageJourney.clickFeesTab();
             FeeDetailsPageJourney.whileFeesPresentWaveFee();
         });
-        And("^A case worker begins to process my fee payment$", () -> {
-            world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            payOutstandingFees(world);
-            FeesDetailsPage.pay();
-        });
         And("^I am on the permits dashboard on external$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
-        });
-        Then("^Information and Text appear correctly$", () -> {
-            assertTrue(HomePage.PermitsTab.isPermitDashboardTextPresent());
         });
     }
 
     public static void clickToPermitTypePage(@NotNull World world) {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.beginPermitApplication();
-    }
-
-    public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull OverviewSection section) {
-        beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-        OverviewPageJourney.clickOverviewSection(section);
     }
 
     public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) {
@@ -117,5 +78,13 @@ public class CommonSteps extends BasePage implements En {
         YearSelectionPage.selectECMTValidityPeriod();
         EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
         OverviewPage.untilOnPage();
+    }
+
+    public static void waitUntilPermitHasStatus(World world) {
+        HomePage.PermitsTab.untilPermitHasStatus(
+                world.applicationDetails.getLicenceNumber(),
+                PermitStatus.VALID,
+                Duration.LONG,
+                TimeUnit.MINUTES);
     }
 }

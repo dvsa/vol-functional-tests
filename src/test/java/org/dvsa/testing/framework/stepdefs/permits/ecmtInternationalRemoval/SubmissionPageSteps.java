@@ -9,19 +9,19 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourne
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
-import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertTrue;
 
 public class SubmissionPageSteps extends BasePermitPage implements En {
 
@@ -46,16 +46,9 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });
-        Then ("^the page heading on the submission page is displayed correctly", () -> {
-
-            Assert.assertEquals(BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH),"Application submitted");
-        });
+        Then ("^the page heading on the submission page is displayed correctly", SubmissionPageSteps::assertHeadingPresentInSubmissionPanel);
         And ("^the application reference number is displayed correctly", () -> {
-            String referenceNumber=BasePage.getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
-            Assert.assertTrue(referenceNumber.contains("Your reference number"));
-            String expectedLicenceNumber = world.applicationDetails.getLicenceNumber();
-            String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
-            Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
+            SubmissionPageSteps.assertReferenceNumberPresentInPanelBody(world);
         });
         And ("^the texts on the submission page are displayed correctly", () -> {
             String expectedHeading = SubmittedPage.getSubHeading();
@@ -91,7 +84,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
         });
         And ("^the application is under issued permits table with status as valid", () -> {
             refreshPage();
-            untilAnyPermitStatusMatch(PermitStatus.VALID);
+            CommonSteps.waitUntilPermitHasStatus(world);
         });
         And ("^I navigate to permit dashboard page", () -> {
             world.selfServeNavigation.navigateToNavBarPage("home");
@@ -110,5 +103,16 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             DeclarationPageJourney.completeDeclaration();
         });
 
+    }
+
+    public static void assertHeadingPresentInSubmissionPanel() {
+        Assert.assertEquals(BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH),"Application submitted");
+    }
+
+    public static void assertReferenceNumberPresentInPanelBody(World world) {
+        String referenceNumber = BasePage.getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
+        assertTrue(referenceNumber.contains("Your reference number"));
+        String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
+        assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
     }
 }

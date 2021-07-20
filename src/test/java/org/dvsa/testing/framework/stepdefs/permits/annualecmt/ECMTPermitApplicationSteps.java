@@ -29,9 +29,6 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
     public static Map<String, String> applicationReference;
 
     public ECMTPermitApplicationSteps(World world, OperatorStore operatorStore) {
-        When("^I fill in the permits form$", () -> {
-            completeEcmtApplication(operatorStore, world);
-        });
         Then("^the permits tab should (not )?be displayed$", (String hidden) -> {
             if (hidden != null) {
                 assertFalse(HomePage.isTabPresent(Tab.PERMITS));

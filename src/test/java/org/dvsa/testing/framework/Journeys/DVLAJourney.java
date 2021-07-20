@@ -50,7 +50,7 @@ public class DVLAJourney extends BasePage {
         click("//input[@id='transfer-vehicle']", SelectorType.XPATH);
         waitAndClick("//*[@id='next']",SelectorType.XPATH);
         waitForTitleToBePresent("Transfer vehicles between your licences");
-    }
+    } // Refactoring possible on the @id='next' and @type='submit buttons because it is the same button.
 
     /***
      *

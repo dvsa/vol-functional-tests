@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.VehiclesCertificateOfRoadwor
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.VehiclesCertificateOfRoadworthinessJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.BasePermitPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
@@ -41,7 +42,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             OverviewPageJourney.clickOverviewSection(OverviewSection.RegistrationNumber);
             VehicleRegistrationNumberPage.untilOnPage();
             assertEquals("Enter the vehicle registration number", VehicleRegistrationNumberPage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleRegistrationNumberPage.enterRegistrationNumber();
             BasePermitPage.saveAndContinue();
         });
@@ -50,7 +51,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             CertificateOfComplianceNumberPage.untilOnPage();
             String heading = CertificateOfComplianceNumberPage.getPageHeading();
             Assert.assertEquals("Enter the vehicle Certificate of Compliance number (optional)", heading);
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
             BasePermitPage.saveAndContinue();
         });
@@ -58,35 +59,35 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
             MakeAndModelPage.untilOnPage();
             String heading = MakeAndModelPage.getPageHeading();
             Assert.assertEquals(heading,"Enter the vehicle make and model");
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             MakeAndModelPage.enterMakeAndModel("BD51SMR");
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle identification number section and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnPage();
             assertEquals("Enter the vehicle identification number (VIN)", VehicleIdentificationNumberPage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleIdentificationNumberPage.enterIdentificationNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete Vehicle Engine number section and click save and continue$", () -> {
             VehicleEngineNumberPage.untilOnPage();
             assertEquals("Enter the vehicle engine number", VehicleEngineNumberPage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleEngineNumberPage.enterEngineNumber();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete vehicle engine type section and click save and continue$", () -> {
             VehicleEngineTypePage.untilOnPage();
             assertEquals("Enter the vehicle engine type", VehicleEngineTypePage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleEngineTypePage.enterEngineType();
             BasePermitPage.saveAndContinue();
         });
         Then("^I check content and complete MOT DATE section and click save and continue$", () -> {
             VehicleMotPage.untilOnPage();
             assertEquals("Enter the vehicle's MOT expiry date", VehicleMotPage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleMotPage.enterMOTDate();
             BasePermitPage.saveAndContinue();
         });

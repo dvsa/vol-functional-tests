@@ -18,7 +18,6 @@ public class PermitFeePageSteps extends BasePermitPage implements En {
         And("^I select the submit and pay link from overview page$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.SubmitAndPay);
         });
-        Then("^I select return to overview link on the permit fee page$", PermitFeePage::clickReturnToOverview);
         Then("^I should be on the permit fee page$", PermitFeePage::untilOnPage);
         Then("^the page heading is displayed correctly on the fee page$", PermitFeePage::untilOnPage);
         Then("^the Fee-breakdown sub-heading can be seen below the fee summary table$", () -> {

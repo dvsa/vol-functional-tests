@@ -41,7 +41,7 @@ public class PermitStartDatePageSteps extends BasePage implements En {
         And ("^the advisory texts on permit start date page are displayed correctly$", () -> {
             assertTrue(PermitStartDatePage.checkAdvisoryTextPresent());
         });
-        Then  ("^the error message is displayed in the permit start date page$", () -> {
+        Then ("^the error message is displayed in the permit start date page$", () -> {
             String errorText = PermitStartDatePage.getErrorText();
             Assert.assertEquals("Enter a valid permit start date and include a day, month and year", errorText);
         });

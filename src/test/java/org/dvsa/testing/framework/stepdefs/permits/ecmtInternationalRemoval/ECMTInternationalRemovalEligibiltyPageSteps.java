@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
@@ -31,7 +32,6 @@ public class ECMTInternationalRemovalEligibiltyPageSteps implements En {
         And ("^the text is shown next to the tick box$", () -> {
            Assert.assertTrue(RemovalsEligibilityPage.isCheckboxAdvisoryTextPresent());
         });
-        And ("^I save and return to overview without selecting the checkbox$", BasePermitPage::clickReturnToOverview);
         And ("^I save and continue without selecting the checkbox$", BasePermitPage::saveAndContinue);
         When("^the checkbox is ticked$", RemovalsEligibilityPage::confirmCheckbox);
         Then("^the error message is displayed on ECMT Remove Eligibility Page$", () -> {
@@ -45,5 +45,6 @@ public class ECMTInternationalRemovalEligibiltyPageSteps implements En {
             String heading = RemovalsEligibilityPage.getPageHeading();
             assertEquals("Removal permits can only be used for removal operations using specialised equipment and staff", heading);
         });
+        Then("^I should be on the ECMT number of permits page$", NumberOfPermitsPageJourney::hasPageHeading);
     }
   }

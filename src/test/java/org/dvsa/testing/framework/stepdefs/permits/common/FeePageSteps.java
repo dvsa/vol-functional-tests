@@ -5,12 +5,12 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 
@@ -18,8 +18,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -38,18 +36,6 @@ public class FeePageSteps extends BasePage implements En {
             DeclarationPageJourney.completeDeclaration();
         });
         When("^I submit and pay$", PermitFeePage::saveAndContinue);
-        When("^I save and return to overview from fee page$", PermitFeePage::clickReturnToOverview);
-        Then("^the number of permits on the fee overview should match$", () -> {
-            String expectedNumberOfPermits = String.valueOf(operatorStore.getLatestLicence().get().getEcmt().getNumberOfPermits());
-        });
-        Then("^the price per permit is as expected$", () -> {
-                    String feePerPermit = PermitFeePage.getTableSectionValue(FeeSection.ApplicationFeePerPermit);
-                    assertThat(feePerPermit, is("£" + "10"));
-                });
-
-        Then("^the total application fee is calculated correctly$", () -> {
-           assertThat(PermitFeePage.totalFee(), is(String.valueOf(operatorStore.getLatestLicence().get().getEcmt().getNumberOfPermits() * 10)));
-        });
         Then("^I am taken to CPMS payment page$", () -> {
             Assert.assertThat(getURL().getHost(), StringContains.containsString("e-paycapita"));
         });
@@ -65,6 +51,4 @@ public class FeePageSteps extends BasePage implements En {
             assertEquals(expectedDateTime, actualDate);
         });
     }
-
-
 }

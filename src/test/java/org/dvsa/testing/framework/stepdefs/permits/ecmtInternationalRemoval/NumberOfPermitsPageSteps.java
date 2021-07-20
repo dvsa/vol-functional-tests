@@ -44,9 +44,6 @@ public class NumberOfPermitsPageSteps implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(BasePermitPage.getReferenceNumber(), actualReference);
         });
-        Given("^I have not entered anything in number of  permits field$", () -> {
-            // Here for readability
-        });
         And("^I enter number of permits more than the authorised vehicles and click save and continue$", () -> {
             NumberOfPermitsPage.exceedAuthorisedVehicle();
             BasePermitPage.saveAndContinue();

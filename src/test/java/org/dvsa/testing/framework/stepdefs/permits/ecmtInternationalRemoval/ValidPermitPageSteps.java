@@ -8,7 +8,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPag
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -16,11 +15,10 @@ import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidECMTInte
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -49,23 +47,13 @@ public class ValidPermitPageSteps implements En {
             SubmittedPage.untilOnPage();
             SubmittedPage.goToPermitsDashboard();
 
-            HomePage.PermitsTab.untilPermitHasStatus(
-                    world.applicationDetails.getLicenceNumber(),
-                    PermitStatus.VALID,
-                    Duration.LONG,
-                    TimeUnit.MINUTES
-            );
+            CommonSteps.waitUntilPermitHasStatus(world);
         });
         And("^I am viewing my issued ECMT removal permit on selfserve$", () -> {
             HomePage.PermitsTab.selectFirstValidPermit();
             ValidPermitsPage.untilOnPage();
         });
         Then("^I am on the ECMT removal Permit list page$", ValidPermitsPage::untilOnPage);
-        And("^the licence number is displayed in ECMT removals list page$", () -> {
-            String expectedReference = world.applicationDetails.getLicenceNumber();
-            String actual = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(expectedReference, actual);
-        });
         And("^the table of ECMT removal permits is as expected$", () -> {
             String message = "Expected all permits to have a status of 'VALID'";
             List<ValidECMTInternationalPermit> permits = ValidPermitsPage.annualECMTPermits();
