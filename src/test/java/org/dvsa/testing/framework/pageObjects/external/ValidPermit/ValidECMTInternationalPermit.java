@@ -26,17 +26,6 @@ public class ValidECMTInternationalPermit {
         this.status = PermitStatus.getEnum(status);
     }
 
-    public String getPermitNumber() {
-        return permitNumber;
-    }
-
-    public String getNotValidForTravel(){
-        return  notValidForTravel;
-    }
-    public String getApplicationNumber() {
-        return applicationNumber;
-    }
-
     public LocalDate getStartDate() {
         return startDate;
     }

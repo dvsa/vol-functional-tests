@@ -31,34 +31,6 @@ public class CookiesPage extends BasePage {
         untilElementIsPresent("//h1[contains(@class,'gem-c-title__text')]", SelectorType.XPATH, 30, TimeUnit.SECONDS);
     }
 
-    public static void optOutAnalyticsCookies() {
-        untilElementIsPresent("//input[@name='analytics' and @value='false']", SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        scrollAndClick("//input[@name='analytics' and @value='false']", SelectorType.XPATH);
-        scrollAndClick("//button[@class='gem-c-button govuk-button']", SelectorType.XPATH);
-        untilElementIsPresent("//h2[@class='gem-c-notice__title']", SelectorType.XPATH, 30, TimeUnit.SECONDS);
-    }
-
-    public static void optInAnalyticsCookies() {
-        untilElementIsPresent("//input[@name='analytics' and @value='true']", SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        scrollAndClick("//input[@name='analytics' and @value='true']", SelectorType.XPATH);
-        scrollAndClick("//button[@class='gem-c-button govuk-button']", SelectorType.XPATH);
-        untilElementIsPresent("//h2[@class='gem-c-notice__title']", SelectorType.XPATH, 30, TimeUnit.SECONDS);
-    }
-
-    public static void optOutChoiceCookies() {
-        untilElementIsPresent("//input[@name='settings' and @value='true']", SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        scrollAndClick("//input[@name='settings' and @value='false']", SelectorType.XPATH);
-        scrollAndClick("//button[@class='gem-c-button govuk-button']", SelectorType.XPATH);
-        untilElementIsPresent("//h2[@class='gem-c-notice__title']", SelectorType.XPATH, 30, TimeUnit.SECONDS);
-    }
-
-    public static void optInChoiceCookies() {
-        untilElementIsPresent("//input[@name='settings' and @value='true']", SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        scrollAndClick("//input[@name='settings' and @value='true']", SelectorType.XPATH);
-        scrollAndClick("//button[@class='gem-c-button govuk-button']", SelectorType.XPATH);
-        untilElementIsPresent("//h2[@class='gem-c-notice__title']", SelectorType.XPATH, 30, TimeUnit.SECONDS);
-    }
-
     public static boolean cookiePageTextPresent() {
         return isTextPresent("Cookies are files saved on your phone, tablet or computer when you visit a website.");
     }

@@ -56,7 +56,7 @@ public class ValidPermitPageSteps implements En {
         Then("^I am on the ECMT removal Permit list page$", ValidPermitsPage::untilOnPage);
         And("^the table of ECMT removal permits is as expected$", () -> {
             String message = "Expected all permits to have a status of 'VALID'";
-            List<ValidECMTInternationalPermit> permits = ValidPermitsPage.annualECMTPermits();
+            List<ValidECMTInternationalPermit> permits = ValidPermitsPage.ECMTInternationalRemovalPermits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isEqual(permits.get(idx).getStartDate().plusDays(364))));

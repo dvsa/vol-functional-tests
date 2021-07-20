@@ -1,7 +1,5 @@
 package org.dvsa.testing.framework.pageObjects.external.enums.sections;
 
-import org.dvsa.testing.framework.pageObjects.external.enums.sections.Section;
-
 public enum MultilateralSection implements Section {
     PermitType("Permit type"),
     Licence("Licence"),

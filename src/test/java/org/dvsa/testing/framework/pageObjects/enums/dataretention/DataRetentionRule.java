@@ -23,10 +23,6 @@ public enum DataRetentionRule {
         this.name = name;
     }
 
-    public boolean equalsName(String otherName) {
-        return name.equals(otherName);
-    }
-
     public static org.dvsa.testing.framework.pageObjects.enums.dataretention.DataRetentionRule getEnum(String value) {
         org.dvsa.testing.framework.pageObjects.enums.dataretention.DataRetentionRule dataRetentionRule;
 

@@ -11,15 +11,6 @@ public class EssentialInformationPage extends BasePermitPage {
         untilElementIsPresent("//h1[contains(text(),'Essential information')]", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
     }
 
-    public static boolean isPageContentPresent() {
-        return isTextPresent("Hauliers visiting Norway between 1 January 2021 and 30 September 2021 will only require permits if carrying out cabotage (transporting goods between 2 points within Norway).") &&
-        isTextPresent("Hauliers visiting Norway from 1 October 2021 onwards will require a standard permit to enter the country and a cabotage permit in addition if you wish to carry out cabotage.") &&
-        isTextPresent("Permits of all types are valid from the year they issued until 31 January the following year.") &&
-        isTextPresent("Applications can be made for either multi journey permits which allow unlimited journeys for the period the permit is valid or for single journey permits. Which types of permit are best for you depends on the number of journeys you are to take.") &&
-        isTextPresent("The fees for applications and for granting of permits is as follows:") &&
-        isTextPresent("Please be aware that any cabotage permits applied for may arrive separately after any standard permits.");
-    }
-
     public static boolean isTurkeyPageContentPresent() {
         return isTextPresent("Turkey only offers single journey permits that allow one outward and return journey.") &&
         isTextPresent("Each permit costs £8.") &&

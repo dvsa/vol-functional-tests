@@ -51,10 +51,6 @@ public class NumberOfPermitsPage extends BasePermitPage {
         return Str.find("\\d+", getText(FIELD.concat(String.format("[%d]", idx) + "/../label"), SelectorType.XPATH)).get();
     }
 
-    public static boolean isBilateralAdvisoryTextPresent() {
-        return isTextPresent("It is only valid if used together with a UK Licence for the Community.");
-    }
-
     public static boolean isAdvisoryTextPresent() {
         return isTextPresent("There is a £10 non-refundable application fee per permit.") &&
         isTextPresent("If your application is successful, you will need to pay an additional");
@@ -85,20 +81,6 @@ public class NumberOfPermitsPage extends BasePermitPage {
     public static int getMaximumAuthorisedVehicles() {
         String regex = getText("//p[contains(@class,'hint')]", SelectorType.XPATH);
         return Integer.parseInt(Str.find("\\d+", regex).get());
-    }
-
-    public static List<Permit> currentMultilateralPermits() {
-        List<Permit> permitsPerCountry = new ArrayList<>();
-
-        IntStream.range(0, size(FIELD, SelectorType.XPATH)).forEach((idx) -> {
-            String feeSelector = String.format(".guidance-blue strong:nth-of-type(%d)", idx + 1);
-            int fee = Integer.parseInt(Str.find("\\d+", getText(feeSelector)).get());
-            String selector = String.format(FIELD + "[%d]", idx + 1);
-            String quantity = getAttribute(selector, SelectorType.XPATH, "value");
-            permitsPerCountry.add(new Permit(getYear(idx), Integer.valueOf(quantity), fee));
-        });
-
-        return permitsPerCountry;
     }
 
     public static boolean isShortTermECMTEmissionErrorTextPresent() {

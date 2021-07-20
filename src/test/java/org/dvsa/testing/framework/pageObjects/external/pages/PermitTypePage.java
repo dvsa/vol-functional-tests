@@ -18,8 +18,4 @@ public class PermitTypePage extends BasePermitPage {
     public static void clickCancel() {
         scrollAndClick("//a[text()='Cancel']", SelectorType.XPATH);
     }
-
-    public static String getPermitTypeBilateralHelpText() {
-        return getText("//div[contains(text(),'These permits are for travelling to or transiting through')]", SelectorType.XPATH);
-    }
 }

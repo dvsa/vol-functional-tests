@@ -10,10 +10,6 @@ public class VehicleRegistrationNumberPage extends BaseCertificateOfRoadWorthine
         return getText("//p[contains(text(),'Enter the registration number plate')]", SelectorType.XPATH);
     }
 
-    public static void invalidRegNumber() {
-        enterTextIntoField("B1234567");
-    }
-
     public static void enterRegistrationNumber() {
         enterTextIntoField("BD51SMR");
     }

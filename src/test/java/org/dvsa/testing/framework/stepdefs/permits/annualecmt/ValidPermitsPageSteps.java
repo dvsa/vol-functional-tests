@@ -16,7 +16,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.PermitApplication;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualMultilateralPermit;
+import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualECMTPermit;
 import org.dvsa.testing.framework.pageObjects.external.pages.ApplicationIssuingFeePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
@@ -86,7 +86,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         });
         And ("^I select return to permit dashboard hyperlink", ValidPermitsPage::returnToPermitDashboard);
         Then ("^the licence number is displayed above the page heading",  () ->{
-            String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
+            String expectedReference= world.applicationDetails.getLicenceNumber();
             Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
         });
         Then ("^the ECMT application licence number is displayed above the page heading",  () ->{
@@ -96,7 +96,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         });
         Then("^the ECMT permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'valid'";
-            List<ValidAnnualMultilateralPermit> permits = ValidPermitsPage.annualMultilateralPermits();
+            List<ValidAnnualECMTPermit> permits = ValidPermitsPage.annualECMTPermits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isBefore(permits.get(idx + 1).getExpiryDate()) ||

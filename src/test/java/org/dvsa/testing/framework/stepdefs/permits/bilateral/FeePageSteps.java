@@ -43,7 +43,7 @@ public class FeePageSteps extends BasePermitPage implements En {
             Assert.assertEquals(expectedPermitType, actualPermitType);
 
             // Number of permits required check
-            String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
+            String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.NumberOfPermits);
             String expectedNumberOfPermits = String.valueOf(NumberOfPermitsPageJourney.permitValue);
             Assert.assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
 

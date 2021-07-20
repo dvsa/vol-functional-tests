@@ -37,10 +37,6 @@ public class EmissionStandardsPage extends BasePermitPage {
         isElementPresent("//p[contains(text(),'You do not need permits for Ukraine if you use Eur')]", SelectorType.XPATH);
     }
 
-    public static String getCheckboxText() {
-        return getText("//label[@class='form-control form-control--checkbox form-control--advanced']", SelectorType.XPATH);
-    }
-
     public static void confirmCheckbox() {
         boolean isNotSelected = !isElementPresent(confirmationCheckBox  + "/ancestor::label[contains(@class, 'selected')]", SelectorType.XPATH);
         if (isNotSelected) {

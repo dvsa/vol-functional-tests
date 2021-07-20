@@ -8,7 +8,6 @@ public class RestrictedCountriesPage extends BasePermitPage {
 
     private static String COUNTRY_TEMPLATE = "//label[contains(text(), '%s')]/input";
 
-
     public static void deliverToRestrictedCountry(boolean answer) {
         int position = answer ? 1 : 2;
         scrollAndClick(String.format("(//*[@class='govuk-radios__item'])[%d]/input", position), SelectorType.XPATH);

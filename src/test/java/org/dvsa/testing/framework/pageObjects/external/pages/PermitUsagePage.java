@@ -2,13 +2,10 @@ package org.dvsa.testing.framework.pageObjects.external.pages;
 
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
-import org.dvsa.testing.framework.pageObjects.enums.PermitUsage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
 import java.time.temporal.ChronoUnit;
-
-import static org.junit.Assert.assertEquals;
 
 public class PermitUsagePage extends BasePermitPage {
 
@@ -50,28 +47,5 @@ public class PermitUsagePage extends BasePermitPage {
 
     public static String getDefaultPeriodOption() {
         return getText("//p[contains(text(),'Only single journey permits are available for this')]", SelectorType.XPATH);
-    }
-
-    public static void permitUsageError() {
-        if (isElementPresent("//input[@id='qaElement']", SelectorType.XPATH)) {
-            saveAndContinue();
-        }
-    }
-
-    public static boolean hasAdvisoryMessages() {
-        return isTextPresent("You should only apply for this type of permit if:");
-    }
-
-    public static boolean isAdvisoryTextPresent () {
-        return isElementPresent("//li[contains(text(),'from 1 January 2021 you are transiting through EU or EEA countries to reach non-EU or non-EEA countries that are')]", SelectorType.XPATH) &&
-        isElementPresent("//li[contains(text(),'during 2021, your journey includes more than two cross-trade trips')]", SelectorType.XPATH);
-    }
-
-    public static boolean isLinkNotPresent() {
-        return isElementNotPresent("//a [@href='https://www.gov.uk/guidance/carry-out-international-road-haulage-after-brexit#get-the-right-permits']", SelectorType.XPATH);
-    }
-
-    public static void permitUsage(PermitUsage PermitUsage) {
-        scrollAndClick(String.format("//label[contains(text(), '%s')]/../input", PermitUsage.toString()), SelectorType.XPATH);
     }
 }

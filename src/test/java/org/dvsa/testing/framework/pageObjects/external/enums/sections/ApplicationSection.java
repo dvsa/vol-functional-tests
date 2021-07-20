@@ -1,7 +1,5 @@
 package org.dvsa.testing.framework.pageObjects.external.enums.sections;
 
-import org.dvsa.testing.framework.pageObjects.external.enums.sections.Section;
-
 public enum ApplicationSection implements Section {
 
     Licence("Licence"),

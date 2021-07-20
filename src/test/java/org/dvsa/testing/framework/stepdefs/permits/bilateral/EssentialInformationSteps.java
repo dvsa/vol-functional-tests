@@ -30,8 +30,11 @@ public class EssentialInformationSteps implements En {
                 //checking the page content on Bilateral essential information  page is correct
                 assertTrue(EssentialInformationPage.isUkrainePageContentPresent());
             }
+
         });
-        When("^I select continue button on the Bilateral (.+) essential information page$", EssentialInformationPage::saveAndContinue);
+        When("^I select continue button on the Bilateral (.+) essential information page$", (String) -> {
+            EssentialInformationPage.saveAndContinue();
+        });
     }
 }
 

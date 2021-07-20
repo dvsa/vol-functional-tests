@@ -64,14 +64,6 @@ public class HomePage extends BasePage {
             return getText("//h1[@class='js-title']", SelectorType.XPATH).trim();
         }
 
-        public static int numberOfPermits() {
-            return Integer.parseInt(Str.find("\\d+(?= ECMT_ANNUAL)", getText(".guidance h2")).get());
-        }
-
-        public static boolean isPermitDashboardTextPresent() {
-            return isTextPresent("International Road Haulage Permits");
-        }
-
         public static void waitUntilOnGoingApplications() {
             untilElementIsPresent("//h2[contains(text(),'Ongoing applications')]",SelectorType.XPATH, 10, TimeUnit.SECONDS);
         }
@@ -101,14 +93,6 @@ public class HomePage extends BasePage {
                     .collect(Collectors.toList());
         }
 
-        public static List<PermitApplication> getOngoingPermitApplications() {
-            return permitApplications(Table.ongoing);
-        }
-
-        public static List<PermitApplication> getIssuedPermitApplications() {
-            return permitApplicationsIssued(Table.issued);
-        }
-
         public static List<PermitApplication> permitApplications(Table table) {
             List<WebElement> rows = findAll(table.toString() + TABLE_ROW, SelectorType.XPATH);
             return rows.stream().map((el) -> {
@@ -124,20 +108,6 @@ public class HomePage extends BasePage {
             ).collect(Collectors.toList());
         }
 
-        public static List<PermitApplication> permitApplicationsIssued(Table table) {
-            List<WebElement> rows = findAll(table.toString() + TABLE_ROW, SelectorType.XPATH);
-            return rows.stream().map((el) -> {
-                        String numOfPermitsText = el.findElement(By.xpath(NO_OF_PERMITS)).getText();
-                        Integer numOfPermits = StringUtils.isBlank(numOfPermitsText) ? null : Integer.valueOf(numOfPermitsText);
-
-                        return new PermitApplication()
-                                .withReferenceNumber(el.findElement(By.xpath(REFERENCE_NUMBER_TEMPLATE)).getText())
-                                .withNoOfPermits(numOfPermits)
-                                .withType(el.findElement(By.xpath(TYPE)).getText())
-                                .withStatus(el.findElement(By.xpath(STATUS)).getText());
-                    }
-            ).collect(Collectors.toList());
-        }
 
         public static void untilPermitHasStatus(String reference, PermitStatus status, long duration, TimeUnit unit) {
             String selector = String.format("//td['%s']/following-sibling::td[last()]/span[text()='%s']", reference, status.toString());

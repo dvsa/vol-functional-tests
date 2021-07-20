@@ -2,13 +2,12 @@ package org.dvsa.testing.framework.pageObjects.external.pages;
 
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualBilateralPermit;
-import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualMultilateralPermit;
+import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualECMTPermit;
 import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidECMTInternationalPermit;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -36,7 +35,7 @@ public class ValidPermitsPage extends BasePermitPage {
         }).collect(Collectors.toList());
     }
 
-    public static List<ValidECMTInternationalPermit> annualECMTPermits() {
+    public static List<ValidECMTInternationalPermit> ECMTInternationalRemovalPermits() {
         return findAll("tbody tr", SelectorType.CSS).stream().map((row) -> {
             String permitNumber = getTextFromRowElement(row, "Permit number");
             String applicationNumber = getTextFromRowElement(row, "Application number");
@@ -48,15 +47,16 @@ public class ValidPermitsPage extends BasePermitPage {
         }).collect(Collectors.toList());
     }
 
-    public static List<ValidAnnualMultilateralPermit> annualMultilateralPermits() {
+    public static List<ValidAnnualECMTPermit> annualECMTPermits() {
         return findAll("tbody tr", SelectorType.CSS).stream().map((row) -> {
             String permitNumber = getTextFromRowElement(row, "Permit number");
             String applicationNumber = getTextFromRowElement(row, "Application number");
+            String issueDate = getTextFromRowElement(row, "Issue date");
             String startDate = getTextFromRowElement(row, "Start date");
             String expiryDate = getTextFromRowElement(row, "Expiry date");
             String status = getStatusFromRowElement(row);
 
-            return new ValidAnnualMultilateralPermit(permitNumber, applicationNumber, startDate, expiryDate, status);
+            return new ValidAnnualECMTPermit(permitNumber, applicationNumber, issueDate, startDate, expiryDate, status);
         }).collect(Collectors.toList());
     }
 
@@ -71,15 +71,5 @@ public class ValidPermitsPage extends BasePermitPage {
     public static String getType() {
         String type = getText("//td[@data-heading='Type']",SelectorType.XPATH);
         return type;
-    }
-
-    public static String getFilterLabel() {
-        return getText("//label[@class='govuk-label']", SelectorType.XPATH);
-    }
-
-    public static void filterToNorway() {
-        Select dropdown = new Select(getDriver().findElement(By.id("country")));
-        dropdown.selectByVisibleText("Norway");
-        scrollAndClick("//button[@class='govuk-button']",SelectorType.XPATH);
     }
 }

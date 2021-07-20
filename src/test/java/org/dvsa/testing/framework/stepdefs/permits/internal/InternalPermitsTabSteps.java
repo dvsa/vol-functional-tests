@@ -33,7 +33,7 @@ public class InternalPermitsTabSteps implements En {
        //     Assert.assertThat(Permits.annualBilateralPermits().size(), is(greaterThanOrEqualTo(1)));
         });
         Then("^the annual ECMT permit table has the expected format$", () -> {
-           Assert.assertThat(ValidPermitsPage.annualECMTPermits().size(), is(greaterThanOrEqualTo(1)));
+           Assert.assertThat(ValidPermitsPage.ECMTInternationalRemovalPermits().size(), is(greaterThanOrEqualTo(1)));
         });
     }
 }

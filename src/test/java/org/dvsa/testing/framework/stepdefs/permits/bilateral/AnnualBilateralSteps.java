@@ -55,8 +55,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
+            OverviewPageJourney.clickBilateralOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                         .permitFee();
@@ -77,8 +76,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPageJourney.completePage();
             BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
-            licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
+            OverviewPageJourney.clickBilateralOverviewSection(OverviewSection.BilateralDeclaration);
             DeclarationPageJourney.completeDeclaration();
             AnnualBilateralJourney.getInstance()
                         .permitFee();

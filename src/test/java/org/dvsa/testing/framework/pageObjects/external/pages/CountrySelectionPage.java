@@ -59,25 +59,8 @@ public class CountrySelectionPage extends BasePermitPage {
         return randomCountries;
     }
 
-    public static int numberOfCountries() {
-        return size("(//input[@type='checkbox'])",  SelectorType.XPATH);
-    }
-
     public static List<String> countries() {
         String selector = "//input[@type='checkbox']/..";
         return findAll(selector, SelectorType.XPATH).stream().map(el -> el.getText().trim()).collect(Collectors.toList());
-    }
-
-    public static List<String> countriesSelected() {
-        String selector = "//li[2]//ul[1]";
-        return findAll(selector, SelectorType.XPATH).stream().map(el -> el.getText().trim()).collect(Collectors.toList());
-    }
-
-    public static List<String> selectedCountries() {
-        return findAll("//*[contains(@class, 'selected')]", SelectorType.XPATH).stream().map(el -> el.getText().trim()).collect(Collectors.toList());
-    }
-
-    public static boolean isErrorMessagePresent(){
-        return isElementPresent("//li[@class='validation-summary__item']", SelectorType.XPATH);
     }
 }

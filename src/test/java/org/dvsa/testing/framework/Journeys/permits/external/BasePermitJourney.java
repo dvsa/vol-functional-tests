@@ -15,11 +15,38 @@ import java.util.Optional;
 
 public class BasePermitJourney extends BaseJourney {
     protected static volatile BasePermitJourney instance = null;
+    public static PermitType permitType;
+    public static String yearChoice;
+    public static String fullReferenceNumber;
 
     protected BasePermitJourney() {
         // The code below assures that someone can't new up instances using reflections
         if (instance != null)
             throw new RuntimeException("Use #getInstance to obtain an instance of this class");
+    }
+
+    private void setPermitType(PermitType permitType) {
+        BasePermitJourney.permitType = permitType;
+    }
+
+    public static PermitType getPermitType() {
+        return permitType;
+    }
+
+    public static void setYearChoice(String yearChoice) {
+        BasePermitJourney.yearChoice = yearChoice;
+    }
+
+    public static String getYearChoice() {
+        return yearChoice;
+    }
+
+    public static void setFullReferenceNumber(String fullReferenceNumber) {
+        BasePermitJourney.fullReferenceNumber = fullReferenceNumber;
+    }
+
+    public static String getFullReferenceNumber() {
+        return fullReferenceNumber;
     }
 
     public static BasePermitJourney getInstance() {
@@ -45,6 +72,7 @@ public class BasePermitJourney extends BaseJourney {
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
 
+        setPermitType(type);
         // TODO: Remove next line below and update code dependent on it
         licence.getEcmt().setType(type);
         operator.setCurrentPermitType(type);
@@ -92,9 +120,9 @@ public class BasePermitJourney extends BaseJourney {
             SelectALicencePage.clickLicence(licenceNumber);
         }
 
-
         SelectALicencePage.saveAndContinue();
 
+        fullReferenceNumber = OverviewPage.getReferenceFromPage();
 
         BasePermitJourney.setReferenceNumber(OverviewPage.getReferenceFromPage());
         return this;

@@ -9,7 +9,7 @@ public enum FeeSection {
     ApplicationStatus("Application status"),
     PermitType("Permit type"),
     PermitYear("Permit year"),
-    PermitsRequired("Number of permits"),
+    NumberOfPermits("Number of permits"),
     ApplicationFeePerPermit("Application fee per permit"),
     TotalApplicationFeeToBePaid("Total application fee to be paid"),
     TotalFeeToBePaid("Total fee to be paid"),

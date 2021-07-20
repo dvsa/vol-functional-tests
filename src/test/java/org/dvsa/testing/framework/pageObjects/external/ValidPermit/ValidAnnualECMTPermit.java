@@ -5,16 +5,17 @@ import org.dvsa.testing.framework.enums.PermitStatus;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class ValidAnnualMultilateralPermit {
+public class ValidAnnualECMTPermit {
     private String permit;
     private String application;
+    private String issueDate;
     private LocalDate startDate;
     private LocalDate expiryDate;
     private PermitStatus status;
 
 
-    public ValidAnnualMultilateralPermit(String permit, String application, String startDate, String expiryDate,
-                                         String status) {
+    public ValidAnnualECMTPermit(String permit, String application, String issueDate, String startDate, String expiryDate,
+                                 String status) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
 
         this.permit = permit;
@@ -30,6 +31,10 @@ public class ValidAnnualMultilateralPermit {
 
     public String getApplication() {
         return application;
+    }
+
+    public String getIssueDate() {
+        return issueDate;
     }
 
     public LocalDate getStartDate() {

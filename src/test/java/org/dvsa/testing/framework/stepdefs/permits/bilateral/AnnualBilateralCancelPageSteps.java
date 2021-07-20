@@ -24,7 +24,9 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
         });
         And("I select cancel application button", CancellationPage::clickCancelButton);
         //Guidance link no more displayed on the page,changed the assertion
-        Then("I select finish button", BilateralJourneySteps::clickFinishButton);
+        Then("I select finish button", () -> {
+            BilateralJourneySteps.clickFinishButton();
+        });
     }
 }
 

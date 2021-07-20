@@ -24,10 +24,6 @@ public class PeriodSelectionPage extends BasePermitPage {
         saveAndContinue();
     }
 
-    public static boolean isWarningTextPresent() throws IllegalBrowserException {
-        return isElementPresent("//strong[@class='govuk-warning-text__text']", SelectorType.XPATH);
-    }
-
     public static void selectFirstAvailablePermitPeriod() {
         String selector = String.format("//input[@id='stock']");
         scrollAndClick(selector, SelectorType.XPATH);

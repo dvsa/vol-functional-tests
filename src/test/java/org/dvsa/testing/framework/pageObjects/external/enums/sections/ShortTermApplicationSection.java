@@ -1,7 +1,5 @@
 package org.dvsa.testing.framework.pageObjects.external.enums.sections;
 
-import org.dvsa.testing.framework.pageObjects.external.enums.sections.Section;
-
 public enum ShortTermApplicationSection implements Section {
     PermitType("Permit type"),
     Licence("Licence"),

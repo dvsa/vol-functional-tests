@@ -19,12 +19,8 @@ public class CancellationPage extends BasePermitPage {
             scrollAndClick(CONFIRM_CANCEL_CHECKBOX, SelectorType.XPATH);
     }
 
-    private static boolean notConfirmed() {
-        return !isConfirmed();
-    }
-
-    public static boolean isConfirmed() {
-        return findElement("input[type='checkbox']", SelectorType.CSS).isSelected();
+    public static boolean notConfirmed() {
+        return !findElement("input[type='checkbox']", SelectorType.CSS).isSelected();
     }
 
     public static void clickCancelButton() { // Not entirely sure of these 4 methods. Check pages before moving.

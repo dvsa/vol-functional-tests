@@ -66,12 +66,4 @@ public class OverviewPage extends BasePermitPage {
     public static void clickCancelApplication() {
         scrollAndClick("//a[contains(text(), 'Cancel application')]", SelectorType.XPATH);
     }
-
-    public static void isGuidanceOnPermitsLinkPresent() {
-        isElementPresent("//a[text()='guidance on permits' and @href='https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage']", SelectorType.XPATH);
-    }
-
-    public static String getSubheadingText() {
-        return getText("//p[contains(text(),'You must complete all of the sections to apply for')]", SelectorType.XPATH);
-    }
 }

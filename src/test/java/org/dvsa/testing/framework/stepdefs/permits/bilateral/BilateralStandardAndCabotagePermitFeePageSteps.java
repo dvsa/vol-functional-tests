@@ -112,7 +112,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
             Assert.assertEquals(expectedPermitType, actualPermitType);
 
             // Number of permits required check
-            String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
+            String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.NumberOfPermits);
             String expectedNumberOfPermits = String.valueOf(NumberOfPermitsPageJourney.permitValue);
             Assert.assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
 
@@ -178,7 +178,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
 
                 // Number of permits required check
                 int totalpermits = standardValue + cabotageValue;
-                String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
+                String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.NumberOfPermits);
                 Assert.assertEquals(String.valueOf(totalpermits), String.valueOf(actualNumberOfPermits));
 
                 //Fee breakdown check
@@ -201,7 +201,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
                 Assert.assertEquals(actualTotal, expectedTotal);
 
                 // Number of permits required check
-                String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.PermitsRequired);
+                String actualNumberOfPermits = PermitFeePage.getTableSectionValue(FeeSection.NumberOfPermits);
                 String expectedNumberOfPermits = String.valueOf(NumberOfPermitsPageJourney.permitValue);
                 Assert.assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
 
