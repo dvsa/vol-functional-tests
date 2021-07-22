@@ -5,7 +5,6 @@ import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
@@ -168,7 +167,7 @@ public class TransportManagerJourney extends BasePage {
         click("form-actions[send]", SelectorType.ID);
     }
 
-    public void addOperatorAdminAsTransportManager() throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
+    public void addOperatorAdminAsTransportManager() throws IllegalBrowserException, MalformedURLException {
         String user = String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName());
         nominateOperatorUserAsTransportManager(user, true);
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
@@ -188,7 +187,7 @@ public class TransportManagerJourney extends BasePage {
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
     }
 
-    public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException, InterruptedException {
+    public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) throws IllegalBrowserException, MalformedURLException {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
         world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
@@ -201,7 +200,7 @@ public class TransportManagerJourney extends BasePage {
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
-    public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) throws IllegalBrowserException, ElementDidNotAppearWithinSpecifiedTimeException, MalformedURLException {
+    public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) {
         String hours = "8";
         findElement("//*[@value='" + OtherLicence + "'][@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + isOwner + "'][@name='responsibilities[isOwner]']", SelectorType.XPATH, 30).click();
@@ -233,7 +232,7 @@ public class TransportManagerJourney extends BasePage {
         waitForTextToBePresent("Declaration");
     }
 
-    public void submitTMApplicationAndNavigateToTMLandingPage() throws ElementDidNotAppearWithinSpecifiedTimeException, IllegalBrowserException, MalformedURLException {
+    public void submitTMApplicationAndNavigateToTMLandingPage() {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         click("form-actions[submit]", SelectorType.ID);
         clickByLinkText("Back to Transport");
