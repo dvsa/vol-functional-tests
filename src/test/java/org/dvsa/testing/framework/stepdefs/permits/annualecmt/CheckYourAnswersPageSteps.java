@@ -55,7 +55,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
         operatorStore.withLicences(licenceStore);
         switch (section) {
             case Cabotage:
-                EcmtApplicationJourney.getInstance().cabotagePage(licenceStore);
+                EcmtApplicationJourney.getInstance().cabotagePage();
                 break;
             case RestrictedCountries:
                 RestrictedCountry restrictedCountry = RestrictedCountry.random();

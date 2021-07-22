@@ -139,16 +139,10 @@ public class LicenceStore extends OperatorStore {
         private boolean euro6;
         private boolean cabotage;
         private boolean restrictedCountries;
-        private List<Country> restrictedCountriesName;
+        // ALL booleans are defaulting as false. Only Booleans default as null. SO THESE ARE PASSING DUE TO LUCK.
+        // STORE IN PAGE CLASS INSTEAD.
         private int numberOfPermits;
-        private int numberOfTrips;
-        private JourneyProportion internationalBusiness;
-        private Sector sector;
         private LocalDateTime submitDate;
-        private PermitUsage usage;
-        private String journeyType;
-        private List<JourneyType> journeyTypeName;
-        private String noCabotage;
 
 
         public String getReferenceNumber() {
@@ -157,14 +151,6 @@ public class LicenceStore extends OperatorStore {
 
         public Optional<PermitType> getType() {
             return type == null ? Optional.empty() : Optional.of(type);
-        }
-
-        public Optional<PeriodType> getShortTermType(){
-            return shortTermType == null ? Optional.empty() : Optional.of(shortTermType);
-        }
-
-        public boolean hasType(PermitType type) {
-            return getType().isPresent() && getType().get().equals(type);
         }
 
         public Ecmt setType(PermitType type) {
@@ -214,37 +200,13 @@ public class LicenceStore extends OperatorStore {
             return this;
         }
 
-        public String getNoCabotage()
-        {return noCabotage;}
-
-        public Ecmt setNoCabotage(String noCabotage){
-            this.noCabotage = noCabotage;
-            return this;
-        }
-
-        public String getJourneyType(){return journeyType;}
-
-        public Ecmt setJourneyType(String journeyType){
-            this.journeyType= journeyType;
-            return this;
-        }
-
         public boolean hasRestrictedCountries() {
             return restrictedCountries;
         }
 
-        public Ecmt setRestrictedCountries(boolean restrictedCounties, List<Country> countries) {
+        public Ecmt setRestrictedCountries(boolean restrictedCounties) {
             this.restrictedCountries = restrictedCounties;
-            this.restrictedCountriesName = countries;
             return this;
-        }
-
-        public Ecmt setRestrictedCountries(List<Country> countries) {
-            return setRestrictedCountries(true, countries);
-        }
-
-        public List<Country> getRestrictedCountriesName() {
-            return restrictedCountriesName;
         }
 
         public  int getNumberOfPermits() {
@@ -256,47 +218,8 @@ public class LicenceStore extends OperatorStore {
             return this;
         }
 
-        public int getNumberOfTrips() {
-            return numberOfTrips;
-        }
-
-        public Ecmt setNumberOfTrips(int numberOfTrips) {
-            this.numberOfTrips = numberOfTrips;
-            return this;
-        }
-
-        public JourneyProportion getInternationalBusiness() {
-            return internationalBusiness;
-        }
-
-        public Ecmt setInternationalBusiness(JourneyProportion internationalBusiness) {
-            this.internationalBusiness = internationalBusiness;
-            return this;
-        }
-
-        public Sector getSector() {
-            return sector;
-        }
-
-        public Ecmt setSector(Sector sector) {
-            this.sector = sector;
-            return this;
-        }
-
-        public LocalDateTime getSubmitDate() {
-            return submitDate;
-        }
-
         public void setSubmitDate(LocalDateTime submitDate) {
             this.submitDate = submitDate;
-        }
-
-        public PermitUsage getPermitusage(){
-            return usage;
-        }
-        public Ecmt setPermitUsage(PermitUsage permitusage){
-            this.usage = permitusage;
-            return this;
         }
     }
 

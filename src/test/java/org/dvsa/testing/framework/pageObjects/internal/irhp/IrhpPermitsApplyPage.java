@@ -322,18 +322,6 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         return sector;
     }
 
-    public static RestrictedCountry restrictedCountries() {
-        RestrictedCountry country = RestrictedCountry.random();
-        restrictedCountries(country);
-        return country;
-    }
-
-    public static void restrictedCountries(RestrictedCountry country) {
-        String selector = String.format(COUNTRIES_LIST.concat("/li[contains(text(), '%s')]"), country.toString());
-        activateCountriesList();
-        scrollAndClick(selector, SelectorType.XPATH);
-    }
-
     private static void activateCountriesList() {
         if (countriesDropdownInactive())
             scrollAndClick(".chosen-choices input[type='text']");

@@ -13,7 +13,7 @@ import org.junit.Assert;
 
 
 public class PermitFeePageSteps extends BasePermitPage implements En {
-    public PermitFeePageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
+    public PermitFeePageSteps(World world) {
 
         And("^I select the submit and pay link from overview page$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.SubmitAndPay);

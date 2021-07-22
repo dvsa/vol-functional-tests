@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.pageObjects.external.pages;
 
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;

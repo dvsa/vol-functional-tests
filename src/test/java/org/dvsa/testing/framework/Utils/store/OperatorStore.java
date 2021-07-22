@@ -147,10 +147,6 @@ public class OperatorStore {
         return licences.stream().filter(test).collect(Collectors.toList());
     }
 
-    public List<LicenceStore> licencesWithCompleteApplication() {
-        return licences(licence -> licence.getEcmt().getSubmitDate() != null);
-    }
-
     public Optional<LicenceStore> getLatestLicence() {
         Optional<LicenceStore> licence = Optional.empty();
         int lastLicenceIdx = getLicences().size() - 1;
@@ -165,13 +161,6 @@ public class OperatorStore {
         return this;
     }
 
-    private boolean hasObject(LicenceStore licenceStore) {
-        return licences.stream()
-                .anyMatch(
-                        currentLicenceStore -> currentLicenceStore.hashCode() == licenceStore.hashCode()
-                );
-    }
-
     private boolean hasLicence(LicenceStore licence) {
         return licences.stream()
                 .anyMatch(
@@ -179,14 +168,6 @@ public class OperatorStore {
                 );
     }
 
-    public ResultModel getEligibleEcmtLicences() {
-        return eligibleEcmtLicences;
-    }
-
-    public OperatorStore setEligibleEcmtLicences(ResultModel eligibleEcmtLicences) {
-        this.eligibleEcmtLicences = eligibleEcmtLicences;
-        return this;
-    }
 
     public Optional<String> getCurrentLicenceNumber() {
         return currentLicence == null ? Optional.empty() : Optional.of(currentLicence);

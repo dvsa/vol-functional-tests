@@ -18,7 +18,6 @@ public class EcmtApplicationStore {
     public LicenceStore licence;
     public boolean euro6 = false;
     public boolean cabotage = false;
-    public boolean restrictedCountries = false;
     //public int numberOfPermits = 0;
     public int numberOfTrips = 0;
     public JourneyProportion internationalBusiness = null;

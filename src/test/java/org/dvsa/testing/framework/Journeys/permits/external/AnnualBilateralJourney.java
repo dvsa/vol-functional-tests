@@ -36,18 +36,9 @@ public class AnnualBilateralJourney extends BasePermitJourney {
     public AnnualBilateralJourney countries(OperatorStore operatorStore) {
         LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
-        List<Country> name = CountrySelectionPage.randomCountries();
+        CountrySelectionPage.randomCountries();
         RestrictedCountriesPage.saveAndContinue();
-        licence.getEcmt().setRestrictedCountries(name);
-        return this;
-    }
-
-    public AnnualBilateralJourney allCountries(OperatorStore operatorStore){
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-
-        List<Country> name = CountrySelectionPage.allCountries();
-        BasePermitPage.waitAndClick("//input[@id='Submit[SubmitButton]']", SelectorType.XPATH);
-        licence.getEcmt().setRestrictedCountries(name);
+        licence.getEcmt().setRestrictedCountries(true);
         return this;
     }
 
@@ -61,14 +52,6 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         JourneyType journeyType = JourneyType.random();
         PermitUsagePage.journeyType(journeyType);
         RestrictedCountriesPage.saveAndContinue();
-        licenceStore.getEcmt().setJourneyType(String.valueOf(journeyType));
-        return this;
-    }
-
-    public AnnualBilateralJourney cabotageConfirmation(World world, LicenceStore licenceStore){
-        String noCabotage  = BilateralJourneySteps.yesAndCabotagePermitConfirmation();
-        RestrictedCountriesPage.saveAndContinue();
-        licenceStore.getEcmt().setNoCabotage(String.valueOf(noCabotage));
         return this;
     }
 

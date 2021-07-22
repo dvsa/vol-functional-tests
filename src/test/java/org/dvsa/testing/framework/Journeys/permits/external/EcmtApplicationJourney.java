@@ -34,7 +34,7 @@ public class EcmtApplicationJourney extends BasePermitJourney {
         return instance;
     }
 
-    public EcmtApplicationJourney cabotagePage(LicenceStore licenceStore) {
+    public EcmtApplicationJourney cabotagePage() {
 
         CabotagePage.confirmWontUndertakeCabotage();
         CabotagePage.saveAndContinue();

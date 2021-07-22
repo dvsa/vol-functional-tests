@@ -49,16 +49,6 @@ public class BasePermitJourney extends BaseJourney {
         return fullReferenceNumber;
     }
 
-    public static BasePermitJourney getInstance() {
-        if (instance == null) {
-            synchronized (BasePermitJourney.class) {
-                instance = new BasePermitJourney();
-            }
-        }
-
-        return instance;
-    }
-
     public BasePermitJourney permitType(OperatorStore operatorStore) {
         return permitType(PermitType.ECMT_ANNUAL, operatorStore);
     }
