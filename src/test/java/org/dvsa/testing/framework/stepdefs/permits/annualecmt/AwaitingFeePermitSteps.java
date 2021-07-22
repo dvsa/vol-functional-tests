@@ -15,7 +15,6 @@ import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
 import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.exception.ElementDidNotAppearWithinSpecifiedTimeException;
 import org.dvsa.testing.lib.newPages.external.pages.ApplicationIssuingFeePage;
 import org.dvsa.testing.lib.newPages.external.pages.HomePage;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.Permit;
@@ -71,7 +70,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
         Then("^I should be taken to the payment provider$", () -> Assert.assertThat(getURL().getHost(), is("sbsctest.e-paycapita.com")));
         }
 
-    public static void triggerPermitIssuing(World world) throws ElementDidNotAppearWithinSpecifiedTimeException, InterruptedException, MalformedURLException, IllegalBrowserException {
+    public static void triggerPermitIssuing(World world) throws InterruptedException {
         getDriver().manage().deleteAllCookies();
 
         get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true)).toString());
