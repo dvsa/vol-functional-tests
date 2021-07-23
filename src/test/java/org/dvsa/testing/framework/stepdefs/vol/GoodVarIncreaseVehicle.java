@@ -16,8 +16,8 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         When("^i increase my vehicle authority count$", () -> {
          world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
          clickByLinkText(world.applicationDetails.getLicenceNumber());
-         world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested() + 1 ));
-         world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfVehiclesRequested() + 1 ));
+         world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ));
+         world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ));
         });
 
         Then("^a status of update required should be shown next to financial evidence$", () -> {
@@ -45,8 +45,8 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
         When("^a selfserve user creates a variation and increases the vehicle authority count$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
             clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested() +2));
-            world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfVehiclesRequested() + 2));
+            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 2));
+            world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 2));
             world.UIJourney.updateFinancialInformation();
             world.UIJourney.signDeclarationForVariation();
         });

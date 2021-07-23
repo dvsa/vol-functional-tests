@@ -152,7 +152,7 @@ public class NumberOfPermitsPageJourney extends BasePermitJourney {
     }
 
     public static void completeMultilateralPage() {
-        int maxNumberOfPermits = world.createApplication.getNoOfVehiclesRequested();
+        int maxNumberOfPermits = world.createApplication.getNoOfAddedHgvVehicles();
         quantity(maxNumberOfPermits, PermitType.ANNUAL_MULTILATERAL);
         saveAndContinue();
         setApplicationDate(LocalDateTime.now());

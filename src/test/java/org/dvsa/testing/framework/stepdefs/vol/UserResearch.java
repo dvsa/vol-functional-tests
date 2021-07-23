@@ -19,7 +19,7 @@ public class UserResearch extends BasePage implements En {
 
         Given("^^I have applied for \"([^\"]*)\" \"([^\"]*)\" licences$", (String licenceType, String operator) -> {
             world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-            world.createApplication.setNoOfVehiclesRequested(5);
+            world.createApplication.setNoOfAddedHgvVehicles(5);
             for (int i = 0; i < trafficAreaList().length - 1; ) {
                 for (TrafficArea TA : trafficAreaList()) {
                     world.createApplication.setCorrespondencePostCode(TrafficArea.getPostCode(TA));
@@ -39,7 +39,7 @@ public class UserResearch extends BasePage implements En {
         Given("^I have applied for \"([^\"]*)\" \"([^\"]*)\" TM application$", (String licenceType, String operatorType) -> {
             String password;
             world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-            world.createApplication.setNoOfVehiclesRequested(3);
+            world.createApplication.setNoOfAddedHgvVehicles(3);
             for (TrafficArea ta : trafficAreaList()) {
                 world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
                 password = S3.getTempPassword(world.createApplication.getTransportManagerEmailAddress());

@@ -14,8 +14,8 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
         When("^A selfserve user decreases the vehicle authority count$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested() - 1));
-            world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfVehiclesRequested() - 1));
+            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1));
+            world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1));
         });
         When("^A selfserve user decreases the vehicle required count by invalid characters$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -25,7 +25,7 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
         When("^A selfserve user decreases the vehicle authority by invalid charecters$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested()));
+            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles()));
             world.UIJourney.changeVehicleAuth("-6");
         });
         Then("^a status of update required should be shown next to Review and declarations$", () -> {

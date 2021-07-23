@@ -2,7 +2,7 @@
 Feature: Transfer a vehicle
 
   Scenario: Transfer vehicles for dual licence holder
-    Given I have "2" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "5"
+    Given I have "2" "goods" "standard_international" licences with "3" vehicles and a vehicleAuthority of "5"
     And I navigate to manage vehicle page on a licence
     When i transfer a vehicle to an assumed licence
     Then the "1 vehicle has been transferred to licence" confirmation banner should appear

@@ -176,7 +176,7 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
         enterText(nameAttribute("input", "data[noOfVehiclesRequired]"), SelectorType.CSS, noOfVehicles);
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
-        if (Integer.parseInt(noOfVehicles) > world.createApplication.getNoOfVehiclesRequested()) {
+        if (Integer.parseInt(noOfVehicles) > world.createApplication.getNoOfAddedHgvVehicles()) {
             click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
         }
         click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);

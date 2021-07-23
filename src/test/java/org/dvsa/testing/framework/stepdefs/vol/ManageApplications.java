@@ -26,8 +26,9 @@ public class ManageApplications {
     @Given("I have a {string} application with {int} vehicles and a vehicleAuthority of {int}")
     public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, int numberOfVehicles, int authority) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setNoOfVehiclesRequested(numberOfVehicles);
-        world.createApplication.setOperatingCentreVehicleCap(authority);
+        world.createApplication.setNoOfAddedHgvVehicles(numberOfVehicles);
+        world.createApplication.setTotalOperatingCentreHgvAuthority(numberOfVehicles);
+        world.createApplication.setNoOfOperatingCentreVehicleAuthorised(authority);
         world.licenceCreation.createApplication(operatorType, LicenceType.STANDARD_INTERNATIONAL.name().toLowerCase(Locale.ROOT));
     }
 
@@ -54,7 +55,7 @@ public class ManageApplications {
     public void iHaveAppliedForTMApplication(String operatorType, String licenceType) throws Exception {
         String password;
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setNoOfVehiclesRequested(3);
+        world.createApplication.setNoOfAddedHgvVehicles(3);
         for (TrafficArea ta : trafficAreaList()) {
             world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
             password = S3.getTempPassword(world.createApplication.getTransportManagerEmailAddress());
@@ -86,9 +87,9 @@ public class ManageApplications {
     }
 
     @Given("I have all {string} {string} traffic area licences")
-    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) throws Exception {
+    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setNoOfVehiclesRequested(3);
+        world.createApplication.setNoOfAddedHgvVehicles(3);
         for (TrafficArea ta : trafficAreaList()) {
             world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
             world.createApplication.setApplicationId(null);
@@ -120,13 +121,14 @@ public class ManageApplications {
     }
 
     @Given("I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
-    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String vehicles, String OCVehicleCap) {
+    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(OCVehicleCap));
-        world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
+        world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));
+        world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(vehicleAuth));
+        world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicleAuth));
         for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
             TrafficArea ta = trafficAreaList()[i];
             world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
@@ -146,6 +148,26 @@ public class ManageApplications {
         for (String ta : trafficAreas) {
             TrafficArea trafficArea = TrafficArea.valueOf(ta.toUpperCase());
             world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, trafficArea);
+        }
+    }
+
+    //TODO will need changing when lgv authority and hgv authority is split.
+    @Given("I have {string} {string} {string} licences with {string} HGVs and {string} LGVs with a vehicleAuthorities of {string} and {string}")
+    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String hgvs, String lgvs, String hgvAuth, String lgvAuth) {
+        if (Integer.parseInt(noOfLicences) > 9) {
+            throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
+        }
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(hgvs));
+        world.createApplication.setNoOfAddedLgvVehicles(Integer.parseInt(lgvs));
+        world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvs));
+        world.createApplication.setTotalOperatingCentreLgvAuthority(Integer.parseInt(lgvs));
+//        world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(OCVehicleCap));
+        // Not used because functionality is not yet in place. Will use separate HGV and LGV authorisations when
+
+        for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
+            TrafficArea ta = trafficAreaList()[i];
+            world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         }
     }
 }

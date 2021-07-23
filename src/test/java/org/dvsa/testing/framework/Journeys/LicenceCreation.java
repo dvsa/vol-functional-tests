@@ -28,8 +28,8 @@ public class LicenceCreation {
         if(licenceType.equals("special_restricted") && Integer.parseInt(vehicles) > 2){
             throw new InvalidArgumentException("Special restricted licences can not have more than 2 vehicles on them.");
         }
-        world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
-        world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
+        world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicles));
+        world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));
         createApplication(operatorType, licenceType);
     }
 
