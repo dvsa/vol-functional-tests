@@ -5,7 +5,7 @@ import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.enums.UserType;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;;
 import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.apache.logging.log4j.LogManager;

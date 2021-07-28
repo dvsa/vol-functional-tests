@@ -3,9 +3,9 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import activesupport.number.Int;
 import apiCalls.Utils.volBuilders.VehiclesBuilder;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.BasePage;
 

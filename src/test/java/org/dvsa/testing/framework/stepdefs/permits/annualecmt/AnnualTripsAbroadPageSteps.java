@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;;
+import io.cucumber.java8.StepDefinitionBody;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
@@ -38,7 +38,7 @@ public class AnnualTripsAbroadPageSteps extends BasePage implements En {
             scrollAndEnterField("//input[@type ='text']", SelectorType.XPATH, "1000000");
         });
 
-        Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepdefBody.A1<String>) NumberOfTripsPage::quantity);
+        Given("^I specify an invalid ([\\w\\-]+) of annual trips$", (StepDefinitionBody.A1<String>) NumberOfTripsPage::quantity);
     }
 
 }

@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import activesupport.number.Int;
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;;
+import io.cucumber.java8.StepDefinitionBody;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
@@ -76,12 +76,12 @@ public class AnnualTripsAbroadPageSteps implements En {
             assertEquals("Enter the number of trips you carried out over the past 12 months", errorText);
         });
         When ("^I select save and return to overview without entering any value$", BasePermitPage::clickReturnToOverview);
-        When ("^I specify an invalid ([\\w\\-]+) of annual trips in short term 2020$", (StepdefBody.A1<String>) AnnualTripsAbroadPage::quantity);
+        When ("^I specify an invalid ([\\w\\-]+) of annual trips in short term 2020$", (StepDefinitionBody.A1<String>) AnnualTripsAbroadPage::quantity);
         Then  ("^I should get the specific validation message for invalid value$", () -> {
             String errorText = AnnualTripsAbroadPage.getErrorText();
             assertEquals("You must enter a valid whole number", errorText);
         });
-        And  ("^I specify more than 6 digit ([\\w\\-]+) of annual trips in short term ECMT$", (StepdefBody.A1<String>) AnnualTripsAbroadPage::quantity);
+        And  ("^I specify more than 6 digit ([\\w\\-]+) of annual trips in short term ECMT$", (StepDefinitionBody.A1<String>) AnnualTripsAbroadPage::quantity);
         Given("^I specify a valid input in short term ECMT annual trips abroad page$", () -> {
             AnnualTripsAbroadPage.quantity(Int.random(0,999999));
         });

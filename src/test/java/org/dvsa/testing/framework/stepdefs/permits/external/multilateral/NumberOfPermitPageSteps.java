@@ -1,9 +1,9 @@
 package org.dvsa.testing.framework.stepdefs.permits.external.multilateral;
 
 import Injectors.World;
-import cucumber.api.PendingException;
-import cucumber.api.java8.En;
-import cucumber.api.java8.StepdefBody;
+import io.cucumber.java8.En;;
+import io.cucumber.java8.StepDefinitionBody;
+import io.cucumber.java8.PendingException;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
@@ -72,7 +72,7 @@ public class NumberOfPermitPageSteps extends BasePermitPage implements En {
         Then("^the number of permits section on the annual multilateral overview page is complete$", () -> {
             OverviewPageJourney.checkStatus(OverviewSection.NumberOfPaymentsRequired, PermitStatus.COMPLETED);
         });
-        Then("^the user is on annual multilateral check your answers page$", (StepdefBody.A0) CheckYourAnswerPage::untilOnPage);
+        Then("^the user is on annual multilateral check your answers page$", (StepDefinitionBody.A0) CheckYourAnswerPage::untilOnPage);
         When("^the case worker is viewing current fees$", () -> {
             LicenceStore licence = operatorStore.getCurrentLicence().get();
             world.APIJourney.createAdminUser();

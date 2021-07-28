@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal.multilateral;
 
 import Injectors.World;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualMultilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;

@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.multilateral;
 import Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitFeesPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;

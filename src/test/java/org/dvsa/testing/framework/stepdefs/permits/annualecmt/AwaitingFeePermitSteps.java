@@ -7,7 +7,7 @@ import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import com.typesafe.config.Config;
-import cucumber.api.java8.En;
+import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.InternalBaseJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;

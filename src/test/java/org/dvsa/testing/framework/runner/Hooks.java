@@ -40,22 +40,6 @@ public class Hooks {
         }
     }
 
-    public void setUpReportConfig() throws IOException {
-        Environments environments = new Environments();
-        environments.createResultsFolder();
-        environments.generateXML();
-    }
-
-    @Before
-    public void chooseBrowser() throws IOException {
-        setUpReportConfig();
-        parser.getElementsByTagName();
-        for (String browserName : parser.browser) {
-            System.out.println("======" + browserName);
-            System.setProperty("browser",browserName);
-        }
-    }
-
     @After
     public void tearDown() throws Exception {
        if(Browser.isBrowserOpen()){
