@@ -1,13 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.When;
-import io.cucumber.java.en.Then;
-import org.dvsa.testing.framework.Journeys.DirectorJourneySteps;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.When;
+import cucumber.api.java.en.Then;
+import org.dvsa.testing.framework.Journeys.DirectorJourney;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
@@ -19,11 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class DirectorVariation extends BasePage {
 
     World world;
-    private DirectorJourneySteps directorJourney;
+    private DirectorJourney directorJourney;
 
     public DirectorVariation(World world) {
         this.world = world;
-        directorJourney = world.directorJourneySteps;
+        directorJourney = world.directorJourney;
     }
 
     @And("i navigate to the directors page")
@@ -40,7 +40,7 @@ public class DirectorVariation extends BasePage {
     @Then("^a new director should be added to my licence$")
     public void aNewDirectorShouldBeAddedToMyLicence() {
         directorJourney.assertDirectorCount(2);
-        List<WebElement> directors = listOfWebElements(directorJourney.directorLinks, SelectorType.XPATH);
+        List<WebElement> directors = findElements(directorJourney.directorLinks, SelectorType.XPATH);
         assertTrue(directorJourney.isDirectorPresentInDirectorTable(directors, directorJourney.getDirectorName()));
     }
 
@@ -147,8 +147,8 @@ public class DirectorVariation extends BasePage {
         selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
 
         String incorrectNameValue = "!@£$%^";
-        enterText(directorJourney.firstNameField, incorrectNameValue, SelectorType.XPATH);
-        enterText(directorJourney.lastNameField, incorrectNameValue, SelectorType.XPATH);
+        enterText(directorJourney.firstNameField, SelectorType.XPATH, incorrectNameValue);
+        enterText(directorJourney.lastNameField, SelectorType.XPATH, incorrectNameValue);
 
         HashMap<String, String> incorrectDateValues = new HashMap<String,String>();
         incorrectDateValues.put("day", "!@");

@@ -16,15 +16,15 @@ Feature: Internal Feature toggle
 
   @INTERNAL @OLCS-20855 @TOGGLE-ECMT
   Scenario: Disabling ECMT internal disables ECMT features on internal
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I log in as an internal user with admin privileges
     And disable all internal ECMT feature toggles
-    When I am viewing a good operating licence on internal
+    When i create an admin and url search for my licence
     Then internal users should not be able to create ECMT Permit applications
 
   @INTERNAL @OLCS-20855 @TOGGLE-ECMT
   Scenario: Disabling ECMT feature on external prevents external users from applying for ECMT Permits
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I log in as an internal user with admin privileges
     And disable all external ECMT feature toggles
     When I sign on as an external user

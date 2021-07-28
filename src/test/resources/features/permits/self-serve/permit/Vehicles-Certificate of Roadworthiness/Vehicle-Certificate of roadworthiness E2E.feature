@@ -1,15 +1,15 @@
-@certificateofroadworthiness_vehicles_E2E
+@certificateofroadworthiness_vehicles_E2E @eupa_regression
 Feature: Certificate of roadworthiness for Vehicles end to end happy path journey
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I select Certificate of Roadworthiness for vehicles on the select permit page
     And I select any licence number for Certificate of Roadworthiness for vehicles
 
   @EXTERNAL @OLCS-26817
   Scenario: Verify that Certificate of Roadworthiness for vehicles application flow is correct and application is submitted successfully with status of Valid
-    Then I am on Certificate of Roadworthiness for vehicles Application overview Page
+    Then I should be on the overview page
     Then I check content and complete Registration number section and click save and continue
     Then I check content and complete vehicle make and model section and click save and continue
     Then I check content and complete Vehicle identification number section and click save and continue

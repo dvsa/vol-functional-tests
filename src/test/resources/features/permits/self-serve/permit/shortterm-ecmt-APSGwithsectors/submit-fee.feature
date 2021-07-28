@@ -2,7 +2,7 @@
 Feature: Shortterm ECMT APSG with sectors Fee page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I am on shortterm ECMT fee page
 
@@ -11,7 +11,7 @@ Feature: Shortterm ECMT APSG with sectors Fee page
     And the page heading and alert message on the fee page is displayed correctly
     And the issuing fee per permit link opens in a new window
     And the table contents on short term Fee page is  as per AC
-    And I go back
+    And I click the back link
     Then I should be taken back to short Term Overview Page
 
   @OLCS-21129 @OLCS-24975

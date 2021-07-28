@@ -2,7 +2,7 @@
 Feature:Bilateral standard and cabotage permits: Annual bilateral valid permit-details  page checks
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I have a valid annual bilateral norway standard and cabotage permit
     And I am viewing an issued annual bilateral permit on self-serve
@@ -16,13 +16,13 @@ Feature:Bilateral standard and cabotage permits: Annual bilateral valid permit-d
   @EXTERNAL @olcs-27365
   Scenario:Bilateral standard and cabotage permits: Back button takes back to Permit dashboard
     When the user is in the annual bilateral list page
-    And  I go back
+    And  I click the back link
     Then I should be taken to the permits dashboard
 
   @EXTERNAL @olcs-27365
   Scenario:Bilateral standard and cabotage permits: Returns to permit dashboard takes back to permit dashboard
     When the user is in the annual bilateral list page
-    And I select returns to permit dashboard hyperlink
+    And I select return to permit dashboard hyperlink
     Then I should be taken to the permits dashboard
 
 

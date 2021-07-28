@@ -1,22 +1,30 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
-import io.cucumber.java8.En;
+import Injectors.World;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.external.permit.BaseDeclarationPage;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.SectorPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
-import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
-import org.junit.Assert;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
+import org.dvsa.testing.lib.newPages.external.enums.Sector;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertTrue;
 
 public class DeclarationPageSteps implements En {
 
@@ -25,60 +33,41 @@ public class DeclarationPageSteps implements En {
         And("^I am on the Short term Declaration page$", () -> {
 
             clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
-            SelectYearPage.shortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore);
+            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
+            YearSelectionPage.selectShortTermValidityPeriod();
+            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
             ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             PermitUsagePage.permitUsage(PermitUsage.random());
             BasePermitPage.saveAndContinue();
-            CabotagePage.cabotageConfirmation();
+            CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.CertificatesRequiredConfirmation();
-            BasePermitPage.saveAndContinue();
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
+            NumberOfPermitsPageJourney.completeECMTPage();
+            EmissionStandardsPageJourney.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.proportion(JourneyProportion.LessThan60Percent);
-            SectorPage.sector(Sector.random());
+            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
+            SectorPage.selectSectionAndContinue(Sector.random());
             ECMTShortTermJourney.getInstance().checkYourAnswersPage();
         });
-        Then("^I should see correct heading label on ECMT declaration page$", () -> {
-            DeclarationPage.hasPageHeading();
-        });
-        Then("^the short term declarations page has reference number", () -> {
-            BaseDeclarationPage.hasReference();
-        });
+        Then("^I should see the correct heading on the declaration page$", DeclarationPageJourney::hasPageHeading);
+        Then("^the declaration page has a reference number", DeclarationPage::hasReference);
         Then("^the short term declarations page has got the correct advisory text$", () -> {
-            DeclarationPage.hasAdvisoryMessages();
+            assertTrue(DeclarationPage.isShortTermECMTAdvisoryTextPresent());
         });
-        Then("^the short term declaration page has correct link under guidance notes$", DeclarationPage::hasGuidanceNotesLinkPresent);
-        Then("^the short term declaration page checkbox has the correct text and displayed unselected by default$", DeclarationPage::hasCheckbox);
-        Then("^I should see the validation error message on the short term declaration page$", () -> {
-            DeclarationPage.hasErrorMessagePresent();
-        });
+        Then("^I should see the validation error message on the short term declaration page$", DeclarationPage::isErrorMessagePresent);
 
         And("^I click declaration link on the overview page again$", () -> {
-            OverviewPage.select(OverviewPage.Section.Declaration);
-
+            OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         });
-
-        Then("^I am directed back to the Declaration page$", DeclarationPage::declarationPageLoad);
-        When("^I make my short term ECMT declaration$", DeclarationPage::DeclarationConfirmation);
 
         Then("^I am on the short term permits overview page with Declaration section marked as complete$", () -> {
-            String error = "Expected the status of Declarations  page to be complete but it wasn't";
             OverviewPage.untilOnPage();
-            boolean complete = OverviewPage.checkStatus(OverviewPage.Section.Declaration,PermitStatus.COMPLETED);
-            Assert.assertTrue(error, complete);
+            OverviewPageJourney.checkStatus(OverviewSection.Declaration,PermitStatus.COMPLETED);
         });
 
-        Then("^I am directed to the short term permit fee page$", () -> {
-            DeclarationPage.untilOnFeePage();
-        });
+        Then("^I am directed to the short term permit fee page$", PermitFeePage::untilOnPage);
     }
 }

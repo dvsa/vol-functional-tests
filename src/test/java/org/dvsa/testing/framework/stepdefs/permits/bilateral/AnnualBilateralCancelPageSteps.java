@@ -1,58 +1,50 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
-import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.OverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CancelApplicationPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CancelConfirmationPage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.CancellationConfirmationPage;
+import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.Driver.DriverUtils.getDriver;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-public class AnnualBilateralCancelPageSteps implements En {
+public class AnnualBilateralCancelPageSteps extends BasePage implements En {
 
     public AnnualBilateralCancelPageSteps(OperatorStore operatorStore, World world) {
         And("^I click cancel application link$", () -> {
-            operatorStore.getLatestLicence().get().setReferenceNumber(org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage.reference());
-            OverviewPage.Application.cancel();
+            operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
+            OverviewPage.clickCancelApplication();
         });
         Then("^the application reference number should be displayed above the heading$", () -> {
-            String actualReference = CancelApplicationPage.reference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        Then("^the bilateral CancelApplication heading should be correct$", CancelApplicationPage::untilOnPage);
 
-        When("^I should see the correct text displayed next to the checkbox", CancelApplicationPage::cancelConfirmationText);
-        When("the checkbox is selected", CancelApplicationPage::cancel);
-        Then("^the bilateral CancelApplication page displays the correct advisory text$", CancelApplicationPage::hasAdvisoryText);
-        When("^the cancel application button is selected without checkbox ticked$", CancelApplicationPage::cancelApplication);
-        Then ("I should be taken to cancel confirmation page", () -> {
-            CancelConfirmationPage.untilOnPage();
-            CancelConfirmationPage.cancellationPagereference();
-            CancelConfirmationPage.hasCancellationPageAdvisoryText();
+        When("^I should see the correct text displayed next to the checkbox", () -> {
+            assertTrue(isElementPresent("//label[@class='form-control form-control--checkbox']", SelectorType.XPATH));
         });
-        Then("the Gov.UK hyperlink opens in a new window", () -> {
-            WebDriver driver = getDriver();
-            String[] windows = driver.getWindowHandles().toArray(new String[0]);
-            driver.switchTo().window(windows[1]);
-            isPath("https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage");
-            driver.switchTo().window(windows[0]);
+        When("the checkbox is selected", CancellationPage::clickCancelCheckbox);
+        When("^the cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
+        Then ("^I should be taken to cancel confirmation page$", () -> {
+            CancellationConfirmationPage.untilOnPage();
+            assertEquals("Application cancelled", CancellationConfirmationPage.getPanelHeading());
+            assertEquals(BasePermitJourney.getReferenceNumber(), CancellationConfirmationPage.getReferenceNumberHeading());
+            assertEquals("What happens now", CancellationConfirmationPage.getAdvisoryHeadingPresent());
+            assertEquals("You have cancelled your application and you will no longer be able to view or access it.", CancellationConfirmationPage.getAdvisoryTextPresent());
         });
-        And("I select cancel application button", () -> CancelApplicationPage.cancelApplication());
+        And("I select cancel application button", CancellationPage::clickCancelButton);
         //Guidance link no more displayed on the page,changed the assertion
-        Then("GOV UK hyperlink on the page does not exist anymore", () -> {
-            Assert.assertTrue("Unable to find gov uk hyperlink", CancelApplicationPage.govUKLink());
-        });
-        Then("I select finish button", CancelApplicationPage::finishButton);
-        And("^I click cancel application link for bilateral application$", () -> {
-            CancelApplicationPage.bilateralCancel();
-        });
-        And("^I am on the cancel application page for Annual Bilateral page$", () -> {
-            CancelApplicationPage.untilOnPage();
-        });
+        Then("I select finish button", BilateralJourneySteps::clickFinishButton);
+        And("^I click cancel application link for bilateral application$", BilateralJourneySteps::bilateralCancel);
     }
 }
 

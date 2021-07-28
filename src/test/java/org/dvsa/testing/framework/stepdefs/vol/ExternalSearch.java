@@ -1,15 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import activesupport.MissingRequiredArgument;
-import apiCalls.enums.UserRoles;
-import apiCalls.enums.UserType;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.assertTrue;
@@ -27,16 +24,16 @@ public class ExternalSearch extends BasePage implements En {
             findSelectAllRadioButtonsByValue(arg0);
             switch (arg0) {
                 case "address":
-                    enterText("search", world.createApplication.getPostCodeByTrafficArea(), SelectorType.NAME);
+                    enterText("search", SelectorType.NAME, world.createApplication.getPostCodeByTrafficArea());
                     break;
                 case "business":
-                    enterText("search", world.createApplication.getOrganisationName(), SelectorType.NAME);
+                    enterText("search", SelectorType.NAME, world.createApplication.getOrganisationName());
                     break;
                 case "licence":
-                    enterText("search", world.applicationDetails.getLicenceNumber(), SelectorType.NAME);
+                    enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
                     break;
                 case "person":
-                    enterText("search", String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()), SelectorType.NAME);
+                    enterText("search", SelectorType.NAME, String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()));
                     break;
             }
             clickByName("submit");
@@ -84,7 +81,7 @@ public class ExternalSearch extends BasePage implements En {
             String password = world.configuration.config.getString("partnerUserPassword");
             String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
             get(externalURL);
-            LoginPage.signIn(user,password);
+            world.globalMethods.signIn(user,password);
         });
     }
 }

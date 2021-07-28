@@ -3,9 +3,9 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -26,11 +26,11 @@ public class CreateApplications extends BasePage implements En {
         });
         Then("^the application should be submitted$", () -> {
             waitForTitleToBePresent("Application overview");
-            assertTrue(isTextPresent("Your application reference number is",30));
+            assertTrue(isTextPresent("Your application reference number is"));
         });
         When("^i pay for my application$", () -> {
             waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
-            world.feeAndPaymentJourneySteps.customerPaymentModule();
+            world.feeAndPaymentJourney.customerPaymentModule();
             waitForTitleToBePresent("Application overview");
         });
         And("^i choose to pay my second application with my saved card details$", () -> {

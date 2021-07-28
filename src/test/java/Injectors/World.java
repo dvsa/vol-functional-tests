@@ -21,16 +21,16 @@ public class World {
     public GlobalMethods globalMethods;
     public LicenceCreation licenceCreation;
 
-    public APIJourneySteps APIJourneySteps;
-    public BusRegistrationJourneySteps busRegistrationJourneySteps;
-    public ContinuationJourneySteps continuationJourneySteps;
-    public DirectorJourneySteps directorJourneySteps;
-    public DVLAJourneySteps dvlaJourneySteps;
-    public FeeAndPaymentJourneySteps feeAndPaymentJourneySteps;
-    public InternalSearchJourneySteps internalSearch;
-    public InternalNavigationalJourneySteps internalNavigation;
-    public SelfServeNavigationalJourneySteps selfServeNavigation;
-    public SurrenderJourneySteps surrenderJourneySteps;
-    public TransportManagerJourneySteps TMJourneySteps;
-    public UIJourneySteps UIJourneySteps;
+    public APIJourney APIJourney;
+    public BusRegistrationJourney busRegistrationJourney;
+    public ContinuationJourney continuationJourney;
+    public DirectorJourney directorJourney;
+    public DVLAJourney dvlaJourney;
+    public FeeAndPaymentJourney feeAndPaymentJourney;
+    public InternalSearchJourney internalSearchJourney;
+    public InternalNavigational internalNavigation;
+    public SelfServeNavigational selfServeNavigation;
+    public SurrenderJourney surrenderJourney;
+    public TransportManagerJourney TMJourney;
+    public UIJourney UIJourney;
 }

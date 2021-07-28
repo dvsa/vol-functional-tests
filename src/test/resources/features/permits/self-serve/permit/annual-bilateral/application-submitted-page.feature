@@ -2,7 +2,7 @@
 Feature: Bilateral Permit application submitted page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
 
 
@@ -29,7 +29,7 @@ Feature: Bilateral Permit application submitted page
   @EXTERNAL @OLCS-22911 @bilateral_cabotage_only @OLCS-26045 @OLCS-27361
   Scenario: Fee waived, view receipt link is NOT displayed
     And I have partial annual bilateral applications
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     And all fees have been waived
     When I'm on the annual bilateral submitted page for my active application
     Then I should not see the view receipt link
@@ -37,7 +37,7 @@ Feature: Bilateral Permit application submitted page
   @EXTERNAL @OLCS-22911 @bilateral_cabotage_only @OLCS-26045 @OLCS-27361
   Scenario: Fee payments processed by case worker
     And I have partial annual bilateral applications
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     And pay outstanding fees
     When I'm on the annual bilateral submitted page for my active application
     Then I should not see the view receipt link

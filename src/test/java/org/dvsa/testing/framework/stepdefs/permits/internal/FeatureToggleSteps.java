@@ -1,28 +1,35 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
-import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
-import org.dvsa.testing.lib.pages.enums.Action;
-import org.dvsa.testing.lib.pages.enums.AdminOption;
-import org.dvsa.testing.lib.pages.internal.NavigationBar;
-import org.dvsa.testing.lib.pages.internal.admin.permits.FeatureTogglesPage;
+import Injectors.World;
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.InternalBaseJourney;
+import org.dvsa.testing.lib.newPages.enums.AdminOption;
+import org.dvsa.testing.lib.newPages.internal.NavigationBar;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.FeatureTogglesPage;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.FeatureToggleStatus;
+import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.Features;
 import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
 
 public class FeatureToggleSteps implements En {
-    public FeatureToggleSteps() {
+    private World world;
+
+    public FeatureToggleSteps(World world) {
         When("^I log in as an internal user with admin privileges$", () -> {
-            BaseInternalJourney.getInstance().signin(BaseInternalJourney.User.Admin);
+            world.APIJourney.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
         });
         Then("^I should be able to see the feature toggle option$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
+            NavigationBar.openAdminPanel();
             NavigationBar.verifyOptionInList(AdminOption.FEATURE_TOGGLE);
         });
         When("^I log in as an internal user with normal privileges$", () -> {
-            BaseInternalJourney.getInstance().signin(BaseInternalJourney.User.Normal);
+            world.APIJourney.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            // Need to add ways of creating users with normal privileges.
         });
         Then("^I should NOT be able to see the feature toggle option$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
+            NavigationBar.openAdminPanel();
             boolean hasPermitToggle = true;
 
             try {
@@ -34,32 +41,29 @@ public class FeatureToggleSteps implements En {
             Assert.assertFalse("Expected permit toggle to not be present but was", hasPermitToggle);
         });
         And("^feature toggle for permits has been enabled$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
-            NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
+            InternalBaseJourney.navigateToAdminFeatureTogglePage();
 
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.PermitsAdmin, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalPermits, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfserveEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfservePermits, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendEcmt, FeatureTogglesPage.Status.Active);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendPermits, FeatureTogglesPage.Status.Active);
+            FeatureTogglesPage.toggle(Features.PermitsAdmin, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.InternalEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.InternalPermits, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.SelfserveEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.SelfservePermits, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.BackendEcmt, FeatureToggleStatus.Active);
+            FeatureTogglesPage.toggle(Features.BackendPermits, FeatureToggleStatus.Active);
         });
         And("^disable all internal ECMT feature toggles$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
-            NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
+            InternalBaseJourney.navigateToAdminFeatureTogglePage();
 
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalEcmt, FeatureTogglesPage.Status.Inactive);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.InternalPermits, FeatureTogglesPage.Status.Inactive);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendEcmt, FeatureTogglesPage.Status.Inactive);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.BackendPermits, FeatureTogglesPage.Status.Inactive);
+            FeatureTogglesPage.toggle(Features.InternalEcmt, FeatureToggleStatus.Inactive);
+            FeatureTogglesPage.toggle(Features.InternalPermits, FeatureToggleStatus.Inactive);
+            FeatureTogglesPage.toggle(Features.BackendEcmt, FeatureToggleStatus.Inactive);
+            FeatureTogglesPage.toggle(Features.BackendPermits, FeatureToggleStatus.Inactive);
         });
         And("^disable all external ECMT feature toggles$", () -> {
-            NavigationBar.adminPanel(Action.OPEN);
-            NavigationBar.administratorList(AdminOption.FEATURE_TOGGLE);
+            InternalBaseJourney.navigateToAdminFeatureTogglePage();
 
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfserveEcmt, FeatureTogglesPage.Status.Inactive);
-            FeatureTogglesPage.toggle(FeatureTogglesPage.Feature.SelfservePermits, FeatureTogglesPage.Status.Inactive);
+            FeatureTogglesPage.toggle(Features.SelfserveEcmt, FeatureToggleStatus.Inactive);
+            FeatureTogglesPage.toggle(Features.SelfservePermits, FeatureToggleStatus.Inactive);
         });
     }
 }

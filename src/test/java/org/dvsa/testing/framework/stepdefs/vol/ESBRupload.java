@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 
 import static junit.framework.TestCase.assertTrue;
@@ -17,22 +17,20 @@ public class ESBRupload extends BasePage implements En {
     public ESBRupload(World world) throws MissingRequiredArgument {
         this.world = world;
 
-
-
         Then("^A short notice flag should be displayed in selfserve$", () -> {
-            world.busRegistrationJourneySteps.viewESBRInExternal();
+            world.busRegistrationJourney.viewESBRInExternal();
             assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'New')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'short notice')]", SelectorType.XPATH));
         });
         And("^A short notice tab should be displayed in internal$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.busRegistrationJourneySteps.internalSearchForBusReg();
-            assertTrue(isTextPresent("Short notice",30));
+            world.busRegistrationJourney.internalSearchForBusReg();
+            assertTrue(isTextPresent("Short notice"));
         });
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
-            world.busRegistrationJourneySteps.viewESBRInExternal();
+            world.busRegistrationJourney.viewESBRInExternal();
             waitForTextToBePresent("successful");
             assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'New')]", SelectorType.XPATH));
@@ -40,16 +38,16 @@ public class ESBRupload extends BasePage implements En {
         });
 
         And("^A short notice tab should not be displayed in internal$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.busRegistrationJourneySteps.internalSearchForBusReg();
+            world.busRegistrationJourney.internalSearchForBusReg();
             waitForTextToBePresent("Short notice");
-            assertFalse(isTextPresent("Short notice", 60));
+            assertFalse(isTextPresent("Short notice"));
         });
 
         Given("^i add a new bus registration$", () -> {
             world.internalNavigation.urlSearchAndViewLicence();
-            world.busRegistrationJourneySteps.internalSiteAddBusNewReg(5);
+            world.busRegistrationJourney.internalSiteAddBusNewReg(5);
             clickByLinkText("Register");
             findSelectAllRadioButtonsByValue("Y");
             clickByName("form-actions[submit]");
@@ -63,12 +61,12 @@ public class ESBRupload extends BasePage implements En {
         });
         And("^it has been paid and granted$", () -> {
             clickByLinkText("Fees");
-            world.feeAndPaymentJourneySteps.selectFee();
-            world.feeAndPaymentJourneySteps.payFee("60", "cash");
+            world.feeAndPaymentJourney.selectFee();
+            world.feeAndPaymentJourney.payFee("60", "cash");
             waitAndClick("//*[contains(text(),'Grant')]",SelectorType.XPATH);
         });
         Then("^the bus registration should be granted$", () -> {
-            Assert.assertTrue(isTextPresent("Registered",30));
+            Assert.assertTrue(isTextPresent("Registered"));
         });
         And("^the traffic areas should be displayed on the service details page$", () -> {
             clickByLinkText("Service details");

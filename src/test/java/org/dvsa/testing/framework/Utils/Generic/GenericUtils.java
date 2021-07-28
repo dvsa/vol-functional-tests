@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
 import activesupport.jenkins.Jenkins;
@@ -10,7 +9,7 @@ import activesupport.system.Properties;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.w3c.dom.Document;
@@ -25,7 +24,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;

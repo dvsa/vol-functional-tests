@@ -1,14 +1,11 @@
 package org.dvsa.testing.framework.Journeys.permits.internal;
 
-import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.permit.AnnualBilateralStore;
-import org.dvsa.testing.lib.pages.internal.details.irhp.InternalAnnualBilateralPermitApplicationPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsDetailsPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.InternalAnnualBilateralPermitApplicationPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
 
-import java.net.MalformedURLException;
 import java.util.stream.IntStream;
 
 public class AnnualBilateralJourney extends BaseInternalJourney {
@@ -33,7 +30,7 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
         AnnualBilateralStore permit = licence.getLatestAnnualBilateral().orElseGet(AnnualBilateralStore::new);
         licence.setAnnualBilateral(permit);
 
-        permit.setWindows( InternalAnnualBilateralPermitApplicationPage.numPermits(numPermits) );
+        permit.setWindows(InternalAnnualBilateralPermitApplicationPage.numPermits(numPermits) );
         return this;
     }
 
@@ -47,7 +44,7 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
     public AnnualBilateralJourney declare(LicenceStore licence, boolean declaration) {
         AnnualBilateralStore permit = licence.getLatestAnnualBilateral().orElseThrow(IllegalStateException::new);
 
-        InternalAnnualBilateralPermitApplicationPage.declaration(declaration);
+        InternalAnnualBilateralPermitApplicationPage.confirmDeclaration();
 
         permit.setDeclaration(declaration);
         return this;
@@ -72,21 +69,6 @@ public class AnnualBilateralJourney extends BaseInternalJourney {
         IrhpPermitsDetailsPage.select(reference);
         InternalAnnualBilateralPermitApplicationPage.untilOnPage();
         return this;
-    }
-
-    @Override
-    public AnnualBilateralJourney signin() {
-        return (AnnualBilateralJourney) super.signin();
-    }
-
-    @Override
-    public AnnualBilateralJourney signin(User user) {
-        return (AnnualBilateralJourney) super.signin(user);
-    }
-
-    @Override
-    public AnnualBilateralJourney signin(String username, String password) {
-        return (AnnualBilateralJourney) super.signin(username, password);
     }
 
     @Override

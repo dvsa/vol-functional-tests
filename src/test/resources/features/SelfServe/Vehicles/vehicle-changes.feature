@@ -1,8 +1,8 @@
-@ss_regression
+@deprecated
 Feature: Vehicle management on a licence
 
   Background: Generate a licence and navigate to vehicle page
-    Given I have "2" "goods" "standard_national" licences with "3" vehicles and a cap of "5"
+    Given I have "2" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "5"
     And i am on the vehicle details page
 
   Scenario: I can add a vehicle on my licence

@@ -1,56 +1,56 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 
 public class InternalSearch extends BasePage implements En {
 
     public InternalSearch(World world) {
 
         When("^i search for and click on my licence$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalSearch.searchAndViewLicence();
+            world.internalSearchJourney.searchAndViewLicence();
         });
         And("^i search for and click on my application", () -> {
             if (isElementPresent("//select[@id='search-select']", SelectorType.XPATH)) {
-                world.internalSearch.searchAndViewApplication();
+                world.internalSearchJourney.searchAndViewApplication();
             } else {
-                world.APIJourneySteps.createAdminUser();
+                world.APIJourney.createAdminUser();
                 world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-                world.internalSearch.searchAndViewApplication();
+                world.internalSearchJourney.searchAndViewApplication();
             }
         });
         When("^i search for and click on my case", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalSearch.searchAndViewCase();
+            world.internalSearchJourney.searchAndViewCase();
         });
         When("^i search for my psv disc and click on my licence and discs$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalSearch.searchAndViewPSVDisc();
+            world.internalSearchJourney.searchAndViewPSVDisc();
         });
         When("^i search for my address and click on my licence and addresses$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalSearch.searchAndViewAddress();
+            world.internalSearchJourney.searchAndViewAddress();
         });
 
         And("^i create an admin and url search for my licence$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
         });
         And("^i create an admin and url search for my application", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewApplication();
         });
         And("^i create an admin and url search for my variation", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewVariational();
         });

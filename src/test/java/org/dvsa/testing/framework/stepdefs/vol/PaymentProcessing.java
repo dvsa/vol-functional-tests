@@ -1,10 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.*;
 
 public class PaymentProcessing extends BasePage implements En {
@@ -40,11 +41,11 @@ public class PaymentProcessing extends BasePage implements En {
             String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']/h2", SelectorType.XPATH);
             setCurrentFeeCount(world.genericUtils.stripAlphaCharacters(feeCountBeforeAddingNewFee));
             assertEquals("current", findElement("status", SelectorType.ID, 30).getAttribute("value"));
-            world.feeAndPaymentJourneySteps.createAdminFee(amount, arg0);
+            world.feeAndPaymentJourney.createAdminFee(amount, arg0);
         });
         Then("^the fee should be created$", () -> {
             // Refresh page
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
             String newFeeCount = world.genericUtils.stripAlphaCharacters(getElementValueByText("//div[@class='table__header']/h3", SelectorType.XPATH));
             assertEquals(getText("//*[contains(text(),'" + getFeeNumber() + "')]//*[contains(@class,'status')]", SelectorType.XPATH), "OUTSTANDING");
             assertNotEquals(currentFeeCount, newFeeCount);
@@ -52,18 +53,18 @@ public class PaymentProcessing extends BasePage implements En {
         Then("^the fee should be paid and no longer visible in the fees table$", () -> {
             world.internalNavigation.urlSearchAndViewEditFee(getFeeNumber());
             waitForTextToBePresent("Payments and adjustments");
-            javaScriptExecutor("location.reload(true)");
+            refreshPageWithJavascript();
             assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
         });
         And("^when i pay for the fee by \"([^\"]*)\"$", (String arg0) -> {
             waitForTextToBePresent("Fee No.");
             String feeAmount = String.valueOf(findElement("//*/tbody/tr[1]/td[5]", SelectorType.XPATH, 10).getText()).substring(1);
             setFeeNumber(world.genericUtils.stripAlphaCharacters(String.valueOf(findElement("//*/tbody/tr[1]/td[1]", SelectorType.XPATH, 10).getText())));
-            world.feeAndPaymentJourneySteps.selectFeeById(feeNumber);
+            world.feeAndPaymentJourney.selectFeeById(feeNumber);
             if (arg0.equals("card")) {
-                world.feeAndPaymentJourneySteps.payFee(null, arg0);
+                world.feeAndPaymentJourney.payFee(null, arg0);
             } else {
-                world.feeAndPaymentJourneySteps.payFee(feeAmount, arg0);
+                world.feeAndPaymentJourney.payFee(feeAmount, arg0);
             }
         });
     }

@@ -1,15 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import io.cucumber.java8.En;
+import cucumber.api.java8.En;
+import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.CheckIfYouNeedECMTPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
-import org.dvsa.testing.lib.pages.external.permit.enums.Sector;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
 import org.junit.Assert;
 
 import java.util.List;
@@ -23,37 +28,31 @@ public class SpecialistHaulagePageSteps implements En {
         And("^I am on the specialist haulage page$", () -> {
             clickToPermitTypePage(world);
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
-            YearSelectionPage.EcmtValidityPeriod();
-            //EcmtApplicationJourney.getInstance().yearSelection(YearSelectionPage.YearSelection.YEAR_2020,operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
+            YearSelectionPage.selectECMTValidityPeriod();
             EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
-            CheckIfYouNeedECMTPermitsPage.needECMTPermits(true);
-        //    AnnualEcmtPermitUsagePage.annualEcmtPermitUsage(AnnualEcmtPermitUsage.random());
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            CheckIfYouNeedECMTPermitsPageJourney.completePage();
             BasePermitPage.saveAndContinue();
-            //OverviewPage.section(PermitSection.Cabotage);
-            CabotagePage.wontCarryCabotage(true);
-            CertificatesRequiredPage.certificatesRequired(true);
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            NumberOfPermitsPage.permitsValue();
+            CabotagePage.confirmWontUndertakeCabotage();
+            CertificatesRequiredPage.completePage();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
+            NumberOfPermitsPageJourney.completeECMTPage();
+            EmissionStandardsPageJourney.completePage();
+            NumberOfTripsPage.enterNumberOfTripsValue();
             BasePermitPage.saveAndContinue();
-            VehicleStandardPage.isEuro6Compliant(true);
-            NumberOfTripsPage.numberOfTripsValue();
-            BasePermitPage.saveAndContinue();
-            PercentageOfInternationalJourneysPage.proportion(JourneyProportion.LessThan60Percent);
+            PercentageOfInternationalJourneysPage.selectProportion(JourneyProportion.LessThan60Percent);
         });
-        Given("^I have specified a type of good to deliver$", () -> SectorPage.sector(Sector.random()));
         Then("^Non other sectors should be in alphabetical order$", () -> {
             List<String> sectorTitles = SectorPage.getSectorsOnPage().stream()
                     .filter((String sector) -> !sector.equals("Other non-metallic mineral products")
-                            && !sector.equals("None or more than one of these sectors") )
+                            && !sector.equals("None or more than one of these sectors"))
                     .collect(Collectors.toList());
 
             for (int i = 0; i < sectorTitles.size() - 1; i++) {
                 Assert.assertTrue(sectorTitles.get(i).substring(0, 1).compareTo(sectorTitles.get(i + 1).substring(0, 1)) <= 0);
             }
         });
-        Then("^I should see the validation error message for the sectors page$", () -> Assert.assertTrue(SectorPage.hasErrorMessagePresent()));
     }
 
 }

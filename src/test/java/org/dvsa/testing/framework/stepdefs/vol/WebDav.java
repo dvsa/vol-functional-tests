@@ -6,8 +6,8 @@ import activesupport.system.Properties;
 import autoitx4java.AutoItX;
 import io.cucumber.java8.En;
 import org.apache.commons.lang.StringUtils;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -32,7 +32,7 @@ public class WebDav extends BasePage implements En {
             String licenceNumber = world.applicationDetails.getLicenceNumber();
             String documentLink = Browser.navigate().findElement(By.id("letter-link")).getText();
 
-            world.UIJourneySteps.editDocumentWithWebDav();
+            world.UIJourney.editDocumentWithWebDav();
 
             String fileName = getText("//table//tbody//tr//td", SelectorType.XPATH);
             world.genericUtils.writeLineToFile(
@@ -42,7 +42,7 @@ public class WebDav extends BasePage implements En {
         });
         And("^the document should contain the changes$", () -> {
 
-            Assert.assertTrue(isTextPresent(templateName,30));
+            Assert.assertTrue(isTextPresent(templateName));
             clickByLinkText(templateName);
 
             String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.applicationDetails.getLicenceNumber(), templateName);
@@ -77,7 +77,7 @@ public class WebDav extends BasePage implements En {
             Assert.assertEquals(getText("//*[@id='osType']//*[@selected='selected']", SelectorType.XPATH), operatingSystem);
         });
         And("^upload a document$", () -> {
-            world.UIJourneySteps.uploadDocument(String.format("%s/%s",System.getProperty("user.dir"),"src/test/resources/testBusTemplate.rtf"));
+            world.UIJourney.uploadDocument(String.format("%s/%s",System.getProperty("user.dir"),"src/test/resources/testBusTemplate.rtf"));
         });
     }
 }

@@ -5,9 +5,9 @@ import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import activesupport.aws.s3.S3;
 import apiCalls.enums.UserType;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import static activesupport.database.DBUnit.*;
 import static java.lang.Thread.sleep;
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.APIJourneySteps.*;
+import static org.dvsa.testing.framework.Journeys.APIJourney.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -37,21 +37,21 @@ public class RemoveTM extends BasePage implements En {
             if (world.createApplication.getOperatorType() == null) {
                 world.createApplication.setOperatorType("public");
             }
-            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-            world.APIJourneySteps.createApplication();
-            world.APIJourneySteps.submitApplication();
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.createApplication();
+            world.APIJourney.submitApplication();
         });
         When("^the internal user goes to remove the last transport manager$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
-            world.TMJourneySteps.promptRemovalOfInternalTransportManager();
+            world.TMJourney.promptRemovalOfInternalTransportManager();
         });
         When("^the transport manager has been removed by an internal user$", () -> {
-            world.APIJourneySteps.createAdminUser();
+            world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             world.internalNavigation.urlSearchAndViewLicence();
-            world.TMJourneySteps.removeInternalTransportManager();
+            world.TMJourney.removeInternalTransportManager();
         });
         Then("^a pop up message should be displayed$", () -> {
             waitForTextToBePresent(alertHeaderValue);
@@ -67,16 +67,16 @@ public class RemoveTM extends BasePage implements En {
         Then("^the remove TM popup should not be displaying new TM remove text$", () -> {
             waitForTextToBePresent(alertHeaderValue);
             if (Browser.navigate().getCurrentUrl().contains("variation") || Browser.navigate().getCurrentUrl().contains("application")) {
-                assertFalse(isTextPresent(newAlertValue, 60));
-                assertTrue(isTextPresent(applicationVariationTMAlertContent, 60));
+                assertFalse(isTextPresent(newAlertValue));
+                assertTrue(isTextPresent(applicationVariationTMAlertContent));
             }
             if (Browser.navigate().getCurrentUrl().contains("ssap1")) {
                 String alertContent = getElementValueByText("//div[@class='modal__content']/p", SelectorType.XPATH);
                 assertEquals(alertContent, oldAlertValue);
             }
             if (tmCount > 1) {
-                assertFalse(isTextPresent(newAlertValue, 60));
-                assertTrue(isTextPresent(applicationVariationTMAlertContent, 60));
+                assertFalse(isTextPresent(newAlertValue));
+                assertTrue(isTextPresent(applicationVariationTMAlertContent));
             }
         });
         Given("^a self-serve user removes the last TM$", () -> {
@@ -99,7 +99,7 @@ public class RemoveTM extends BasePage implements En {
             waitForTextToBePresent(alertHeaderValue);
             do {
                 // do nothing
-            } while (!isTextPresent("You must select an option", 60));
+            } while (!isTextPresent("You must select an option"));
             isLinkPresent("You must select an option", 60);
         });
 

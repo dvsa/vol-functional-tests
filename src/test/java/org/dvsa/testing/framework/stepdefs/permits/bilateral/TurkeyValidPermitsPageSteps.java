@@ -3,11 +3,12 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenByCountryModel;
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenWindowModel;
 import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
-import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Utils.common.World;
+import cucumber.api.java8.En;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.ValidAnnualBilateralPermitsPage;
+import org.dvsa.testing.lib.newPages.external.ValidPermit.ValidAnnualBilateralPermit;
+import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.junit.Assert;
 
 import java.time.LocalDate;
@@ -26,8 +27,7 @@ public class TurkeyValidPermitsPageSteps implements En {
 
             OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
             String message =  "Expected all permits to have a status of 'VALID' but one or more DIDN'T!!!";
-            OperatorStore store = operatorStore;
-            List<ValidAnnualBilateralPermitsPage.Permit> permits = ValidAnnualBilateralPermitsPage.permits();
+            List<ValidAnnualBilateralPermit> permits = ValidPermitsPage.annualBilateralPermits();
 
             List<OpenWindowModel> windows = stock.openWindowsFor(permits.stream().map(p -> p.getCountry().toString()).toArray(String[]::new));
 
@@ -35,7 +35,7 @@ public class TurkeyValidPermitsPageSteps implements En {
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
 
             // Verify that Type is displayed is always Standard single journey for Turkey
-            Assert.assertEquals("Standard single journey",ValidAnnualBilateralPermitsPage.type());
+            Assert.assertEquals("Standard single journey", ValidPermitsPage.getType());
 
             IntStream.range(0, permits.size() - 1).forEach((idx) -> {
                 List<LocalDate> expiryDates = stock.openWindowsFor(permits.get(idx).getCountry().toString())

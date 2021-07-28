@@ -1,22 +1,20 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
-import activesupport.IllegalBrowserException;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.LicencePage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.YearSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.PeriodSelectionPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PeriodSelectionPageOne;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.PeriodSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitTypePage;
+import org.dvsa.testing.lib.newPages.external.pages.SelectALicencePage;
 
-import java.net.MalformedURLException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class BasePermitJourney extends VolAccountJourney {
+public class BasePermitJourney extends BaseJourney {
     protected static volatile BasePermitJourney instance = null;
 
     protected BasePermitJourney() {
@@ -35,25 +33,15 @@ public class BasePermitJourney extends VolAccountJourney {
         return instance;
     }
 
-    public BasePermitJourney beginApplication()  {
-        HomePage.selectTab(Tab.PERMITS);
-        HomePage.applyForLicenceButton();
-        return this;
-    }
-
     public BasePermitJourney permitType(OperatorStore operatorStore) {
-        return permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
+        return permitType(PermitType.ECMT_ANNUAL, operatorStore);
     }
 
     public BasePermitJourney permitType() {
-        return permitType(PermitTypePage.PermitType.EcmtAnnual, new OperatorStore());
+        return permitType(PermitType.ECMT_ANNUAL, new OperatorStore());
     }
 
-    public BasePermitJourney yearSelection() {
-        return yearSelection(YearSelectionPage.YearSelection.YEAR_2019, new OperatorStore());
-    }
-
-    public BasePermitJourney permitType(PermitTypePage.PermitType type, OperatorStore operator) {
+    public BasePermitJourney permitType(PermitType type, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -63,12 +51,12 @@ public class BasePermitJourney extends VolAccountJourney {
         operator.setCurrentPermitType(type);
         operator.withLicences(licence);
 
-        PermitTypePage.type(type);
-        PermitTypePage.continueButton();
+        PermitTypePage.selectType(type);
+        PermitTypePage.clickContinue();
         return this;
     }
 
-    public BasePermitJourney shortTermType(PeriodSelectionPageOne.ShortTermType shortTermType, OperatorStore operator) {
+    public BasePermitJourney shortTermType(PeriodType shortTermType, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -76,11 +64,11 @@ public class BasePermitJourney extends VolAccountJourney {
         operator.setCurrentShortTermType(shortTermType);
         operator.withLicences(licence);
 
-        PeriodSelectionPageOne.shortTermtype(shortTermType);
-        PeriodSelectionPageOne.continueButton();
+        PeriodSelectionPage.selectShortTermType(shortTermType);
+        PeriodSelectionPage.saveAndContinue();
         return this;
     }
-    public BasePermitJourney bilateralPeriodType (PeriodSelectionPage.BilateralPeriodType bilateralPeriodType, OperatorStore operator) {
+    public BasePermitJourney bilateralPeriodType (PeriodType bilateralPeriodType, OperatorStore operator) {
         Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
         LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
         operator.withLicences(licence);
@@ -91,52 +79,25 @@ public class BasePermitJourney extends VolAccountJourney {
         //PeriodSelectionPage.continueButton();
         return this;
     }
-    public BasePermitJourney yearSelection(YearSelectionPage.YearSelection yearSelection, OperatorStore operator){
-        Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
-        LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
-        operator.withLicences(licence);
-        licence.getEcmt().setYear(yearSelection);
-        operator.setCurrentYearSelection(yearSelection);
-        operator.withLicences(licence);
-
-        YearSelectionPage.type(yearSelection);
-        YearSelectionPage.continueButton();
-        return this;
-    }
 
     public BasePermitJourney licencePage(OperatorStore operator, World world) {
-        LicenceStore selectedLicence;
+
         String licenceNumber;
-
-        if (operator.getCurrentLicenceNumber().isPresent()) {
-            selectedLicence = operator.getLicences().stream().filter(l -> !l.getLicenceNumber().equals(operator.getCurrentLicenceNumber())).collect(Collectors.toList()).get(0);
-        } else {
-            selectedLicence = operator.randomLicence();
-        }
-
-        if (selectedLicence.getEcmt().hasType(PermitTypePage.PermitType.AnnualBilateral) ||
-                operator.hasCurrentPermitType(PermitTypePage.PermitType.AnnualMultilateral) ||
-                operator.hasCurrentPermitType(PermitTypePage.PermitType.ShortTermECMT) ||
-                operator.hasCurrentPermitType(PermitTypePage.PermitType.EcmtInternationalRemoval)) {
-            org.dvsa.testing.lib.pages.external.permit.bilateral.LicencePage.licence(selectedLicence.getLicenceNumber());
-            licenceNumber = selectedLicence.getLicenceNumber();
-        }
-
-        else if (LicencePage.hasMultipleLicences()) {
-            LicencePage.licence(selectedLicence.getLicenceNumber());
-            licenceNumber = selectedLicence.getLicenceNumber();
-        }
+        if (SelectALicencePage.numberOfLicences() > 1) {
+//            SelectALicencePage.clickLicence(selectedLicence.getLicenceNumber());
+//            licenceNumber = selectedLicence.getLicenceNumber();
+        } // Need way of clicking licence when multiple are available. See if test breaks first.
 
         else {
-            LicencePage.licence(selectedLicence.getLicenceNumber());
-            licenceNumber = selectedLicence.getLicenceNumber();
+            licenceNumber = world.applicationDetails.getLicenceNumber();
+            SelectALicencePage.clickLicence(licenceNumber);
         }
 
-        operator.setCurrentLicenceNumber(licenceNumber);
-        world.put("licence", selectedLicence);
 
-        LicencePage.saveAndContinue();
+        SelectALicencePage.saveAndContinue();
 
+
+        BasePermitJourney.setReferenceNumber(OverviewPage.getReferenceFromPage());
         return this;
     }
 

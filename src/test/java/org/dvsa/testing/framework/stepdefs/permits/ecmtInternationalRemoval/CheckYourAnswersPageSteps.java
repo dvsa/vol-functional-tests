@@ -2,14 +2,17 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CheckYourAnswersPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.Declaration;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.NumberofPermitsPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.enums.ECMTRemovalsInfo;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
+import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.enums.sections.ECMTRemovalsSection;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 
@@ -23,41 +26,39 @@ public class CheckYourAnswersPageSteps implements En {
         When("^I am on ECMT Removal check your answers page", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtInternationalRemoval, operatorStore)
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                     .licencePage(operatorStore, world);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
-                    .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)
                     .removalsEligibility(true)
                      .cabotagePage()
                     .certificatesRequiredPage()
-                    .permitStartDatePage()
-                    .numberOfPermits();
+                    .permitStartDatePage();
+            NumberOfPermitsPageJourney.completePage();
 
         });
-        Then("^ECMT Removals permit check your answers page has correct heading label$", () -> CheckYourAnswersPage.hasPageHeading());
-        And("^the ECMT Removals check your answers page has reference number$", CheckYourAnswersPage::reference);
+        And("^the ECMT Removals check your answers page has reference number$", BasePermitPage::getReferenceFromPage);
         And("^the ECMT Removals application answers are displayed on the check your answers page$", () -> {
-            String licence = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CheckYourAnswersPage.getAnswer(ECMTRemovalsInfo.Licence);
-            assertThat(licence,StringContains.containsString(operatorStore.getCurrentLicence().get().getLicenceNumber()));
-            String permitType = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CheckYourAnswersPage.getAnswer(ECMTRemovalsInfo.PermitType);
-            System.out.println(permitType);
+            String licence = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Licence);
+            assertThat(licence,StringContains.containsString(world.applicationDetails.getLicenceNumber()));
+            String permitType = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.PermitType);
             Assert.assertEquals(permitType,"ECMT International Removal");
-            String RemovalsEligibility = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CheckYourAnswersPage.getAnswer(ECMTRemovalsInfo.RemovalsEligibility);
-            Assert.assertEquals(RemovalsEligibility,CheckYourAnswersPage.permitEligibility());
-            String Cabotage = org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CheckYourAnswersPage.getAnswer(ECMTRemovalsInfo.Cabotage);
-            Assert.assertEquals(Cabotage,CheckYourAnswersPage.cabotage());
+            String RemovalsEligibility = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.RemovalsEligibility);
+            Assert.assertEquals(RemovalsEligibility, "I confirm that I will only use an ECMT international removal permit to move household goods or business possessions and that I will use specialised equipment and staff for removal operations.");
+            String Cabotage = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Cabotage);
+            Assert.assertEquals(Cabotage, "I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.");
         });
-        Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPage.checkStatus("Check your answers",COMPLETED));
-        And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPage.select(OverviewPage.Section.Checkyouranswers));
-        Then("^I am navigated to the ECMT Removals check your answers page$", () ->{
-                CheckYourAnswersPage.checkAnswersPageLoad();
-                CheckYourAnswersPage.hasPageHeading();
+        Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPageJourney.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
+        And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPageJourney.clickOverviewSection(OverviewSection.CheckYourAnswers));
+        Then("^I should be on the declaration page$", DeclarationPage::untilOnPage);
+        Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> {
+            CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.RemovalsEligibility);
         });
-        Then("^I am on ECMT Removal Declaration page$", Declaration::heading);
-        //Then("^I choose to change the ECMT Removals Permits Licence section$", () -> CheckYourAnswersPage.change(ECMTRemovalsInfo.Licence));
-        Then("^I choose to change the ECMT Removals Permits Eligibility  section$", () -> CheckYourAnswersPage.change(ECMTRemovalsInfo.RemovalsEligibility));
-        Then("^I choose to change the ECMT Removals Permits Cabotage section$", () -> CheckYourAnswersPage.change(ECMTRemovalsInfo.Cabotage));
-        Then("^I choose to change the ECMT Removals Permits Number of permits section$", () -> CheckYourAnswersPage.change(ECMTRemovalsInfo.NumberOfPermits));
-        Then("^I should be on the ECMT international removal number of permits page$", () -> { NumberofPermitsPage.hasheading(); });
+        Then("^I choose to change the ECMT Removals Permits Cabotage section$", () -> CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.Cabotage));
+        Then("^I choose to change the ECMT Removals Permits Number of permits section$", () -> CheckYourAnswerPage.clickChangeAnswer(ECMTRemovalsSection.NumberOfPermits));
+        Then("^I should be on the ECMT international removal number of permits page$", () -> {
+            NumberOfPermitsPage.untilOnPage();
+            NumberOfPermitsPageJourney.hasECMTPageHeading();
+        });
     }
 }

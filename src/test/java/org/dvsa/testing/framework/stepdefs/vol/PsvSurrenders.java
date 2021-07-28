@@ -1,15 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
-import activesupport.driver.Browser;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
-
-import java.net.MalformedURLException;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -19,7 +15,7 @@ public class PsvSurrenders extends BasePage implements En {
 
     public PsvSurrenders(World world) {
         And("^i choose to surrender my licence$", () -> {
-            world.surrenderJourneySteps.submitSurrenderUntilChoiceOfVerification();
+            world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
         });
         Then("^the correct licence details should be displayed$", () -> {
             String licenceNumber = getText("//dt[contains(text(),'Licence number')]//..//dd", SelectorType.XPATH);
@@ -34,9 +30,9 @@ public class PsvSurrenders extends BasePage implements En {
                     world.createApplication.getCorrespondenceAddressLine4());
             String correspondenceTown = world.createApplication.getCorrespondenceTown();
             String correspondenceCountry = "United Kingdom";
-            Assertions.assertEquals(correspondenceAddress, world.surrenderJourneySteps.getSurrenderAddressLine1());
-            Assertions.assertEquals(correspondenceTown, world.surrenderJourneySteps.getSurrenderTown());
-            Assertions.assertEquals(correspondenceCountry, world.surrenderJourneySteps.getSurrenderCountry());
+            Assertions.assertEquals(correspondenceAddress, world.surrenderJourney.getSurrenderAddressLine1());
+            Assertions.assertEquals(correspondenceTown, world.surrenderJourney.getSurrenderTown());
+            Assertions.assertEquals(correspondenceCountry, world.surrenderJourney.getSurrenderCountry());
         });
         And("^the correct contact details should be displayed$", () -> {
             String contactNumber = getText("//dt[contains(text(),'Contact number')]//..//dd", SelectorType.XPATH);
@@ -45,28 +41,28 @@ public class PsvSurrenders extends BasePage implements En {
             Assert.assertEquals(world.createApplication.getOrganisationEmailAddress(), emailAddress);
         });
         And("^i update my correspondence address$", () -> {
-            world.surrenderJourneySteps.setUpdatedTown("Leicester");
+            world.surrenderJourney.setUpdatedTown("Leicester");
             click("//a[contains(text(),'Change')][1]", SelectorType.XPATH);
             waitForTitleToBePresent("Addresses");
             findElement("addressTown", SelectorType.ID, 5).clear();
-            enterText("addressTown", world.surrenderJourneySteps.getUpdatedTown(), SelectorType.ID);
+            enterText("addressTown", SelectorType.ID, world.surrenderJourney.getUpdatedTown());
             click("//*[@id='form-actions[save]']", SelectorType.XPATH);
             waitForTitleToBePresent("Review your contact information");
         });
         Then("^the new correspondence details should be displayed on the review page$", () -> {
-            String licenceTown = world.surrenderJourneySteps.getSurrenderTown();
-            Assert.assertEquals(world.surrenderJourneySteps.getUpdatedTown(), licenceTown);
+            String licenceTown = world.surrenderJourney.getSurrenderTown();
+            Assert.assertEquals(world.surrenderJourney.getUpdatedTown(), licenceTown);
         });
         Given("^i sign with verify$", () -> {
             waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.UIJourneySteps.signWithVerify();
+            world.UIJourney.signWithVerify();
         });
         Then("^the post verify success page is displayed$", () -> {
             waitForTextToBePresent("What happens next");
             Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber()), 30));
-            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")), 30));
-            assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk", 30));
+            Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
+            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
+            assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
             waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
         });
         And("^the surrender status is \"([^\"]*)\"$", (String status) -> {

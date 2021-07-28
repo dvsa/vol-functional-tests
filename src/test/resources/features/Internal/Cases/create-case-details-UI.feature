@@ -25,3 +25,14 @@ Feature: Public enquiry added and published and deletion of case notes
   Scenario: Add a submission
     When i add a submission
     Then the submission details should be displayed
+
+    #TODO: Need to do UI versions of these
+  Scenario: Creating a case with a complaint
+
+  Scenario: Add a conviction to a case
+
+  Scenario: Add a condition-undertaking to a case
+
+  Scenario: Add a submission
+
+  Scenario: Add a case note

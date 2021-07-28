@@ -2,7 +2,7 @@
 Feature: Short term ECMT APSG with sectors submitted page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
 
   @OLCS-23019
@@ -11,8 +11,8 @@ Feature: Short term ECMT APSG with sectors submitted page
     Then the reference number on the short term ECMT submitted page  is as expected
     And all advisory texts on short term ECMT submitted page is displayed correctly
     When I select view receipt from short term application submitted page
-    Then the view receipt hyperlink opens in a new window
-    When  I select finish button
+    Then I open the receipt and it should open in a new window
+    When I select finish button
     Then the user is on self-serve permits dashboard
 
   @OLCS-23019

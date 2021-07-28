@@ -5,12 +5,16 @@ import apiCalls.eupaActions.OrganisationAPI;
 import io.cucumber.java8.En;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.CheckYourAnswersPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.external.enums.sections.BilateralSection;
 import org.junit.Assert;
 
 import java.util.List;
@@ -23,25 +27,25 @@ public class CheckYourAnswersSteps implements En {
         And("^I'm on the annual bilateral check your answers page$", ()-> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.AnnualBilateral, operatorStore)
+                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
                     .licencePage(operatorStore, world);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.Countries);
             AnnualBilateralJourney.getInstance()
-                    .overview(OverviewPage.Section.Countries, operatorStore)
-                    .countries(operatorStore)
-                    .numberOfPermits(operatorStore);
+                    .countries(operatorStore);
+            NumberOfPermitsPageJourney.completeBilateralPage();
 
-            CheckYourAnswersPage.untilOnPage();
+            CheckYourAnswerPage.untilOnPage();
         });
         Then("^I am able to see the application reference number on the annual bilateral check your answers page$", () -> {
-            CheckYourAnswersPage.untilOnPage();
-            String actualReference =  CheckYourAnswersPage.reference();
+            CheckYourAnswerPage.untilOnPage();
+            String actualReference =  BasePermitPage.getReferenceFromPage();
             String expectedReference = operatorStore.getCurrentLicence().get().getReferenceNumber();
             Assert.assertEquals(expectedReference, actualReference);
         });
-        Then("^the bilateral check your answers page heading should be correct$", CheckYourAnswersPage::untilOnPage);
+        Then("^the bilateral check your answers page heading should be correct$", CheckYourAnswerPage::untilOnPage);
         Then("^all of the answers displayed match the answers I gave$", () -> {
             LicenceStore licenceStore = operatorStore.getCurrentLicence().get();
-            Collections.reverse(licenceStore.getEcmt().getPermitsPerCountry());
+            Collections.reverse(NumberOfPermitsPageJourney.getPermitsPerCountry());
 
             String expectedPermitType = licenceStore.getEcmt().getType().get().toString();
             LicenceModel licenceModel = OrganisationAPI.dashboard(operatorStore.getOrganisationId())
@@ -49,15 +53,15 @@ public class CheckYourAnswersSteps implements En {
             String expectedLicence = licenceModel.getLicNo().concat("\n" + licenceModel.getTrafficArea().getName());
 
             List<String> deliveryCountries =
-                    licenceStore.getEcmt().getPermitsPerCountry().stream().map(permit -> permit.getCountry().toString()).collect(Collectors.toList());
+                    NumberOfPermitsPageJourney.getPermitsPerCountry().stream().map(permit -> permit.getCountry().toString()).collect(Collectors.toList());
             Collections.reverse(deliveryCountries);
             String expectedDeliveryCountry = String.join(", ", deliveryCountries);
 
-            Assert.assertEquals(expectedPermitType, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.PermitType));
-            Assert.assertEquals(expectedLicence, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.Licence));
-            Assert.assertEquals(expectedDeliveryCountry, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.Country));
+            Assert.assertEquals(expectedPermitType, CheckYourAnswerPage.getAnswer(BilateralSection.PermitType));
+            Assert.assertEquals(expectedLicence, CheckYourAnswerPage.getAnswer(BilateralSection.Licence));
+            Assert.assertEquals(expectedDeliveryCountry, CheckYourAnswerPage.getAnswer(BilateralSection.Country));
 
-            licenceStore.getEcmt().getPermitsPerCountry().sort((o1, o2) -> {
+            NumberOfPermitsPageJourney.getPermitsPerCountry().sort((o1, o2) -> {
                 int result = o1.getCountry().toString().substring(0, 1).compareTo(o2.getCountry().toString().substring(0, 1));
 
                 if (result == 0 && Integer.parseInt(o1.getYear()) < Integer.parseInt(o2.getYear())) {
@@ -69,9 +73,9 @@ public class CheckYourAnswersSteps implements En {
                 return result;
             });
 
-            String expectedPermits = licenceStore.getEcmt().getPermitsPerCountry().stream().map(permits -> String.format("%d permits for %s in %s", permits.getQuantity(), permits.getCountry(), permits.getYear())).collect(Collectors.joining("\n"));
+            String expectedPermits = NumberOfPermitsPageJourney.getPermitsPerCountry().stream().map(permits -> String.format("%d permits for %s in %s", permits.getQuantity(), permits.getCountry(), permits.getYear())).collect(Collectors.joining("\n"));
 
-            Assert.assertEquals(expectedPermits, CheckYourAnswersPage.getAnswer(CheckYourAnswersPage.Section.Permits));
+            Assert.assertEquals(expectedPermits, CheckYourAnswerPage.getAnswer(BilateralSection.Permits));
         });
     }
 }

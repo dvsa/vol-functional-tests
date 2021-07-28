@@ -3,12 +3,11 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import activesupport.number.Int;
 import apiCalls.Utils.volBuilders.VehiclesBuilder;
-
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +15,7 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     World world;
 
+    //deprecated
     public OldVehicleDetailsJourney(World world) {
         this.world = world;
     }
@@ -40,14 +40,16 @@ public class OldVehicleDetailsJourney extends BasePage {
     public void iAmOnTheVehicleDetailsPage() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", "Vehicles");
-    };
+    }
+
+    ;
 
     @When("i add a vehicle to my licence")
     public void iAddAVehicleToMyLicence() {
         click("add", SelectorType.ID);
         waitForTitleToBePresent("Add vehicle");
-        enterText(VRMField, generatedVRM, SelectorType.XPATH);
-        enterText(weightField, generatedWeight, SelectorType.XPATH);
+        enterText(VRMField, SelectorType.XPATH, generatedVRM);
+        enterText(weightField, SelectorType.XPATH, generatedWeight);
         click(submitButton, SelectorType.XPATH);
     }
 
@@ -67,7 +69,7 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     @Then("the vehicle no longer appears")
     public void theVehicleNoLongerAppears() {
-        assertFalse(isTextPresent(firstVRM, 10));
+        assertFalse(isTextPresent(firstVRM));
     }
 
     @When("i change a vehicle on my licence")
@@ -106,8 +108,10 @@ public class OldVehicleDetailsJourney extends BasePage {
         assertEquals(firstVRM, valueOfFirstVRMInTable);
     }
 
+
+    //deprecated
     @Then("the {string} alert should appear")
     public void theAlertShouldAppear(String alertText) {
-        assertTrue(isTextPresent(alertText, 10));
+        assertTrue(isTextPresent(alertText));
     }
 }

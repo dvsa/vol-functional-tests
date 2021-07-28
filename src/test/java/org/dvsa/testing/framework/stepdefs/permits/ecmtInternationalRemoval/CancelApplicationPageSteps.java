@@ -1,25 +1,32 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
-import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Utils.common.World;
+import cucumber.api.java8.En;
+import Injectors.World;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.CancelApplicationPage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
-public class CancelApplicationPageSteps implements En {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+public class CancelApplicationPageSteps extends BasePage implements En {
 
     public CancelApplicationPageSteps(OperatorStore operatorStore, World world) {
 
         And ("^the ECMT International Removal application reference number should be displayed above the heading$", () -> {
-            String actualReference = CancelApplicationPage.reference();
+            String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(operatorStore.getLatestLicence().get().getReferenceNumber(), actualReference);
         });
-        Then("^I am on the ECMT Removals cancel application page$", CancelApplicationPage::untilOnPage);
-        And ("^the ECMT international removal  CancelApplication heading should be correct$", CancelApplicationPage::untilOnPage);
-        And ("^the ECMT International Removal CancelApplication page displays the correct advisory text$", CancelApplicationPage::hasAdvisoryText);
-        And ("^the correct text is displayed next to the checkbox in ECMT Removal cancellation page", CancelApplicationPage::ecmtInternationalRemovalcancelConfirmationText);
-        When("^the ECMT International Removal cancel application button is selected without checkbox ticked$", CancelApplicationPage::cancelApplication);
-        When("^I select the Gov.UK hyperlink$", CancelApplicationPage::govUKLink);
+        And ("^the correct text is displayed next to the checkbox in ECMT Removal cancellation page", () -> {
+            assertEquals("I confirm that I would like to cancel my application.", CancellationPage.getConfirmCheckboxText());
+        });
+        When("^the ECMT International Removal cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
+        When("^I select the Gov.UK hyperlink$", () -> {
+            assertTrue(isElementNotPresent("//a[@href='https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage']", SelectorType.XPATH));
+        });
     }
 }
 

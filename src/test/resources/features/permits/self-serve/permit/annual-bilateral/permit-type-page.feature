@@ -2,7 +2,7 @@
 Feature: Annual bilateral permit type selection page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
 
   @EXTERNAL @OLCS-22906 @OLCS-26819 @27064 @olcs-27581

@@ -5,15 +5,16 @@ import activesupport.http.RestUtils;
 import activesupport.system.Properties;
 import apiCalls.Utils.generic.Headers;
 import apiCalls.Utils.generic.Utils;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.When;
-import io.cucumber.java.en.Then;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import io.restassured.response.ValidatableResponse;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -34,19 +35,19 @@ public class ManageVehicle extends BasePage {
     @When("I navigate to manage vehicle page on an application")
     public void iNavigateToManageVehiclePageOnAnApplication(){
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.dvlaJourneySteps.navigateToManageVehiclesPage("application");
+        world.dvlaJourney.navigateToManageVehiclesPage("application");
     }
 
     @When("I navigate to manage vehicle page on a licence")
     public void iNavigateToManageVehiclePageOnALicence(){
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.dvlaJourneySteps.navigateToManageVehiclesPage("licence");
+        world.dvlaJourney.navigateToManageVehiclesPage("licence");
     }
 
     @When("I navigate to manage vehicle page on a variation")
     public void iNavigateToManageVehiclePageOnAVariation(){
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.dvlaJourneySteps.navigateToManageVehiclesPage("variation");
+        world.dvlaJourney.navigateToManageVehiclesPage("variation");
     }
 
     @Then("the add vehicle page should display licence number")
@@ -56,7 +57,7 @@ public class ManageVehicle extends BasePage {
 
     @And("choose to add a {string} vehicle")
     public void chooseToAddAVehicle(String VRM){
-        world.UIJourneySteps.addAVehicle(VRM);
+        world.UIJourney.addAVehicle(VRM);
         waitAndClick("confirm", SelectorType.ID);
     }
 
@@ -67,29 +68,29 @@ public class ManageVehicle extends BasePage {
 
     @And("I search without entering a registration number")
     public void iSearchWithoutEnteringARegistrationNumber() {
-        world.UIJourneySteps.addAVehicle("");
+        world.UIJourney.addAVehicle("");
     }
 
     @Then("An error message should be displayed")
     public void anErrorMessageShouldBeDisplayed() {
         isElementPresent("//div[@class=\"govuk-error-summary\"]", SelectorType.XPATH);
-        isTextPresent("Enter a Vehicle Registration Mark", 60);
+        isTextPresent("Enter a Vehicle Registration Mark");
     }
 
     @When("I search for a valid {string} registration")
     public void iSearchForAValidRegistration(String vrm) {
-        world.dvlaJourneySteps.VRM = vrm;
+        world.dvlaJourney.VRM = vrm;
         waitAndClick("//*[contains(text(),'Add a vehicle')]", SelectorType.XPATH);
         waitAndClick("next", SelectorType.ID);
-        enterText("vehicle-search[search-value]", world.dvlaJourneySteps.VRM, SelectorType.NAME);
+        enterText("vehicle-search[search-value]", SelectorType.NAME, world.dvlaJourney.VRM);
         waitAndClick("vehicle-search[submit]", SelectorType.NAME);
     }
 
     @Then("the vehicle summary should be displayed on the page:")
     public void theVehicleSummaryShouldBeDisplayedOnThePage(List<String> table) {
-        isTextPresent(String.format("A vehicle has been found with registration %s", world.dvlaJourneySteps.VRM), 60);
+        isTextPresent(String.format("A vehicle has been found with registration %s", world.dvlaJourney.VRM));
         for (String columns : table) {
-            isTextPresent(columns, 60);
+            isTextPresent(columns);
         }
     }
 
@@ -104,7 +105,7 @@ public class ManageVehicle extends BasePage {
     @Then("the following should be displayed:")
     public void theFollowingShouldBeDisplayed(List<String> headers) {
         for (String header : headers) {
-            isTextPresent(header, 60);
+            isTextPresent(header);
         }
     }
 
@@ -120,72 +121,72 @@ public class ManageVehicle extends BasePage {
 
     @And("I choose to remove a vehicle")
     public void iChooseToRemoveAVehicle() {
-        world.UIJourneySteps.removeVehicle();
+        world.UIJourney.removeVehicle();
     }
 
     @And("I choose to reprint a vehicle disc")
     public void iChooseToReprintAVehicleDisc() {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
+        world.dvlaJourney.navigateToReprintVehicleDiscPage();
     }
 
     @And("I want to confirm a vehicle removal")
     public void iWantToConfirmAVehicleRemoval() {
-        world.UIJourneySteps.vehicleRemovalConfirmationPage();
+        world.UIJourney.vehicleRemovalConfirmationPage();
     }
 
     @And("I choose to transfer a vehicle")
     public void iChooseToTransferAVehicle() {
-        world.dvlaJourneySteps.navigateToTransferVehiclePage();
+        world.dvlaJourney.navigateToTransferVehiclePage();
     }
 
     @When("i transfer a vehicle to an assumed licence")
     public void iTransferAVehiclesToAnAssumedLicence() {
-        world.dvlaJourneySteps.navigateToTransferVehiclePage();
-        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:", 10));
-        world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "N");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to transfer this vehicle to licence");
+        world.dvlaJourney.navigateToTransferVehiclePage();
+        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:"));
+        world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "N", "N");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to transfer this vehicle to licence");
     }
 
     @When("i transfer a vehicle to a specified licence")
     public void iTransferAVehicleAToASpecifiedLicence() {
-        world.dvlaJourneySteps.navigateToTransferVehiclePage();
-        assertTrue(isTextPresent("Select the licence that you want to transfer your vehicles to", 10));
+        world.dvlaJourney.navigateToTransferVehiclePage();
+        assertTrue(isTextPresent("Select the licence that you want to transfer your vehicles to"));
         Select option = new Select(findElement("//select[@id='select-a-licence']", SelectorType.XPATH));
         assertEquals("Select a licence", option.getFirstSelectedOption().getText());
         selectValueFromDropDownByIndex("select-a-licence", SelectorType.ID, 1);
-        world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "N");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to transfer this vehicle to licence");
+        world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "N", "N");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to transfer this vehicle to licence");
     }
 
     @When("i transfer all the vehicles from my licence")
     public void iTransferAllTheVehiclesFromMyLicence() {
-        world.dvlaJourneySteps.navigateToTransferVehiclePage();
-        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:", 10));
-        world.dvlaJourneySteps.completeDVLAPageAndStoreAllValues("Y", "N");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to transfer these vehicles to licence");
+        world.dvlaJourney.navigateToTransferVehiclePage();
+        assertTrue(isTextPresent("All selected vehicles will be transferred to the licence:"));
+        world.dvlaJourney.completeDVLAPageAndStoreAllValues("Y", "N");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to transfer these vehicles to licence");
     }
 
     @When("I reprint a vehicle disc")
     public void iReprintAVehicleDisc() {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
-        world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "Y", "N");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
+        world.dvlaJourney.navigateToReprintVehicleDiscPage();
+        world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "Y", "N");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
         world.updateLicence.printLicenceDiscs();
     }
 
     @When("i search for and reprint a vehicle disc")
     public void iSearchForAndReprintAVehicleDisc() {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
-        world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "Y", "Y");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
+        world.dvlaJourney.navigateToReprintVehicleDiscPage();
+        world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "Y", "Y");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
         world.updateLicence.printLicenceDiscs();
     }
 
     @When("I reprint all my discs")
     public void iReprintAllMyDiscs() {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
-        world.dvlaJourneySteps.completeDVLAPageAndStoreAllValues("Y", "Y");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to reprint discs for these vehicles");
+        world.dvlaJourney.navigateToReprintVehicleDiscPage();
+        world.dvlaJourney.completeDVLAPageAndStoreAllValues("Y", "Y");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to reprint discs for these vehicles");
         world.updateLicence.printLicenceDiscs();
     }
 
@@ -209,45 +210,45 @@ public class ManageVehicle extends BasePage {
 
     @And("I want to confirm a vehicle disc reprint")
     public void iWantToConfirmAVehicleDiscReprint() {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
+        world.dvlaJourney.navigateToReprintVehicleDiscPage();
         click("//input[@type='checkbox']", SelectorType.XPATH);
         click("//*[@name='formActions[action]']", SelectorType.XPATH);
     }
 
     @And("I want to confirm a vehicle transfer")
     public void iWantToConfirmAVehicleTransfer() {
-        world.dvlaJourneySteps.navigateToTransferVehiclePage();
+        world.dvlaJourney.navigateToTransferVehiclePage();
         click("//input[@type='checkbox']", SelectorType.XPATH);
         click("//*[@name='formActions[action]']", SelectorType.XPATH);
     }
 
     @And("the licence discs number should be updated")
     public void theLicenceDiscsNumberShouldBeUpdated() {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
-        world.dvlaJourneySteps.newDiscNumber = getText(
-                String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourneySteps.VRM), SelectorType.XPATH);
-        Assert.assertNotEquals(world.dvlaJourneySteps.newDiscNumber, world.dvlaJourneySteps.previousDiscNumber);
-        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber, 10));
+        world.dvlaJourney.navigateToReprintVehicleDiscPage();
+        world.dvlaJourney.newDiscNumber = getText(
+                String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourney.VRM), SelectorType.XPATH);
+        Assert.assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
+        Assert.assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
     }
 
     @And("i search and the licence discs number should be updated")
     public void iSearchAndTheLicenceDiscsNumberShouldBeUpdated() {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
-        world.dvlaJourneySteps.searchForExactVRM(world.dvlaJourneySteps.VRM);
-        world.dvlaJourneySteps.newDiscNumber = getText(
-                String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourneySteps.VRM), SelectorType.XPATH);
-        Assert.assertNotEquals(world.dvlaJourneySteps.newDiscNumber, world.dvlaJourneySteps.previousDiscNumber);
-        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber, 10));
+        world.dvlaJourney.navigateToReprintVehicleDiscPage();
+        world.dvlaJourney.searchForExactVRM(world.dvlaJourney.VRM);
+        world.dvlaJourney.newDiscNumber = getText(
+                String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourney.VRM), SelectorType.XPATH);
+        Assert.assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
+        Assert.assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
     }
 
     @And("all the licence discs number should be updated")
     public void theAllTheLicenceDiscsNumberShouldBeUpdated() {
-        world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
+        world.dvlaJourney.navigateToReprintVehicleDiscPage();
         for (int i = 0; i < world.createApplication.getVehicleVRMs().length; i++) {
-            world.dvlaJourneySteps.newDiscNumber = getText(
-                    String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourneySteps.allVRMs.get(i)), SelectorType.XPATH);
-            Assert.assertNotEquals(world.dvlaJourneySteps.newDiscNumber, world.dvlaJourneySteps.previousDiscNumber);
-            Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.previousDiscNumber, 10));
+            world.dvlaJourney.newDiscNumber = getText(
+                    String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourney.allVRMs.get(i)), SelectorType.XPATH);
+            Assert.assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
+            Assert.assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
         }
     }
 
@@ -255,13 +256,13 @@ public class ManageVehicle extends BasePage {
     public void iClicksSubmitWithoutCheckingACheckbox(String page) {
         switch (page) {
             case "remove":
-                world.dvlaJourneySteps.navigateToRemoveVehiclePage();
+                world.dvlaJourney.navigateToRemoveVehiclePage();
                 break;
             case "reprint":
-                world.dvlaJourneySteps.navigateToReprintVehicleDiscPage();
+                world.dvlaJourney.navigateToReprintVehicleDiscPage();
                 break;
             case "transfer":
-                world.dvlaJourneySteps.navigateToTransferVehiclePage();
+                world.dvlaJourney.navigateToTransferVehiclePage();
                 break;
         }
         click("//*[@name='formActions[action]']", SelectorType.XPATH);
@@ -277,41 +278,41 @@ public class ManageVehicle extends BasePage {
 
     @And("i remove a vehicle")
     public void iRemoveAVehicle() {
-        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
-        world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "N");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
+        world.dvlaJourney.navigateToRemoveVehiclePage();
+        world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "N", "N");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
     }
 
     @And("the vehicle should no longer be present")
     public void theVehicleShouldNoLongerBePresent() {
-        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
+        world.dvlaJourney.navigateToRemoveVehiclePage();
         List<WebElement> remainingVRMs = findElements("//td//a", SelectorType.XPATH);
         for (WebElement VRM : remainingVRMs) {
-            assertNotEquals(VRM.getText(), (world.dvlaJourneySteps.VRM));
+            assertNotEquals(VRM.getText(), (world.dvlaJourney.VRM));
         }
     }
 
     @And("i search and remove a vehicle")
     public void iSearchAndRemoveAVehicle() {
-        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
-        world.dvlaJourneySteps.completeDVLAPageAndStoreValue("Y", "N", "Y");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
+        world.dvlaJourney.navigateToRemoveVehiclePage();
+        world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "N", "Y");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to remove the vehicle from your licence?");
     }
 
     @And("i search and the vehicle should no longer be present")
     public void iSearchAndTheVehicleShouldNoLongerBePresent() {
-        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
-        enterText("vehicleSearch[search-value]", world.dvlaJourneySteps.VRM, SelectorType.NAME);
+        world.dvlaJourney.navigateToRemoveVehiclePage();
+        enterText("vehicleSearch[search-value]", SelectorType.NAME, world.dvlaJourney.VRM);
         click("vehicleSearch[submit]", SelectorType.NAME);
-        Assert.assertFalse(isTextPresent(world.dvlaJourneySteps.VRM, 10));
-        Assert.assertTrue(isTextPresent("No vehicle can be found with that Vehicle Registration Mark", 10));
+        Assert.assertFalse(isTextPresent(world.dvlaJourney.VRM));
+        Assert.assertTrue(isTextPresent("No vehicle can be found with that Vehicle Registration Mark"));
     }
 
     @And("i remove all my vehicles")
     public void iRemoveAllMyVehicles() {
-        world.dvlaJourneySteps.navigateToRemoveVehiclePage();
-        world.dvlaJourneySteps.completeDVLAPageAndStoreAllValues("Y", "Y");
-        world.dvlaJourneySteps.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to remove the vehicles from your licence?");
+        world.dvlaJourney.navigateToRemoveVehiclePage();
+        world.dvlaJourney.completeDVLAPageAndStoreAllValues("Y", "Y");
+        world.dvlaJourney.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to remove the vehicles from your licence?");
     }
 
     @Then("the switchboard only views add vehicle and view vehicle radio buttons")
@@ -327,10 +328,14 @@ public class ManageVehicle extends BasePage {
 
     @Then("the {string} should be displayed on the page")
     public void theShouldBeDisplayedOnThePage(String vrm) {
-        isTextPresent(String.format("Vehicle %s has been added", vrm), 60);
+         if(isTextPresent(String.format("%s is specified on another licence.",vrm))){
+             findSelectAllRadioButtonsByValue("yes");
+             clickById("next");
+        }
+        isTextPresent(String.format("Vehicle %s has been added", vrm));
     }
 
-    @io.cucumber.java.After
+    @After
     public void removeVehicleOnLicence() {
         JSONObject json = new JSONObject();
         Map<String, String> queryParams = new HashMap<>();

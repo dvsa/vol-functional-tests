@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.*;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.lib.pages.BasePage;
+import org.dvsa.testing.lib.newPages.BasePage;
 
 public class Initialisation extends BasePage implements En {
 
@@ -32,17 +32,17 @@ public class Initialisation extends BasePage implements En {
         world.DBUtils = new DBUtils(world);
         world.licenceCreation = new LicenceCreation(world);
         world.genericUtils = new GenericUtils(world);
-        world.APIJourneySteps = new APIJourneySteps(world);
-        world.continuationJourneySteps = new ContinuationJourneySteps(world);
-        world.busRegistrationJourneySteps = new BusRegistrationJourneySteps(world);
-        world.directorJourneySteps = new DirectorJourneySteps(world);
-        world.dvlaJourneySteps = new DVLAJourneySteps(world);
-        world.internalSearch = new InternalSearchJourneySteps(world);
-        world.feeAndPaymentJourneySteps = new FeeAndPaymentJourneySteps(world);
-        world.internalNavigation = new InternalNavigationalJourneySteps(world);
-        world.selfServeNavigation = new SelfServeNavigationalJourneySteps(world);
-        world.surrenderJourneySteps = new SurrenderJourneySteps(world);
-        world.TMJourneySteps = new TransportManagerJourneySteps(world);
-        world.UIJourneySteps = new UIJourneySteps(world);
+        world.APIJourney = new APIJourney(world);
+        world.continuationJourney = new ContinuationJourney(world);
+        world.busRegistrationJourney = new BusRegistrationJourney(world);
+        world.directorJourney = new DirectorJourney(world);
+        world.dvlaJourney = new DVLAJourney(world);
+        world.internalSearchJourney = new InternalSearchJourney(world);
+        world.feeAndPaymentJourney = new FeeAndPaymentJourney(world);
+        world.internalNavigation = new InternalNavigational(world);
+        world.selfServeNavigation = new SelfServeNavigational(world);
+        world.surrenderJourney = new SurrenderJourney(world);
+        world.TMJourney = new TransportManagerJourney(world);
+        world.UIJourney = new UIJourney(world);
     }
 }

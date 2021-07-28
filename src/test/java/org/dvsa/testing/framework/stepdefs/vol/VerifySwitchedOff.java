@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import apiCalls.enums.UserType;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
@@ -16,13 +16,13 @@ public class VerifySwitchedOff extends BasePage implements En {
         Given("^i have a \"([^\"]*)\" \"([^\"]*)\" partial application$", (String operatorType, String country) -> {
             world.createApplication.setOperatorType(operatorType);
             if (country.equals("NI")) {
-                world.APIJourneySteps.nIAddressBuilder();
+                world.APIJourney.nIAddressBuilder();
             }
-            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-            world.APIJourneySteps.createPartialApplication();
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.createPartialApplication();
         });
         And("^transport manager details approved banner appears$", () -> {
-            assertTrue(isTextPresent("Transport Manager details approved", 10));
+            assertTrue(isTextPresent("Transport Manager details approved"));
             clickByLinkText("Back to Transport Managers");
         });
         And("^transport manager status is \"([^\"]*)\" and \"([^\"]*)\"$", (String classString, String Text) -> {
@@ -47,35 +47,35 @@ public class VerifySwitchedOff extends BasePage implements En {
 
         });
         When("^the transport manager is the owner$", () -> {
-            world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
+            world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         });
         And("^the transport manager is not the owner$", () -> {
-            world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
+            world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         When("^i submit the application$", () -> {
             click("form-actions[submit]", SelectorType.ID);
         });
         Then("^the print and sign page is displayed$", () -> {
-            Assert.assertTrue(isTextPresent("Transport Manager details approved",30));
-            Assert.assertTrue(isTextPresent("Print, sign and return",30));
+            Assert.assertTrue(isTextPresent("Transport Manager details approved"));
+            Assert.assertTrue(isTextPresent("Print, sign and return"));
         });
         Then("^the 'Awaiting operator review' post signature page is displayed$", () -> {
             waitForTextToBePresent("What happens next?");
             assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            assertTrue(isTextPresent("Awaiting operator review",30));
-            assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy")),30));
+            assertTrue(isTextPresent("Awaiting operator review"));
+            assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
         });
         When("^i am on the the TM landing page$", () -> {
-            world.TMJourneySteps.submitTMApplicationAndNavigateToTMLandingPage();
+            world.TMJourney.submitTMApplicationAndNavigateToTMLandingPage();
         });
         Then("^a success message banner should be displayed$", () -> {
-            Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager",30));
+            Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager"));
         });
         And("^i navigate to the declarations page$", () -> {
-            world.TMJourneySteps.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
+            world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
         });
         Then("^the 'Awaiting operator review' verify off page is displayed$", () -> {
-            assertTrue(isTextPresent("Awaiting operator review",30));
+            assertTrue(isTextPresent("Awaiting operator review"));
         });
     }
 }

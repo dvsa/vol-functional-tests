@@ -2,7 +2,7 @@
 Feature: Annual Bilateral permit number-of-permits page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
 
   #AC01
@@ -15,8 +15,7 @@ Feature: Annual Bilateral permit number-of-permits page
     When I enter zero as value in the number of permits fields
     And  I save and continue
     Then the relevant error message for annual bilateral number of permits page is displayed
-    When the number of permits value is entered
-    And  I save and continue
+    When I enter the number of bilateral permits required
     Then the user is navigated to the next page
     When I select the fee tab on the selfserve
     Then the outstanding fees are displayed properly
@@ -30,8 +29,7 @@ Feature: Annual Bilateral permit number-of-permits page
     When I enter zero as value in the number of permits fields
     And  I save and continue
     Then the relevant error message for annual bilateral number of permits page is displayed
-    When the number of permits value is entered
-    And  I save and continue
+    When I enter the number of bilateral permits required
     Then the user is navigated to the next page
     When I select the fee tab on the selfserve
     Then the outstanding fees are displayed properly
@@ -45,8 +43,7 @@ Feature: Annual Bilateral permit number-of-permits page
     When I enter zero as value in the number of permits fields
     And  I save and continue
     Then the relevant error message for annual bilateral number of permits page is displayed
-    When the number of permits value is entered
-    And  I save and continue
+    When I enter the number of bilateral permits required
     Then the user is navigated to the next page
     When I select the fee tab on the selfserve
     Then the outstanding fees are displayed properly
@@ -60,8 +57,7 @@ Feature: Annual Bilateral permit number-of-permits page
     When I enter zero as value in the number of permits fields
     And  I save and continue
     Then the relevant error message for annual bilateral number of permits page is displayed
-    When the number of permits value is entered
-    And  I save and continue
+    When I enter the number of bilateral permits required
     Then the user is navigated to the next page
     When I select the fee tab on the selfserve
     Then the outstanding fees are displayed properly

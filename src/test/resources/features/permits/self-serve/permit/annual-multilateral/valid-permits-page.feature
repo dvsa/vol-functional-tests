@@ -3,7 +3,7 @@
 Feature: Annual Multilateral valid permits page checks
 
   Background:
-    Given I have valid Goods standard_international VOL licences
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I submit an annual multilateral permit on external
     And I am viewing an issued annual multilateral permit on self-serve
@@ -13,11 +13,11 @@ Feature: Annual Multilateral valid permits page checks
     Then the user is in the annual multilateral list page
     And  the licence number is displayed above the page heading
     And  the Multilateral permit list page table should display all relevant fields
-    And I select returns to permit dashboard hyperlink
+    And I select return to permit dashboard hyperlink
     Then I should be taken to the permits dashboard
 
   @OLCS-24423
   Scenario: Back button takes back to Permit dashboard
     When the user is in the annual multilateral list page
-    And  I go back
+    And  I click the back link
     Then I should be taken to the permits dashboard

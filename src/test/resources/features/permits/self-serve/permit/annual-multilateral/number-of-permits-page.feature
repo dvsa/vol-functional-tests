@@ -3,14 +3,14 @@
 Feature: Annual Multilateral permit number-of-permits page
 
   Background:
-    Given  I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I am on the number of permits required page
 
   #AC01
   @OLCS-24290
   Scenario:Back button return to the 'Multilateral permits Application overview' page
-    When I go back
+    When I click the back link
     Then I should be on the Annual Multilateral overview page
 
   #AC02/AC03:

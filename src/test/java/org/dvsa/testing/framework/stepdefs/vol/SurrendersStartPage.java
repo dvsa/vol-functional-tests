@@ -1,16 +1,16 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 
 import static junit.framework.TestCase.assertTrue;
 
 public class SurrendersStartPage extends BasePage implements En {
     public SurrendersStartPage(World world) {
         When("^i click on apply to surrender licence$", () -> {
-            world.surrenderJourneySteps.navigateToSurrendersStartPage();
+            world.surrenderJourney.navigateToSurrendersStartPage();
         });
         Then("^the correct page heading for \"([^\"]*)\" should be displayed$", (String licenceType) -> {
             if(licenceType.equals("public"))
@@ -22,7 +22,7 @@ public class SurrendersStartPage extends BasePage implements En {
         });
         And("^the correct instructions for \"([^\"]*)\" should be displayed$", (String licenceType) -> {
             if(licenceType.equals("public")) {
-                assertTrue(isTextPresent("You will need to cancel all registered bus services.",40));
+                assertTrue(isTextPresent("You will need to cancel all registered bus services."));
             }
         });
         And("^the correct licence number should be displayed$", () -> {

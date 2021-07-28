@@ -1,9 +1,9 @@
-@ecmt_removal
+@ecmt_removal @eupa_regression
 Feature: ECMT International Removal submission page
 
   Background:
-    Given  I have valid Goods standard_international VOL licence
-    And    I am on the VOL self-serve site
+    Given I have a "goods" "standard_international" licence
+    And I am on the VOL self-serve site
 
   @EXTERNAL @OLCS-26739 @olcs-28201
   Scenario: Application submission page details are displayed correctly
@@ -18,7 +18,7 @@ Feature: ECMT International Removal submission page
   @EXTERNAL @OLCS-26739
   Scenario: Fee waived, view receipt link is NOT displayed
     And I have partial ECMT international removal application
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     And all fees have been waived
     When I'm on the ECMT international submitted page for my active application
     Then I should not see the view receipt link
@@ -26,7 +26,7 @@ Feature: ECMT International Removal submission page
   @EXTERNAL @OLCS-26739
   Scenario: Fee payments processed by case worker
     And I have partial ECMT international removal application
-    And I am viewing a good operating licence on internal
+    And i create an admin and url search for my licence
     And pay outstanding fees
     When I'm on the ECMT international submitted page for my active application
     Then I should not see the view receipt link
@@ -36,6 +36,6 @@ Feature: ECMT International Removal submission page
     And I have partial ECMT international removal application
     And I navigate to permit dashboard page
     When  I select the fee tab and pay the outstanding fees
-    And I go back
+    And I click the back link
     When  I proceed with the application
     Then I should not see the view receipt link

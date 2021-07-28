@@ -1,44 +1,35 @@
 package org.dvsa.testing.framework.stepdefs.permits.common;
 
-import activesupport.config.Configuration;
+import Injectors.World;
 import activesupport.string.Str;
 import activesupport.system.Properties;
+import apiCalls.Utils.eupaBuilders.enums.Boolean;
 import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
 import apiCalls.Utils.eupaBuilders.external.StandardResponseModel;
 import apiCalls.Utils.eupaBuilders.internal.*;
 import apiCalls.Utils.eupaBuilders.internal.enums.PaymentMethod;
 import apiCalls.Utils.eupaBuilders.internal.enums.Status;
-import apiCalls.Utils.eupaBuilders.enums.Boolean;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import apiCalls.eupaActions.external.ApplicationAPI;
 import apiCalls.eupaActions.internal.CaseWorkerAPI;
-import com.typesafe.config.Config;
-import io.cucumber.java8.En;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.VolAccountJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
+import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.Utils.common.RandomUtils;
-import org.dvsa.testing.framework.Utils.common.World;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
 import org.dvsa.testing.lib.enums.Duration;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.LoginPage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.ChangeYourPasswordPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.*;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitSection;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.EuroEmissioStandardsPage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.PermitFee;
-import org.dvsa.testing.lib.pages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.LicenceDetailsPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.*;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;
@@ -48,14 +39,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.internal.IRHPPermitsPageSteps.payOutstandingFees;
-import static org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue;
 import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertTrue;
 
 public class CommonSteps extends BasePage implements En {
+
+    public static Map<String, java.net.URL> origin;
 
     public CommonSteps(OperatorStore operator, World world) {
         Given("^I am on the VOL self-serve site$", () -> {
@@ -77,55 +71,38 @@ public class CommonSteps extends BasePage implements En {
             clickToPermitTypePage(world);
         });
         Then ("^I submit the annual ECMT APGG application$", () -> {
-            OverviewPage.section(PermitSection.CheckIfYouNeedECMTPermits);
-            CabotagePage.wontCarryCabotage(true);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+            CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.certificatesRequired(true);
+            CertificatesRequiredPage.completePage();
             BasePermitPage.saveAndContinue();
             RestrictedCountriesPage.deliverToRestrictedCountry(false);
+            RestrictedCountriesPage.saveAndContinue();
+            NumberOfPermitsPageJourney.completeECMTPage();
+            EmissionStandardsPageJourney.completePage();
             BasePermitPage.saveAndContinue();
-            euro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
-            BasePermitPage.saveAndContinue();
-            CheckYourAnswersPage.saveAndContinue();
-            DeclarationPage.declare(true);
-            DeclarationPage.saveAndContinue();
-            PermitFee.submitAndPay();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
-            BaseApplicationSubmitPage.finish();
+            DeclarationPageJourney.completeDeclaration();
+            PermitFeePage.submitAndPay();
+            world.feeAndPaymentJourney.customerPaymentModule();
+            SubmittedPage.goToPermitsDashboard();
         });
         And("^I Grant the application on internal$", () -> {
             LicenceModel licence = OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0);
             operator.setCurrentLicenceNumber(licence.getLicNo());
-
-            BaseInternalJourney.getInstance().openLicence(
-                    licence.getLicenceId()
-            ).signin();
-            IrhpPermitsApplyPage.licence();
-            String browser = String.valueOf(getURL());
-            System.out.println(getURL());
-            get(browser+"irhp-application/");
-            IrhpPermitsApplyPage.viewApplication();
-            IrhpPermitsApplyPage.grantApplication();
-            IrhpPermitsApplyPage.continueButton();
+            IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
         });
         And("^I accept and pay the issuing fee on Selfserve$", () -> {
             deleteCookies();
             refreshPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
 
-            LoginPage.signIn(world.get("username"), world.get("password"));
-            HomePage.selectTab(Tab.PERMITS);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.selectPermitTab();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
-            String licence1= operator.getCurrentLicenceNumber().toString().substring(9,18);
-            HomePage.PermitsTab.selectOngoing(licence1);
+            HomePage.PermitsTab.selectFirstOngoingApplication();
             ApplicationIssuingFeePage.acceptAndPay();
-            EcmtApplicationJourney.getInstance().cardDetailsPage().cardHolderDetailsPage().confirmAndPay();
-            BaseApplicationSubmitPage.finish();
+            world.feeAndPaymentJourney.customerPaymentModule();
+            SubmittedPage.goToPermitsDashboard();
             HomePage.PermitsTab.untilPermitHasStatus(
                     operator.getCurrentLicence().get().getReferenceNumber(),
                     PermitStatus.VALID,
@@ -141,85 +118,54 @@ public class CommonSteps extends BasePage implements En {
         });
         And("^I am on the (Annual ECMT|Annual Bilateral \\(EU and EEA\\)|Annual Multilateral \\(EU and EEA\\)) licence page$", (String type) -> {
             clickToPermitTypePage(world);
-            EcmtApplicationJourney.getInstance().permitType(PermitTypePage.PermitType.toEnum(type), operator);
-            world.put("origin", getURL()); // Used to test a scenario for licence page
+            EcmtApplicationJourney.getInstance().permitType(PermitType.getEnum(type), operator);
+            CommonSteps.origin.put("origin", getURL()); // Used to test a scenario for licence page
         });
         And("^I am on the Annual ECMT licence selection page$", () -> {
-            signInAndAcceptCookies(world);
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitTypePage.PermitType.EcmtAnnual, operator);
-            YearSelectionPage.EcmtValidityPeriod();
+                    .permitType(PermitType.ECMT_ANNUAL, operator);
+            YearSelectionPage.selectECMTValidityPeriod();
 
-        });
-        When("^I login to self-serve on VOL$", () -> {
-            LoginPage.signIn(operator.getUsername(), operator.getPassword());
-
-            if (ChangeYourPasswordPage.onPage()) {
-                operator.setPassword(Str.randomWord(7).concat("1Pp"));
-                ChangeYourPasswordPage.update(operator.getPreviousPassword(), operator.getPassword());
-            }
-        });
-        Then("^the user is navigated to the next page$", () -> {
-            Assert.assertNotEquals(world.get("origin"), getURL().toString());
         });
         Then("^I will get an error message on the licence page$", () -> {
-            Assert.assertTrue(LicencePage.hasErrorMessagePresent());
+            assertTrue(SelectALicencePage.isErrorMessagePresent());
         });
-        When("^I use the application back button$", BasePermitPage::back);
         Then("^I should be taken to the next section$", () -> {
-            java.net.URL url = world.get("origin");
+            java.net.URL url = CommonSteps.origin.get("origin");
             Assert.assertThat(getURL(), is(not(equalTo(url))));
         });
-        Then("^I should not be taken to the next section$", () -> {
-            java.net.URL url = world.get("origin");
-            Assert.assertTrue("The current URL path does not match the expected one", isPath(url.getPath()));
-        });
         Then("^I should get an error message$", () -> {
-            NumberOfTripsPage.maxErrorMessage();
-            //  boolean hasError = BasePage.hasErrorMessagePresent();
-            // Assert.assertTrue("Error message was not displayed on the page", hasError);
+             boolean hasError = BasePage.isErrorMessagePresent();
+             assertTrue("Error message was not displayed on the page", hasError);
         });
-        When("^I save and return to overview$", BasePermitPage::overview);
-        When("^I go back$", BasePermitPage::back);
+        When("^I save and return to overview$", BasePermitPage::clickReturnToOverview);
         When("^I sign on as an external user$", () -> {
-            deleteCookies();
-            refreshPage();
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "auth/login/").toString());
-
-            VolAccountJourney.getInstance().signin(operator, world);
-        });
+            world.APIJourney.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
         And("^all fees have been waived$", () -> {
-            LicenceDetailsPage.Tab.select(BaseDetailsPage.DetailsTab.Fees);
-            while (FeesDetailsPage.hasFee()) {
-                FeesDetailsPage.select1stFee();
-                FeesDetailsPage.waive(true);
-                FeesDetailsPage.waiveNote(Str.randomWord(180));
-                FeesDetailsPage.recommandWaiver();
-                FeesDetailsPage.waive(FeesDetailsPage.Decision.Approve);
-            }
+            LicenceDetailsPageJourney.clickFeesTab();
+            FeeDetailsPageJourney.whileFeesPresentWaveFee();
         });
         And("^A case worker begins to process my fee payment$", () -> {
-            BaseInternalJourney.getInstance().openLicence(
-                    OrganisationAPI.dashboard(operator.getOrganisationId()).getDashboard().getLicences().get(0).getLicenceId()
-            ).signin();
-            payOutstandingFees();
+            world.APIJourney.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            payOutstandingFees(world);
             FeesDetailsPage.pay();
         });
         And("^I am on the permits dashboard on external$", () -> {
-            signInAndAcceptCookies(world);
-            HomePage.selectTab(Tab.PERMITS);
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+            HomePageJourney.selectPermitTab();
         });
         Then("^Information and Text appear correctly$", () -> {
-
-            Permits.permitDashboardText();
+            assertTrue(HomePage.PermitsTab.isPermitDashboardTextPresent());
         });
     }
 
     public static void payAndGrantApplication(@NotNull World world) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        Integer version = world.get("version");
+        Integer version = VolLicenceSteps.version.get("version");
 
         // SETUP: CaseWorker#overview
         TrackingModel tracking = new TrackingModel()
@@ -244,8 +190,8 @@ public class CommonSteps extends BasePage implements En {
                 .withVehiclesPsvStatus(Status.Unknown)
                 .withVersion(1);
 
-        String applicationId = world.get("applicationId");
-        TrafficArea trafficArea = world.get("trafficArea");
+        String applicationId = VolLicenceSteps.applicationId.get("applicationId");
+        TrafficArea trafficArea = VolLicenceSteps.trafficArea.get("trafficArea");
         OverviewModel overview = new OverviewModel()
                 .withApplicationId(applicationId)
                 .withLeadTcArea(trafficArea)
@@ -255,7 +201,7 @@ public class CommonSteps extends BasePage implements En {
 
         // Service Calls
         CaseWorkerAPI.overview(overview);
-        ApplicationFeesModel applicationFees = ApplicationAPI.outstandingFees(world.get("applicationId"));
+        ApplicationFeesModel applicationFees = ApplicationAPI.outstandingFees(VolLicenceSteps.applicationId.get("applicationId"));
         BigDecimal totalOutstandingFee = applicationFees.getTotalGrossAmount();
 
         List<Integer> feeIds = applicationFees.getOutstandingFeeIds();
@@ -264,12 +210,12 @@ public class CommonSteps extends BasePage implements En {
         // SETUP: CaseWorker#payOutstandingFee
         FeesModel fees = new FeesModel()
                 .withFeeIds(feeIds)
-                .withOrganisationId(world.get("organisationId"))
-                .withApplicationId(world.get("applicationId"))
+                .withOrganisationId(VolLicenceSteps.organisationId.get("organisationId"))
+                .withApplicationId(VolLicenceSteps.applicationId.get("applicationId"))
                 .withPaymentMethod(PaymentMethod.Cash)
                 .withReceived(totalOutstandingFee)
                 .withReceiptDate(LocalDateTime.now().format(dateFormatter))
-                .withPayer(world.get("person.firstName"))
+                .withPayer(VolLicenceSteps.personFirstName.get("person.firstName"))
                 .withSlipNo(Str.randomNumbers(6));
 
         // Service Calls
@@ -277,7 +223,7 @@ public class CommonSteps extends BasePage implements En {
 
         // SETUP: CaseWorker#grantApplication
         GrantApplicationModel grantApplication = new GrantApplicationModel()
-                .withId(world.get("applicationId"))
+                .withId(VolLicenceSteps.applicationId.get("applicationId"))
                 .withDuePeriod("9")
                 .withAuthority("grant_authority_dl")
                 .withCaseworkerNotes(Str.randomWord(50, 100));
@@ -296,53 +242,21 @@ public class CommonSteps extends BasePage implements En {
     }
 
     public static void clickToPermitTypePage(@NotNull World world) {
-        signInAndAcceptCookies(world);
-        HomePage.selectTab(Tab.PERMITS);
-        HomePage.applyForLicenceButton();
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        HomePageJourney.beginPermitApplication();
     }
 
-    public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull PermitSection section) {
+    public static void clickToPage(@NotNull OperatorStore operatorStore, @NotNull World world, @NotNull OverviewSection section) {
         beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
-        OverviewPage.section(section);
+        OverviewPageJourney.clickOverviewSection(section);
     }
 
     public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) {
-        LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-
         clickToPermitTypePage(world);
         EcmtApplicationJourney.getInstance()
-                .permitType(PermitTypePage.PermitType.EcmtAnnual, operatorStore);
-        YearSelectionPage.EcmtValidityPeriod();
+                .permitType(PermitType.ECMT_ANNUAL, operatorStore);
+        YearSelectionPage.selectECMTValidityPeriod();
         EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-    }
-
-    public static void signInAndAcceptCookies(World world) {
-        signIn(world);
-
-        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
-        }
-    }
-
-    public static void signIn(World world) {
-        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        Config config = new Configuration(env.toString()).getConfig();
-        String newPassword = config.getString("internalNewPassword");
-
-        try {
-            LoginPage.signIn(world.get("username"), world.get("password"));
-        } catch (Exception e) {
-            //User is already registered
-            ChangeYourPasswordPage.update(world.get("password"), newPassword);
-        } finally {
-            if (isTextPresent("Current password", 60)) {
-                waitForTextToBePresent("Re-enter new password");
-                enterField(nameAttribute("input", "oldPassword"), world.get("password"));
-                enterField(nameAttribute("input", "newPassword"), newPassword);
-                enterField(nameAttribute("input", "confirmPassword"), newPassword);
-                click(nameAttribute("input", "submit"));
-                world.put("password", newPassword);
-            }
-        }
+        OverviewPage.untilOnPage();
     }
 }

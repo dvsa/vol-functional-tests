@@ -2,14 +2,14 @@
 Feature: Annual bilateral check your answers page
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I am on the Bilateral check your answers page
 
   @EXTERNAL @OLCS-27074 @bilateral_cabotage_only
   Scenario: Verify Norway Permits check your answers page contents
     Then Country name displayed on the Bilateral check your answers page is the one clicked on the overview page
-    And  the page heading on bilateral check your answers page is correct
+    And  the page heading on the check your answers page is correct
 
   @EXTERNAL @OLCS-27074 @bilateral_cabotage_only @olcs-27581
   Scenario: Verify that the Bilateral check your answers page has got all the sections displaying data correctly

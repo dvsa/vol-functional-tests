@@ -3,12 +3,13 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import apiCalls.enums.UserRoles;
 import apiCalls.enums.UserType;
-import io.cucumber.java8.En;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
+import cucumber.api.java8.En;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class RefundInterim extends BasePage implements En {
@@ -20,13 +21,13 @@ public class RefundInterim extends BasePage implements En {
             world.createApplication.setOperatorType(operatorType);
             world.createApplication.setLicenceType(licenceType);
             world.createApplication.setIsInterim("Y");
-            world.APIJourneySteps.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+            world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
             if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
-                world.APIJourneySteps.createSpecialRestrictedLicence();
+                world.APIJourney.createSpecialRestrictedLicence();
             }
             else if (world.createApplication.getApplicationId() == null) {
-                world.APIJourneySteps.createApplication();
-                world.APIJourneySteps.submitApplication();
+                world.APIJourney.createApplication();
+                world.APIJourney.submitApplication();
             }
         });
         When("^the interim fee has been paid$", () -> {
@@ -47,7 +48,7 @@ public class RefundInterim extends BasePage implements En {
             waitForTextToBePresent("Fee details");
             long kickoutTime = System.currentTimeMillis() + 30000;
             do {
-                javaScriptExecutor("location.reload(true)");
+                refreshPageWithJavascript();
             } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
             if (System.currentTimeMillis() > kickoutTime) {
                 throw new TimeoutException("Kickout time for expecting the interim fee to be refunded.");
@@ -65,18 +66,18 @@ public class RefundInterim extends BasePage implements En {
             clickByLinkText("Fees");
             do {
                 waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
-            } while (!isTextPresent("Paid",30));
+            } while (!isTextPresent("Paid"));
             assertTrue(checkForPartialMatch("£68.00"));
             assertFalse(world.genericUtils.returnFeeStatus("CANCELLED"));
         });
         And("^the licence is granted$", () -> {
-            world.APIJourneySteps.grantLicenceAndPayFees();
+            world.APIJourney.grantLicenceAndPayFees();
         });
         And("^the interim is granted$", () -> {
             world.updateLicence.grantInterimApplication(world.createApplication.getApplicationId());
         });
         When("^i pay for the interim application$", () -> {
-            world.UIJourneySteps.payForInterimApp();
+            world.UIJourney.payForInterimApp();
             waitForTitleToBePresent("Application overview");
         });
         And("^the variation application has been refused$", () -> {

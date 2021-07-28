@@ -1,58 +1,75 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
-import io.cucumber.java8.En;
+import Injectors.World;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.EmissionStandardsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.external.permit.BasePermitPage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.enums.JourneyProportion;
-import org.dvsa.testing.lib.pages.external.permit.enums.PermitUsage;
-import org.dvsa.testing.lib.pages.external.permit.shorttermecmt.*;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.PeriodType;
+import org.dvsa.testing.lib.newPages.enums.PermitUsage;
+import org.dvsa.testing.lib.newPages.external.enums.JourneyProportion;
+import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
+import org.dvsa.testing.lib.newPages.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.AnnualTripsAbroadPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.ProportionOfInternationalJourneyPage;
+import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
+import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertEquals;
 
 public class ProportionOfInternationalJourneySteps implements En {
 
     public ProportionOfInternationalJourneySteps(OperatorStore operatorStore, World world) {
         And("^I am on short term proportion of international journey page$", () -> {
             clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitTypePage.PermitType.ShortTermECMT, operatorStore);
-            SelectYearPage.shortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodSelectionPageOne.ShortTermType.ShortTermECMTAPSGWithSectors,operatorStore)
+            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
+            YearSelectionPage.selectShortTermValidityPeriod();
+            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore)
                     .licencePage(operatorStore,world);
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
-            OverviewPage.select(OverviewPage.Section.HowwillyouusethePermits);
+            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
             licence.getEcmt().setPermitUsage(PermitUsage.random());
             PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
-            world.put("permit.usage", licence.getEcmt().getPermitusage());
             BasePermitPage.saveAndContinue();
-            CabotagePage.cabotageConfirmation();
+            CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.CertificatesRequiredConfirmation();
-            BasePermitPage.saveAndContinue();
-            CountriesWithLimitedPermitsPage.noCountrieswithLimitedPermits();
-            org.dvsa.testing.lib.pages.external.permit.NumberOfPermitsPage.euro5OrEuro6permitsValue();
-            BasePermitPage.saveAndContinue();
-            EuroEmissioStandardsPage.Emissionsconfirmation();
-            BasePermitPage.saveAndContinue();
+            CertificatesRequiredPage.completePage();
+            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
+            NumberOfPermitsPageJourney.completeECMTPage();
+            EmissionStandardsPageJourney.completePage();
             AnnualTripsAbroadPage.quantity(10);
             BasePermitPage.saveAndContinue();
         });
-        And("^the page heading on short term international journey page is displayed correctly$", ProportionOfInternationalJourneyPage::pageHeading);
-        And("^the error message should be displayed$", ProportionOfInternationalJourneyPage::errorText);
+        And("^the page heading on short term international journey page is displayed correctly$", () -> {
+            String heading = ProportionOfInternationalJourneyPage.getPageHeading();
+            assertEquals("In that period, what percentage of all trips using this licence were international?", heading);
+        });
+        And("^the error message should be displayed$", () -> {
+            String errorText = ProportionOfInternationalJourneyPage.getErrorText();
+            assertEquals("Select the percentage of international journeys over the past 12 months", errorText);
+        });
         When("^I select proportion of International Journey and save and continue$", () -> {
             LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
             operatorStore.withLicences(licence);
             licence.getEcmt().setInternationalBusiness(JourneyProportion.random());
-            ProportionOfInternationalJourneyPage.proportion(licence.getEcmt().getInternationalBusiness());
+            ProportionOfInternationalJourneyPage.chooseDesiredProportion(licence.getEcmt().getInternationalBusiness());
         });
         When("^I specify  high percentage of international journey$", () -> {
-           ProportionOfInternationalJourneyPage.proportion(JourneyProportion.MoreThan90Percent);
+           ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.MoreThan90Percent);
         });
-        When("^the high intensity warning message is displayed$", ProportionOfInternationalJourneyPage::hasIntensityMessage);
+        When("^the high intensity warning message is displayed$", () -> {
+            String message = ProportionOfInternationalJourneyPage.getIntensityMessage();
+            assertEquals("Warning"+"\n"+"You have stated a high intensity of use of these permits. Check the details are correct. We may contact you to verify this information.", message);
+        });
 
     }
 }

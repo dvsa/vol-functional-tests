@@ -1,8 +1,8 @@
-@ecmt_removal
-Feature: ECMT International Removal Valid Permit Page
+@ecmt_removal @smoketest @eupa_regression
+Feature: ECMT International Removal Self Service End to End Smoke test
 
   Background:
-    Given I have valid Goods standard_international VOL licence
+    Given I have a "goods" "standard_international" licence
     And I am on the VOL self-serve site
     And I have a valid ECMT removal permit
     And I am viewing my issued ECMT removal permit on selfserve

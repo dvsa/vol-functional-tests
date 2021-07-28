@@ -1,41 +1,40 @@
 package org.dvsa.testing.framework.stepdefs.permits.cookies;
 
-import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import Injectors.World;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.Driver.DriverUtils;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.CookiesPage;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.PermitTypePage;
-import org.dvsa.testing.lib.pages.external.permit.ecmtInternationalRemoval.OverviewPage;
+import org.dvsa.testing.lib.enums.PermitType;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.CookiesPage;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Set;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.signIn;
-import static org.dvsa.testing.lib.pages.BasePage.getElementValueByText;
-import static org.dvsa.testing.lib.pages.BasePage.isPath;
-import static org.dvsa.testing.lib.pages.external.CookiesPage.*;
+import static org.dvsa.testing.lib.newPages.external.pages.CookiesPage.*;
+import static org.junit.Assert.assertTrue;
 
 
-public class CookieSteps extends DriverUtils implements En {
+public class CookieSteps extends BasePage implements En {
 
     public CookieSteps(World world, OperatorStore operatorStore) {
 
         WebDriver driver;
         And("^I logged into Self Serve site before accepting cookies$", () -> {
-            signIn(world);
+            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
         });
         And("^I am on the permit type page before accepting cookies$", () -> {
-            signIn(world);
-            HomePage.selectTab(Tab.PERMITS);
-            HomePage.applyForLicenceButton();
+            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
+            HomePageJourney.beginPermitApplication();
         });
         And("^I should see the cookies list$", () -> {
             Set<Cookie> cookies = getDriver().manage().getCookies();
@@ -54,7 +53,9 @@ public class CookieSteps extends DriverUtils implements En {
             selectAllCookies();
         });
 
-        And("^I should see no banner in the page$", CookiesPage::cookiesBannerIsNotPresent);
+        And("^I should see no banner in the page$", () -> {
+            assertTrue(CookiesPage.cookiesBannerIsNotPresent());
+        });
 
         And("^I should see banner in the page$", CookiesPage::cookiesBannerIsPresent);
 
@@ -131,7 +132,7 @@ public class CookieSteps extends DriverUtils implements En {
            /* String langPrefCookie = Browser.getDriver().manage().getCookieNamed("langPref").getValue().trim();
             System.out.println(langPrefCookie);
             Assert.assertEquals(langPrefCookie,"en-GB");*/
-                Assert.assertTrue(getElementValueByText("//a[contains(text(),'Set cookie preferences')]", SelectorType.XPATH), true);
+                assertTrue(getElementValueByText("//a[contains(text(),'Set cookie preferences')]", SelectorType.XPATH), true);
             });
 
             And("^I Should not see settings cookies$", () -> {
@@ -164,18 +165,17 @@ public class CookieSteps extends DriverUtils implements En {
             });
 
             And("^I should see the same cookies list in ECMT Removal Check Answers Page$", () -> {
-                HomePage.selectTab(Tab.PERMITS);
-                HomePage.applyForLicenceButton();
+                HomePageJourney.beginPermitApplication();
                 EcmtInternationalRemovalJourney.getInstance()
-                        .permitType(PermitTypePage.PermitType.EcmtInternationalRemoval, operatorStore)
+                        .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
                         .licencePage(operatorStore, world);
+                OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
                 EcmtInternationalRemovalJourney.getInstance()
-                        .overview(OverviewPage.Section.RemovalsEligibility, operatorStore)
                         .removalsEligibility(true)
                         .cabotagePage()
                         .certificatesRequiredPage()
-                        .permitStartDatePage()
-                        .numberOfPermits();
+                        .permitStartDatePage();
+                NumberOfPermitsPageJourney.completePage();
                 Set<Cookie> cookies = getDriver().manage().getCookies();
                 Cookie cookiePHP = getDriver().manage().getCookieNamed("PHPSESSID");
                 String secureToken = getDriver().manage().getCookieNamed("secureToken").getValue();
@@ -190,13 +190,9 @@ public class CookieSteps extends DriverUtils implements En {
 
             And("^I should see the same cookies list in ECMT Removal valid Page$", () -> {
                 EcmtInternationalRemovalJourney.getInstance()
-                        .checkYourAnswers()
-                        .declaration();
-                EcmtApplicationJourney.getInstance()
-                        .feeOverviewPage()
-                        .cardDetailsPage()
-                        .cardHolderDetailsPage()
-                        .confirmAndPay();
+                        .checkYourAnswers();
+                DeclarationPageJourney.completeDeclaration();
+                world.feeAndPaymentJourney.customerPaymentModule();
                 Set<Cookie> cookies = getDriver().manage().getCookies();
                 Cookie cookiePHP = getDriver().manage().getCookieNamed("PHPSESSID");
                 String secureToken = getDriver().manage().getCookieNamed("secureToken").getValue();
@@ -209,5 +205,5 @@ public class CookieSteps extends DriverUtils implements En {
             });
 
         });
-    }
+    } //TODO: Refactoring to be done here.
 }

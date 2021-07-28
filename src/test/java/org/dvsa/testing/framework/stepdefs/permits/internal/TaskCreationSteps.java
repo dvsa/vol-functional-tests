@@ -2,13 +2,12 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
 import activesupport.system.Properties;
-import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.internal.BaseInternalJourney;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.pages.BasePage;
-import org.dvsa.testing.lib.pages.enums.SelectorType;
-import org.dvsa.testing.lib.pages.internal.details.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.pages.internal.details.irhp.TaskCreationPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.lib.newPages.internal.irhp.TaskCreationPage;
+import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
@@ -21,7 +20,8 @@ public class TaskCreationSteps extends BasePage implements En {
     public TaskCreationSteps(World world, OperatorStore operatorStore) {
 
         And("^I am on the internal home page$", () -> {
-            BaseInternalJourney.getInstance().signin(BaseInternalJourney.User.Admin.getUsername(), world.configuration.config.getString("internalNewPassword"));
+            world.APIJourney.createAdminUser();
+            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             Assert.assertEquals(BasePage.getElementValueByText("//h1[contains(text(),'Home')]", SelectorType.XPATH), "Home");
         });
         And("^I navigate to the corresponding task created against the licence$", () -> {

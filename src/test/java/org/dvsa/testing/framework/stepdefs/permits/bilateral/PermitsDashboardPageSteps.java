@@ -1,80 +1,87 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
-import io.cucumber.java8.En;
+import Injectors.World;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Utils.common.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Utils.store.LicenceStore;
 import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.PermitApplication;
 import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.pages.enums.external.home.Tab;
-import org.dvsa.testing.lib.pages.external.HomePage;
-import org.dvsa.testing.lib.pages.external.permit.BaseApplicationSubmitPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.BilateralDashboardPage;
-import org.dvsa.testing.lib.pages.external.permit.bilateral.OverviewPage;
-import org.dvsa.testing.lib.pages.external.permit.ecmt.ApplicationSubmitPage;
+import org.dvsa.testing.lib.newPages.PermitApplication;
+import org.dvsa.testing.lib.newPages.enums.OverviewSection;
+import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.lib.newPages.external.pages.HomePage;
+import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
+import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
+import org.dvsa.testing.lib.newPages.BasePage;
 import org.junit.Assert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
-import static org.dvsa.testing.lib.pages.Driver.DriverUtils.refreshPage;
 
-public class PermitsDashboardPageSteps implements En {
+public class PermitsDashboardPageSteps extends BasePage implements En {
     public PermitsDashboardPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
         Then("^I navigate to the Permits dashboard page from the Bilaterals Overview page$", () -> {
-            OverviewPage.overviewToHome();
-            HomePage.selectTab(Tab.PERMITS);
+            world.selfServeNavigation.navigateToNavBarPage("home");
+            HomePageJourney.selectPermitTab();
         });
         Then("^my Bilaterals permit should be under the ongoing permit application table with correct columns and values$", () -> {
             HomePage.untilOnPage();
-            LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
 
             //Verifying that Application reference displayed on the Dashboard is the same as on the application overview page
-            Assert.assertEquals(BilateralDashboardPage.dashboardReferenceNumber().substring(17),OverviewPage.getReferenceNumber());
+            String referenceNumber = findElement("(//table)[count(//table)]//td[@data-heading='Application reference']", SelectorType.XPATH).getText();
+            Assert.assertEquals(referenceNumber.substring(17), OverviewPage.getReferenceNumber());
 
             //Verifying that number of permits displayed on the dashboard is same as entered on number of permits page
-            Assert.assertEquals(BilateralDashboardPage.dashboardNumberofPermits(),operatorStore.getPermit());
+            String dashboardNumberOfPermits = findElement("(//table)[count(//table)]//td[2][@data-heading='Number of permits']", SelectorType.XPATH).getText();
+            Assert.assertEquals(dashboardNumberOfPermits, NumberOfPermitsPageJourney.getLabel());
 
             //Verifying that the permit type displayed on the dashboard is same as chosen while making an application
-            Assert.assertEquals(BilateralDashboardPage.dashboardPermitType(),operatorStore.getCurrentPermitType().get().toString());
+            String dashboardPermitType = findElement("(//table)[count(//table)]//td[3][@data-heading='Type']", SelectorType.XPATH).getText();
+            Assert.assertEquals(dashboardPermitType, operatorStore.getCurrentPermitType().get().toString());
 
             //Verify the status on the ongoing permits table is NOT yet submitted
-            BilateralDashboardPage.dashboardPermitStatus();
+            String statusTagText = getText("//span[contains(text(),'Not yet submitted')]", SelectorType.XPATH);
+            Assert.assertTrue(statusTagText.equalsIgnoreCase("NOT YET SUBMITTED"));
 
-            List<PermitApplication> actualPermits = HomePage.PermitsTab.ongoingPermitApplications();
+            List<PermitApplication> actualPermits = HomePage.PermitsTab.getOngoingPermitApplications();
 
         });
         Then("^I Submit my Annual bilateral partial application and navigate to the Permits dashboard$", () -> {
-            OverviewPage.selectDeclaration();
-            AnnualBilateralJourney.getInstance().declare(true)
+            OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
+            DeclarationPageJourney.completeDeclaration();
+            AnnualBilateralJourney.getInstance()
                     .permitFee();
-            EcmtApplicationJourney.getInstance()
-                    .cardDetailsPage()
-                    .cardHolderDetailsPage()
-                    .confirmAndPay();
-            BaseApplicationSubmitPage.untilSubmittedPageLoad();
-            ApplicationSubmitPage.finish();
-            BilateralDashboardPage.untilOnBilateralsDashboardPage();
+            world.feeAndPaymentJourney.customerPaymentModule();
+            SubmittedPage.untilOnPage();
+            SubmittedPage.goToPermitsDashboard();
+            untilElementIsPresent("//h2[contains(text(),'Issued permits and certificates')]", SelectorType.XPATH, 10L, TimeUnit.SECONDS);
         });
         Then("^my Bilaterals permit should be under the Issued permit applications table with correct columns and values$", () -> {
-            //HomePage.untilPresentWithRefresh()
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.VALID);
 
             //Verifying that licence number displayed on the dashboard page is the one selected while making an application
             String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            Assert.assertEquals(BilateralDashboardPage.dashboardRefIssued(),expectedReference);
+            String dashboardIssuedRef = findElement("//div[3]//table[1]//tbody[1]//tr[1]//td[1]//a[1]//span[1]", SelectorType.XPATH).getText();
+            Assert.assertEquals(dashboardIssuedRef, expectedReference);
 
             //Verifying that number of permits displayed on the dashboard is same as entered on number of permits page
-            Assert.assertEquals(BilateralDashboardPage.dashboardNumberofPermitsIssued(),operatorStore.getPermit());
+            String dashboardNumberOfIssuedPermits = findElement("//div[3]//table[1]//tbody[1]//tr[1]//td[2]", SelectorType.XPATH).getText();
+            Assert.assertEquals(dashboardNumberOfIssuedPermits, NumberOfPermitsPageJourney.getLabel());
 
             //Verifying that the permit type displayed on the dashboard is same as chosen while making an application
-            Assert.assertEquals(BilateralDashboardPage.dashboardTypeIssued(),operatorStore.getCurrentPermitType().get().toString());
+            String dashboardIssuedType = findElement("//div[3]//table[1]//tbody[1]//tr[1]//td[3]", SelectorType.XPATH).getText();
+            Assert.assertEquals(dashboardIssuedType, operatorStore.getCurrentPermitType().get().toString());
 
             //Verify the status on the issued permits table is VALID
-            BilateralDashboardPage.dashboardTypeStatus();
+            String permitsTableStatus = getText("//span[contains(text(),'Valid')]", SelectorType.XPATH);
+            Assert.assertEquals(permitsTableStatus, "VALID");
         });
     }
 }
