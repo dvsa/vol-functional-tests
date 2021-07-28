@@ -35,12 +35,16 @@
         <allure-mvn.version>2.10.0</allure-mvn.version>
         <cucable-plugin.version>1.8.0</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
-        <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
+        <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <apache-commons.version>1.8</apache-commons.version>
         <gson.version>20210307</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
+        <java.version>1.8</java.version>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
     </properties>
+
 
     <repositories>
         <repository>
@@ -49,47 +53,77 @@
         </repository>
     </repositories>
 
+
+
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+    <!--                <version>${maven.compiler.version}</version>-->
+    <!--                <configuration>-->
+    <!--                    <source>8</source>-->
+    <!--                    <target>8</target>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+
+
+    <!--                    <plugin>-->
+    <!--                        <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                        <artifactId>maven-surefire-plugin</artifactId>-->
+    <!--                        <version>${maven-surefire-plugin.version}</version>-->
+    <!--                        <configuration>-->
+    <!--                            <argLine>-->
+    <!--                                -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
+    <!--                                -Dcucumber.options="&#45;&#45;plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"-->
+    <!--                            </argLine>-->
+    <!--                        </configuration>-->
+    <!--                        <dependencies>-->
+    <!--                            <dependency>-->
+    <!--                                <groupId>org.aspectj</groupId>-->
+    <!--                                <artifactId>aspectjweaver</artifactId>-->
+    <!--                                <version>${aspectj.version}</version>-->
+    <!--                            </dependency>-->
+    <!--                        </dependencies>-->
+    <!--                    </plugin>-->
+    <!--                    <plugin>-->
+    <!--                        <groupId>io.qameta.allure</groupId>-->
+    <!--                        <artifactId>allure-maven</artifactId>-->
+    <!--                        <version>${allure-mvn.version}</version>-->
+    <!--                        <configuration>-->
+    <!--                            <reportingOutputDirectory>${project.basedir}/target/site/allure-report-->
+    <!--                            </reportingOutputDirectory>-->
+    <!--                            <reportVersion>${allure-report.version}</reportVersion>-->
+    <!--                        </configuration>-->
+    <!--                    </plugin>-->
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.version}</version>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <parallel>methods</parallel>
+                            <threadCount>8</threadCount>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
 
-    <profiles>
-    <profile>
-        <id>parallel</id>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <threadCount>10</threadCount>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>io.qameta.allure</groupId>
-                    <artifactId>allure-maven</artifactId>
-                    <version>${allure-mvn.version}</version>
-                    <configuration>
-                        <reportingOutputDirectory>${project.basedir}/target/site/allure-report
-                        </reportingOutputDirectory>
-                        <reportVersion>${allure-report.version}</reportVersion>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-    </profile>
-    </profiles>
 
     <dependencies>
         <dependency>
@@ -126,8 +160,14 @@
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit</artifactId>
-            <version>${cucumber-junit.version}</version>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>6.10.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.7.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -211,6 +251,12 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>4.7.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
