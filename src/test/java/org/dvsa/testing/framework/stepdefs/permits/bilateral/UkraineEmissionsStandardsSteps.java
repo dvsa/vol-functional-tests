@@ -2,21 +2,21 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.EmissionStandardsPage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class UkraineEmissionsStandardsSteps implements En {
-    public UkraineEmissionsStandardsSteps(OperatorStore operatorStore, World world) {
+    public UkraineEmissionsStandardsSteps(World world) {
 
         Then("^I am on the Ukraine emissions standards page with correct information and content$", () -> {
             // Make sure the page has loaded before any further checks
             EmissionStandardsPage.untilOnPage();
 
             //checking the Country name displayed on the page is Ukraine
-            assertEquals(EmissionStandardsPage.getCountry(), operatorStore.getCountry());
+            assertEquals(EmissionStandardsPage.getCountry(), AnnualBilateralJourney.getCountry());
 
             //checking the Page heading on the Ukraine emissions standards page is correct
             String heading = EmissionStandardsPage.getPageHeading();

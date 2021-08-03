@@ -4,7 +4,6 @@ import Injectors.World;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 import org.junit.Assert;
 
@@ -14,7 +13,7 @@ import java.util.stream.IntStream;
 
 public class LicencePageSteps implements En {
 
-    public LicencePageSteps(OperatorStore operatorStore, World world) {
+    public LicencePageSteps(World world) {
         Then("^I should see the type of licence next to each licence$", () -> {
             List<LicenceModel> expectedLicences = OrganisationAPI.dashboard(world.userDetails.getOrganisationId()).getDashboard().getLicences();
 

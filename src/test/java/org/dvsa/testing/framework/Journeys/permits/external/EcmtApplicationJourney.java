@@ -2,15 +2,11 @@ package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
 import activesupport.number.Int;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.openqa.selenium.WebElement;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -34,15 +30,7 @@ public class EcmtApplicationJourney extends BasePermitJourney {
         return instance;
     }
 
-    public EcmtApplicationJourney cabotagePage() {
-
-        CabotagePage.confirmWontUndertakeCabotage();
-        CabotagePage.saveAndContinue();
-        return this;
-    }
-
-    public EcmtApplicationJourney numberOfPermitsPage(int maxNumberOfPermits, OperatorStore operatorStore) {
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
+    public EcmtApplicationJourney numberOfPermitsPage(int maxNumberOfPermits) {
         List<WebElement> numberOfPermitFields = findAll("//*[contains(@class, 'field')]//input[@type='number']", SelectorType.XPATH);
         numberOfPermitFields.forEach(numberOfPermitsField -> {
             Integer randomNumberOfPermitsLessThanMax = Int.random(maxNumberOfPermits);
@@ -52,48 +40,19 @@ public class EcmtApplicationJourney extends BasePermitJourney {
         return this;
     }
 
-    public EcmtApplicationJourney numberOfPermitsPage(OperatorStore operatorStore) {
-        int authVehicles = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new).getNumberOfAuthorisedVehicles();
-        numberOfPermitsPage(authVehicles,operatorStore);
-        operatorStore.getCurrentLicence().get().getEcmt().setSubmitDate(LocalDateTime.now());
-        return this;
-    }
-
     public EcmtApplicationJourney feeOverviewPage() {
         PermitFeePage.saveAndContinue();
         return this;
     }
 
     @Override
-    public EcmtApplicationJourney permitType(OperatorStore operatorStore) {
-        return (EcmtApplicationJourney) super.permitType(operatorStore);
+    public EcmtApplicationJourney permitType(PermitType type) {
+        return (EcmtApplicationJourney) super.permitType(type);
     }
 
     @Override
-    public EcmtApplicationJourney permitType() {
-        return (EcmtApplicationJourney) super.permitType();
-    }
-
-    @Override
-    public EcmtApplicationJourney permitType(PermitType type, OperatorStore operator) {
-        return (EcmtApplicationJourney) super.permitType(type, operator);
-    }
-
-    @Override
-    public EcmtApplicationJourney licencePage(OperatorStore operator, World world) {
-        return (EcmtApplicationJourney) super.licencePage(operator, world);
-    }
-
-    public EcmtApplicationJourney submitApplication(LicenceStore licenceStore, World world) {
-        licenceStore.setReferenceNumber(SubmittedPage.getReferenceNumber().substring(22,40));
-        SubmittedPage.goToPermitsDashboard();
-
-        LocalDateTime date = LocalDateTime.now();
-        String dateFormatted = date.format(DateTimeFormatter.ofPattern("d MMM yyyy"));
-
-        licenceStore.getEcmt().setSubmitDate(date);
-
-        return this;
+    public EcmtApplicationJourney licencePage(World world) {
+        return (EcmtApplicationJourney) super.licencePage(world);
     }
 
 }

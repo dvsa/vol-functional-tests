@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -31,12 +30,12 @@ public class OverviewPageSteps extends BasePage implements En {
             "Declaration"
     };
 
-    public OverviewPageSteps(World world, OperatorStore operatorStore) {
+    public OverviewPageSteps(World world) {
         Then("^I should be on the Annual ECMT overview page$", () -> {
             isPath("/permits/application/\\d+");
         });
         And("^I am on the application overview page$", () -> {
-            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
+            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world);
 
         });
         Then("^only the expected status labels are displayed$", () -> {
@@ -58,15 +57,12 @@ public class OverviewPageSteps extends BasePage implements En {
 
             OverviewPageJourney.checkStatus(sectionEnum, PermitStatus.CANT_START_YET);
         });
-        When("^I fill all steps preceding steps to check your answers$", () -> {
-            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
-        });
         Then("^the (check your answers|declaration) section should be enabled$", (String section) -> {
             OverviewSection sectionEnum = OverviewSection.toEnum(section);
             assertTrue(OverviewPage.isSectionActive(sectionEnum));
         });
         When("^I fill all steps preceding steps to declaration$", () -> {
-            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
+            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage();
             ECMTPermitApplicationSteps.saveAndContinue();
         });
         When("^the overview page heading is displayed correctly$", OverviewPageJourney::hasPageHeading);

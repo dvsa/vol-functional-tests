@@ -6,7 +6,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeed
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -23,15 +22,15 @@ import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsPageSteps extends BasePage implements En {
 
-    public NumberOfPermitsPageSteps(World world, OperatorStore operatorStore) {
+    public NumberOfPermitsPageSteps(World world) {
         And("^I am on the number of permits page$", () -> {
-            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
+            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world);
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
             CabotagePage.saveAndContinue();
             CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
+            CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
         });
         And("^the page heading on the ECMT number of permits page is displayed correctly$", NumberOfPermitsPageJourney::hasPageHeading);
         And("^the advisory texts are displayed correctly$", () -> {

@@ -5,7 +5,6 @@ import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenWindowModel;
 import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualBilateralPermit;
 import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
@@ -20,7 +19,7 @@ import static org.hamcrest.CoreMatchers.hasItem;
 
 public class ValidPermitsPageSteps implements En {
 
-    public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
+    public ValidPermitsPageSteps(World world) {
         And("^The content and information on valid permits is correct$", () -> {
 
             // the table of annual bilateral permits is as expected

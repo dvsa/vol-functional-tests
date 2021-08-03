@@ -23,6 +23,7 @@ public class NumberOfPermitsPageJourney extends BasePermitJourney {
 
     private static World world;
     public static int fieldCount;
+    public static int numberOfPermits;
     public static String cabotageLabel;
     public static String cabotageValue;
     public static String label;
@@ -39,6 +40,14 @@ public class NumberOfPermitsPageJourney extends BasePermitJourney {
 
     public static void setFieldCount(int fieldCount) {
         NumberOfPermitsPageJourney.fieldCount = fieldCount;
+    }
+
+    public static void setNumberOfPermits(int numberOfPermits) {
+        NumberOfPermitsPageJourney.numberOfPermits = numberOfPermits;
+    }
+
+    public static int getNumberOfPermits() {
+        return NumberOfPermitsPageJourney.numberOfPermits;
     }
 
     public static String getCabotageLabel() {

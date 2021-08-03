@@ -8,7 +8,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPag
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -25,12 +24,12 @@ import static org.junit.Assert.assertTrue;
 
 public class SubmissionPageSteps extends BasePermitPage implements En {
 
-    public SubmissionPageSteps(World world, OperatorStore operatorStore) {
+    public SubmissionPageSteps(World world) {
         And("^I am on the ECMT International removal submission page", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
+                    .licencePage(world);
             OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)
@@ -70,8 +69,8 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
         And ("^I have partial ECMT international removal application", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
+                    .licencePage(world);
             OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)

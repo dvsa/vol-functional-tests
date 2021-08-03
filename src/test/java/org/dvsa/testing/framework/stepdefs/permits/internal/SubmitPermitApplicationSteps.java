@@ -3,45 +3,29 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 import Injectors.World;
 import activesupport.number.Int;
 import activesupport.system.Properties;
-import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.eupaActions.OrganisationAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.AnnualBilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.Duration;
-import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.external.enums.JourneyProportion;
-import org.dvsa.testing.framework.pageObjects.external.enums.ShortTermRestrictedCountry;
-import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
 import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
-import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitFeesPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.junit.Assert;
 
-import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.framework.pageObjects.Driver.DriverUtils.get;
-import static org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.DeclineGrantedPermitPage.isErrorTextPresent;
 import static org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 
 public class SubmitPermitApplicationSteps extends BasePage implements En {
 
-    public SubmitPermitApplicationSteps(World world, OperatorStore operatorStore) {
+    public SubmitPermitApplicationSteps(World world) {
 
         Given("^I am on the VOL internal site$", () -> {
             deleteCookies();
@@ -49,114 +33,14 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true), "auth/login/").toString());
         });
         When("^I apply for an ECMT APGG Euro5 or Euro 6 application$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            LicenceDetailsPageJourney.clickIRHPTab();
-
-            //apply application
-            untilOnPage();
-            applyAnnualEcmtAPGGApplication();
-
-            int numberOfPermits = Int.random(1, 5);
-
-            //Fill application
-            isPath("/licence/\\d+/irhp-application/edit/\\d+/");
-            emissionRadioSelectNew();
-            needECMTPermit();
-            cabotageEligibility();
-            certificatesRequired();
-            restrictedCountriesNo();
-            isEuro6Compliant(true);
-            emissionRadioSelect();
-            permitsQuantityEcmtAPGGInternal(numberOfPermits);
-            licenceStore.getEcmt().setNumberOfPermits(numberOfPermits);
-            declare(true);
-            operatorStore.withLicences(licenceStore);
-
-            //Save application
-            saveIRHP();
-            licenceStore.getEcmt().setSubmitDate(LocalDateTime.now());
+            completeInternalECMTApplication(PermitType.ECMT_ANNUAL, true);
         });
+        When("^I apply for an ECMT permit application without selecting Euro emissions checkbox$", () -> {
+            completeInternalECMTApplication(PermitType.ECMT_ANNUAL, false);
+        });
+
         When("^I apply for a short term APGG Euro5 or Euro 6 application$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            LicenceDetailsPageJourney.clickIRHPTab();
-
-            //apply application
-            untilOnPage();
-
-            applyShortTermAPGGApplication();
-
-            int numberOfPermits = Int.random(1, 5);
-
-            //Fill application
-            isPath("/licence/\\d+/irhp-application/edit/\\d+/");
-            emissionRadioSelectNew();
-            needECMTPermit();
-            cabotageEligibility();
-            certificatesRequired();
-            restrictedCountriesNo();
-            isEuro6Compliant(true);
-            numberOfPermitsShortTermAPSG(numberOfPermits);
-            datePermitNeededShortTermApgg();
-            licenceStore.getEcmt().setNumberOfPermits(numberOfPermits);
-            declare(true);
-            operatorStore.withLicences(licenceStore);
-
-            //Save application
-            saveIRHP();
-            licenceStore.getEcmt().setSubmitDate(LocalDateTime.now());
-        });
-        When("^I apply for an ECMT permit application without selecting Euro emmissions checkbox$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            LicenceDetailsPageJourney.clickIRHPTab();
-
-            //apply application
-            untilOnPage();
-            applyAnnualEcmtAPGGApplication();
-            int numberOfPermits = Int.random(1, 5);
-
-            //Fill application
-            isPath("/licence/\\d+/irhp-application/edit/\\d+/");
-            emissionRadioSelectNew();
-            needECMTPermit();
-            cabotageEligibility();
-            certificatesRequired();
-            restrictedCountriesNo();
-            emissionRadioSelect();
-            permitsQuantityEcmtAPGGInternal(numberOfPermits);
-            licenceStore.getEcmt().setNumberOfPermits(numberOfPermits);
-            declare(true);
-        });
-            When("^I apply for an Short term APSG permit application$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            LicenceDetailsPageJourney.clickIRHPTab();
-
-            int numberOfTrips = Int.random(1, 1000);
-
-            //apply application
-            untilOnPage();
-            applyShortTermPermitAPSGWithoutSectors();
-
-          int numberOfPermits = Int.random(1, 5);
-
-            //Fill application
-            permitsQuantityShortTermAPSG(numberOfPermits);
-            checkBoxClickedSaveContinue();
-            JourneyProportion journey = internationalJourneys();
-            selectTripsAPSG(numberOfTrips);
-             fillAPSG();
-            countries(ShortTermRestrictedCountry.random());
-
-            declare(true);
-            operatorStore.withLicences(licenceStore);
-
-            //Save application
-            saveIRHP();
-             untilOnPage();
-
+            completeInternalECMTApplication(PermitType.SHORT_TERM_ECMT, true);
         });
 
         When("^I am in application details page, I should see application is in UC status$",() -> {
@@ -183,10 +67,8 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         //Submit button Exists
         Then("^In application details page, I should see Submit button$", IrhpPermitsApplyPage::submitButtonExists);
 
-
         //cancel button Exists
         Then("^I am on application details page, I should see cancel button$", IrhpPermitsApplyPage::cancelButtonExists);
-
 
         //withdraw button Exists
         Then("^I am in application details page, I should see withdraw button$", () -> {
@@ -224,46 +106,7 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
             LicenceDetailsPageJourney.clickFeesTab();
             submitButtonAPSGExists();
         });
-        //Go To first Fee tab
 
-        When("^I am on the first fee tab page$", LicenceDetailsPageJourney::clickFeesTab);
-        When("^I click the application link on the fees page$", IrhpPermitFeesPage::clickFeeDetailsLink);
-        Then ("^I should be in the edit fee page$", ()->{
-            isPath("/licence/\\d+/fees/edit-fee/\\d+/");
-        });
-        Then("^I should see Fee Amount calculated correctly$", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            String expectedFeeAmount = String.valueOf(licenceStore.getEcmt().getNumberOfPermits()*10);
-            int expectedFee = Integer.parseInt(expectedFeeAmount);
-            int actualFee = IrhpPermitFeesPage.getFeeAmount();
-            assertThat(actualFee, is(expectedFee));
-        });
-        Then("^I should see Pay Fee Amount calculated correctly$", () -> {
-            BaseModel.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
-            int expectedFeeAmount = operatorStore.getLicences().get(0).getEcmt().getNumberOfPermits()*10;
-            int actualFeeAmount = IrhpPermitFeesPage.getFeeAmountInFrame();
-            assertThat(actualFeeAmount, is(expectedFeeAmount));
-        });
-
-        Then("^I should see Outstanding balance calculated correctly$", () ->{
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            String expectedOutstandingBalance = String.valueOf(licenceStore.getEcmt().getNumberOfPermits()*10);
-            int expectedOutstandingFee = Integer.parseInt(expectedOutstandingBalance);
-            int actualOutstandingBalance = IrhpPermitFeesPage.getOutstandingFee();
-            assertThat(actualOutstandingBalance, is(expectedOutstandingFee));
-        });
-
-        Then("^In Details page, I should see Outstanding balance calculated correctly$", () ->{
-            int expectedOutstandingBalance = operatorStore.getLicences().get(0).getEcmt().getNumberOfPermits()*10;
-            int actualOutstandingBalance = IrhpPermitFeesPage.getOutstandingFromDetails();
-            assertThat(actualOutstandingBalance, is(expectedOutstandingBalance));
-        });
-
-        Then("^In Details page, I should see Fee Amount calculated correctly$", () ->{
-            int expectedFeeAmount = operatorStore.getLicences().get(0).getEcmt().getNumberOfPermits()*10;
-            int actualFeeAmount = IrhpPermitFeesPage.getFeeAmountFromDetails();
-            assertThat(actualFeeAmount, is(expectedFeeAmount));
-        });
         When("^I am on the fee details page$", () -> {
             //Go To Fee tab
             refreshPage();
@@ -277,17 +120,12 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
 
         //Submit Application
         When("^I select application to pay$", IrhpPermitsApplyPage::selectApplication);
-        When("^(?:I pay fee for application|I pay for all outstanding fees)$", () -> {
+        When("^I pay fee for application$", () -> {
             //Pay Fee
             BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
             selectCardPayment();
             world.feeAndPaymentJourney.customerPaymentModule();
             FeesDetailsPage.untilFeePaidNotification();
-        });
-
-        //Submit Button Exists
-        When("^I am in application details page, I should not see submit button$", () -> {
-            assertTrue(IrhpPermitsApplyPage.submitButtonNotExists());
         });
 
         //cancel Button not Exists
@@ -303,11 +141,6 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
 
             selectCardPayment();
             world.feeAndPaymentJourney.customerPaymentModule();
-        });
-        //apply application
-        When("^I apply for a new permit application$", () -> {
-            untilOnPage();
-            applyPermit();
         });
 
         And("^I save my IRHP permit$", IrhpPermitsApplyPage::saveIRHP);
@@ -327,42 +160,51 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         When("^I have not declared not to undertake cabotage in internal", () -> {
             waitAndClick("//label[contains(text(),'I confirm that I will not undertake cabotage journ')]",SelectorType.XPATH);
         });
-        //checking Euro6 validation
-        When("^I have not declared Euro 6 compliance in internal", () -> {
-            waitAndClick("//label[contains(text(),'I confirm that I will only use my ECMT permits wit')]",SelectorType.XPATH);
-        });
-        When("^I should get the declaration error message", () -> {
-            Assert.assertEquals(BasePage.getElementValueByText("//p[@class='error__text']", SelectorType.XPATH),"Select one main sector only");
-        });
-//checking declaration page validation
+
+        //checking declaration page validation
         When("declaration checkbox is not selected in internal", () -> {
-            LicenceStore licenceStore = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licenceStore);
-            LicenceDetailsPageJourney.clickIRHPTab();
-            boolean cabotage = true;
-            boolean euro6Compliant = true;
-
-            //apply application
-            int numberOfPermits = Int.random(1,
-                    operatorStore.getLatestLicence().get().getNumberOfAuthorisedVehicles());
-            untilOnPage();
-            applyAnnualEcmtApplication();
-
-            //Fill application
-            emissionRadioSelectNew();
-            needECMTPermit();
-            cabotageEligibility();
-            certificatesRequired();
-            restrictedCountriesNo();
-            isEuro6Compliant(true);
-            emissionRadioSelect();
-            permitsQuantityEcmtAPGGInternal(numberOfPermits);
-            licenceStore.getEcmt().setNumberOfPermits(numberOfPermits);
-
+            completeInternalECMTApplicationUntilDeclaration(PermitType.ECMT_ANNUAL, true);
         });
+
         Then("^I should not see submit button on the application page$", () -> {
             assertTrue(IrhpPermitsApplyPage.submitButtonNotExists());
         });
     }
 
+    public void completeInternalECMTApplication(PermitType ECMTType, boolean euro6Compliance) {
+        completeInternalECMTApplicationUntilDeclaration(ECMTType, euro6Compliance);
+        declare(true);
+
+        //Save application
+        saveIRHP();
+    }
+
+    public void completeInternalECMTApplicationUntilDeclaration(PermitType ECMTType, boolean euro6Compliance) {
+        LicenceDetailsPageJourney.clickIRHPTab();
+
+        //apply application
+        untilOnPage();
+        IRHPPageJourney.completeModal(ECMTType);
+        int numberOfPermits = Int.random(1, 5);
+
+        //Fill application
+        isPath("/licence/\\d+/irhp-application/edit/\\d+/");
+        emissionRadioSelectNew();
+        needECMTPermit();
+        cabotageEligibility();
+        certificatesRequired();
+        restrictedCountriesNo();
+        isEuro6Compliant(euro6Compliance);
+
+        if (ECMTType == PermitType.ECMT_ANNUAL) {
+            emissionRadioSelect();
+            permitsQuantityEcmtAPGGInternal(numberOfPermits);
+
+        } else if (ECMTType == PermitType.SHORT_TERM_ECMT) {
+            numberOfPermitsShortTermAPSG(numberOfPermits);
+            datePermitNeededShortTermApgg();
+        }
+
+        NumberOfPermitsPageJourney.setNumberOfPermits(numberOfPermits);
+    }
 }

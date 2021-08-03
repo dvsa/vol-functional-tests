@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
@@ -16,15 +16,15 @@ import static org.junit.Assert.assertTrue;
 
 
 public class OverviewPageSteps implements En {
-    public OverviewPageSteps(OperatorStore operatorStore, World world) {
+    public OverviewPageSteps(World world) {
         And("^I am on the ECMT International Removal overview page$", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-            .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-            .licencePage(operatorStore, world);
+            .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
+            .licencePage(world);
         });
         And("^I click cancel application link on the International removal overview page$", () -> {
-            operatorStore.getLatestLicence().get().setReferenceNumber(BasePermitPage.getReferenceFromPage());
+            BasePermitJourney.setReferenceNumber(BasePermitPage.getReferenceFromPage());
             OverviewPage.clickCancelApplication();
         });
         And("^the licence number is displayed correctly$", () -> {

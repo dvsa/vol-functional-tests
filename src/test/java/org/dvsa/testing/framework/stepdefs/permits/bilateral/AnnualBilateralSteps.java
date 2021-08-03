@@ -7,8 +7,6 @@ import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -36,7 +34,7 @@ import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.Assert.assertTrue;
 
 public class AnnualBilateralSteps extends BasePage implements En {
-    public AnnualBilateralSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
+    public AnnualBilateralSteps(World world) {
         Then("^I should be on the overview page$", () -> {
             OverviewPage.untilOnPage();
             OverviewPageJourney.hasPageHeading();
@@ -44,10 +42,10 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
         Given("^I have a valid annual bilateral norway standard and cabotage permit$", () -> {
 
-            startBilateralCountryJourneyAndSelectCountry(operatorStore, world, "Norway");
+            startBilateralCountryJourneyAndSelectCountry(world, "Norway");
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits);
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
@@ -66,12 +64,12 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
 
         Given("^I have (a valid |applied for an )annual bilateral norway standard no cabotage permit$", (String notValid) -> {
-            startBilateralCountryJourneyAndSelectCountry(operatorStore, world, "Norway");
+            startBilateralCountryJourneyAndSelectCountry(world, "Norway");
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage);
             PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
+            AnnualBilateralJourney.getInstance().journeyType();
             PermitUsagePage.saveAndContinue();
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPageJourney.completePage();
@@ -86,13 +84,13 @@ public class AnnualBilateralSteps extends BasePage implements En {
             CommonSteps.waitUntilPermitHasStatus(world);
         });
         Given("^I have selected Turkey and I am on the Bilateral application overview page$", () -> {
-            startBilateralCountryJourneyAndSelectCountry(operatorStore, world, "Turkey");
+            startBilateralCountryJourneyAndSelectCountry(world, "Turkey");
         });
         Given("^I have selected Morocco and I am on the Bilateral application overview page$", () -> {
-            startBilateralCountryJourneyAndSelectCountry(operatorStore, world, "Morocco");
+            startBilateralCountryJourneyAndSelectCountry(world, "Morocco");
         });
         Given("^I have selected Ukraine and I am on the Bilateral application overview page$", () -> {
-            startBilateralCountryJourneyAndSelectCountry(operatorStore, world, "Ukraine");
+            startBilateralCountryJourneyAndSelectCountry(world, "Ukraine");
         });
         Given("^I accept declaration and submit the application$", () -> {
             OverviewPageJourney.clickBilateralOverviewSection(OverviewSection.BilateralDeclaration);
@@ -165,12 +163,12 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
     }
 
-    private void startBilateralCountryJourneyAndSelectCountry(OperatorStore operatorStore, World world, String country) {
+    private void startBilateralCountryJourneyAndSelectCountry(World world, String country) {
         clickToPermitTypePage(world);
         AnnualBilateralJourney.getInstance()
-                .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                .licencePage(operatorStore, world);
-        AnnualBilateralJourney.getInstance().selectCountry(operatorStore, country);
+                .permitType(PermitType.ANNUAL_BILATERAL)
+                .licencePage(world);
+        AnnualBilateralJourney.getInstance().selectCountry(country);
         OverviewPage.untilOnPage();
     }
     //TODO: This can all be refactored. There is so much duplication.

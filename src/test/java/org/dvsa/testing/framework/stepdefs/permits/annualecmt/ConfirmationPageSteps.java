@@ -8,8 +8,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPag
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -29,11 +27,11 @@ import static org.junit.Assert.assertTrue;
 
 public class ConfirmationPageSteps extends BasePage implements En {
 
-    public ConfirmationPageSteps(OperatorStore operatorStore, World world) {
+    public ConfirmationPageSteps(World world) {
 
         Then("^I am on the Annual ECMT application submitted page$", () -> {
             clickToPermitTypePage(world);
-            ECMTPermitApplicationSteps.completeEcmtApplicationConfirmation(operatorStore, world);
+            ECMTPermitApplicationSteps.completeEcmtApplicationConfirmation(world);
         });
 
         Then("^the reference number on the annual ECMT submitted page  is as expected$", () -> {
@@ -50,11 +48,11 @@ public class ConfirmationPageSteps extends BasePage implements En {
         Then("^I have an ongoing Annual ECMT with all fees paid", () -> {
             CommonSteps.clickToPermitTypePage(world);
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
             EcmtApplicationJourney.getInstance()
-                    .licencePage(operatorStore, world);
-            LicenceStore licenceStore = completeUpToCheckYourAnswersPage(world, operatorStore);
+                    .licencePage(world);
+            completeUpToCheckYourAnswersPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
 
             HomePageJourney.payAllOutstandingFees();

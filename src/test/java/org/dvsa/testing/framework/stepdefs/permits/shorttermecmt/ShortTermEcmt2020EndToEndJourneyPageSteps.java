@@ -3,30 +3,25 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
-import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
-import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 
 import static org.junit.Assert.assertEquals;
 
 public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implements En {
-    public ShortTermEcmt2020EndToEndJourneyPageSteps(OperatorStore operatorStore, World world)  {
+    public ShortTermEcmt2020EndToEndJourneyPageSteps(World world)  {
         Then("^I select year on the select year page$", YearSelectionPage::selectShortTermValidityPeriod);
 
         Then("^I select any licence number for short term permit$", () -> {
-            ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
+            ShorttermECMTJourney.getInstance().licencePage(world);
         });
         Then("^I complete the Check if you need ECMT permits section and click save and continue$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
@@ -38,7 +33,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
             CertificatesRequiredPage.completePage();
         });
         Then("^I complete Countries with limited permits section and click save and continue$", () -> {
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
+            CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
             BasePermitPage.saveAndContinue();
         });
         Then("^I complete Number of permits required section and click save and continue$", () -> {
@@ -49,9 +44,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
             EmissionStandardsPageJourney.hasPageHeading();
             EmissionStandardsPageJourney.completePage();
         });
-        Then("^I click confirm and continue on the Check your answers page$", () -> {
-            ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-        });
+        Then("^I click confirm and continue on the Check your answers page$", CheckYourAnswerPage::saveAndContinue);
         Then("^I click on Accept and continue on the Declaration page$", DeclarationPageJourney::completeDeclaration);
         Then("^I click on Submit and Pay button on the Permit fee page and complete the payment", () -> {
             PermitFeePage.submitAndPay();

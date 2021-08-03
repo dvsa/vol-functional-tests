@@ -2,17 +2,14 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
 import static org.junit.Assert.assertEquals;
 
 public class CancelApplicationPageSteps extends BasePage implements En {
 
-    public CancelApplicationPageSteps(OperatorStore operatorStore, World world) {
+    public CancelApplicationPageSteps(World world) {
         And ("^the correct text is displayed next to the checkbox in ECMT Removal cancellation page", () -> {
             assertEquals("I confirm that I would like to cancel my application.", CancellationPage.getConfirmCheckboxText());
         });

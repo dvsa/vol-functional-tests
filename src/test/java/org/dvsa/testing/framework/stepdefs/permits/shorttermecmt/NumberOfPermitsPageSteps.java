@@ -2,14 +2,13 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 
 import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 
-    public NumberOfPermitsPageSteps(OperatorStore operatorStore, World world) {
+    public NumberOfPermitsPageSteps(World world) {
         Then("^I should get the number of permits page error message$", () ->{
             assertTrue(NumberOfPermitsPage.isEnterNumberOfPermitsErrorTextPresent());
         });

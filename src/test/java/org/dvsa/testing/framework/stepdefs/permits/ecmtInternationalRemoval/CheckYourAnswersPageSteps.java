@@ -5,7 +5,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
@@ -22,12 +21,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CheckYourAnswersPageSteps implements En {
 
-    public CheckYourAnswersPageSteps(World world, OperatorStore operatorStore) {
+    public CheckYourAnswersPageSteps(World world) {
         When("^I am on ECMT Removal check your answers page", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
+                    .licencePage(world);
             OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)

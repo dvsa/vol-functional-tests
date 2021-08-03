@@ -4,8 +4,6 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -18,8 +16,7 @@ import org.junit.Assert;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 
 public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps extends BasePage implements En {
-    public ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps(OperatorStore operatorStore, World world)  {
-        LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
+    public ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps(World world)  {
         Then("^I select short term ecmt period", () -> {
             PeriodSelectionPage.selectFirstAvailablePermitPeriod();
             PeriodSelectionPage.saveAndContinue();

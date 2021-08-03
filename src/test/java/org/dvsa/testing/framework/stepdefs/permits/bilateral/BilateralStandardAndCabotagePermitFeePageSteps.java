@@ -7,8 +7,6 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.*;
@@ -25,19 +23,19 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 
 public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage implements En {
 
-    public BilateralStandardAndCabotagePermitFeePageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore)
+    public BilateralStandardAndCabotagePermitFeePageSteps(World world)
     {
         And("^I'm on the annual bilateral standard and cabotage permit fee page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().selectCountry(operatorStore, "Norway");
+                    .permitType(PermitType.ANNUAL_BILATERAL)
+                    .licencePage(world);
+            AnnualBilateralJourney.getInstance().selectCountry("Norway");
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits);
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
@@ -51,14 +49,14 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
         And("^I'm on the annual bilateral standard and cabotage permit fee page with Cabotage selected on Cabotage page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().selectCountry(operatorStore, "Norway");
+                    .permitType(PermitType.ANNUAL_BILATERAL)
+                    .licencePage(world);
+            AnnualBilateralJourney.getInstance().selectCountry("Norway");
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits);
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
@@ -73,16 +71,16 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
         And("^I'm on the annual bilateral standard permit no cabotage fee page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().selectCountry(operatorStore, "Norway");
+                    .permitType(PermitType.ANNUAL_BILATERAL)
+                    .licencePage(world);
+            AnnualBilateralJourney.getInstance().selectCountry("Norway");
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage);
             PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType(world, licenceStore);
+            AnnualBilateralJourney.getInstance().journeyType();
             PermitUsagePage.saveAndContinue();
             BasePermitPage.saveAndContinue();
             NumberOfPermitsPageJourney.completePage();
@@ -95,9 +93,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
 
             // Application reference check
             String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
-            String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            Assert.assertEquals(actualReference.contains(licence1),true);
-            Assert.assertTrue(actualReference.contains(licence1));
+            Assert.assertTrue(actualReference.contains(world.applicationDetails.getLicenceNumber()));
 
             // Application date check
             DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMMM yyyy");
@@ -128,7 +124,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
 
                 //Fee breakdown check
                 Assert.assertTrue(String.valueOf(getElementValueByText("//tbody/tr/td[@data-heading='Type']",SelectorType.XPATH).contains(PermitUsagePage.getJourney())),true);
-                Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH),operatorStore.getCountry());
+                Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
                 Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']",SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
                 Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£"+ expectedTotal);
             }
@@ -137,7 +133,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
                 int expectedTotal = numberOfPermits * 8;
                 Assert.assertEquals(actualTotal, expectedTotal);
                 Assert.assertTrue(String.valueOf(getElementValueByText("//tbody/tr/td[@data-heading='Type']",SelectorType.XPATH).contains(PermitUsagePage.getJourney())),true);
-                Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH),operatorStore.getCountry());
+                Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
                 Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']",SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
                 Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£"+ expectedTotal);
                 }
@@ -148,9 +144,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
 
             // Application reference check
             String actualReference = PermitFeePage.getTableSectionValue(FeeSection.ApplicationReference);
-            String licence1 = operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
-            Assert.assertEquals(actualReference.contains(licence1),true);
-            Assert.assertTrue(actualReference.contains(licence1));
+            Assert.assertTrue(actualReference.contains(world.applicationDetails.getLicenceNumber()));
 
             // Application date check
             DateTimeFormatter format = DateTimeFormatter.ofPattern("dd MMMM yyyy");
@@ -183,11 +177,11 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
 
                 //Fee breakdown check
                 Assert.assertTrue(String.valueOf(getElementValueByText("//tbody/tr[1]/td[2][@data-heading='Type']", SelectorType.XPATH).contains(NumberOfPermitsPage.getStandardLabel())), true);
-                Assert.assertEquals(getElementValueByText("//tbody/tr[1]/td[1][@data-heading='Country']", SelectorType.XPATH), operatorStore.getCountry());
+                Assert.assertEquals(getElementValueByText("//tbody/tr[1]/td[1][@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
                 Assert.assertEquals(getElementValueByText("//tbody/tr[1]/td[3][@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getStandardValue());
                 Assert.assertEquals(getElementValueByText("//tbody/tr[1]/td[4][@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotalStandardValue);
                 Assert.assertTrue(String.valueOf(getElementValueByText("//tbody/tr[2]/td[2][@data-heading='Type']", SelectorType.XPATH).contains(NumberOfPermitsPage.getCabotageLabel())), true);
-                Assert.assertEquals(getElementValueByText("//tbody/tr[2]/td[1][@data-heading='Country']", SelectorType.XPATH), operatorStore.getCountry());
+                Assert.assertEquals(getElementValueByText("//tbody/tr[2]/td[1][@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
                 Assert.assertEquals(getElementValueByText("//tbody/tr[2]/td[3][@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getCabotageValue());
                 Assert.assertEquals(getElementValueByText("//tbody/tr[2]/td[4][@data-heading='Total fee']", SelectorType.XPATH), "£" + expectedTotalCabotageValue);
             }
@@ -207,10 +201,11 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
 
                // fee breakdown check
                 Assert.assertTrue(String.valueOf(getElementValueByText("//tbody/tr/td[@data-heading='Type']",SelectorType.XPATH).contains(PermitUsagePage.getJourney())),true);
-                Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH),operatorStore.getCountry());
+                Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
                 Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']",SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
                 Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£"+ expectedTotal);
             }
         });
-    } //TODO: Check page for repetition. Seems to be a fair bit.
+    }
+    refactor
 }

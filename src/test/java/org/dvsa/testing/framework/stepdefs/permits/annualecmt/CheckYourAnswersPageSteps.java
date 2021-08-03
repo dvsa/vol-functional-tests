@@ -2,12 +2,10 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.enums.RestrictedCountry;
 import org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.RestrictedCountriesPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
@@ -25,10 +23,8 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
     String restrictedCountries;
     
 
-    public CheckYourAnswersPageSteps(OperatorStore operatorStore, World world) {
-        And("^I have completed all steps prior to check your answers page$", () -> {
-            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
-        });
+    public CheckYourAnswersPageSteps(World world) {
+        And("^I have completed all steps prior to check your answers page$", ECMTPermitApplicationSteps::completeUpToCheckYourAnswersPage);
         Then("^the information I inserted during the application is displayed$", () -> {
             licence = CheckYourAnswerPage.getAnswer(Licence);
             euro6 = CheckYourAnswerPage.getAnswer(Euro6);
@@ -46,16 +42,15 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             ApplicationSection sectionEnum = ApplicationSection.valueOf(section);
 
             CheckYourAnswerPage.clickChangeAnswer(sectionEnum);
-            updateSectionWithValidRandomAnswer(sectionEnum, world, operatorStore);
+            updateSectionWithValidRandomAnswer(sectionEnum);
         });
     }
 
-    private void updateSectionWithValidRandomAnswer(ApplicationSection section, World world, OperatorStore operatorStore) {
-        LicenceStore licenceStore = operatorStore.getLatestLicence().get();
-        operatorStore.withLicences(licenceStore);
+    private void updateSectionWithValidRandomAnswer(ApplicationSection section) {
         switch (section) {
             case Cabotage:
-                EcmtApplicationJourney.getInstance().cabotagePage();
+                CabotagePage.confirmWontUndertakeCabotage();
+                CabotagePage.saveAndContinue();
                 break;
             case RestrictedCountries:
                 RestrictedCountry restrictedCountry = RestrictedCountry.random();

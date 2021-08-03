@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.cookies;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -18,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CookieSteps extends BasePage implements En {
 
-    public CookieSteps(World world, OperatorStore operatorStore) {
+    public CookieSteps(World world) {
 
         WebDriver driver;
         And("^I logged into Self Serve site before accepting cookies$", () -> {

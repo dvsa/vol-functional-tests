@@ -7,8 +7,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.BasePermitPage
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -26,15 +24,14 @@ import static org.junit.Assert.assertTrue;
 
 
 public class VehiclesCertificateOfRoadWorthinessE2E implements En {
-    public VehiclesCertificateOfRoadWorthinessE2E(OperatorStore operatorStore, World world) {
-        LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
+    public VehiclesCertificateOfRoadWorthinessE2E(World world) {
         And("^I select Certificate of Roadworthiness for vehicles on the select permit page$", () -> {
             clickToPermitTypePage(world);
-            VehiclesCertificateOfRoadworthinessJourney.getInstance().permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_VEHICLES, operatorStore);
+            VehiclesCertificateOfRoadworthinessJourney.getInstance().permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_VEHICLES);
         });
 
         Then("^I select any licence number for Certificate of Roadworthiness for vehicles$", () -> {
-            VehiclesCertificateOfRoadworthinessJourney.getInstance().licencePage(operatorStore, world);
+            VehiclesCertificateOfRoadworthinessJourney.getInstance().licencePage(world);
         });
 
 

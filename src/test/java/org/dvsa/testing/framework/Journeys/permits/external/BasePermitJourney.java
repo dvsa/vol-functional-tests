@@ -1,23 +1,20 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.BaseJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitTypePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
-import java.util.Optional;
-
-public class BasePermitJourney extends BaseJourney {
+public class BasePermitJourney extends BasePermitPage {
     protected static volatile BasePermitJourney instance = null;
     public static PermitType permitType;
     public static String yearChoice;
     public static String fullReferenceNumber;
+    public static Boolean countriesWithLimitedPermitsChoice;
 
     protected BasePermitJourney() {
         // The code below assures that someone can't new up instances using reflections
@@ -25,7 +22,7 @@ public class BasePermitJourney extends BaseJourney {
             throw new RuntimeException("Use #getInstance to obtain an instance of this class");
     }
 
-    private void setPermitType(PermitType permitType) {
+    public void setPermitType(PermitType permitType) {
         BasePermitJourney.permitType = permitType;
     }
 
@@ -49,55 +46,29 @@ public class BasePermitJourney extends BaseJourney {
         return fullReferenceNumber;
     }
 
-    public BasePermitJourney permitType(OperatorStore operatorStore) {
-        return permitType(PermitType.ECMT_ANNUAL, operatorStore);
+    public static void setCountriesWithLimitedPermitsChoice(boolean choice) {
+        BasePermitJourney.countriesWithLimitedPermitsChoice = choice;
     }
 
-    public BasePermitJourney permitType() {
-        return permitType(PermitType.ECMT_ANNUAL, new OperatorStore());
+    public static boolean getCountriesWithLimitedPermitsChoice() {
+        return BasePermitJourney.countriesWithLimitedPermitsChoice;
     }
 
-    public BasePermitJourney permitType(PermitType type, OperatorStore operator) {
-        Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
-        LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
-        operator.withLicences(licence);
-
+    public BasePermitJourney permitType(PermitType type) {
         setPermitType(type);
-        // TODO: Remove next line below and update code dependent on it
-        licence.getEcmt().setType(type);
-        operator.setCurrentPermitType(type);
-        operator.withLicences(licence);
-
         PermitTypePage.selectType(type);
         PermitTypePage.clickContinue();
         return this;
     }
 
-    public BasePermitJourney shortTermType(PeriodType shortTermType, OperatorStore operator) {
-        Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
-        LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
-        operator.withLicences(licence);
-        licence.getEcmt().setShortTermType(shortTermType);
-        operator.setCurrentShortTermType(shortTermType);
-        operator.withLicences(licence);
-
-        PeriodSelectionPage.selectShortTermType(shortTermType);
+    public BasePermitJourney bilateralPeriodType (PeriodType bilateralPeriodType) {
+        AnnualBilateralJourney.setPeriodType(bilateralPeriodType);
+        PeriodSelectionPage.bilateralPeriodType(bilateralPeriodType);
         PeriodSelectionPage.saveAndContinue();
         return this;
     }
-    public BasePermitJourney bilateralPeriodType (PeriodType bilateralPeriodType, OperatorStore operator) {
-        Optional<LicenceStore> potentialLicence = operator.getLatestLicence();
-        LicenceStore licence = potentialLicence.orElseGet(LicenceStore::new);
-        operator.withLicences(licence);
-        operator.setCurrentBilateralPeriodType(bilateralPeriodType);
 
-        operator.withLicences(licence);
-        PeriodSelectionPage.bilateralPeriodType(bilateralPeriodType);
-        //PeriodSelectionPage.continueButton();
-        return this;
-    }
-
-    public BasePermitJourney licencePage(OperatorStore operator, World world) {
+    public BasePermitJourney licencePage(World world) {
 
         String licenceNumber;
         if (SelectALicencePage.numberOfLicences() > 1) {
@@ -112,7 +83,7 @@ public class BasePermitJourney extends BaseJourney {
 
         SelectALicencePage.saveAndContinue();
 
-        fullReferenceNumber = OverviewPage.getReferenceFromPage();
+        setFullReferenceNumber(OverviewPage.getReferenceFromPage());
 
         BasePermitJourney.setReferenceNumber(OverviewPage.getReferenceFromPage());
         return this;

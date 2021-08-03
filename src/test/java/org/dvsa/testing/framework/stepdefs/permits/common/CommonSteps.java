@@ -8,7 +8,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourn
 import org.dvsa.testing.framework.Journeys.permits.external.pages.FeeDetailsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
@@ -29,9 +28,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CommonSteps extends BasePermitJourney implements En {
 
-    public static Map<String, java.net.URL> origin;
-
-    public CommonSteps(OperatorStore operator, World world) {
+    public CommonSteps(World world) {
         Given("^I am on the VOL self-serve site$", () -> {
             deleteCookies();
             refreshPage();
@@ -41,7 +38,7 @@ public class CommonSteps extends BasePermitJourney implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL, operator);
+                    .permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
 
         });
@@ -71,12 +68,12 @@ public class CommonSteps extends BasePermitJourney implements En {
         HomePageJourney.beginPermitApplication();
     }
 
-    public static void beginEcmtApplicationAndGoToOverviewPage(World world, OperatorStore operatorStore) {
+    public static void beginEcmtApplicationAndGoToOverviewPage(World world) {
         clickToPermitTypePage(world);
         EcmtApplicationJourney.getInstance()
-                .permitType(PermitType.ECMT_ANNUAL, operatorStore);
+                .permitType(PermitType.ECMT_ANNUAL);
         YearSelectionPage.selectECMTValidityPeriod();
-        EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
+        EcmtApplicationJourney.getInstance().licencePage(world);
         OverviewPage.untilOnPage();
     }
 

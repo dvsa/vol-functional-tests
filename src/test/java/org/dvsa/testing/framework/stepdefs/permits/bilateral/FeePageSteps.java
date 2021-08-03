@@ -3,10 +3,9 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import Injectors.World;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -19,7 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class FeePageSteps extends BasePermitPage implements En {
-    public FeePageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
+    public FeePageSteps(World world) {
 
         When("^I am on the permit fee page for annual bilateral application with correct information and content$", () -> {
             PermitFeePage.untilOnPage();
@@ -55,7 +54,7 @@ public class FeePageSteps extends BasePermitPage implements En {
 
             //Fee breakdown check
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH),"Standard single journey");
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']", SelectorType.XPATH), operatorStore.getCountry());
+            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£" + expectedTotal);
         });

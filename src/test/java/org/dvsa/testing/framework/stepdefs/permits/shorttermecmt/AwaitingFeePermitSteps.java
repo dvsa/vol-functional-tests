@@ -5,7 +5,6 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -27,16 +26,16 @@ import static org.junit.Assert.assertTrue;
 
 public class AwaitingFeePermitSteps extends BasePermitPage implements En {
 
-    public AwaitingFeePermitSteps(OperatorStore operatorStore, World world) {
+    public AwaitingFeePermitSteps(World world) {
         And("^I have a short term application in awaiting fee status$", () -> {
             CommonSteps.clickToPermitTypePage(world);
             ECMTShortTermJourney.getInstance()
-                    .permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
+                    .permitType(PermitType.SHORT_TERM_ECMT);
             YearSelectionPage.selectShortTermValidityPeriod();
             PeriodSelectionPage.selectFirstAvailablePermitPeriod();
             PeriodSelectionPage.saveAndContinue();
             ECMTShortTermJourney.getInstance()
-                    .licencePage(operatorStore, world);
+                    .licencePage(world);
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPage.saveAndContinue();
             CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
@@ -44,7 +43,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             CabotagePage.confirmWontUndertakeCabotage();
             BasePermitPage.saveAndContinue();
             CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
+            CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
             NumberOfPermitsPageJourney.completeECMTPage();
             PermitStartDatePage.permitDate();
             BasePermitPage.saveAndContinue();

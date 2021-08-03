@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPag
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -22,13 +21,13 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 
 public class DeclarationPageSteps extends BasePage implements En {
 
-    public DeclarationPageSteps(World world, OperatorStore operatorStore) {
+    public DeclarationPageSteps(World world) {
 
         When("^I am on  the ECMT Removal Declaration page", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
+                    .licencePage(world);
             OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)

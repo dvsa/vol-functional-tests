@@ -24,8 +24,7 @@ Feature: Internal ECMT permits application validation page
 
   @olcs-20952 @olcs-27581 @olcs-27682
   Scenario: Checking Euro6 validation on the application page
-    And I apply for an ECMT permit application without selecting Euro emmissions checkbox
-    And I save my IRHP permit
+    And I apply for an ECMT permit application without selecting Euro emissions checkbox
     Then I should get the emissions  page error message
 
   @olcs-20952 @olcs-27682

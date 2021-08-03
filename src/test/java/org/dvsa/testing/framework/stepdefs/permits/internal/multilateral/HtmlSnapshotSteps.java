@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.multilateral;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;

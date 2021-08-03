@@ -4,7 +4,6 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ApplicationIssuingFeePage;
@@ -19,13 +18,12 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
 
     private World world;
 
-    public AwaitingFeePermitSteps(OperatorStore operatorStore, World world) {
+    public AwaitingFeePermitSteps(World world) {
 
         And("^I am viewing an application that's awaiting fees$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
-            ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
-            operatorStore.setCurrentLicenceNumber(world.applicationDetails.getLicenceNumber());
+            ECMTPermitApplicationSteps.completeEcmtApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(3000);
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

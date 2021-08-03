@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationConfirmationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
@@ -13,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class AnnualBilateralCancelPageSteps extends BasePage implements En {
 
-    public AnnualBilateralCancelPageSteps(OperatorStore operatorStore, World world) {
+    public AnnualBilateralCancelPageSteps(World world) {
         When("the checkbox is selected", CancellationPage::clickCancelCheckbox);
         Then ("^I should be taken to cancel confirmation page$", () -> {
             CancellationConfirmationPage.untilOnPage();

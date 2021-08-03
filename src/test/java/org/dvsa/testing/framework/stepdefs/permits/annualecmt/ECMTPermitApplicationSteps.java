@@ -2,11 +2,10 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -15,9 +14,6 @@ import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
 
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
@@ -26,9 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
 
-    public static Map<String, String> applicationReference;
-
-    public ECMTPermitApplicationSteps(World world, OperatorStore operatorStore) {
+    public ECMTPermitApplicationSteps(World world) {
         Then("^the permits tab should (not )?be displayed$", (String hidden) -> {
             if (hidden != null) {
                 assertFalse(HomePage.isTabPresent(Tab.PERMITS));
@@ -47,7 +41,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         And("^I have completed an ECMT application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
-            ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
+            ECMTPermitApplicationSteps.completeEcmtApplication(world);
         });
         When("^I withdraw without confirming$", () -> {
             HomePage.PermitsTab.selectFirstOngoingApplication();
@@ -58,16 +52,16 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
-            EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
+            EcmtApplicationJourney.getInstance().licencePage(world);
             BasePermitPage.back();
         });
         When("^I view the application from ongoing permit application table$", HomePage.PermitsTab::selectFirstOngoingApplication);
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
-            ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
+            ECMTPermitApplicationSteps.completeEcmtApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(5000);
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -80,26 +74,26 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         When("^I try applying with a licence that has an existing annual ECMT application$", () -> {
             HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
             SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
             SelectALicencePage.saveAndContinue();
         });
     }
 
-    public static void completeEcmtApplication(OperatorStore operator, World world) {
-        completeEcmtApplicationConfirmation(operator, world);
+    public static void completeEcmtApplication(World world) {
+        completeEcmtApplicationConfirmation(world);
         SubmittedPage.untilPageLoad();
         SubmittedPage.goToPermitsDashboard();
 
     }
 
-    public static void completeEcmtApplicationConfirmation(OperatorStore operator, World world) {
+    public static void completeEcmtApplicationConfirmation(World world) {
         EcmtApplicationJourney.getInstance()
-                .permitType(PermitType.ECMT_ANNUAL, operator);
+                .permitType(PermitType.ECMT_ANNUAL);
         YearSelectionPage.selectECMTValidityPeriod();
-        EcmtApplicationJourney.getInstance().licencePage(operator, world);
-        completeUpToCheckYourAnswersPage(world, operator);
+        EcmtApplicationJourney.getInstance().licencePage(world);
+        completeUpToCheckYourAnswersPage();
         CheckYourAnswerPage.untilOnPage();
         CheckYourAnswerPage.saveAndContinue();
         DeclarationPageJourney.completeDeclaration();
@@ -107,19 +101,16 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 
-    public static LicenceStore completeUpToCheckYourAnswersPage(@NotNull World world, OperatorStore store) {
-        LicenceStore licenceStore = store.getCurrentLicence().orElseGet(LicenceStore::new);
-        store.withLicences(licenceStore);
+    public static void completeUpToCheckYourAnswersPage() {
         OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
         CheckIfYouNeedECMTPermitsPageJourney.completePage();
         CabotagePage.confirmWontUndertakeCabotage();
         CabotagePage.saveAndContinue();
         CertificatesRequiredPage.completePage();
-        CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
+        CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
         NumberOfPermitsPageJourney.completeECMTPage();
         EmissionStandardsPageJourney.completePage();
-        licenceStore.setReferenceNumber(BasePermitPage.getReferenceFromPage());
-        return licenceStore;
+        BasePermitJourney.setReferenceNumber(BasePermitPage.getReferenceFromPage());
 
    }
 }

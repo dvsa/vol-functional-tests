@@ -1,11 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
-import activesupport.aws.s3.S3;
-import activesupport.string.Str;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -18,23 +15,18 @@ import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
-import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class IRHPPermitsPageSteps extends BasePage implements En {
     private static World world;
-    LocalDate ld;
 
-    public static List<String> successfulPermits;
-
-    public IRHPPermitsPageSteps(OperatorStore operator, World world) {
+    public IRHPPermitsPageSteps(World world) {
         When("^I am viewing a licences IRHP section$", () -> {
             refreshPage();
             LicenceDetailsPageJourney.clickIRHPTab();
@@ -67,9 +59,6 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
             IrhpPermitsApplyPage.underConsiderationStatusExists();
         });
-        And("^I have an ECMT application that's not yet submitted$", () -> {
-
-        });
     }
 
     public static void payOutstandingFees(World world) {
@@ -82,21 +71,6 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
         IrhpPermitsApplyPage.selectCardPayment();
         world.feeAndPaymentJourney.customerPaymentModule();
         FeesDetailsPage.untilFeePaidNotification();
-    }
-
-    private List<String> getAllSuccessfulApplications(OperatorStore operator) throws MessagingException {
-        return operator.getLicences().stream()
-                .map((licence) -> licence.getEcmt().getFullReferenceNumber())
-                .map(reference -> S3.getEcmtCorrespondences(operator.getEmail(), reference))
-                .filter(email -> Str.find("(?<==0A=0A)Application status: Successful", email).isPresent())
-                .map(email -> Str.find("(?<=Your ECMT permit application )(\\w{2}\\d{7} / \\d{5})", email).get())
-                .collect(Collectors.toList());
-    }
-
-    public static void viewLicenceOnInternal() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
     }
 
 }

@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -15,10 +14,10 @@ import static org.junit.Assert.assertEquals;
 
 public class YearSelectionPageSteps extends BasePage implements En {
 
-    public YearSelectionPageSteps(World world, OperatorStore operatorStore) {
+    public YearSelectionPageSteps(World world) {
         And("^I am on the Year Selection Page$", () -> {
            CommonSteps.clickToPermitTypePage(world);
-           EcmtApplicationJourney.getInstance().permitType(PermitType.ECMT_ANNUAL,operatorStore);
+           EcmtApplicationJourney.getInstance().permitType(PermitType.ECMT_ANNUAL);
         });
         And("^the user is navigated to the permit type page$", () -> {
             String pageHeading = PermitTypePage.getPageHeading();

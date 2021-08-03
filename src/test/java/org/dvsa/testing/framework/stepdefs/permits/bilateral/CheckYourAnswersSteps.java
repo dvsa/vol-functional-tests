@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
@@ -12,7 +11,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.Bila
 import org.junit.Assert;
 
 public class CheckYourAnswersSteps extends BasePage implements En {
-    public CheckYourAnswersSteps(OperatorStore operatorStore, World world) {
+    public CheckYourAnswersSteps(World world) {
         And("^I am on the Annual Bilateral (.+) check your answers page with correct information and content$", (String country)-> {
 
             //Wait until check your answers page is loaded

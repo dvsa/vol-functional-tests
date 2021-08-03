@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRem
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -25,12 +24,12 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 
 public class ValidPermitPageSteps implements En {
 
-    public ValidPermitPageSteps(World world, OperatorStore operatorStore) {
+    public ValidPermitPageSteps(World world) {
         And("^I have a valid ECMT removal permit$", () -> {
             clickToPermitTypePage(world);
             EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
+                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
+                    .licencePage(world);
             OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
             EcmtInternationalRemovalJourney.getInstance()
                     .removalsEligibility(true)

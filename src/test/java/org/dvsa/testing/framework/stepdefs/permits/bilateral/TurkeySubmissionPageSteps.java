@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 
@@ -10,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 public class TurkeySubmissionPageSteps implements En {
 
-    public TurkeySubmissionPageSteps(World world, OperatorStore operatorStore) {
+    public TurkeySubmissionPageSteps(World world) {
         And("^I am on the Annual Bilateral application submitted page with correct information and content", () -> {
             SubmittedPage.untilOnPage();
 

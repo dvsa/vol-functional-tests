@@ -1,10 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
+import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
@@ -12,17 +10,15 @@ import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.junit.Assert;
 
-import java.net.MalformedURLException;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CheckYourAnswersPageSteps extends BasePage implements En {
-    public CheckYourAnswersPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore)throws MalformedURLException, IllegalBrowserException {
+    public CheckYourAnswersPageSteps(World world) {
         Then("^Country name displayed on the Bilateral check your answers page is the one clicked on the overview page$", () -> {
             CheckYourAnswerPage.untilOnPage();
             String country = getText("//div[@class='govuk-caption-xl']", SelectorType.XPATH);
-            Assert.assertEquals(country, operatorStore.getCountry());
+            Assert.assertEquals(country, AnnualBilateralJourney.getCountry());
         });
 
         Then("^the page heading on the check your answers page is correct$", () -> {
@@ -36,7 +32,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
         });
 
         Then("^Period type displayed on the check your answers page is the one I selected on the Period selection page$", () -> {
-            Assert.assertEquals(BilateralJourneySteps.getPeriodText(), operatorStore.getCurrentBilateralPeriodType().toString());
+            Assert.assertEquals(BilateralJourneySteps.getPeriodText(), AnnualBilateralJourney.getPeriodType());
         });
 
         Then("^Journey type displayed on the check your answers page is the one I selected on the Permits usage$", () -> {

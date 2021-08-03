@@ -2,14 +2,13 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitTypePage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
 
 public class PermitTypePageSteps implements En {
-    public PermitTypePageSteps(OperatorStore operatorStore, World world) {
+    public PermitTypePageSteps(World world) {
         And("^I am on the permit type page$", () -> {
             clickToPermitTypePage(world);
         });

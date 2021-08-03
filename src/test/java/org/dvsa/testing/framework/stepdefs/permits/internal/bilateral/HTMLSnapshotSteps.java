@@ -3,29 +3,19 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.bilateral;
 import cucumber.api.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.enums.PermitType;
-import org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection;
 import org.dvsa.testing.framework.pageObjects.external.enums.sections.BilateralSection;
-import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
-import org.dvsa.testing.framework.pageObjects.internal.details.DocsAndAttachmentsPage;
 import org.dvsa.testing.framework.pageObjects.internal.details.DocumentsPage;
-import org.dvsa.testing.framework.pageObjects.internal.details.enums.Category;
-import org.dvsa.testing.framework.pageObjects.internal.details.enums.Subcategory;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
 import java.util.ArrayList;
 
-import static org.dvsa.testing.framework.pageObjects.internal.details.DocsAndAttachmentsPage.snapshotTitle;
 import static org.junit.Assert.*;
 
 public class HTMLSnapshotSteps extends BasePage implements En {
 
-    public HTMLSnapshotSteps(OperatorStore operator, World world, LicenceStore licenceStore) {
+    public HTMLSnapshotSteps(World world) {
         Then("^text for annual bilateral snapshot is displayed as expected$", () -> {
 
             ArrayList<String> tab = new ArrayList<String> (getDriver().getWindowHandles());

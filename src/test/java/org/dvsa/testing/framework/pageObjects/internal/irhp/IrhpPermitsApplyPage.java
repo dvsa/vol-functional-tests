@@ -52,33 +52,6 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         scrollAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
 
     }
-
-    public static void applyAnnualEcmtApplication() {
-        waitAndClick("//button[@id='Apply']", SelectorType.XPATH);
-        BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
-        waitAndSelectByIndex("Select Permit Type","//select[@id='permitType']", SelectorType.XPATH,1);
-        waitAndSelectByIndex("Select a year","//select[@id='yearList']", SelectorType.XPATH,1);
-        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
-    }
-
-    public static void applyAnnualEcmtAPGGApplication() {
-        waitAndClick("//button[@id='Apply']", SelectorType.XPATH);
-        BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
-        waitAndSelectByIndex("Select Permit Type","//select[@id='permitType']", SelectorType.XPATH,1);
-        Select drpYear = new Select(getDriver().findElement(By.xpath("//select[@id='yearList']")));
-        waitAndClick("//select[@id='yearList']",SelectorType.XPATH);
-        drpYear.selectByValue("2021");
-        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
-    }
-    public static void applyShortTermAPGGApplication() {
-        waitAndClick("//button[@id='Apply']", SelectorType.XPATH);
-        IrhpPermitsPage.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
-        IrhpPermitsPage.Model.permitType(PermitType.SHORT_TERM_ECMT);
-        Select drpYear = new Select(getDriver().findElement(By.xpath("//select[@id='yearList']")));
-        waitAndClick("//select[@id='yearList']",SelectorType.XPATH);
-        drpYear.selectByValue("2021");
-        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
-    }
     public static void applyforPermit() {
         scrollAndClick("//button[@id='Apply']", SelectorType.XPATH);
     }

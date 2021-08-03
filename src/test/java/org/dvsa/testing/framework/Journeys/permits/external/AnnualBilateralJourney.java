@@ -1,20 +1,17 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
-import Injectors.World;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.pageObjects.enums.Country;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.external.pages.*;
-import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
+import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
 import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
-
-import java.util.List;
+import org.dvsa.testing.framework.pageObjects.external.pages.CountrySelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.RestrictedCountriesPage;
 
 public class AnnualBilateralJourney extends BasePermitJourney {
 
     private static volatile AnnualBilateralJourney instance = null;
+    private String bilateralCountry;
+    private static PeriodType periodType;
 
 
     protected AnnualBilateralJourney(){
@@ -33,31 +30,32 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         return instance;
     }
 
-    public AnnualBilateralJourney countries(OperatorStore operatorStore) {
-        LicenceStore licence = operatorStore.getCurrentLicence().orElseThrow(IllegalStateException::new);
-
-        CountrySelectionPage.randomCountries();
-        RestrictedCountriesPage.saveAndContinue();
-        licence.getEcmt().setRestrictedCountries(true);
-        return this;
+    public void setBilateralCountry(String bilateralCountry) {
+        this.bilateralCountry = bilateralCountry;
     }
 
-    public AnnualBilateralJourney selectCountry(OperatorStore operatorStore, String country){
+    public String getBilateralCountry() {
+        return bilateralCountry;
+    }
+
+    public static void setPeriodType(PeriodType periodType) {
+        AnnualBilateralJourney.periodType = periodType;
+    }
+
+    public static PeriodType getPeriodType() {
+        return periodType;
+    }
+
+    public AnnualBilateralJourney selectCountry(String country){
         String countryTitle = CountrySelectionPage.selectCountry(country);;
-        operatorStore.setCountry(countryTitle);
+        setBilateralCountry(countryTitle);
         return this;
     }
 
-    public AnnualBilateralJourney journeyType(World world, LicenceStore licenceStore){
+    public AnnualBilateralJourney journeyType(){
         JourneyType journeyType = JourneyType.random();
         PermitUsagePage.journeyType(journeyType);
         RestrictedCountriesPage.saveAndContinue();
-        return this;
-    }
-
-    public AnnualBilateralJourney checkYourAnswers(){
-        CheckYourAnswerPage.untilOnPage();
-        CheckYourAnswerPage.saveAndContinue();
         return this;
     }
 

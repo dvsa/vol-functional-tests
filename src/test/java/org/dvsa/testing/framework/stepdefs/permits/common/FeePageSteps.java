@@ -4,7 +4,6 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
@@ -23,15 +22,15 @@ import static org.junit.Assert.assertTrue;
 
 public class FeePageSteps extends BasePage implements En {
 
-    public FeePageSteps(World world, OperatorStore operatorStore) {
+    public FeePageSteps(World world) {
 
         And("^I am on the fee page$", () -> {
             clickToPermitTypePage(world);
             EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL, operatorStore);
+                    .permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
-            EcmtApplicationJourney.getInstance().licencePage(operatorStore, world);
-            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage(world, operatorStore);
+            EcmtApplicationJourney.getInstance().licencePage(world);
+            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage();
             ECMTPermitApplicationSteps.saveAndContinue();
             DeclarationPageJourney.completeDeclaration();
         });

@@ -2,21 +2,21 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.PermitUsagePageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 
 import static org.junit.Assert.assertEquals;
 
 public class PermitsUsagePageSteps implements En {
-    public PermitsUsagePageSteps(OperatorStore operatorStore, World world) {
+    public PermitsUsagePageSteps(World world) {
         Then("^I am on the Bilateral Permit usage page with correct information and content$", () -> {
 
             PermitUsagePage.untilOnPage();
 
             //Country name displayed on the Permits Usage page is the one clicked on the overview page
-            assertEquals(PermitUsagePage.getCountry(), operatorStore.getCountry());
+            assertEquals(PermitUsagePage.getCountry(), AnnualBilateralJourney.getCountry());
 
             // the page heading on bilateral Turkey permits usage  page is correct
             PermitUsagePageJourney.hasPageHeading();

@@ -5,7 +5,6 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCountriesPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
@@ -20,9 +19,9 @@ import static org.junit.Assert.assertEquals;
 
 public class RestrictedCountriesPageSteps extends BasePage implements En {
 
-    public RestrictedCountriesPageSteps(World world, OperatorStore operatorStore) {
+    public RestrictedCountriesPageSteps(World world) {
         And("^I am on the restricted countries page$", () -> {
-            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world, operatorStore);
+            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world);
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();

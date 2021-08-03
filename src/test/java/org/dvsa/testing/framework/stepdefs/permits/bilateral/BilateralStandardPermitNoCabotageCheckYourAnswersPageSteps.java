@@ -4,8 +4,6 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.Country;
 import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
@@ -20,18 +18,18 @@ import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.cli
 import static org.junit.Assert.assertTrue;
 
 public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps implements En {
-    public BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
+    public BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps(World world) {
         Then("^I am on the Bilateral Standard permits no Cabotage check your answers page$", () -> {
             clickToPermitTypePage(world);
             AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().selectCountry(operatorStore, "Norway");
+                    .permitType(PermitType.ANNUAL_BILATERAL)
+                    .licencePage(world);
+            AnnualBilateralJourney.getInstance().selectCountry("Norway");
             OverviewPage.untilOnPage();
             OverviewPage.clickCountrySection(Country.Norway);
             EssentialInformationPage.untilOnPage();
             EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage,operatorStore);
+            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage);
             PermitUsagePage.untilOnPage();
             PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
             PermitUsagePage.saveAndContinue();
