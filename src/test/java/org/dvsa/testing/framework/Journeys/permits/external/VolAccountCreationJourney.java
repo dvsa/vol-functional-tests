@@ -24,20 +24,4 @@ public class VolAccountCreationJourney {
 
         return instance;
     }
-
-    public VolAccountCreationJourney register(UserRegistrationDetailsModel userRegistrationDetails, OperatorStore operator){
-        operator.setUserDetails(UserAPI.register(userRegistrationDetails));
-        operator.setUsername(userRegistrationDetails.getUsername());
-
-        String email = userRegistrationDetails.getContactDetailsModel().getEmailAddress();
-        try{
-            Thread.sleep(10000);
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        operator.setEmail(email).setPassword(S3.getTempPassword(email));
-
-        return this;
-    }
-
 }

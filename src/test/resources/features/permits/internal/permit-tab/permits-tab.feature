@@ -7,7 +7,7 @@ Feature: Internal permits tab
   @INTERNAL
   Scenario: Table is formatted for annual bilateral
     And I am on the permits dashboard on external
-    And have valid Annual Bilateral Permits
+    And I have a valid annual bilateral norway standard and cabotage permit
     And i create an admin and url search for my licence
     When I'm viewing the permits tab
     Then the annual bilateral permit table has the expected format

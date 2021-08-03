@@ -42,7 +42,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
             OverviewPageJourney.hasPageHeading();
         });
 
-        Given("^I have (a valid |applied for an )annual bilateral norway standard and cabotage permit$", (String notValid) -> {
+        Given("^I have a valid annual bilateral norway standard and cabotage permit$", () -> {
 
             startBilateralCountryJourneyAndSelectCountry(operatorStore, world, "Norway");
             OverviewPage.clickCountrySection(Country.Norway);

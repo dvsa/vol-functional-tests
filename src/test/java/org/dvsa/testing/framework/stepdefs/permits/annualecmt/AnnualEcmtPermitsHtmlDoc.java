@@ -21,7 +21,7 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
     private World world;
 
     public AnnualEcmtPermitsHtmlDoc(World world, OperatorStore operatorStore) {
-        When("^I view the annual ECMT Permits documentation$", () -> {
+        When("^I view the annual (bilateral|ECMT) permits documentation$", (String permitType) -> {
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
             String permitApplicationNumber = getText("//td[@data-heading='Reference number']/a", SelectorType.XPATH);
             clickByLinkText(permitApplicationNumber);
@@ -44,6 +44,8 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             Assert.assertEquals(selectedLicence.getEcmt().hasRestrictedCountries(),
                     (Str.find("(?i)(yes|no)", DocumentsPage.getSectionBody(ApplicationSection.RestrictedCountries)).get()).trim().equalsIgnoreCase("yes")
             );
+            //TODO hasRestrictedCountries is defaulting to false because it is a null boolean. Needs changing.
+
             // Verify percentage of international journey
             Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.NumberOfPermits).isEmpty());
             Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Euro6).isEmpty());

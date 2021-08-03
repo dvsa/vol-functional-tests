@@ -64,21 +64,6 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             HomePage.PermitsTab.selectFirstValidPermit();
 
         });
-        And("^have valid Annual Bilateral Permits$", () -> {
-            HomePage.applyForLicenceButton();
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
-            AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.Countries);
-            AnnualBilateralJourney.getInstance()
-                    .countries(operatorStore);
-            NumberOfPermitsPageJourney.completeBilateralPage();
-            AnnualBilateralJourney.getInstance().checkYourAnswers();
-            DeclarationPageJourney.completeDeclaration();
-            AnnualBilateralJourney.getInstance().permitFee();
-
-            world.feeAndPaymentJourney.customerPaymentModule();
-        });
         Then("^the user is in the annual ECMT list page$",()  ->{
             Assert.assertTrue(isPath("/permits/valid/\\d+"));
             String title = BasePage.getElementValueByText("h1.govuk-heading-l",SelectorType.CSS).trim();
