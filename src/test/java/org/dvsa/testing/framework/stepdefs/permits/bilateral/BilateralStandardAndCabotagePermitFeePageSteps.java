@@ -176,6 +176,7 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage imp
                 Assert.assertEquals(String.valueOf(totalpermits), String.valueOf(actualNumberOfPermits));
 
                 //Fee breakdown check
+                use fee page clas
                 Assert.assertTrue(String.valueOf(getElementValueByText("//tbody/tr[1]/td[2][@data-heading='Type']", SelectorType.XPATH).contains(NumberOfPermitsPage.getStandardLabel())), true);
                 Assert.assertEquals(getElementValueByText("//tbody/tr[1]/td[1][@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
                 Assert.assertEquals(getElementValueByText("//tbody/tr[1]/td[3][@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getStandardValue());
