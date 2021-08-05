@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.TrailersCertificateOfRoadwor
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.TrailersCertificateOfRoadworthinessJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.BasePermitPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;

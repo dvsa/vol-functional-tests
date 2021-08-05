@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationConfirmationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 
 import static org.junit.Assert.assertEquals;
 
