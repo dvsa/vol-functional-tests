@@ -81,10 +81,6 @@ public class DriverUtils {
         getDriver().switchTo().window(windowHandle);
     }
 
-    public static String getWindowHandle() {
-        return getDriver().getWindowHandle();
-    }
-
     public static Set<String> getWindowHandles() {
         return getDriver().getWindowHandles();
     }
@@ -97,16 +93,8 @@ public class DriverUtils {
         getDriver().close();
     }
 
-    public static void quit() {
-        getDriver().quit();
-    }
-
     public static String getTitle() {
         return getDriver().getTitle();
-    }
-
-    public static String getPageSource() {
-        return getDriver().getPageSource();
     }
 
 }

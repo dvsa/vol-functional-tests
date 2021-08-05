@@ -28,8 +28,4 @@ public class PeriodSelectionPage extends BasePermitPage {
         scrollAndClick(selector, SelectorType.XPATH);
     }
 
-    public static void selectShortTermType(PeriodType shortTermType) {
-        String selector = String.format("//label[contains(text(), '%s')]/../input[@type='radio']", shortTermType.toString());
-        scrollAndClick(selector, SelectorType.XPATH);
-    }
 }

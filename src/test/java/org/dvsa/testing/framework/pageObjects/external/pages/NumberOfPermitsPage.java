@@ -2,14 +2,10 @@ package org.dvsa.testing.framework.pageObjects.external.pages;
 
 import activesupport.number.Int;
 import activesupport.string.Str;
-import org.dvsa.testing.framework.pageObjects.type.Permit;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 public class NumberOfPermitsPage extends BasePermitPage {
 
@@ -31,24 +27,6 @@ public class NumberOfPermitsPage extends BasePermitPage {
 
     public static String getCabotageLabel() {
         return getText("//label[contains(text(),'Cabotage multiple journey permit')]", SelectorType.XPATH);
-    }
-
-    public static int numberOfFields() {
-        return size(FIELD, SelectorType.XPATH);
-    }
-
-    public static String getNthCountry(int position) {
-        return getText(FIELD.concat(String.format("[%d]/../../legend", position)), SelectorType.XPATH).trim();
-    }
-
-    public static int getNthFee(int index) {
-        String feeSelector = String.format(".guidance-blue strong:nth-of-type(%d)", index + 1);
-        return Integer.parseInt(Str.find("\\d+", getText(feeSelector)).get());
-    }
-
-    public static String getYear(int idx) {
-        idx += 1;
-        return Str.find("\\d+", getText(FIELD.concat(String.format("[%d]", idx) + "/../label"), SelectorType.XPATH)).get();
     }
 
     public static boolean isAdvisoryTextPresent() {

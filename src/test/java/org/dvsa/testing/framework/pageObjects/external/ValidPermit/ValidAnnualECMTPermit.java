@@ -33,10 +33,6 @@ public class ValidAnnualECMTPermit {
         return application;
     }
 
-    public String getIssueDate() {
-        return issueDate;
-    }
-
     public LocalDate getStartDate() {
         return startDate;
     }

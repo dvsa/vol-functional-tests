@@ -12,14 +12,4 @@ public class ValidPermitsPageJourney extends BasePermitJourney {
         assertEquals("Bilateral permits", heading);
     }
 
-    public static void hasMultilateralHeading() {
-        String heading = ValidPermitsPage.getPageHeading();
-        assertEquals("Annual Multilateral (EU and EEA)", heading);
-    }
-
-    public static void hasAnnualECMTHeading() {
-        String heading = ValidPermitsPage.getPageHeading();
-        assertEquals("ECMT International Removal", heading);
-    }
-
 }

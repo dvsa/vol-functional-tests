@@ -9,10 +9,6 @@ public class BaseModel extends BasePage {
 
     private static String MODAL_CONTAINER = "//*[@class='modal' or @class='modal--alert']";
 
-    public static boolean hasModel(){
-        return isElementPresent(MODAL_CONTAINER, SelectorType.XPATH);
-    }
-
     public static void untilModalIsPresent(long duration, TimeUnit timeUnit){
         untilElementIsPresent(MODAL_CONTAINER, SelectorType.XPATH, duration, timeUnit);
     }

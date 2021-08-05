@@ -34,23 +34,6 @@ public class Permit {
         return numberOfPermits;
     }
 
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
-
-    public long getQuantity() {
-        return quantity;
-    }
-
-    public Optional<Integer> getFeePerPermit() {
-        return feePerPermit == null || feePerPermit == 0 ? Optional.empty() : Optional.of(feePerPermit);
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -2,9 +2,6 @@ package org.dvsa.testing.framework.pageObjects.internal.details;
 
 import activesupport.string.Str;
 import org.dvsa.testing.framework.enums.Duration;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.details.BaseDetailsPage;
-
 
 import java.util.concurrent.TimeUnit;
 
@@ -34,12 +31,6 @@ public class FeesDetailsPage extends BaseDetailsPage {
         return tryUntilElementIsPresent(String.format(NTH_FEE, 1), XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
     }
 
-    public static void refundFeeButton() {
-        String refundButton = "//button[@id='refund']";
-        untilElementIsPresent(refundButton, XPATH, Duration.CENTURY, TimeUnit.SECONDS);
-        waitAndClick(refundButton, XPATH);
-    }
-
     public static void confirmWaive() {
         if (isNotWaived())
             scrollAndClick(WAIVE, XPATH);
@@ -51,12 +42,6 @@ public class FeesDetailsPage extends BaseDetailsPage {
                 WAIVE + "/ancestor::label[@class='selected']", XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
     }
 
-    public static void acceptWaive() {
-        String selector = "#" + "accept";
-        untilElementIsPresent(selector, SelectorType.CSS, Duration.MEDIUM, TimeUnit.SECONDS);
-        scrollAndClick(selector);
-    }
-
     public static void enterWaiveNote() {
         String selector = "//textarea[@id='fee-details[waiveReason]']";
         untilVisible(selector, XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
@@ -65,12 +50,6 @@ public class FeesDetailsPage extends BaseDetailsPage {
 
     public static void clickRecommend() {
         scrollAndClick("button#recommend");
-    }
-
-    public static void acceptRefund() {
-        untilElementIsPresent("//div[@class='modal--alert']", SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
-        untilElementIsPresent("//p[contains(text(),'The fee has been refunded')]", SelectorType.XPATH,Duration.MEDIUM, TimeUnit.SECONDS);
     }
 
     public static void clickBackToHome() {

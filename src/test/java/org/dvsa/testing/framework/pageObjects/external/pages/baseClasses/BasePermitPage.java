@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.pageObjects.external.pages.baseClasses;
 
-import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

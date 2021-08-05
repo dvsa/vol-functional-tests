@@ -90,7 +90,6 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
 
         //withdraw permit application
         Then("^In application details page, I withdraw Permit Application$", () -> {
-          //  viewApplication();
             withdrawPermitApplication();
             viewApplication();
         });

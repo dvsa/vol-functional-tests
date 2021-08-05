@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.pageObjects.internal.details;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.details.BaseDetailsPage;
 import org.openqa.selenium.By;
 
 import java.math.BigDecimal;
@@ -48,51 +47,6 @@ public class FeesPage extends BaseDetailsPage {
             this.created = created;
             this.feeAmount = feeAmount;
             this.outstanding = outstanding;
-        }
-
-        public String getFeeNo() {
-            return feeNo;
-        }
-
-        public Fee setFeeNo(String feeNo) {
-            this.feeNo = feeNo;
-            return this;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public Fee setDescription(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public LocalDate getCreated() {
-            return created;
-        }
-
-        public Fee setCreated(LocalDate created) {
-            this.created = created;
-            return this;
-        }
-
-        public BigDecimal getFeeAmount() {
-            return feeAmount;
-        }
-
-        public Fee setFeeAmount(BigDecimal feeAmount) {
-            this.feeAmount = feeAmount;
-            return this;
-        }
-
-        public BigDecimal getOutstanding() {
-            return outstanding;
-        }
-
-        public Fee setOutstanding(BigDecimal outstanding) {
-            this.outstanding = outstanding;
-            return this;
         }
 
         @Override

@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.pageObjects.external.pages;
 
-import activesupport.string.Str;
 import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.pageObjects.PermitApplication;
 import org.dvsa.testing.framework.enums.Duration;

@@ -17,9 +17,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
-import static org.dvsa.testing.framework.pageObjects.Driver.DriverUtils.getWindowHandles;
-import static org.dvsa.testing.framework.pageObjects.Driver.DriverUtils.switchToWindow;
-
 public class ContinuationJourney extends BasePage {
 
     private World world;

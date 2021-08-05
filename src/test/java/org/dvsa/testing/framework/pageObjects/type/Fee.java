@@ -18,20 +18,4 @@ public class Fee {
         this.totalFee = totalFee;
     }
 
-    public String getYear() {
-        return year;
-    }
-
-    public String getValidityPeriod() {
-        return validityPeriod;
-    }
-
-    public int getFeePerPermit() {
-        return feePerPermit;
-    }
-
-    public int getNumberOfPermits() {
-        return numberOfPermits;
-    }
-
 }

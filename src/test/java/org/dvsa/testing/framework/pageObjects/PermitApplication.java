@@ -70,14 +70,6 @@ public class PermitApplication {
         return Str.find("\\w{2}\\d{7}", referenceNumber).get();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getLicenceNumber() {
-        return licenceNumber;
-    }
-
     public String getReferenceNumber() {
         return referenceNumber;
     }

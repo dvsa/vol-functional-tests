@@ -4,19 +4,10 @@ package org.dvsa.testing.framework.pageObjects.internal.irhp;
 import activesupport.dates.Dates;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.enums.Duration;
-import org.dvsa.testing.framework.enums.PermitType;
-import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsPage;
-import org.joda.time.LocalDate;
-import org.openqa.selenium.support.ui.Select;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.external.enums.JourneyProportion;
-import org.dvsa.testing.framework.pageObjects.external.enums.RestrictedCountry;
-import org.dvsa.testing.framework.pageObjects.external.enums.Sector;
-import org.dvsa.testing.framework.pageObjects.external.enums.ShortTermRestrictedCountry;
 import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
 import org.dvsa.testing.framework.pageObjects.internal.details.BaseDetailsPage;
-import org.jetbrains.annotations.NotNull;
-import org.openqa.selenium.By;
+import org.joda.time.LocalDate;
 
 import java.time.temporal.ChronoUnit;
 import java.util.LinkedHashMap;
@@ -25,92 +16,45 @@ import java.util.concurrent.TimeUnit;
 public class IrhpPermitsApplyPage extends BaseDetailsPage {
 
     private static final String EMISSIONS = "//label[contains(text(),'I confirm that I will only use my ECMT permits wit')]";
-    private static final String COUNTRIES_LIST = "//ul[@class='chosen-results']";
     private static final String DECLARATION = "//input[@id='declaration']";
     private static final String NEED_ECMT_PERMIT = "//label[contains(text(),'I confirm that I need to apply for an ECMT permit to make 3 cross-trade jobs, cross-trade between EU and non-EU countries or travel to the ECMT member countries listed.')]";
 
-    public static final String RESOURCE = "licence/\\d+/permits/";
-
-    private static String CABOTAGESREQUIRED = "//fieldset[@data-group='qa']//input[@type='checkbox' and @name='qa[fieldset10][qaElement]']";
-    private static String NO_CABOTAGE;
-    public static final String RESOURCEONE = "ecmt-roadworthiness/";
     static Dates date = new Dates(LocalDate::new);
+
     static LinkedHashMap<String, String> currentDate = date.getDateHashMap(0, 0, 0);
 
-    public static void applyPermit() {
-        scrollAndClick("//button[@id='Apply']", SelectorType.XPATH);
-        BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
-        scrollAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
-    }
-
-    public static void applyShortTermPermitAPSGWithoutSectors() {
-        waitAndClick("//button[@id='Apply']", SelectorType.XPATH);
-        BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
-        waitAndSelectByIndex("Select Permit Type","//select[@id='permitType']", SelectorType.XPATH,2);
-        waitAndSelectByIndex("Select a year","//select[@id='yearList']", SelectorType.XPATH,1);
-        waitAndSelectByIndex("Select a stock","//select[@id='stock']", SelectorType.XPATH,2);
-        scrollAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
-
-    }
-    public static void applyforPermit() {
+    public static void applyForPermit() {
         scrollAndClick("//button[@id='Apply']", SelectorType.XPATH);
     }
 
-    public static void quantity(@NotNull String quantity){
-        scrollAndEnterField("//input[@typ='number']", quantity);
-    }
-
-    public static void quantity(int quantity){
-        quantity(String.valueOf(quantity));
-    }
-
-    public static void permitsQuantity(int number){
-
-        String Selector = "//input[@id='qa[fieldset61]";
-        untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-        scrollAndEnterField(Selector, SelectorType.XPATH, String.valueOf(number));
-    }
-
-    public static void permitsQuantityInternal(int number){
-        String Selector = "//input[@id='qa[fieldset61][permitsRequired]']";
-        untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-        scrollAndEnterField(Selector, SelectorType.XPATH, String.valueOf(number));
-    }
-
-    public static void permitsQuantityEcmtAPGGInternal(int number){
+    public static void permitsQuantityEcmtAPGGInternal(int number) {
         String Selector = "//input[@id='qa[fieldset172][permitsRequired]']";
         untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
         scrollAndEnterField(Selector, SelectorType.XPATH, String.valueOf(number));
     }
-    public static void emissionRadioSelect(){
+    public static void emissionRadioSelect() {
         String Selector = "//input[@name='qa[fieldset172][emissionsCategory]']";
         untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
         scrollAndClick(Selector,SelectorType.XPATH);
     }
 
-    public static void emissionRadioSelectNew(){
+    public static void emissionRadioSelectNew() {
         String Selector = "//input[@value='euro6']";
         untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
         scrollAndClick(Selector,SelectorType.XPATH);
     }
-    public static void permitsQuantityShortTermAPSG(int number){
-        String Selector = "//input[@id='requiredEuro6']";
-        untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-        scrollAndEnterField(Selector, SelectorType.XPATH, String.valueOf(number));
 
-    }
-
-    public static void numberOfPermitsShortTermAPSG(int number){
+    public static void numberOfPermitsShortTermAPSG(int number) {
         String Selector = "//input[@id='qa[fieldset203][permitsRequired]']";
         untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
         scrollAndEnterField(Selector, SelectorType.XPATH, String.valueOf(number));
     }
-    public static void restrictedCountriesNo(){
+    public static void restrictedCountriesNo() {
         String Selector = "//label[contains(text(),'No')]";
         waitAndClick(Selector,SelectorType.XPATH);
     }
 
-    public static void permitStartDate(){
+    public static void permitStartDate() {
         waitAndClick("//input[@name='qa[fieldset37][qaElement][day]']", SelectorType.XPATH);
         waitAndEnterText("//input[@name='qa[fieldset37][qaElement][day]']", SelectorType.XPATH, currentDate.get("day"));
         waitAndClick("//input[@name='qa[fieldset37][qaElement][month]']", SelectorType.XPATH);
@@ -118,7 +62,8 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         waitAndClick("//input[@name='qa[fieldset37][qaElement][year]']", SelectorType.XPATH);
         waitAndEnterText("//input[@name='qa[fieldset37][qaElement][year]']", SelectorType.XPATH, currentDate.get("year"));
     }
-    public static void datePermitNeededShortTermApgg(){
+
+    public static void datePermitNeededShortTermApgg() {
         waitAndClick("//input[@id='qaDateSelect_day']", SelectorType.XPATH);
         waitAndEnterText("//input[@id='qaDateSelect_day']", SelectorType.XPATH, currentDate.get("day"));
         waitAndClick("//input[@id='qaDateSelect_month']", SelectorType.XPATH);
@@ -126,14 +71,9 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         waitAndClick("//input[@id='qaDateSelect_year']", SelectorType.XPATH);
         waitAndEnterText("//input[@id='qaDateSelect_year']", SelectorType.XPATH, currentDate.get("year"));
     }
-    public static void numberOfPermitRemoval(){
-        waitAndEnterText("//input[@name='qa[fieldset35][qaElement]']", SelectorType.XPATH,"1");
-    }
 
-    public static void selectTripsAPSG(int number) {
-        String Selector = "//input[@id='qa[fieldset15][qaElement]']";
-        untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-        scrollAndEnterField(Selector, SelectorType.XPATH, String.valueOf(number));
+    public static void numberOfPermitRemoval() {
+        waitAndEnterText("//input[@name='qa[fieldset35][qaElement]']", SelectorType.XPATH,"1");
     }
 
     public static void removalsEligibility() {
@@ -148,73 +88,6 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         waitAndClick("//label[contains(text(),'I confirm that I will not undertake cabotage journ')]", SelectorType.XPATH);
     }
 
-    public static void fillAPSG(){
-        waitAndClick("//label[contains(text(),'Transit only')]", SelectorType.XPATH);
-        isTextPresent("Short-term ECMT APSGwithoutsectors");
-        isTextPresent("I confirm that I will not undertake cabotage journeys using an ECMT permit.");
-        isTextPresent("I understand that I must obtain and carry the appropriate ECMT Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer I intend to use with this permit.");
-    }
-
-    public static void countries(ShortTermRestrictedCountry... countries) {
-        waitAndClick("//label[contains(text(),'Yes')]", SelectorType.XPATH);
-        ShortTermRestrictedCountry[] var1 = countries;
-        int var2 = countries.length;
-
-        for(int var3 = 0; var3 < var2; ++var3) {
-            ShortTermRestrictedCountry country = var1[var3];
-            scrollAndClick(String.format("//label[contains(text(), '%s')]/input", country.toString()), SelectorType.XPATH);
-        }
-
-    }
-
-    public static boolean checkbox() {
-        return isCheckboxNotSelected();
-
-    }
-    private static boolean isCheckboxNotSelected() {
-        return !isCheckboxSelected();
-    }
-
-        private static boolean isCheckboxSelected() {
-            return isElementPresent(NO_CABOTAGE, SelectorType.CSS);
-        }
-
-    static {
-        NO_CABOTAGE = "label.selected " + CABOTAGESREQUIRED;
-    }
-
-    public static boolean checkBoxCabotageNotSelected() {
-        return isElementPresent("//label[@class='form-control form-control--checkbox form-control--advanced']", SelectorType.XPATH) && isTextPresent("I confirm that I will not undertake cabotage journeys using an ECMT permit.");
-    }
-
-    public static boolean checkBoxCertificatesNotSelected() {
-        return isElementPresent("//label[@class='form-control form-control--checkbox form-control--advanced']", SelectorType.XPATH) && isTextPresent("I understand that I must obtain and carry the appropriate ECMT Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer I intend to use with this permit.");
-    }
-
-    public static boolean checkBoxEuroEmissionsNotSelected() {
-        return isElementPresent("//label[@class='form-control form-control--checkbox form-control--advanced']", SelectorType.XPATH) && isTextPresent("I confirm that I will only use my ECMT permits with vehicles that meet the minimum euro emissions standards allowed.");
-    }
-
-
-
-    public static void checkBoxClickedSaveContinue() {
-        if (checkBoxCabotageNotSelected()) {
-            scrollAndClick("//label[@class='form-control form-control--checkbox form-control--advanced']", SelectorType.XPATH);
-
-        }
-        if (checkBoxCertificatesNotSelected()) {
-            scrollAndClick("//label[@class='form-control form-control--checkbox form-control--advanced']", SelectorType.XPATH);
-
-        }
-        if (checkBoxEuroEmissionsNotSelected()) {
-            scrollAndClick("//label[@class='form-control form-control--checkbox form-control--advanced']", SelectorType.XPATH);
-
-        }else {
-            System.out.println("Checkbox is already selected");
-        }
-
-    }
-
     public static int getNumberOfPermits() {
         String Selector = "p.hint";
         untilElementIsPresent(Selector, Duration.MEDIUM, TimeUnit.SECONDS);
@@ -223,29 +96,6 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
 
     public static void certificatesRequired() {
         waitAndClick("//label[contains(text(),'I understand that I must obtain and carry the appr')]",SelectorType.XPATH);
-    }
-
-
-    public static void noCabotage(boolean noCabotage) {
-        willNotUndertakeCabotage(noCabotage);
-    }
-
-    public static void willNotUndertakeCabotage(boolean noCabotage) {
-        String selector = "//input[@id='cabotage']";
-
-        if (noCabotage && cabotageNotSelected()) {
-            scrollAndClick(selector, SelectorType.XPATH);
-        } else if (!noCabotage && cabotageSelected()) {
-            scrollAndClick(selector, SelectorType.XPATH);
-        }
-    }
-
-    private static boolean cabotageSelected() {
-        return isElementPresent("//input[@id='cabotage']/../self::label[contains(@class, 'selected')]", SelectorType.XPATH);
-    }
-
-    private static boolean cabotageNotSelected() {
-        return !cabotageSelected();
     }
 
     public static void isEuro6Compliant(boolean isCompliant) {
@@ -264,10 +114,6 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         return !emissionsSelected();
     }
 
-    public static void declaration(boolean declaration) {
-        declare(declaration);
-    }
-
     public static void declare(boolean declaration) {
         if (declaration && declarationNotSelected()) {
             scrollAndClick(DECLARATION, SelectorType.XPATH);
@@ -282,48 +128,6 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
 
     private static boolean declarationSelected() {
         return isElementPresent(DECLARATION.concat("/../self::label[contains(@class, 'selected')]"), SelectorType.XPATH);
-    }
-
-    public static void sector(Sector sector) {
-        String selector = String.format("//label[contains(text(), '%s')]/../input", sector.toString());
-        scrollAndClick(selector, SelectorType.XPATH);
-    }
-
-    public static Sector sector() {
-        Sector sector = Sector.random();
-        sector(sector);
-        return sector;
-    }
-
-    private static void activateCountriesList() {
-        if (countriesDropdownInactive())
-            scrollAndClick(".chosen-choices input[type='text']");
-            untilElementIsPresent(COUNTRIES_LIST.concat("/li"), SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-    }
-
-    private static boolean countriesDropdownEnabled() {
-        return isElementPresent("div[@id='countrys_chosen' and contains(@class, 'chosen-container-active')]", SelectorType.XPATH) &&
-                isElementPresent("//ul[@class='chosen-results']/li", SelectorType.XPATH);
-    }
-
-    private static boolean countriesDropdownInactive() {
-        return !countriesDropdownEnabled();
-    }
-
-    public static void selectTrips(int number) {
-        String Selector = "//input[@name='qa[fieldset62][qaElement]']";
-        untilElementIsPresent(Selector, SelectorType.XPATH, 6L, TimeUnit.SECONDS);
-        scrollAndEnterField(Selector, SelectorType.XPATH, String.valueOf(number));
-    }
-
-    public static JourneyProportion internationalJourneys() {
-        JourneyProportion journey = JourneyProportion.random();
-        internationalJourneys(journey);
-        return journey;
-    }
-
-    public static void internationalJourneys(JourneyProportion proportion) {
-        scrollAndClick(String.format("//label[contains(text(), '%s')]/../input", proportion.toString()), SelectorType.XPATH);
     }
 
     public static void saveIRHP() {
@@ -352,10 +156,6 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         untilElementIsPresent("#menu-irhp-application-decisions-submit", SelectorType.CSS, Duration.MEDIUM, TimeUnit.SECONDS);
     }
 
-    public static void withdrawButtonExists() {
-        untilElementIsPresent("//a[@id='menu-irhp-permit-decisions-withdraw']", SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-    }
-
     public static void cancelButtonExists() {
         untilElementIsPresent("//a[@id='menu-irhp-application-quick-actions-cancel']", SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
     }
@@ -367,6 +167,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
     public static void withdrawStatusExists() {
         untilElementIsPresent("//span[@class='status red']", SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
     }
+
     public static void cancelPermitApplication() {
         String cancelButton = "//a[@id='menu-irhp-application-quick-actions-cancel']";
         String continueButton = "//button[@id='form-actions[confirm]']";
@@ -379,7 +180,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
     public static void withdrawPermitApplication() {
         String withdrawButton = "//a[contains(text(), 'Withdraw application')]";
         String withdrawReasonButton = "//select[@id='withdraw-details[reason]']";
-        String withdrawReason= "//option[contains(text(),'Permits withdrawn by user')]";
+        String withdrawReason = "//option[contains(text(),'Permits withdrawn by user')]";
         String continueButton = "//button[@id='form-actions[withdraw]']";
         untilElementIsPresent(withdrawButton, SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
         scrollAndClick(withdrawButton, SelectorType.XPATH);
@@ -389,39 +190,11 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         scrollAndClick(continueButton, SelectorType.XPATH);
     }
 
-    public static void selectApplicationForFee() {
-        String payButton = "//button[@id='pay']";
-        untilElementIsPresent(payButton, SelectorType.CSS, Duration.MEDIUM, TimeUnit.SECONDS);
-        scrollAndClick(payButton, SelectorType.CSS);
-    }
-
     public static void selectApplication() {
         String payButton = "//button[@id='pay']";
         scrollAndClick("//input[@id='checkall']",SelectorType.XPATH);
         untilElementIsPresent(payButton, SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
         scrollAndClick(payButton, SelectorType.XPATH);
-    }
-    public static void selectAndClickApplication() {
-        waitAndClick("//a[@id='menu-licence_irhp_permits']", SelectorType.XPATH);
-
-    }
-
-    public static void inPayApplicationTab() {
-        String paymentMethod = "//select[@id='details[paymentType]']";
-        untilElementIsPresent(paymentMethod, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-        selectValueFromDropDown(paymentMethod, SelectorType.XPATH, PaymentMethod.Card.toString());
-    }
-
-    public static void selectCashPayment() {
-        String paymentMethod = "//select[@id='details[paymentType]']";
-        untilElementIsPresent(paymentMethod, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-        selectValueFromDropDown(paymentMethod, SelectorType.XPATH, PaymentMethod.Cash.toString());
-    }
-
-    public static void selectChequePayment() {
-        String paymentMethod = "//select[@id='details[paymentType]']";
-        untilElementIsPresent(paymentMethod, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
-        selectValueFromDropDown(paymentMethod, SelectorType.XPATH, PaymentMethod.Cheque.toString());
     }
 
     public static void selectCardPayment() {
@@ -443,21 +216,21 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
     public static boolean cancelButtonNotExists() {
         return isElementPresent("#menu-irhp-application-quick-actions-cancel", SelectorType.CSS);
     }
+
     public static void grantApplication() {
         waitAndClick("//a[contains(text(), 'Grant application')]", SelectorType.XPATH);
     }
+
     public static void continueButton() {
         BaseModel.untilModalIsPresent(30L, TimeUnit.SECONDS);
         waitAndClick("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
     }
-    public static void licence() {
-        waitAndClick("//a[contains(text(),'Licence')]",SelectorType.XPATH);
-    }
+
     public static void underConsiderationStatusExists() {
         untilElementIsPresent("//span[@class='status orange']", SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
     }
 
-    public  enum PaymentMethod{
+    public enum PaymentMethod{
         Card("Card Payment"),
         Cash("Cash"),
         Cheque("Cheque");
@@ -477,13 +250,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
     public static void untilOnPage(){
         untilVisible("//button[@id='Apply']",SelectorType.XPATH,30,TimeUnit.SECONDS);
     }
-    public static void untilOnPermitsPage(){
-        untilElementWithText("//a[@id='menu-licence_irhp_permits']", SelectorType.XPATH,"IRHP Permits", ChronoUnit.SECONDS, Duration.CENTURY);
-    }
 
-    public static void untilOnPermitsDashboardPage(){
-        untilElementWithText("//span[@class='status orange']", SelectorType.XPATH,"Under Consideration", ChronoUnit.SECONDS, Duration.CENTURY);
-    }
     public static boolean isErrorTextPresent() {
         String Selector = "//p[@class='error__text' and contains(text(),'You have exceeded the maximum you can apply for')]";
         return isElementPresent(Selector,SelectorType.XPATH);

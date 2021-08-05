@@ -14,7 +14,7 @@ public class InterimPage extends BasePage{
     private static String SAVE = nameAttribute("button", "form-actions[save]");
     private static String GRANT = nameAttribute("button", "form-actions[grant]");
 
-    public static void  enterInterimDetail(String interimDetails) {
+    public static void enterInterimDetail(String interimDetails) {
           enterText(INTERIM_REASON_FIELD, SelectorType.CSS, interimDetails);
     }
 

@@ -18,11 +18,6 @@ public class PermitUsagePageJourney extends BasePermitJourney {
         }
     }
 
-    public static void hasECMTPageHeading() {
-        String heading = PermitUsagePage.getPageHeading();
-        assertEquals("How will you use your permits?", heading);
-    }
-
     public static void completePermitTypePage(JourneyType permitTypeChoice) {
         PermitUsagePage.untilOnPage();
         PermitUsagePage.journeyType(permitTypeChoice);

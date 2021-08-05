@@ -1,17 +1,13 @@
 package org.dvsa.testing.framework.pageObjects.external.pages;
 
-import activesupport.number.Int;
-import activesupport.string.Str;
 import org.dvsa.testing.framework.enums.Duration;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertTrue;
 
 public class SelectALicencePage extends BasePermitPage {
 
@@ -57,7 +53,4 @@ public class SelectALicencePage extends BasePermitPage {
         return licenceNumber + " " + type;
     }
 
-    public static boolean isLicencePresent(String licenceNo) {
-        return isTextPresent(licenceNo.trim());
-    }
 }

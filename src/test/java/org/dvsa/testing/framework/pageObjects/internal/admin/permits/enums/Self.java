@@ -1,7 +1,5 @@
 package org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums;
 
-import org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums.ECMTType;
-
 import java.time.LocalDateTime;
 
 public class Self {

@@ -231,12 +231,6 @@ public abstract class BasePage extends DriverUtils {
         until(ExpectedConditions.visibilityOfElementLocated(by));
     }
 
-    public static void untilNotVisible(@NotNull String selector, @NotNull SelectorType selectorType, long duration, TimeUnit timeUnit) {
-        By by = by(selector, selectorType);
-
-        until(not(ExpectedConditions.visibilityOfElementLocated(by)));
-    }
-
     public static void until(ExpectedCondition<?> expectedCondition) {
 
         new FluentWait<>(getDriver())
@@ -438,10 +432,6 @@ public abstract class BasePage extends DriverUtils {
         return findElements("//table/tbody/tr[*]",SelectorType.XPATH).stream().anyMatch(w -> w.getText().contains(searchTerm));
     }
 
-    public void clickFirstElementFound(String selector, SelectorType selectorType) {
-        findElements(selector,selectorType).stream().findFirst().get().click();
-    }
-
     public void enterTextIntoMultipleFields(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String text) {
         findElements(selector, selectorType).stream().forEach(x -> x.sendKeys(text));
     }
@@ -518,5 +508,4 @@ public abstract class BasePage extends DriverUtils {
     public static void untilNotInDOM(@NotNull String selector, int seconds) {
         new WebDriverWait(getDriver(), seconds).until(not(ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
     }
-
 }

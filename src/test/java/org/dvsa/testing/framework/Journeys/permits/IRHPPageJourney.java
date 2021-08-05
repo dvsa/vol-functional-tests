@@ -18,7 +18,7 @@ public class IRHPPageJourney extends BasePermitJourney {
     }
 
     public static void completeModal(PermitType permitType) {
-        IrhpPermitsApplyPage.applyforPermit();
+        IrhpPermitsApplyPage.applyForPermit();
         IrhpPermitsPage.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
         IrhpPermitsPage.Model.permitType(permitType);
         if (permitType == PermitType.ECMT_ANNUAL || permitType == PermitType.SHORT_TERM_ECMT) {

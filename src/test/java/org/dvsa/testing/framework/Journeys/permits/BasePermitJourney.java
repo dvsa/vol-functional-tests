@@ -54,15 +54,8 @@ public class BasePermitJourney extends BasePermitPage {
     }
 
     public static void licencePage(World world) {
-
-        if (SelectALicencePage.numberOfLicences() > 1) {
-//            SelectALicencePage.clickLicence(selectedLicence.getLicenceNumber());
-//            licenceNumber = selectedLicence.getLicenceNumber();
-        } // Need way of clicking licence when multiple are available. See if test breaks first.
-
-        else {
-            SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
-        }
+        // Note not ready for MLH but not needed.
+        SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
         SelectALicencePage.saveAndContinue();
         setFullReferenceNumber(OverviewPage.getReferenceFromPage());
     }

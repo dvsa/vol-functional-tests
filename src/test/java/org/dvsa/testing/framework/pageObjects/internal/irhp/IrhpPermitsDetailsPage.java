@@ -32,10 +32,6 @@ public class IrhpPermitsDetailsPage extends BaseDetailsPage {
         return isTextPresent("There are no permit application records to display");
     }
 
-    public static List<PermitApplication> getIssuedPermits(){
-        return getPermitsFromTable("(//tbody)[1]/tr");
-    }
-
     public static List<PermitApplication> getApplications() {
         return getPermitsFromTable("//div[@id='permit-applications-table']/../descendant::tbody/tr");
     }

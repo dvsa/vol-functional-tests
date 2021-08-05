@@ -13,7 +13,4 @@ public class LicenceDetailsPageJourney {
         BaseDetailsPage.Tab.select(DetailsTab.Fees);
     }
 
-    public static void clickProcessingTab() {
-        BaseDetailsPage.Tab.select(DetailsTab.Processing);
-    }
 }
