@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;

@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly;
 
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 

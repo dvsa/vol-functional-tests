@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicationsRelatedSteps extends BasePage implements En {

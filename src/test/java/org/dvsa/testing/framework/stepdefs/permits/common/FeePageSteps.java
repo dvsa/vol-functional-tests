@@ -2,15 +2,10 @@ package org.dvsa.testing.framework.stepdefs.permits.common;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
-import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
-import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 

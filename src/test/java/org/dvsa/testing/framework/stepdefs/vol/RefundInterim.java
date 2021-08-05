@@ -9,7 +9,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class RefundInterim extends BasePage implements En {

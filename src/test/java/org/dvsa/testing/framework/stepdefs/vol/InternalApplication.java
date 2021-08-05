@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertNotNull;
 
 public class InternalApplication extends BasePage implements En {

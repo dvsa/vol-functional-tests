@@ -2,10 +2,10 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

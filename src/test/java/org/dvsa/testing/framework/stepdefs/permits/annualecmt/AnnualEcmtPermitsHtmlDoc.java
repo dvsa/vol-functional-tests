@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import Injectors.World;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection;

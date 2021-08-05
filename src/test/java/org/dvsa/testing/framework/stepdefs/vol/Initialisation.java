@@ -5,11 +5,10 @@ import apiCalls.actions.*;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
-import org.dvsa.testing.framework.Journeys.*;
+import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 
 public class Initialisation extends BasePage implements En {
 

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

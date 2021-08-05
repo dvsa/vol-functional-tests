@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 
 public class ApplicationOverviewPageSteps implements En {

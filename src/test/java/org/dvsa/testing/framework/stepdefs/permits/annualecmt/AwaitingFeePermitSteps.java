@@ -2,9 +2,9 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ApplicationIssuingFeePage;

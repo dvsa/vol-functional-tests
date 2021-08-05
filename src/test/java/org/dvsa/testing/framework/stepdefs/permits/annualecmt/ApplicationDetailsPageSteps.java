@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.WithdrawApplicationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.WithdrawApplicationPageJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.ApplicationDetailsPage;
 import org.dvsa.testing.framework.pageObjects.enums.ApplicationDetail;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;

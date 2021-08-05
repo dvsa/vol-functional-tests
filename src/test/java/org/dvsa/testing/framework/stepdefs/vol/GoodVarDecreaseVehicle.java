@@ -5,7 +5,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class GoodVarDecreaseVehicle extends BasePage implements En {
     World world = new World();

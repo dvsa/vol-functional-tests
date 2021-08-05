@@ -3,8 +3,8 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.*;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

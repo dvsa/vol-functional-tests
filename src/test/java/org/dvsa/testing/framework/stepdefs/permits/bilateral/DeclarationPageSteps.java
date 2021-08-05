@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
 
 import static org.junit.Assert.assertTrue;

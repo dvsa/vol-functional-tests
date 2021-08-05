@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.ecmtremoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.internal.BaseModel;

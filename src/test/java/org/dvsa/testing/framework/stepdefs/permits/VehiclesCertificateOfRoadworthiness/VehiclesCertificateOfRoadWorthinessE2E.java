@@ -1,13 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.permits.VehiclesCertificateOfRoadworthiness;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.VehiclesCertificateOfRoadworthinessJourney;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.BasePermitPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.BasePermitPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.SubmittedPageJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;

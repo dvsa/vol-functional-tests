@@ -2,21 +2,14 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.ShortTermECMTJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
-import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.ShortTermECMTJourney;
+import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
-import org.dvsa.testing.framework.enums.PermitType;
-import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
-import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.DeclineGrantedPermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.GrantedPermitRestrictionsPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 
 import java.util.List;

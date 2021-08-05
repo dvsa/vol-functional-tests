@@ -16,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import static activesupport.database.DBUnit.*;
 import static java.lang.Thread.sleep;
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.APIJourney.*;
+import static org.dvsa.testing.framework.Journeys.licence.APIJourney.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 

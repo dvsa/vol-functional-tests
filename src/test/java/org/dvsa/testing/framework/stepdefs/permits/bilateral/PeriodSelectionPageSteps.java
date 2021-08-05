@@ -2,8 +2,8 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.PeriodSelectionPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.PeriodSelectionPageJourney;
 import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;

@@ -2,10 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitTypePage;

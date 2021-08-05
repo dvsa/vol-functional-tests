@@ -13,7 +13,7 @@ import org.openqa.selenium.WebElement;
 
 import static junit.framework.Assert.fail;
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertEquals;
 
 public class Surrenders extends BasePage implements En {
