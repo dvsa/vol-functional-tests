@@ -19,7 +19,7 @@ public class InternalPermitsTabSteps implements En {
     public InternalPermitsTabSteps() {
         When("^I'm viewing the permits tab$", () -> {
 
-            String referenceNumber = BasePermitJourney.getReferenceNumber();
+            String referenceNumber = BasePermitJourney.getFullReferenceNumber();
             LicenceDetailsPageJourney.clickIRHPTab();
 
             IrhpPermitsDetailsPage.untilOnPage();

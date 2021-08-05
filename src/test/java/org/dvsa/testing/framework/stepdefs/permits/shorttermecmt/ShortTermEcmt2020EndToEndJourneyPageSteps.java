@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -21,7 +21,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
         Then("^I select year on the select year page$", YearSelectionPage::selectShortTermValidityPeriod);
 
         Then("^I select any licence number for short term permit$", () -> {
-            ShorttermECMTJourney.getInstance().licencePage(world);
+            BasePermitJourney.licencePage(world);
         });
         Then("^I complete the Check if you need ECMT permits section and click save and continue$", () -> {
             OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
@@ -55,8 +55,8 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
             SubmittedPage.untilOnPage();
             SubmittedPageJourney.hasPageHeading();
             waitForElementToBePresent("//a[contains(text(),'Go to permits dashboard')]");
-            BilateralJourneySteps.clickFinishButton();
-        });;
+            SubmittedPage.goToPermitsDashboard();
+        });
         Then("^I am navigated back to the permits dashboard page with my application status shown as Under Consideration", () -> {
             HomePage.PermitsTab.selectFirstOngoingApplication();
             assertEquals(getElementValueByText("//span[@class='status orange']",SelectorType.XPATH),"UNDER CONSIDERATION");

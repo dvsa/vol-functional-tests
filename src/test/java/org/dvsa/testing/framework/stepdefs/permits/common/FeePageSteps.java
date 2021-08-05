@@ -17,7 +17,6 @@ import org.junit.Assert;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -26,13 +25,7 @@ public class FeePageSteps extends BasePage implements En {
     public FeePageSteps(World world) {
 
         And("^I am on the fee page$", () -> {
-            clickToPermitTypePage(world);
-            BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
-            YearSelectionPage.selectECMTValidityPeriod();
-            BasePermitJourney.licencePage(world);
-            EcmtApplicationJourney.completeUpToCheckYourAnswersPage();
-            ECMTPermitApplicationSteps.saveAndContinue();
-            DeclarationPageJourney.completeDeclaration();
+            EcmtApplicationJourney.completeApplicationUntilFeePage(world);
         });
         When("^I submit and pay$", PermitFeePage::saveAndContinue);
         Then("^I am taken to CPMS payment page$", () -> {

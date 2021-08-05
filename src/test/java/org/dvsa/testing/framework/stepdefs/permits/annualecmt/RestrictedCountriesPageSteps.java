@@ -2,17 +2,11 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.CertificatesRequiredPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCountriesPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
-import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
-import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.RestrictedCountriesPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -22,12 +16,7 @@ public class RestrictedCountriesPageSteps extends BasePage implements En {
 
     public RestrictedCountriesPageSteps(World world) {
         And("^I am on the restricted countries page$", () -> {
-            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPageJourney.completePage();
-            CabotagePage.confirmWontUndertakeCabotage();
-            CabotagePage.saveAndContinue();
-            CertificatesRequiredPageJourney.completePage();
+            EcmtApplicationJourney.completeUntilRestrictedCountriesPage(world);
         });
         Given("^I (do |don't )?plan on delivering to a restricted country$", (String deliverToRestrictedCountries) -> {
             boolean deliverToRestricted = deliverToRestrictedCountries.equals("do ");

@@ -5,23 +5,22 @@ import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
-import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 
     public NumberOfPermitsPageSteps(World world) {
         When("^I am on the ECMT Removal number of permits page", () -> {
-            EcmtInternationalRemovalJourney.completeApplicationUntilNumberOfPermitsPage(world);
+            EcmtInternationalRemovalJourney.completeUntilNumberOfPermitsPage(world);
         });
         And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPageJourney::hasECMTPageHeading);
         And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", () -> {
@@ -30,7 +29,7 @@ public class NumberOfPermitsPageSteps implements En {
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(BasePermitPage.getReferenceNumber(), actualReference);
+            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
         And("^I enter number of permits more than the authorised vehicles and click save and continue$", () -> {
             NumberOfPermitsPage.exceedAuthorisedVehicle();

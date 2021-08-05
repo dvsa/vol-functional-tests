@@ -17,8 +17,7 @@ public class YearSelectionPageSteps extends BasePage implements En {
 
     public YearSelectionPageSteps(World world) {
         And("^I am on the Year Selection Page$", () -> {
-           CommonSteps.clickToPermitTypePage(world);
-            BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
+            EcmtApplicationJourney.beginApplicationToYearSelectionPage(world);
         });
         And("^the user is navigated to the permit type page$", () -> {
             String pageHeading = PermitTypePage.getPageHeading();

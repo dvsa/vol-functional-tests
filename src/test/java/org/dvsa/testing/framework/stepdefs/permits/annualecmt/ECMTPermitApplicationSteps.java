@@ -39,8 +39,6 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         Then("^I should be taken to the permits dashboard$", () -> assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
         And("^I have completed an ECMT application$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.completeEcmtApplication(world);
         });
         When("^I withdraw without confirming$", () -> {
@@ -49,17 +47,11 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             WithdrawApplicationPage.clickWithdraw();
         });
         When("^I have a partial completed ECMT application$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.beginPermitApplication();
-            BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
-            YearSelectionPage.selectECMTValidityPeriod();
-            BasePermitJourney.licencePage(world);
+            EcmtApplicationJourney.beginApplication(world);
             BasePermitPage.back();
         });
         When("^I view the application from ongoing permit application table$", HomePage.PermitsTab::selectFirstOngoingApplication);
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.completeEcmtApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(5000);
@@ -74,8 +66,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             HomePageJourney.beginPermitApplication();
             BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
-            SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
-            SelectALicencePage.saveAndContinue();
+            BasePermitJourney.licencePage(world);
         });
     }
 }

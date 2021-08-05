@@ -8,17 +8,12 @@ import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
 public class BasePermitJourney extends BasePermitPage {
-    protected static volatile BasePermitJourney instance = null;
     public static PermitType permitType;
     public static String yearChoice;
     public static String fullReferenceNumber;
     public static Boolean countriesWithLimitedPermitsChoice;
 
-    protected BasePermitJourney() {
-        // The code below assures that someone can't new up instances using reflections
-        if (instance != null)
-            throw new RuntimeException("Use #getInstance to obtain an instance of this class");
-    }
+    protected BasePermitJourney() { }
 
     public static void setPermitType(PermitType permitType) {
         BasePermitJourney.permitType = permitType;
@@ -60,22 +55,16 @@ public class BasePermitJourney extends BasePermitPage {
 
     public static void licencePage(World world) {
 
-        String licenceNumber;
         if (SelectALicencePage.numberOfLicences() > 1) {
 //            SelectALicencePage.clickLicence(selectedLicence.getLicenceNumber());
 //            licenceNumber = selectedLicence.getLicenceNumber();
         } // Need way of clicking licence when multiple are available. See if test breaks first.
 
         else {
-            licenceNumber = world.applicationDetails.getLicenceNumber();
-            SelectALicencePage.clickLicence(licenceNumber);
+            SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
         }
-
         SelectALicencePage.saveAndContinue();
-
         setFullReferenceNumber(OverviewPage.getReferenceFromPage());
-
-        BasePermitJourney.setReferenceNumber(OverviewPage.getReferenceFromPage());
     }
 
 

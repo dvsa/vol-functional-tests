@@ -22,8 +22,6 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
     public AwaitingFeePermitSteps(World world) {
 
         And("^I am viewing an application that's awaiting fees$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.completeEcmtApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(3000);

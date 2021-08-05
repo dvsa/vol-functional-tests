@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.VehiclesCertificateOfRoadworthiness;
 
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.VehiclesCertificateOfRoadworthinessJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.BasePermitPageJourney;
@@ -27,11 +28,11 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
     public VehiclesCertificateOfRoadWorthinessE2E(World world) {
         And("^I select Certificate of Roadworthiness for vehicles on the select permit page$", () -> {
             clickToPermitTypePage(world);
-            VehiclesCertificateOfRoadworthinessJourney.getInstance().permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_VEHICLES);
+            BasePermitJourney.permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_VEHICLES);
         });
 
         Then("^I select any licence number for Certificate of Roadworthiness for vehicles$", () -> {
-            VehiclesCertificateOfRoadworthinessJourney.getInstance().licencePage(world);
+            BasePermitJourney.licencePage(world);
         });
 
 

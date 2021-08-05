@@ -2,13 +2,8 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.CertificatesRequiredPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCountriesPageJourney;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
-import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
+import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
@@ -20,11 +15,7 @@ public class CertificatesRequiredPageSteps implements En {
     public CertificatesRequiredPageSteps(World world) {
 
         And("^I am on the Ecmt Certificates required Page$", () -> {
-            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPageJourney.completePage();
-            CabotagePage.confirmWontUndertakeCabotage();
-            CabotagePage.saveAndContinue();
+            EcmtApplicationJourney.completeUntilCertificatesRequiredPage(world);
         });
         And("^The application reference is displayed on the page$", CertificatesRequiredPage::getReferenceFromPage);
         And("^the certificates required page heading is as per the AC$",() -> {

@@ -25,7 +25,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
     
 
     public CheckYourAnswersPageSteps(World world) {
-        And("^I have completed all steps prior to check your answers page$", EcmtApplicationJourney::completeUpToCheckYourAnswersPage);
+        And("^I have completed all steps prior to check your answers page$", EcmtApplicationJourney::completeUntilCheckYourAnswersPage);
         Then("^the information I inserted during the application is displayed$", () -> {
             licence = CheckYourAnswerPage.getAnswer(Licence);
             euro6 = CheckYourAnswerPage.getAnswer(Euro6);

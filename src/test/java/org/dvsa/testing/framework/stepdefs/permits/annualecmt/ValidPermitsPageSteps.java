@@ -34,8 +34,6 @@ public class ValidPermitsPageSteps extends BasePage implements En {
 
     public ValidPermitsPageSteps(World world) {
         And("^have valid permits$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.beginPermitApplication();
             EcmtApplicationJourney.completeEcmtApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(5000);

@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
@@ -14,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class ECMTInternationalRemovalEligibiltyPageSteps implements En {
     public ECMTInternationalRemovalEligibiltyPageSteps(World world) {
         When("^I am on the ECMT International Removal Eligibity page", () -> {
-            EcmtInternationalRemovalJourney.completeApplicationUntilRemovalEligibilityPage(world);
+            EcmtInternationalRemovalJourney.completeUntilRemovalEligibilityPage(world);
         });
         And ("^the text is shown below the page heading$", () -> {
             String advisoryText = RemovalsEligibilityPage.getAdvisoryText();
@@ -30,7 +31,7 @@ public class ECMTInternationalRemovalEligibiltyPageSteps implements En {
         });
         And ("^the Application Number is shown correctly on ECMT International Eligibility page", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            assertEquals(BasePermitPage.getReferenceNumber(), actualReference);
+            assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
         And ("^the page heading is shown as per updated AC$", () -> {
             String heading = RemovalsEligibilityPage.getPageHeading();

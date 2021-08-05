@@ -16,11 +16,11 @@ public class CertificatesRequiredPageSteps extends BasePage implements En {
 
     public CertificatesRequiredPageSteps(World world) {
         And("^I am on the ECMT Removals certificates required page$", () -> {
-            EcmtInternationalRemovalJourney.completeApplicationUntilCertificatesRequiredPage(world);
+            EcmtInternationalRemovalJourney.completeUntilCertificatesRequiredPage(world);
         });
         And ("^the application reference number is displayed$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(BasePermitJourney.getReferenceNumber(), actualReference);
+            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
         And ("^the advisory texts on certificates required page are displayed", () -> {
             assertEquals("If your permit application is successful, you are required to have the appropriate Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer you intend to use.", CertificatesRequiredPage.getAdvisoryText());

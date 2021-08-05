@@ -1,29 +1,27 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
-import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import Injectors.World;
+import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
-import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.enums.sections.ECMTRemovalsSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.pageObjects.external.enums.sections.ECMTRemovalsSection;
 import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.enums.PermitStatus.COMPLETED;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CheckYourAnswersPageSteps implements En {
 
     public CheckYourAnswersPageSteps(World world) {
         When("^I am on ECMT Removal check your answers page", () -> {
-            EcmtInternationalRemovalJourney.completeApplicationUntilCheckYourAnswersPage(world);
+            EcmtInternationalRemovalJourney.completeUntilCheckYourAnswersPage(world);
 
         });
         And("^the ECMT Removals check your answers page has reference number$", BasePermitPage::getReferenceFromPage);

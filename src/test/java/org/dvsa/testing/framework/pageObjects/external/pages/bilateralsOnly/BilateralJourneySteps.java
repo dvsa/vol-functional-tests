@@ -5,10 +5,6 @@ import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePer
 
 public class BilateralJourneySteps extends BasePermitPage {
 
-    public static void clickFinishButton() {
-        waitAndClick("//a[contains(text(),'Go to permits dashboard')]",SelectorType.XPATH);
-    }
-
     public static boolean areSectionsPresent(boolean hasCabotage) {
         boolean areSectionsPresent = isTextPresent("//dt[contains(text(),'Validity period')]") &&
         isTextPresent("//dt[contains(text(),'Permit usage')]") &&

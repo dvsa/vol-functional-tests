@@ -17,19 +17,10 @@ public class BasePermitPage extends BasePage {
     protected static String PAGE_HEADING = "//h1[contains(@class,'govuk-fieldset__heading') or contains(@class,'govuk-heading-xl')]";
     protected static String PAGE_SUBHEADING = "//h2[@class='govuk-heading-m']";
     protected static String PANEL_HEADING = "//h1[@class='govuk-panel__title']";
-    private static String referenceNumber;
     private static String SAVE_AND_CONTINUE ="//*[@name='Submit[SubmitButton]' or @class='button govuk-button']";
     private static String SAVE_AND_RETURN_TO_OVERVIEW = "//*[@id='save-return-button' or text()='Save and return to overview']";
     protected static String TABLE_SECTION_TEMPLATE = "//dt[contains(text(), '%s')]/../dd";
 
-
-    public static String getReferenceNumber() {
-        return referenceNumber;
-    }
-
-    public static void setReferenceNumber(String referenceNumber) {
-        BasePermitPage.referenceNumber = referenceNumber;
-    }
 
     public static String getPageHeading() {
         return getText(PAGE_HEADING, SelectorType.XPATH).trim();
@@ -73,10 +64,6 @@ public class BasePermitPage extends BasePage {
 
     public static String getTableSectionValue(FeeSection section) {
         return getText(String.format(TABLE_SECTION_TEMPLATE, section.toString()), SelectorType.XPATH).trim();
-    }
-
-    protected static int findIntegerInText(String text) {
-        return Integer.parseInt(Str.find("\\d+", text).get());
     }
 
     protected static String getTextFromRowElement(WebElement row, String rowHeading) {

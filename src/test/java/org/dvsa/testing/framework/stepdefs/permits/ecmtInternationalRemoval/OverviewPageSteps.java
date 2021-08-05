@@ -19,7 +19,7 @@ public class OverviewPageSteps implements En {
             EcmtInternationalRemovalJourney.beginApplication(world);
         });
         And("^I click cancel application link on the International removal overview page$", () -> {
-            BasePermitJourney.setReferenceNumber(BasePermitPage.getReferenceFromPage());
+            BasePermitJourney.setFullReferenceNumber(BasePermitPage.getReferenceFromPage());
             OverviewPage.clickCancelApplication();
         });
         And("^the licence number is displayed correctly$", () -> {

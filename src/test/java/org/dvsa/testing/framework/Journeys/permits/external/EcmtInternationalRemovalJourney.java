@@ -18,43 +18,43 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
         BasePermitJourney.licencePage(world);
     }
 
-    public static void completeApplicationUntilRemovalEligibilityPage(World world) {
+    public static void completeUntilRemovalEligibilityPage(World world) {
         beginApplication(world);
         OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
     }
 
-    public static void completeApplicationUntilCabotagePage(World world) {
-        completeApplicationUntilRemovalEligibilityPage(world);
+    public static void completeUntilCabotagePage(World world) {
+        completeUntilRemovalEligibilityPage(world);
         RemovalsEligibilityPageJourney.completePage();
     }
 
-    public static void completeApplicationUntilCertificatesRequiredPage(World world) {
-        completeApplicationUntilCabotagePage(world);
+    public static void completeUntilCertificatesRequiredPage(World world) {
+        completeUntilCabotagePage(world);
         CabotagePageJourney.completePage();
     }
 
-    public static void completeApplicationUntilPermitStartDatePage(World world) {
-        completeApplicationUntilCertificatesRequiredPage(world);
+    public static void completeUntilPermitStartDatePage(World world) {
+        completeUntilCertificatesRequiredPage(world);
         CertificatesRequiredPageJourney.completePage();
     }
 
-    public static void completeApplicationUntilNumberOfPermitsPage(World world) {
-        completeApplicationUntilPermitStartDatePage(world);
+    public static void completeUntilNumberOfPermitsPage(World world) {
+        completeUntilPermitStartDatePage(world);
         PermitStartDatePageJourney.completePage();
     }
 
-    public static void completeApplicationUntilCheckYourAnswersPage(World world) {
-        completeApplicationUntilNumberOfPermitsPage(world);
+    public static void completeUntilCheckYourAnswersPage(World world) {
+        completeUntilNumberOfPermitsPage(world);
         NumberOfPermitsPageJourney.completePage();
     }
 
-    public static void completeApplicationUntilDeclarationPage(World world) {
-        completeApplicationUntilCheckYourAnswersPage(world);
+    public static void completeUntilDeclarationPage(World world) {
+        completeUntilCheckYourAnswersPage(world);
         CheckYourAnswersPageJourney.completePage();
     }
 
     public static void completeAndSubmitApplication(World world) {
-        completeApplicationUntilDeclarationPage(world);
+        completeUntilDeclarationPage(world);
         DeclarationPageJourney.completeDeclaration();
         PermitFeePage.saveAndContinue();
         world.feeAndPaymentJourney.customerPaymentModule();

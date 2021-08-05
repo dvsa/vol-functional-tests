@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 import Injectors.World;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.ECMTShortTermJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.ShortTermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
@@ -14,11 +14,9 @@ import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECM
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.DeclineGrantedPermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.GrantedPermitRestrictionsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.jsoup.Connection;
 import org.junit.Assert;
 
 import java.util.List;
@@ -30,31 +28,8 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
 
     public AwaitingFeePermitSteps(World world) {
         And("^I have a short term application in awaiting fee status$", () -> {
-            CommonSteps.clickToPermitTypePage(world);
-            BasePermitJourney.permitType(PermitType.SHORT_TERM_ECMT);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            PeriodSelectionPage.selectFirstAvailablePermitPeriod();
-            PeriodSelectionPage.saveAndContinue();
-            BasePermitJourney.licencePage(world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-            CheckIfYouNeedECMTPermitsPage.saveAndContinue();
-            CheckIfYouNeedECMTPermitsPage.hasErrorMessagePresent();
-            CheckIfYouNeedECMTPermitsPageJourney.completePage();
-            CabotagePageJourney.completePage();
-            CertificatesRequiredPageJourney.completePage();
-            CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourney.completeECMTPage();
-            PermitStartDatePageJourney.completePage();
-            EmissionStandardsPageJourney.completePage();
-            saveAndContinue();
-            DeclarationPageJourney.completeDeclaration();
-            PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilOnPage();
-            BilateralJourneySteps.clickFinishButton();
-
+            ShortTermECMTJourney.completeShortTermECMTApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
-
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
             HomePage.PermitsTab.selectFirstOngoingApplication();

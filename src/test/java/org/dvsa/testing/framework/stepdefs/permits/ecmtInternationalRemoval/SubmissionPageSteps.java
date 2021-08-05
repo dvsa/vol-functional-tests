@@ -1,24 +1,21 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
-import com.deque.html.axecore.results.Check;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
-import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
-import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertTrue;
 
 public class SubmissionPageSteps extends BasePermitPage implements En {
@@ -49,7 +46,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             driver.switchTo().window(windows[0]);
         });
         And ("^I have partial ECMT international removal application", () -> {
-            EcmtInternationalRemovalJourney.completeApplicationUntilDeclarationPage(world);
+            EcmtInternationalRemovalJourney.completeUntilDeclarationPage(world);
         });
         And ("^the application is under issued permits table with status as valid", () -> {
             refreshPage();

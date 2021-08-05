@@ -8,7 +8,6 @@ import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 
 import java.util.LinkedList;
@@ -36,8 +35,7 @@ public class OverviewPageSteps extends BasePage implements En {
             isPath("/permits/application/\\d+");
         });
         And("^I am on the application overview page$", () -> {
-            CommonSteps.beginEcmtApplicationAndGoToOverviewPage(world);
-
+            EcmtApplicationJourney.beginApplication(world);
         });
         Then("^only the expected status labels are displayed$", () -> {
             List<OverviewSection> overviewSections = new LinkedList<>();
@@ -63,7 +61,7 @@ public class OverviewPageSteps extends BasePage implements En {
             assertTrue(OverviewPage.isSectionActive(sectionEnum));
         });
         When("^I fill all steps preceding steps to declaration$", () -> {
-            EcmtApplicationJourney.completeUpToCheckYourAnswersPage();
+            EcmtApplicationJourney.completeUntilCheckYourAnswersPage();
             ECMTPermitApplicationSteps.saveAndContinue();
         });
         When("^the overview page heading is displayed correctly$", OverviewPageJourney::hasPageHeading);

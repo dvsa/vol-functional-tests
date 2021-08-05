@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.external.enums;
 
 import activesupport.number.Int;
-import org.dvsa.testing.framework.pageObjects.external.enums.RestrictedCountry;
 
 public enum ShortTermRestrictedCountry {
 
