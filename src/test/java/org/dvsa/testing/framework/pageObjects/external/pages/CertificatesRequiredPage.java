@@ -13,11 +13,6 @@ public class CertificatesRequiredPage extends BasePermitPage {
         untilElementIsPresent("//h1[contains(text(), 'Mandatory certificates')]", SelectorType.XPATH, 6L, TimeUnit.SECONDS);
     }
 
-    public static void completePage() {
-        confirmCertificateRequired();
-        saveAndContinue();
-    }
-
     public static void confirmCertificateRequired() {
         if (checkboxNotConfirmed())
             scrollAndClick(certificateRequiredConfirmation, SelectorType.XPATH);

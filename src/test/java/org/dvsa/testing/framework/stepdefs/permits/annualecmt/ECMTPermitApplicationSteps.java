@@ -41,7 +41,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         And("^I have completed an ECMT application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
-            ECMTPermitApplicationSteps.completeEcmtApplication(world);
+            EcmtApplicationJourney.completeEcmtApplication(world);
         });
         When("^I withdraw without confirming$", () -> {
             HomePage.PermitsTab.selectFirstOngoingApplication();
@@ -51,17 +51,16 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
         When("^I have a partial completed ECMT application$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
-            EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL);
+            BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
-            EcmtApplicationJourney.getInstance().licencePage(world);
+            BasePermitJourney.licencePage(world);
             BasePermitPage.back();
         });
         When("^I view the application from ongoing permit application table$", HomePage.PermitsTab::selectFirstOngoingApplication);
         Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
-            ECMTPermitApplicationSteps.completeEcmtApplication(world);
+            EcmtApplicationJourney.completeEcmtApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(5000);
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -73,44 +72,10 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
 
         When("^I try applying with a licence that has an existing annual ECMT application$", () -> {
             HomePageJourney.beginPermitApplication();
-            EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL);
+            BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
             SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
             SelectALicencePage.saveAndContinue();
         });
     }
-
-    public static void completeEcmtApplication(World world) {
-        completeEcmtApplicationConfirmation(world);
-        SubmittedPage.untilPageLoad();
-        SubmittedPage.goToPermitsDashboard();
-
-    }
-
-    public static void completeEcmtApplicationConfirmation(World world) {
-        EcmtApplicationJourney.getInstance()
-                .permitType(PermitType.ECMT_ANNUAL);
-        YearSelectionPage.selectECMTValidityPeriod();
-        EcmtApplicationJourney.getInstance().licencePage(world);
-        completeUpToCheckYourAnswersPage();
-        CheckYourAnswerPage.untilOnPage();
-        CheckYourAnswerPage.saveAndContinue();
-        DeclarationPageJourney.completeDeclaration();
-        PermitFeePage.saveAndContinue();
-        world.feeAndPaymentJourney.customerPaymentModule();
-    }
-
-    public static void completeUpToCheckYourAnswersPage() {
-        OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
-        CheckIfYouNeedECMTPermitsPageJourney.completePage();
-        CabotagePage.confirmWontUndertakeCabotage();
-        CabotagePage.saveAndContinue();
-        CertificatesRequiredPage.completePage();
-        CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
-        NumberOfPermitsPageJourney.completeECMTPage();
-        EmissionStandardsPageJourney.completePage();
-        BasePermitJourney.setReferenceNumber(BasePermitPage.getReferenceFromPage());
-
-   }
 }

@@ -8,17 +8,12 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.enums.PermitStatus;
-import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.Country;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualBilateralPermit;
-import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
-import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 
@@ -28,7 +23,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
 import static org.junit.Assert.assertTrue;
@@ -41,56 +35,26 @@ public class AnnualBilateralSteps extends BasePage implements En {
         });
 
         Given("^I have a valid annual bilateral norway standard and cabotage permit$", () -> {
-
-            startBilateralCountryJourneyAndSelectCountry(world, "Norway");
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits);
-            PermitUsagePage.untilOnPage();
-            PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
-            PermitUsagePage.saveAndContinue();
-            BilateralJourneySteps.clickNoToCabotage();
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
-            BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourney.clickBilateralOverviewSection(OverviewSection.BilateralDeclaration);
-            DeclarationPageJourney.completeDeclaration();
-            AnnualBilateralJourney.getInstance()
-                        .permitFee();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilOnPage();
-            SubmittedPage.goToPermitsDashboard();
+            AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(world, PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, false);
+            AnnualBilateralJourney.completePayFees(world);
+            SubmittedPageJourney.goToPermitsDashboard();
             CommonSteps.waitUntilPermitHasStatus(world);
         });
 
         Given("^I have (a valid |applied for an )annual bilateral norway standard no cabotage permit$", (String notValid) -> {
-            startBilateralCountryJourneyAndSelectCountry(world, "Norway");
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPageJourney.completePage();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardPermitsNoCabotage);
-            PermitUsagePage.untilOnPage();
-            AnnualBilateralJourney.getInstance().journeyType();
-            PermitUsagePage.saveAndContinue();
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
-            BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
-            OverviewPageJourney.clickBilateralOverviewSection(OverviewSection.BilateralDeclaration);
-            DeclarationPageJourney.completeDeclaration();
-            AnnualBilateralJourney.getInstance()
-                        .permitFee();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilOnPage();
-            SubmittedPage.goToPermitsDashboard();
+            AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(world, PeriodType.BilateralsStandardPermitsNoCabotage, Country.Norway, null);
+            AnnualBilateralJourney.completePayFees(world);
+            SubmittedPageJourney.goToPermitsDashboard();
             CommonSteps.waitUntilPermitHasStatus(world);
         });
         Given("^I have selected Turkey and I am on the Bilateral application overview page$", () -> {
-            startBilateralCountryJourneyAndSelectCountry(world, "Turkey");
+            AnnualBilateralJourney.startBilateralCountryJourneyAndSelectCountry(world, "Turkey");
         });
         Given("^I have selected Morocco and I am on the Bilateral application overview page$", () -> {
-            startBilateralCountryJourneyAndSelectCountry(world, "Morocco");
+            AnnualBilateralJourney.startBilateralCountryJourneyAndSelectCountry(world, "Morocco");
         });
         Given("^I have selected Ukraine and I am on the Bilateral application overview page$", () -> {
-            startBilateralCountryJourneyAndSelectCountry(world, "Ukraine");
+            AnnualBilateralJourney.startBilateralCountryJourneyAndSelectCountry(world, "Ukraine");
         });
         Given("^I accept declaration and submit the application$", () -> {
             OverviewPageJourney.clickBilateralOverviewSection(OverviewSection.BilateralDeclaration);
@@ -162,15 +126,5 @@ public class AnnualBilateralSteps extends BasePage implements En {
             });
         });
     }
-
-    private void startBilateralCountryJourneyAndSelectCountry(World world, String country) {
-        clickToPermitTypePage(world);
-        AnnualBilateralJourney.getInstance()
-                .permitType(PermitType.ANNUAL_BILATERAL)
-                .licencePage(world);
-        AnnualBilateralJourney.getInstance().selectCountry(country);
-        OverviewPage.untilOnPage();
-    }
-    //TODO: This can all be refactored. There is so much duplication.
 }
 

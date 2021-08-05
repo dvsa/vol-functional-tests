@@ -30,7 +30,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
         Then("^I complete Certificates required page section and click save and continue$", () -> {
             String heading = CertificatesRequiredPage.getPageHeading();
             assertEquals("Mandatory certificates for vehicles and trailers you intend to use", heading);
-            CertificatesRequiredPage.completePage();
+            CertificatesRequiredPageJourney.completePage();
         });
         Then("^I complete Countries with limited permits section and click save and continue$", () -> {
             CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();

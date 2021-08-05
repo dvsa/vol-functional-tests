@@ -60,8 +60,7 @@ public class FeePageSteps extends BasePermitPage implements En {
         });
 
         When("^I submit and pay the Bilateral fee$", () -> {
-            EcmtApplicationJourney.getInstance()
-                    .feeOverviewPage();
+            PermitFeePage.saveAndContinue();
             world.feeAndPaymentJourney.customerPaymentModule();
             SubmittedPage.untilOnPage();
         });

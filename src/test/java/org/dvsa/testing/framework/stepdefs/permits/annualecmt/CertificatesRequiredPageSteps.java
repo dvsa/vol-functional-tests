@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CertificatesRequiredPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCountriesPageJourney;
@@ -31,9 +32,9 @@ public class CertificatesRequiredPageSteps implements En {
             String heading = CertificatesRequiredPage.getPageHeading();
             assertEquals("Mandatory certificates for vehicles and trailers you intend to use", heading);
         });
-        And("^The advisory text contains bold characters at the right places$", () ->
-                assertTrue(CertificatesRequiredPage.isComplianceAndRoadworthinessFontIsBold())
-        );
+        And("^The advisory text contains bold characters at the right places$", () -> {
+            assertTrue(CertificatesRequiredPage.isComplianceAndRoadworthinessFontIsBold());
+        });
         And("^There is one checkbox with right label and not checked by default$", () ->
             assertTrue(CertificatesRequiredPage.checkboxNotConfirmed())
         );
@@ -42,7 +43,7 @@ public class CertificatesRequiredPageSteps implements En {
             CertificatesRequiredPage.confirmCertificateRequired();
             BasePermitPage.clickReturnToOverview();
         });
-        And("^I select the checkbox and click Save and Continue button$", CertificatesRequiredPage::completePage);
+        And("^I select the checkbox and click Save and Continue button$", CertificatesRequiredPageJourney::completePage);
         Then("^I am taken to the Restricted countries page$", RestrictedCountriesPageJourney::hasPageHeading);
     }
 }

@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -14,10 +15,6 @@ import static org.junit.Assert.assertEquals;
 public class DeclarationPageSteps implements En {
 
     public DeclarationPageSteps(World world) {
-        And("^I am on the declaration page$", () -> {
-            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage();
-            ECMTPermitApplicationSteps.saveAndContinue();
-        });
         Then("^I should see the validation error message for the declaration page$", () -> Assert.assertTrue(DeclarationPage.isErrorMessagePresent()));
         When("^I save and continue on the declaration page$", DeclarationPage::saveAndContinue);
         And("^I should see the declaration advisory texts$", DeclarationPage::isECMTAdvisoryTextPresent);

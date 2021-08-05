@@ -37,10 +37,8 @@ public class CommonSteps extends BasePermitJourney implements En {
         And("^I am on the Annual ECMT licence selection page$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.beginPermitApplication();
-            EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL);
+            BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
-
         });
         Then("^I will get an error message on the licence page$", () -> {
             assertTrue(SelectALicencePage.isErrorMessagePresent());
@@ -70,10 +68,9 @@ public class CommonSteps extends BasePermitJourney implements En {
 
     public static void beginEcmtApplicationAndGoToOverviewPage(World world) {
         clickToPermitTypePage(world);
-        EcmtApplicationJourney.getInstance()
-                .permitType(PermitType.ECMT_ANNUAL);
+        BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
         YearSelectionPage.selectECMTValidityPeriod();
-        EcmtApplicationJourney.getInstance().licencePage(world);
+        BasePermitJourney.licencePage(world);
         OverviewPage.untilOnPage();
     }
 

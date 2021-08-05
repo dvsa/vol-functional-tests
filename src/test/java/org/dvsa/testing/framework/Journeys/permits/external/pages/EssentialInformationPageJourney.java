@@ -12,6 +12,7 @@ public class EssentialInformationPageJourney extends BasePermitJourney {
     }
 
     public static void completePage() {
+        EssentialInformationPage.untilOnPage();
         hasPageHeading();
         saveAndContinue();
     }

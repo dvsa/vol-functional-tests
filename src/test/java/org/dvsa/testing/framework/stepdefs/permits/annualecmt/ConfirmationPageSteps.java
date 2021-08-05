@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import Injectors.World;
 import activesupport.system.Properties;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
@@ -21,7 +22,6 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
-import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertTrue;
 
@@ -31,7 +31,7 @@ public class ConfirmationPageSteps extends BasePage implements En {
 
         Then("^I am on the Annual ECMT application submitted page$", () -> {
             clickToPermitTypePage(world);
-            ECMTPermitApplicationSteps.completeEcmtApplicationConfirmation(world);
+            EcmtApplicationJourney.completeEcmtApplicationConfirmation(world);
         });
 
         Then("^the reference number on the annual ECMT submitted page  is as expected$", () -> {
@@ -47,12 +47,10 @@ public class ConfirmationPageSteps extends BasePage implements En {
 
         Then("^I have an ongoing Annual ECMT with all fees paid", () -> {
             CommonSteps.clickToPermitTypePage(world);
-            EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL);
+            BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
-            EcmtApplicationJourney.getInstance()
-                    .licencePage(world);
-            completeUpToCheckYourAnswersPage();
+            BasePermitJourney.licencePage(world);
+            EcmtApplicationJourney.completeUpToCheckYourAnswersPage();
             get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
 
             HomePageJourney.payAllOutstandingFees();

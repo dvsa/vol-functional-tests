@@ -4,25 +4,17 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.enums.PermitType;
-import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.RemovalsEligibilityPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ECMTInternationalRemovalEligibiltyPageSteps implements En {
     public ECMTInternationalRemovalEligibiltyPageSteps(World world) {
         When("^I am on the ECMT International Removal Eligibity page", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
-                    .licencePage(world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
+            EcmtInternationalRemovalJourney.completeApplicationUntilRemovalEligibilityPage(world);
         });
         And ("^the text is shown below the page heading$", () -> {
             String advisoryText = RemovalsEligibilityPage.getAdvisoryText();

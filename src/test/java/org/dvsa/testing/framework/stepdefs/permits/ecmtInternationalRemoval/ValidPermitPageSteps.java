@@ -2,16 +2,15 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidECMTInternationalPermit;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -26,26 +25,8 @@ public class ValidPermitPageSteps implements En {
 
     public ValidPermitPageSteps(World world) {
         And("^I have a valid ECMT removal permit$", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
-                    .licencePage(world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                    .cabotagePage()
-                    .certificatesRequiredPage()
-                    .permitStartDatePage();
-            NumberOfPermitsPageJourney.completePage();
-            EcmtInternationalRemovalJourney.getInstance()
-                    .checkYourAnswers();
-            DeclarationPageJourney.completeDeclaration();
-            EcmtApplicationJourney.getInstance()
-                    .feeOverviewPage();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilOnPage();
+            EcmtInternationalRemovalJourney.completeAndSubmitApplication(world);
             SubmittedPage.goToPermitsDashboard();
-
             CommonSteps.waitUntilPermitHasStatus(world);
         });
         And("^I am viewing my issued ECMT removal permit on selfserve$", () -> {

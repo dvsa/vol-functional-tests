@@ -21,4 +21,9 @@ public class SubmittedPageJourney extends BasePermitJourney {
         assertTrue(isTextPresent("Your permit application is under consideration and will now be processed. We may contact you to verify your application. We will let you know the result of your application within 10 working days."));
         assertTrue(isTextPresent("You can check your application status on the next page."));
     }
+
+    public static void goToPermitsDashboard() {
+        SubmittedPage.untilOnPage();
+        SubmittedPage.goToPermitsDashboard();
+    }
 }

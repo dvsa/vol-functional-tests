@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.enums.RestrictedCountry;
 import org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection;
@@ -24,7 +25,7 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
     
 
     public CheckYourAnswersPageSteps(World world) {
-        And("^I have completed all steps prior to check your answers page$", ECMTPermitApplicationSteps::completeUpToCheckYourAnswersPage);
+        And("^I have completed all steps prior to check your answers page$", EcmtApplicationJourney::completeUpToCheckYourAnswersPage);
         Then("^the information I inserted during the application is displayed$", () -> {
             licence = CheckYourAnswerPage.getAnswer(Licence);
             euro6 = CheckYourAnswerPage.getAnswer(Euro6);

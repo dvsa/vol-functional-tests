@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CertificatesRequiredPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.RestrictedCountriesPageJourney;
@@ -26,7 +27,7 @@ public class RestrictedCountriesPageSteps extends BasePage implements En {
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
             CabotagePage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
+            CertificatesRequiredPageJourney.completePage();
         });
         Given("^I (do |don't )?plan on delivering to a restricted country$", (String deliverToRestrictedCountries) -> {
             boolean deliverToRestricted = deliverToRestrictedCountries.equals("do ");

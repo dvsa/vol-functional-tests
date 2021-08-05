@@ -1,18 +1,17 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
+import com.deque.html.axecore.results.Check;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
@@ -26,24 +25,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
 
     public SubmissionPageSteps(World world) {
         And("^I am on the ECMT International removal submission page", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
-                    .licencePage(world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                    .cabotagePage()
-                    .certificatesRequiredPage()
-                    .permitStartDatePage();
-            NumberOfPermitsPageJourney.completePage();
-            EcmtInternationalRemovalJourney.getInstance()
-                    .checkYourAnswers();
-            DeclarationPageJourney.completeDeclaration();
-            EcmtApplicationJourney.getInstance()
-                    .feeOverviewPage();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilOnPage();
+            EcmtInternationalRemovalJourney.completeAndSubmitApplication(world);
         });
         Then ("^the page heading on the submission page is displayed correctly", SubmissionPageSteps::assertHeadingPresentInSubmissionPanel);
         And ("^the application reference number is displayed correctly", () -> {
@@ -67,19 +49,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             driver.switchTo().window(windows[0]);
         });
         And ("^I have partial ECMT international removal application", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
-                    .licencePage(world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                    .cabotagePage()
-                    .certificatesRequiredPage()
-                    .permitStartDatePage();
-            NumberOfPermitsPageJourney.completePage();
-            EcmtInternationalRemovalJourney.getInstance()
-                    .checkYourAnswers();
+            EcmtInternationalRemovalJourney.completeApplicationUntilDeclarationPage(world);
         });
         And ("^the application is under issued permits table with status as valid", () -> {
             refreshPage();

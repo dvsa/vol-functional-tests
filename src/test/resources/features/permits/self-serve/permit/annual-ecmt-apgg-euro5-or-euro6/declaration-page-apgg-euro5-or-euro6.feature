@@ -5,7 +5,7 @@ Feature: Annual ECMT Declaration page
     Given I have a "goods" "standard_international" licence
     And  I am on the VOL self-serve site
     And I am on the application overview page
-    And I am on the declaration page
+    And I fill all steps preceding steps to declaration
 
   @OLCS-21940 @OLCS-24974 @OLCS-26709
   Scenario: Displays validation error summary box

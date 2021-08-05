@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -62,7 +63,7 @@ public class OverviewPageSteps extends BasePage implements En {
             assertTrue(OverviewPage.isSectionActive(sectionEnum));
         });
         When("^I fill all steps preceding steps to declaration$", () -> {
-            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage();
+            EcmtApplicationJourney.completeUpToCheckYourAnswersPage();
             ECMTPermitApplicationSteps.saveAndContinue();
         });
         When("^the overview page heading is displayed correctly$", OverviewPageJourney::hasPageHeading);

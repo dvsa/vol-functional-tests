@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.common;
 
 import Injectors.World;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.enums.PermitType;
@@ -26,11 +27,10 @@ public class FeePageSteps extends BasePage implements En {
 
         And("^I am on the fee page$", () -> {
             clickToPermitTypePage(world);
-            EcmtApplicationJourney.getInstance()
-                    .permitType(PermitType.ECMT_ANNUAL);
+            BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
             YearSelectionPage.selectECMTValidityPeriod();
-            EcmtApplicationJourney.getInstance().licencePage(world);
-            ECMTPermitApplicationSteps.completeUpToCheckYourAnswersPage();
+            BasePermitJourney.licencePage(world);
+            EcmtApplicationJourney.completeUpToCheckYourAnswersPage();
             ECMTPermitApplicationSteps.saveAndContinue();
             DeclarationPageJourney.completeDeclaration();
         });

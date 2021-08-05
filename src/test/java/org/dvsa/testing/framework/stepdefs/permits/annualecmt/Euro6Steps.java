@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import cucumber.api.java8.En;
 import Injectors.World;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.CertificatesRequiredPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.CheckIfYouNeedECMTPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
@@ -28,7 +29,7 @@ public class Euro6Steps extends BasePage implements En {
             CheckIfYouNeedECMTPermitsPageJourney.completePage();
             CabotagePage.confirmWontUndertakeCabotage();
             CabotagePage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
+            CertificatesRequiredPageJourney.completePage();
             CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
             NumberOfPermitsPageJourney.completeECMTPage();
         });

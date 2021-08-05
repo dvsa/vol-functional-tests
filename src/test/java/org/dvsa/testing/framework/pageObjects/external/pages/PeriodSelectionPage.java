@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.pageObjects.external.pages;
 
-import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
@@ -16,7 +15,7 @@ public class PeriodSelectionPage extends BasePermitPage {
         untilElementIsPresent(String.format("//h1[contains(text(),'%s')]", PAGE_TITLE), SelectorType.XPATH, 10L, TimeUnit.SECONDS);
     }
 
-    public static void bilateralPeriodType(PeriodType shortTermType) {
+    public static void chooseBilateralPeriodType(PeriodType shortTermType) {
         String selector = String.format("//label[contains(text(), '%s')]/../input[@type='radio']", shortTermType.toString());
         if (isElementPresent("//input[@id='stock']", SelectorType.XPATH)) {
             scrollAndClick(selector, SelectorType.XPATH);

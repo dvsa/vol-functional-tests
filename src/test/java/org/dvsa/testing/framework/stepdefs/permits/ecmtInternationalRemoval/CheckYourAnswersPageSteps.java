@@ -1,10 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
@@ -23,17 +23,7 @@ public class CheckYourAnswersPageSteps implements En {
 
     public CheckYourAnswersPageSteps(World world) {
         When("^I am on ECMT Removal check your answers page", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL)
-                    .licencePage(world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                     .cabotagePage()
-                    .certificatesRequiredPage()
-                    .permitStartDatePage();
-            NumberOfPermitsPageJourney.completePage();
+            EcmtInternationalRemovalJourney.completeApplicationUntilCheckYourAnswersPage(world);
 
         });
         And("^the ECMT Removals check your answers page has reference number$", BasePermitPage::getReferenceFromPage);

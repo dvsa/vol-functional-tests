@@ -1,58 +1,46 @@
 package org.dvsa.testing.framework.Journeys.permits.external;
 
 import Injectors.World;
-import activesupport.number.Int;
+import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
 import org.dvsa.testing.framework.enums.PermitType;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
 
 public class EcmtApplicationJourney extends BasePermitJourney {
 
-    private static volatile EcmtApplicationJourney instance = null;
+    protected EcmtApplicationJourney() { }
 
-    protected EcmtApplicationJourney() {
-        // The code below assures that someone can't new up instances using reflections
-        if (instance != null)
-            throw new RuntimeException("Use #getInstance to obtain an instance of this class");
+    public static void completeEcmtApplication(World world) {
+        completeEcmtApplicationConfirmation(world);
+        SubmittedPage.untilPageLoad();
+        SubmittedPage.goToPermitsDashboard();
     }
 
-    public static EcmtApplicationJourney getInstance() {
-        if (instance == null) {
-            synchronized (EcmtApplicationJourney.class) {
-                instance = new EcmtApplicationJourney();
-            }
-        }
-
-        return instance;
-    }
-
-    public EcmtApplicationJourney numberOfPermitsPage(int maxNumberOfPermits) {
-        List<WebElement> numberOfPermitFields = findAll("//*[contains(@class, 'field')]//input[@type='number']", SelectorType.XPATH);
-        numberOfPermitFields.forEach(numberOfPermitsField -> {
-            Integer randomNumberOfPermitsLessThanMax = Int.random(maxNumberOfPermits);
-                    numberOfPermitsField.sendKeys(String.valueOf(randomNumberOfPermitsLessThanMax));
-        });
-        NumberOfPermitsPage.saveAndContinue();
-        return this;
-    }
-
-    public EcmtApplicationJourney feeOverviewPage() {
+    public static void completeEcmtApplicationConfirmation(World world) {
+        BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
+        YearSelectionPage.selectECMTValidityPeriod();
+        BasePermitJourney.licencePage(world);
+        completeUpToCheckYourAnswersPage();
+        CheckYourAnswerPage.untilOnPage();
+        CheckYourAnswerPage.saveAndContinue();
+        DeclarationPageJourney.completeDeclaration();
         PermitFeePage.saveAndContinue();
-        return this;
+        world.feeAndPaymentJourney.customerPaymentModule();
     }
 
-    @Override
-    public EcmtApplicationJourney permitType(PermitType type) {
-        return (EcmtApplicationJourney) super.permitType(type);
+    public static void completeUpToCheckYourAnswersPage() {
+        OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
+        CheckIfYouNeedECMTPermitsPageJourney.completePage();
+        CabotagePage.confirmWontUndertakeCabotage();
+        CabotagePage.saveAndContinue();
+        CertificatesRequiredPageJourney.completePage();
+        CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
+        NumberOfPermitsPageJourney.completeECMTPage();
+        EmissionStandardsPageJourney.completePage();
+        BasePermitJourney.setReferenceNumber(BasePermitPage.getReferenceFromPage());
     }
-
-    @Override
-    public EcmtApplicationJourney licencePage(World world) {
-        return (EcmtApplicationJourney) super.licencePage(world);
-    }
-
 }
