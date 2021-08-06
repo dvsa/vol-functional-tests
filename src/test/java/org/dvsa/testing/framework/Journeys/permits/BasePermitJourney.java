@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.permits;
 
 import Injectors.World;
 import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitTypePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
@@ -57,7 +58,9 @@ public class BasePermitJourney extends BasePermitPage {
         // Note not ready for MLH but not needed.
         SelectALicencePage.clickLicence(world.applicationDetails.getLicenceNumber());
         SelectALicencePage.saveAndContinue();
-        setFullReferenceNumber(OverviewPage.getReferenceFromPage());
+        if (!isElementPresent("//span[@class='govuk-warning-text__assistive']", SelectorType.XPATH)) {
+            setFullReferenceNumber(OverviewPage.getReferenceFromPage());
+        }
     }
 
 
