@@ -24,6 +24,7 @@ public class IRHPPageJourney extends BasePermitJourney {
         if (permitType == PermitType.ECMT_ANNUAL || permitType == PermitType.SHORT_TERM_ECMT) {
             waitAndSelectByIndex("Select a year","//select[@id='yearList']", SelectorType.XPATH,1);
         }
+        IrhpPermitsPage.Model.waitForContinueToBeClickable();
         IrhpPermitsPage.Model.continueButton();
         IrhpPermitsPage.Model.untilModalIsGone();
     }

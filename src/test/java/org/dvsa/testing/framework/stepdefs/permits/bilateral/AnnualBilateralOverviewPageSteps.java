@@ -53,7 +53,7 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
         EssentialInformationPageJourney.completePage();
         PeriodSelectionPageJourney.hasMoroccoPageHeading();
         Assert.assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
-        AnnualBilateralJourney.setPeriodType(typeOfMoroccoJourney);
+        AnnualBilateralJourney.completePeriodTypePage(typeOfMoroccoJourney);
         NumberOfPermitsPage.untilOnPage();
         Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
         NumberOfPermitsPageJourney.hasPageHeading();

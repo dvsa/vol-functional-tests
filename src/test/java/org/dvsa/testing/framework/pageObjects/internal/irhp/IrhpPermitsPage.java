@@ -14,7 +14,11 @@ public class IrhpPermitsPage extends BaseDetailsPage {
         }
 
         public static void continueButton() {
-            org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsPage.scrollAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+            scrollAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+        }
+
+        public static void waitForContinueToBeClickable() {
+            waitForElementToBeClickable("//button[@id='form-actions[submit]']", SelectorType.XPATH);
         }
     }
 
