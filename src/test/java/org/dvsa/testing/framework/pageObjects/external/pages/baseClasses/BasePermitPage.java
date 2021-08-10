@@ -17,7 +17,7 @@ public class BasePermitPage extends BasePage {
     protected static String PAGE_SUBHEADING = "//h2[@class='govuk-heading-m']";
     protected static String PANEL_HEADING = "//h1[@class='govuk-panel__title']";
     private static String SAVE_AND_CONTINUE ="//*[@name='Submit[SubmitButton]' or @class='button govuk-button']";
-    private static String SAVE_AND_RETURN_TO_OVERVIEW = "//*[@id='save-return-button' or text()='Save and return to overview']";
+    private static String SAVE_AND_RETURN_TO_OVERVIEW = "//*[@id='save-return-button' or contains(text(),'eturn to overview')]";
     protected static String TABLE_SECTION_TEMPLATE = "//dt[contains(text(), '%s')]/../dd";
 
 

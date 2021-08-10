@@ -34,7 +34,6 @@ public class ECMTRemovalInternalApplicationSteps implements En {
 
             //Save application
             saveIRHP();
-            untilOnPage();
         });
         And("^I pay fee for the ECMT removal application$", () -> {
             LicenceDetailsPageJourney.clickFeesTab();

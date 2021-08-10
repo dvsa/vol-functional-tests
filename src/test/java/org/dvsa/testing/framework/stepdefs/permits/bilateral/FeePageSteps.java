@@ -46,14 +46,13 @@ public class FeePageSteps extends BasePermitPage implements En {
             Assert.assertEquals(expectedNumberOfPermits, actualNumberOfPermits);
 
             // Total fee to be paid check
-            int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalApplicationFeeToBePaid)).get().replaceAll(",", ""));
+            int actualTotal = Integer.parseInt(Str.find("[\\d,]+", PermitFeePage.getTableSectionValue(FeeSection.TotalFeeToBePaid)).get().replaceAll(",", ""));
             int  numberOfPermits = Integer.parseInt(String.valueOf(NumberOfPermitsPageJourney.permitValue));
             int expectedTotal= numberOfPermits * 8 ;
             Assert.assertEquals(actualTotal,expectedTotal);
 
             //Fee breakdown check
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Type']", SelectorType.XPATH),"Standard single journey");
-            Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']", SelectorType.XPATH), AnnualBilateralJourney.getCountry());
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Number of permits']", SelectorType.XPATH), NumberOfPermitsPageJourney.getPermitValue());
             Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Total fee']", SelectorType.XPATH),"£" + expectedTotal);
         });
