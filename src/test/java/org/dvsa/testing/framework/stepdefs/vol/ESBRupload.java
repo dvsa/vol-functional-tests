@@ -17,8 +17,6 @@ public class ESBRupload extends BasePage implements En {
     public ESBRupload(World world) throws MissingRequiredArgument {
         this.world = world;
 
-
-
         Then("^A short notice flag should be displayed in selfserve$", () -> {
             world.busRegistrationJourney.viewESBRInExternal();
             assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
