@@ -3,15 +3,14 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import Injectors.World;
 import activesupport.string.Str;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection;
-import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
-import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
-import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection;
+import org.dvsa.testing.framework.pageObjects.internal.details.DocsAndAttachmentsPage;
+import org.dvsa.testing.framework.pageObjects.internal.details.DocumentsPage;
+import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;
 import org.junit.Assert;
 
 import java.util.ArrayList;
@@ -20,8 +19,8 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
 
     private World world;
 
-    public AnnualEcmtPermitsHtmlDoc(World world, OperatorStore operatorStore) {
-        When("^I view the annual ECMT Permits documentation$", () -> {
+    public AnnualEcmtPermitsHtmlDoc(World world) {
+        When("^I view the annual (bilateral|ECMT) permits documentation$", (String permitType) -> {
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
             String permitApplicationNumber = getText("//td[@data-heading='Reference number']/a", SelectorType.XPATH);
             clickByLinkText(permitApplicationNumber);
@@ -33,7 +32,6 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             getDriver().switchTo().window(tab.get(tab.size() - 1));
             DocumentsPage.untilOnPage();
             String selectLicence1 = world.applicationDetails.getLicenceNumber();
-            LicenceStore selectedLicence = operatorStore.getLatestLicence().get();
             // Check heading contains correct heading
             Assert.assertTrue(String.valueOf(getText("h2").contains(selectLicence1)),true);
             // Verify Euro 6
@@ -41,9 +39,11 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             // Verify Cabotage
             Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Cabotage).isEmpty());
             // Verify restricted countries
-            Assert.assertEquals(selectedLicence.getEcmt().hasRestrictedCountries(),
+            Assert.assertEquals(BasePermitJourney.getCountriesWithLimitedPermitsChoice(),
                     (Str.find("(?i)(yes|no)", DocumentsPage.getSectionBody(ApplicationSection.RestrictedCountries)).get()).trim().equalsIgnoreCase("yes")
             );
+            //TODO hasRestrictedCountries is defaulting to false because it is a null boolean. Needs changing.
+
             // Verify percentage of international journey
             Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.NumberOfPermits).isEmpty());
             Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Euro6).isEmpty());

@@ -18,14 +18,6 @@ Feature: Internal ECMT APGG Euro5 or Euro 6 with cross trade permits Application
     And I am in application details page, I should not see withdraw button
     And I am in application details page, I should see application as withdrawn
 
-  @OLCS-21284 @Deprecated
-  Scenario: Withdraw application from details page
-    When I click on submit button
-    And I pay fee for application
-    Then In application details page, I withdraw Permit Application
-    And I am in application details page, I should not see withdraw button
-    And I am in application details page, I should see application as withdrawn
-
   @OLCS-21284 @internal_annual_ecmt_apgg_euro5_or_euro6 @OLCS-25288 @eupa_regression
   Scenario: withdraw application from fee tab page
     When I am on the fee tab page

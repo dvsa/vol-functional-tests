@@ -3,8 +3,7 @@ Feature: Short term ECMT APGG Euro 5 or Euro 6 end to end happy path journey inc
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And  I am on the VOL self-serve site
-    And I select Short term ecmt permit on the select permit page
+    And I select short term ecmt permit on the select permit page
     And I select year on the select year page
     And I select short term ecmt period
     And I select any licence number for short term permit

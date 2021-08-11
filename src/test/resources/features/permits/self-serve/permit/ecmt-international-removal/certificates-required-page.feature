@@ -20,7 +20,7 @@ Feature: ECMT International Removals Certificates required  Page
     And  the correct text is displayed next to the checkbox
     When save and continue  button is selected without selecting the checkbox
     Then I should get the certificates required page error message
-    When I save and return to overview without selecting the checkbox
+    When I save and return to overview
     Then I should get the certificates required page error message
     When I confirm the Certificates Required checkbox
     And  I save and continue
