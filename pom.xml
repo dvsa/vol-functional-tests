@@ -18,9 +18,9 @@
         <uri-constructor.version>1.5.4</uri-constructor.version>
         <axe-scanner-version>2.1</axe-scanner-version>
 
-        <cucumber-junit.version>6.10.4</cucumber-junit.version>
-        <cucumber-java.version>6.10.4</cucumber-java.version>
-        <pico-container-version>6.10.4</pico-container-version>
+        <cucumber-junit.version>6.11.0</cucumber-junit.version>
+        <cucumber-java.version>6.11.0</cucumber-java.version>
+        <pico-container-version>6.11.0</pico-container-version>
 
         <allure-cucumber5-jvm.version>2.13.5</allure-cucumber5-jvm.version>
         <allure-report.version>2.14.0</allure-report.version>
@@ -101,22 +101,8 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.22.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                        <configuration>
-                            <failIfNoTests>false</failIfNoTests>
-                            <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
-                            <threadCount>4</threadCount>
-                            <perCoreThreadCount>true</perCoreThreadCount>
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
             </plugin>
         </plugins>
     </build>
