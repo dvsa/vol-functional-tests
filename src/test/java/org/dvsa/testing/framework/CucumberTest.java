@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.runner;
+package org.dvsa.testing.framework;
 
 import io.cucumber.junit.platform.engine.Cucumber;
 
