@@ -3,7 +3,7 @@
 @CPMS_tests
 Feature: Complete Manual Bus Registration Steps
 
-  Background:
+  Background: Testing
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And i have logged in to internal
 
