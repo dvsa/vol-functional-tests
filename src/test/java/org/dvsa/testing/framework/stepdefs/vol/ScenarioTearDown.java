@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -14,7 +13,8 @@ import java.io.IOException;
 public class ScenarioTearDown {
     @After
     public void afterClass(Scenario scenario) throws Exception {
-        Hooks.attach(scenario);
+        Hooks hooks = new Hooks();
+        hooks.attach(scenario);
     }
 
     @Before

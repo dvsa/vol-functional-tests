@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 
 public class GlobalMethods extends BasePage {
 
@@ -38,9 +39,9 @@ public class GlobalMethods extends BasePage {
         String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
 
-        if (Browser.isBrowserOpen()) {
-            navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        if(getBrowser() != null) {
+            getBrowser().get().manage().deleteAllCookies();
+            getBrowser().get().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         }
 
         get(myURL);
@@ -68,7 +69,6 @@ public class GlobalMethods extends BasePage {
 
     public void navigateToLogin(String username, String emailAddress, ApplicationType applicationType) {
         navigateToLoginWithoutCookies(username, emailAddress, applicationType);
-
         if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
     }
