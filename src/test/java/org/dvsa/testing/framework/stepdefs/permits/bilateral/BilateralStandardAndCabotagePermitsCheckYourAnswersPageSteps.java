@@ -1,46 +1,26 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+<<<<<<< HEAD
 import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
+=======
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.Country;
-import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.enums.JourneyType;
-import org.dvsa.testing.lib.newPages.external.pages.EssentialInformationPage;
-import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
-import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.pageObjects.enums.Country;
+import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.junit.Assert;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-
 public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extends BasePermitPage implements En {
-    public BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps(OperatorStore operatorStore, World world, LicenceStore licenceStore) {
+    public BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps(World world) {
         Then("^I am on the Bilateral Standard and Cabotage permits check your answers page$", () -> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            AnnualBilateralJourney.getInstance().norway(operatorStore);
-            OverviewPage.untilOnPage();
-            OverviewPage.clickCountrySection(Country.Norway);
-            EssentialInformationPage.untilOnPage();
-            EssentialInformationPage.saveAndContinue();
-            AnnualBilateralJourney.getInstance().bilateralPeriodType(PeriodType.BilateralsStandardAndCabotagePermits,operatorStore);
-            PermitUsagePage.untilOnPage();
-            PermitUsagePage.journeyType(JourneyType.MultipleJourneys);
-            PermitUsagePage.saveAndContinue();
-            BilateralJourneySteps.clickYesToCabotage();
-            BilateralJourneySteps.yesAndCabotagePermitConfirmation();
-            BilateralJourneySteps.saveAndContinue();
-            NumberOfPermitsPageJourney.completePage();
+            AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(world, PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, true);
         });
 
         Then("^Value of do you need to carry out cabotage, will always be as per the value selected on the cabotage page$", () -> {
@@ -66,11 +46,9 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
             if(count == 1) {
                 Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitvalue + " " + permitlabel + "s");
             }
-            else
-                {
-                    Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitStandard + " " + permitstandardlabel + "s"+'\n'+permitCabotage + " " + permitcabotagelabel + "s");
-
-                }
+            else {
+                Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitStandard + " " + permitstandardlabel + "s" + '\n' + permitCabotage + " " + permitcabotagelabel + "s");
+            }
         });
     }
 }

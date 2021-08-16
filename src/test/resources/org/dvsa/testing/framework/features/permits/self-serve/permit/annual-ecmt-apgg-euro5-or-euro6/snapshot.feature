@@ -2,20 +2,20 @@ Feature:  HTML snapshot
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
 
   @INTERNAL @OLCS-20958 @ECMT @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
   Scenario: Doc is generated from ECMT permit application submitted externally
+    And I am on the VOL self-serve site
     And I have completed an ECMT application
     And i create an admin and url search for my licence
-    When I view the annual ECMT Permits documentation
+    When I view the annual ECMT permits documentation
     Then the annual ECMT Permits HTML document should have the correct information
 
-  @SNAPSHOT @OLCS-27366 @bilateral_cabotage_only @WIP
+  @SNAPSHOT @OLCS-27366 @bilateral_cabotage_only
   Scenario: Snapshot generated when bilateral application is submitted in selfserve
-#    TODO below step
-    When I have a valid annual bilateral permit
-    And I am on the VOL internal site
-    And A case worker is reviewing my docs & attachments
-    Then an HTML snapshot for annual bilateral permit is generated
+    And  I have selected Morocco and I am on the Bilateral application overview page
+    And I submit the application for empty entry single journey on selection of Morocco link on overview page
+    When I accept declaration and submit the application
+    And i create an admin and url search for my licence
+    And I view the annual bilateral permits documentation
     Then text for annual bilateral snapshot is displayed as expected

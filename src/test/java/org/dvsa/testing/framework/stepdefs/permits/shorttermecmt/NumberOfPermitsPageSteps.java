@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import Injectors.World;
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
@@ -19,36 +20,16 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.Yea
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.PermitUsagePage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 
-    public NumberOfPermitsPageSteps(OperatorStore operatorStore, World world) {
-
-        Then("^I am on the short term number of permits page$", () -> {
-            clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore)
-                    .licencePage(operatorStore,world);
-            LicenceStore licence = operatorStore.getLatestLicence().orElseGet(LicenceStore::new);
-            operatorStore.withLicences(licence);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
-            licence.getEcmt().setPermitUsage(PermitUsage.random());
-            PermitUsagePage.permitUsage(licence.getEcmt().getPermitusage());
-            BasePermitPage.saveAndContinue();
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-        });
-        Then("^the page heading on the short term number of permits page is displayed correctly$", () -> {
-            NumberOfPermitsPageJourney.hasPageHeading();
-            assertTrue(NumberOfPermitsPage.isAdvisoryTextPresent());
-        });
+    public NumberOfPermitsPageSteps(World world) {
         Then("^I should get the number of permits page error message$", () ->{
             assertTrue(NumberOfPermitsPage.isEnterNumberOfPermitsErrorTextPresent());
         });
@@ -61,24 +42,5 @@ public class NumberOfPermitsPageSteps implements En {
         });
 
         Then("^I enter the valid number of short term permits required$", NumberOfPermitsPage::enterEuro5OrEuro6permitsValue);
-        Then("^I enter the number of permits required more than the authorised vehicles$",() ->{
-            NumberOfPermitsPage.euro5OrEuro6Select();
-            NumberOfPermitsPage.exceedAuthorisedVehicle();
-        });
-        Then("^I should get the validation error message$", () -> {
-            assertEquals("You have exceeded the maximum you can apply for", NumberOfPermitsPage.getErrorText());
-        });
-        Then("^the user is navigated to the overview page with the number of permits page status as completed$", () -> {
-            OverviewPageJourney.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.COMPLETED);
-        });
-        Then("^I am taken back to short term number of permits page$", () -> {
-            NumberOfPermitsPage.untilOnPage();
-            NumberOfPermitsPageJourney.hasPageHeading();
-        });
-        Then("^the user is navigated to the overview page with the number of permits page status as not started yet$", () -> {
-            OverviewPageJourney.hasPageHeading();
-            OverviewPageJourney.checkStatus(OverviewSection.NumberOfPermits, PermitStatus.NOT_STARTED_YET);
-        });
-
     }
 }

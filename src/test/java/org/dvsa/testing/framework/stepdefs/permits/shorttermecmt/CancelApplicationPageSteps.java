@@ -1,35 +1,21 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+<<<<<<< HEAD
 import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.ShorttermECMTJourney;
+=======
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.PeriodType;
-import org.dvsa.testing.lib.newPages.external.pages.CancellationPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.junit.Assert;
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CancelApplicationPageSteps extends BasePage implements En {
 
-    public CancelApplicationPageSteps(OperatorStore operatorStore, World world) {
-        Then("^I am on short term ECMT overview Page$", () -> {
-            clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
-            ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-        });
-        Then("^I click cancel application link on the overview page$", OverviewPage::clickCancelApplication);
-        Then("^I should be taken back to short Term Overview Page$", () -> {
-            assertTrue(isPath("/permits/application/\\d+/"));
-        });
+    public CancelApplicationPageSteps(World world) {
         And ("^the cancel application page displays the correct text$", () -> {
             CancellationPage.getPageHeading();
             assertTrue(CancellationPage.isAdvisoryTextPresent());

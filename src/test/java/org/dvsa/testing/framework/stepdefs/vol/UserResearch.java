@@ -6,8 +6,13 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.UserType;
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
 import org.dvsa.testing.lib.newPages.BasePage;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 

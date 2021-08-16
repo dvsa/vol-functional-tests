@@ -8,6 +8,5 @@ Feature: Cancel application page
 
   @OLCS-21940
   Scenario: Displays validation error summary box
-    Given I have not confirmed I would like to cancel
     When I cancel my ECMT application
     Then I should get an error message on Annual ECMT cancel application page

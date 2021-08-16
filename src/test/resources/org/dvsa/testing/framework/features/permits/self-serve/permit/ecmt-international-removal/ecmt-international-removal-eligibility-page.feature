@@ -20,7 +20,7 @@ Feature: ECMT International Removal Eligiblity page
     And  the text is shown below the page heading
     And  the text is shown next to the tick box
     And  I save and continue without selecting the checkbox
-    And  I save and return to overview without selecting the checkbox
+    And  I save and return to overview
     Then the error message is displayed on ECMT Remove Eligibility Page
 
   #AC09

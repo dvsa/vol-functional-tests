@@ -5,9 +5,15 @@ import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import activesupport.aws.s3.S3;
 import apiCalls.enums.UserType;
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
 import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 import java.time.LocalDateTime;
@@ -16,7 +22,7 @@ import java.time.format.DateTimeFormatter;
 import static activesupport.database.DBUnit.*;
 import static java.lang.Thread.sleep;
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.APIJourney.*;
+import static org.dvsa.testing.framework.Journeys.licence.APIJourney.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 

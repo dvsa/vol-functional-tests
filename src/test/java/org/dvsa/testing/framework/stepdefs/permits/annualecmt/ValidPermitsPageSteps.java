@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
+<<<<<<< HEAD
 import activesupport.system.Properties;
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
@@ -27,6 +28,23 @@ import org.dvsa.testing.lib.newPages.external.pages.ValidPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
+import org.dvsa.testing.framework.enums.Duration;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.PermitApplication;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualECMTPermit;
+import org.dvsa.testing.framework.pageObjects.external.pages.ApplicationIssuingFeePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 import java.util.HashMap;
@@ -43,11 +61,9 @@ public class ValidPermitsPageSteps extends BasePage implements En {
     public static Map<String, PermitApplication> userPermitsSelected = new HashMap();
     private World world;
 
-    public ValidPermitsPageSteps(OperatorStore operatorStore, World world) {
+    public ValidPermitsPageSteps(World world) {
         And("^have valid permits$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.beginPermitApplication();
-            ECMTPermitApplicationSteps.completeEcmtApplication(operatorStore, world);
+            EcmtApplicationJourney.completeEcmtApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(5000);
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
@@ -69,21 +85,6 @@ public class ValidPermitsPageSteps extends BasePage implements En {
             HomePage.PermitsTab.selectFirstValidPermit();
 
         });
-        And("^have valid Annual Bilateral Permits$", () -> {
-            HomePage.applyForLicenceButton();
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore);
-            AnnualBilateralJourney.getInstance().licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.Countries);
-            AnnualBilateralJourney.getInstance()
-                    .countries(operatorStore);
-            NumberOfPermitsPageJourney.completeBilateralPage();
-            AnnualBilateralJourney.getInstance().checkYourAnswers();
-            DeclarationPageJourney.completeDeclaration();
-            AnnualBilateralJourney.getInstance().permitFee();
-
-            world.feeAndPaymentJourney.customerPaymentModule();
-        });
         Then("^the user is in the annual ECMT list page$",()  ->{
             Assert.assertTrue(isPath("/permits/valid/\\d+"));
             String title = BasePage.getElementValueByText("h1.govuk-heading-l",SelectorType.CSS).trim();
@@ -91,7 +92,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         });
         And ("^I select return to permit dashboard hyperlink", ValidPermitsPage::returnToPermitDashboard);
         Then ("^the licence number is displayed above the page heading",  () ->{
-            String expectedReference= operatorStore.getCurrentLicenceNumber().toString().substring(9,18);
+            String expectedReference= world.applicationDetails.getLicenceNumber();
             Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
         });
         Then ("^the ECMT application licence number is displayed above the page heading",  () ->{
@@ -101,7 +102,7 @@ public class ValidPermitsPageSteps extends BasePage implements En {
         });
         Then("^the ECMT permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'valid'";
-            List<ValidAnnualMultilateralPermit> permits = ValidPermitsPage.annualMultilateralPermits();
+            List<ValidAnnualECMTPermit> permits = ValidPermitsPage.annualECMTPermits();
             Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
             IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
                     permits.get(idx).getExpiryDate().isBefore(permits.get(idx + 1).getExpiryDate()) ||

@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
+<<<<<<< HEAD
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import io.cucumber.java8.En;
@@ -21,25 +22,28 @@ import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
 import org.dvsa.testing.lib.newPages.BasePage;
 
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 
 public class DeclarationPageSteps extends BasePage implements En {
 
-    public DeclarationPageSteps(World world, OperatorStore operatorStore) {
+    public DeclarationPageSteps(World world) {
 
         When("^I am on  the ECMT Removal Declaration page", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                    .cabotagePage()
-                    .certificatesRequiredPage()
-                    .permitStartDatePage();
-            NumberOfPermitsPageJourney.completePage();
-            EcmtInternationalRemovalJourney.getInstance()
-                    .checkYourAnswers();
+            EcmtInternationalRemovalJourney.completeUntilDeclarationPage(world);
         });
         And ("^the declaration page has correct link under guidance notes", DeclarationPage::isGuidanceNotesLinkPresent);
         And ("^the declaration page checkbox has the correct text and displayed unselected by default", DeclarationPageJourney::hasCheckboxText);
@@ -72,7 +76,5 @@ public class DeclarationPageSteps extends BasePage implements En {
            FeesDetailsPage.untilOnFeePage();
            FeesDetailsPage.clickBackToHome();
         });
-
-
     }
 }

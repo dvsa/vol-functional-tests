@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.InternalBaseJourney;
 import org.dvsa.testing.lib.newPages.enums.AdminOption;
@@ -8,6 +9,15 @@ import org.dvsa.testing.lib.newPages.internal.NavigationBar;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.FeatureTogglesPage;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.FeatureToggleStatus;
 import org.dvsa.testing.lib.newPages.internal.admin.permits.enums.Features;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.pages.InternalBaseJourney;
+import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
+import org.dvsa.testing.framework.pageObjects.internal.NavigationBar;
+import org.dvsa.testing.framework.pageObjects.internal.admin.permits.FeatureTogglesPage;
+import org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums.FeatureToggleStatus;
+import org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums.Features;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
 

@@ -1,81 +1,49 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+<<<<<<< HEAD
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import io.cucumber.java8.En;
 import edu.emory.mathcs.backport.java.util.Collections;
 import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
+=======
+import cucumber.api.java8.En;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.pages.CheckYourAnswerPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.external.enums.sections.BilateralSection;
+import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.TurkeyThirdCountryPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
 import org.junit.Assert;
 
-import java.util.List;
-import java.util.stream.Collectors;
+public class CheckYourAnswersSteps extends BasePage implements En {
+    public CheckYourAnswersSteps(World world) {
+        And("^I am on the Annual Bilateral (.+) check your answers page with correct information and content$", (String country)-> {
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-
-public class CheckYourAnswersSteps implements En {
-    public CheckYourAnswersSteps(OperatorStore operatorStore, World world) {
-        And("^I'm on the annual bilateral check your answers page$", ()-> {
-            clickToPermitTypePage(world);
-            AnnualBilateralJourney.getInstance()
-                    .permitType(PermitType.ANNUAL_BILATERAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.Countries);
-            AnnualBilateralJourney.getInstance()
-                    .countries(operatorStore);
-            NumberOfPermitsPageJourney.completeBilateralPage();
-
+            //Wait until check your answers page is loaded
             CheckYourAnswerPage.untilOnPage();
-        });
-        Then("^I am able to see the application reference number on the annual bilateral check your answers page$", () -> {
-            CheckYourAnswerPage.untilOnPage();
-            String actualReference =  BasePermitPage.getReferenceFromPage();
-            String expectedReference = operatorStore.getCurrentLicence().get().getReferenceNumber();
-            Assert.assertEquals(expectedReference, actualReference);
-        });
-        Then("^the bilateral check your answers page heading should be correct$", CheckYourAnswerPage::untilOnPage);
-        Then("^all of the answers displayed match the answers I gave$", () -> {
-            LicenceStore licenceStore = operatorStore.getCurrentLicence().get();
-            Collections.reverse(NumberOfPermitsPageJourney.getPermitsPerCountry());
 
-            String expectedPermitType = licenceStore.getEcmt().getType().get().toString();
-            LicenceModel licenceModel = OrganisationAPI.dashboard(operatorStore.getOrganisationId())
-                    .getDashboard().getLicence(licenceStore.getLicenceNumber()).get();
-            String expectedLicence = licenceModel.getLicNo().concat("\n" + licenceModel.getTrafficArea().getName());
+            /*Period should always be Turkey related -
+            commented it out as sql script to create stock automatically doesn't populate this automatically and it may change in future */
+          // Assert.assertEquals(CheckYourAnswersPage.getPeriod(),operatorStore.getCurrentBilateralPeriodType().toString());
 
-            List<String> deliveryCountries =
-                    NumberOfPermitsPageJourney.getPermitsPerCountry().stream().map(permit -> permit.getCountry().toString()).collect(Collectors.toList());
-            Collections.reverse(deliveryCountries);
-            String expectedDeliveryCountry = String.join(", ", deliveryCountries);
+            //Permit usage should always be Single Journeys as that's the only Turkey offers
+            Assert.assertEquals(BilateralJourneySteps.getJourney(),"Single journeys");
 
-            Assert.assertEquals(expectedPermitType, CheckYourAnswerPage.getAnswer(BilateralSection.PermitType));
-            Assert.assertEquals(expectedLicence, CheckYourAnswerPage.getAnswer(BilateralSection.Licence));
-            Assert.assertEquals(expectedDeliveryCountry, CheckYourAnswerPage.getAnswer(BilateralSection.Country));
+            if (country.equals("Turkey")) {
+                //Third-country continuation should always be YES
+                Assert.assertEquals(TurkeyThirdCountryPage.getOverviewThirdCountryContinuationText(), "Yes");
+            } else if (country.equals("Ukraine")) {
+                //Euro emission standard should always be Euro 3 or Euro 4
+                String emissionStandard = getText("//dd[contains(text(),'Euro 3 or Euro 4')]", SelectorType.XPATH);
+                Assert.assertEquals(emissionStandard,"Euro 3 or Euro 4");
+            }
 
-            NumberOfPermitsPageJourney.getPermitsPerCountry().sort((o1, o2) -> {
-                int result = o1.getCountry().toString().substring(0, 1).compareTo(o2.getCountry().toString().substring(0, 1));
-
-                if (result == 0 && Integer.parseInt(o1.getYear()) < Integer.parseInt(o2.getYear())) {
-                    result = -1;
-                } else if (result == 0 && Integer.parseInt(o1.getYear()) >Integer.parseInt(o2.getYear())) {
-                    result = 1;
-                }
-
-                return result;
-            });
-
-            String expectedPermits = NumberOfPermitsPageJourney.getPermitsPerCountry().stream().map(permits -> String.format("%d permits for %s in %s", permits.getQuantity(), permits.getCountry(), permits.getYear())).collect(Collectors.joining("\n"));
-
-            Assert.assertEquals(expectedPermits, CheckYourAnswerPage.getAnswer(BilateralSection.Permits));
+            //Number of permits should be the same as entered on the number of permits page
+            String permitValue = String.valueOf(NumberOfPermitsPageJourney.getPermitValue());
+            Assert.assertEquals(BilateralJourneySteps.getPermitValue(),permitValue + " Standard single journey permits");
         });
     }
 }

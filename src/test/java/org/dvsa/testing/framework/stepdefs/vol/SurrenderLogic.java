@@ -5,16 +5,22 @@ import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import io.cucumber.datatable.DataTable;
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
 import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.HashMap;
 import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

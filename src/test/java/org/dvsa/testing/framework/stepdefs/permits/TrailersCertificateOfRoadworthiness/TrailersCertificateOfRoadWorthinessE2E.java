@@ -1,20 +1,24 @@
 package org.dvsa.testing.framework.stepdefs.permits.TrailersCertificateOfRoadworthiness;
 
+<<<<<<< HEAD
 import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.external.TrailersCertificateOfRoadworthinessJourney;
+=======
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.SubmittedPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.pages.DeclarationPage;
-import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.BasePermitPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.SubmittedPageJourney;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
@@ -22,15 +26,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TrailersCertificateOfRoadWorthinessE2E implements En {
-    public TrailersCertificateOfRoadWorthinessE2E(OperatorStore operatorStore, World world) {
-        LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
+    public TrailersCertificateOfRoadWorthinessE2E(World world) {
         And("^I select Certificate of Roadworthiness for trailers on the select permit page$", () -> {
             clickToPermitTypePage(world);
-            TrailersCertificateOfRoadworthinessJourney.getInstance().permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_TRAILERS,operatorStore);
+            BasePermitJourney.permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_TRAILERS);
         });
 
         Then("^I select any licence number for Certificate of Roadworthiness for trailers$", () -> {
-            TrailersCertificateOfRoadworthinessJourney.getInstance().licencePage(operatorStore,world);
+            BasePermitJourney.licencePage(world);
 
         });
 
@@ -41,7 +44,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             // Check the new validation
             BasePermitPage.saveAndContinue();
             assertEquals("Enter the registration number plate", VehicleRegistrationNumberPage.getRequiredFieldValidation());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleRegistrationNumberPage.enterTrailerRegistrationNumber();
 
             BasePermitPage.saveAndContinue();
@@ -51,7 +54,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             CertificateOfComplianceNumberPage.untilOnPage();
             String heading = CertificateOfComplianceNumberPage.getPageHeading();
             assertEquals("Enter the trailer Certificate of Compliance number (optional)", heading);
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
             CertificateOfComplianceNumberPage.saveAndContinue();
         });
@@ -60,7 +63,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
             MakeAndModelPage.untilOnPage();
             String heading = MakeAndModelPage.getPageHeading();
             assertEquals("Enter the trailer make and model", heading);
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             MakeAndModelPage.enterMakeAndModel("BD51SMR");
             MakeAndModelPage.saveAndContinue();
         });
@@ -68,7 +71,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Vehicle identification number section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleIdentificationNumberPage.untilOnPage();
             assertEquals("Enter the trailer's vehicle identification number (VIN)", VehicleIdentificationNumberPage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleIdentificationNumberPage.enterIdentificationNumber();
             BasePermitPage.saveAndContinue();
         });
@@ -76,7 +79,7 @@ public class TrailersCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete MOT DATE section Certificate of Roadworthiness for trailers and click save and continue$", () -> {
             VehicleMotPage.untilOnPage();
             assertEquals("Enter the trailer's MOT expiry date", VehicleMotPage.getPageHeading());
-            BasePermitPage.getReferenceFromPage();
+            BasePermitPageJourney.hasReferenceOnPage();
             VehicleMotPage.enterMOTDate();
             BasePermitPage.saveAndContinue();
         });

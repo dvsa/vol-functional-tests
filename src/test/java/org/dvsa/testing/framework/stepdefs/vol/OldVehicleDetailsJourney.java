@@ -3,11 +3,19 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import activesupport.number.Int;
 import apiCalls.Utils.volBuilders.VehiclesBuilder;
+<<<<<<< HEAD
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
 import org.dvsa.testing.lib.newPages.BasePage;
+=======
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 
 import static org.junit.Assert.*;
 

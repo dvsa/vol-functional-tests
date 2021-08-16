@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.external.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
@@ -11,24 +12,25 @@ import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.CabotagePage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
+import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
 
 public class CabotagePageSteps extends BasePage implements En {
-    public CabotagePageSteps(World world, OperatorStore operatorStore) {
+    public CabotagePageSteps(World world) {
         And("^I am on the ECMT International cabotage Page$", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true);
+            EcmtInternationalRemovalJourney.completeUntilCabotagePage(world);
         });
         And ("^the ECMT International Removal application reference number should be displayed$", () -> {
-            Assert.assertEquals(BasePermitJourney.getReferenceNumber(), CabotagePage.getReferenceFromPage());
+            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), CabotagePage.getReferenceFromPage());
         });
         Then("^the ECMT international removal cabotage heading should be correct$", () -> {
             String heading = CabotagePage.getPageHeading();
@@ -38,10 +40,8 @@ public class CabotagePageSteps extends BasePage implements En {
             //TODO: Previous code didn't make any sense being here.
         });
         When("^save and continue  button is selected without selecting the checkbox$", BasePermitPage::saveAndContinue);
-        When ("^the cabotage checkbox is selected$", CabotagePage::confirmWontUndertakeCabotage);
         Then("^I should be taken to certificates required page", () -> {
             Assert.assertTrue(isPath("/permits/application/\\d+/st-certificates/"));
         });
-
     }
 }

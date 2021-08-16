@@ -20,7 +20,6 @@ Feature: ECMT International Declaration Page
     When I click the back link
     Then I should be on the overview page
     And  I click declaration link on the Ecmt removal overview page again
-    Then I should be on the declaration page
     When I confirm the declaration
     And  I save and return to overview
     Then I am on ECMT removal permits overview page with Declaration section marked as complete

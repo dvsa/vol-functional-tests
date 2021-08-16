@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import Injectors.World;
+<<<<<<< HEAD
 import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import io.cucumber.java8.En;;
@@ -15,13 +16,27 @@ import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.lib.newPages.BasePage;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.*;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
+import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 
 public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps extends BasePage implements En {
-    public ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps(OperatorStore operatorStore, World world)  {
-        LicenceStore licenceStore = operatorStore.getCurrentLicence().orElseGet(LicenceStore::new);
+    public ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps(World world)  {
         Then("^I select short term ecmt period", () -> {
             PeriodSelectionPage.selectFirstAvailablePermitPeriod();
             PeriodSelectionPage.saveAndContinue();
@@ -64,6 +79,10 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
         Then("^My application status changes to Valid", () -> {
             untilAnyPermitStatusMatch(PermitStatus.VALID);
             HomePage.PermitsTab.waitUntilIssuedPermitsAndCertificatesHeading();
+        });
+        And("^I select short term ecmt permit on the select permit page$", () -> {
+            CommonSteps.clickToPermitTypePage(world);
+            BasePermitJourney.permitType(PermitType.SHORT_TERM_ECMT);
         });
     }
 }

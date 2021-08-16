@@ -2,6 +2,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
@@ -13,27 +14,27 @@ import org.dvsa.testing.lib.newPages.enums.OverviewSection;
 import org.dvsa.testing.lib.newPages.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.lib.newPages.external.pages.OverviewPage;
 import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
+import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 
-    public NumberOfPermitsPageSteps(World world, OperatorStore operatorStore) {
+    public NumberOfPermitsPageSteps(World world) {
         When("^I am on the ECMT Removal number of permits page", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                    .cabotagePage()
-                    .certificatesRequiredPage()
-                    .permitStartDatePage();
-            BasePermitPage.saveAndContinue();
-            NumberOfPermitsPage.untilOnPage();
+            EcmtInternationalRemovalJourney.completeUntilNumberOfPermitsPage(world);
         });
         And("^the page heading on the ECMT removals number of permits page is displayed correctly$", NumberOfPermitsPageJourney::hasECMTPageHeading);
         And("^the advisory text on the ECMT removals number of permits page is displayed correctly$", () -> {
@@ -42,10 +43,7 @@ public class NumberOfPermitsPageSteps implements En {
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(BasePermitPage.getReferenceNumber(), actualReference);
-        });
-        Given("^I have not entered anything in number of  permits field$", () -> {
-            // Here for readability
+            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
         And("^I enter number of permits more than the authorised vehicles and click save and continue$", () -> {
             NumberOfPermitsPage.exceedAuthorisedVehicle();

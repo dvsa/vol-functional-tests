@@ -15,7 +15,7 @@ Feature: Certificates required Page
     And There is one checkbox with right label and not checked by default
     And  if I don't select the checkbox and click Save and Continue button
     Then I should get the certificates required page error message
-    And  if I don't select the checkbox and click Save and Return to Overview button
+    And I save and return to overview
     Then I should get the certificates required page error message
     And  if I select the checkbox and click Save and Return to Overview button
     Then  I should be on the Annual ECMT overview page

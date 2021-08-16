@@ -3,15 +3,14 @@ package org.dvsa.testing.framework.Global;
 import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
-import activesupport.driver.Browser;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import java.util.concurrent.TimeUnit;
 
-import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 
 public class GlobalMethods extends BasePage {
@@ -44,7 +43,7 @@ public class GlobalMethods extends BasePage {
             getBrowser().get().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         }
 
-        get(myURL);
+        DriverUtils.get(myURL);
         String password = world.configuration.getTempPassword(emailAddress);
 
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?

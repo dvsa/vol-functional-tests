@@ -3,13 +3,19 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import apiCalls.enums.UserRoles;
 import apiCalls.enums.UserType;
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
 import org.dvsa.testing.lib.newPages.BasePage;
 import org.dvsa.testing.lib.newPages.enums.SelectorType;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class RefundInterim extends BasePage implements En {

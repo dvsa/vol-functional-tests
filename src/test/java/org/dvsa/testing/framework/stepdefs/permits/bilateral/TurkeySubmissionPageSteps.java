@@ -1,29 +1,27 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+<<<<<<< HEAD
 import io.cucumber.java8.En;;
+=======
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.junit.Assert;
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
+import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 
 import static org.junit.Assert.assertTrue;
 
 public class TurkeySubmissionPageSteps implements En {
 
-    public TurkeySubmissionPageSteps(World world, OperatorStore operatorStore) {
+    public TurkeySubmissionPageSteps(World world) {
         And("^I am on the Annual Bilateral application submitted page with correct information and content", () -> {
             SubmittedPage.untilOnPage();
 
             // the page heading on the submission page is displayed correctly
-            Assert.assertEquals(BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH),"Application submitted");
+            SubmissionPageSteps.assertHeadingPresentInSubmissionPanel();
 
             // the application reference number is displayed correctly;
-            String referenceNumber=BasePage.getElementValueByText("//div[@class='govuk-panel__body']",SelectorType.XPATH);
-            assertTrue(referenceNumber.contains("Your reference number"));
-            String actualReferenceNumber = BasePage.getElementValueByText("//div/strong",SelectorType.XPATH);
-            assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
+            SubmissionPageSteps.assertReferenceNumberPresentInPanelBody(world);
 
             // the texts on the submission page are displayed correctly
             assertTrue(SubmittedPage.isBilateralAdvisoryTextPresent());

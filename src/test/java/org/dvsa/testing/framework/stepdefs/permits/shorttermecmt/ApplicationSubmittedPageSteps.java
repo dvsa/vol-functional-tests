@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import Injectors.World;
+<<<<<<< HEAD
 import activesupport.string.Str;
 import activesupport.system.Properties;
 import io.cucumber.java8.En;;
@@ -33,169 +34,25 @@ import org.dvsa.testing.lib.newPages.external.enums.Sector;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
+=======
+import cucumber.api.java8.En;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ReceiptPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
+>>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.openqa.selenium.WebDriver;
-
-import java.util.concurrent.TimeUnit;
-
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.junit.Assert.assertTrue;
 
 public class ApplicationSubmittedPageSteps extends BasePage implements En {
 
-    public ApplicationSubmittedPageSteps(OperatorStore operatorStore, World world)
+    public ApplicationSubmittedPageSteps(World world)
     {
-        And ("^I am on the application submitted page$", () -> {
-            clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
-            ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
-            PermitUsagePage.permitUsage(PermitUsage.random());
-            BasePermitPage.saveAndContinue();
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourney.completeECMTPage();
-            EmissionStandardsPageJourney.completePage();
-            AnnualTripsAbroadPage.quantity(10);
-            BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            SectorPage.selectSectionAndContinue(Sector.random());
-            ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPageJourney.completeDeclaration();
-            PermitFeePage.submitAndPay();
-            world.feeAndPaymentJourney.customerPaymentModule();
-        });
-        Then("^the reference number on the short term ECMT submitted page  is as expected$", () -> {
-            SubmittedPage.untilElementIsPresent("//h1[@class='govuk-panel__title']",SelectorType.XPATH,10,TimeUnit.SECONDS);
-            String actualReference = getElementValueByText("//div[@class='govuk-panel__body'] ", SelectorType.XPATH);
-            assertTrue(actualReference.contains(operatorStore.getCurrentLicenceNumber().toString().substring(9, 18)));
-        });
-        When ("^a case worker worker pays all fees for my ongoing short term  permit application$", () -> {
-            CommonSteps.clickToPermitTypePage(world);
-            ECMTShortTermJourney.getInstance()
-                    .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
-            ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
-            PermitUsagePage.permitUsage(PermitUsage.random());
-            BasePermitPage.saveAndContinue();
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourney.completeECMTPage();
-            world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            refreshPage();
-            IrhpPermitsPage.Tab.select(DetailsTab.Fees);
-
-            //Pay Fee
-            FeesDetailsPage.outstanding();
-            FeesDetailsPage.pay();
-            BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
-            IrhpPermitsApplyPage.selectCardPayment();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            FeesDetailsPage.untilFeePaidNotification();
-
-            ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.selectPermitTab();
-
-            HomePage.PermitsTab.selectFirstOngoingApplication();
-            OverviewPageJourney.clickOverviewSection(OverviewSection.EuroEmissionStandards);
-            EmissionStandardsPageJourney.completePage();
-            AnnualTripsAbroadPage.quantity(10);
-            BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            SectorPage.selectSectionAndContinue(Sector.random());
-            ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPageJourney.completeDeclaration();
-        });
-        Then("^a case worker waives all fees for my ongoing short term permit application$", () -> {
-            CommonSteps.clickToPermitTypePage(world);
-            ECMTShortTermJourney.getInstance()
-                    .permitType(PermitType.SHORT_TERM_ECMT,operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
-            ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
-            PermitUsagePage.permitUsage(PermitUsage.random());
-            BasePermitPage.saveAndContinue();
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourney.completeECMTPage();
-            world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            IrhpPermitsPage.Tab.select(DetailsTab.Fees);
-            FeeDetailsPageJourney.whileFeesPresentWaveFee();
-            ShorttermECMTJourney.getInstance().go(ApplicationType.EXTERNAL);
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            HomePageJourney.selectPermitTab();
-
-            HomePage.PermitsTab.selectFirstOngoingApplication();
-            OverviewPageJourney.clickOverviewSection(OverviewSection.EuroEmissionStandards);
-
-            EmissionStandardsPageJourney.completePage();
-            AnnualTripsAbroadPage.quantity(10);
-            BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            SectorPage.selectSectionAndContinue(Sector.random());
-            ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPageJourney.completeDeclaration();
-        });
-        Then("^there shouldn't be a view receipt link on the shortterm ECMT submitted page$", () -> {
-            Assert.assertFalse(SubmittedPage.hasViewReceipt());
-        });
-        And ("^all advisory texts on short term ECMT submitted page is displayed correctly$", () -> {
-            SubmittedPageJourney.hasPageHeading();
-            SubmittedPageJourney.hasShortTermECMTAdvisoryText();
-            assertTrue(SubmittedPage.isWarningMessagePresent());
-        });
-        Then("^I select view receipt from short term application submitted page$", SubmittedPage::openReceipt);
         Then("^I open the receipt and it should open in a new window$", () -> {
-            WebDriver driver = getDriver();
+            WebDriver driver = getBrowser();
             SubmittedPage.openReceipt();
             String[] windows = driver.getWindowHandles().toArray(new String[0]);
             driver.switchTo().window(windows[1]);
             ReceiptPage.untilOnPage();
             driver.switchTo().window(windows[0]);
-        });
-        And("^I have an ongoing short term ECMT with all fees paid$", () -> {
-            clickToPermitTypePage(world);
-            ShorttermECMTJourney.getInstance().permitType(PermitType.SHORT_TERM_ECMT, operatorStore);
-            YearSelectionPage.selectShortTermValidityPeriod();
-            ShorttermECMTJourney.getInstance().shortTermType(PeriodType.ShortTermECMTAPSGWithSectors,operatorStore);
-            ShorttermECMTJourney.getInstance().licencePage(operatorStore,world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.HowWillYouUseThePermits);
-            PermitUsagePage.permitUsage(PermitUsage.random());
-            BasePermitPage.saveAndContinue();
-            CabotagePage.confirmWontUndertakeCabotage();
-            BasePermitPage.saveAndContinue();
-            CertificatesRequiredPage.completePage();
-            CountriesWithLimitedPermitsPage.noCountriesWithLimitedPermits();
-            NumberOfPermitsPageJourney.completeECMTPage();
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
-            HomePageJourney.payAllOutstandingFees();
-
-            world.feeAndPaymentJourney.customerPaymentModule();
-            get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "dashboard/").toString());
-            HomePageJourney.selectPermitTab();
-
-            HomePage.PermitsTab.selectFirstOngoingApplication();
-            OverviewPageJourney.clickOverviewSection(OverviewSection.EuroEmissionStandards);
-            EmissionStandardsPageJourney.completePage();
-            AnnualTripsAbroadPage.quantity(10);
-            BasePermitPage.saveAndContinue();
-            ProportionOfInternationalJourneyPage.chooseDesiredProportion(JourneyProportion.LessThan60Percent);
-            SectorPage.selectSectionAndContinue(Sector.random());
-            ECMTShortTermJourney.getInstance().checkYourAnswersPage();
-            DeclarationPageJourney.completeDeclaration();
         });
     }
 }

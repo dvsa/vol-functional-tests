@@ -18,7 +18,7 @@ Feature: ECMT International Removals Certificates required  Page
     And  the advisory texts on permit start date page are displayed correctly
     When save and continue  button is selected without selecting the checkbox
     Then the error message is displayed in the permit start date page
-    When I save and return to overview without selecting the checkbox
+    When I save and return to overview
     Then the error message is displayed in the permit start date page
     When I dont enter all the fields
     And  I save and continue

@@ -9,7 +9,7 @@ import activesupport.system.Properties;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.w3c.dom.Document;
