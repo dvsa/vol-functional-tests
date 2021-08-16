@@ -2,19 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
 import activesupport.string.Str;
-<<<<<<< HEAD
 import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.enums.sections.ApplicationSection;
-import org.dvsa.testing.lib.newPages.internal.details.DocsAndAttachmentsPage;
-import org.dvsa.testing.lib.newPages.internal.details.DocumentsPage;
-import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -23,10 +11,11 @@ import org.dvsa.testing.framework.pageObjects.internal.details.DocsAndAttachment
 import org.dvsa.testing.framework.pageObjects.internal.details.DocumentsPage;
 import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 import java.util.ArrayList;
+
+import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 
 public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
 
@@ -41,8 +30,8 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             DocsAndAttachmentsPage.select(permitApplicationNumber);
         });
         Then("^the annual ECMT Permits HTML document should have the correct information$", () -> {
-            ArrayList<String> tab = new ArrayList<String> (getBrowser().getWindowHandles());
-            getBrowser().switchTo().window(tab.get(tab.size() - 1));
+            ArrayList<String> tab = new ArrayList<String> (getBrowser().get().getWindowHandles());
+            getBrowser().get().switchTo().window(tab.get(tab.size() - 1));
             DocumentsPage.untilOnPage();
             String selectLicence1 = world.applicationDetails.getLicenceNumber();
             // Check heading contains correct heading

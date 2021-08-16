@@ -2,24 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import Injectors.World;
 import activesupport.string.Str;
-<<<<<<< HEAD
 import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.*;
-import org.dvsa.testing.lib.newPages.external.pages.*;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.dvsa.testing.lib.newPages.external.enums.JourneyType;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.enums.PermitType;
@@ -32,7 +15,6 @@ import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 import java.time.LocalDateTime;

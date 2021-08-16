@@ -1,13 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
-<<<<<<< HEAD
-import activesupport.IllegalBrowserException;
 import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-=======
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

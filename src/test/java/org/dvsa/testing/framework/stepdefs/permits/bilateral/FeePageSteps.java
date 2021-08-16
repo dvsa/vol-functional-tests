@@ -2,21 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import Injectors.World;
 import activesupport.string.Str;
-<<<<<<< HEAD:src/test/java/org/dvsa/testing/framework/stepdefs/permits/bilateral/UkraineFeePageSteps.java
 import io.cucumber.java8.En;;
-import Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.FeeSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.PermitFeePage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-=======
-import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
@@ -24,7 +10,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3:src/test/java/org/dvsa/testing/framework/stepdefs/permits/bilateral/FeePageSteps.java
 import org.junit.Assert;
 
 import java.time.LocalDateTime;

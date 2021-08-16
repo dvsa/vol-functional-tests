@@ -1,15 +1,9 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
-<<<<<<< HEAD
 import io.cucumber.java8.En;;
-import org.dvsa.testing.lib.newPages.internal.details.BaseDetailsPage;
-import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.internal.details.BaseDetailsPage;
 import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 public class LicenceDetailsPageSteps implements En {

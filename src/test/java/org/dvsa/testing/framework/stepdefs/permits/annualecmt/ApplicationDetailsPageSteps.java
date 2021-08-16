@@ -1,21 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
-<<<<<<< HEAD
 import io.cucumber.java8.En;;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.WithdrawApplicationPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
-import org.dvsa.testing.lib.newPages.enums.ApplicationDetail;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.pages.WithdrawApplicationPageJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.ApplicationDetailsPage;
 import org.dvsa.testing.framework.pageObjects.enums.ApplicationDetail;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 import java.text.DateFormat;

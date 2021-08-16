@@ -1,12 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.VehiclesCertificateOfRoadworthiness;
 
-<<<<<<< HEAD
 import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.VehiclesCertificateOfRoadworthinessJourney;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.pages.BasePermitPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
@@ -118,4 +113,3 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
 
     } //TODO Possible refactoring to be done here. See if it can be combined with trailers?
 }
-

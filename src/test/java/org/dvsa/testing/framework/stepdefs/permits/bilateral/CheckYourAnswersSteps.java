@@ -1,14 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
-<<<<<<< HEAD
-import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.eupaActions.OrganisationAPI;
 import io.cucumber.java8.En;
-import edu.emory.mathcs.backport.java.util.Collections;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-=======
-import cucumber.api.java8.En;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;

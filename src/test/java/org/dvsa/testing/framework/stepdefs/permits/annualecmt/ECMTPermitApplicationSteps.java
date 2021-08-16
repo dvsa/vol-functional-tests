@@ -1,37 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
-<<<<<<< HEAD
-import activesupport.system.Properties;
-import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.eupaActions.OrganisationAPI;
 import io.cucumber.java8.En;;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
-import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.PermitApplication;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.Tab;
-import org.dvsa.testing.lib.newPages.external.pages.*;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.hamcrest.Matchers;
-import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.IntStream;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
@@ -42,7 +12,6 @@ import org.dvsa.testing.framework.pageObjects.enums.Tab;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 
 import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;

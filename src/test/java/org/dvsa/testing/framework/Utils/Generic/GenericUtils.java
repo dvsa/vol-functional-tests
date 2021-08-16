@@ -51,7 +51,7 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String xmlFile = "./src/test/resources/ESBR/ESBR.xml";
+            String xmlFile = "./src/test/resources/ESBR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
             Document xmlDoc = xmlBuilder.parse(xmlFile);

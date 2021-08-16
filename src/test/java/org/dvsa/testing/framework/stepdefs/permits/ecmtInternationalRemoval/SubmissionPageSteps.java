@@ -1,25 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
-<<<<<<< HEAD
 import io.cucumber.java8.En;;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.BasePage;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
@@ -31,10 +13,9 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 
+import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 import static org.junit.Assert.assertTrue;
 
 public class SubmissionPageSteps extends BasePermitPage implements En {
@@ -59,10 +40,9 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             Assert.assertEquals("Warning" +"\n"+"Make sure your correspondence address is correct on all your operator licences and your email address is up-to-date on your account.", expectedWarningMessage);
         });
         Then ("^the view receipt of ECMT International hyperlink opens in a new window", () -> {
-            WebDriver driver = getBrowser();
-            String[] windows = driver.getWindowHandles().toArray(new String[0]);
+            String[] windows = getBrowser().get().getWindowHandles().toArray(new String[0]);
             SubmittedPage.openReceipt();
-            driver.switchTo().window(windows[0]);
+            getBrowser().get().switchTo().window(windows[0]);
         });
         And ("^I have partial ECMT international removal application", () -> {
             EcmtInternationalRemovalJourney.completeUntilDeclarationPage(world);

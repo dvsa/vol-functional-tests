@@ -1,12 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-<<<<<<< HEAD
 import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.AnnualBilateralJourney;
-=======
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import Injectors.World;
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;

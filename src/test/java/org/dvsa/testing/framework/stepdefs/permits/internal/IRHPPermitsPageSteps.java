@@ -1,30 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
-<<<<<<< HEAD
-import activesupport.aws.s3.S3;
-import activesupport.string.Str;
 import io.cucumber.java8.En;;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.LicenceDetailsPageJourney;
-import org.dvsa.testing.framework.Utils.store.LicenceStore;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
-import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
-import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.PermitApplication;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.ApplicationDetailsPage;
-import org.dvsa.testing.lib.newPages.internal.BaseModel;
-import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.newPages.internal.details.enums.DetailsTab;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.lib.newPages.internal.irhp.IrhpPermitsDetailsPage;
-import org.dvsa.testing.lib.newPages.BasePage;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitType;
@@ -36,7 +13,6 @@ import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
 import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 import java.time.LocalDate;

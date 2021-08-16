@@ -1,25 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.permits.cookies;
 
 import Injectors.World;
-<<<<<<< HEAD
 import io.cucumber.java8.En;;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.CookiesPage;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.Set;
 
 import static org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage.*;
+import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 import static org.junit.Assert.assertTrue;
 
 
@@ -43,10 +29,10 @@ public class CookieSteps extends BasePage implements En {
             HomePageJourney.beginPermitApplication();
         });
         And("^I should see the cookies list$", () -> {
-            Set<Cookie> cookies = getBrowser().manage().getCookies();
-            Cookie cookiePHP = getBrowser().manage().getCookieNamed("PHPSESSID");
-            Cookie secureToken = getBrowser().manage().getCookieNamed("secureToken");
-            Cookie gid = getBrowser().manage().getCookieNamed("_gid");
+            Set<Cookie> cookies = getBrowser().get().manage().getCookies();
+            Cookie cookiePHP = getBrowser().get().manage().getCookieNamed("PHPSESSID");
+            Cookie secureToken = getBrowser().get().manage().getCookieNamed("secureToken");
+            Cookie gid = getBrowser().get().manage().getCookieNamed("_gid");
             System.out.println("All Available cookie count is  :  " + cookies.size());
             System.out.println("All Available cookies are  :  " + cookies);
             System.out.println("PHP cookie is  :  " + cookiePHP);

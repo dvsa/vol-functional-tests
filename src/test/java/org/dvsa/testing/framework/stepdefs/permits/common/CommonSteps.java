@@ -2,36 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.common;
 
 import Injectors.World;
 import activesupport.system.Properties;
-<<<<<<< HEAD
-import apiCalls.Utils.eupaBuilders.enums.Boolean;
-import apiCalls.Utils.eupaBuilders.enums.TrafficArea;
-import apiCalls.Utils.eupaBuilders.external.StandardResponseModel;
-import apiCalls.Utils.eupaBuilders.internal.*;
-import apiCalls.Utils.eupaBuilders.internal.enums.PaymentMethod;
-import apiCalls.Utils.eupaBuilders.internal.enums.Status;
-import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
-import apiCalls.eupaActions.OrganisationAPI;
-import apiCalls.eupaActions.external.ApplicationAPI;
-import apiCalls.eupaActions.internal.CaseWorkerAPI;
 import io.cucumber.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.*;
-import org.dvsa.testing.framework.Journeys.permits.internal.IRHPPageJourney;
-import org.dvsa.testing.framework.Utils.common.RandomUtils;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.framework.stepdefs.permits.annualecmt.VolLicenceSteps;
-import org.dvsa.testing.lib.enums.Duration;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.*;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.internal.details.FeesDetailsPage;
-import org.dvsa.testing.lib.newPages.BasePage;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.FeeDetailsPageJourney;
@@ -43,7 +14,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.jetbrains.annotations.NotNull;

@@ -2,25 +2,19 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
-<<<<<<< HEAD
 import io.cucumber.java8.En;;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-=======
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
->>>>>>> d8085593ab4c7bbad63e837e7c025193e92cdcf3
 import org.junit.Assert;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-public class ESBRupload extends BasePage implements En {
+public class EBSRupload extends BasePage implements En {
 
     private World world;
 
-    public ESBRupload(World world) throws MissingRequiredArgument {
+    public EBSRupload(World world) throws MissingRequiredArgument {
         this.world = world;
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
