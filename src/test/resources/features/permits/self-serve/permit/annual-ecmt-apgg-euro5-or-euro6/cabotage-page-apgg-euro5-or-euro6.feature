@@ -3,7 +3,6 @@ Feature: Cabotage Page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And  I am on the VOL self-serve site
     And I am on the cabotage Page
 
   @OLCS-21119 @OLCS-28275

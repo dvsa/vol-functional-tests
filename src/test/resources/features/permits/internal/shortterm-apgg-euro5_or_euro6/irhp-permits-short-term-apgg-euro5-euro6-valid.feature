@@ -15,4 +15,4 @@ Feature:  ECMT APGG Euro5 or Euro 6 Permit application is granted permit and goe
     And I pay fee for application
     Then I am in application details page, I should see application is in UC status
     When I Grant and pay issue fee on Internal
-    Then the ECMT APGG application goes to valid status
+    Then the application goes to valid status

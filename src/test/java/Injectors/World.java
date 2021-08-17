@@ -3,7 +3,7 @@ package Injectors;
 import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
-import org.dvsa.testing.framework.Journeys.*;
+import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 
@@ -21,7 +21,7 @@ public class World {
     public GlobalMethods globalMethods;
     public LicenceCreation licenceCreation;
 
-    public APIJourney APIJourney;
+    public org.dvsa.testing.framework.Journeys.licence.APIJourney APIJourney;
     public BusRegistrationJourney busRegistrationJourney;
     public ContinuationJourney continuationJourney;
     public DirectorJourney directorJourney;

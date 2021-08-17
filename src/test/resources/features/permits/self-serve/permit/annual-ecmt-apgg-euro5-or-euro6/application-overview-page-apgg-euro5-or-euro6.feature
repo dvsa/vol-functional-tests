@@ -18,7 +18,7 @@ Feature: Application overview page
 
   @OLCS-24821 @olcs-27581
   Scenario: Check your answers is enabled if all preceding steps are completed
-    When I fill all steps preceding steps to check your answers
+    When I have completed all steps prior to check your answers page
     And I click the back link
     Then the check your answers section should be enabled
 

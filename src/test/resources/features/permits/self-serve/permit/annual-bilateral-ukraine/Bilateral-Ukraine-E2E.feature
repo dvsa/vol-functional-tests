@@ -12,9 +12,9 @@ Feature: Bilaterals Ukraine end to end happy path journey including validations
      Then I am navigated to Ukraine essential information page with correct information and content
      When I select continue button on the Bilateral Ukraine essential information page
      Then I am on the Bilateral Ukraine Period Selection page with correct information and content
-     When I select continue button on the Bilateral Ukraine period selection page
-     Then I am on the Bilateral Ukraine Permit usage page with correct information and content
-     When I select continue button on the Bilateral Ukraine permit usage page
+     When I select continue button on the Bilateral period selection page
+     Then I am on the Bilateral Permit usage page with correct information and content
+     When I select continue button on the Bilateral permit usage page
      Then I am on the Ukraine emissions standards page with correct information and content
      When I save and continue on the Ukraine emissions standards page
      Then I should get the validation error message to select one option
@@ -32,13 +32,13 @@ Feature: Bilaterals Ukraine end to end happy path journey including validations
      When I click on Accept and continue on the Declaration page without selecting declaration checkbox
      Then I should get the correct error message on the declaration page
      When I click on Accept and continue on the Declaration page
-     Then I am on the permit fee page for annual bilateral ukraine application with correct information and content
+     Then I am on the permit fee page for annual bilateral application with correct information and content
      When I submit and pay the Bilateral fee
      Then I am on the Annual Bilateral application submitted page with correct information and content
      When I click 'go to permits' dashboard on the submitted page
-     Then The Bilateral Ukraine application status on the self service dashboard goes to VALID
+     Then the application goes to valid status
      When I click on my licence on the permits dashboard page
-     Then The content and information on Ukraine valid permits is correct
+     Then The content and information on valid permits is correct
      When I select return to permits dashboard hyperlink
      Then I am navigated back to permits dashboard page
 
@@ -48,9 +48,9 @@ Feature: Bilaterals Ukraine end to end happy path journey including validations
     Then I am navigated to Ukraine essential information page with correct information and content
     When I select continue button on the Bilateral Ukraine essential information page
     Then I am on the Bilateral Ukraine Period Selection page with correct information and content
-    When I select continue button on the Bilateral Ukraine period selection page
-    Then I am on the Bilateral Ukraine Permit usage page with correct information and content
-    When I select continue button on the Bilateral Ukraine permit usage page
+    When I select continue button on the Bilateral period selection page
+    Then I am on the Bilateral Permit usage page with correct information and content
+    When I select continue button on the Bilateral permit usage page
     Then I am on the Ukraine emissions standards page with correct information and content
     When I save and continue on the Ukraine emissions standards page
     Then I should get the validation error message to select one option

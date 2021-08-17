@@ -6,8 +6,8 @@ import apiCalls.Utils.volBuilders.VehiclesBuilder;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import static org.junit.Assert.*;
 

@@ -10,5 +10,5 @@ Feature: ECMT International Removal Self Service End to End Smoke test
   @EXTERNAL @olcs-26303
   Scenario: Valid Permit Page details are displayed correctly
     Then I am on the ECMT removal Permit list page
-    And  the licence number is displayed in ECMT removals list page
+    And  the licence number is displayed correctly
     And  the table of ECMT removal permits is as expected

@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal.StockCreation;
 
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.InternalBaseJourney;
-import org.dvsa.testing.lib.newPages.internal.admin.permits.Permit;
+import org.dvsa.testing.framework.Journeys.permits.pages.InternalBaseJourney;
+import org.dvsa.testing.framework.pageObjects.internal.admin.permits.Permit;
 
 public class StockCreationSteps implements En {
     public StockCreationSteps() {

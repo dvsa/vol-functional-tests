@@ -16,8 +16,8 @@ Feature: ECMT International Removal Cancel application Page
   @OLCS-24814 @r222gremovalsfix  @OLCS-27781  @OLCS-28352
   Scenario: Cancel Application page details are displayed correctly
     Then I am navigated to the cancel application page
-    And  the ECMT International Removal application reference number should be displayed above the heading
-    And  I am navigated to the cancel application page
+    And the licence number is displayed correctly
+    And I am navigated to the cancel application page
     And the cancel application page displays the correct text
     And  the correct text is displayed next to the checkbox in ECMT Removal cancellation page
     When the ECMT International Removal cancel application button is selected without checkbox ticked

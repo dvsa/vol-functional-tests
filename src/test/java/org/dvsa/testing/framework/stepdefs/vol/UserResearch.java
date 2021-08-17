@@ -7,7 +7,7 @@ import apiCalls.enums.TrafficArea;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.UserType;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 

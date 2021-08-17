@@ -5,9 +5,9 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
-import org.dvsa.testing.framework.Journeys.DirectorJourney;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;

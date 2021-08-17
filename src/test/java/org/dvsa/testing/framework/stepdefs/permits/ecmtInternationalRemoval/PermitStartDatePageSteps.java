@@ -2,37 +2,25 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
+import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.junit.Assert;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class PermitStartDatePageSteps extends BasePage implements En {
 
-    public PermitStartDatePageSteps(World world, OperatorStore operatorStore) {
+    public PermitStartDatePageSteps(World world) {
         And("^I am on the ECMT removals permit start page$", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                    .cabotagePage()
-                    .certificatesRequiredPage();
+            EcmtInternationalRemovalJourney.completeUntilPermitStartDatePage(world);
         });
         And ("^the reference number is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(BasePermitPage.getReferenceNumber(), actualReference);
+            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
         And ("^the page heading on permit start date page should be correct$", ()-> {
             String heading = PermitStartDatePage.getPageHeading();
@@ -41,7 +29,7 @@ public class PermitStartDatePageSteps extends BasePage implements En {
         And ("^the advisory texts on permit start date page are displayed correctly$", () -> {
             assertTrue(PermitStartDatePage.checkAdvisoryTextPresent());
         });
-        Then  ("^the error message is displayed in the permit start date page$", () -> {
+        Then ("^the error message is displayed in the permit start date page$", () -> {
             String errorText = PermitStartDatePage.getErrorText();
             Assert.assertEquals("Enter a valid permit start date and include a day, month and year", errorText);
         });
