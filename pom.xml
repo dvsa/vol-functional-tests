@@ -19,7 +19,9 @@
 
         <cucumber-junit.version>6.11.0</cucumber-junit.version>
         <cucumber-java.version>6.11.0</cucumber-java.version>
+        <cucumber-testNG.version>6.11.0</cucumber-testNG.version>
         <pico-container-version>6.11.0</pico-container-version>
+        <testNG-version>7.4.0</testNG-version>
 
         <allure-cucumber5-jvm.version>2.13.5</allure-cucumber5-jvm.version>
         <allure-report.version>2.14.0</allure-report.version>
@@ -59,11 +61,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <forkCount>4</forkCount>
-                    <parallelMavenExecution>true</parallelMavenExecution>
-                    <parallelOptimized>true</parallelOptimized>
-                    <parallel>methods</parallel>
-                    <reuseForks>true</reuseForks>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
+                    <forkCount>2</forkCount>
+                    <parallel>methodsAndClasses</parallel>
+                    <reuseForks>false</reuseForks>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Dcucumber.options="--plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"
@@ -124,17 +128,31 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-            <version>${cucumber-junit.version}</version>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testNG-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.2</version>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber-testNG.version}</version>
             <scope>test</scope>
         </dependency>
+
+
+        <!--        <dependency>-->
+<!--            <groupId>io.cucumber</groupId>-->
+<!--            <artifactId>cucumber-junit-platform-engine</artifactId>-->
+<!--            <version>${cucumber-junit.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-api</artifactId>-->
+<!--            <version>5.7.2</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>active-support</artifactId>

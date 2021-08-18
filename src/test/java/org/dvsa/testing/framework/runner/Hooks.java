@@ -1,10 +1,11 @@
 package org.dvsa.testing.framework.runner;
 
 import io.cucumber.java.Before;
+import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import activesupport.driver.Browser;
@@ -49,7 +50,6 @@ public class Hooks {
         getBrowser().set(Browser.navigate());
     }
 
-    @AfterAll
     public void tearDown() {
         getBrowser().get().quit();
     }

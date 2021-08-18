@@ -15,6 +15,7 @@ import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 
+import javax.annotation.concurrent.NotThreadSafe;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
