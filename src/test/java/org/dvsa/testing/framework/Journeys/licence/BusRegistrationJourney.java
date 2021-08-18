@@ -23,7 +23,7 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 public class BusRegistrationJourney extends BasePage {
 
     private World world;
-    private static final String zipFilePath = "/src/test/resources/ESBR.zip";
+    private static final String zipFilePath = "/src/test/resources/EBSR.zip";
 
     public BusRegistrationJourney(World world){
         this.world = world;

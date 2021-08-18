@@ -11,6 +11,7 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 
+import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 import static org.junit.Assert.*;
 
 public class HTMLSnapshotSteps extends BasePage implements En {
@@ -18,8 +19,8 @@ public class HTMLSnapshotSteps extends BasePage implements En {
     public HTMLSnapshotSteps(World world) {
         Then("^text for annual bilateral snapshot is displayed as expected$", () -> {
 
-            ArrayList<String> tab = new ArrayList<String> (getBrowser().getWindowHandles());
-            getBrowser().switchTo().window(tab.get(tab.size() - 1));
+            ArrayList<String> tab = new ArrayList<String> (getBrowser().get().getWindowHandles());
+            getBrowser().get().switchTo().window(tab.get(tab.size() - 1));
 
             DocumentsPage.untilOnPage();
 
@@ -56,6 +57,5 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             String address = DocumentsPage.getAddress();
             assertEquals("International Road Haulage Permit Office, Hillcrest House, 386 Harehills Lane, Leeds, LS9 6NF", address);
         });
-
     }
 }

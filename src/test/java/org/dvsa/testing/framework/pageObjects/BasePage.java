@@ -23,7 +23,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
-import static org.dvsa.testing.lib.newPages.Driver.DriverUtils.getDriver;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 
 public abstract class BasePage extends DriverUtils {
@@ -394,7 +393,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static Object javaScriptExecutor(String jsScript) {
-        return ((JavascriptExecutor) getBrowser()).executeScript(jsScript);
+        return ((JavascriptExecutor) getBrowser().get()).executeScript(jsScript);
     }
 
     public static void enterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {

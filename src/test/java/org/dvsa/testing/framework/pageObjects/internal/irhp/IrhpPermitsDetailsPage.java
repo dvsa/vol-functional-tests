@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
+
 public class IrhpPermitsDetailsPage extends BaseDetailsPage {
 
     public static void untilOnPage() {
@@ -65,11 +67,10 @@ public class IrhpPermitsDetailsPage extends BaseDetailsPage {
         long maxSecondsWait = unit.toSeconds(duration);
 
         while (maxSecondsWait >= 0 && !isElementVisible(selector, 1)) {
-            getBrowser().navigate().refresh();
+            getBrowser().get().navigate().refresh();
             maxSecondsWait--;
         }
 
         return isElementPresent(selector, SelectorType.XPATH);
     }
-
 }

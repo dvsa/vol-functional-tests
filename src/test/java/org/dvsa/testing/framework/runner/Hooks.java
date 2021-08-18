@@ -36,7 +36,7 @@ public class Hooks {
         File screenshot = new File(String.format(directory + "/error%s.png", Instant.now().getEpochSecond()));
         if (scenarioStatus.isFailed()) {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
-            byte[] attachment = ((TakesScreenshot) getBrowser())
+            byte[] attachment = ((TakesScreenshot) getBrowser().get())
                     .getScreenshotAs(OutputType.BYTES);
             scenarioStatus.attach(attachment, "PNG", String.valueOf(screenshotStream));
             screenshotStream.write(attachment);
