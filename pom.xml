@@ -60,6 +60,9 @@
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
                     <forkCount>4</forkCount>
+                    <parallelMavenExecution>true</parallelMavenExecution>
+                    <parallelOptimized>true</parallelOptimized>
+                    <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
