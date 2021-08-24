@@ -16,6 +16,9 @@ public class InternalNavigational extends BasePage {
     private World world;
     private String myURL = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
+    String adminDropdown = "//li[@class='admin__title']";
+    String financialStandingAdminLink = "//a[@id='menu-admin-dashboard/admin-financial-standing']";
+    String financialStandingTitle = "Financial standing rates";
     public String taskTitle = "//h2[text()='Edit task']";
 
     public InternalNavigational(World world) {
@@ -24,6 +27,12 @@ public class InternalNavigational extends BasePage {
 
     public void navigateToLogin(String username, String emailAddress) {
         world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.INTERNAL);
+    }
+
+    public void navigateToFinancialStandingRates() {
+        click(adminDropdown, SelectorType.XPATH);
+        click(financialStandingAdminLink, SelectorType.XPATH);
+        waitForTitleToBePresent(financialStandingTitle);
     }
 
     public void logInAndNavigateToDocsTable()  {
