@@ -15,7 +15,6 @@ import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 
-import javax.annotation.concurrent.NotThreadSafe;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
@@ -24,7 +23,6 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 public class BusRegistrationJourney extends BasePage {
 
     private World world;
-    private static final String zipFilePath = "/src/test/resources/EBSR.zip";
 
     public BusRegistrationJourney(World world){
         this.world = world;
@@ -146,18 +144,19 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument {
+        world.genericUtils = new GenericUtils(world);
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.genericUtils.modifyXML(state, interval);
-        GenericUtils.zipFolder();
+        GenericUtils genericUtils = new GenericUtils(world);
+        genericUtils.zipFolder();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
         clickByLinkText("Bus registrations");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
-        String workingDir = System.getProperty("user.dir");
         String jScript = "document.getElementById('fields[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
-        enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, workingDir + zipFilePath);
+        enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, genericUtils.transXchangeZIP);
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
 }

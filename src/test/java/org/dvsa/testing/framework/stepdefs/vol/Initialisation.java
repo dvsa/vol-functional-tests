@@ -31,7 +31,7 @@ public class Initialisation extends BasePage implements En {
         world.globalMethods = new GlobalMethods(world);
         world.DBUtils = new DBUtils(world);
         world.licenceCreation = new LicenceCreation(world);
-        world.genericUtils = new GenericUtils(world);
+//        world.genericUtils = new GenericUtils(world);
         world.APIJourney = new APIJourney(world);
         world.continuationJourney = new ContinuationJourney(world);
         world.busRegistrationJourney = new BusRegistrationJourney(world);

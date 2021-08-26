@@ -34,7 +34,6 @@
         <allure-mvn.version>2.10.0</allure-mvn.version>
         <cucable-plugin.version>1.8.0</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <apache-commons.version>1.8</apache-commons.version>
         <gson.version>20210307</gson.version>
@@ -59,10 +58,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>2</forkCount>
                     <parallel>methods</parallel>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
+                    <threadCount>3</threadCount>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Dcucumber.options="--plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"
@@ -86,24 +86,6 @@
                     <reportVersion>${allure-report.version}</reportVersion>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven.failsafe.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                        </goals>
-                        <configuration>
-                            <forkCount>3</forkCount>
-                            <reuseForks>true</reuseForks>
-                            <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 

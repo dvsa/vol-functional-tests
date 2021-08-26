@@ -34,8 +34,14 @@ import java.util.*;
 
 public class GenericUtils extends BasePage {
 
-    private World world;
+
+    public String transXchangeZIP;
     private String registrationNumber;
+    private String zipFileName;
+
+    private final World world;
+    ThreadLocal<File> fileThreadLocal = new ThreadLocal<>();
+    ThreadLocal<File> zipFile = new ThreadLocal<>();
 
     public String getRegistrationNumber() {
         return registrationNumber;
@@ -45,16 +51,36 @@ public class GenericUtils extends BasePage {
         this.registrationNumber = registrationNumber;
     }
 
+    public String getZipFileName(){
+        return zipFileName;
+    }
+
+    public ThreadLocal<File> getZipFile() {
+        return zipFile;
+    }
+
+    public ThreadLocal<File> getFileThreadLocal() {
+        return fileThreadLocal;
+    }
+
+    public void setZipFileName(String zipFileName) {
+        this.zipFileName = zipFileName;
+    }
+
     public GenericUtils(World world) throws MissingRequiredArgument {
         this.world = world;
     }
 
     public void modifyXML(String dateState, int months) {
         try {
+            ThreadLocal<String> transXchangeFile = new ThreadLocal<>();
             String xmlFile = "./src/test/resources/EBSR/EBSR.xml";
+
+            transXchangeFile.set(xmlFile);
+
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document xmlDoc = xmlBuilder.parse(xmlFile);
+            Document xmlDoc = xmlBuilder.parse(transXchangeFile.get());
             //update licence number
             NodeList nodeList = xmlDoc.getElementsByTagName("*");
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -96,7 +122,7 @@ public class GenericUtils extends BasePage {
             DOMSource source = new DOMSource(xmlDoc);
             System.out.println("-----------Modified File-----------");
 
-            StreamResult result = new StreamResult(new File(xmlFile));
+            StreamResult result = new StreamResult(new File(transXchangeFile.get()));
             transformer.transform(source, result);
             StreamResult consoleResult = new StreamResult(System.out);
             transformer.transform(source, consoleResult);
@@ -129,11 +155,13 @@ public class GenericUtils extends BasePage {
         return myDate;
     }
 
-    public static void zipFolder() {
+    public void zipFolder() {
         /*
         / Uses Open source util zt-zip https://github.com/zeroturnaround/zt-zip
          */
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File("./src/test/resources/EBSR.zip"));
+        String dir = System.getProperty("user.dir");
+        transXchangeZIP = dir + "/" + String.format("EBSR%s.zip",world.applicationDetails.getLicenceNumber());
+        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(transXchangeZIP));
     }
 
     public void executeJenkinsBatchJob(String command) throws Exception {

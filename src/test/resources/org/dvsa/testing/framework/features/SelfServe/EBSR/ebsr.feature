@@ -1,7 +1,7 @@
 @EBSR
 Feature: ESBR for English, Welsh and Scottish Areas
 
-  @ss_regression_1
+  @ss_regression
   Scenario Outline: Short notice ESBR in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
@@ -9,10 +9,10 @@ Feature: ESBR for English, Welsh and Scottish Areas
     Examples:
       | Area       | Days |
       | north_east | 41   |
-#      | scotland   | 41   |
-#      | wales      | 55   |
-#      | east       | 41   |
-#      | west       | 41   |
+      | scotland   | 41   |
+      | wales      | 55   |
+      | east       | 41   |
+      | west       | 41   |
 
   @ss_regression
   Scenario Outline: ESBR in self-serve
