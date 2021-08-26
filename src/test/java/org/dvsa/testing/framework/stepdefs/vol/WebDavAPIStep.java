@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import apiCalls.enums.UserType;
+import cucumber.api.java.en.Given;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
 

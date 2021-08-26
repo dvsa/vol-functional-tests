@@ -81,8 +81,8 @@ public class ManageApplications {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        for (TrafficArea ta : trafficAreaList()) {
-            world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
+        for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
+            world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, trafficAreaList()[i]);
         }
     }
 
