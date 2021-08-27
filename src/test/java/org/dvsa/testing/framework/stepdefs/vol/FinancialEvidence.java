@@ -1,14 +1,16 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.number.Int;
 import apiCalls.enums.TrafficArea;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.stepdefs.lgv.FinancialStandingRates;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
@@ -16,7 +18,17 @@ import static apiCalls.enums.TrafficArea.trafficAreaList;
 public class FinancialEvidence extends BasePage {
 
     World world;
-    HashMap<String, Object[]> licences = new HashMap<>();
+    HashMap<String, String[]> licences = new HashMap<>();
+    FinancialStandingRate[] allRates = {
+            new FinancialStandingRate("goods","standard_national",null,8000,4500,null),
+            new FinancialStandingRate("goods","standard_international","hgv",8000,4500,null),
+            new FinancialStandingRate("goods","standard_international","lgv",1600,800,null),
+            new FinancialStandingRate("goods","restricted",null,3100,1700,null),
+            new FinancialStandingRate("public","standard_national",null,8000,4500,null),
+            new FinancialStandingRate("public","standard_international",null,8000,4500,null),
+            new FinancialStandingRate("public","restricted",null,3100,1700,null),
+            new FinancialStandingRate("public","special_restricted",null,3100,1700,null),
+    };
 
     public FinancialEvidence(World world) {
         this.world = world;
@@ -27,7 +39,7 @@ public class FinancialEvidence extends BasePage {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority));
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea)];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
-        licences.put(world.createApplication.getLicenceId(), new Object[] {operatorType, licenceType, Integer.parseInt(hgvAuthority), 0});
+        licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
     }
 
     @And("i create an operating centre variation with {string} hgv and {string} lgvs")
@@ -45,8 +57,8 @@ public class FinancialEvidence extends BasePage {
         }
         replaceText("//input[@id='totAuthHgvVehicles']", SelectorType.XPATH, hgvs);
         replaceText("//input[@id='totAuthLgvVehicles']", SelectorType.XPATH, lgvs);
-        licences.get(world.createApplication.getLicenceId())[2] = Integer.parseInt(hgvs);
-        licences.get(world.createApplication.getLicenceId())[3] = Integer.parseInt(lgvs);
+        licences.get(world.createApplication.getLicenceId())[3] = hgvs;
+        licences.get(world.createApplication.getLicenceId())[4] = lgvs;
     }
 
     @Then("the financial evidence value should be as expected")
@@ -55,30 +67,59 @@ public class FinancialEvidence extends BasePage {
         String valueInPounds = getText("//h2[@style='margin-top: 0;']", SelectorType.XPATH);
         int value = Integer.parseInt(valueInPounds.replaceAll("[^\\d.]", ""));
         getExpectedFinancialEvidenceValue(licences);
-
     }
 
-    public void getExpectedFinancialEvidenceValue(HashMap<String, Object[]> licences) {
+    public void getExpectedFinancialEvidenceValue(HashMap<String, String[]> licences) {
+        licences.values().forEach(values -> {
+            String operatorType = values[0];
+            String licenceType = values[1];
+            Integer hgvs = Integer.parseInt(values[3]);
+            Integer lgvs = Integer.parseInt(values[4]);
+            // Get whether vehicleType needs to be split again.
+            boolean notApplicable = !(values[0].equals("goods") && (values[1].equals("standard_international")));
+
+            Collection<Integer> firstRatesConsidered = null;
+            int additionalRates;
+            for (FinancialStandingRate rate : allRates) {
+                if (operatorType.equals(rate.getOperatorType())) {
+                    if (licenceType.equals(rate.getLicenceType())) {
+
+                        if(rate.getVehicleType().equals(notApplicable)) {
+                            firstRatesConsidered.add(Integer.parseInt(rate.getFirstRate()));
+                            additionalRates =
+                        }
+                        else {
+                            if (hgvs > 0) {
+                                firstRatesConsidered.add(Integer.parseInt());
+                            }
+                            else {
+
+                            }
+
+                        }
 
 
-        FinancialStandingRates
 
-        licences;
+                        firstRatesConsidered.add(String.valueOf(rate.getFirstRate()));
+
+
+                        licences.add values to array. and work out outside.
+                        split international storage up for hgv and lgv. Store both values in smaller arrays? But when checking, if no hgvs, grab lgv value for collection.
+//                      LOOK AT ADDING RATES TO licences AND THEN CAN JUST CALCULATE ON THE OUTSIDE <-- THIS.
+                    }
+                }
+            }
+            Integer mostExpensiveRate = ratesConsidered.stream().sorted().; get first one.
+
+
+
+        }
 
     }
 
 }
 
-//        Operator type	  Licence type	            Vehicle type	    First	Additional
-//        Goods Vehicle   Restricted	            Not Applicable	    3100	1700
-//        Goods Vehicle   Standard National	        Not Applicable	    8000	4500
-//        Goods Vehicle   Standard International	Heavy Goods Vehicle	8000	4500
-//        Goods Vehicle   Standard International	Light Goods Vehicle	1600	800
-//        Public Vehicle  Restricted	            Not Applicable	    3100	1700
-//        Public Vehicle  Standard National	        Not Applicable	    8000	4500
-//        Public vehicle  Standard International	Not Applicable	    8000	4500
-//        Public Vehicle  Special Restricted	    Not Applicable	    3100	1700
-//
+
 //
 //  workOutTopValue = firstRate
 //

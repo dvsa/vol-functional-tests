@@ -44,6 +44,9 @@ public class FinancialStandingRate {
     }
 
     private String formatDate(HashMap<String, String> date) {
+        if(date == null) {
+            return null;
+        }
         String dayModifier = Integer.parseInt(date.get("day")) < 10 ? "0" : "";
         String monthModifier = Integer.parseInt(date.get("month")) < 10 ? "0" : "";
         String formattedDate = String.format("%s%s/%s%s/%s",
@@ -62,5 +65,25 @@ public class FinancialStandingRate {
         this.firstRate.equals(row.firstRate) &&
         this.additionalRate.equals(row.additionalRate) &&
         this.effectiveDate.equals(row.effectiveDate);
+    }
+
+    public String getOperatorType() {
+        return operatorType;
+    }
+
+    public String getLicenceType() {
+        return licenceType;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public String getFirstRate() {
+        return firstRate;
+    }
+
+    public String getAdditionalRate() {
+        return additionalRate;
     }
 }
