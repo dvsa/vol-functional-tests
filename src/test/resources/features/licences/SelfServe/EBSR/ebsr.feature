@@ -1,4 +1,4 @@
-@import EBSR
+@EBSR
 Feature: import EBSR for English, Welsh and Scottish Areas
 
   @ss_regression
