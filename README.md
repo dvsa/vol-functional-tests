@@ -59,7 +59,7 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - Rename stepdefs/PSVApplication.java to application.java
 - CreateOverview - can be moved in to util
 - Before step for EBSR pre-processing to update xml
-- Place variable in ESBR.xml method to stop it updating and requiring changes in git.
+- Place variable in import EBSR.xml method to stop it updating and requiring changes in git.
 - use gmail api to get passwords instead of getting passwords from the S3 Bucket.
 - Look at Google accessibility for method to check that tab skipped to main content for skipToMainContentAndCheck function. Maybe look at using Axe.
 
