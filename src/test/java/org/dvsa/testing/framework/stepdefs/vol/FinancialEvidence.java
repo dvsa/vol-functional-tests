@@ -60,7 +60,8 @@ public class FinancialEvidence extends BasePage {
         if (!hgvs.equals(totalNumberOfHgvsOnOperatingCentres)) {
             click(String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentrePostCode()), SelectorType.XPATH);
             replaceText("//*[@id='noOfVehiclesRequired']", SelectorType.XPATH, hgvs);
-            if (Integer.parseInt(hgvs) > Integer.parseInt(totalNumberOfHgvsOnOperatingCentres) && world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+            if (Integer.parseInt(hgvs) > Integer.parseInt(totalNumberOfHgvsOnOperatingCentres) && world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) && !world.createApplication.getOperatorType().equals(LicenceType.RESTRICTED.asString())) {
+                waitAndClick("//h1[contains(text(),'Edit operating centre')]", SelectorType.XPATH);
                 waitForElementToBePresent("//h3[text()='Newspaper advert']");
             }
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
