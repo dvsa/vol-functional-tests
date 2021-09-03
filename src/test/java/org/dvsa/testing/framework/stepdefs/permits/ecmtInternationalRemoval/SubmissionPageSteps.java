@@ -2,60 +2,31 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtApplicationJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.EcmtInternationalRemovalJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.DeclarationPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.external.pages.OverviewPageJourney;
-import org.dvsa.testing.framework.Utils.store.OperatorStore;
-import org.dvsa.testing.lib.enums.PermitStatus;
-import org.dvsa.testing.lib.enums.PermitType;
-import org.dvsa.testing.lib.newPages.enums.OverviewSection;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
-import org.dvsa.testing.lib.newPages.external.pages.HomePage;
-import org.dvsa.testing.lib.newPages.external.pages.SubmittedPage;
-import org.dvsa.testing.lib.newPages.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.lib.newPages.BasePage;
+import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
+import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
+import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 
-import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
+import static org.junit.Assert.assertTrue;
 
 public class SubmissionPageSteps extends BasePermitPage implements En {
 
-    public SubmissionPageSteps(World world, OperatorStore operatorStore) {
+    public SubmissionPageSteps(World world) {
         And("^I am on the ECMT International removal submission page", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                    .cabotagePage()
-                    .certificatesRequiredPage()
-                    .permitStartDatePage();
-            NumberOfPermitsPageJourney.completePage();
-            EcmtInternationalRemovalJourney.getInstance()
-                    .checkYourAnswers();
-            DeclarationPageJourney.completeDeclaration();
-            EcmtApplicationJourney.getInstance()
-                    .feeOverviewPage();
-            world.feeAndPaymentJourney.customerPaymentModule();
-            SubmittedPage.untilOnPage();
+            EcmtInternationalRemovalJourney.completeAndSubmitApplication(world);
         });
-        Then ("^the page heading on the submission page is displayed correctly", () -> {
-
-            Assert.assertEquals(BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH),"Application submitted");
-        });
+        Then ("^the page heading on the submission page is displayed correctly", SubmissionPageSteps::assertHeadingPresentInSubmissionPanel);
         And ("^the application reference number is displayed correctly", () -> {
-            String referenceNumber=BasePage.getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
-            Assert.assertTrue(referenceNumber.contains("Your reference number"));
-            String expectedLicenceNumber = world.applicationDetails.getLicenceNumber();
-            String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
-            Assert.assertTrue(actualReferenceNumber.contains(expectedLicenceNumber));
+            SubmissionPageSteps.assertReferenceNumberPresentInPanelBody(world);
         });
         And ("^the texts on the submission page are displayed correctly", () -> {
             String expectedHeading = SubmittedPage.getSubHeading();
@@ -75,23 +46,11 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             driver.switchTo().window(windows[0]);
         });
         And ("^I have partial ECMT international removal application", () -> {
-            clickToPermitTypePage(world);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL, operatorStore)
-                    .licencePage(operatorStore, world);
-            OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
-            EcmtInternationalRemovalJourney.getInstance()
-                    .removalsEligibility(true)
-                    .cabotagePage()
-                    .certificatesRequiredPage()
-                    .permitStartDatePage();
-            NumberOfPermitsPageJourney.completePage();
-            EcmtInternationalRemovalJourney.getInstance()
-                    .checkYourAnswers();
+            EcmtInternationalRemovalJourney.completeUntilDeclarationPage(world);
         });
         And ("^the application is under issued permits table with status as valid", () -> {
             refreshPage();
-            untilAnyPermitStatusMatch(PermitStatus.VALID);
+            CommonSteps.waitUntilPermitHasStatus(world);
         });
         And ("^I navigate to permit dashboard page", () -> {
             world.selfServeNavigation.navigateToNavBarPage("home");
@@ -110,5 +69,16 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             DeclarationPageJourney.completeDeclaration();
         });
 
+    }
+
+    public static void assertHeadingPresentInSubmissionPanel() {
+        Assert.assertEquals(BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH),"Application submitted");
+    }
+
+    public static void assertReferenceNumberPresentInPanelBody(World world) {
+        String referenceNumber = BasePage.getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
+        assertTrue(referenceNumber.contains("Your reference number"));
+        String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
+        assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
     }
 }

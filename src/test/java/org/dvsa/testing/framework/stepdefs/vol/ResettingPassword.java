@@ -4,8 +4,8 @@ import Injectors.World;
 import activesupport.string.Str;
 import cucumber.api.java.eo.Se;
 import cucumber.api.java8.En;
-import org.dvsa.testing.lib.newPages.BasePage;
-import org.dvsa.testing.lib.newPages.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 public class ResettingPassword extends BasePage implements En {
     public ResettingPassword(World world) {

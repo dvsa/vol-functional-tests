@@ -12,7 +12,7 @@ Feature: Annual bilaterals standard and cabotage permits fee page
     Then I should be on the overview page
     When I select the submit and pay link from overview page
     Then I should be on the permit fee page
-    When I select return to overview link on the permit fee page
+    When I save and return to overview
     Then I should be on the overview page
     When I select the submit and pay link from overview page
     Then the page heading is displayed correctly on the fee page

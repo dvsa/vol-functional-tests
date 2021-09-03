@@ -1,3 +1,4 @@
+@lgv
 Feature: Authority page checks
 
   Scenario: Table displays the right number of lgvs and hgvs

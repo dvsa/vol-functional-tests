@@ -15,5 +15,5 @@ Feature: Annual ECMT Fee page
 
   @OLCS-21129 @OLCS-24975
   Scenario: Successfully returns to overview
-    When I save and return to overview from fee page
+    When I save and return to overview
     Then I should be on the Annual ECMT overview page
