@@ -29,6 +29,11 @@ public class SelfServeNavigational extends BasePage {
         navigate().get(myURL);
     }
 
+    public void navigateToLoginPage() {
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
+        navigate().get(myURL);
+    }
+
     public void navigateToPage(String type, String page)  {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");

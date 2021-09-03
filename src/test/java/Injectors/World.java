@@ -30,6 +30,7 @@ public class World {
     public InternalSearchJourney internalSearchJourney;
     public InternalNavigational internalNavigation;
     public SelfServeNavigational selfServeNavigation;
+    public SelfServeForgottenCredentialsJourney selfServeForgottenCredentialsJourney;
     public SurrenderJourney surrenderJourney;
     public TransportManagerJourney TMJourney;
     public UIJourney UIJourney;

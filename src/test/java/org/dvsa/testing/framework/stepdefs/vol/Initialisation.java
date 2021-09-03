@@ -44,5 +44,6 @@ public class Initialisation extends BasePage implements En {
         world.surrenderJourney = new SurrenderJourney(world);
         world.TMJourney = new TransportManagerJourney(world);
         world.UIJourney = new UIJourney(world);
+        world.selfServeForgottenCredentialsJourney = new SelfServeForgottenCredentialsJourney(world);
     }
 }
