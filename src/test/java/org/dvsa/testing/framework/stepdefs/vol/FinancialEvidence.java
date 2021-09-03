@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import activesupport.system.Properties;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.TrafficArea;
@@ -12,8 +11,6 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -35,7 +32,21 @@ public class FinancialEvidence extends BasePage {
             new FinancialStandingRate("public","restricted",null,3100,1700,null),
             new FinancialStandingRate("public","special_restricted",null,3100,1700,null)}
     );
+
     int expectedFinancialEvidenceValue;
+
+    String operatingCentreTitle = "//h1[contains(text(),'Edit operating centre')]";
+    String operatingCentreVehicleField = "//*[@id='noOfVehiclesRequired']";
+    String advertTitle = "//h3[text()='Newspaper advert']";
+    String submitButton = "//*[@id='form-actions[submit]']";
+
+    String operatingCentreConfirmationText = "Operating centre updated";
+    String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
+    String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
+    String saveButton = "//*[@id='form-actions[save]']";
+    String totalHgvInTable = "//td[@colspan][1]";
+    String financialEvidenceValueOnPage = "//h2[@style='margin-top: 0;']";
+
 
     public FinancialEvidence(World world) {
         this.world = world;
@@ -56,29 +67,19 @@ public class FinancialEvidence extends BasePage {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
         world.UIJourney.changeLicenceForVariation();
-        String totalNumberOfHgvsOnOperatingCentres = findElement("//td[@colspan][1]", SelectorType.XPATH).getText();
-        if (!hgvs.equals(totalNumberOfHgvsOnOperatingCentres)) {
-            click(String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentrePostCode()), SelectorType.XPATH);
-            replaceText("//*[@id='noOfVehiclesRequired']", SelectorType.XPATH, hgvs);
-            if (Integer.parseInt(hgvs) > Integer.parseInt(totalNumberOfHgvsOnOperatingCentres) && world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) && !world.createApplication.getOperatorType().equals(LicenceType.RESTRICTED.asString())) {
-                waitAndClick("//h1[contains(text(),'Edit operating centre')]", SelectorType.XPATH);
-                waitForElementToBePresent("//h3[text()='Newspaper advert']");
-            }
-            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-            waitForTextToBePresent("Operating centre updated");
-        }
-        replaceText("//input[@id='totAuthHgvVehicles']", SelectorType.XPATH, hgvs);
+        changeOperatingCentreVehicleAuthorisation(hgvs);
+        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, hgvs);
         licences.get(world.createApplication.getLicenceId())[3] = hgvs;
-        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) && world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())){
-            replaceText("//input[@id='totAuthLgvVehicles']", SelectorType.XPATH, lgvs);
+        if (world.licenceCreation.isAGoodsInternationalLicence()) {
+            replaceText(totalLGVAuthorisationField, SelectorType.XPATH, lgvs);
             licences.get(world.createApplication.getLicenceId())[4] = lgvs;
         }
-        click("//*[@id='form-actions[save]']", SelectorType.XPATH);
+        click(saveButton, SelectorType.XPATH);
     }
 
     @Then("the financial evidence value should be as expected")
     public void theFinancialEvidenceValueShouldBeAsExpected() {
-        get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())).toString());
+        world.selfServeNavigation.getVariationFinancialEvidencePage();
         int actualFinancialEvidenceValue = getFinancialValueFromPage();
         expectedFinancialEvidenceValue = getExpectedFinancialEvidenceValue(licences);
         assertEquals(expectedFinancialEvidenceValue, actualFinancialEvidenceValue);
@@ -88,13 +89,27 @@ public class FinancialEvidence extends BasePage {
     public void theSameFinancialEvidenceValueIsDisplayedOnInternal() {
         world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewVariational();
-        get(URL.build(ApplicationType.INTERNAL, Properties.get("env", true), String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())).toString());
+        world.internalNavigation.getVariationFinancialEvidencePage();
         assertEquals(getFinancialValueFromPage(), expectedFinancialEvidenceValue);
     }
 
+    private void changeOperatingCentreVehicleAuthorisation(String hgvs) {
+        String totalNumberOfHgvsOnOperatingCentres = findElement(totalHgvInTable, SelectorType.XPATH).getText();
+        if (!hgvs.equals(totalNumberOfHgvsOnOperatingCentres)) {
+            String operatingCentreLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentrePostCode());
+            click(operatingCentreLink, SelectorType.XPATH);
+            replaceText(operatingCentreVehicleField, SelectorType.XPATH, hgvs);
+            if (Integer.parseInt(hgvs) > Integer.parseInt(totalNumberOfHgvsOnOperatingCentres) && world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) && !world.createApplication.getOperatorType().equals(LicenceType.RESTRICTED.asString())) {
+                waitAndClick(operatingCentreTitle, SelectorType.XPATH);
+                waitForElementToBePresent(advertTitle);
+            }
+            click(submitButton, SelectorType.XPATH);
+            waitForTextToBePresent(operatingCentreConfirmationText);
+        }
+    }
+
     public int getFinancialValueFromPage() {
-        String valueInPounds = getText("//h2[@style='margin-top: 0;']", SelectorType.XPATH);
+        String valueInPounds = getText(financialEvidenceValueOnPage, SelectorType.XPATH);
         return Integer.parseInt(valueInPounds.replaceAll("[^\\d.]", ""));
     }
 
@@ -106,7 +121,6 @@ public class FinancialEvidence extends BasePage {
             int numberOfHGVs = Integer.parseInt(values[3]);
             int numberOfLGVs = Integer.parseInt(values[4]);
             boolean notApplicable = !(values[0].equals("goods") && (values[1].equals("standard_international")));
-
 
             Collection<FinancialStandingRate> ratesFilteredToVehicleType = allRates.stream()
                     .filter(rate -> rate.getOperatorType().equals(operatorType))

@@ -9,7 +9,7 @@ Feature: Financial evidence calculations for hgv and lgv permutations.
 
     Examples:
     | operatorType | licenceType            | vehicleAuth | trafficArea | hgvs | lgvs |
-   | goods        | standard_international |     5       |      1      |   7  |   0  |
+    | goods        | standard_international |     5       |      1      |   7  |   0  |
    | goods        | standard_international |     5       |      1      |   3  |   2  |
 #   | goods        | standard_international |     5       |      1      |   0  |   5  | CURRENTLY 0 HGVs is blocked.
    | goods        | standard_national      |     5       |      1      |   6  |   0  |

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class InternalNavigational extends BasePage {
 
     private World world;
-    private String myURL = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+    private String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
     String adminDropdown = "//li[@class='admin__title']";
     String financialStandingAdminLink = "//a[@id='menu-admin-dashboard/admin-financial-standing']";
@@ -52,23 +52,27 @@ public class InternalNavigational extends BasePage {
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
     public void urlSearchAndViewApplication()  {
-        navigate().get(this.myURL.concat(String.format("application/%s", world.createApplication.getApplicationId())));
+        navigate().get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
 
-    public void urlSearchAndViewLicence()  {
-        navigate().get(this.myURL.concat(String.format("licence/%s", world.createApplication.getLicenceId())));
+    public void getLicence()  {
+        get(this.url.concat(String.format("licence/%s", world.createApplication.getLicenceId())));
     }
 
-    public void urlSearchAndViewVariational()  {
-        navigate().get(this.myURL.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationId())));
+    public void getVariationApplication()  {
+        get(this.url.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationId())));
     }
 
-    public void urlSearchAndViewEditFee(String feeNumber)  {
-        navigate().get(this.myURL.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
+    public void getAdminEditFee(String feeNumber)  {
+        get(this.url.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
     }
 
-    public void urlSearchAndViewInternalUserAccount(String adminUserId)  {
-        navigate().get(this.myURL.concat(String.format("admin/user-management/users/edit/%s", adminUserId)));
+    public void getEditUserAccount(String adminUserId)  {
+        get(this.url.concat(String.format("admin/user-management/users/edit/%s", adminUserId)));
+    }
+
+    public void getVariationFinancialEvidencePage() {
+        get(this.url.concat(String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())));
     }
 
     public void logIntoInternalAndClickOnTask(String taskLinkText) {

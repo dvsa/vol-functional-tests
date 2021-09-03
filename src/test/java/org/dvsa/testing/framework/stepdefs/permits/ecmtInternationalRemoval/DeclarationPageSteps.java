@@ -37,7 +37,7 @@ public class DeclarationPageSteps extends BasePage implements En {
             world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
             refreshPage();
-            world.internalNavigation.urlSearchAndViewLicence();
+            world.internalNavigation.getLicence();
             clickByLinkText("IRHP Permits");
             clickByLinkText(world.applicationDetails.getLicenceNumber());
         });

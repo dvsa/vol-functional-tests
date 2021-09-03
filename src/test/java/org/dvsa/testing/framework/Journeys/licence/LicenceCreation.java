@@ -77,4 +77,9 @@ public class LicenceCreation {
     public boolean isPSVLicence() {
         return world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString());
     }
+
+    public boolean isAGoodsInternationalLicence() {
+        return isGoodsLicence()
+                && world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString());
+    }
 }

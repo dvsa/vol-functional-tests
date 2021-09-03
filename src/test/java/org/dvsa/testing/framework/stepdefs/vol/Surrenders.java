@@ -77,7 +77,7 @@ public class Surrenders extends BasePage implements En {
         When("^a caseworker views the surrender details$", () -> {
             world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalNavigation.urlSearchAndViewLicence();
+            world.internalNavigation.getLicence();
             waitAndClick("menu-licence_surrender", SelectorType.ID);
         });
 
@@ -106,11 +106,11 @@ public class Surrenders extends BasePage implements En {
             }
         });
         And("^the open case and bus reg is closed$", () -> {
-            world.internalNavigation.urlSearchAndViewLicence();
+            world.internalNavigation.getLicence();
             clickByLinkText("Cases");
             world.UIJourney.closeCase();
             waitForTextToBePresent("Case closed");
-            world.internalNavigation.urlSearchAndViewLicence();
+            world.internalNavigation.getLicence();
             clickByLinkText("Bus registrations");
             world.busRegistrationJourney.closeBusReg();
         });
@@ -135,7 +135,7 @@ public class Surrenders extends BasePage implements En {
         When("^the caseworker checks the case and bus reg is visible in surrenders$", () -> {
             world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalNavigation.urlSearchAndViewLicence();
+            world.internalNavigation.getLicence();
             waitForTextToBePresent("Overview");
             if (isTextPresent("Surrender")){
                 clickByLinkText("Surrender");

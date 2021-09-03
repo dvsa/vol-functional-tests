@@ -114,7 +114,7 @@ public class SurrenderJourney extends BasePage {
     public void caseworkManageSurrender() {
         world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.getLicence();
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
