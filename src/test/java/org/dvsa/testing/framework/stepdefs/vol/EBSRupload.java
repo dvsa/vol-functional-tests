@@ -10,15 +10,15 @@ import org.junit.Assert;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-public class ESBRupload extends BasePage implements En {
+public class EBSRupload extends BasePage implements En {
 
     private World world;
 
-    public ESBRupload(World world) throws MissingRequiredArgument {
+    public EBSRupload(World world) throws MissingRequiredArgument {
         this.world = world;
 
         Then("^A short notice flag should be displayed in selfserve$", () -> {
-            world.busRegistrationJourney.viewESBRInExternal();
+            world.busRegistrationJourney.viewEBSRInExternal();
             assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'New')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'short notice')]", SelectorType.XPATH));
@@ -30,7 +30,7 @@ public class ESBRupload extends BasePage implements En {
             assertTrue(isTextPresent("Short notice"));
         });
         Then("^A short notice flag should not be displayed in selfserve$", () -> {
-            world.busRegistrationJourney.viewESBRInExternal();
+            world.busRegistrationJourney.viewEBSRInExternal();
             waitForTextToBePresent("successful");
             assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
             assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'New')]", SelectorType.XPATH));
