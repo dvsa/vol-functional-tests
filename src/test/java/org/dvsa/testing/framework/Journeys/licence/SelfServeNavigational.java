@@ -34,6 +34,10 @@ public class SelfServeNavigational extends BasePage {
         navigate().get(myURL);
     }
 
+    public void navigateToCreateAnAccount() {
+        clickByLinkText("create an account");
+    }
+
     public void navigateToPage(String type, String page)  {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");

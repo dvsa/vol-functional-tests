@@ -14,7 +14,7 @@ public class ForgottenCredsStepDef extends BasePage {
 
     @And("I have forgotten my password and want to reset")
     public void iHaveForgottenMyPasswordAndWantToReset() {
-        world.selfServeForgottenCredentialsJourney.forgottenPassword();
+        //world.selfServeForgottenCredentialsJourney.forgottenPassword();
     }
 
     @Then("I will be sent an email")

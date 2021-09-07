@@ -35,8 +35,8 @@ public class DVLAJourney extends BasePage {
     }
 
     public void navigateToRemoveVehiclePage() {
-        waitAndClick("//input[@id='remove-vehicle']", SelectorType.XPATH);
-        waitAndClick("//*[@type='submit']", SelectorType.XPATH);
+        clickById("remove-vehicle");
+        clickById("next");
         waitForTitleToBePresent("Remove a vehicle");
     }
 

@@ -23,7 +23,7 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 public class BusRegistrationJourney extends BasePage {
 
     private World world;
-    private static final String zipFilePath = "/src/test/resources/ESBR.zip";
+    private static final String zipFilePath = "/src/test/resources/EBSR.zip";
 
     public BusRegistrationJourney(World world){
         this.world = world;
@@ -128,7 +128,7 @@ public class BusRegistrationJourney extends BasePage {
         world.updateLicence.createCase();
     }
 
-    public void viewESBRInExternal()  {
+    public void viewEBSRInExternal()  {
 
         long kickOutTime = System.currentTimeMillis() + 120000;
 
@@ -140,11 +140,11 @@ public class BusRegistrationJourney extends BasePage {
         try {
             Assert.assertTrue(isTextPresent("Successful"));
         } catch (Exception e) {
-            throw new NotFoundException("ESBR is still displaying as 'processing' when kick out time was reached.");
+            throw new NotFoundException("import EBSR is still displaying as 'processing' when kick out time was reached.");
         }
     }
 
-    public void uploadAndSubmitESBR(String state, int interval) throws MissingRequiredArgument {
+    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.genericUtils.modifyXML(state, interval);
         GenericUtils.zipFolder();
