@@ -26,7 +26,7 @@ public class World {
     public APIJourney APIJourney;
     public UIJourney UIJourney;
 
-
+    public ForgottenCredsJourney forgottenCredsJourney;
     public BusRegistrationJourney busRegistrationJourney;
     public ContinuationJourney continuationJourney;
     public DirectorJourney directorJourney;

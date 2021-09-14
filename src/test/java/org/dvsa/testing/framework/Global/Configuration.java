@@ -22,4 +22,13 @@ public class Configuration{
     public String getTempPassword(String emailAddress) {
         return S3.getTempPassword(emailAddress, getBucketName());
     }
+    public String getPasswordResetLink() {
+        return String.valueOf(S3.getPasswordResetLink());
+    }
+
+    public String getUsernameResetLink() {
+        return String.valueOf(S3.getUsernameInfoLink());
+    }
+
+
 }
