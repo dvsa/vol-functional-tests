@@ -5,8 +5,3 @@ Feature: Username/password reset from login page
     When I am on Selfserve homepage
     And I have forgotten my password and want to reset
     Then I will be sent an email
-
-
-
-
-
