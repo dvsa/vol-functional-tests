@@ -47,6 +47,22 @@ public class InternalSearchJourney extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
+    public void searchUser() {
+        long kickOut = System.currentTimeMillis() + 120000;
+        do {
+            SearchNavBar.search(SearchType.Users, world.UIJourney.getEmail());
+        } while (!isTextPresent(world.UIJourney.getEmail()));
+    }
+
+    public void searchLicense() {
+        long kickOut = System.currentTimeMillis() + 120000;
+        do {
+            SearchNavBar.search(SearchType.Licence, world.applicationDetails.getLicenceNumber());
+        } while (!isTextPresent(world.applicationDetails.getLicenceNumber()));
+        clickByLinkText(String.valueOf(world.applicationDetails.getLicenceNumber()));
+    }
+
+
     public void searchAndViewCase()  {
         long kickOut = System.currentTimeMillis() + 120000;
         do {

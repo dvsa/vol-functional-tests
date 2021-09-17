@@ -46,6 +46,10 @@ public class InternalNavigational extends BasePage {
         navigate().get(this.myURL.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
 
+    public void urlViewUsers() {
+        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env,"/search/user/search/").toString();
+    }
+
     public void urlSearchAndViewLicence()  {
         navigate().get(this.myURL.concat(String.format("licence/%s", world.createApplication.getLicenceId())));
     }
