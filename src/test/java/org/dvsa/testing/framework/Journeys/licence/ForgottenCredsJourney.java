@@ -20,7 +20,7 @@ public class ForgottenCredsJourney extends BasePage {
 
     public void forgottenPassword()
     {
-       createAccountSignOut();
+        createAccountSignOut();
         waitAndClick("Forgotten your password?", SelectorType.LINKTEXT);
         waitAndEnterText("auth.forgot-password.username", SelectorType.ID, world.registerUser.getUserName());
         waitAndClick("auth.forgot-password.button", SelectorType.ID);
@@ -35,13 +35,5 @@ public class ForgottenCredsJourney extends BasePage {
         waitAndEnterText("fields[licenceNumber]", SelectorType.ID, world.applicationDetails.getLicenceNumber());
         waitAndEnterText("fields[emailAddress]", SelectorType.ID, world.registerUser.getEmailAddress());
         waitAndClick("form-actions[submit]", SelectorType.ID);
-        System.out.println(world.configuration.getUsernameResetLink());
-
-
-
-
-
     }
-
-
 }

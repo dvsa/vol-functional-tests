@@ -31,5 +31,6 @@ public class ResetCredsSelfServ extends BasePage implements En {
 
     @Then("I will be sent an email with my username")
     public void iWillBeSentAnEmailWithMyUsername() {
+        Assert.assertEquals(world.configuration.getUsernameResetLink(), world.registerUser.getUserName());
     }
 }
