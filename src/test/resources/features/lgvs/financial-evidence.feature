@@ -1,3 +1,4 @@
+@fintest
 Feature: Financial evidence calculations for hgv and lgv permutations.
 
   Scenario Outline: Check financial evidence for variations
