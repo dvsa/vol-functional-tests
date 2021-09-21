@@ -42,7 +42,7 @@ public class InternalSearch extends BasePage implements En {
         And("^i create an admin and url search for my licence$", () -> {
             world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalNavigation.urlSearchAndViewLicence();
+            world.internalNavigation.getLicence();
         });
         And("^i create an admin and url search for my application", () -> {
             world.APIJourney.createAdminUser();
@@ -52,11 +52,11 @@ public class InternalSearch extends BasePage implements En {
         And("^i create an admin and url search for my variation", () -> {
             world.APIJourney.createAdminUser();
             world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalNavigation.urlSearchAndViewVariational();
+            world.internalNavigation.getVariationApplication();
         });
 
         And("^i url search for my licence$", () -> {
-            world.internalNavigation.urlSearchAndViewLicence();
+            world.internalNavigation.getLicence();
         });
         And("^i url search for my application", () -> {
             world.internalNavigation.urlSearchAndViewApplication();

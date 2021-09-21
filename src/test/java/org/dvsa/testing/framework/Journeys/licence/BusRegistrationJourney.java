@@ -122,7 +122,7 @@ public class BusRegistrationJourney extends BasePage {
         }
         world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.getLicence();
         internalSiteAddBusNewReg(5);
         payFeesAndGrantNewBusReg();
         world.updateLicence.createCase();
