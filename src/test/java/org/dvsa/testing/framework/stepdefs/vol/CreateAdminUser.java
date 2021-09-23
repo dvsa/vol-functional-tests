@@ -29,6 +29,6 @@ public class CreateAdminUser implements En {
 
     @Then("^I should be able to login with my new credentials$")
     public void iShouldBeAbleToLoginWithMyNewCredentials(){
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(),world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
     };
 }

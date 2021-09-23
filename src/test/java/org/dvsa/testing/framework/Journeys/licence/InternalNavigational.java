@@ -29,6 +29,10 @@ public class InternalNavigational extends BasePage {
         world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.INTERNAL);
     }
 
+    public void logInAsAdmin() {
+        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+    }
+
     public void navigateToFinancialStandingRates() {
         click(adminDropdown, SelectorType.XPATH);
         click(financialStandingAdminLink, SelectorType.XPATH);
@@ -37,19 +41,25 @@ public class InternalNavigational extends BasePage {
 
     public void logInAndNavigateToDocsTable()  {
         world.APIJourney.createAdminUser();
-        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        logInAsAdmin();
         urlSearchAndViewApplication();
         clickByLinkText("Docs");
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
-    public void logInAndNavigateToTask()  {
+    public void logInAndNavigateToApplicationProcessing()  {
         world.APIJourney.createAdminUser();
-        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        logInAsAdmin();
         urlSearchAndViewApplication();
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
-        assertTrue(isElementEnabled("//body", SelectorType.XPATH));
     } // refactor to use global navigate to task method or something on the end after the login steps.
+
+    public void logInAndNavigateToAdminProcessing()  {
+        world.APIJourney.createAdminUser();
+        logInAsAdmin();
+        click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
+        click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
+    }
 
     public void urlSearchAndViewApplication()  {
         navigate().get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
@@ -76,7 +86,7 @@ public class InternalNavigational extends BasePage {
     }
 
     public void logIntoInternalAndClickOnTask(String taskLinkText) {
-        logInAndNavigateToTask();
+        logInAndNavigateToApplicationProcessing();
         clickByXPath(taskLinkText);
         waitForElementToBePresent(taskTitle);
     }

@@ -60,21 +60,21 @@ public class FinancialEvidence extends BasePage {
         licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
     }
 
-    @And("i create an operating centre variation with {string} hgv and {string} lgvs")
-    public void iCreateAnOperatingCentreVariationWithHgvAndLgvs(String numberOfHgvs, String numberOfLgvs) {
-        String hgvs = numberOfHgvs.replaceAll(" ", "");
-        String lgvs = numberOfLgvs.replaceAll(" ", "");
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
-        world.UIJourney.changeLicenceForVariation();
-        changeOperatingCentreVehicleAuthorisation(hgvs);
-        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, hgvs);
-        licences.get(world.createApplication.getLicenceId())[3] = hgvs;
-        if (world.licenceCreation.isAGoodsInternationalLicence()) {
-            replaceText(totalLGVAuthorisationField, SelectorType.XPATH, lgvs);
-            licences.get(world.createApplication.getLicenceId())[4] = lgvs;
-        }
+    @And("i create an operating centre variation with {string} hgvs and {string} lgvs")
+    public void iCreateAnOperatingCentreVariationWithHgvAndLgvs(String unformattedNumberOfHGVs, String unformattedNumberOfLGVs) {
+        loginAndSubmitOperatingCentreVehicleAuthorisationVariation(unformattedNumberOfHGVs, unformattedNumberOfLGVs);
+    }
+
+    @And("i create and submit an operating centre variation with {string} hgvs and {string} lgvs")
+    public void iCreateAndSubmitAnOperatingCentreVariationWithHgvsAndLgvs(String unformattedNumberOfHGVs, String unformattedNumberOfLGVs) {
+        loginAndSubmitOperatingCentreVehicleAuthorisationVariation(unformattedNumberOfHGVs, unformattedNumberOfLGVs);
+        clickByLinkText("Financial evidence");
+        click("uploadLaterRadio", SelectorType.ID);
         click(saveButton, SelectorType.XPATH);
+        clickByLinkText("Review and declarations");
+        click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
+        click("submit", SelectorType.ID);
+        waitForTextToBePresent("Thank you, your application has been submitted.");
     }
 
     @Then("the financial evidence value should be as expected")
@@ -88,9 +88,35 @@ public class FinancialEvidence extends BasePage {
     @And("the same financial evidence value is displayed on internal")
     public void theSameFinancialEvidenceValueIsDisplayedOnInternal() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getVariationFinancialEvidencePage();
         assertEquals(getFinancialValueFromPage(), expectedFinancialEvidenceValue);
+    }
+
+    private void loginAndSubmitOperatingCentreVehicleAuthorisationVariation(String unformattedNumberOfHGVs, String unformattedNumberOfLGVs) {
+        String hgvs = unformattedNumberOfHGVs.replaceAll(" ", "");
+        String lgvs = unformattedNumberOfLGVs.replaceAll(" ", "");
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+        world.UIJourney.changeLicenceForVariation();
+        changeAndSaveOperatingCentreVehicleAuthorisation(hgvs, lgvs);
+    }
+
+    private void changeAndSaveOperatingCentreVehicleAuthorisation(String hgvs, String lgvs) {
+        changeOperatingCentreVehicleAuthorisation(hgvs);
+        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, hgvs);
+        if (world.licenceCreation.isAGoodsInternationalLicence()) {
+            replaceText(totalLGVAuthorisationField, SelectorType.XPATH, lgvs);
+        }
+
+        if (licences.get(world.createApplication.getLicenceId()) != null) {
+            licences.get(world.createApplication.getLicenceId())[3] = hgvs;
+            if (world.licenceCreation.isAGoodsInternationalLicence()) {
+                licences.get(world.createApplication.getLicenceId())[4] = lgvs;
+            }
+        }
+
+        click(saveButton, SelectorType.XPATH);
     }
 
     private void changeOperatingCentreVehicleAuthorisation(String hgvs) {

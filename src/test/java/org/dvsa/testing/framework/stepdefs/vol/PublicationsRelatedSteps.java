@@ -1,6 +1,9 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import Injectors.World;
 import activesupport.driver.Browser;
+import apiCalls.enums.OperatorType;
+import apiCalls.enums.TrafficArea;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -15,7 +18,11 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicationsRelatedSteps extends BasePage implements En {
-    public PublicationsRelatedSteps() {
+
+    public World world;
+
+    public PublicationsRelatedSteps(World world) {
+        this.world = world;
         And("^i navigate to the admin publications page$", () -> {
             click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
             click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
@@ -133,7 +140,38 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     refreshPageWithJavascript();
                 }
             }
-            Assert.assertEquals(0,missingLinks);
+            Assert.assertEquals(0, missingLinks);
+        });
+        Then("^the corresponding publication is generated and published$", () -> {
+            world.internalNavigation.logInAndNavigateToAdminProcessing();
+            String trafficArea = getTrafficArea(world.createApplication.getTrafficArea());
+            String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
+            String selector = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
+            String publicationValue = getAttribute(selector, SelectorType.XPATH, "value");
+            click(selector, SelectorType.XPATH);
+            click("generate", SelectorType.ID);
+            waitForTextToBePresent("Publication was generated, a new publication was also created");
+            click(String.format("//tr/td/label/input[@value='%s']", publicationValue), SelectorType.XPATH);
+            click("publish", SelectorType.ID);
+            waitForTextToBePresent("Update successful");
+        });
+
+        Then("^the publication is visible via self serve search$", () -> {
+            world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
+            enterText("search", SelectorType.ID, world.applicationDetails.getLicenceNumber());
+            click("submit", SelectorType.ID);
+            WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'New Variation')]]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
+            String expectedText = String.format("%s, %s, %s, %s, %s, %s\n",
+                    world.createApplication.getCorrespondenceAddressLine1(),
+                    world.createApplication.getCorrespondenceAddressLine2(),
+                    world.createApplication.getCorrespondenceAddressLine3(),
+                    world.createApplication.getCorrespondenceAddressLine4(),
+                    world.createApplication.getCorrespondenceTown(),
+                    world.createApplication.getCorrespondencePostCode())
+                    .concat("Light goods vehicles authorised on the licence. New authorisation will be 5 vehicle(s)");
+            assertTrue(publicationResult.findElement(By.xpath("/div[2]/p[3]")).getText().contains(expectedText));
+            clickByLinkText(world.applicationDetails.getLicenceNumber());
+
         });
     }
 
@@ -193,5 +231,41 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             monthName = "Date Not Found";
         }
         return monthName;
+    }
+
+    public static String getTrafficArea(TrafficArea trafficArea) {
+        String trafficAreaString;
+        switch (trafficArea) {
+            case NORTH_EAST:
+                trafficAreaString = "North East of England";
+                break;
+            case NORTH_WEST:
+            trafficAreaString = "North West of England";
+                break;
+            case MIDLANDS:
+            trafficAreaString = "West Midlands";
+                break;
+            case EAST:
+            trafficAreaString = "East of England";
+                break;
+            case WALES:
+            trafficAreaString = "Wales";
+                break;
+            case WEST:
+            trafficAreaString = "West of England";
+                break;
+            case LONDON:
+            trafficAreaString = "London and the South East of England";
+                break;
+            case SCOTLAND:
+            trafficAreaString = "Scotland";
+                break;
+            case NORTHERN_IRELAND:
+            trafficAreaString = "Northern Ireland";
+                break;
+            default:
+            throw new IllegalStateException("Unexpected value: " + trafficArea);
+        }
+        return trafficAreaString;
     }
 }

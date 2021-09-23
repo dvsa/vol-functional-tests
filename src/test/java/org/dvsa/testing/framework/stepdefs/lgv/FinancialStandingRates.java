@@ -72,7 +72,7 @@ public class FinancialStandingRates extends BasePage {
     @When("i am on the financial standing rates page")
     public void iAmOnTheFinancialStandingRatesPage() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToFinancialStandingRates();
     }
 

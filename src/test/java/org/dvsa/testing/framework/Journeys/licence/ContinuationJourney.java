@@ -69,7 +69,7 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void viewContinuationSnapshotOnInternal()  {
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.urlSearchAndViewApplication();
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
