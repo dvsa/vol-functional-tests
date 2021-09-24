@@ -51,7 +51,7 @@ public class PaymentProcessing extends BasePage implements En {
             assertNotEquals(currentFeeCount, newFeeCount);
         });
         Then("^the fee should be paid and no longer visible in the fees table$", () -> {
-            world.internalNavigation.urlSearchAndViewEditFee(getFeeNumber());
+            world.internalNavigation.getAdminEditFee(getFeeNumber());
             waitForTextToBePresent("Payments and adjustments");
             refreshPageWithJavascript();
             assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");

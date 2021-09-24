@@ -1,20 +1,22 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.system.Properties;
 import com.sun.istack.NotNull;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
 import java.time.Duration;
 
-import static activesupport.driver.Browser.navigate;
-
 public class SelfServeNavigational extends BasePage {
 
     public World world;
+    private String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+    public String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
     public SelfServeNavigational(World world) {
         this.world = world;
@@ -25,8 +27,7 @@ public class SelfServeNavigational extends BasePage {
     }
 
     public void navigateToSearch()  {
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-lorry-bus-operators/").toString();
-        navigate().get(myURL);
+        get(this.url.concat("search/find-lorry-bus-operators/"));
     }
 
     public void navigateToPage(String type, String page)  {
@@ -118,39 +119,35 @@ public class SelfServeNavigational extends BasePage {
     public void navigateThroughApplication()  {
         String workingDir = System.getProperty("user.dir");
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
-        String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Business type");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Business details");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Addresses");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Directors");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Operating centres and authorisation");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Financial evidence");
-
+        waitAndContinuePage("Business type");
+        waitAndContinuePage("Business details");
+        waitAndContinuePage("Addresses");
+        waitAndContinuePage("Directors");
+        waitAndContinuePage("Operating centres and authorisation");
+        waitAndContinuePage("Financial evidence");
         waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
         uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Transport Managers");
+        waitAndContinuePage("Transport Managers");
+        waitAndContinuePage("Vehicle details");
 
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Vehicle details");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
         if (isTitlePresent("Vehicle declarations", 30)) {
             waitAndClick(saveAndContinue, SelectorType.XPATH);
         }
-        waitForTitleToBePresent("Safety and compliance");
+        waitAndContinuePage("Safety and compliance");
+        waitAndContinuePage("Financial history");
+        waitAndContinuePage("Licence history");
+        waitAndContinuePage("Convictions and Penalties");
+    }
+
+    private void waitAndContinuePage(String pageTitle) {
+        waitForTitleToBePresent(pageTitle);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Financial history");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Licence history");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Convictions and Penalties");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+    }
+
+    public void getVariationFinancialEvidencePage() {
+        get(this.url.concat(String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())));
     }
 }

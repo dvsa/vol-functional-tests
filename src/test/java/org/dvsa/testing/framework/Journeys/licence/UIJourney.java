@@ -319,7 +319,7 @@ public class UIJourney extends BasePage {
     public void addNewOperatingCentre()  {
         world.APIJourney.createAdminUser();
         world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.getLicence();
         clickByLinkText("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
         searchAndSelectAddress("postcodeInput1", "FK10 1AA", 1);
@@ -409,13 +409,13 @@ public class UIJourney extends BasePage {
     public void createCaseUI(String target)  {
         switch (target.toLowerCase()) {
             case "licence":
-                world.internalNavigation.urlSearchAndViewLicence();
+                world.internalNavigation.getLicence();
                 break;
             case "application":
                 world.internalNavigation.urlSearchAndViewApplication();
                 break;
             case "variation":
-                world.internalNavigation.urlSearchAndViewVariational();
+                world.internalNavigation.getVariationApplication();
                 break;
         }
         if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equals("UNDER CONSIDERATION")) {
