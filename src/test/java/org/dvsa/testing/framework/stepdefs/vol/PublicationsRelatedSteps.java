@@ -7,6 +7,7 @@ import apiCalls.enums.TrafficArea;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PublicationsRelatedSteps extends BasePage implements En {
@@ -140,7 +142,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     refreshPageWithJavascript();
                 }
             }
-            Assert.assertEquals(0, missingLinks);
+            assertEquals(0, missingLinks);
         });
         Then("^the corresponding publication is generated and published$", () -> {
             world.internalNavigation.logInAndNavigateToAdminProcessing();
@@ -159,18 +161,51 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         Then("^the publication is visible via self serve search$", () -> {
             world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
             enterText("search", SelectorType.ID, world.applicationDetails.getLicenceNumber());
-            click("submit", SelectorType.ID);
-            WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'New Variation')]]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
-            String expectedText = String.format("%s, %s, %s, %s, %s, %s\n",
+            String licenceNo = world.applicationDetails.getLicenceNumber();
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNo, 90, "New Variation publication wasn't present. Possibly the backend didn't process in time.");
+            waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNo), SelectorType.XPATH);
+        });
+        And("^the \"([^\"]*)\" publication text is correct with \"([^\"]*)\" hgvs and \"([^\"]*)\" lgvs", (String variationType, String hgvs, String lgvs) -> {
+            WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'New Variation')]]/div[2]/p[3]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
+            String correspondenceAddress = String.format("%s, %s, %s, %s, %s, %s ",
                     world.createApplication.getCorrespondenceAddressLine1(),
                     world.createApplication.getCorrespondenceAddressLine2(),
                     world.createApplication.getCorrespondenceAddressLine3(),
                     world.createApplication.getCorrespondenceAddressLine4(),
                     world.createApplication.getCorrespondenceTown(),
-                    world.createApplication.getCorrespondencePostCode())
-                    .concat("Light goods vehicles authorised on the licence. New authorisation will be 5 vehicle(s)");
-            assertTrue(publicationResult.findElement(By.xpath("/div[2]/p[3]")).getText().contains(expectedText));
+                    world.createApplication.getCorrespondencePostCode());
+
+            StringBuilder expectedText = new StringBuilder("");
+
+            if (variationType.contains("HGV")) {
+                String operatingCentreAddress = String.format("%s, %s, %s, %s, %s, %s",
+                        world.createApplication.getOperatingCentreAddressLine1(),
+                        world.createApplication.getOperatingCentreAddressLine2(),
+                        world.createApplication.getOperatingCentreAddressLine3(),
+                        world.createApplication.getOperatingCentreAddressLine4(),
+                        world.createApplication.getOperatingCentreTown(),
+                        world.createApplication.getOperatingCentrePostCode());
+                String hgvIncreaseText = String.format("Increase at existing operating centre: %s New authorisation at this operating centre will be: %s Heavy Goods Vehicle(s), %s trailer(s) ",
+                        operatingCentreAddress,
+                        hgvs,
+                        world.createApplication.getTotalOperatingCentreTrailerAuthority());
+                expectedText.append(correspondenceAddress);
+                expectedText.append(hgvIncreaseText);
+            }
+            if (variationType.contains("LGV")) {
+                expectedText.append(correspondenceAddress);
+                String lgvIncreaseText = String.format("Light goods vehicles authorised on the licence. New authorisation will be %s vehicle(s)", lgvs);
+                expectedText.append(lgvIncreaseText);
+            }
+            assertTrue(expectedText.toString().equals(publicationResult.getText()));
+
+
             clickByLinkText(world.applicationDetails.getLicenceNumber());
+            assertTrue(isElementPresent("//th[contains(text(),'Operating centre')]/../th[contains(text(),'Heavy Goods Vehicles')]", SelectorType.XPATH));
+            assertEquals(getText("//li/dt[contains(text(),'Total Number of Heavy Goods Vehicles')]/../dd", SelectorType.XPATH), hgvs);
+            if (!lgvs.equals("0"))
+                assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvs);
+            assertEquals(getText("//li/dt[contains(text(),'Total Number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         });
     }
 

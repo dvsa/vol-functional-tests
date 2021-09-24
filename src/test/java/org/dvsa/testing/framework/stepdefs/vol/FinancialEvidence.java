@@ -66,14 +66,20 @@ public class FinancialEvidence extends BasePage {
     }
 
     @And("i create and submit an operating centre variation with {string} hgvs and {string} lgvs")
-    public void iCreateAndSubmitAnOperatingCentreVariationWithHgvsAndLgvs(String unformattedNumberOfHGVs, String unformattedNumberOfLGVs) {
-        loginAndSubmitOperatingCentreVehicleAuthorisationVariation(unformattedNumberOfHGVs, unformattedNumberOfLGVs);
+    public void iCreateAndSubmitAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) {
+        loginAndSubmitOperatingCentreVehicleAuthorisationVariation(numberOfHGVs, numberOfLGVs);
         clickByLinkText("Financial evidence");
         click("uploadLaterRadio", SelectorType.ID);
         click(saveButton, SelectorType.XPATH);
         clickByLinkText("Review and declarations");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
-        click("submit", SelectorType.ID);
+        if (String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority()).equals(numberOfHGVs))
+            click("submit", SelectorType.ID);
+        else {
+            click("submitAndPay", SelectorType.ID);
+            click("form-actions[pay]", SelectorType.ID);
+            world.feeAndPaymentJourney.customerPaymentModule();
+        }
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }
 

@@ -18,8 +18,7 @@ public class ExternalSearchFilters extends BasePage implements En {
             enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
             click(nameAttribute("input","submit"), SelectorType.CSS);
             do { click(nameAttribute("button","submit"), SelectorType.CSS);}
-            while(!isElementPresent("//*[@class='table__wrapper']",SelectorType.XPATH));
-
+            while(!isElementPresent("//*[@class='table__wrapper']", SelectorType.XPATH));
         });
         Then("^the Organisation Type filter should be displayed$", () -> {
             String opName = getText(String.format("//*[@id='filter[orgTypeDesc]']/option[2]"), SelectorType.XPATH);

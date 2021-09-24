@@ -6,6 +6,7 @@ import activesupport.system.Properties;
 import com.sun.istack.NotNull;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
@@ -122,15 +123,13 @@ public class SelfServeNavigational extends BasePage {
     This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
  */
     public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage)  {
-        boolean conditionNotTrue = true;
-        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
-        while (conditionNotTrue) {
-            conditionNotTrue = !isTextPresent(text);
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();;
+        do {
             click("submit", SelectorType.ID);
             waitForPageLoad();
-            if (System.currentTimeMillis() > kickOut) {
-                throw new TimeoutException(exceptionMessage);
-            }
+        } while (!isTextPresent(text) && System.currentTimeMillis() < kickOut);
+        if (System.currentTimeMillis() > kickOut) {
+            throw new TimeoutException(exceptionMessage);
         }
     }
 
