@@ -3,7 +3,7 @@ Feature: Financial evidence calculations for hgv and lgv permutations.
   Scenario Outline: Check financial evidence for variations
     Given I create a new external user
     And i have a "<operatorType>" "<licenceType>" licence with a hgv authorisation of "<vehicleAuth>" in traffic area "<trafficArea>"
-    When i create an operating centre variation with "<hgvs>" hgv and "<lgvs>" lgvs
+    When i create an operating centre variation with "<hgvs>" hgvs and "<lgvs>" lgvs
     Then the financial evidence value should be as expected
     And the same financial evidence value is displayed on internal
 
@@ -22,7 +22,7 @@ Feature: Financial evidence calculations for hgv and lgv permutations.
     Given I create a new external user
     And i have a "<operatorType>" "<licenceType>" licence with a hgv authorisation of "<vehicleAuth>" in traffic area "<trafficArea>"
     And i have a "<operatorType2>" "<licenceType2>" licence with a hgv authorisation of "<vehicleAuth2>" in traffic area "<trafficArea2>"
-    When i create an operating centre variation with "<hgvs>" hgv and "<lgvs>" lgvs
+    When i create an operating centre variation with "<hgvs>" hgvs and "<lgvs>" lgvs
     Then the financial evidence value should be as expected
     And the same financial evidence value is displayed on internal
 

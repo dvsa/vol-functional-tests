@@ -1,7 +1,7 @@
 Feature: Publications
 
 
-  Scenario: Publications generate and display correctly on both apps.
+  Scenario: Publications generate and display correctly on both apps. (LGV increase)
     Given i have a valid "goods" "standard_international" licence
     And i create and submit an operating centre variation with "5" hgvs and "5" lgvs
     When the corresponding publication is generated and published

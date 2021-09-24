@@ -171,7 +171,6 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     .concat("Light goods vehicles authorised on the licence. New authorisation will be 5 vehicle(s)");
             assertTrue(publicationResult.findElement(By.xpath("/div[2]/p[3]")).getText().contains(expectedText));
             clickByLinkText(world.applicationDetails.getLicenceNumber());
-
         });
     }
 
