@@ -1,3 +1,4 @@
+@lgv
 Feature: Publications generate on LGV related changes and regression
 
 

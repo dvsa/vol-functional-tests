@@ -49,8 +49,14 @@ public class FinancialEvidence extends BasePage {
         licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
     }
 
-    @Then("the financial evidence value should be as expected")
-    public void theFinancialEvidenceValueShouldBeAsExpected() {
+    @Then("the financial evidence value should be as expected for {string} hgvs and {string} lgvs")
+    public void theFinancialEvidenceValueShouldBeAsExpected(String newHGVTotalAuthority, String newLGVTotalAuthority) {
+        if (FinancialEvidence.licences.get(world.createApplication.getLicenceId()) != null) {
+            FinancialEvidence.licences.get(world.createApplication.getLicenceId())[3] = newHGVTotalAuthority;
+            if (world.licenceCreation.isAGoodsInternationalLicence()) {
+                FinancialEvidence.licences.get(world.createApplication.getLicenceId())[4] = newLGVTotalAuthority;
+            }
+        }
         world.selfServeNavigation.getVariationFinancialEvidencePage();
         int actualFinancialEvidenceValue = getFinancialValueFromPage();
         expectedFinancialEvidenceValue = getExpectedFinancialEvidenceValue(licences);
