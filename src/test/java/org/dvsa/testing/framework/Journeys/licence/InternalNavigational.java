@@ -8,7 +8,6 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
-import static activesupport.driver.Browser.navigate;
 import static org.junit.Assert.assertTrue;
 
 public class InternalNavigational extends BasePage {
@@ -42,14 +41,18 @@ public class InternalNavigational extends BasePage {
     public void logInAndNavigateToDocsTable()  {
         world.APIJourney.createAdminUser();
         logInAsAdmin();
-        urlSearchAndViewApplication();
+        getApplication();
         clickByLinkText("Docs");
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
-    public void logInAndNavigateToApplicationProcessing()  {
+    public void logInAndNavigateToApplicationProcessingPage(boolean variation)  {
         world.APIJourney.createAdminUser();
         logInAsAdmin();
-        urlSearchAndViewApplication();
+        if (variation) {
+            getVariationApplication();
+        } else {
+            getApplication();
+        }
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
     } // refactor to use global navigate to task method or something on the end after the login steps.
@@ -62,8 +65,8 @@ public class InternalNavigational extends BasePage {
         click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
     }
 
-    public void urlSearchAndViewApplication()  {
-        navigate().get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
+    public void getApplication()  {
+        get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
 
     public void getLicence()  {
@@ -87,7 +90,7 @@ public class InternalNavigational extends BasePage {
     }
 
     public void logIntoInternalAndClickOnTask(String taskLinkText) {
-        logInAndNavigateToApplicationProcessing();
+        logInAndNavigateToApplicationProcessingPage(false);
         clickByXPath(taskLinkText);
         waitForElementToBePresent(taskTitle);
     }

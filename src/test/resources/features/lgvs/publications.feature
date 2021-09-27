@@ -29,9 +29,13 @@ Feature: Publications generate on LGV related changes and regression
       | standard_international | 8    | 5    | HGV and LGV   |
       | standard_national      | 8    | 0    | HGV           |
 
-  Scenario: Out of objection date displays 22 days after submitting
+  Scenario Outline: The out of objection date is populated 22 days after the publication date
+    Given i have a valid "goods" "<licenceType>" licence
+    When i create and submit an operating centre variation with "<HGVs>" hgvs and "<LGVs>" lgvs
+    Then the out of objection date is present on the application 22 days after the publication date
 
-
-#  Scenario Out of Objection date
-
-#  as soon as granted, publication updates without requiring another publish.
+    Examples:
+      | licenceType            | HGVs | LGVs |
+      | standard_international | 5    | 5    |
+      | standard_international | 8    | 0    |
+      | standard_national      | 8    | 0    |

@@ -102,13 +102,13 @@ public class DirectorVariation extends BasePage {
 
     @Then("^a task should not be created in internal$")
     public void aTaskShouldNotBeCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToApplicationProcessing();
+        world.internalNavigation.logInAndNavigateToApplicationProcessingPage(false);
         directorJourney.assertLastDirectorTaskNotCreated();
     }
 
     @Then("^the last director deleted task is created in internal$")
     public void aLastDirectorDeletedTaskIsCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToApplicationProcessing();
+        world.internalNavigation.logInAndNavigateToApplicationProcessingPage(false);
         directorJourney.assertLastDirectorTaskCreated();
     }
 

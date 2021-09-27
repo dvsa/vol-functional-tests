@@ -412,7 +412,7 @@ public class UIJourney extends BasePage {
                 world.internalNavigation.getLicence();
                 break;
             case "application":
-                world.internalNavigation.urlSearchAndViewApplication();
+                world.internalNavigation.getApplication();
                 break;
             case "variation":
                 world.internalNavigation.getVariationApplication();

@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -213,6 +215,18 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             if (world.licenceCreation.isAGoodsInternationalLicence())
                 assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
             assertEquals(getText("//li/dt[contains(text(),'Total Number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        });
+
+        Then("^the out of objection date is present on the application (\\d+) days after the publication date$", (Integer arg0) -> {
+            world.internalNavigation.logInAndNavigateToApplicationProcessingPage(true);
+            clickByLinkText("Publications");
+            String publicationDate = getText("//td[@data-heading='Publication date']", SelectorType.XPATH);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate formattedDate = LocalDate.parse(publicationDate, formatter);
+            String expectedDate = formattedDate.plusDays(22).format(formatter);
+            clickByLinkText("Application details");
+            String actualDate = getText("//dt[text()='Out of objection']/../dd", SelectorType.XPATH);
+            assertEquals(expectedDate, actualDate);
         });
     }
 
