@@ -344,7 +344,7 @@ public class UIJourney extends BasePage {
     public void caseWorkerCompleteOverview()  {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        click("//*[contains(@id,'form-actions[save')]", SelectorType.XPATH);
     }
 
     public void caseWorkerGrantApplication()  {
@@ -561,5 +561,14 @@ public class UIJourney extends BasePage {
 
     public void checkValue(String selector, SelectorType selectorType, String text) {
         assertEquals(getValue(selector, selectorType), text);
+    }
+
+    public void grantApplicationUnderDelegatedAuthority() {
+        waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
+        waitAndClick("//input[@id='grant-authority']", SelectorType.XPATH);
+        waitAndClick("//button[@id='form-actions[continue-to-grant]']", SelectorType.XPATH);
+        if (isElementPresent("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH))
+            waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
     }
 }

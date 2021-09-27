@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FinancialEvidence extends BasePage {
 
     World world;
-    HashMap<String, String[]> licences = new HashMap<>();
+    public static HashMap<String, String[]> licences = new HashMap<>();
     List<FinancialStandingRate> allRates = Arrays.asList( new FinancialStandingRate[] {
             new FinancialStandingRate("goods","standard_national",null,8000,4500,null),
             new FinancialStandingRate("goods","standard_international","hgv",8000,4500,null),
@@ -34,17 +34,6 @@ public class FinancialEvidence extends BasePage {
     );
 
     int expectedFinancialEvidenceValue;
-
-    String operatingCentreTitle = "//h1[contains(text(),'Edit operating centre')]";
-    String operatingCentreVehicleField = "//*[@id='noOfVehiclesRequired']";
-    String advertTitle = "//h3[text()='Newspaper advert']";
-    String submitButton = "//*[@id='form-actions[submit]']";
-
-    String operatingCentreConfirmationText = "Operating centre updated";
-    String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
-    String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
-    String saveButton = "//*[@id='form-actions[save]']";
-    String totalHgvInTable = "//td[@colspan][1]";
     String financialEvidenceValueOnPage = "//h2[@style='margin-top: 0;']";
 
 
@@ -58,29 +47,6 @@ public class FinancialEvidence extends BasePage {
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
-    }
-
-    @And("i create an operating centre variation with {string} hgvs and {string} lgvs")
-    public void iCreateAnOperatingCentreVariationWithHgvAndLgvs(String unformattedNumberOfHGVs, String unformattedNumberOfLGVs) {
-        loginAndSubmitOperatingCentreVehicleAuthorisationVariation(unformattedNumberOfHGVs, unformattedNumberOfLGVs);
-    }
-
-    @And("i create and submit an operating centre variation with {string} hgvs and {string} lgvs")
-    public void iCreateAndSubmitAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) {
-        loginAndSubmitOperatingCentreVehicleAuthorisationVariation(numberOfHGVs, numberOfLGVs);
-        clickByLinkText("Financial evidence");
-        click("uploadLaterRadio", SelectorType.ID);
-        click(saveButton, SelectorType.XPATH);
-        clickByLinkText("Review and declarations");
-        click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
-        if (String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority()).equals(numberOfHGVs))
-            click("submit", SelectorType.ID);
-        else {
-            click("submitAndPay", SelectorType.ID);
-            click("form-actions[pay]", SelectorType.ID);
-            world.feeAndPaymentJourney.customerPaymentModule();
-        }
-        waitForTextToBePresent("Thank you, your application has been submitted.");
     }
 
     @Then("the financial evidence value should be as expected")
@@ -97,47 +63,6 @@ public class FinancialEvidence extends BasePage {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getVariationFinancialEvidencePage();
         assertEquals(getFinancialValueFromPage(), expectedFinancialEvidenceValue);
-    }
-
-    private void loginAndSubmitOperatingCentreVehicleAuthorisationVariation(String unformattedNumberOfHGVs, String unformattedNumberOfLGVs) {
-        String hgvs = unformattedNumberOfHGVs.replaceAll(" ", "");
-        String lgvs = unformattedNumberOfLGVs.replaceAll(" ", "");
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
-        world.UIJourney.changeLicenceForVariation();
-        changeAndSaveOperatingCentreVehicleAuthorisation(hgvs, lgvs);
-    }
-
-    private void changeAndSaveOperatingCentreVehicleAuthorisation(String hgvs, String lgvs) {
-        changeOperatingCentreVehicleAuthorisation(hgvs);
-        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, hgvs);
-        if (world.licenceCreation.isAGoodsInternationalLicence()) {
-            replaceText(totalLGVAuthorisationField, SelectorType.XPATH, lgvs);
-        }
-
-        if (licences.get(world.createApplication.getLicenceId()) != null) {
-            licences.get(world.createApplication.getLicenceId())[3] = hgvs;
-            if (world.licenceCreation.isAGoodsInternationalLicence()) {
-                licences.get(world.createApplication.getLicenceId())[4] = lgvs;
-            }
-        }
-
-        click(saveButton, SelectorType.XPATH);
-    }
-
-    private void changeOperatingCentreVehicleAuthorisation(String hgvs) {
-        String totalNumberOfHgvsOnOperatingCentres = findElement(totalHgvInTable, SelectorType.XPATH).getText();
-        if (!hgvs.equals(totalNumberOfHgvsOnOperatingCentres)) {
-            String operatingCentreLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentrePostCode());
-            click(operatingCentreLink, SelectorType.XPATH);
-            replaceText(operatingCentreVehicleField, SelectorType.XPATH, hgvs);
-            if (Integer.parseInt(hgvs) > Integer.parseInt(totalNumberOfHgvsOnOperatingCentres) && world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) && !world.createApplication.getOperatorType().equals(LicenceType.RESTRICTED.asString())) {
-                waitAndClick(operatingCentreTitle, SelectorType.XPATH);
-                waitForElementToBePresent(advertTitle);
-            }
-            click(submitButton, SelectorType.XPATH);
-            waitForTextToBePresent(operatingCentreConfirmationText);
-        }
     }
 
     public int getFinancialValueFromPage() {
