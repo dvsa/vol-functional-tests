@@ -57,7 +57,7 @@ public class InternalNavigational extends BasePage {
         clickByLinkText("Processing");
     } // refactor to use global navigate to task method or something on the end after the login steps.
 
-    public void navigateToAdminProcessing()  {
+    public void navigateToAdminPublication()  {
         if (world.updateLicence.getInternalUserId() == null)
             world.APIJourney.createAdminUser();
         logInAsAdmin();

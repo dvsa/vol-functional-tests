@@ -28,8 +28,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
     public PublicationsRelatedSteps(World world) {
         this.world = world;
         And("^i navigate to the admin publications page$", () -> {
-            click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
-            click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
+            world.internalNavigation.navigateToAdminPublication();
         });
         And("^i generate and publish all \"([^\"]*)\" publications$", (Integer noOfDifferentLicences) -> {
             String currentPubNo;
@@ -147,7 +146,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             assertEquals(0, missingLinks);
         });
         Then("^the corresponding publication is generated and published$", () -> {
-            world.internalNavigation.navigateToAdminProcessing();
+            world.internalNavigation.navigateToAdminPublication();
             String trafficArea = getTrafficArea(world.createApplication.getTrafficArea());
             String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
             String selector = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
