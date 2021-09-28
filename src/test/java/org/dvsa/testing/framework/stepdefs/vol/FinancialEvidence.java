@@ -1,8 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import apiCalls.enums.LicenceType;
-import apiCalls.enums.OperatorType;
 import apiCalls.enums.TrafficArea;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -59,7 +57,7 @@ public class FinancialEvidence extends BasePage {
         }
         world.selfServeNavigation.getVariationFinancialEvidencePage();
         int actualFinancialEvidenceValue = getFinancialValueFromPage();
-        expectedFinancialEvidenceValue = getExpectedFinancialEvidenceValue(licences);
+        expectedFinancialEvidenceValue = calculateExpectedFinancialEvidenceValue(licences);
         assertEquals(expectedFinancialEvidenceValue, actualFinancialEvidenceValue);
     }
 
@@ -76,7 +74,7 @@ public class FinancialEvidence extends BasePage {
         return Integer.parseInt(valueInPounds.replaceAll("[^\\d.]", ""));
     }
 
-    public int getExpectedFinancialEvidenceValue(HashMap<String, String[]> licences) {
+    public int calculateExpectedFinancialEvidenceValue(HashMap<String, String[]> licences) {
         List<String[]> allRelevantRates = new LinkedList<>();
         licences.values().forEach(values -> {
             String operatorType = values[0];

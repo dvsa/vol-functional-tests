@@ -107,7 +107,7 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("The document has been saved");
     }
 
-    public void editDocumentWithWebDav() throws IllegalBrowserException, IOException, InterruptedException {
+    public void editDocumentWithWebDav() throws IOException, InterruptedException {
         // Forgive us for using sleeps. There's no other way as this is not a window that selenium can recognise.
         String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
         String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
