@@ -8,8 +8,6 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
-import static org.junit.Assert.assertTrue;
-
 public class InternalNavigational extends BasePage {
 
     private World world;
@@ -38,24 +36,16 @@ public class InternalNavigational extends BasePage {
         waitForTitleToBePresent(financialStandingTitle);
     }
 
-    public void logInAndNavigateToDocsTable()  {
-        world.APIJourney.createAdminUser();
-        logInAsAdmin();
-        getApplication();
+    public void logInAndNavigateToApplicationDocsTable(boolean variation)  {
+        loginAndGetApplication(variation);
         clickByLinkText("Docs");
-    } // refactor to use global navigate to task method or something on the end after the login steps.
+    }
 
     public void logInAndNavigateToApplicationProcessingPage(boolean variation)  {
-        world.APIJourney.createAdminUser();
-        logInAsAdmin();
-        if (variation) {
-            getVariationApplication();
-        } else {
-            getApplication();
-        }
+        loginAndGetApplication(variation);
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
-    } // refactor to use global navigate to task method or something on the end after the login steps.
+    }
 
     public void navigateToAdminPublication()  {
         if (world.updateLicence.getInternalUserId() == null)
@@ -63,6 +53,17 @@ public class InternalNavigational extends BasePage {
         logInAsAdmin();
         click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
+    }
+
+    public void loginAndGetApplication(boolean variation) {
+        if (world.updateLicence.getInternalUserId() == null)
+            world.APIJourney.createAdminUser();
+        logInAsAdmin();
+        if (variation) {
+            getVariationApplication();
+        } else {
+            getApplication();
+        }
     }
 
     public void getApplication()  {

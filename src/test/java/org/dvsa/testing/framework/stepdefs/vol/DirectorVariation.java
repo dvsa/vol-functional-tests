@@ -70,7 +70,7 @@ public class DirectorVariation extends BasePage {
 
     @Then("^a snapshot should be created in internal$")
     public void aSnapshotShouldBeCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToDocsTable();
+        world.internalNavigation.logInAndNavigateToApplicationDocsTable(false);
         directorJourney.assertDirectorChangeInTable();
     }
 

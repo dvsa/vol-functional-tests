@@ -91,11 +91,11 @@ public class OperatingCentreVariation extends BasePage {
             String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentrePostCode());
             click(operatingCentreEditLink, SelectorType.XPATH);
             replaceText(operatingCentreVehicleField, SelectorType.XPATH, newHGVTotalAuthority);
-            if (Integer.parseInt(newHGVTotalAuthority) > Integer.parseInt(totalCountOfHGVAuthorisationsOnOperatingCentres) && world.licenceCreation.isGoodsLicence() && !world.licenceCreation.isARestrictedLicence()) {
-                waitAndClick(operatingCentreTitle, SelectorType.XPATH); // Standard and International licences require uploadable proof of advert on a HGV increase.
+            if (Integer.parseInt(newHGVTotalAuthority) > Integer.parseInt(totalCountOfHGVAuthorisationsOnOperatingCentres) && world.licenceCreation.isGoodsLicence()) {
+                waitAndClick(operatingCentreTitle, SelectorType.XPATH);
                 waitForElementToBePresent(advertTitle);
             }
-            click(submitButton, SelectorType.XPATH);
+            waitAndClick(submitButton, SelectorType.XPATH);
             waitForTextToBePresent(operatingCentreConfirmationText);
         }
     }

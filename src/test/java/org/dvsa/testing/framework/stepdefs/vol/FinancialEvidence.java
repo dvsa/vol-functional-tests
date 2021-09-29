@@ -67,6 +67,7 @@ public class FinancialEvidence extends BasePage {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getVariationFinancialEvidencePage();
         assertEquals(getFinancialValueFromPage(), expectedFinancialEvidenceValue);
+        licences = new HashMap<>();
     }
 
     public int getFinancialValueFromPage() {

@@ -2,16 +2,12 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.database.exception.UnsupportedDatabaseDriverException;
-import cucumber.api.java.eo.Se;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 
 import java.sql.SQLException;
-
-import static activesupport.driver.Browser.navigate;
-import static junit.framework.TestCase.assertTrue;
 
 public class InternalSearchJourney extends BasePage {
 
@@ -26,12 +22,6 @@ public class InternalSearchJourney extends BasePage {
         internalSearchUntilTextPresent(SearchType.Application, applicationId, applicationId);
         if (isLinkPresent("Interim", 60))
             clickByLinkText("Interim ");
-    }
-
-    public void searchAndViewVariationApplication() {
-        String variationApplicationNumber = world.updateLicence.getVariationApplicationId();
-        internalSearchUntilTextPresent(SearchType.Application, variationApplicationNumber, variationApplicationNumber);
-        assertTrue(Boolean.parseBoolean(String.valueOf(navigate().getCurrentUrl().contains("variation"))));
     }
 
     public void searchAndViewLicence()  {
