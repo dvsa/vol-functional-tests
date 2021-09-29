@@ -58,12 +58,12 @@ public class OperatingCentreVariation extends BasePage {
         click(uploadLaterRadioButton, SelectorType.XPATH);
         click(saveButton, SelectorType.XPATH);
         clickByLinkText("Review and declarations");
-        click(confirmDeclaration, SelectorType.ID);
+        click(confirmDeclaration, SelectorType.XPATH);
         if (world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority))
-            click(submitApplication, SelectorType.ID);
+            click(submitApplication, SelectorType.XPATH);
         else {
-            click(submitAndPayForApplication, SelectorType.ID);
-            click(payNow, SelectorType.ID);
+            click(submitAndPayForApplication, SelectorType.XPATH);
+            click(payNow, SelectorType.XPATH);
             world.feeAndPaymentJourney.customerPaymentModule();
         }
         waitForTextToBePresent("Thank you, your application has been submitted.");
