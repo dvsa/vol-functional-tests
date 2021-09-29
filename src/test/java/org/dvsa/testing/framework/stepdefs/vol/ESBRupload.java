@@ -25,7 +25,7 @@ public class ESBRupload extends BasePage implements En {
         });
         And("^A short notice tab should be displayed in internal$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
             world.busRegistrationJourney.internalSearchForBusReg();
             assertTrue(isTextPresent("Short notice"));
         });
@@ -39,7 +39,7 @@ public class ESBRupload extends BasePage implements En {
 
         And("^A short notice tab should not be displayed in internal$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
             world.busRegistrationJourney.internalSearchForBusReg();
             waitForTextToBePresent("Short notice");
             assertFalse(isTextPresent("Short notice"));

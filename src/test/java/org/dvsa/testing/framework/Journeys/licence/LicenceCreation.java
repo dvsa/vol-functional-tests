@@ -80,6 +80,15 @@ public class LicenceCreation {
 
     public boolean isAGoodsInternationalLicence() {
         return isGoodsLicence()
-                && world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString());
+                && isAnInternationalLicence();
     }
+
+    public boolean isAnInternationalLicence() {
+        return world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString());
+    }
+
+    public boolean isARestrictedLicence() {
+        return world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString());
+    }
+
 }

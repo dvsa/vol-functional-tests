@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import com.sun.istack.NotNull;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -11,6 +12,9 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
+
+import static activesupport.driver.Browser.navigate;
 
 public class SelfServeNavigational extends BasePage {
 
@@ -26,8 +30,22 @@ public class SelfServeNavigational extends BasePage {
         world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.EXTERNAL);
     }
 
-    public void navigateToSearch()  {
-        get(this.url.concat("search/find-lorry-bus-operators/"));
+    public void navigateToExternalSearch() {
+        if (Browser.isBrowserOpen()) {
+            navigate().manage().deleteAllCookies();
+            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        }
+        get(this.url.concat("search/"));
+    }
+
+    public void navigateToFindLorryAndBusOperatorsSearch()  {
+        navigateToExternalSearch();
+        clickByLinkText("Lorry and bus operators");
+    }
+
+    public void navigateToVehicleOperatorDecisionsAndApplications() {
+        navigateToExternalSearch();
+        clickByLinkText("Vehicle operator decisions and applications");
     }
 
     public void navigateToPage(String type, String page)  {
@@ -104,15 +122,13 @@ public class SelfServeNavigational extends BasePage {
     This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
  */
     public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage)  {
-        boolean conditionNotTrue = true;
-        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
-        while (conditionNotTrue) {
-            conditionNotTrue = !isTextPresent(text);
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();;
+        do {
             click("submit", SelectorType.ID);
             waitForPageLoad();
-            if (System.currentTimeMillis() > kickOut) {
-                throw new TimeoutException(exceptionMessage);
-            }
+        } while (!isTextPresent(text) && System.currentTimeMillis() < kickOut);
+        if (System.currentTimeMillis() > kickOut) {
+            throw new TimeoutException(exceptionMessage);
         }
     }
 

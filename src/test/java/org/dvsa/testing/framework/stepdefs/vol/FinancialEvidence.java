@@ -1,8 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import apiCalls.enums.LicenceType;
-import apiCalls.enums.OperatorType;
 import apiCalls.enums.TrafficArea;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -21,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FinancialEvidence extends BasePage {
 
     World world;
-    HashMap<String, String[]> licences = new HashMap<>();
+    public static HashMap<String, String[]> licences = new HashMap<>();
     List<FinancialStandingRate> allRates = Arrays.asList( new FinancialStandingRate[] {
             new FinancialStandingRate("goods","standard_national",null,8000,4500,null),
             new FinancialStandingRate("goods","standard_international","hgv",8000,4500,null),
@@ -34,17 +32,6 @@ public class FinancialEvidence extends BasePage {
     );
 
     int expectedFinancialEvidenceValue;
-
-    String operatingCentreTitle = "//h1[contains(text(),'Edit operating centre')]";
-    String operatingCentreVehicleField = "//*[@id='noOfVehiclesRequired']";
-    String advertTitle = "//h3[text()='Newspaper advert']";
-    String submitButton = "//*[@id='form-actions[submit]']";
-
-    String operatingCentreConfirmationText = "Operating centre updated";
-    String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
-    String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
-    String saveButton = "//*[@id='form-actions[save]']";
-    String totalHgvInTable = "//td[@colspan][1]";
     String financialEvidenceValueOnPage = "//h2[@style='margin-top: 0;']";
 
 
@@ -60,52 +47,27 @@ public class FinancialEvidence extends BasePage {
         licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
     }
 
-    @And("i create an operating centre variation with {string} hgv and {string} lgvs")
-    public void iCreateAnOperatingCentreVariationWithHgvAndLgvs(String numberOfHgvs, String numberOfLgvs) {
-        String hgvs = numberOfHgvs.replaceAll(" ", "");
-        String lgvs = numberOfLgvs.replaceAll(" ", "");
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
-        world.UIJourney.changeLicenceForVariation();
-        changeOperatingCentreVehicleAuthorisation(hgvs);
-        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, hgvs);
-        licences.get(world.createApplication.getLicenceId())[3] = hgvs;
-        if (world.licenceCreation.isAGoodsInternationalLicence()) {
-            replaceText(totalLGVAuthorisationField, SelectorType.XPATH, lgvs);
-            licences.get(world.createApplication.getLicenceId())[4] = lgvs;
+    @Then("the financial evidence value should be as expected for {string} hgvs and {string} lgvs")
+    public void theFinancialEvidenceValueShouldBeAsExpected(String newHGVTotalAuthority, String newLGVTotalAuthority) {
+        if (FinancialEvidence.licences.get(world.createApplication.getLicenceId()) != null) {
+            FinancialEvidence.licences.get(world.createApplication.getLicenceId())[3] = newHGVTotalAuthority;
+            if (world.licenceCreation.isAGoodsInternationalLicence()) {
+                FinancialEvidence.licences.get(world.createApplication.getLicenceId())[4] = newLGVTotalAuthority;
+            }
         }
-        click(saveButton, SelectorType.XPATH);
-    }
-
-    @Then("the financial evidence value should be as expected")
-    public void theFinancialEvidenceValueShouldBeAsExpected() {
         world.selfServeNavigation.getVariationFinancialEvidencePage();
         int actualFinancialEvidenceValue = getFinancialValueFromPage();
-        expectedFinancialEvidenceValue = getExpectedFinancialEvidenceValue(licences);
+        expectedFinancialEvidenceValue = calculateExpectedFinancialEvidenceValue(licences);
         assertEquals(expectedFinancialEvidenceValue, actualFinancialEvidenceValue);
     }
 
     @And("the same financial evidence value is displayed on internal")
     public void theSameFinancialEvidenceValueIsDisplayedOnInternal() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getVariationFinancialEvidencePage();
         assertEquals(getFinancialValueFromPage(), expectedFinancialEvidenceValue);
-    }
-
-    private void changeOperatingCentreVehicleAuthorisation(String hgvs) {
-        String totalNumberOfHgvsOnOperatingCentres = findElement(totalHgvInTable, SelectorType.XPATH).getText();
-        if (!hgvs.equals(totalNumberOfHgvsOnOperatingCentres)) {
-            String operatingCentreLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentrePostCode());
-            click(operatingCentreLink, SelectorType.XPATH);
-            replaceText(operatingCentreVehicleField, SelectorType.XPATH, hgvs);
-            if (Integer.parseInt(hgvs) > Integer.parseInt(totalNumberOfHgvsOnOperatingCentres) && world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) && !world.createApplication.getOperatorType().equals(LicenceType.RESTRICTED.asString())) {
-                waitAndClick(operatingCentreTitle, SelectorType.XPATH);
-                waitForElementToBePresent(advertTitle);
-            }
-            click(submitButton, SelectorType.XPATH);
-            waitForTextToBePresent(operatingCentreConfirmationText);
-        }
+        licences = new HashMap<>();
     }
 
     public int getFinancialValueFromPage() {
@@ -113,7 +75,7 @@ public class FinancialEvidence extends BasePage {
         return Integer.parseInt(valueInPounds.replaceAll("[^\\d.]", ""));
     }
 
-    public int getExpectedFinancialEvidenceValue(HashMap<String, String[]> licences) {
+    public int calculateExpectedFinancialEvidenceValue(HashMap<String, String[]> licences) {
         List<String[]> allRelevantRates = new LinkedList<>();
         licences.values().forEach(values -> {
             String operatorType = values[0];

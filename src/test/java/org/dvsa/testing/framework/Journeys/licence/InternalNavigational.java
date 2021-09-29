@@ -8,9 +8,6 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
-import static activesupport.driver.Browser.navigate;
-import static org.junit.Assert.assertTrue;
-
 public class InternalNavigational extends BasePage {
 
     private World world;
@@ -29,30 +26,48 @@ public class InternalNavigational extends BasePage {
         world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.INTERNAL);
     }
 
+    public void logInAsAdmin() {
+        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+    }
+
     public void navigateToFinancialStandingRates() {
         click(adminDropdown, SelectorType.XPATH);
         click(financialStandingAdminLink, SelectorType.XPATH);
         waitForTitleToBePresent(financialStandingTitle);
     }
 
-    public void logInAndNavigateToDocsTable()  {
-        world.APIJourney.createAdminUser();
-        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        urlSearchAndViewApplication();
+    public void logInAndNavigateToApplicationDocsTable(boolean variation)  {
+        loginAndGetApplication(variation);
         clickByLinkText("Docs");
-    } // refactor to use global navigate to task method or something on the end after the login steps.
+    }
 
-    public void logInAndNavigateToTask()  {
-        world.APIJourney.createAdminUser();
-        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        urlSearchAndViewApplication();
+    public void logInAndNavigateToApplicationProcessingPage(boolean variation)  {
+        loginAndGetApplication(variation);
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
-        assertTrue(isElementEnabled("//body", SelectorType.XPATH));
-    } // refactor to use global navigate to task method or something on the end after the login steps.
+    }
 
-    public void urlSearchAndViewApplication()  {
-        navigate().get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
+    public void navigateToAdminPublication()  {
+        if (world.updateLicence.getInternalUserId() == null)
+            world.APIJourney.createAdminUser();
+        logInAsAdmin();
+        click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
+        click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
+    }
+
+    public void loginAndGetApplication(boolean variation) {
+        if (world.updateLicence.getInternalUserId() == null)
+            world.APIJourney.createAdminUser();
+        logInAsAdmin();
+        if (variation) {
+            getVariationApplication();
+        } else {
+            getApplication();
+        }
+    }
+
+    public void getApplication()  {
+        get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
 
     public void getLicence()  {
@@ -76,7 +91,7 @@ public class InternalNavigational extends BasePage {
     }
 
     public void logIntoInternalAndClickOnTask(String taskLinkText) {
-        logInAndNavigateToTask();
+        logInAndNavigateToApplicationProcessingPage(false);
         clickByXPath(taskLinkText);
         waitForElementToBePresent(taskTitle);
     }
