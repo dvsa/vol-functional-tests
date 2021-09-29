@@ -107,7 +107,7 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("The document has been saved");
     }
 
-    public void editDocumentWithWebDav() throws IllegalBrowserException, IOException, InterruptedException {
+    public void editDocumentWithWebDav() throws IOException, InterruptedException {
         // Forgive us for using sleeps. There's no other way as this is not a window that selenium can recognise.
         String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
         String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
@@ -318,7 +318,7 @@ public class UIJourney extends BasePage {
 
     public void addNewOperatingCentre()  {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getLicence();
         clickByLinkText("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
@@ -344,7 +344,7 @@ public class UIJourney extends BasePage {
     public void caseWorkerCompleteOverview()  {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        click("//*[contains(@id,'form-actions[save')]", SelectorType.XPATH);
     }
 
     public void caseWorkerGrantApplication()  {
@@ -412,7 +412,7 @@ public class UIJourney extends BasePage {
                 world.internalNavigation.getLicence();
                 break;
             case "application":
-                world.internalNavigation.urlSearchAndViewApplication();
+                world.internalNavigation.getApplication();
                 break;
             case "variation":
                 world.internalNavigation.getVariationApplication();
@@ -561,5 +561,14 @@ public class UIJourney extends BasePage {
 
     public void checkValue(String selector, SelectorType selectorType, String text) {
         assertEquals(getValue(selector, selectorType), text);
+    }
+
+    public void grantApplicationUnderDelegatedAuthority() {
+        waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
+        waitAndClick("//input[@id='grant-authority']", SelectorType.XPATH);
+        waitAndClick("//button[@id='form-actions[continue-to-grant]']", SelectorType.XPATH);
+        if (isElementPresent("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH))
+            waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
     }
 }

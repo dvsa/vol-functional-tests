@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -18,7 +17,7 @@ public class ExternalSearch extends BasePage implements En {
         this.world = world;
 
         Given("^I am on the external search page$", () -> {
-            world.selfServeNavigation.navigateToSearch();
+            world.selfServeNavigation.navigateToFindLorryAndBusOperatorsSearch();
         });
         When("^I search for a lorry and bus operator by \"([^\"]*)\"$", (String arg0) -> {
             findSelectAllRadioButtonsByValue(arg0);

@@ -85,8 +85,8 @@ public class InternalApplication extends BasePage implements En {
 
         When("^the caseworker completes and submits the application$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalNavigation.urlSearchAndViewApplication();
+            world.internalNavigation.logInAsAdmin();
+            world.internalNavigation.getApplication();
             click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
             waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
@@ -116,11 +116,7 @@ public class InternalApplication extends BasePage implements En {
             if (System.currentTimeMillis() > kickoutTime) {
                 throw new TimeoutException("Kickout time for expecting no fee is present when granting a licence exceeded.");
             }
-            waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
-            waitAndClick("//input[@id='grant-authority']", SelectorType.XPATH);
-            waitAndClick("//button[@id='form-actions[continue-to-grant]']", SelectorType.XPATH);
-            waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
-            click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
+           world.UIJourney.grantApplicationUnderDelegatedAuthority();
         });
 
         Then("^the licence is granted in Internal$", () -> {

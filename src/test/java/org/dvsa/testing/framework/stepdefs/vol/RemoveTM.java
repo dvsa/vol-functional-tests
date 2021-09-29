@@ -43,13 +43,13 @@ public class RemoveTM extends BasePage implements En {
         });
         When("^the internal user goes to remove the last transport manager$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
             world.internalNavigation.getLicence();
             world.TMJourney.promptRemovalOfInternalTransportManager();
         });
         When("^the transport manager has been removed by an internal user$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
             world.internalNavigation.getLicence();
             world.TMJourney.removeInternalTransportManager();
         });

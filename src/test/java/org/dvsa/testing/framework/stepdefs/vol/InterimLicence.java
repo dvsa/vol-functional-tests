@@ -78,7 +78,7 @@ public class InterimLicence extends BasePage implements En {
         });
         And("^i have logged in to internal$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
         });
         When("^I create an interim application with a start and no end date$", () -> {
             clickByLinkText("add interim");
