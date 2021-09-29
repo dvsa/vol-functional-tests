@@ -147,14 +147,17 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         });
         Then("^the corresponding publication is generated and published$", () -> {
             world.internalNavigation.navigateToAdminPublication();
+            clickByLinkText("25");
             String trafficArea = getTrafficArea(world.createApplication.getTrafficArea());
             String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
-            String selector = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
-            String publicationValue = getAttribute(selector, SelectorType.XPATH, "value");
-            click(selector, SelectorType.XPATH);
+            String radioButton = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
+            String radioButtonValue = getAttribute(radioButton, SelectorType.XPATH, "value");
+            click(radioButton, SelectorType.XPATH);
             click("generate", SelectorType.ID);
             waitForTextToBePresent("Publication was generated, a new publication was also created");
-            click(String.format("//tr/td/label/input[@value='%s']", publicationValue), SelectorType.XPATH);
+            clickByLinkText("25");
+            String matchingRadioButton = String.format("//tr/td/label/input[@value='%s']", radioButtonValue);
+            click(matchingRadioButton, SelectorType.XPATH);
             click("publish", SelectorType.ID);
             waitForTextToBePresent("Update successful");
         });
