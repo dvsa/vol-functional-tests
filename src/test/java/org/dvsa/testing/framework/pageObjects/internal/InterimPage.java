@@ -10,7 +10,8 @@ public class InterimPage extends BasePage{
     private static String INTERIM_REASON_FIELD = nameAttribute("textarea","data[interimReason]");
     private static String START_DATE_FIELDS = nameAttribute("input", "data[interimStart][%s]");
     private static String END_DATE_FIELDS = nameAttribute("input", "data[interimEnd][%s]");
-    private static String VEHICLE_FIELD = nameAttribute("input", "data[interimAuthHgvVehicles]");
+    private static String HGV_VEHICLE_FIELD = nameAttribute("input", "data[interimAuthHgvVehicles]");
+    private static String LGV_VEHICLE_FIELD = nameAttribute("input", "data[interimAuthLgvVehicles]");
     private static String TRAILERS_FIELD = nameAttribute("input", "data[interimAuthTrailers]");
     private static String SAVE = nameAttribute("button", "form-actions[save]");
     private static String GRANT = nameAttribute("button", "form-actions[grant]");
@@ -31,8 +32,12 @@ public class InterimPage extends BasePage{
         enterText(String.format(END_DATE_FIELDS, "year"), SelectorType.CSS, String.valueOf(year));
     }
 
-    public static void vehicleAuthority(int vehicles) {
-        enterText(VEHICLE_FIELD, SelectorType.CSS, String.valueOf(vehicles));
+    public static void vehicleHgvAuthority(int hGVVehicles) {
+        enterText(HGV_VEHICLE_FIELD, SelectorType.CSS, String.valueOf(hGVVehicles));
+    }
+
+    public static void vehicleLgvAuthority(int lGVVehicles) {
+        enterText(LGV_VEHICLE_FIELD, SelectorType.CSS, String.valueOf(lGVVehicles));
     }
 
     public static void trailerAuthority(int trailer) {
