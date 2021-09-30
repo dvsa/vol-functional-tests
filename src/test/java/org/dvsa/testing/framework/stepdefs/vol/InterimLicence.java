@@ -56,11 +56,8 @@ public class InterimLicence extends BasePage implements En {
 
         Then("^A \"([^\"]*)\" error appears when i save the interim licence$", (String errorType) -> {
             InterimPage.save();
-            if (Objects.equals(errorType, "HGV")) {
-                assertTrue(isTextPresent(HgvVehicleErrorMessage));}
-            else {
-                assertTrue(isTextPresent(LgvVehicleErrorMessage));
-            }
+            String errorMes = (errorType.equals("HGV") ? (HgvVehicleErrorMessage):(LgvVehicleErrorMessage));
+            assertTrue(isTextPresent(errorMes));
         });
 
         Then("^I should get an error when i save the application$", () -> {
