@@ -7,6 +7,8 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.joda.time.LocalDate;
 
+import java.util.Objects;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -57,9 +59,9 @@ public class InterimLicence extends BasePage implements En {
             InterimPage.trailerAuthority(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         });
 
-        Then("^I should get a {string} error when i save the application$", (String errorType) -> {
+        Then("^A {string} error appears when i save the interim licence$", (String errorType) -> {
             InterimPage.save();
-            if (errorType == "HGV") {
+            if (Objects.equals(errorType, "HGV")) {
                 assertTrue(isTextPresent(HgvVehicleErrorMessage));}
             else {
                 assertTrue(isTextPresent(LgvVehicleErrorMessage));
