@@ -98,6 +98,12 @@ public class InterminLicence extends BasePage implements En {
         InterimPage.trailerAuthority(world.createApplication.getNoOfVehiclesRequested());
     }
 
+    @And("i have logged in to internal")
+        public void iHaveLoggedInToInternal() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+    }
+
     @Then("I should error when i attempt to grant the application")
     public void iShouldErrorWhenIAttemptToGrantTheApplication() {
         InterimPage.save();

@@ -76,7 +76,7 @@ public class PublicationRelationSteps extends BasePage implements En {
         Assert.assertEquals(0,missingLinks);
     }
 
-    @And("i generate and publish all {int} publications")
+    @And("i generate and publish all \\\"(\\\\d+)\\\" publications")
     public void iGenerateAndPublishAllPublications(Integer noOfDifferentLicences) {
         String currentPubNo;
         String linkedPubNo;

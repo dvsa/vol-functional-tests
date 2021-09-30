@@ -138,5 +138,10 @@ public class SurrenderLogic extends BasePage implements En {
     public void iAmOnTheSurrendersReviewContactDetailsPage() {
         assertTrue(Browser.navigate().getCurrentUrl().contains("review-contact-details"));
     }
+
+    @Then("the {string} page should display")
+    public void thePageShouldDisplay(String page) {
+        assertTrue(isTextPresent(page));
+    }
 }
 
