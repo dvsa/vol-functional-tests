@@ -127,5 +127,16 @@ public class SurrenderLogic extends BasePage implements En {
             checkForPartialMatch("Surrender Application Withdrawn");
             checkForPartialMatch("Surrender Under Consideration");
         }
+
+    @And("i have started a surrender")
+    public void iHaveStartedASurrender() {
+        world.surrenderJourney.navigateToSurrendersStartPage();
+        world.surrenderJourney.startSurrender();
     }
+
+    @When("i am on the surrenders review contact details page")
+    public void iAmOnTheSurrendersReviewContactDetailsPage() {
+        assertTrue(Browser.navigate().getCurrentUrl().contains("review-contact-details"));
+    }
+}
 
