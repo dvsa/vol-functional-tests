@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import activesupport.faker.FakerUtils;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -124,6 +125,9 @@ public class VerifySwitchedOff extends BasePage {
     @Given("i start a new licence application")
     public void iStartANewLicenceApplication() {
         //Move to UIJourney
+        FakerUtils faker = new FakerUtils();
+        String workingDir = System.getProperty("user.dir");
+        String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
 
         DriverUtils.get(myURL);
@@ -137,15 +141,33 @@ public class VerifySwitchedOff extends BasePage {
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
-        waitForTitleToBePresent("Business type");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Business details");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Addresses");
+        waitAndEnterText("correspondence_address[searchPostcode][postcode]",SelectorType.NAME,"NG1 6LP");
+        clickByName("correspondence_address[searchPostcode][search]");
+        waitAndSelectByIndex("Select an address","//*[@id='selectAddress1']",SelectorType.XPATH, 1);
+        waitAndEnterText("contact[phone_primary]",SelectorType.NAME,"07123456780");
+        waitAndEnterText("contact[email]",SelectorType.NAME,faker.bothify("????????##@volTest.org"));
+
         waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Directors");
+        waitForTitleToBePresent("Responsible people");
+
+        clickByXPath("//*[contains(text(),'Add operating centre')]");
+        waitAndEnterText("address[searchPostcode][postcode]",SelectorType.NAME,"NG1 6LP");
+        clickByName("address[searchPostcode][search]");
+        waitAndSelectByIndex("Select an address","//*[@id='selectAddress1']",SelectorType.XPATH, 1);
+        enterText("data[noOfVehiclesRequired]",SelectorType.NAME,"6");
+        enterText("data[noOfTrailersRequired]",SelectorType.NAME,"6");
+        clickByName("data[permission][permission]");
+        clickByXPath("//*[contains(text(),'Upload documents now')]");
+        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
+
+
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
+
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Financial evidence");
     }
