@@ -1,11 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import cucumber.api.java.en.And;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.internal.InterimPage;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.joda.time.LocalDate;
+
+import java.util.Objects;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,6 +17,8 @@ import static org.junit.Assert.assertTrue;
 public class InterimLicence extends BasePage implements En {
 
     private static String VehicleErrorMessage = "The interim vehicle authority cannot exceed the total vehicle authority";
+    private static String HgvVehicleErrorMessage = "The interim Heavy Goods Vehicle Authority cannot exceed the total Heavy Goods Vehicle Authority";
+    private static String LgvVehicleErrorMessage = "The interim Light Goods Vehicle Authority cannot exceed the total Light Goods Vehicle Authority";
     private static String noDatesErrorMessage = "Value is required";
     private World world;
 
@@ -21,37 +26,38 @@ public class InterimLicence extends BasePage implements En {
         this.world = world;
 
         When("^I have an interim vehicle authority greater than my application vehicle authority$", () -> {
-            clickByLinkText("add interim");
-            findSelectAllRadioButtonsByValue("Y");
-            InterimPage.startDate(LocalDate.now().getDayOfWeek(), LocalDate.now().getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.endDate(LocalDate.now().plusDays(7).getDayOfWeek(), LocalDate.now().plusMonths(2).getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.vehicleAuthority(world.createApplication.getNoOfAddedHgvVehicles() + 1);
+            InterimPage.addInterimValues();
+            InterimPage.vehicleHgvAuthority(world.createApplication.getNoOfAddedHgvVehicles() + 1);
         });
 
         When("^I have an interim vehicle authority equal to my application vehicle authority$", () -> {
-            clickByLinkText("add interim");
-            findSelectAllRadioButtonsByValue("Y");
-            InterimPage.enterInterimDetail("Test Test");
-            InterimPage.startDate(LocalDate.now().getDayOfWeek(), LocalDate.now().getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.endDate(LocalDate.now().plusDays(7).getDayOfWeek(), LocalDate.now().plusMonths(2).getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.vehicleAuthority(world.createApplication.getNoOfAddedHgvVehicles());
+            InterimPage.addInterimValues();
+            InterimPage.vehicleHgvAuthority(world.createApplication.getNoOfAddedHgvVehicles());
         });
 
         When("^I have an interim vehicle authority less than my application vehicle authority$", () -> {
-            clickByLinkText("add interim");
-            findSelectAllRadioButtonsByValue("Y");
-            InterimPage.enterInterimDetail("Test Test");
-            InterimPage.startDate(LocalDate.now().getDayOfWeek(), LocalDate.now().getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.endDate(LocalDate.now().plusDays(7).getDayOfWeek(), LocalDate.now().plusMonths(2).getMonthOfYear(), LocalDate.now().getYear());
-            InterimPage.vehicleAuthority(world.createApplication.getNoOfAddedHgvVehicles() - 1);
+            InterimPage.addInterimValues();
+            InterimPage.vehicleHgvAuthority(world.createApplication.getNoOfAddedHgvVehicles() - 1);
+        });
+
+        When("^I have an interim vehicle authority with \"([^\"]*)\" hgvs and \"([^\"]*)\" lgvs$", (String intHGVs, String intLGVs) -> {
+            InterimPage.addInterimValues();
+            InterimPage.vehicleHgvAuthority(Integer.parseInt(intHGVs));
+            InterimPage.vehicleLgvAuthority(Integer.parseInt(intLGVs));
         });
 
         When("^I create an interim application with no start and end dates$", () -> {
             clickByLinkText("add interim");
             findSelectAllRadioButtonsByValue("Y");
             InterimPage.enterInterimDetail("Test Test");
-            InterimPage.vehicleAuthority(world.createApplication.getTotalOperatingCentreHgvAuthority());
+            InterimPage.vehicleHgvAuthority(world.createApplication.getTotalOperatingCentreHgvAuthority());
             InterimPage.trailerAuthority(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+        });
+
+        Then("^A \"([^\"]*)\" error appears when i save the interim licence$", (String errorType) -> {
+            InterimPage.save();
+            String errorMes = (errorType.equals("HGV") ? (HgvVehicleErrorMessage):(LgvVehicleErrorMessage));
+            assertTrue(isTextPresent(errorMes));
         });
 
         Then("^I should get an error when i save the application$", () -> {
@@ -62,6 +68,8 @@ public class InterimLicence extends BasePage implements En {
         Then("^I should be able to save the application without any errors$", () -> {
             InterimPage.save();
             assertFalse(isTextPresent(VehicleErrorMessage));
+            assertFalse(isTextPresent(HgvVehicleErrorMessage));
+            assertFalse(isTextPresent(LgvVehicleErrorMessage));
         });
 
         Then("^I should not error when i save the application$", () -> {
@@ -85,7 +93,7 @@ public class InterimLicence extends BasePage implements En {
             findSelectAllRadioButtonsByValue("Y");
             InterimPage.startDate(10, 8, 2017);
             InterimPage.enterInterimDetail("Interim with no dates");
-            InterimPage.vehicleAuthority(world.createApplication.getTotalOperatingCentreHgvAuthority());
+            InterimPage.vehicleHgvAuthority((world.createApplication.getTotalOperatingCentreHgvAuthority()));
             InterimPage.trailerAuthority(world.createApplication.getTotalOperatingCentreTrailerAuthority());
             // Not sure why this is setting authorities.
         });

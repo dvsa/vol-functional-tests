@@ -59,7 +59,7 @@ public class OperatingCentreVariation extends BasePage {
         click(saveButton, SelectorType.XPATH);
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
-        if (world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority))
+        if (world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority) && world.createApplication.getTotalOperatingCentreLgvAuthority() >= Integer.parseInt(newLGVTotalAuthority))
             click(submitApplication, SelectorType.XPATH);
         else {
             click(submitAndPayForApplication, SelectorType.XPATH);
