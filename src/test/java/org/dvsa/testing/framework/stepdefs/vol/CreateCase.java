@@ -125,4 +125,12 @@ public class CreateCase extends BasePage implements En {
         response = world.updateLicence.getCaseDetails("processing/note", world.updateLicence.getCaseNoteId());
         assertThat(response.body("comment", Matchers.equalTo("case note submitted through the API")));
     }
+
+    @And("i add a case in internal on the {string} page")
+        public void iAddACaseInInternalOnThePage(String page) {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.UIJourney.createCaseUI(page);
+    }
+
 }
