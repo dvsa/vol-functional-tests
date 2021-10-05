@@ -54,7 +54,7 @@ public class TMDetails extends BasePage implements En {
     public void theSectionButtonsShouldBeDisplayed(DataTable table) {
         List<String> sections = table.asList(String.class);
         for (String button : sections) {
-            assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
+            assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().anyMatch(x -> x.getText().contains(button)));
         }
     }
 
@@ -88,8 +88,8 @@ public class TMDetails extends BasePage implements En {
     @When("I click the no radio button for the {string} question")
     public void iClickTheNoRadioButtonForTheQuestion(String arg0) {
         click("//*[@id=\"responsibilities\"]//input[@value='N']", SelectorType.XPATH);
-
     }
+
 
     @Then("the guidance text should be displayed")
     public void theGuidanceTextShouldBeDisplayed() {
