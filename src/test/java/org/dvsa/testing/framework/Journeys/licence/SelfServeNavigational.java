@@ -129,6 +129,7 @@ public class SelfServeNavigational extends BasePage {
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
+
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
         waitForTitleToBePresent("Business type");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
@@ -138,11 +139,15 @@ public class SelfServeNavigational extends BasePage {
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Directors");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
+
+
         waitForTitleToBePresent("Operating centres and authorisation");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Financial evidence");
 
         waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
+        waitAndEnterText("adPlacedIn",SelectorType.ID,"VOL Tribune");
+        waitAndEnterText("adPlacedDate_day",SelectorType.ID,"VOL Tribune");
         uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Transport Managers");

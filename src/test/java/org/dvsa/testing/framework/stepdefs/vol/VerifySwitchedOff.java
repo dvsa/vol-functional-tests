@@ -15,6 +15,7 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.junit.Assert;
 
+import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
@@ -131,7 +132,7 @@ public class VerifySwitchedOff extends BasePage {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
 
         DriverUtils.get(myURL);
-        world.globalMethods.signIn("jacobfinney","");
+        world.globalMethods.signIn("jacobfinney","k8n48rRTerdN5XHzwWq@");
         clickByXPath("//*[contains(text(),'Apply for a new licence')]");
         clickByXPath("//*[contains(text(),'Goods')]");
         clickByXPath("//*[contains(text(),'Standard National')]");
@@ -153,22 +154,27 @@ public class VerifySwitchedOff extends BasePage {
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Responsible people");
 
-        clickByXPath("//*[contains(text(),'Add operating centre')]");
-        waitAndEnterText("address[searchPostcode][postcode]",SelectorType.NAME,"NG1 6LP");
-        clickByName("address[searchPostcode][search]");
-        waitAndSelectByIndex("Select an address","//*[@id='selectAddress1']",SelectorType.XPATH, 1);
-        enterText("data[noOfVehiclesRequired]",SelectorType.NAME,"6");
-        enterText("data[noOfTrailersRequired]",SelectorType.NAME,"6");
-        clickByName("data[permission][permission]");
-        clickByXPath("//*[contains(text(),'Upload documents now')]");
-        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-
-
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
+        clickByXPath("//*[contains(text(),'Add operating centre')]");
+        waitAndEnterText("address[searchPostcode][postcode]",SelectorType.NAME,"B44 9UL");
+        clickByName("address[searchPostcode][search]");
+        waitAndSelectByIndex("Select an address","//*[@id='selectAddress1']",SelectorType.XPATH, 1);
+        waitAndEnterText("data[noOfVehiclesRequired]",SelectorType.NAME,"6");
+        waitAndEnterText("data[noOfTrailersRequired]",SelectorType.NAME,"6");
+        clickById("permission");
+        waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
 
+        uploadFile("//*[@id='advertisements[adPlacedContent][file][file]']", workingDir + financialEvidenceFile, "document.getElementById('advertisements[adPlacedContent][file][file]').style.left = 0", SelectorType.XPATH);
+
+        waitAndEnterText("adPlacedIn",SelectorType.ID, "VOL Tribune");
+        waitAndEnterText("adPlacedDate_day",SelectorType.ID, String.valueOf(LocalDate.now().getDayOfMonth()));
+        waitAndEnterText("adPlacedDate_month",SelectorType.ID, String.valueOf(LocalDate.now().getMonthValue()));
+        waitAndEnterText("adPlacedDate_year",SelectorType.ID, String.valueOf(LocalDate.now().getYear()));
+        waitAndClick("form-actions[submit]", SelectorType.NAME);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
+        waitAndEnterText("data[totAuthVehicles]",SelectorType.NAME,"6");
+        waitAndEnterText("data[totAuthTrailers]",SelectorType.NAME,"6");
         waitForTitleToBePresent("Financial evidence");
     }
 }

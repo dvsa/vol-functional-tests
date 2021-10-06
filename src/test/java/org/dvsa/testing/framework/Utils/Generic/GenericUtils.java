@@ -158,25 +158,21 @@ public class GenericUtils extends BasePage {
     }
 
     public static java.time.LocalDate getFutureDate(@NotNull int month) {
-        java.time.LocalDate date = java.time.LocalDate.now().plusMonths(month);
-        return date;
+        return LocalDate.now().plusMonths(month);
     }
 
     public static java.time.LocalDate getPastDate(@NotNull int years) {
-        java.time.LocalDate date = java.time.LocalDate.now().minusYears(years);
-        return date;
+        return LocalDate.now().minusYears(years);
     }
 
     public static String getCurrentDate(String datePattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-        String formatDateTime = LocalDate.now().format(formatter);
-        return formatDateTime;
+        return LocalDate.now().format(formatter);
     }
 
     public static String getFutureFormattedDate(@NotNull int months, String datePattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-        String formatDateTime = LocalDate.now().plusMonths(months).format(formatter);
-        return formatDateTime;
+        return LocalDate.now().plusMonths(months).format(formatter);
     }
 
     public String confirmationPanel(String locator, String cssValue)  {
@@ -189,8 +185,7 @@ public class GenericUtils extends BasePage {
     }
 
     public String readFileAsString(String fileName) throws IOException {
-        String data = new String(Files.readAllBytes(Paths.get(fileName)));
-        return data;
+        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
     public static int getRandomNumberInts(int min, int max){
