@@ -132,7 +132,7 @@ public class VerifySwitchedOff extends BasePage {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
 
         DriverUtils.get(myURL);
-        world.globalMethods.signIn("jacobfinney",);
+        world.globalMethods.signIn("jacobfinney","");
         clickByXPath("//*[contains(text(),'Apply for a new licence')]");
         clickByXPath("//*[contains(text(),'Goods')]");
         clickByXPath("//*[contains(text(),'Standard National')]");
