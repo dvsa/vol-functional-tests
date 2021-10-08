@@ -26,7 +26,7 @@ public class PSVApplication extends BasePage implements En {
             }
         }
 
-        @Given("I have a {string} application which is under consideration")
+        @Given("I have a {string} {string} application which is under consideration")
         public void iHaveAApplicationWhichIsUnderConsideration(String vehicleType, String typeOfLicence) {
             world.createApplication.setIsInterim("Y");
             world.createApplication.setOperatorType(vehicleType);

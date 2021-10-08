@@ -27,7 +27,7 @@ public class PageChecks extends BasePage implements En {
             world.selfServeNavigation.navigateToPage(page,"View");
             assertFalse(isElementPresent("//div//a[text()='Withdraw application']", SelectorType.XPATH));
         }
-        @Then("{string} document should be generated")
+        @Then("the {string} document should be generated")
             public void documentShouldBeGenerated(String documentType) {
             if (isElementPresent("//a[contains(text(),'Docs & attachments')]",SelectorType.XPATH)) {
                 clickByLinkText("Docs & attachments");
