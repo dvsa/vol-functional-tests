@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.Journeys.page;
+package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;

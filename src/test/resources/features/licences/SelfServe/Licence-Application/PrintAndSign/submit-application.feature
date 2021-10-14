@@ -1,5 +1,4 @@
 @prod_smoketest
-
 Feature: Submit an application on pre-prod or int env
 
   Scenario: Submit an application

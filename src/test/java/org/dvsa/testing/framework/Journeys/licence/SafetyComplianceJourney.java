@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.Journeys.page;
+package org.dvsa.testing.framework.Journeys.licence;
 
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
