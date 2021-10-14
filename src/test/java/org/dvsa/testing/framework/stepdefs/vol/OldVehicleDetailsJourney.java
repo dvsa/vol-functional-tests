@@ -42,8 +42,6 @@ public class OldVehicleDetailsJourney extends BasePage {
         world.selfServeNavigation.navigateToPage("licence", "Vehicles");
     }
 
-    ;
-
     @When("i add a vehicle to my licence")
     public void iAddAVehicleToMyLicence() {
         click("add", SelectorType.ID);
