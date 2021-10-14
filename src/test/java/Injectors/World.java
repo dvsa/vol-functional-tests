@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
+import org.dvsa.testing.framework.Journeys.licence.TransportManagerJourney;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 
@@ -37,5 +38,11 @@ public class World {
     public SelfServeNavigational selfServeNavigation;
     public SurrenderJourney surrenderJourney;
     public TransportManagerJourney TMJourney;
+    public BusinessDetailsJourney businessDetailsJourney;
+    public OperatingCentreJourney operatingCentreJourney;
+    public SafetyComplianceJourney safetyComplianceJourney;
+    public SafetyInspectorJourney safetyInspectorJourney;
+    public TransportManagerJourney transportManagerJourney;
+    public VehicleDetailsJourney vehicleDetailsJourney;
 
 }
