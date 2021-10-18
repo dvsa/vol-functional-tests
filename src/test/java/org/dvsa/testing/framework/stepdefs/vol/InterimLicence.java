@@ -98,12 +98,7 @@ public class InterimLicence extends BasePage implements En {
             // Not sure why this is setting authorities.
         });
         And("^i create a variation in internal$", () -> {
-            waitAndClick("//*[@id='menu-licence-quick-actions-create-variation']",SelectorType.XPATH);
-            waitForTextToBePresent("Applying to change a licence");
-            waitAndClick("//*[contains(text(),'No')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
-            waitAndClick("form-actions[submit]",SelectorType.ID);
-            waitForTextToBePresent("Variation details");
+            world.UIJourney.createVariationInInternal(false);
         });
     }
 }

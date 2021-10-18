@@ -142,7 +142,7 @@ public class SelfServeNavigational extends BasePage {
         waitAndContinuePage("Addresses");
         waitAndContinuePage("Directors");
         waitAndContinuePage("Operating centres and authorisation");
-        waitAndContinuePage("Financial evidence");
+        waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
         uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
         waitAndClick(saveAndContinue, SelectorType.XPATH);

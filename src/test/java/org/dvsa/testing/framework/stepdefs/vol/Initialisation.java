@@ -40,6 +40,7 @@ public class Initialisation extends BasePage implements En {
         world.internalSearchJourney = new InternalSearchJourney(world);
         world.feeAndPaymentJourney = new FeeAndPaymentJourney(world);
         world.internalNavigation = new InternalNavigational(world);
+        world.operatingCentreJourney = new OperatingCentreJourney(world);
         world.selfServeNavigation = new SelfServeNavigational(world);
         world.surrenderJourney = new SurrenderJourney(world);
         world.TMJourney = new TransportManagerJourney(world);

@@ -15,9 +15,11 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
 
         When("^i increase my vehicle authority count$", () -> {
          world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-         clickByLinkText(world.applicationDetails.getLicenceNumber());
-         world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ));
-         world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ));
+         world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+         world.UIJourney.changeLicenceForVariation();
+         world.operatingCentreJourney.updateOperatingCentreAuthorisation(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ));
+         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ), null, currentTrailerTotalAuthority);
         });
 
         Then("^a status of update required should be shown next to financial evidence$", () -> {
@@ -26,36 +28,23 @@ public class GoodVarIncreaseVehicle extends BasePage implements En  {
 
         When("^A selfserve user increases the vehicle required count by invalid characters$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq("+6");
+            world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+            world.UIJourney.changeLicenceForVariation();
+            world.operatingCentreJourney.updateOperatingCentreAuthorisation("+6");
         });
         Then("^An error message should appear$", () -> {
             isTextPresent("//*[@id=\"OperatingCentre\"]/fieldset[2]/div[1]/div/p");
         });
-
-        When("^A selfserve user increases the vehicle authority by invalid charecters$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-            world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
-            world.UIJourney.changeLicenceForVariation();
-            world.UIJourney.changeVehicleAuth("+6");
-        });
         Then("^An error should appear$", () -> {
             isTextPresent("//*[@id=\"OperatingCentres\"]/fieldset[3]/div[1]/div/p");
         });
-        When("^a selfserve user creates a variation and increases the vehicle authority count$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 2));
-            world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 2));
-            world.UIJourney.updateFinancialInformation();
-            world.UIJourney.signDeclarationForVariation();
-        });
-        And("^a selfserve user creates a variation and adds an operating centre$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+        And("^a selfserve user creates a variation and adds an operating centre with \"([^\"]*)\" HGVs and \"([^\"]*)\" trailers$", (String vehicles, String trailers) -> {
+            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
             world.UIJourney.changeLicenceForVariation();
-            world.UIJourney.addNewOperatingCentreSelfServe(7,7);
-            world.UIJourney.updateFinancialInformation();
+            world.operatingCentreJourney.addNewOperatingCentre(vehicles, trailers);
+            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(vehicles, null, trailers);
+            world.UIJourney.completeFinancialEvidencePage();
             world.UIJourney.signDeclarationForVariation();
         });
         Then("^the \"([^\"]*)\" fee should be paid$", (String feeName) -> {
