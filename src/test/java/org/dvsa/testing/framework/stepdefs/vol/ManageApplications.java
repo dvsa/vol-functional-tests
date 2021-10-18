@@ -170,4 +170,14 @@ public class ManageApplications {
             world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         }
     }
+
+    @Given("I have a {string} {string} licence with {int} operating centres")
+    public void iHaveALicenceWithOperatingCentres(String operatorType, String licenceType, int numberOfOperatingCentres) {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.licenceCreation.createApplication(operatorType, licenceType);
+        for (int i = 1; i < numberOfOperatingCentres; i++)
+            world.createApplication.addOperatingCentre();
+        world.APIJourney.submitApplication();
+        world.APIJourney.grantLicenceAndPayFees();
+    }
 }

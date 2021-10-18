@@ -13,20 +13,24 @@ public class GoodVarDecreaseVehicle extends BasePage implements En {
     public GoodVarDecreaseVehicle(World world) {
         When("^A selfserve user decreases the vehicle authority count$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1));
-            world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1));
+            world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+            world.UIJourney.changeLicenceForVariation();
+            world.operatingCentreJourney.updateOperatingCentreAuthorisation(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1));
+            String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1), null, currentTrailerTotalAuthority);
         });
         When("^A selfserve user decreases the vehicle required count by invalid characters$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq("-6");
+            world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+            world.UIJourney.changeLicenceForVariation();
+            world.operatingCentreJourney.updateOperatingCentreAuthorisation("-6");
         });
-        When("^A selfserve user decreases the vehicle authority by invalid charecters$", () -> {
+        When("^A selfserve user changes the vehicle authority by invalid characters$", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles()));
-            world.UIJourney.changeVehicleAuth("-6");
+            world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+            world.UIJourney.changeLicenceForVariation();
+            String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("-6", null, currentTrailerTotalAuthority);
         });
         Then("^a status of update required should be shown next to Review and declarations$", () -> {
             waitForElementToBePresent("//*[@id='overview-item__undertakings']");

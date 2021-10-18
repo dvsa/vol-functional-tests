@@ -21,7 +21,7 @@ public class World {
     public GlobalMethods globalMethods;
     public LicenceCreation licenceCreation;
 
-    public org.dvsa.testing.framework.Journeys.licence.APIJourney APIJourney;
+    public APIJourney APIJourney;
     public BusRegistrationJourney busRegistrationJourney;
     public ContinuationJourney continuationJourney;
     public DirectorJourney directorJourney;
@@ -29,6 +29,7 @@ public class World {
     public FeeAndPaymentJourney feeAndPaymentJourney;
     public InternalSearchJourney internalSearchJourney;
     public InternalNavigational internalNavigation;
+    public OperatingCentreJourney operatingCentreJourney;
     public SelfServeNavigational selfServeNavigation;
     public SurrenderJourney surrenderJourney;
     public TransportManagerJourney TMJourney;
