@@ -1,15 +1,20 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import Injectors.World;
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-public class BusinessDetailsJourney extends BasePage{
-
+public class BusinessDetailsJourney extends BasePage {
+    private World world;
     FakerUtils faker = new FakerUtils();
     String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
-    public void addBusinessDetails(){
+    public BusinessDetailsJourney(World world) {
+        this.world = world;
+    }
+
+    public void addBusinessDetails() {
         waitForTitleToBePresent("Business details");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Addresses");

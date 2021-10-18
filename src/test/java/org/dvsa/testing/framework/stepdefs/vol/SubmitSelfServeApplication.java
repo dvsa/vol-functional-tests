@@ -12,6 +12,7 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 public class SubmitSelfServeApplication extends BasePage {
 
     World world;
+
     public SubmitSelfServeApplication(World world) {
         this.world = world;
     }
@@ -24,31 +25,44 @@ public class SubmitSelfServeApplication extends BasePage {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
 
         DriverUtils.get(myURL);
-        world.globalMethods.signIn("jacobfinney", "");
-        clickByXPath("//*[contains(text(),'Apply for a new licence')]");
-        clickByXPath("//*[contains(text(),'Goods')]");
-        clickByXPath("//*[contains(text(),'Standard National')]");
-        clickByXPath("//*[contains(text(),'Save')]");
+        world.globalMethods.signIn("", "");
+        waitForTitleToBePresent("Licences");
 
-        clickByXPath("//*[contains(text(),'Business type')]");
+        waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
+
+        waitForTitleToBePresent("Type of licence");
+        waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         //business details
         world.businessDetailsJourney.addBusinessDetails();
-        waitForTitleToBePresent("Responsible people");
-
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
+            waitAndClick(saveAndContinue, SelectorType.XPATH);
+        }
 
         //operating centre
         world.operatingCentreJourney.addAnOperatingCentre();
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         //transport manager
-        world.transportManagerJourney.nominateOperatorUserAsTransportManager(faker.generateFirstName(), false);
+        world.transportManagerJourney.nominateOperatorUserAsTransportManager(faker.generateFirstName(), true);
+
+        //transport manager details
+        if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
+            clickByName("form-actions[send]");
+            waitAndClick(saveAndContinue, SelectorType.XPATH);
+        } else {
+            world.transportManagerJourney.addTransportManagerDetails();
+        }
 
         //vehicleDetails
         world.vehicleDetailsJourney.addAVehicle(true);
@@ -60,7 +74,16 @@ public class SubmitSelfServeApplication extends BasePage {
         world.safetyInspectorJourney.addASafetyInspector();
 
         waitForTitleToBePresent("Safety and compliance");
-        waitAndClick("//*[@id=\"application[safetyConfirmation]\"]", SelectorType.XPATH);
+        clickById("application[safetyConfirmation]");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
+
+        //Financial History
+        world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit();
+
+        //Licence details
+        world.licenceDetailsJourney.answerNoToAllQuestionsAndSubmit();
+
+        //Convictions
+        world.convictionsAndPenaltiesJourney.answerYesToAllQuestionsAndSubmit();
     }
 }

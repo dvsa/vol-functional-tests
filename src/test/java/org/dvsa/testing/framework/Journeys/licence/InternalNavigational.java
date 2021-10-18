@@ -26,6 +26,10 @@ public class InternalNavigational extends BasePage {
         world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.INTERNAL);
     }
 
+    public void logInAsAdmin() {
+        navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+    }
+
     public void logInAndNavigateToDocsTable()  {
         world.APIJourney.createAdminUser();
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
