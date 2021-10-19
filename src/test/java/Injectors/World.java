@@ -44,5 +44,8 @@ public class World {
     public SafetyInspectorJourney safetyInspectorJourney;
     public TransportManagerJourney transportManagerJourney;
     public VehicleDetailsJourney vehicleDetailsJourney;
-
+    public FinancialHistoryJourney financialHistoryJourney;
+    public LicenceDetailsJourney licenceDetailsJourney;
+    public ConvictionsAndPenaltiesJourney convictionsAndPenaltiesJourney;
+    public UserRegistrationJourney userRegistrationJourney;
 }
