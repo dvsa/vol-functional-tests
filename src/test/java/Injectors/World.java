@@ -47,4 +47,5 @@ public class World {
     public FinancialHistoryJourney financialHistoryJourney;
     public LicenceDetailsJourney licenceDetailsJourney;
     public ConvictionsAndPenaltiesJourney convictionsAndPenaltiesJourney;
+    public UserRegistrationJourney userRegistrationJourney;
 }

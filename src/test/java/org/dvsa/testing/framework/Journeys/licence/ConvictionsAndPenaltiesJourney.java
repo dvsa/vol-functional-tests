@@ -27,14 +27,20 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     }
 
     public void answerYesToAllQuestionsAndSubmit() {
-        FakerUtils faker = new FakerUtils();
-        HashMap<String, String> dates;
-
         waitForTitleToBePresent("Convictions and Penalties");
         findSelectAllRadioButtonsByValue("Y");
         clickById("add");
+        addPreviousConviction();
+        waitForTitleToBePresent("Convictions and Penalties");
+        waitAndClick("convictionsConfirmation[convictionsConfirmation]", SelectorType.ID);
+        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+    }
+
+    public void addPreviousConviction() {
+        FakerUtils faker = new FakerUtils();
+        HashMap<String, String> dates;
         waitForTitleToBePresent("Add previous conviction");
-        selectValueFromDropDownByIndex("data[title]", SelectorType.ID, 1);
+        selectValueFromDropDown("data[title]", SelectorType.ID, "Mr");
         waitAndEnterText("data[forename]", SelectorType.ID, faker.generateFirstName());
         waitAndEnterText("data[familyName]", SelectorType.ID, faker.generateFirstName());
         waitAndEnterText("data[categoryText]", SelectorType.ID, faker.generateNatureOfBusiness());
@@ -47,8 +53,5 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         enterText("data[convictionDate][month]", SelectorType.ID, dates.get("month"));
         enterText("data[convictionDate][year]", SelectorType.ID, dates.get("year"));
         waitAndClick("form-actions[submit]", SelectorType.ID);
-        waitForTitleToBePresent("Convictions and Penalties");
-        waitAndClick("convictionsConfirmation[convictionsConfirmation]", SelectorType.ID);
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
     }
 }

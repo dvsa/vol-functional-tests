@@ -113,7 +113,7 @@ public class DirectorJourney extends BasePage {
         } else {
             findSelectAllRadioButtonsByValue("Y");
             click("add", SelectorType.ID);
-            world.UIJourney.addPreviousConviction();
+            world.convictionsAndPenaltiesJourney.addPreviousConviction();
         }
     }
 

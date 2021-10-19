@@ -2,12 +2,15 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.faker.FakerUtils;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+
+import java.util.Objects;
 
 public class SubmitSelfServeApplication extends BasePage {
 
@@ -17,15 +20,19 @@ public class SubmitSelfServeApplication extends BasePage {
         this.world = world;
     }
 
-    @Given("i start a new licence application")
+    @And("i start a new licence application")
     public void iStartANewLicenceApplication() {
         //Move to UIJourney
         FakerUtils faker = new FakerUtils();
 
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
-
         DriverUtils.get(myURL);
-        world.globalMethods.signIn("", "");
+
+        if(Objects.equals(world.configuration.env.toString(), "int")) {
+            world.globalMethods.signIn("", "");
+        }else{
+            world.selfServeNavigation.navigateToLogin(world.UIJourney.getUsername(),world.UIJourney.getEmail());
+        }
         waitForTitleToBePresent("Licences");
 
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
@@ -85,5 +92,10 @@ public class SubmitSelfServeApplication extends BasePage {
 
         //Convictions
         world.convictionsAndPenaltiesJourney.answerYesToAllQuestionsAndSubmit();
+    }
+
+    @Given("i have a self serve account")
+    public void iHaveASelfServeAccount() {
+        world.userRegistrationJourney.registerUserWithNoLicence();
     }
 }

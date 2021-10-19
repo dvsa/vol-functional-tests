@@ -56,5 +56,6 @@ public class Initialisation extends BasePage implements En {
         world.financialHistoryJourney = new FinancialHistoryJourney(world);
         world.licenceDetailsJourney = new LicenceDetailsJourney(world);
         world.convictionsAndPenaltiesJourney = new ConvictionsAndPenaltiesJourney(world);
+        world.userRegistrationJourney = new UserRegistrationJourney(world);
     }
 }
