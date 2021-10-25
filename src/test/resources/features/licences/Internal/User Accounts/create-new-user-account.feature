@@ -7,3 +7,4 @@ Feature: Create a new Internal User
     When I add a new User
     Then User should be created
 
+
