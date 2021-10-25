@@ -6,5 +6,3 @@ Feature: Create a new Internal User
     And I have logged into the internal application
     When I add a new User
     Then User should be created
-
-
