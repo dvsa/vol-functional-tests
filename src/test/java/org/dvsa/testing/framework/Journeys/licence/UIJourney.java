@@ -313,13 +313,13 @@ public class UIJourney extends BasePage {
 
     public void caseWorkerCompleteConditionsAndUndertakings()  {
         clickByLinkText("Conditions and undertakings");
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteReviewAndDeclarations()  {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteOverview()  {
@@ -543,4 +543,9 @@ public class UIJourney extends BasePage {
         waitAndClick("form-actions[submit]",SelectorType.ID);
         waitForTextToBePresent("Variation details");
     }
+
+    public static void clickSaveAndContinue()  {
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+    }
+
 }

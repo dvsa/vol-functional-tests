@@ -30,7 +30,6 @@ public class DirectorJourney extends BasePage {
     public String directorTitleDropdown = "//select[@id='title']";
     public String firstNameField = "//input[@name='data[forename]']";
     public String lastNameField = "//input[@name='data[familyName]']";
-    public String saveAndContinue = "//button[@name='form-actions[saveAndContinue]']";
     public String additionalInformation = "//*[@id='data[insolvencyDetails]']";
     public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
@@ -84,17 +83,17 @@ public class DirectorJourney extends BasePage {
         enterText(lastNameField, SelectorType.XPATH, directorLastName);
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         replaceDateFieldsByPartialId("dob", dates);
-        clickByXPath(saveAndContinue);
+        UIJourney.clickSaveAndContinue();
     }
 
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(financialHistoryAnswers);
-        clickByXPath(saveAndContinue);
+        UIJourney.clickSaveAndContinue();
     };
 
     public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
-        clickByXPath(saveAndContinue);
+        UIJourney.clickSaveAndContinue();
     };
 
     public void removeDirector()  {
