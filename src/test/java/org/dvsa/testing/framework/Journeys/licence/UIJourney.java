@@ -43,8 +43,6 @@ public class UIJourney extends BasePage {
     private FakerUtils faker = new FakerUtils();
 
     String uploadLaterRadioButton =  "//input[@id='uploadLaterRadio']";
-    String saveButton = "//*[@id='form-actions[save]']";
-
 
     public UIJourney(World world) {
         this.world = world;
@@ -220,7 +218,7 @@ public class UIJourney extends BasePage {
     public void completeFinancialEvidencePage() {
         world.selfServeNavigation.navigateToPage("variation", "Financial evidence");
         click(uploadLaterRadioButton, SelectorType.XPATH);
-        click(saveButton, SelectorType.XPATH);
+        clickSaveAndReturn();
     }
 
     public void signDeclaration()  {
@@ -287,7 +285,7 @@ public class UIJourney extends BasePage {
     public void payForInterimApp()  {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
-        waitAndClick("form-actions[save]", SelectorType.NAME);
+        clickSaveAndReturn();
         clickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
@@ -548,4 +546,7 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
+    public static void clickSaveAndReturn()  {
+        waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
+    }
 }

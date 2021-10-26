@@ -6,6 +6,7 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import io.cucumber.datatable.DataTable;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
@@ -36,7 +37,7 @@ public class SurrenderLogic extends BasePage implements En {
             clickByLinkText("Addresses");
             world.UIJourney.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
             replaceText("phone_primary", SelectorType.ID, contactNumber);
-            waitAndClick("form-actions[save]", SelectorType.ID);
+            UIJourney.clickSaveAndReturn();
         });
         Then("^continue with application link is displayed$", () -> {
             assertFalse(isLinkPresent("Apply to surrender licence", 30));

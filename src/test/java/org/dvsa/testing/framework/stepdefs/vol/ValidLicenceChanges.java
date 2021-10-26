@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -43,7 +44,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             enterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             click("//*[@id='allow-email[allowEmail]']", SelectorType.XPATH);
-            click("//*[@id='form-actions[save]']", SelectorType.XPATH);
+            UIJourney.clickSaveAndReturn();
         });
         Then("^the changes to the business details page are made$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Business details");
@@ -71,7 +72,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             replaceText("//*[@id='tc_phone_primary']", SelectorType.XPATH, phoneNumber);
             replaceText("//*[@id='tc_phone_secondary']", SelectorType.XPATH, secondaryPhoneNumber);
             replaceText("//*[@id='consultantContact[email]']", SelectorType.XPATH, email);
-            click("//*[@id='form-actions[save]']", SelectorType.XPATH);
+            UIJourney.clickSaveAndReturn();
         });
         Then("^the changes to the addresses page are made$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Addresses");
@@ -105,7 +106,7 @@ public class ValidLicenceChanges extends BasePage implements En {
                 }
             }
             click("//*[@id='shareInfo[shareInfo]']", SelectorType.XPATH);
-            click("//*[@id='form-actions[save]']", SelectorType.XPATH);
+            UIJourney.clickSaveAndReturn();
         });
         Then("^the changes to the vehicles page are made$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Vehicles");
@@ -150,7 +151,7 @@ public class ValidLicenceChanges extends BasePage implements En {
             world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
             click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             waitForTextToBePresent("Safety inspectors");
-            click("//*[@id='form-actions[save]']", SelectorType.XPATH);
+            UIJourney.clickSaveAndReturn();
         });
         Then("^the changes to the safety and compliance page are made$", () -> {
             world.selfServeNavigation.navigateToPage("licence", "Safety and compliance");

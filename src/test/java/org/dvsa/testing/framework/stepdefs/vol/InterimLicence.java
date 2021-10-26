@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import cucumber.api.java.en.And;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.internal.InterimPage;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -55,30 +56,30 @@ public class InterimLicence extends BasePage implements En {
         });
 
         Then("^A \"([^\"]*)\" error appears when i save the interim licence$", (String errorType) -> {
-            InterimPage.save();
+            UIJourney.clickSaveAndReturn();
             String errorMes = (errorType.equals("HGV") ? (HgvVehicleErrorMessage):(LgvVehicleErrorMessage));
             assertTrue(isTextPresent(errorMes));
         });
 
         Then("^I should get an error when i save the application$", () -> {
-            InterimPage.save();
+            UIJourney.clickSaveAndReturn();
             assertTrue(isTextPresent(VehicleErrorMessage));
         });
 
         Then("^I should be able to save the application without any errors$", () -> {
-            InterimPage.save();
+            UIJourney.clickSaveAndReturn();
             assertFalse(isTextPresent(VehicleErrorMessage));
             assertFalse(isTextPresent(HgvVehicleErrorMessage));
             assertFalse(isTextPresent(LgvVehicleErrorMessage));
         });
 
         Then("^I should not error when i save the application$", () -> {
-            InterimPage.save();
+            UIJourney.clickSaveAndReturn();
             assertFalse(isTextPresent(noDatesErrorMessage));
         });
 
         Then("^I should error when i attempt to grant the application$", () -> {
-            InterimPage.save();
+            UIJourney.clickSaveAndReturn();
             clickByLinkText("Interim details");
             waitForTextToBePresent("Interim application");
             InterimPage.grant();
