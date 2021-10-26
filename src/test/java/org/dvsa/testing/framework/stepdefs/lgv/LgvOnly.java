@@ -32,16 +32,20 @@ public class LgvOnly extends BasePage {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         clickByLinkText("Apply for a new licence");
-        WebElement Where = getDriver().findElement(By.id("type-of-licence[operator-location]"));
-        Where.click();
-        clickByLinkText("Great Britain");
-        findSelectAllRadioButtonsByValue("Great Britain");
-        findSelectAllRadioButtonsByValue(operatorType);
-        findSelectAllRadioButtonsByValue(licenceType);
+        clickByXPath("//input[@id='type-of-licence[operator-location]']");
+        clickByXPath("//input[@value='lcat_gv']");
+        clickByXPath("//input[@value='ltyp_si']");
     }
 
     @When("I click save and continue")
     public void iClickSaveAndContinue() {
-        clickByLinkText("Save and continue");
+        clickById("form-actions[saveAndContinue]");
+    }
+
+    @Then("A LGV only error message should be displayed")
+    public void lgvOnlyErrorMessage() {
+        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
+        isTextPresent("Will you only be operating Light goods vehicles on this licence?");
     }
 }
+
