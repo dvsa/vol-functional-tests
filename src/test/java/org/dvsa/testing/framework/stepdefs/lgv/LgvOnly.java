@@ -5,7 +5,10 @@ import activesupport.number.Int;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Given;
-import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
+import org.dvsa.testing.framework.enums.LicenceFleet;
+import org.dvsa.testing.framework.enums.LicenceWhere;
+import org.dvsa.testing.framework.enums.LicenceVehicles;
+import org.dvsa.testing.framework.enums.LicenceType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -21,25 +24,20 @@ public class LgvOnly extends BasePage {
         this.world = world;
     }
 
-    @Given("I want to apply for a {string} {string} licence")
-    public void iWantToApplyForALicence(String operatorType, String licenceType) {
+    @Given("I am applying for a {string} {string} {string} {string} licence")
+    public void iWantToApplyForALicence(String licenceWhere, String licenceVehicles, String licenceType, String licenceFleet) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         clickByLinkText("Apply for a new licence");
-        clickByXPath("//input[@id='type-of-licence[operator-location]']");
-        clickByXPath("//input[@value='lcat_gv']");
-        clickByXPath("//input[@value='ltyp_si']");
-    }
+        clickByXPath(LicenceWhere.valueOf(licenceWhere.toUpperCase()).toString());
+        clickByXPath(LicenceVehicles.valueOf(licenceVehicles.toUpperCase()).toString());
+        clickByXPath(LicenceType.valueOf(licenceType.toUpperCase()).toString());
+        if (licenceType.equals("Standard_International")){
+            if (!"No_selection".equals(licenceFleet)){
+                clickByXPath(LicenceFleet.valueOf(licenceFleet.toUpperCase()).toString());
+            }
+        }
 
-    @Given("I am on the LGV only undertakings page for a LGV only licence application")
-    public void iAmOnLGVOnlyUndertakingsPageForLGVOnlyLicenceApplication() {
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        clickByLinkText("Apply for a new licence");
-        clickByXPath("//input[@id='type-of-licence[operator-location]']");
-        clickByXPath("//input[@value='lcat_gv']");
-        clickByXPath("//input[@value='ltyp_si']");
-        clickByXPath("//input[@value='app_veh_type_lgv']");
     }
 
     @When("I click save and continue")
