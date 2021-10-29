@@ -1,6 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
+import activesupport.faker.FakerUtils;
+import activesupport.number.Int;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java8.En;
@@ -20,7 +22,11 @@ public class CreateNewInternalUser extends BasePage implements En {
 
     @Then("I add a new User")
     public void iAddANewUser() {
-        world.UIJourney.addNewInternalUser();
+        FakerUtils faker = new FakerUtils();
+        String foreName = faker.generateFirstName();
+        String familyName = faker.generateLastName();
+        String userName = String.format("%s.%s%s", foreName, familyName, Int.random(1000, 9999));
+        world.UIJourney.addNewInternalUser(userName, foreName, familyName, userName.concat("@dvsa.org"));
     }
 
 
