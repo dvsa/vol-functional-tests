@@ -134,6 +134,7 @@ public class UIJourney extends BasePage {
         replaceText("search", SelectorType.NAME, world.DataGenerator.getOperatorUserEmail());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         world.internalSearchJourney.searchUser();
+        waitForPageLoad();
     }
 
 
