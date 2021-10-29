@@ -33,6 +33,6 @@ public class CreateNewInternalUser extends BasePage implements En {
     @Then("User should be created")
     public void userShouldBeCreated()
     {
-        Assert.assertTrue(isTextPresent(world.UIJourney.getUsername()));
+        Assert.assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
     }
 }
