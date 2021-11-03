@@ -1,18 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
 import Injectors.World;
-import activesupport.number.Int;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Given;
-import org.dvsa.testing.framework.enums.LicenceFleet;
-import org.dvsa.testing.framework.enums.LicenceWhere;
-import org.dvsa.testing.framework.enums.LicenceVehicles;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 
 import apiCalls.enums.*;
 
@@ -25,9 +19,6 @@ public class LgvOnly extends BasePage {
 
     public String greatBritain = "//input[@id='type-of-licence[operator-location]']";
     public String northernIreland = "61790589c0c15";
-    //public String lgvOnly = "//input[@value='app_veh_type_lgv']";
-    //public String mixed = "//input[@value='app_veh_type_mixed']";
-
 
     @Given("I am applying for a {string} {string} {string} {string} licence")
     public void iWantToApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType) {
