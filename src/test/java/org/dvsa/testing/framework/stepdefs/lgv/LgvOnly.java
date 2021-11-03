@@ -8,7 +8,6 @@ import cucumber.api.java.en.Given;
 import org.dvsa.testing.framework.enums.LicenceFleet;
 import org.dvsa.testing.framework.enums.LicenceWhere;
 import org.dvsa.testing.framework.enums.LicenceVehicles;
-import org.dvsa.testing.framework.enums.LicenceType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -24,17 +23,25 @@ public class LgvOnly extends BasePage {
         this.world = world;
     }
 
+    public String greatBritain = "//input[@id='type-of-licence[operator-location]']";
+    public String northernIreland = "61790589c0c15";
+    //public String lgvOnly = "//input[@value='app_veh_type_lgv']";
+    //public String mixed = "//input[@value='app_veh_type_mixed']";
+
+
     @Given("I am applying for a {string} {string} {string} {string} licence")
-    public void iWantToApplyForALicence(String licenceWhere, String licenceVehicles, String licenceType, String licenceFleet) {
+    public void iWantToApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         clickByLinkText("Apply for a new licence");
-        clickByXPath(LicenceWhere.valueOf(licenceWhere.toUpperCase()).toString());
-        clickByXPath(LicenceVehicles.valueOf(licenceVehicles.toUpperCase()).toString());
+
+        if (licenceWhere.equals("great_britain")) clickByXPath(greatBritain); else clickByXPath(northernIreland);
+        clickByXPath(OperatorType.valueOf(operatorType.toUpperCase()).toString());
         clickByXPath(LicenceType.valueOf(licenceType.toUpperCase()).toString());
-        if (licenceType.equals("Standard_International")){
-            if (!"No_selection".equals(licenceFleet)){
-                clickByXPath(LicenceFleet.valueOf(licenceFleet.toUpperCase()).toString());
+
+        if (licenceType.equals("standard_international")){
+            if (!"no_selection".equals(vehicleType)){
+                clickByXPath(VehicleType.valueOf(vehicleType.toUpperCase()).toString());
             }
         }
 
