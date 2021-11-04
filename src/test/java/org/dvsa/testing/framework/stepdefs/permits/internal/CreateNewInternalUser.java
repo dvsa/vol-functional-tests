@@ -22,11 +22,7 @@ public class CreateNewInternalUser extends BasePage implements En {
 
     @Then("I add a new User")
     public void iAddANewUser() {
-        FakerUtils faker = new FakerUtils();
-        String foreName = faker.generateFirstName();
-        String familyName = faker.generateLastName();
-        String userName = String.format("%s.%s%s", foreName, familyName, Int.random(1000, 9999));
-        world.UIJourney.addNewInternalUser(userName, foreName, familyName, userName.concat("@dvsa.org"));
+       world.UIJourney.addNewInternalUser();
     }
 
 

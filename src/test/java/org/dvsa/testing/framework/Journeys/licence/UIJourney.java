@@ -111,12 +111,16 @@ public class UIJourney extends BasePage {
       waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
-    public void addNewInternalUser(String operatorUser, String operatorForeName, String operatorFamilyName,
-                                   String operatorUserEmail) {
-            world.DataGenerator.setOperatorUser(operatorUser);
-            world.DataGenerator.setOperatorForeName(operatorForeName);
-            world.DataGenerator.setOperatorFamilyName(operatorFamilyName);
-            world.DataGenerator.setOperatorUserEmail(operatorUserEmail);
+    public void generateUser(String operatorUser, String operatorForeName, String operatorFamilyName,
+    String operatorUserEmail) {
+        world.DataGenerator.setOperatorUser(operatorUser);
+        world.DataGenerator.setOperatorForeName(operatorForeName);
+        world.DataGenerator.setOperatorFamilyName(operatorFamilyName);
+        world.DataGenerator.setOperatorUserEmail(operatorUserEmail);
+    }
+
+    public void addNewInternalUser() {
+       world.DataGenerator.generateOperatorValues();
         selectValueFromDropDown("search-select", SelectorType.ID, "Users");
         enterText("search", SelectorType.NAME, faker.generateCompanyName());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
@@ -134,7 +138,6 @@ public class UIJourney extends BasePage {
         replaceText("search", SelectorType.NAME, world.DataGenerator.getOperatorUserEmail());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         world.internalSearchJourney.searchUser();
-        waitForPageLoad();
     }
 
 
@@ -279,10 +282,7 @@ public class UIJourney extends BasePage {
 
     public void addUser(String operatorUser, String operatorForeName, String operatorFamilyName,
                         String operatorUserEmail)  {
-        world.DataGenerator.setOperatorUser(operatorUser);
-        world.DataGenerator.setOperatorForeName(operatorForeName);
-        world.DataGenerator.setOperatorFamilyName(operatorFamilyName);
-        world.DataGenerator.setOperatorUserEmail(operatorUserEmail);
+        world.DataGenerator.generateOperatorValues();
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
