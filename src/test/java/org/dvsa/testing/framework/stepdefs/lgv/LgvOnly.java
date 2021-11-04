@@ -27,15 +27,13 @@ public class LgvOnly extends BasePage {
         clickByLinkText("Apply for a new licence");
 
         if (licenceWhere.equals("great_britain")) clickByXPath(greatBritain); else clickByXPath(northernIreland);
-        clickByXPath(OperatorType.valueOf(operatorType.toUpperCase()).toString());
-        clickByXPath(LicenceType.valueOf(licenceType.toUpperCase()).toString());
-
+        clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
+        clickByXPath("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
         if (licenceType.equals("standard_international")){
             if (!"no_selection".equals(vehicleType)){
-                clickByXPath(VehicleType.valueOf(vehicleType.toUpperCase()).toString());
+                clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
             }
         }
-
     }
 
     @When("I click save and continue")
