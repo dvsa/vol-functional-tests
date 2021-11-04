@@ -78,7 +78,7 @@ public class InternalApplication extends BasePage implements En {
         String templateValue = getText("//*[@id='generate-document']/div[4]", SelectorType.XPATH);
         assertNotNull(templateValue);
 
-        String docStoreLink = getAttribute("//a[contains(@href,'file:////')]", SelectorType.XPATH, "href");
+        String docStoreLink = getAttribute("//a[contains(@href,'ms-word:ofe|u|https://')]", SelectorType.XPATH, "href");
         assertNotNull(docStoreLink);
         assertTrue(docStoreLink.contains(".rtf"));
     }
