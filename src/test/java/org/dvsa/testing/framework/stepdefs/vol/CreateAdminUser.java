@@ -5,25 +5,24 @@ import apiCalls.enums.UserRoles;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 
-public class CreateAdminUser implements En {
+public class CreateAdminUser extends BasePage implements En {
 
-    World world;
+    private final World world;
 
-    private ValidatableResponse apiResponse;
-    public CreateAdminUser(World world) {
-        this.world = world;
-    }
+    public CreateAdminUser(World world) {this.world = world;}
 
-    @Given("^I create a new internal admin user$")
+    @When("I create a new internal admin user")
     public void iCreateANewInternalAdminUser() {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
-    };
+    }
 
     @Given("I create a new external user")
-    public void iRegisterANewExternalUser() {
+    public void iCreateANewExternalUser() {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
 
@@ -31,4 +30,6 @@ public class CreateAdminUser implements En {
     public void iShouldBeAbleToLoginWithMyNewCredentials(){
         world.internalNavigation.logInAsAdmin();
     };
+
+
 }

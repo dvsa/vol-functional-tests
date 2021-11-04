@@ -48,6 +48,15 @@ public class SelfServeNavigational extends BasePage {
         clickByLinkText("Vehicle operator decisions and applications");
     }
 
+    public void navigateToLoginPage() {
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
+        navigate().get(myURL);
+    }
+
+    public void navigateToCreateAnAccount() {
+        clickByLinkText("create an account");
+    }
+
     public void navigateToPage(String type, String page)  {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");

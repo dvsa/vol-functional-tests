@@ -1,6 +1,9 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -11,17 +14,24 @@ public class SelfServePayFees extends BasePage implements En {
     private World world;
 
     public SelfServePayFees(World world) {
-        When("^I pay fees on self serve$", () -> {
-            click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
-            world.feeAndPaymentJourney.payFee(null, "card");
-        });
-        And("^an internal user has granted my application$", () -> {
+        this.world = world;
+    }
+
+        @When("^I pay fees on self serve")
+        public void iPayFeesOnSelfServe() {
+        click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+        world.feeAndPaymentJourney.payFee(null, "card");
+    }
+
+        @And("an internal user has granted my application")
+        public void anInternalUserHasGrantedMyApplication() {
             world.grantApplication.grant();
             world.grantApplication.payGrantFees();
-        });
-        Then("^my licence should valid$", () -> {
+        }
+
+        @Then("^my licence should valid")
+        public void myLicenceShouldValid() {
             clickByLinkText("Home");
             assertTrue(isTextPresent("Valid"));
-        });
-    }
+        }
 }

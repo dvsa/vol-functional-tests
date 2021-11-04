@@ -17,11 +17,6 @@ public class ScenarioTearDown {
         Hooks.attach(scenario);
     }
 
-//    @After
-//    public static void tearDown() {
-//        Browser.navigate().close();
-//    }
-
     @Before
     public void setUpReportConfig() throws IOException {
         Environments environments = new Environments();

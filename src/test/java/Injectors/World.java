@@ -3,6 +3,7 @@ package Injectors;
 import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
+import org.dvsa.testing.framework.Journeys.licence.AdminJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
@@ -21,7 +22,11 @@ public class World {
     public GlobalMethods globalMethods;
     public LicenceCreation licenceCreation;
 
+    public AdminJourney adminJourney;
     public APIJourney APIJourney;
+    public UIJourney UIJourney;
+
+    public ForgottenCredsJourney forgottenCredsJourney;
     public BusRegistrationJourney busRegistrationJourney;
     public ContinuationJourney continuationJourney;
     public DirectorJourney directorJourney;
@@ -33,5 +38,5 @@ public class World {
     public SelfServeNavigational selfServeNavigation;
     public SurrenderJourney surrenderJourney;
     public TransportManagerJourney TMJourney;
-    public UIJourney UIJourney;
+
 }

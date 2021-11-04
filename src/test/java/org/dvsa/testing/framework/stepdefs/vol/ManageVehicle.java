@@ -59,6 +59,10 @@ public class ManageVehicle extends BasePage {
     public void chooseToAddAVehicle(String VRM){
         world.UIJourney.addAVehicle(VRM);
         waitAndClick("confirm", SelectorType.ID);
+        if(isTextPresent(String.format("%s is specified on another licence.", VRM))){
+            findSelectAllRadioButtonsByValue("yes");
+            clickById("next");
+        }
     }
 
     @And("{string} heading")
@@ -328,10 +332,6 @@ public class ManageVehicle extends BasePage {
 
     @Then("the {string} should be displayed on the page")
     public void theShouldBeDisplayedOnThePage(String vrm) {
-         if(isTextPresent(String.format("%s is specified on another licence.",vrm))){
-             findSelectAllRadioButtonsByValue("yes");
-             clickById("next");
-        }
         isTextPresent(String.format("Vehicle %s has been added", vrm));
     }
 
