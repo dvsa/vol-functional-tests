@@ -52,7 +52,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         waitForPageLoad();
     }
 
-    @Then("the {string} post signature page is displayed")
+    @Then("the 'Review and declarations' post signature page is displayed")
     public void theReviewAndDeclarationsPostSignaturePageIsDisplayed() {
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         Assert.assertTrue(isTextPresent("Review and declarations"));
