@@ -1,4 +1,4 @@
-@VOL-90 @VOL-91 @DVLA @ss_regression
+@VOL-90 @VOL-91 @DVLA @ss_regression @skip
 Feature: Transfer a vehicle
 
   Scenario: Transfer vehicles for dual licence holder
