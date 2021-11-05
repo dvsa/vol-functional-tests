@@ -17,7 +17,6 @@ import org.openqa.selenium.WebElement;
 public class ExternalSearch extends BasePage implements En {
     private final World world;
 
-
     public ExternalSearch(World world) {this.world = world;}
 
     @And("i login as a partner user")
@@ -31,7 +30,7 @@ public class ExternalSearch extends BasePage implements En {
 
     @And("I am on the external search page")
     public void iAmOnTheExternalSearchPage() {
-        world.selfServeNavigation.navigateToSearch();
+        world.selfServeNavigation.navigateToFindLorryAndBusOperatorsSearch();
     }
 
     @When("I search for a lorry and bus operator by {string}")

@@ -106,6 +106,6 @@ public class PsvSurrenders extends BasePage implements En {
     @Then("the number of disc should match the vehicles registered on the licence")
     public void theNumberOfDiscShouldMatchTheVehiclesRegisteredOnTheLicence() {
         String heading = findElements("//h2[@class = 'govuk-heading-m']", SelectorType.XPATH).get(0).getText();
-        Assert.assertTrue(heading.contains(String.valueOf(world.createApplication.getNoOfVehiclesRequested())));
+        Assert.assertTrue(heading.contains(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles())));
     }
 }

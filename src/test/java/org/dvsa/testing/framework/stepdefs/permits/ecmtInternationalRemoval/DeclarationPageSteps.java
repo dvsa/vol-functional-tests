@@ -35,9 +35,9 @@ public class DeclarationPageSteps extends BasePage implements En {
         Then("^I am directed to the ECMT removals permit fee page$", PermitFeePage::untilOnPage);
         Then("^I'm viewing my saved ECMT International application in internal$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
             refreshPage();
-            world.internalNavigation.urlSearchAndViewLicence();
+            world.internalNavigation.getLicence();
             clickByLinkText("IRHP Permits");
             clickByLinkText(world.applicationDetails.getLicenceNumber());
         });

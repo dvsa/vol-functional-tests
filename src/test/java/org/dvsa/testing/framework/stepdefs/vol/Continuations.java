@@ -28,8 +28,8 @@ public class Continuations extends BasePage implements En {
     @When("i change my continuation and review date on Internal")
     public void iChangeMyContinuationAndReviewDateOnInternal() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
         continuationDate = dates.getDateHashMap(10, 0, 0);
         world.continuationJourney.replaceContinuationAndReviewDates(continuationDate, continuationDate);
     }
@@ -47,8 +47,8 @@ public class Continuations extends BasePage implements En {
     @Then("the continuation should be approved and a snapshot generated on Internal")
     public void theContinuationShouldBeApprovedAndASnapshotGeneratedOnInternal() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
         Assert.assertTrue(isTextPresent("Digital continuation snapshot"));

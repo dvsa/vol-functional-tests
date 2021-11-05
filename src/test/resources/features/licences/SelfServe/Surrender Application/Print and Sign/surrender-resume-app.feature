@@ -14,7 +14,7 @@ Feature: User should be able to continue where they left off
 
     Examples:
       | OperatorType | LicenceType            |
-      | public       | standard_international |
+      | public       | standard_national |
 
 #  Scenario Outline: Remove disc from licence and resume surrender journey
 #    Given i have a valid "<OperatorType>" "<LicenceType>" licence

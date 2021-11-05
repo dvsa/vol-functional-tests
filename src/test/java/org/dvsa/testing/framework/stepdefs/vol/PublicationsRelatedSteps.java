@@ -17,10 +17,10 @@ import java.util.List;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PublicationRelationSteps extends BasePage implements En {
+public class PublicationsRelatedSteps extends BasePage implements En {
     private final World world;
 
-    public PublicationRelationSteps(World world) {
+    public PublicationsRelatedSteps(World world) {
         this.world = world;
     }
 

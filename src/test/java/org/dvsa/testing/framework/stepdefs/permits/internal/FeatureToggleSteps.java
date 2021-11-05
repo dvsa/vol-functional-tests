@@ -17,7 +17,7 @@ public class FeatureToggleSteps implements En {
     public FeatureToggleSteps(World world) {
         When("^I log in as an internal user with admin privileges$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
         });
         Then("^I should be able to see the feature toggle option$", () -> {
             NavigationBar.openAdminPanel();
@@ -25,7 +25,7 @@ public class FeatureToggleSteps implements En {
         });
         When("^I log in as an internal user with normal privileges$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
             // Need to add ways of creating users with normal privileges.
         });
         Then("^I should NOT be able to see the feature toggle option$", () -> {

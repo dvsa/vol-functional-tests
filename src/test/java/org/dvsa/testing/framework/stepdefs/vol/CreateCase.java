@@ -129,8 +129,7 @@ public class CreateCase extends BasePage implements En {
     @And("i add a case in internal on the {string} page")
         public void iAddACaseInInternalOnThePage(String page) {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.UIJourney.createCaseUI(page);
     }
-
 }

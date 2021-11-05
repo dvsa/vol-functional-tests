@@ -248,7 +248,7 @@ public class ManageVehicle extends BasePage {
     @And("all the licence discs number should be updated")
     public void theAllTheLicenceDiscsNumberShouldBeUpdated() {
         world.dvlaJourney.navigateToReprintVehicleDiscPage();
-        for (int i = 0; i < world.createApplication.getVehicleVRMs().length; i++) {
+        for (int i = 0; i < world.createApplication.getHgvVRMs().length; i++) {
             world.dvlaJourney.newDiscNumber = getText(
                     String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourney.allVRMs.get(i)), SelectorType.XPATH);
             Assert.assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);

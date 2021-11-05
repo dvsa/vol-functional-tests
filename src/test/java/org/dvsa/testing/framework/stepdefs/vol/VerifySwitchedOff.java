@@ -75,13 +75,6 @@ public class VerifySwitchedOff extends BasePage implements En {
             Assert.assertTrue(isTextPresent("Transport Manager details approved"));
             Assert.assertTrue(isTextPresent("Print, sign and return"));
         }
-        @Then("the 'Awaiting operator review' post signature page is displayed")
-        public void theAwaitingOperatorReviewPostSignaturePageIsDisplayed() {
-            waitForTextToBePresent("What happens next?");
-            assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-            assertTrue(isTextPresent("Awaiting operator review"));
-            assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
-        }
         @When("i am on the the TM landing page")
         public void iamOnTheTmLandingPage(){
             world.TMJourney.submitTMApplicationAndNavigateToTMLandingPage();

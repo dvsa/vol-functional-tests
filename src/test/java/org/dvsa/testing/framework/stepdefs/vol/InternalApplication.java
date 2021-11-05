@@ -21,8 +21,8 @@ public class InternalApplication extends BasePage implements En {
     @When("the caseworker completes and submits the application")
     public void theCaseworkerCompletesAndSubmitsTheApplication() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewApplication();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
         click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("has been submitted");
@@ -49,11 +49,7 @@ public class InternalApplication extends BasePage implements En {
         if (System.currentTimeMillis() > kickoutTime) {
             throw new TimeoutException("Kickout time for expecting no fee is present when granting a licence exceeded.");
         }
-        waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
-        waitAndClick("//input[@id='grant-authority']", SelectorType.XPATH);
-        waitAndClick("//button[@id='form-actions[continue-to-grant]']", SelectorType.XPATH);
-        waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
+        world.UIJourney.grantApplicationUnderDelegatedAuthority();
     }
 
     @Then("the licence is granted in Internal")
@@ -82,7 +78,7 @@ public class InternalApplication extends BasePage implements En {
         String templateValue = getText("//*[@id='generate-document']/div[4]", SelectorType.XPATH);
         assertNotNull(templateValue);
 
-        String docStoreLink = getAttribute("//a[contains(@href,'file:////')]", SelectorType.XPATH, "href");
+        String docStoreLink = getAttribute("//a[contains(@href,'ms-word:ofe|u|https://')]", SelectorType.XPATH, "href");
         assertNotNull(docStoreLink);
         assertTrue(docStoreLink.contains(".rtf"));
     }

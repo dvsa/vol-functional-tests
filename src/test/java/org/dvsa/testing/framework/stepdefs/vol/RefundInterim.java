@@ -53,8 +53,8 @@ public class RefundInterim extends BasePage implements En {
     @Then("the interim fee should be refunded")
     public void theInterimFeeShouldBeRefunded() {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
         clickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
         waitForTextToBePresent("£68.00");
@@ -90,8 +90,8 @@ public class RefundInterim extends BasePage implements En {
     @Then("the interim fee should not be refunded")
     public void theInterimFeeShouldNotBeRefunded() {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
         clickByLinkText("Fees");
         do {
             waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);

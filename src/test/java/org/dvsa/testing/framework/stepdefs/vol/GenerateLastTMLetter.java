@@ -5,13 +5,11 @@ import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
 import apiCalls.enums.UserType;
-import com.typesafe.config.Config;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.util.HashMap;
 
@@ -19,7 +17,6 @@ import static junit.framework.TestCase.assertTrue;
 
 public class GenerateLastTMLetter extends BasePage implements En {
     private final World world;
-    private Config config;
 
     public GenerateLastTMLetter(World world) {
         this.world = world;

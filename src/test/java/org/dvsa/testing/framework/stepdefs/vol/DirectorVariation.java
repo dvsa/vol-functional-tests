@@ -70,7 +70,7 @@ public class DirectorVariation extends BasePage {
 
     @Then("^a snapshot should be created in internal$")
     public void aSnapshotShouldBeCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToDocsTable();
+        world.internalNavigation.logInAndNavigateToApplicationDocsTable(false);
         directorJourney.assertDirectorChangeInTable();
     }
 
@@ -102,13 +102,13 @@ public class DirectorVariation extends BasePage {
 
     @Then("^a task should not be created in internal$")
     public void aTaskShouldNotBeCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToTask();
+        world.internalNavigation.logInAndNavigateToApplicationProcessingPage(false);
         directorJourney.assertLastDirectorTaskNotCreated();
     }
 
     @Then("^the last director deleted task is created in internal$")
     public void aLastDirectorDeletedTaskIsCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToTask();
+        world.internalNavigation.logInAndNavigateToApplicationProcessingPage(false);
         directorJourney.assertLastDirectorTaskCreated();
     }
 

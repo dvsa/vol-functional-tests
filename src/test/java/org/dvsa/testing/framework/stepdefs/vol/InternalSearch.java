@@ -18,7 +18,7 @@ public class InternalSearch extends BasePage implements En {
     @When("i search for and click on my licence")
     public void iSearchForAndClickOnMyLicence() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.internalSearchJourney.searchAndViewLicence();
     }
 
@@ -28,7 +28,7 @@ public class InternalSearch extends BasePage implements En {
             world.internalSearchJourney.searchAndViewApplication();
         } else {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+            world.internalNavigation.logInAsAdmin();
             world.internalSearchJourney.searchAndViewApplication();
         }
     }
@@ -36,14 +36,14 @@ public class InternalSearch extends BasePage implements En {
     @When("i search for and click on my case")
     public void iSearchForAndClickOnMyCase() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.internalSearchJourney.searchAndViewCase();
     }
 
     @When("i search for my psv disc and click on my licence and discs")
     public void iSearchForMyPsvDiscAndClickOnMyLicenceAndDiscs() throws SQLException, UnsupportedDatabaseDriverException {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
+        world.internalNavigation.logInAsAdmin();
         world.internalSearchJourney.searchAndViewPSVDisc();
     }
 
@@ -57,26 +57,31 @@ public class InternalSearch extends BasePage implements En {
     @And("i create an admin and url search for my licence")
     public void iCreateAnAdminAndUrlSearchForMyLicence() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
     }
 
     @And("i create an admin and url search for my application")
     public void iCreateAnAdminAndUrlSearchForMyApplication() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewApplication();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
     }
 
     @And("i create an admin and url search for my variation")
     public void iCreateAnAdminAndUrlSearchForMyVariation() {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewVariational();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getVariationApplication();
     }
 
     @And("i url search for my licence")
     public void iUrlSearchForMyLicence() {
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.getLicence();
+    }
+
+    @And("i url search for my application")
+    public void iUrlSearchForMyApplication() {
+        world.internalNavigation.getApplication();
     }
 }
