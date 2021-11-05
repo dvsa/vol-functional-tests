@@ -1,17 +1,22 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.time.LocalDate;
 
 public class OperatingCentreJourney extends BasePage {
-
+    World world;
     String workingDir = System.getProperty("user.dir");
     String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
     String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
-    public void addAnOperatingCentre(){
+    public OperatingCentreJourney(World world) {
+        this.world = world;
+    }
+
+    public void addAnOperatingCentre() {
         waitForTitleToBePresent("Operating centres and authorisation");
         clickByXPath("//*[contains(text(),'Add operating centre')]");
         waitAndEnterText("address[searchPostcode][postcode]", SelectorType.NAME, "B44 9UL");

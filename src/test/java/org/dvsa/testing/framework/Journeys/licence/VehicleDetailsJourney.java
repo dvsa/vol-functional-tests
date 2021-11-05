@@ -1,9 +1,15 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 public class VehicleDetailsJourney extends BasePage {
+
+    private World world;
+    public VehicleDetailsJourney(World world){
+        this.world = world;
+    }
 
     public void addAVehicle(boolean choice) {
         waitForTitleToBePresent("Vehicle details");

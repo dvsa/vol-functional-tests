@@ -1,9 +1,15 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 public class SafetyComplianceJourney extends BasePage {
+
+    private World world;
+    public SafetyComplianceJourney(World world){
+        this.world = world;
+    }
 
     public void addSafetyAndComplianceData() {
         waitForTitleToBePresent("Safety and compliance");
