@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
@@ -88,12 +89,6 @@ public class UIJourney extends BasePage {
         clickByName("form-actions[submit]");
     }
 
-    public void generatePersonName()
-    {
-        // Not the best way I know - hopefully start using Faker properly
-        enterText( "forename", SelectorType.ID, faker.generateFirstName());
-        enterText("familyName", SelectorType.ID, faker.generateLastName());
-    }
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
 
@@ -101,7 +96,8 @@ public class UIJourney extends BasePage {
         String userName = faker.generateFirstName() + faker.generateUniqueId(1);
 
         enterText("username", SelectorType.ID, userName);
-        generatePersonName();
+        enterText( "forename", SelectorType.ID, faker.generateFirstName());
+        enterText("familyName", SelectorType.ID, faker.generateLastName());
         enterText("fields[emailAddress]", SelectorType.ID, email);
         enterText("fields[emailConfirm]", SelectorType.ID, email);
         if (existingApplication){
@@ -117,9 +113,7 @@ public class UIJourney extends BasePage {
     }
 
     public void addNewInternalUser() {
-        userName = faker.generateFirstName() + "1234";
-       email = faker.generateFirstName() + faker.generateLastName() +
-                 "@email.com"; // Repeated I know but when Faker is configured correctly will be refactored
+       world.DataGenerator.generateOperatorValues();
         selectValueFromDropDown("search-select", SelectorType.ID, "Users");
         enterText("search", SelectorType.NAME, faker.generateCompanyName());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
@@ -127,18 +121,17 @@ public class UIJourney extends BasePage {
         selectValueFromDropDown("userType[userType]", SelectorType.NAME,"Internal");
         selectValueFromDropDown("userType[team]", SelectorType.NAME,"VOL Development team");
         selectValueFromDropDown("userType[role]", SelectorType.NAME,"Internal - Admin");
-        generatePersonName();
-        enterText("userContactDetails[emailAddress]", SelectorType.ID, email);
-        enterText("userContactDetails[emailConfirm]", SelectorType.ID, email);
-        waitAndEnterText("username", SelectorType.ID, userName);
+        enterText( "forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        enterText("userContactDetails[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("userContactDetails[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         waitAndClick("form-actions[submit]", SelectorType.ID);
         world.internalNavigation.urlViewUsers();
-
-        replaceText("search", SelectorType.NAME, email);
+        replaceText("search", SelectorType.NAME, world.DataGenerator.getOperatorUserEmail());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         world.internalSearchJourney.searchUser();
     }
-
 
 
     public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
@@ -260,19 +253,15 @@ public class UIJourney extends BasePage {
         clickByLinkText("Forgotten your password?");
     }
 
-    public void addUser(String operatorUser, String operatorForeName, String operatorFamilyName,
-                        String operatorUserEmail)  {
-        world.TMJourney.setOperatorUser(operatorUser);
-        world.TMJourney.setOperatorForeName(operatorForeName);
-        world.TMJourney.setOperatorFamilyName(operatorFamilyName);
-        world.TMJourney.setOperatorUserEmail(operatorUserEmail);
+    public void addUser()  {
+        world.DataGenerator.generateOperatorValues();
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", SelectorType.ID, world.TMJourney.getOperatorUser());
-        enterText("forename", SelectorType.ID, world.TMJourney.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.TMJourney.getOperatorFamilyName());
-        enterText("main[emailAddress]", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
-        enterText("main[emailConfirm]", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
+        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        enterText("main[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("main[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 

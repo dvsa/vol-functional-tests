@@ -1,6 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
+import activesupport.faker.FakerUtils;
+import activesupport.number.Int;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java8.En;
@@ -20,13 +22,13 @@ public class CreateNewInternalUser extends BasePage implements En {
 
     @Then("I add a new User")
     public void iAddANewUser() {
-        world.UIJourney.addNewInternalUser();
+       world.UIJourney.addNewInternalUser();
     }
 
 
     @Then("User should be created")
     public void userShouldBeCreated()
     {
-        Assert.assertTrue(isTextPresent(world.UIJourney.getUsername()));
+        Assert.assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
     }
 }

@@ -17,58 +17,11 @@ public class TransportManagerJourney extends BasePage {
 
     private World world;
     static int tmCount;
-    private String externalTMUser;
-    private String externalTMEmail;
-    private String operatorUser;
-    private String operatorUserEmail;
-    private String operatorForeName;
-    private String operatorFamilyName;
 
     public TransportManagerJourney(World world){
         this.world = world;
     }
 
-    public String getExternalTMUser() { return externalTMUser; }
-
-    public void setExternalTMUser(String externalTMUser) { this.externalTMUser = externalTMUser; }
-
-    public String getExternalTMEmail() {
-        return externalTMEmail;
-    }
-
-    public void setExternalTMEmail(String externalTMEmail) {
-        this.externalTMEmail = externalTMEmail;
-    }
-
-    public String getOperatorForeName() {
-        return operatorForeName;
-    }
-
-    public void setOperatorForeName(String operatorForeName) {
-        this.operatorForeName = operatorForeName;
-    }
-
-    public String getOperatorFamilyName() {
-        return operatorFamilyName;
-    }
-
-    public void setOperatorFamilyName(String operatorFamilyName) {
-        this.operatorFamilyName = operatorFamilyName;
-    }
-
-    public String getOperatorUser() { return operatorUser; }
-
-    public void setOperatorUser(String operatorUser) {
-        this.operatorUser = operatorUser;
-    }
-
-    public String getOperatorUserEmail() {
-        return operatorUserEmail;
-    }
-
-    public void setOperatorUserEmail(String operatorUserEmail) {
-        this.operatorUserEmail = operatorUserEmail;
-    }
 
     public void promptRemovalOfInternalTransportManager() {
         assertTrue(isTextPresent("Overview"));
@@ -158,7 +111,7 @@ public class TransportManagerJourney extends BasePage {
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
     public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) {
-        String user = String.format("%s %s", getOperatorForeName(), getOperatorFamilyName());
+        String user = String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName());
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         replaceDateFieldsByPartialId("dob", dob);
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
@@ -188,13 +141,13 @@ public class TransportManagerJourney extends BasePage {
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
-        world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
+        world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
             world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
         }
-        clickByLinkText(getOperatorForeName() + " " + getOperatorFamilyName());
+        clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
@@ -208,7 +161,7 @@ public class TransportManagerJourney extends BasePage {
         findElement("//*[@value='" + hasPreviousLicences + "'][@name='previousHistory[hasPreviousLicences]']", SelectorType.XPATH, 30).click();
         findElement("//*[@id='responsibilities']//*[contains(text(),'Internal')]", SelectorType.XPATH, 30).click();
         if (findElement("emailAddress", SelectorType.ID, 10).getAttribute("value").isEmpty()) {
-            waitAndEnterText("emailAddress", SelectorType.ID, getOperatorUserEmail());
+            waitAndEnterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         }
         waitAndEnterText("birthPlace", SelectorType.ID, "Nottingham");
         waitAndEnterText("postcodeInput1", SelectorType.ID, "NG23HX");
@@ -238,40 +191,18 @@ public class TransportManagerJourney extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void generateOperatorValues() {
-        FakerUtils faker = new FakerUtils();
-        setOperatorForeName(faker.generateFirstName());
-        setOperatorFamilyName(faker.generateLastName());
-        setOperatorUser(String.format("%s.%s%s",
-                getOperatorForeName(),
-                getOperatorFamilyName(), Int.random(1000, 9999))
-        );
-        setOperatorUserEmail(
-                getOperatorUser().concat("@dvsaUser.com")
-        );
-    }
-
-    public void generateAndAddOperatorUser() {
-        world.TMJourney.generateOperatorValues();
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.UIJourney.addUser(
-                world.TMJourney.getOperatorUser(),
-                world.TMJourney.getOperatorForeName(),
-                world.TMJourney.getOperatorFamilyName(),
-                world.TMJourney.getOperatorUserEmail());
-    }
-
     public void addNewPersonAsTransportManager(String licenceType) {
+        world.DataGenerator.generateOperatorValues();
         world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
         click("add", SelectorType.ID);
         waitAndClick("addUser", SelectorType.ID);
-        enterText("forename", SelectorType.ID, world.TMJourney.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.TMJourney.getOperatorFamilyName());
+        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
         LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
         replaceDateFieldsByPartialId("dob", dob);
-        enterText("username", SelectorType.ID, world.TMJourney.getOperatorUser());
-        enterText("emailAddress", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
-        enterText("emailConfirm", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
+        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+        enterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("emailConfirm", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         click("form-actions[continue]", SelectorType.ID);
         waitForTextToBePresent("user account has been created and a link sent to them");
     }
