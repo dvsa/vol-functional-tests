@@ -18,7 +18,7 @@ public class LgvOnly extends BasePage {
     }
 
     public String greatBritain = "//input[@id='type-of-licence[operator-location]']";
-    public String northernIreland = "61790589c0c15";
+    public String northernIreland = "//input[@name='type-of-licence[operator-location]'][@value='Y']";
 
     @Given("I am applying for a {string} {string} {string} {string} licence")
     public void iWantToApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType) {
@@ -27,7 +27,12 @@ public class LgvOnly extends BasePage {
         clickByLinkText("Apply for a new licence");
 
         if (licenceWhere.equals("great_britain")) clickByXPath(greatBritain); else clickByXPath(northernIreland);
-        clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
+        if (licenceWhere.equals("great_britain")){
+            //if (!"no_selection".equals(operatorType)){
+                clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
+            //}
+        }
+        //clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
         clickByXPath("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
         if (licenceType.equals("standard_international")){
             if (!"no_selection".equals(vehicleType)){
