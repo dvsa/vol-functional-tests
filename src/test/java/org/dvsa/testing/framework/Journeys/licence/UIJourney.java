@@ -43,8 +43,6 @@ public class UIJourney extends BasePage {
     private String userName;
     private String email;
     String uploadLaterRadioButton =  "//input[@id='uploadLaterRadio']";
-    String saveButton = "//*[@id='form-actions[save]']";
-
 
     public String getUsername() {
         return userName;
@@ -88,7 +86,6 @@ public class UIJourney extends BasePage {
         enterText("data[penalty]", SelectorType.NAME, "Severe");
         clickByName("form-actions[submit]");
     }
-
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
 
@@ -268,7 +265,7 @@ public class UIJourney extends BasePage {
     public void completeFinancialEvidencePage() {
         world.selfServeNavigation.navigateToPage("variation", "Financial evidence");
         click(uploadLaterRadioButton, SelectorType.XPATH);
-        click(saveButton, SelectorType.XPATH);
+        clickSaveAndReturn();
     }
 
     public void signDeclaration()  {
@@ -335,7 +332,7 @@ public class UIJourney extends BasePage {
     public void payForInterimApp()  {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
-        waitAndClick("form-actions[save]", SelectorType.NAME);
+        clickSaveAndReturn();
         clickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
@@ -361,13 +358,13 @@ public class UIJourney extends BasePage {
 
     public void caseWorkerCompleteConditionsAndUndertakings()  {
         clickByLinkText("Conditions and undertakings");
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteReviewAndDeclarations()  {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteOverview()  {
@@ -590,5 +587,13 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
         waitAndClick("form-actions[submit]",SelectorType.ID);
         waitForTextToBePresent("Variation details");
+    }
+
+    public static void clickSaveAndContinue()  {
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+    }
+
+    public static void clickSaveAndReturn()  {
+        waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 }

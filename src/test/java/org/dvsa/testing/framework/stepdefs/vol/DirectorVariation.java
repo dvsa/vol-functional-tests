@@ -6,6 +6,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
@@ -53,7 +54,8 @@ public class DirectorVariation extends BasePage {
     @When("^i enter \"([^\"]*)\" to previous convictions details question$")
     public void iEnterPreviousToConvictionDetailsQuestion (String answer) {
         directorJourney.answerConvictionsAndPenalties(answer);
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndReturn();
+        //clickByXPath(directorJourney.saveAndContinue);
     }
 
     @And("^an urgent task is created in internal$")
@@ -65,7 +67,8 @@ public class DirectorVariation extends BasePage {
     @And("^i enter \"([^\"]*)\" to financial details question$")
     public void iEnterToFinancialDetailsQuestion(String answer) {
         directorJourney.answerFinancialHistory(answer);
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndReturn();
+        //clickByXPath(directorJourney.saveAndContinue);
     }
 
     @Then("^a snapshot should be created in internal$")
@@ -115,13 +118,15 @@ public class DirectorVariation extends BasePage {
     @When("I begin adding a director but submit empty fields")
     public void iBeginAddingADirectorButSubmitEmptyFields() {
         clickByXPath(directorJourney.addButton);
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndReturn();
+        //clickByXPath(directorJourney.saveAndContinue);
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 
     @When("I submit the empty page")
     public void iSubmitAnEmptyPage() {
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndReturn();
+        //clickByXPath(directorJourney.saveAndContinue);
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 
@@ -156,7 +161,8 @@ public class DirectorVariation extends BasePage {
         incorrectDateValues.put("year", "%^&*");
         replaceDateFieldsByPartialId("dob", incorrectDateValues);
 
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndReturn();
+        //clickByXPath(directorJourney.saveAndContinue);
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 

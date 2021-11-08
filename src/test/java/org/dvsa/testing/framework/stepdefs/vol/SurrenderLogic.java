@@ -7,6 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import io.cucumber.datatable.DataTable;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -143,4 +144,3 @@ public class SurrenderLogic extends BasePage implements En {
         assertTrue(isTextPresent(page));
     }
 }
-

@@ -25,7 +25,6 @@ public class OperatingCentreJourney extends BasePage {
     String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
     String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
     String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
-    public String saveButton = "//*[@id='form-actions[save]']";
 
     String confirmDeclaration =  "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
@@ -80,7 +79,7 @@ public class OperatingCentreJourney extends BasePage {
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
         replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
-        click(saveButton, SelectorType.XPATH);
+        UIJourney.clickSaveAndReturn();
     }
 
     public void addNewOperatingCentre(String vehicles, String trailers) {

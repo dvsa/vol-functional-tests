@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.internal.InterimPage;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
@@ -58,20 +59,20 @@ public class InterimLicence extends BasePage implements En {
 
     @Then("A {string} error appears when i save the interim licence")
     public void AErrorAppearsWhenISaveTheInterimLicence(String errorType) {
-        InterimPage.save();
+        UIJourney.clickSaveAndReturn();
         String errorMes = (errorType.equals("HGV") ? (HgvVehicleErrorMessage):(LgvVehicleErrorMessage));
         assertTrue(isTextPresent(errorMes));
     };
 
     @Then("I should get an error when i save the application")
     public void iShouldGetAnErrorWhenISaveTheApplication() {
-        InterimPage.save();
+        UIJourney.clickSaveAndReturn();
         assertTrue(isTextPresent(VehicleErrorMessage));
     };
 
     @Then("I should be able to save the application without any errors")
     public void iShouldBeAbleToSaveTheApplicationWithoutAnyErrors() {
-        InterimPage.save();
+        UIJourney.clickSaveAndReturn();
         assertFalse(isTextPresent(VehicleErrorMessage));
         assertFalse(isTextPresent(HgvVehicleErrorMessage));
         assertFalse(isTextPresent(LgvVehicleErrorMessage));
@@ -79,13 +80,13 @@ public class InterimLicence extends BasePage implements En {
 
     @Then("I should not error when i save the application")
     public void iShouldNotErrorWhenISaveTheApplication() {
-        InterimPage.save();
+        UIJourney.clickSaveAndReturn();
         assertFalse(isTextPresent(noDatesErrorMessage));
     };
 
     @Then("I should error when i attempt to grant the application")
     public void iShouldErrorWhenIAttemptToGrantTheApplication() {
-        InterimPage.save();
+        UIJourney.clickSaveAndReturn();
         clickByLinkText("Interim details");
         waitForTextToBePresent("Interim application");
         InterimPage.grant();

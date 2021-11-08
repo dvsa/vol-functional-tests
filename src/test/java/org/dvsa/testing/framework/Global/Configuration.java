@@ -30,5 +30,4 @@ public class Configuration{
         return String.valueOf(S3.getUsernameInfoLink(world.registerUser.getEmailAddress()));
     }
 
-
 }
