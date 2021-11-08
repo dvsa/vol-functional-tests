@@ -121,7 +121,7 @@ pom.xml.releaseBackup
 pom.xml.tag
 
 # Testing
-/src/test/resources/ESBR.zip
+/src/test/resources/import EBSR.zip
 /.allure/
 /allure-report/
 /img/

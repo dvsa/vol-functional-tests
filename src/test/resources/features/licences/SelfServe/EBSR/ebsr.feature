@@ -1,8 +1,8 @@
-@ESBR
-Feature: ESBR for English, Welsh and Scottish Areas
+@EBSR
+Feature: import EBSR for English, Welsh and Scottish Areas
 
   @ss_regression
-  Scenario Outline: Short notice ESBR in self-serve
+  Scenario Outline: Short notice import EBSR in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
     Then A short notice flag should be displayed in selfserve
@@ -15,7 +15,7 @@ Feature: ESBR for English, Welsh and Scottish Areas
       | west       | 41   |
 
   @ss_regression
-  Scenario Outline: ESBR in self-serve
+  Scenario Outline: import EBSR in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
     Then A short notice flag should not be displayed in selfserve
@@ -28,7 +28,7 @@ Feature: ESBR for English, Welsh and Scottish Areas
       | west       | 42   |
 
   @ss_regression
-  Scenario Outline: ESBR for curtailed and suspended licence in self-serve
+  Scenario Outline: import EBSR for curtailed and suspended licence in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     And the licence status is "<LicenceStatus>"
     When I upload an ebsr file with "<Days>" days notice
@@ -39,19 +39,19 @@ Feature: ESBR for English, Welsh and Scottish Areas
       | wales       | 55   | suspend       |
 
   @smoketest
-  Scenario: Short notice ESBR in self-serve
+  Scenario: Short notice import EBSR in self-serve smoke test
     Given I have a psv application with traffic area "west" and enforcement area "west" which has been granted
     When I upload an ebsr file with "41" days notice
     Then A short notice flag should be displayed in selfserve
 
   @smoketest
-  Scenario: ESBR in self-serve
+  Scenario: import EBSR in self-serve smoke test
     Given I have a psv application with traffic area "west" and enforcement area "west" which has been granted
     When I upload an ebsr file with "42" days notice
     Then A short notice flag should not be displayed in selfserve
 
   @smoketest
-  Scenario: ESBR for curtailed and suspended licence in self-serve
+  Scenario: import EBSR for curtailed and suspended licence in self-serve smoke test
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And the licence status is "curtail"
     When I upload an ebsr file with "41" days notice

@@ -1,28 +1,33 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import apiCalls.enums.OperatorType;
+import com.fasterxml.jackson.databind.ser.Serializers;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import io.restassured.response.ValidatableResponse;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class GrantApplication implements En {
-
-    private World world;
+public class GrantApplication extends BasePage implements En {
+    private final World world;
     private ValidatableResponse apiResponse;
 
     public GrantApplication(World world) {
         this.world = world;
+    }
 
-        When("^I grant licence$", () -> {
-            apiResponse = world.grantApplication.grantLicence();
-        });
-        Then("^the licence should be granted$", () -> {
-            if (world.licenceCreation.isGoodsLicence()) {
-                apiResponse = world.grantApplication.payGrantFees();
-            }
-            assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
-        });
+    @When("I grant licence")
+    public void iGrantLicence() {
+        apiResponse = world.grantApplication.grantLicence();
+    }
+
+    @Then("the licence should be granted")
+    public void theLicenceShouldBeGranted() {
+        if (world.licenceCreation.isGoodsLicence()) {
+            apiResponse = world.grantApplication.payGrantFees();
+        }
+        assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
     }
 }

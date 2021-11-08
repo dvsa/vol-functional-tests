@@ -1,10 +1,11 @@
+@Accessibility
 Feature: Check that manage vehicle journey is accessible
 
   Background:
     Given I have "2" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "6"
     When I navigate to manage vehicle page on a licence
 
-  Scenario: Check that Manage Vehicle page is accessible
+  Scenario: Manage Vehicle page is accessible
     And i scan for accessibility violations
     Then no issues should be present on the page
 

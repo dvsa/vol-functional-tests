@@ -47,6 +47,19 @@ public class SelfServeNavigational extends BasePage {
         navigateToExternalSearch();
         clickByLinkText("Vehicle operator decisions and applications");
     }
+    public void navigateToCheckerPage()  {
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
+        navigate().get(myURL);
+    }
+
+    public void navigateToLoginPage() {
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
+        navigate().get(myURL);
+    }
+
+    public void navigateToCreateAnAccount() {
+        clickByLinkText("create an account");
+    }
 
     public void navigateToPage(String type, String page)  {
         clickByLinkText("GOV.UK");

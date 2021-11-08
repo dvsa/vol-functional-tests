@@ -21,13 +21,12 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
+
+import java.util.*;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
@@ -41,10 +40,19 @@ public class UIJourney extends BasePage {
 
     private World world;
     private FakerUtils faker = new FakerUtils();
-
+    private String userName;
+    private String email;
     String uploadLaterRadioButton =  "//input[@id='uploadLaterRadio']";
     String saveButton = "//*[@id='form-actions[save]']";
 
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     public UIJourney(World world) {
         this.world = world;
@@ -80,6 +88,51 @@ public class UIJourney extends BasePage {
         enterText("data[penalty]", SelectorType.NAME, "Severe");
         clickByName("form-actions[submit]");
     }
+
+
+    public void addNewOperator(String applicationID, boolean existingApplication) {
+
+        String email = faker.generateFirstName() + faker.generateLastName() + faker.generateUniqueId(3) + "@email.com";
+        String userName = faker.generateFirstName() + faker.generateUniqueId(1);
+
+        enterText("username", SelectorType.ID, userName);
+        enterText( "forename", SelectorType.ID, faker.generateFirstName());
+        enterText("familyName", SelectorType.ID, faker.generateLastName());
+        enterText("fields[emailAddress]", SelectorType.ID, email);
+        enterText("fields[emailConfirm]", SelectorType.ID, email);
+        if (existingApplication){
+            findSelectAllRadioButtonsByValue("Y");
+            enterText("fields[licenceNumber]", SelectorType.ID, applicationID);
+        }
+       else { findSelectAllRadioButtonsByValue("N");
+            enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
+            waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
+        }
+        click("termsAgreed", SelectorType.ID);
+      waitAndClick("form-actions[submit]", SelectorType.ID);
+    }
+
+    public void addNewInternalUser() {
+       world.DataGenerator.generateOperatorValues();
+        selectValueFromDropDown("search-select", SelectorType.ID, "Users");
+        enterText("search", SelectorType.NAME, faker.generateCompanyName());
+        waitAndClick("//input[@name='submit']", SelectorType.XPATH);
+        waitAndClick("add", SelectorType.ID);
+        selectValueFromDropDown("userType[userType]", SelectorType.NAME,"Internal");
+        selectValueFromDropDown("userType[team]", SelectorType.NAME,"VOL Development team");
+        selectValueFromDropDown("userType[role]", SelectorType.NAME,"Internal - Admin");
+        enterText( "forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        enterText("userContactDetails[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("userContactDetails[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.internalNavigation.urlViewUsers();
+        replaceText("search", SelectorType.NAME, world.DataGenerator.getOperatorUserEmail());
+        waitAndClick("//input[@name='submit']", SelectorType.XPATH);
+        world.internalSearchJourney.searchUser();
+    }
+
 
     public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env).toString();
@@ -196,24 +249,19 @@ public class UIJourney extends BasePage {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
         }
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env).toString();
-        navigate().get(myURL);
+        world.selfServeNavigation.navigateToLoginPage();
         clickByLinkText("Forgotten your password?");
     }
 
-    public void addUser(String operatorUser, String operatorForeName, String operatorFamilyName,
-                        String operatorUserEmail)  {
-        world.TMJourney.setOperatorUser(operatorUser);
-        world.TMJourney.setOperatorForeName(operatorForeName);
-        world.TMJourney.setOperatorFamilyName(operatorFamilyName);
-        world.TMJourney.setOperatorUserEmail(operatorUserEmail);
+    public void addUser()  {
+        world.DataGenerator.generateOperatorValues();
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
-        enterText("username", SelectorType.ID, world.TMJourney.getOperatorUser());
-        enterText("forename", SelectorType.ID, world.TMJourney.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.TMJourney.getOperatorFamilyName());
-        enterText("main[emailAddress]", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
-        enterText("main[emailConfirm]", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
+        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        enterText("main[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("main[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 

@@ -36,7 +36,7 @@ public class GenericUtils extends BasePage {
 
     private World world;
     private String registrationNumber;
-    private static final String zipFilePath = "/src/test/resources/ESBR.zip";
+    private static final String zipFilePath = "/src/test/resources/import EBSR.zip";
 
     public String getRegistrationNumber() {
         return registrationNumber;
@@ -52,7 +52,7 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String xmlFile = "./src/test/resources/ESBR/ESBR.xml";
+            String xmlFile = "./src/test/resources/EBSR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
             Document xmlDoc = xmlBuilder.parse(xmlFile);
@@ -134,7 +134,7 @@ public class GenericUtils extends BasePage {
         /*
         / Uses Open source util zt-zip https://github.com/zeroturnaround/zt-zip
          */
-        ZipUtil.pack(new File("./src/test/resources/ESBR"), new File("./src/test/resources/ESBR.zip"));
+        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File("./src/test/resources/EBSR.zip"));
     }
 
     public void executeJenkinsBatchJob(String command) throws Exception {
