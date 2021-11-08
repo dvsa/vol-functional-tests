@@ -112,14 +112,6 @@ public class UIJourney extends BasePage {
       waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
-    public void generateUser(String operatorUser, String operatorForeName, String operatorFamilyName,
-    String operatorUserEmail) {
-        world.DataGenerator.setOperatorUser(operatorUser);
-        world.DataGenerator.setOperatorForeName(operatorForeName);
-        world.DataGenerator.setOperatorFamilyName(operatorFamilyName);
-        world.DataGenerator.setOperatorUserEmail(operatorUserEmail);
-    }
-
     public void addNewInternalUser() {
        world.DataGenerator.generateOperatorValues();
         selectValueFromDropDown("search-select", SelectorType.ID, "Users");
