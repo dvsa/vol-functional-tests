@@ -192,6 +192,7 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void addNewPersonAsTransportManager(String licenceType) {
+        world.DataGenerator.generateOperatorValues();
         world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
         click("add", SelectorType.ID);
         waitAndClick("addUser", SelectorType.ID);

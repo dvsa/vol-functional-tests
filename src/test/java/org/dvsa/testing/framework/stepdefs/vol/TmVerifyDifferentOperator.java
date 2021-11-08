@@ -93,7 +93,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @When("i add new person as a transport manager and they fill out their details")
     public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() {
-        world.DataGenerator.generateOperatorValues();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.addNewPersonAsTransportManager("application");
         world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
@@ -168,7 +167,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     public void iAddANewTransportManager() {
         world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
         world.UIJourney.changeLicenceForVariation();
-        world.DataGenerator.generateOperatorValues();
         world.TMJourney.addNewPersonAsTransportManager("variation");
     }
 

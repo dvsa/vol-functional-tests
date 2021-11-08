@@ -261,8 +261,7 @@ public class UIJourney extends BasePage {
         clickByLinkText("Forgotten your password?");
     }
 
-    public void addUser(String operatorUser, String operatorForeName, String operatorFamilyName,
-                        String operatorUserEmail)  {
+    public void addUser()  {
         world.DataGenerator.generateOperatorValues();
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
