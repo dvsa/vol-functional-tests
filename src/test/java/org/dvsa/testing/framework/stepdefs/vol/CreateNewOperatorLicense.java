@@ -8,6 +8,8 @@ import cucumber.api.java8.En;
 
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
+import static org.junit.Assert.assertTrue;
+
 
 public class CreateNewOperatorLicense extends BasePage implements En {
     private final World world;
@@ -28,7 +30,7 @@ public class CreateNewOperatorLicense extends BasePage implements En {
 
     @Then("I should be able to register an account")
     public void iShouldBeAbleToRegisterAnAccount() {
-        isTextPresent("Check your email");
+        assertTrue(isTitlePresent("Check your email", 10));
     }
 
     @And("I am on the registration page")

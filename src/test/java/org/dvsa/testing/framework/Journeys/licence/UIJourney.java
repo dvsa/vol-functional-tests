@@ -1,4 +1,3 @@
-
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
@@ -13,7 +12,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -44,6 +42,9 @@ public class UIJourney extends BasePage {
     private FakerUtils faker = new FakerUtils();
     private String userName;
     private String email;
+    String uploadLaterRadioButton =  "//input[@id='uploadLaterRadio']";
+    String saveButton = "//*[@id='form-actions[save]']";
+
 
     public String getUsername() {
         return userName;
@@ -170,7 +171,7 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("The document has been saved");
     }
 
-    public void editDocumentWithWebDav() throws IllegalBrowserException, IOException, InterruptedException {
+    public void editDocumentWithWebDav() throws IOException, InterruptedException {
         // Forgive us for using sleeps. There's no other way as this is not a window that selenium can recognise.
         String window = "Olcs - ".concat(world.applicationDetails.getLicenceNumber()).concat(" - Google Chrome");
         String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), "/");
@@ -230,26 +231,6 @@ public class UIJourney extends BasePage {
         waitAndClick("//button[@id='form-actions[confirm]']", SelectorType.XPATH);
     }
 
-    public void changeVehicleReq(String noOfVehicles) {
-        click("//*[@id='overview-item__operating_centres']", SelectorType.XPATH);
-        waitForTextToBePresent("Traffic area");
-        waitAndClick("//*[contains(text(),'change your')]", SelectorType.XPATH);
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
-        waitForTitleToBePresent("Operating centres and authorisation");
-        waitAndClick("//*[@id=\"OperatingCentres\"]/fieldset[1]/div/div[2]/table/tbody/tr/td[1]/input", SelectorType.XPATH);
-        enterText(nameAttribute("input", "data[noOfVehiclesRequired]"), SelectorType.CSS, noOfVehicles);
-        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
-        if (Integer.parseInt(noOfVehicles) > world.createApplication.getNoOfVehiclesRequested()) {
-            click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
-        }
-        click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
-    }
-
-    public void changeVehicleAuth(String noOfAuthVehicles)  {
-        enterText(nameAttribute("input", "data[totAuthVehicles]"), SelectorType.CSS, noOfAuthVehicles);
-        click(nameAttribute("button", "form-actions[save]"), SelectorType.CSS);
-    }
-
     public void signWithVerify()  {
         String verifyUsername = world.configuration.config.getString("verifyUsername");
         String verifyPassword = world.configuration.config.getString("verifyPassword");
@@ -293,13 +274,10 @@ public class UIJourney extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-
-
-    public void updateFinancialInformation()  {
+    public void completeFinancialEvidencePage() {
         world.selfServeNavigation.navigateToPage("variation", "Financial evidence");
-        refreshPageWithJavascript();
-        click("//*[@id='uploadLaterRadio']", SelectorType.XPATH);
-        click("//*[@id='form-actions[save]']", SelectorType.XPATH);
+        click(uploadLaterRadioButton, SelectorType.XPATH);
+        click(saveButton, SelectorType.XPATH);
     }
 
     public void signDeclaration()  {
@@ -378,8 +356,8 @@ public class UIJourney extends BasePage {
 
     public void addNewOperatingCentre()  {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
         clickByLinkText("Operating centres and authorisation");
         click("//*[@id='add']", SelectorType.XPATH);
         searchAndSelectAddress("postcodeInput1", "FK10 1AA", 1);
@@ -404,7 +382,7 @@ public class UIJourney extends BasePage {
     public void caseWorkerCompleteOverview()  {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        click("//*[contains(@id,'form-actions[save')]", SelectorType.XPATH);
     }
 
     public void caseWorkerGrantApplication()  {
@@ -466,18 +444,16 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("Details");
     }
 
-
-
     public void createCaseUI(String target)  {
         switch (target.toLowerCase()) {
             case "licence":
-                world.internalNavigation.urlSearchAndViewLicence();
+                world.internalNavigation.getLicence();
                 break;
             case "application":
-                world.internalNavigation.urlSearchAndViewApplication();
+                world.internalNavigation.getApplication();
                 break;
             case "variation":
-                world.internalNavigation.urlSearchAndViewVariational();
+                world.internalNavigation.getVariationApplication();
                 break;
         }
         if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equals("UNDER CONSIDERATION")) {
@@ -534,13 +510,11 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void addNewAddressDetails(HashMap<String, String> address, String postcode, String typeOfAddress) {
-        replaceText(String.format("//*[contains(@name,'%s[addressLine1]')]", typeOfAddress), SelectorType.XPATH, address.get("addressLine1"));
-        replaceText(String.format("//*[contains(@name,'%s[addressLine2]')]", typeOfAddress), SelectorType.XPATH, address.get("addressLine2"));
-        replaceText(String.format("//*[contains(@name,'%s[addressLine3]')]", typeOfAddress), SelectorType.XPATH, address.get("addressLine3"));
-        replaceText(String.format("//*[contains(@name,'%s[addressLine4]')]", typeOfAddress), SelectorType.XPATH, address.get("addressLine4"));
-        replaceText(String.format("//*[contains(@name,'%s[town]')]", typeOfAddress), SelectorType.XPATH, address.get("town"));
-        replaceText(String.format("//*[contains(@name,'%s[postcode]')]", typeOfAddress), SelectorType.XPATH, postcode);
+    public void addNewAddressDetails(HashMap<String, String> address, String postcodeMatchingTrafficArea, String typeOfAddress) {
+        String[] addressFields = {"addressLine1", "addressLine2", "addressLine3", "addressLine4", "town"};
+        for (String addressField : addressFields )
+            replaceText(String.format("//*[contains(@name,'%s[%s]')]", typeOfAddress, addressField), SelectorType.XPATH, address.get(addressField));
+        replaceText(String.format("//*[contains(@name,'%s[postcode]')]", typeOfAddress), SelectorType.XPATH, postcodeMatchingTrafficArea);
     }
 
     public void checkAddressDetails(HashMap<String, String> address, String postcode, String typeOfAddress) {
@@ -550,23 +524,6 @@ public class UIJourney extends BasePage {
         checkValue(String.format("//*[@name='%s[addressLine4]']", typeOfAddress), SelectorType.XPATH, address.get("addressLine4"));
         checkValue(String.format("//*[@name='%s[town]']", typeOfAddress), SelectorType.XPATH, address.get("town"));
         checkValue(String.format("//*[@name='%s[postcode]']", typeOfAddress), SelectorType.XPATH, postcode);
-    }
-
-    public void addNewOperatingCentreSelfServe(int vehicles, int trailers) {
-        waitForTitleToBePresent("Operating centres and authorisation");
-        click("//*[@id='add']", SelectorType.XPATH);
-        HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
-        clickByLinkText("Enter the address yourself");
-        addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
-        enterText("//*[@id='noOfVehiclesRequired']", SelectorType.XPATH, Integer.toString(vehicles));
-        enterText("//*[@id='noOfTrailersRequired']", SelectorType.XPATH, Integer.toString(trailers));
-        click("//*[@id='permission']", SelectorType.XPATH);
-        click("//*[@value='adPlacedLater']", SelectorType.XPATH);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForTextToBePresent("Operating centre added");
-        replaceText("//*[@id='totAuthVehicles']", SelectorType.XPATH, Integer.toString(vehicles));
-        replaceText("//*[@id='totAuthTrailers']", SelectorType.XPATH, Integer.toString(vehicles));
-        click("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
     public void skipToMainContentAndCheck() {
@@ -623,5 +580,24 @@ public class UIJourney extends BasePage {
 
     public void checkValue(String selector, SelectorType selectorType, String text) {
         assertEquals(getValue(selector, selectorType), text);
+    }
+
+    public void grantApplicationUnderDelegatedAuthority() {
+        waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
+        waitAndClick("//input[@id='grant-authority']", SelectorType.XPATH);
+        waitAndClick("//button[@id='form-actions[continue-to-grant]']", SelectorType.XPATH);
+        if (isElementPresent("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH))
+            waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
+    }
+
+    public void createVariationInInternal(boolean variationFeeRequired) {
+        String variationFeeDecision = variationFeeRequired ? "Yes" : "No";
+        waitAndClick("//*[@id='menu-licence-quick-actions-create-variation']",SelectorType.XPATH);
+        waitForTextToBePresent("Applying to change a licence");
+        waitAndClick(String.format("//*[contains(text(),'%s')]", variationFeeDecision), SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        waitForTextToBePresent("Variation details");
     }
 }

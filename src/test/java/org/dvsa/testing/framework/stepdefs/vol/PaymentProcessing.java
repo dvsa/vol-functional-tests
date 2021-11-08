@@ -5,14 +5,13 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertEquals;
 
-public class PaymentProcessing extends BasePage implements En {
+public class PaymentProcessing extends BasePage {
     private World world;
     private String currentFeeCount;
     private String feeNumber;
@@ -29,7 +28,9 @@ public class PaymentProcessing extends BasePage implements En {
         this.feeNumber = feeNumber;
     }
 
-    public PaymentProcessing(World world) {this.world = world;}
+    public PaymentProcessing(World world) {
+        this.world = world;
+    }
 
     @When("when i pay for the fee by {string}")
     public void whenIPayForTheFeeBy(String arg0) {
@@ -46,12 +47,11 @@ public class PaymentProcessing extends BasePage implements En {
 
     @Given("i am on the payment processing page")
     public void iAmOnThePaymentProcessingPage() {
-        Given("^i am on the payment processing page$", () -> {
-            waitAndClick("//li[@class='admin__title']", SelectorType.XPATH);
-            clickByLinkText("Payment processing");
-            waitForTextToBePresent("Payment Processing");
-        });
+        waitAndClick("//li[@class='admin__title']", SelectorType.XPATH);
+        clickByLinkText("Payment processing");
+        waitForTextToBePresent("Payment Processing");
     }
+
     @And("i add a new {string} fee")
     public void iAddANewFee(String arg0) {
         String amount = "100";
@@ -64,10 +64,9 @@ public class PaymentProcessing extends BasePage implements En {
 
     @Then("the fee should be paid and no longer visible in the fees table")
     public void theFeeShouldBePaidAndNoLongerVisibleInTheFeesTable() {
-        world.internalNavigation.urlSearchAndViewEditFee(getFeeNumber());
+        world.internalNavigation.getAdminEditFee(getFeeNumber());
         waitForTextToBePresent("Payments and adjustments");
         refreshPageWithJavascript();
         assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
-
     }
 }

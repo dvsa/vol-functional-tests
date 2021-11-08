@@ -19,7 +19,6 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
@@ -40,7 +39,7 @@ public class WebDav extends BasePage implements En {
 
     @When("i update my operating system on internal to {string}")
     public void iUpdateMyOperatingSystemOnInternalTo(String operatingSystem) {
-        world.internalNavigation.urlSearchAndViewInternalUserAccount(world.updateLicence.getInternalUserId());
+        world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
@@ -65,7 +64,7 @@ public class WebDav extends BasePage implements En {
     }
 
     @And("i make changes to the document with WebDav and save it")
-    public void iMakeChangesToTheDocumentWithWebDavAndSaveIt() throws IllegalBrowserException, IOException, InterruptedException {
+    public void iMakeChangesToTheDocumentWithWebDavAndSaveIt() throws IOException, InterruptedException {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         String documentLink = Browser.navigate().findElement(By.id("letter-link")).getText();
 
@@ -96,7 +95,7 @@ public class WebDav extends BasePage implements En {
 
     @Then("the operating system should be updated to {string}")
     public void theOperatingSystemShouldBeUpdatedTo(String operatingSystem) {
-        world.internalNavigation.urlSearchAndViewInternalUserAccount(world.updateLicence.getInternalUserId());
+        world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);

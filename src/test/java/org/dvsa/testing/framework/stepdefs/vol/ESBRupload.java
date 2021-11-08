@@ -37,7 +37,7 @@ public class ESBRupload extends BasePage implements En {
 
     @And("i add a new bus registration")
     public void iAddANewBusRegistration() {
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.getLicence();
         world.busRegistrationJourney.internalSiteAddBusNewReg(5);
         clickByLinkText("Register");
         findSelectAllRadioButtonsByValue("Y");

@@ -7,10 +7,10 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.junit.Assert;
 
-public class ResetCredsSelfServ extends BasePage implements En {
+public class ResetCredsSelfServe extends BasePage implements En {
     private final World world;
 
-    public ResetCredsSelfServ (World world)  {
+    public ResetCredsSelfServe(World world)  {
         this.world = world;
     }
 

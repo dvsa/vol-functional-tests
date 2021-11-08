@@ -121,8 +121,8 @@ public class BusRegistrationJourney extends BasePage {
             System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         }
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
         internalSiteAddBusNewReg(5);
         payFeesAndGrantNewBusReg();
         world.updateLicence.createCase();

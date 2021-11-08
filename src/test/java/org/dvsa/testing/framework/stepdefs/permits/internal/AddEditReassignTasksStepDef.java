@@ -34,12 +34,12 @@ public class AddEditReassignTasksStepDef extends BasePage implements En {
 
     @Then("the User has re-assigned a task")
     public void theUserHasReAssignedATask() {
-        Assert.assertTrue(isTextPresent("System Team (ELGOOD, ASHLEY ALEX)"));
+        Assert.assertTrue(isTextPresent("System Team (COPESTAKE, ANDREW DAVID)"));
     }
 
     @Then("the User has edited a task")
     public void theUserHasEditedATask() {
-        Assert.assertTrue(isTextPresent("System Team (ELGOOD, ASHLEY ALEX)"));
+        Assert.assertTrue(isTextPresent("System Team (COPESTAKE, ANDREW DAVID)"));
         Assert.assertTrue(isTextPresent(world.adminJourney.getDescription()));
     }
 
@@ -48,7 +48,7 @@ public class AddEditReassignTasksStepDef extends BasePage implements En {
           Assert.assertTrue(isTextPresent(world.adminJourney.getDescription()));
           String actualDate = getText("//tbody/tr[2]/td[4]", SelectorType.XPATH);
           String expectedDate = LocalDate.now().plusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-         Assert.assertEquals(expectedDate,actualDate);
+         Assert.assertEquals(expectedDate, actualDate);
     }
 }
 

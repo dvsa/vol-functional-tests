@@ -10,7 +10,7 @@
 
     <properties>
         <active-support.version>1.5.1</active-support.version>
-        <api-calls.version>1.1.1</api-calls.version>
+        <api-calls.version>1.1.4</api-calls.version>
         <uri-constructor.version>1.5.4</uri-constructor.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -104,7 +104,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfRunners>3</desiredNumberOfRunners>
+                    <desiredNumberOfRunners>2</desiredNumberOfRunners>
                     <includeScenarioTags>
                         not (@skip
                         or @Deprecated

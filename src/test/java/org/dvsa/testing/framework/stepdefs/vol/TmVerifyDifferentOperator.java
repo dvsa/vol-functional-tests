@@ -53,9 +53,9 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @Then("the {string} post signature page is displayed")
-    public void theReviewAndDeclarationsPostSignaturePageIsDisplayed() {
+    public void thePostSignaturePageIsDisplayed(String text) {
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-        Assert.assertTrue(isTextPresent("Review and declarations"));
+        Assert.assertTrue(isTextPresent(text));
         if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])<10) {
             Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
         } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])>=10){
