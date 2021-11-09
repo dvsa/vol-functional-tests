@@ -29,7 +29,7 @@ public class AdminJourney extends BasePage {
     public void selectSystemTeam() {
         selectValueFromDropDown("assignedToTeam", SelectorType.ID, "System Team");
         waitAndClick("assignedToUser", SelectorType.ID);
-        selectRandomValueFromDown("assignedToUser");
+        selectRandomValueFromDropDown("assignedToUser");
         waitAndClick("assignedToUser", SelectorType.ID);
 
     }

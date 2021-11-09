@@ -123,7 +123,7 @@ public abstract class BasePage extends DriverUtils {
         selectItem.selectByIndex(listValue);
     }
 
-    protected static void selectRandomValueFromDown(String idArgument) {
+    protected static void selectRandomValueFromDropDown(String idArgument) {
         Select select = new Select(getDriver().findElement(By.id(idArgument)));
         Random random = new Random();
         List<WebElement> dropdown = select.getOptions();
