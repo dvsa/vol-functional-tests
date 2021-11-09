@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.faker.FakerUtils;
+import cucumber.api.java.eo.Se;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -28,7 +29,7 @@ public class AdminJourney extends BasePage {
     public void selectSystemTeam() {
         selectValueFromDropDown("assignedToTeam", SelectorType.ID, "System Team");
         waitAndClick("assignedToUser", SelectorType.ID);
-        selectValueFromDropDown("assignedToUser", SelectorType.ID, "ANDREW DAVID COPESTAKE");
+        selectRandomValueFromDown("assignedToUser");
         waitAndClick("assignedToUser", SelectorType.ID);
 
     }
