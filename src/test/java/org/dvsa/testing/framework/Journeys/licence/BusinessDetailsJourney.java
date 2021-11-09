@@ -16,6 +16,16 @@ public class BusinessDetailsJourney extends BasePage {
 
     public void addBusinessDetails() {
         waitForTitleToBePresent("Business details");
+        if(getText("data[companyNumber][company_number]", SelectorType.ID).equals("")) {
+            waitAndEnterText("data[companyNumber][company_number]", SelectorType.ID, "12345678");
+            waitAndClick("data[companyNumber][submit_lookup_company]", SelectorType.ID);
+            waitAndEnterText("natureOfBusiness", SelectorType.ID, faker.generateCompanyName());
+        }
+        enterAddress();
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
+    }
+
+    public void enterAddress() {
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitForTitleToBePresent("Addresses");
         waitAndEnterText("correspondence_address[searchPostcode][postcode]", SelectorType.NAME, "NG1 6LP");
@@ -23,7 +33,5 @@ public class BusinessDetailsJourney extends BasePage {
         waitAndSelectByIndex("Select an address", "//*[@id='selectAddress1']", SelectorType.XPATH, 1);
         waitAndEnterText("contact[phone_primary]", SelectorType.NAME, "07123456780");
         waitAndEnterText("contact[email]", SelectorType.NAME, faker.bothify("????????##@volTest.org"));
-
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
     }
 }

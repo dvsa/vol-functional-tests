@@ -6,7 +6,6 @@ import activesupport.number.Int;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
-import org.openqa.selenium.NoSuchElementException;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,64 +17,11 @@ public class TransportManagerJourney extends BasePage {
 
     private World world;
     static int tmCount;
-    private String externalTMUser;
-    private String externalTMEmail;
-    private String operatorUser;
-    private String operatorUserEmail;
-    private String operatorForeName;
-    private String operatorFamilyName;
 
-    public TransportManagerJourney(World world) {
+    public TransportManagerJourney(World world){
         this.world = world;
     }
 
-    public String getExternalTMUser() {
-        return externalTMUser;
-    }
-
-    public void setExternalTMUser(String externalTMUser) {
-        this.externalTMUser = externalTMUser;
-    }
-
-    public String getExternalTMEmail() {
-        return externalTMEmail;
-    }
-
-    public void setExternalTMEmail(String externalTMEmail) {
-        this.externalTMEmail = externalTMEmail;
-    }
-
-    public String getOperatorForeName() {
-        return operatorForeName;
-    }
-
-    public void setOperatorForeName(String operatorForeName) {
-        this.operatorForeName = operatorForeName;
-    }
-
-    public String getOperatorFamilyName() {
-        return operatorFamilyName;
-    }
-
-    public void setOperatorFamilyName(String operatorFamilyName) {
-        this.operatorFamilyName = operatorFamilyName;
-    }
-
-    public String getOperatorUser() {
-        return operatorUser;
-    }
-
-    public void setOperatorUser(String operatorUser) {
-        this.operatorUser = operatorUser;
-    }
-
-    public String getOperatorUserEmail() {
-        return operatorUserEmail;
-    }
-
-    public void setOperatorUserEmail(String operatorUserEmail) {
-        this.operatorUserEmail = operatorUserEmail;
-    }
 
     public void promptRemovalOfInternalTransportManager() {
         assertTrue(isTextPresent("Overview"));
@@ -88,14 +34,14 @@ public class TransportManagerJourney extends BasePage {
         click("//*[@value='Remove']", SelectorType.XPATH);
     }
 
-    public void removeInternalTransportManager() {
+    public void removeInternalTransportManager()  {
         promptRemovalOfInternalTransportManager();
         waitForTitleToBePresent("Are you sure you want to remove this Transport Manager?");
         findSelectAllRadioButtonsByValue("Y");
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
-    public void addTransportManagerDetails() {
+    public void addTransportManagerDetails()  {
         //Add Personal Details
         String birthPlace = world.createApplication.getTransportManagerTown();
         String postCode = "NG1 6LP";
@@ -107,19 +53,17 @@ public class TransportManagerJourney extends BasePage {
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'External')]", SelectorType.XPATH);
-        world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        findSelectAllRadioButtonsByValue("Y");
 
         //Add Home Address
         enterText("postcodeInput1", SelectorType.ID, postCode);
         clickByName("homeAddress[searchPostcode][search]");
-        waitAndClick("homeAddress[searchPostcode][addresses]", SelectorType.ID);
-        selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
+        waitAndSelectByIndex("Select an address","//*[@id='selectAddress1']",SelectorType.XPATH, 1);
 
         //Add Work Address
         waitAndEnterText("postcodeInput2", SelectorType.ID, postCode);
         waitAndClick("workAddress[searchPostcode][search]", SelectorType.ID);
-        waitAndClick("workAddress[searchPostcode][addresses]", SelectorType.ID);
-        selectValueFromDropDownByIndex("workAddress[searchPostcode][addresses]", SelectorType.ID, 1);
+        waitAndSelectByIndex("Select an address","//*[@id='selectAddress2']",SelectorType.XPATH, 1);
 
         //Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);
@@ -162,10 +106,18 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("//*[@id='lic-no']", SelectorType.XPATH, "PD263849");
         waitAndEnterText("//*[@id='holderName']", SelectorType.XPATH, "PD263849");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+
+        waitForTitleToBePresent("Check your answers");
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+
+        waitForTitleToBePresent("Declaration");
+        waitAndClick("form-actions[submit]",SelectorType.ID);
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
     public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) {
-        String user = String.format("%s %s", getOperatorForeName(), getOperatorFamilyName());
+        String user = String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName());
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         replaceDateFieldsByPartialId("dob", dob);
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
@@ -180,41 +132,34 @@ public class TransportManagerJourney extends BasePage {
 
     public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) {
         if (applicationOrNot) {
-            if (!isTitlePresent("Transport Managers", 10)) {
-                world.selfServeNavigation.navigateToPage("application", "Transport Managers");
-            }
+            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
-            if (!isTitlePresent("Transport Managers", 10)) {
-                world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
-                world.UIJourney.changeLicenceForVariation();
-            }
+            world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
+            world.UIJourney.changeLicenceForVariation();
         }
         waitForTitleToBePresent("Transport Managers");
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
-        try {
-            selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
-        } catch (NoSuchElementException e) {
-            selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        }
+        selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
         click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
     }
 
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
-        world.selfServeNavigation.navigateToLogin(getOperatorUser(), getOperatorUserEmail());
+        world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", "Transport Managers");
         } else {
             world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
         }
-        clickByLinkText(getOperatorForeName() + " " + getOperatorFamilyName());
+        clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
     public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) {
         String hours = "8";
+        findElement("//*[@value='Y'][@name='details[hasUndertakenTraining]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + OtherLicence + "'][@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + isOwner + "'][@name='responsibilities[isOwner]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + hasEmployment + "'][@name='otherEmployments[hasOtherEmployment]']", SelectorType.XPATH, 20).click();
@@ -222,7 +167,7 @@ public class TransportManagerJourney extends BasePage {
         findElement("//*[@value='" + hasPreviousLicences + "'][@name='previousHistory[hasPreviousLicences]']", SelectorType.XPATH, 30).click();
         findElement("//*[@id='responsibilities']//*[contains(text(),'Internal')]", SelectorType.XPATH, 30).click();
         if (findElement("emailAddress", SelectorType.ID, 10).getAttribute("value").isEmpty()) {
-            waitAndEnterText("emailAddress", SelectorType.ID, getOperatorUserEmail());
+            waitAndEnterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         }
         waitAndEnterText("birthPlace", SelectorType.ID, "Nottingham");
         waitAndEnterText("postcodeInput1", SelectorType.ID, "NG23HX");
@@ -252,48 +197,24 @@ public class TransportManagerJourney extends BasePage {
         waitForTextToBePresent("Transport Managers");
     }
 
-    public void generateOperatorValues() {
-        FakerUtils faker = new FakerUtils();
-        setOperatorForeName(faker.generateFirstName());
-        setOperatorFamilyName(faker.generateLastName());
-        setOperatorUser(String.format("%s.%s%s",
-                getOperatorForeName(),
-                getOperatorFamilyName(), Int.random(1000, 9999))
-        );
-        setOperatorUserEmail(
-                getOperatorUser().concat("@dvsaUser.com")
-        );
-    }
-
-    public void generateAndAddOperatorUser() {
-        world.TMJourney.generateOperatorValues();
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.UIJourney.addUser(
-                world.TMJourney.getOperatorUser(),
-                world.TMJourney.getOperatorForeName(),
-                world.TMJourney.getOperatorFamilyName(),
-                world.TMJourney.getOperatorUserEmail());
-    }
-
     public void addNewPersonAsTransportManager(String licenceType) {
-        if (!isTitlePresent("Transport Manager details", 5)) {
-            world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
-            click("add", SelectorType.ID);
-            waitAndClick("addUser", SelectorType.ID);
-        }
-        enterText("forename", SelectorType.ID, world.TMJourney.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.TMJourney.getOperatorFamilyName());
+        world.DataGenerator.generateOperatorValues();
+        world.selfServeNavigation.navigateToPage(licenceType, "Transport Managers");
+        click("add", SelectorType.ID);
+        waitAndClick("addUser", SelectorType.ID);
+        enterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
         LinkedHashMap<String, String> dob = world.globalMethods.date.getDateHashMap(0, 0, -20);
         replaceDateFieldsByPartialId("dob", dob);
-        enterText("username", SelectorType.ID, world.TMJourney.getOperatorUser());
-        enterText("emailAddress", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
-        enterText("emailConfirm", SelectorType.ID, world.TMJourney.getOperatorUserEmail());
+        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
+        enterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("emailConfirm", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         click("form-actions[continue]", SelectorType.ID);
         waitForTextToBePresent("user account has been created and a link sent to them");
     }
 
     public void assertTMDetailsWithOperator() {
-        Assert.assertTrue(isElementPresent("//span[contains(text(),'With operator')]", SelectorType.XPATH));
+        Assert.assertTrue(isElementPresent("//span[contains(text(),'With operator')]",SelectorType.XPATH));
         Assert.assertTrue(isLinkPresent("View details", 10));
     }
 

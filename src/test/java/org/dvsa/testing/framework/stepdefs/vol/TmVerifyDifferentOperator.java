@@ -35,7 +35,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     @When("i add an existing person as a transport manager who is not the operator on {string}")
     public void iAddAnExistingPersonAsATransportManagerWhoIsNotTheOperatorOn(String applicationType) {
         boolean applicationOrNot = applicationType.equals("application");
-        world.TMJourney.generateAndAddOperatorUser();
+        world.DataGenerator.generateAndAddOperatorUser();
         world.TMJourney.addAndCompleteOperatorUserAsTransportManager("N", applicationOrNot);
     }
 
@@ -52,10 +52,10 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         waitForPageLoad();
     }
 
-    @Then("the 'Review and declarations' post signature page is displayed")
-    public void theReviewAndDeclarationsPostSignaturePageIsDisplayed() {
+    @Then("the {string} post signature page is displayed")
+    public void thePostSignaturePageIsDisplayed(String text) {
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
-        Assert.assertTrue(isTextPresent("Review and declarations"));
+        Assert.assertTrue(isTextPresent(text));
         if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])<10) {
             Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
         } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])>=10){
@@ -73,7 +73,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationId())).size()!=0) {
             world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
         }
-        clickByLinkText(world.TMJourney.getOperatorForeName() + " " + world.TMJourney.getOperatorFamilyName());
+        clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         click("form-actions[submit]", SelectorType.ID);
         world.UIJourney.signDeclaration();
         world.UIJourney.signWithVerify();
@@ -85,7 +85,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", "Transport Managers");
-        clickByLinkText(String.format("%s %s", world.TMJourney.getOperatorForeName(), world.TMJourney.getOperatorFamilyName()));
+        clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("form-actions[submit]", SelectorType.ID);
         click("//*[contains(text(),'Print')]",SelectorType.XPATH);
         click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
@@ -93,10 +93,9 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @When("i add new person as a transport manager and they fill out their details")
     public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() {
-        world.TMJourney.generateOperatorValues();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.addNewPersonAsTransportManager("application");
-        world.selfServeNavigation.navigateToLogin(world.TMJourney.getOperatorUser(), world.TMJourney.getOperatorUserEmail());
+        world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
         clickByLinkText("Provide details");
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
     }
@@ -109,7 +108,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", "Transport Managers");
-        clickByLinkText(String.format("%s %s", world.TMJourney.getOperatorForeName(), world.TMJourney.getOperatorFamilyName()));
+        clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='emailAddress']");
         click("submit", SelectorType.ID);
@@ -123,13 +122,13 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @And("the TM should see the incomplete label and provide details link")
     public void theTMShouldSeeTheIncompleteLabelAndProvideDetailsLink() {
-        world.selfServeNavigation.navigateToLogin(world.TMJourney.getOperatorUser(), world.TMJourney.getOperatorUserEmail());
+        world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
         world.TMJourney.assertTMDetailsIncomplete();
     }
 
     @When("create a user and add them as a tm with a future DOB")
     public void createAUserAndAddThemAsATmWithAFutureDOB() {
-        world.TMJourney.generateAndAddOperatorUser();
+        world.DataGenerator.generateAndAddOperatorUser();
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
         world.TMJourney.addOperatorUserAsTransportManager(dob, true);
     }
@@ -168,7 +167,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     public void iAddANewTransportManager() {
         world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
         world.UIJourney.changeLicenceForVariation();
-        world.TMJourney.generateOperatorValues();
         world.TMJourney.addNewPersonAsTransportManager("variation");
     }
 
@@ -179,7 +177,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @Then("the download TM{int} for should not be displayed on the details page")
     public void theDownloadTMForShouldNotBeDisplayedOnTheDetailsPage(int arg0) {
-        waitAndClick(String.format("//a[contains(text(),'%s %s')]", world.TMJourney.getOperatorForeName(), world.TMJourney.getOperatorFamilyName()), SelectorType.XPATH);
+        waitAndClick(String.format("//a[contains(text(),'%s %s')]", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()), SelectorType.XPATH);
         waitForTitleToBePresent("Details not submitted");
         assertFalse(isTextPresent("Alternatively they can download a TM1 form (PDF 150KB)."));
         assertFalse(isLinkPresent("download a TM1 form (PDF 150KB).", 30));

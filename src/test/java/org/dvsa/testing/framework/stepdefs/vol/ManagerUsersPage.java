@@ -3,8 +3,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
-import activesupport.faker.FakerUtils;
-import activesupport.number.Int;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -75,11 +73,7 @@ public class ManagerUsersPage extends BasePage implements En {
 
     @When("i add a user")
     public void iAddAUser() {
-        FakerUtils faker = new FakerUtils();
-        String foreName = faker.generateFirstName();
-        String familyName = faker.generateLastName();
-        String userName = String.format("%s.%s%s", foreName, familyName, Int.random(1000, 9999));
-        world.UIJourney.addUser(userName, foreName, familyName, userName.concat("@dvsa.org"));
+        world.UIJourney.addUser();
     }
 
     @Then("remove button column should be named {string}")

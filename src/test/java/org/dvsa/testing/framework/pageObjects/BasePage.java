@@ -416,7 +416,7 @@ public abstract class BasePage extends DriverUtils {
         return findElements(selector, selectorType).size();
     }
 
-    public void findSelectAllRadioButtonsByValue(String value) {
+    public static void findSelectAllRadioButtonsByValue(String value) {
         List<WebElement> radioButtons = findElements("//*[@type='radio']",SelectorType.XPATH);
         radioButtons.stream().
                 filter(x -> x.getAttribute("value").equals(value)).

@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.licence.AdminJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.TransportManagerJourney;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
+import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 
 public class World {
@@ -35,11 +36,11 @@ public class World {
     public FeeAndPaymentJourney feeAndPaymentJourney;
     public InternalSearchJourney internalSearchJourney;
     public InternalNavigational internalNavigation;
+    public OperatingCentreJourney operatingCentreJourney;
     public SelfServeNavigational selfServeNavigation;
     public SurrenderJourney surrenderJourney;
     public TransportManagerJourney TMJourney;
     public BusinessDetailsJourney businessDetailsJourney;
-    public OperatingCentreJourney operatingCentreJourney;
     public SafetyComplianceJourney safetyComplianceJourney;
     public SafetyInspectorJourney safetyInspectorJourney;
     public TransportManagerJourney transportManagerJourney;
@@ -48,4 +49,5 @@ public class World {
     public LicenceDetailsJourney licenceDetailsJourney;
     public ConvictionsAndPenaltiesJourney convictionsAndPenaltiesJourney;
     public UserRegistrationJourney userRegistrationJourney;
+    public DataGenerator DataGenerator;
 }

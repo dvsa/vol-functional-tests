@@ -31,8 +31,8 @@ public class IRHPPageJourney extends BasePermitJourney {
 
     public static void logInToInternalAndIRHPGrantApplication(World world) {
         world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
         String browser = String.valueOf(getURL());
         get(browser+"irhp-application/");
         IrhpPermitsApplyPage.viewApplication();

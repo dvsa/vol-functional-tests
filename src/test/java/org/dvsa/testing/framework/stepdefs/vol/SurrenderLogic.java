@@ -54,10 +54,9 @@ public class SurrenderLogic extends BasePage implements En {
 
     @When("the caseworker attempts to withdraw the surrender")
     public void theCaseworkerAttemptsToWithdrawTheSurrender() {
-        waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
-        waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
-        waitForTextToBePresent("The licence surrender has been undone");
+        world.surrenderJourney.caseworkManageSurrender();
+        waitForElementToBeClickable("actions[surrender]", SelectorType.ID);
+        waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
     }
 
     @Then("a modal box is displayed")

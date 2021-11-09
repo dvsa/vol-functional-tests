@@ -43,7 +43,7 @@ public class CommonSteps extends BasePermitJourney implements En {
         When("^I save and return to overview$", BasePermitPage::clickReturnToOverview);
         When("^I sign on as an external user$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
+        });
         And("^all fees have been waived$", () -> {
             LicenceDetailsPageJourney.clickFeesTab();
             FeeDetailsPageJourney.whileFeesPresentWaveFee();

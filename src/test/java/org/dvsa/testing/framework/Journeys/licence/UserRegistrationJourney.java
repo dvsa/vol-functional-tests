@@ -3,6 +3,8 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class UserRegistrationJourney extends BasePage {
     private World world;
 
@@ -14,6 +16,6 @@ public class UserRegistrationJourney extends BasePage {
         world.selfServeNavigation.navigateToLoginPage();
         world.selfServeNavigation.navigateToCreateAnAccount();
         world.UIJourney.addNewOperator(null, false);
-        isTextPresent(world.UIJourney.getEmail());
+        assertTrue(isTextPresent(world.UIJourney.getEmail()));
     }
 }

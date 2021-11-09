@@ -1,41 +1,105 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import java.time.LocalDate;
+import java.util.HashMap;
 
 public class OperatingCentreJourney extends BasePage {
+
     World world;
-    String workingDir = System.getProperty("user.dir");
-    String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
-    String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
+    private FakerUtils faker = new FakerUtils();
+
+    String editOperatingCentreTitle = "//h1[contains(text(),'Edit operating centre')]";
+    String enterAddressManually = "Enter the address yourself";
+    String operatingCentreVehicleField = "//*[@id='noOfVehiclesRequired']";
+    String operatingCentreTrailerField = "//*[@id='noOfTrailersRequired']";
+    String confirmOffStreetParkingCheckbox = "//*[@id='permission']";
+    String advertTitle = "//h3[text()='Newspaper advert']";
+    String uploadAdvertLater = "//*[@value='adPlacedLater']";
+    String submitButton = "//*[@id='form-actions[submit]']";
+
+    public String addOperatingCentre = "//*[@id='add']";
+    String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
+    String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
+    String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
+    public String saveButton = "//*[@id='form-actions[save]']";
+
+    String confirmDeclaration =  "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
+    String submitApplication = "//button[@id='submit']";
+    String submitAndPayForApplication = "//button[@id='submitAndPay']";
+
+    String payNow = "//button[@id='form-actions[pay]']";
 
     public OperatingCentreJourney(World world) {
         this.world = world;
     }
 
-    public void addAnOperatingCentre() {
-        waitForTitleToBePresent("Operating centres and authorisation");
-        clickByXPath("//*[contains(text(),'Add operating centre')]");
-        waitAndEnterText("address[searchPostcode][postcode]", SelectorType.NAME, "B44 9UL");
-        clickByName("address[searchPostcode][search]");
-        waitAndSelectByIndex("Select an address", "//*[@id='selectAddress1']", SelectorType.XPATH, 1);
-        waitAndEnterText("data[noOfVehiclesRequired]", SelectorType.NAME, "6");
-        waitAndEnterText("data[noOfTrailersRequired]", SelectorType.NAME, "6");
-        clickById("permission");
-        waitAndClick("//*[contains(text(),'Upload documents now')]", SelectorType.XPATH);
+    public void loginAndSubmitOperatingCentreVehicleAuthorisationVariationApplication(String newHGVTotalAuthority, String newLGVTotalAuthority) {
+        loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        world.UIJourney.completeFinancialEvidencePage();
+        clickByLinkText("Review and declarations");
+        click(confirmDeclaration, SelectorType.XPATH);
+        if (hasHGVAuthorityIncreased(newHGVTotalAuthority) || hasLGVAuthorityIncreased(newLGVTotalAuthority))
+            click(submitApplication, SelectorType.XPATH);
+        else {
+            click(submitAndPayForApplication, SelectorType.XPATH);
+            click(payNow, SelectorType.XPATH);
+            world.feeAndPaymentJourney.customerPaymentModule();
+            world.UIJourney.signDeclarationForVariation();
+        }
+        waitForTextToBePresent("Thank you, your application has been submitted.");
+    }
 
-        uploadFile("//*[@id='advertisements[adPlacedContent][file][file]']", workingDir + financialEvidenceFile, "document.getElementById('advertisements[adPlacedContent][file][file]').style.left = 0", SelectorType.XPATH);
+    public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+        world.UIJourney.changeLicenceForVariation();
+        if (!newHGVTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()))) {
+            updateOperatingCentreAuthorisation(newHGVTotalAuthority);
+        }
+        updateOperatingCentreTotalVehicleAuthority(newHGVTotalAuthority, newLGVTotalAuthority, newTrailerTotalAuthority);
+    }
 
-        waitAndEnterText("adPlacedIn", SelectorType.ID, "VOL Tribune");
-        waitAndEnterText("adPlacedDate_day", SelectorType.ID, String.valueOf(LocalDate.now().getDayOfMonth()));
-        waitAndEnterText("adPlacedDate_month", SelectorType.ID, String.valueOf(LocalDate.now().getMonthValue()));
-        waitAndEnterText("adPlacedDate_year", SelectorType.ID, String.valueOf(LocalDate.now().getYear()));
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
-        waitAndEnterText("data[totAuthVehicles]", SelectorType.NAME, "6");
-        waitAndEnterText("data[totAuthTrailers]", SelectorType.NAME, "6");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+    public void updateOperatingCentreAuthorisation(String newHGVTotalAuthority) {
+        String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
+        click(operatingCentreEditLink, SelectorType.XPATH);
+        replaceText(operatingCentreVehicleField, SelectorType.XPATH, newHGVTotalAuthority);
+        if (Integer.parseInt(newHGVTotalAuthority) > world.createApplication.getNoOfOperatingCentreVehicleAuthorised() && world.licenceCreation.isGoodsLicence()) {
+            waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
+            waitForElementToBePresent(advertTitle);
+        }
+        waitAndClick(submitButton, SelectorType.XPATH);
+    }
+
+    public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
+        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
+        if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
+            replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
+        }
+        replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
+        click(saveButton, SelectorType.XPATH);
+    }
+
+    public void addNewOperatingCentre(String vehicles, String trailers) {
+        click(addOperatingCentre, SelectorType.XPATH);
+        HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
+        clickByLinkText(enterAddressManually);
+        world.UIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
+        enterText(operatingCentreVehicleField, SelectorType.XPATH, vehicles);
+        enterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
+        click(confirmOffStreetParkingCheckbox, SelectorType.XPATH);
+        click(uploadAdvertLater, SelectorType.XPATH);
+        click(submitButton, SelectorType.XPATH);
+    }
+
+    private boolean hasHGVAuthorityIncreased(String newHGVTotalAuthority) {
+        return  world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority);
+    }
+
+    private boolean hasLGVAuthorityIncreased(String newLGVTotalAuthority) {
+        return world.createApplication.getTotalOperatingCentreLgvAuthority() >= Integer.parseInt(newLGVTotalAuthority);
     }
 }

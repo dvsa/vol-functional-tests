@@ -26,7 +26,7 @@ public class DirectorJourney extends BasePage {
     public String directorsTitle = "Directors";
     public String directorLinks = "//tbody/tr/td[1]/input";
     public String addButton = "//button[@name='table[action]']";
-    public String directorDetailsTitle = "Add a director";
+    public String directorDetailsTitle = "Add person";
     public String directorTitleDropdown = "//select[@id='title']";
     public String firstNameField = "//input[@name='data[forename]']";
     public String lastNameField = "//input[@name='data[familyName]']";
@@ -84,7 +84,7 @@ public class DirectorJourney extends BasePage {
         enterText(lastNameField, SelectorType.XPATH, directorLastName);
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         replaceDateFieldsByPartialId("dob", dates);
-        clickByXPath(saveAndContinue);
+        clickByName("form-actions[submit]");
     }
 
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {

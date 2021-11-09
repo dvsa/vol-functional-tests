@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public class SubmitSelfServeApplication extends BasePage {
@@ -22,16 +23,15 @@ public class SubmitSelfServeApplication extends BasePage {
 
     @And("i start a new licence application")
     public void iStartANewLicenceApplication() {
-        //Move to UIJourney
         FakerUtils faker = new FakerUtils();
-
+        String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         DriverUtils.get(myURL);
 
-        if(Objects.equals(world.configuration.env.toString(), "int")) {
+        if (Objects.equals(world.configuration.env.toString(), "int")) {
             world.globalMethods.signIn("", "");
-        }else{
-            world.selfServeNavigation.navigateToLogin(world.UIJourney.getUsername(),world.UIJourney.getEmail());
+        } else {
+            world.globalMethods.enterCredentialsAndLogin(world.UIJourney.getUsername(), world.UIJourney.getEmail(), newPassword);
         }
         waitForTitleToBePresent("Licences");
 
@@ -49,11 +49,18 @@ public class SubmitSelfServeApplication extends BasePage {
         //business details
         world.businessDetailsJourney.addBusinessDetails();
         if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
+            if (isTextPresent("You haven't added any Directors yet")) {
+                world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
+            }
             waitAndClick(saveAndContinue, SelectorType.XPATH);
         }
 
         //operating centre
-        world.operatingCentreJourney.addAnOperatingCentre();
+        String authority = "2";
+        String trailers = "4";
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, null, trailers);
+        world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
+        selectValueFromDropDownByIndex("trafficArea", SelectorType.ID, 1);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         waitForTitleToBePresent("Financial evidence");
@@ -61,7 +68,9 @@ public class SubmitSelfServeApplication extends BasePage {
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         //transport manager
-        world.transportManagerJourney.nominateOperatorUserAsTransportManager(faker.generateFirstName(), true);
+        clickById("add");
+        selectValueFromDropDownByIndex("data[registeredUser]",SelectorType.ID,1);
+        clickById("form-actions[continue]");
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {

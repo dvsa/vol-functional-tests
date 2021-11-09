@@ -16,5 +16,5 @@ Feature: Goods Variation decrease vehicle count for an OC
     Then An error message should appear
 
   Scenario: Decreasing the vehicle count to an invalid character for authorised vehicles
-    When A selfserve user decreases the vehicle authority by invalid charecters
+    When A selfserve user changes the vehicle authority by invalid characters
     Then An error should appear

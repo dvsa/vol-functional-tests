@@ -1,20 +1,26 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.driver.Browser;
+import activesupport.system.Properties;
 import com.sun.istack.NotNull;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
 
 public class SelfServeNavigational extends BasePage {
 
     public World world;
+    private String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+    public String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
     public SelfServeNavigational(World world) {
         this.world = world;
@@ -24,8 +30,25 @@ public class SelfServeNavigational extends BasePage {
         world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.EXTERNAL);
     }
 
-    public void navigateToSearch()  {
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-lorry-bus-operators/").toString();
+    public void navigateToExternalSearch() {
+        if (Browser.isBrowserOpen()) {
+            navigate().manage().deleteAllCookies();
+            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        }
+        get(this.url.concat("search/"));
+    }
+
+    public void navigateToFindLorryAndBusOperatorsSearch()  {
+        navigateToExternalSearch();
+        clickByLinkText("Lorry and bus operators");
+    }
+
+    public void navigateToVehicleOperatorDecisionsAndApplications() {
+        navigateToExternalSearch();
+        clickByLinkText("Vehicle operator decisions and applications");
+    }
+    public void navigateToCheckerPage()  {
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
         navigate().get(myURL);
     }
 
@@ -112,57 +135,48 @@ public class SelfServeNavigational extends BasePage {
     This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
  */
     public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage)  {
-        boolean conditionNotTrue = true;
-        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
-        while (conditionNotTrue) {
-            conditionNotTrue = !isTextPresent(text);
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();;
+        do {
             click("submit", SelectorType.ID);
             waitForPageLoad();
-            if (System.currentTimeMillis() > kickOut) {
-                throw new TimeoutException(exceptionMessage);
-            }
+        } while (!isTextPresent(text) && System.currentTimeMillis() < kickOut);
+        if (System.currentTimeMillis() > kickOut) {
+            throw new TimeoutException(exceptionMessage);
         }
     }
 
     public void navigateThroughApplication()  {
         String workingDir = System.getProperty("user.dir");
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
-        String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
-        waitForTitleToBePresent("Business type");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Business details");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Addresses");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Directors");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-
-        waitForTitleToBePresent("Operating centres and authorisation");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        waitAndContinuePage("Business type");
+        waitAndContinuePage("Business details");
+        waitAndContinuePage("Addresses");
+        waitAndContinuePage("Directors");
+        waitAndContinuePage("Operating centres and authorisation");
         waitForTitleToBePresent("Financial evidence");
-
         waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
-        waitAndEnterText("adPlacedIn",SelectorType.ID,"VOL Tribune");
-        waitAndEnterText("adPlacedDate_day",SelectorType.ID,"VOL Tribune");
         uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Transport Managers");
+        waitAndContinuePage("Transport Managers");
+        waitAndContinuePage("Vehicle details");
 
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Vehicle details");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
         if (isTitlePresent("Vehicle declarations", 30)) {
             waitAndClick(saveAndContinue, SelectorType.XPATH);
         }
-        waitForTitleToBePresent("Safety and compliance");
+        waitAndContinuePage("Safety and compliance");
+        waitAndContinuePage("Financial history");
+        waitAndContinuePage("Licence history");
+        waitAndContinuePage("Convictions and Penalties");
+    }
+
+    private void waitAndContinuePage(String pageTitle) {
+        waitForTitleToBePresent(pageTitle);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Financial history");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Licence history");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-        waitForTitleToBePresent("Convictions and Penalties");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+    }
+
+    public void getVariationFinancialEvidencePage() {
+        get(this.url.concat(String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())));
     }
 }
