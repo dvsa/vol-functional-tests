@@ -49,9 +49,6 @@ public class AddEditReassignTasksStepDef extends BasePage implements En {
           String actualDate = getText("//tbody/tr[2]/td[4]", SelectorType.XPATH);
           String expectedDate = LocalDate.now().plusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
           Assert.assertEquals(expectedDate, actualDate);
-
-
-
     }
 }
 
