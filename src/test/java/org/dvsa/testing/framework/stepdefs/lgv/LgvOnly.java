@@ -19,6 +19,7 @@ public class LgvOnly extends BasePage {
 
     public String greatBritain = "//input[@id='type-of-licence[operator-location]']";
     public String northernIreland = "//input[@name='type-of-licence[operator-location]'][@value='Y']";
+    public String lgvDeclarationCheckbox = "//input[@id='lgv-declaration-confirmation']";
 
     @Given("I am applying for a {string} {string} {string} {string} licence")
     public void iWantToApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType) {
@@ -41,6 +42,22 @@ public class LgvOnly extends BasePage {
         }
     }
 
+    @Given("I {string} the LGV undertaking declaration checkbox")
+    public void iCheckTheLGVUndertakingDeclaration(String checkBoxAction) {
+        if (checkBoxAction.equals("select")){
+            clickByXPath(lgvDeclarationCheckbox);
+        }
+    }
+
+    @Given("I update the vehicle type on the licence to {string}")
+    public void iUpdateVehicleTypeOnLicence(String vehicleType) {
+        clickByLinkText("Type of licence");
+        clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
+        if (vehicleType.equals("lgv_only_fleet")){
+            clickByXPath(lgvDeclarationCheckbox);
+        }
+    }
+
     @When("I click save and continue")
     public void iClickSaveAndContinue() {
         UIJourney.clickSaveAndContinue();
@@ -56,6 +73,12 @@ public class LgvOnly extends BasePage {
     public void lgvUndertakingsErrorMessage() {
         isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
         isTextPresent("You must confirm you have read and agree to the undertaking to apply for this licence type.");
+    }
+
+    @Then("A change licence type warning message should be displayed")
+    public void changeLicenceWarningMessage() {
+        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
+        isTextPresent("Are you sure you want to make this change?");
     }
 }
 
