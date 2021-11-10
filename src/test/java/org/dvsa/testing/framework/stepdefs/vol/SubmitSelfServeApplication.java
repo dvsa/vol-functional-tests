@@ -44,7 +44,6 @@ public class SubmitSelfServeApplication extends BasePage {
 
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
 
-
         waitForTitleToBePresent("Type of licence");
         waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
