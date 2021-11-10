@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.aws.s3.S3SecretsManager;
-import activesupport.faker.FakerUtils;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -10,6 +9,7 @@ import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import apiCalls.enums.*;
 
 import java.util.Objects;
 
@@ -36,7 +36,7 @@ public class SubmitSelfServeApplication extends BasePage {
         DriverUtils.get(myURL);
 
         if (Objects.equals(world.configuration.env.toString(), "int")) {
-            world.globalMethods.signIn(intUsername, secretKey);
+            world.globalMethods.signIn(intUsername, intPassword);
         } else {
             world.globalMethods.enterCredentialsAndLogin(world.UIJourney.getUsername(), world.UIJourney.getEmail(), newPassword);
         }
@@ -46,8 +46,8 @@ public class SubmitSelfServeApplication extends BasePage {
 
         waitForTitleToBePresent("Type of licence");
         waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'"+OperatorType.GOODS.asString()+"']", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'"+LicenceType.STANDARD_NATIONAL.asString()+"']", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
