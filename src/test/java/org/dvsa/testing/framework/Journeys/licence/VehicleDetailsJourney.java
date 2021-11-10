@@ -1,6 +1,8 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.number.Int;
+import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -16,7 +18,8 @@ public class VehicleDetailsJourney extends BasePage {
         if (choice) {
             clickById("add");
             waitForTitleToBePresent("Add vehicle");
-            waitAndEnterText("vrm", SelectorType.ID, "DWK412T");
+            String num = String.valueOf(Int.random(100,999));
+            waitAndEnterText("vrm", SelectorType.ID, "VRM".concat(num).concat(Str.randomWord(1)));
             waitAndEnterText("plated_weight", SelectorType.ID, "5000");
             waitAndClick("form-actions[submit]", SelectorType.ID);
             waitForTitleToBePresent("Vehicle details");

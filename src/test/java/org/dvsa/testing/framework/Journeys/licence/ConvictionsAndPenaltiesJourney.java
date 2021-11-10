@@ -22,7 +22,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     public void answerNoToAllQuestionsAndSubmit() {
         waitForTitleToBePresent("Convictions and Penalties");
         findSelectAllRadioButtonsByValue("N");
-        waitAndClick("convictionsConfirmation[convictionsConfirmation]", SelectorType.ID);
+        clickById("convictionsConfirmation[convictionsConfirmation]");
         waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
     }
 

@@ -108,12 +108,6 @@ public class TransportManagerJourney extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
         waitAndClick("form-actions[submit]",SelectorType.ID);
-
-        waitForTitleToBePresent("Check your answers");
-        waitAndClick("form-actions[submit]",SelectorType.ID);
-
-        waitForTitleToBePresent("Declaration");
-        waitAndClick("form-actions[submit]",SelectorType.ID);
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
     public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) {
@@ -221,5 +215,15 @@ public class TransportManagerJourney extends BasePage {
     public void assertTMDetailsIncomplete() {
         Assert.assertTrue(isElementPresent("//span[contains(text(),'Incomplete')]", SelectorType.XPATH));
         Assert.assertTrue(isLinkPresent("Provide details", 10));
+    }
+
+    public void submitTMApplicationAndSignWithVerify(){
+        addTransportManagerDetails();
+        waitForTitleToBePresent("Check your answers");
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        waitForTitleToBePresent("Declaration");
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        world.UIJourney.signWithVerify();
+        waitAndClick("//*[contains(text(),'Finish')]",SelectorType.XPATH);
     }
 }

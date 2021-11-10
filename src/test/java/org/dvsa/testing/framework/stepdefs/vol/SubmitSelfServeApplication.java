@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.aws.s3.S3SecretsManager;
 import activesupport.faker.FakerUtils;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -10,7 +11,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 public class SubmitSelfServeApplication extends BasePage {
@@ -23,13 +23,20 @@ public class SubmitSelfServeApplication extends BasePage {
 
     @And("i start a new licence application")
     public void iStartANewLicenceApplication() {
-        FakerUtils faker = new FakerUtils();
         String newPassword = world.configuration.config.getString("internalNewPassword");
+        String intUsername = world.configuration.config.getString("intUsername");
+        String secretKey = world.configuration.config.getString("secretKey");
+        String region = world.configuration.config.getString("region");
+
+        S3SecretsManager secretsManager = new S3SecretsManager();
+        secretsManager.setRegion(region);
+        String intPassword = secretsManager.getSecretValue(secretKey);
+
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         DriverUtils.get(myURL);
 
         if (Objects.equals(world.configuration.env.toString(), "int")) {
-            world.globalMethods.signIn("", "");
+            world.globalMethods.signIn(intUsername, secretKey);
         } else {
             world.globalMethods.enterCredentialsAndLogin(world.UIJourney.getUsername(), world.UIJourney.getEmail(), newPassword);
         }
@@ -75,10 +82,10 @@ public class SubmitSelfServeApplication extends BasePage {
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
             clickByName("form-actions[send]");
-            waitAndClick(saveAndContinue, SelectorType.XPATH);
         } else {
-            world.transportManagerJourney.addTransportManagerDetails();
+            world.transportManagerJourney.submitTMApplicationAndSignWithVerify();
         }
+        waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         //vehicleDetails
         world.vehicleDetailsJourney.addAVehicle(true);
@@ -100,7 +107,7 @@ public class SubmitSelfServeApplication extends BasePage {
         world.licenceDetailsJourney.answerNoToAllQuestionsAndSubmit();
 
         //Convictions
-        world.convictionsAndPenaltiesJourney.answerYesToAllQuestionsAndSubmit();
+        world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit();
     }
 
     @Given("i have a self serve account")

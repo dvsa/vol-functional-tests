@@ -94,8 +94,15 @@ public class UIJourney extends BasePage {
         enterText("familyName", SelectorType.ID, faker.generateLastName());
     }
 
+    private String emailAccount(){
+        return faker.generateFirstName() + faker.generateLastName() + faker.generateUniqueId(3) + "@vol.com";
+    }
+
     public void addNewOperator(String applicationID, boolean existingApplication) {
-        email = faker.generateFirstName() + faker.generateLastName() + faker.generateUniqueId(3) + "@email.com";
+        email = emailAccount();
+        if(email.contains("!")){
+           email = emailAccount();
+        }
         userName = faker.generateFirstName() + faker.generateUniqueId(1);
 
         enterText("username", SelectorType.ID, userName);
