@@ -1,5 +1,5 @@
 @prod_smokeTest
-Feature: Submit an application on pre-prod or int env
+Feature: Submit an application on int env
 
   Scenario: Submit an application
     Given i have a self serve account
