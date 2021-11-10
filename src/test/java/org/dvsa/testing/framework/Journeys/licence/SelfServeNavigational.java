@@ -60,6 +60,7 @@ public class SelfServeNavigational extends BasePage {
         clickByLinkText("create an account");
     }
 
+//    Possibly add enums for page titles. Would be a good way to standardise the values accepted.
     public void navigateToPage(String type, String page)  {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
