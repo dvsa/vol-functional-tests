@@ -1,4 +1,5 @@
 @prod_smokeTest
+@ss_regression
 Feature: Submit an application on int env
 
   Scenario: Submit an application
