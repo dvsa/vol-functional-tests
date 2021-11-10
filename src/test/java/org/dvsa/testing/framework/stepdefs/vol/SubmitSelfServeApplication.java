@@ -44,10 +44,11 @@ public class SubmitSelfServeApplication extends BasePage {
 
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
 
+
         waitForTitleToBePresent("Type of licence");
         waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'"+OperatorType.GOODS.asString()+"']", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'"+LicenceType.STANDARD_NATIONAL.asString()+"']", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
