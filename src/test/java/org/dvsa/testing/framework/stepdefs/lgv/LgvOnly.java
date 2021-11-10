@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import apiCalls.enums.*;
+import org.junit.Assert;
 
 public class LgvOnly extends BasePage {
     World world;
@@ -26,14 +27,10 @@ public class LgvOnly extends BasePage {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         clickByLinkText("Apply for a new licence");
-
         if (licenceWhere.equals("great_britain")) clickByXPath(greatBritain); else clickByXPath(northernIreland);
         if (licenceWhere.equals("great_britain")){
-            //if (!"no_selection".equals(operatorType)){
-                clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
-            //}
+            clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
         }
-        //clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
         clickByXPath("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
         if (licenceType.equals("standard_international")){
             if (!"no_selection".equals(vehicleType)){
@@ -66,19 +63,18 @@ public class LgvOnly extends BasePage {
     @Then("A LGV only error message should be displayed")
     public void lgvOnlyErrorMessage() {
         isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
-        isTextPresent("Will you only be operating Light goods vehicles on this licence?");
+        Assert.assertTrue(isElementPresent("//a[contains(text(),'Will you only be operating Light goods vehicles on this licence?')]", SelectorType.XPATH));
     }
 
     @Then("A LGV undertakings error message should be displayed")
     public void lgvUndertakingsErrorMessage() {
         isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
-        isTextPresent("You must confirm you have read and agree to the undertaking to apply for this licence type.");
+        Assert.assertTrue(isTextPresent("You must confirm you have read and agree to the undertaking to apply for this licence type."));
     }
 
     @Then("A change licence type warning message should be displayed")
     public void changeLicenceWarningMessage() {
-        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
-        isTextPresent("Are you sure you want to make this change?");
+        Assert.assertTrue(isTextPresent("Are you sure you want to make this change?"));
     }
 }
 
