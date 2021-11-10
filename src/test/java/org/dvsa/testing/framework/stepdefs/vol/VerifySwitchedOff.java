@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
@@ -11,7 +10,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
-import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.Assert.*;
 
 public class VerifySwitchedOff extends BasePage implements En {
