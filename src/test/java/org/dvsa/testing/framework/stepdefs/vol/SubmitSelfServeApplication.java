@@ -27,14 +27,13 @@ public class SubmitSelfServeApplication extends BasePage {
         String secretKey = world.configuration.config.getString("secretKey");
         String region = world.configuration.config.getString("region");
 
-        S3SecretsManager secretsManager = new S3SecretsManager();
-        secretsManager.setRegion(region);
-        String intPassword = secretsManager.getSecretValue(secretKey);
-
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         DriverUtils.get(myURL);
 
         if (Objects.equals(world.configuration.env.toString(), "int")) {
+            S3SecretsManager secretsManager = new S3SecretsManager();
+            secretsManager.setRegion(region);
+            String intPassword = secretsManager.getSecretValue(secretKey);
             world.globalMethods.signIn(intUsername, intPassword);
         } else {
             world.globalMethods.enterCredentialsAndLogin(world.UIJourney.getUsername(), world.UIJourney.getEmail(), newPassword);
