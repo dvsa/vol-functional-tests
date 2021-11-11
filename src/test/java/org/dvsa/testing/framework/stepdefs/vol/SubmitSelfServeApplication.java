@@ -30,7 +30,7 @@ public class SubmitSelfServeApplication extends BasePage {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         DriverUtils.get(myURL);
 
-        if (Objects.equals(world.configuration.env.toString(), "int")) {
+        if (Objects.equals(world.configuration.env.toString(), "int") || Objects.equals(world.configuration.env.toString(), "pp") ) {
             S3SecretsManager secretsManager = new S3SecretsManager();
             secretsManager.setRegion(region);
             String intPassword = secretsManager.getSecretValue(secretKey);
