@@ -4,22 +4,35 @@ import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.faker.FakerUtils;
 import cucumber.api.java.eo.Se;
+import cucumber.api.java8.Pa;
+import org.apache.poi.ss.formula.functions.Na;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class AdminJourney extends BasePage {
     private World world;
     private FakerUtils faker = new FakerUtils();
     private String description;
+    private String ownerName;
 
     Dates date = new Dates(org.joda.time.LocalDate::new);
 
     public String getDescription(){
     return description;
+    }
+
+    public String getOwnerName() {return ownerName;}
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
     }
 
     public AdminJourney(World world){
@@ -29,7 +42,8 @@ public class AdminJourney extends BasePage {
     public void selectSystemTeam() {
         selectValueFromDropDown("assignedToTeam", SelectorType.ID, "System Team");
         waitAndClick("assignedToUser", SelectorType.ID);
-        selectRandomValueFromDropDown("assignedToUser");
+        String ownerName = selectRandomValueFromDropDown("assignedToUser");
+        setOwnerName(ownerName);
         waitAndClick("assignedToUser", SelectorType.ID);
 
     }
@@ -44,17 +58,15 @@ public class AdminJourney extends BasePage {
     }
 
     public void reassignTask() {
-        findLicenseAndNavigate();
-        waitAndClick("re-assign task", SelectorType.ID);
+        findLicenseAndNavigate();waitAndClick("re-assign task", SelectorType.ID);
         waitAndClick("assignedToTeam", SelectorType.ID);
         selectSystemTeam();
         clickById("form-actions[submit]");
-        waitForTextToBePresent("System Team (COPESTAKE, ANDREW DAVID)");
+
     }
 
     public void generateCompany() {
         description = faker.generateCompanyName();
-
     }
 
     public void editTask() {
@@ -67,6 +79,7 @@ public class AdminJourney extends BasePage {
         waitAndClick("submit", SelectorType.ID);
         waitForElementToBePresent("//p[@role='alert']");
     }
+
 
     public void addTask() {
         generateCompany();
@@ -86,6 +99,8 @@ public class AdminJourney extends BasePage {
         waitAndClick("submit", SelectorType.ID);
         waitAndClick("date", SelectorType.ID);
         selectValueFromDropDown("date", SelectorType.ID,"All" );
-        waitForTextToBePresent("System Team (COPESTAKE, ANDREW DAVID)");
+        waitAndClick(description, SelectorType.LINKTEXT);
+        waitForTextToBePresent("System Team");
+
     }
 }

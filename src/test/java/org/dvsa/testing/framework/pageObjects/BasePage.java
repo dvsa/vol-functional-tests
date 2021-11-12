@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.pageObjects;
 
 import com.google.common.base.Function;
-import cucumber.api.java.eo.Se;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -27,6 +26,7 @@ public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 10;
     private static final int TIME_OUT_SECONDS = 60;
     private static final int POLLING_SECONDS = 1;
+
 
     private static String ERROR_MESSAGE_HEADING = "Please correct the following errors";
     private static String ERROR_CLASS = ".error__text";
@@ -123,13 +123,15 @@ public abstract class BasePage extends DriverUtils {
         selectItem.selectByIndex(listValue);
     }
 
-    protected static void selectRandomValueFromDropDown(String idArgument) {
+    public static String selectRandomValueFromDropDown(String idArgument) {
         Select select = new Select(getDriver().findElement(By.id(idArgument)));
         Random random = new Random();
         List<WebElement> dropdown = select.getOptions();
         int size = dropdown.size();
         int maxNr = random.nextInt(size);
-        select.selectByIndex(maxNr);
+        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]",idArgument,maxNr),SelectorType.XPATH).getText();
+        selectValueFromDropDown(idArgument, SelectorType.ID, ownerName);
+        return ownerName;
     }
 
     protected static boolean isLinkPresent(String locator, int duration) {
