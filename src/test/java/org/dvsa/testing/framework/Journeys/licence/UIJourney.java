@@ -91,10 +91,9 @@ public class UIJourney extends BasePage {
 
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
-
-        String email = faker.generateFirstName() + faker.generateLastName() + faker.generateUniqueId(3) + "@email.com";
-        String userName = faker.generateFirstName() + faker.generateUniqueId(1);
-
+        world.DataGenerator.generateOperatorValues();
+        String email = world.DataGenerator.getOperatorUserEmail();
+        String userName = world.DataGenerator.getOperatorUser();
         enterText("username", SelectorType.ID, userName);
         enterText( "forename", SelectorType.ID, faker.generateFirstName());
         enterText("familyName", SelectorType.ID, faker.generateLastName());
