@@ -26,8 +26,6 @@ public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 10;
     private static final int TIME_OUT_SECONDS = 60;
     private static final int POLLING_SECONDS = 1;
-
-
     private static String ERROR_MESSAGE_HEADING = "Please correct the following errors";
     private static String ERROR_CLASS = ".error__text";
     protected static String MAIN_TITLE_SELECTOR = "h1";

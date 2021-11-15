@@ -58,11 +58,11 @@ public class AdminJourney extends BasePage {
     }
 
     public void reassignTask() {
-        findLicenseAndNavigate();waitAndClick("re-assign task", SelectorType.ID);
+        findLicenseAndNavigate();
+        waitAndClick("re-assign task", SelectorType.ID);
         waitAndClick("assignedToTeam", SelectorType.ID);
         selectSystemTeam();
         clickById("form-actions[submit]");
-
     }
 
     public void generateCompany() {
@@ -79,7 +79,6 @@ public class AdminJourney extends BasePage {
         waitAndClick("submit", SelectorType.ID);
         waitForElementToBePresent("//p[@role='alert']");
     }
-
 
     public void addTask() {
         generateCompany();
@@ -101,6 +100,5 @@ public class AdminJourney extends BasePage {
         selectValueFromDropDown("date", SelectorType.ID,"All" );
         waitAndClick(description, SelectorType.LINKTEXT);
         waitForTextToBePresent("System Team");
-
     }
 }
