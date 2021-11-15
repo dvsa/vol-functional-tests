@@ -43,7 +43,6 @@ public class DataGenerator extends BasePage {
         this.operatorUserEmail = operatorUserEmail;
     }
 
-
     public DataGenerator(World world) {this.world = world;}
 
     public void generateOperatorValues() {
@@ -63,8 +62,4 @@ public class DataGenerator extends BasePage {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.UIJourney.addUser();
     }
-
-
-
-
 }
