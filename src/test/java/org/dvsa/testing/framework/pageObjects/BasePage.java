@@ -128,8 +128,8 @@ public abstract class BasePage extends DriverUtils {
         Random random = new Random();
         List<WebElement> dropdown = select.getOptions();
         int size = dropdown.size();
-        int maxNr = random.nextInt(size);
-        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]",idArgument,maxNr),SelectorType.XPATH).getText();
+        int randomNo = random.nextInt(size);
+        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]",idArgument,randomNo),SelectorType.XPATH).getText();
         selectValueFromDropDown(idArgument, SelectorType.ID, ownerName);
         return ownerName;
     }
