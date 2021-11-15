@@ -30,7 +30,7 @@ public class CreateNewOperatorLicense extends BasePage implements En {
 
     @Then("I should be able to register an account")
     public void iShouldBeAbleToRegisterAnAccount() {
-        assertTrue(isTitlePresent("Check your email", 10));
+        assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
     }
 
     @And("I am on the registration page")
