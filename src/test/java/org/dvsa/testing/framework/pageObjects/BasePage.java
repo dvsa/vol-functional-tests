@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 
@@ -14,10 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +26,6 @@ public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 10;
     private static final int TIME_OUT_SECONDS = 60;
     private static final int POLLING_SECONDS = 1;
-
     private static String ERROR_MESSAGE_HEADING = "Please correct the following errors";
     private static String ERROR_CLASS = ".error__text";
     protected static String MAIN_TITLE_SELECTOR = "h1";
@@ -122,6 +119,17 @@ public abstract class BasePage extends DriverUtils {
     protected static void selectValueFromDropDownByIndex(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull int listValue) {
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByIndex(listValue);
+    }
+
+    public static String selectRandomValueFromDropDown(String idArgument) {
+        Select select = new Select(getDriver().findElement(By.id(idArgument)));
+        Random random = new Random();
+        List<WebElement> dropdown = select.getOptions();
+        int size = dropdown.size();
+        int randomNo = random.nextInt(size);
+        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]",idArgument,randomNo),SelectorType.XPATH).getText();
+        selectValueFromDropDown(idArgument, SelectorType.ID, ownerName);
+        return ownerName;
     }
 
     protected static boolean isLinkPresent(String locator, int duration) {

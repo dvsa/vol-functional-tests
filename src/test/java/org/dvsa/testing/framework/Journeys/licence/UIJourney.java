@@ -40,19 +40,8 @@ public class UIJourney extends BasePage {
 
     private World world;
     private FakerUtils faker = new FakerUtils();
-    private String userName;
-    private String email;
     String uploadLaterRadioButton =  "//input[@id='uploadLaterRadio']";
     String saveButton = "//*[@id='form-actions[save]']";
-
-
-    public String getUsername() {
-        return userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 
     public UIJourney(World world) {
         this.world = world;
@@ -91,15 +80,12 @@ public class UIJourney extends BasePage {
 
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
-
-        String email = faker.generateFirstName() + faker.generateLastName() + faker.generateUniqueId(3) + "@email.com";
-        String userName = faker.generateFirstName() + faker.generateUniqueId(1);
-
-        enterText("username", SelectorType.ID, userName);
+        world.DataGenerator.generateOperatorValues();
+        enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         enterText( "forename", SelectorType.ID, faker.generateFirstName());
         enterText("familyName", SelectorType.ID, faker.generateLastName());
-        enterText("fields[emailAddress]", SelectorType.ID, email);
-        enterText("fields[emailConfirm]", SelectorType.ID, email);
+        enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         if (existingApplication){
             findSelectAllRadioButtonsByValue("Y");
             enterText("fields[licenceNumber]", SelectorType.ID, applicationID);

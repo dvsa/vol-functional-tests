@@ -9,11 +9,15 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 
-public class AddEditReassignTasksStepDef extends BasePage implements En {
+
+public class AddEditReassignTasks extends BasePage implements En {
     private final World world;
 
-    public AddEditReassignTasksStepDef(World world) {
+
+    public AddEditReassignTasks(World world) {
         this.world = world;
     }
 
@@ -39,6 +43,10 @@ public class AddEditReassignTasksStepDef extends BasePage implements En {
         String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
         String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Assert.assertEquals(expectedDate, actualDate);
+        String name = world.adminJourney.getOwnerName();
+        String[] nameArray = name.split(" (?=[^ ]*$)");
+        String reassignedName = String.format("%s, %s",nameArray[1],nameArray[0]);
+        Assert.assertTrue(isTextPresent(reassignedName));
     }
 
     @Then("the User has edited a task")
