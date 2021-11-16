@@ -34,7 +34,6 @@ public class AddEditReassignTasksStepDef extends BasePage implements En {
 
     @Then("the User has re-assigned a task")
     public void theUserHasReAssignedATask() {
-        Assert.assertTrue(isTextPresent("System Team (COPESTAKE, ANDREW DAVID)"));
         Assert.assertTrue(isTextPresent("Forms Digital"));
         Assert.assertTrue(isTextPresent("GV79 Application"));
         String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
@@ -44,7 +43,6 @@ public class AddEditReassignTasksStepDef extends BasePage implements En {
 
     @Then("the User has edited a task")
     public void theUserHasEditedATask() {
-        Assert.assertTrue(isTextPresent("System Team (COPESTAKE, ANDREW DAVID)"));
         Assert.assertTrue(isTextPresent(world.adminJourney.getDescription()));
         Assert.assertTrue(isTextPresent("Forms Digital"));
         String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
