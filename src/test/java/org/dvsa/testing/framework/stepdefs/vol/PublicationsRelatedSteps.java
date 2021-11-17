@@ -184,7 +184,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNo), SelectorType.XPATH);
     };
 
-    @And("^the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
+    @And("the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
     public void thePublicationTextIsCorrectWithHGVsAndLGVs(String publicationType, String variationType, String hgvs, String lgvs) {
         WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]/p[3]", world.applicationDetails.getLicenceNumber(), publicationType), SelectorType.XPATH);
         String adaptiveVehicleTypeText = world.licenceCreation.isAGoodsInternationalLicence() ? "Heavy Goods Vehicle" : "vehicle";
