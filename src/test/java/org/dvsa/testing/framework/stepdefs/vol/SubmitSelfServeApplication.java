@@ -38,6 +38,7 @@ public class SubmitSelfServeApplication extends BasePage {
         } else {
             world.globalMethods.enterCredentialsAndLogin(world.UIJourney.getUsername(), world.UIJourney.getEmail(), newPassword);
         }
+
         waitForTitleToBePresent("Licences");
 
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
@@ -48,6 +49,7 @@ public class SubmitSelfServeApplication extends BasePage {
         waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Limited Company')]", SelectorType.XPATH);
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
@@ -65,7 +67,7 @@ public class SubmitSelfServeApplication extends BasePage {
         String trailers = "4";
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, null, trailers);
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
-        selectValueFromDropDownByIndex("trafficArea", SelectorType.ID, 1);
+        waitAndSelectByIndex("Traffic area","//*[@id='trafficArea']",SelectorType.XPATH,1);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         waitForTitleToBePresent("Financial evidence");
@@ -81,7 +83,7 @@ public class SubmitSelfServeApplication extends BasePage {
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
             clickByName("form-actions[send]");
         } else {
-            world.transportManagerJourney.submitTMApplicationAndSignWithVerify();
+            world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
@@ -110,6 +112,8 @@ public class SubmitSelfServeApplication extends BasePage {
 
     @Given("i have a self serve account")
     public void iHaveASelfServeAccount() {
+        if (!world.configuration.env.toString().equals("int")) {
         world.userRegistrationJourney.registerUserWithNoLicence();
+        }
     }
 }

@@ -16,7 +16,7 @@ public class BusinessDetailsJourney extends BasePage {
 
     public void addBusinessDetails() {
         waitForTitleToBePresent("Business details");
-        if(getText("data[companyNumber][company_number]", SelectorType.ID).equals("")) {
+        if(getAttribute("data[companyNumber][company_number]", SelectorType.ID, "value").equals("")) {
             waitAndEnterText("data[companyNumber][company_number]", SelectorType.ID, "12345678");
             waitAndClick("data[companyNumber][submit_lookup_company]", SelectorType.ID);
             waitAndEnterText("natureOfBusiness", SelectorType.ID, faker.generateCompanyName());

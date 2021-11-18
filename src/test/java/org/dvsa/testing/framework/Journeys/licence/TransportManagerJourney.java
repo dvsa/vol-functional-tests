@@ -226,4 +226,16 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.signWithVerify();
         waitAndClick("//*[contains(text(),'Finish')]",SelectorType.XPATH);
     }
+
+    public void submitTMApplicationPrintAndSign(){
+        addTransportManagerDetails();
+        waitForTitleToBePresent("Check your answers");
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        waitForTitleToBePresent("Declaration");
+        waitAndClick("//*[contains(text(),'Print')]",SelectorType.XPATH);
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        clickByLinkText("Back to Transport Managers");
+        waitForTitleToBePresent("Transport Managers");
+        waitAndClick("form-actions[saveAndContinue]",SelectorType.ID);
+    }
 }

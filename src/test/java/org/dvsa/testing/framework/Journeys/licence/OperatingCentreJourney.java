@@ -22,12 +22,13 @@ public class OperatingCentreJourney extends BasePage {
     String submitButton = "//*[@id='form-actions[submit]']";
 
     public String addOperatingCentre = "//*[@id='add']";
+    String totalAuthorisationField = "//input[@id='totAuthVehicles']";
     String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
     String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
     String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
     public String saveButton = "//*[@id='form-actions[save]']";
 
-    String confirmDeclaration =  "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
+    String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
     String submitAndPayForApplication = "//button[@id='submitAndPay']";
 
@@ -75,11 +76,15 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
-        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
         replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
+        if(isElementPresent("totAuthVehicles",SelectorType.ID)) {
+            replaceText(totalAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
+        }else{
+            replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
+        }
         click(saveButton, SelectorType.XPATH);
     }
 
@@ -96,7 +101,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     private boolean hasHGVAuthorityIncreased(String newHGVTotalAuthority) {
-        return  world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority);
+        return world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority);
     }
 
     private boolean hasLGVAuthorityIncreased(String newLGVTotalAuthority) {
