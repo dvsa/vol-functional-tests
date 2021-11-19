@@ -30,7 +30,7 @@ public class SubmitSelfServeApplication extends BasePage {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         DriverUtils.get(myURL);
 
-        if (Objects.equals(world.configuration.env.toString(), "int") || Objects.equals(world.configuration.env.toString(), "pp") ) {
+        if (Objects.equals(world.configuration.env.toString(), "int") || Objects.equals(world.configuration.env.toString(), "pp")) {
             S3SecretsManager secretsManager = new S3SecretsManager();
             secretsManager.setRegion(region);
             String intPassword = secretsManager.getSecretValue(secretKey);
@@ -67,7 +67,7 @@ public class SubmitSelfServeApplication extends BasePage {
         String trailers = "4";
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, null, trailers);
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
-        waitAndSelectByIndex("Traffic area","//*[@id='trafficArea']",SelectorType.XPATH,1);
+        waitAndSelectByIndex("Traffic area", "//*[@id='trafficArea']", SelectorType.XPATH, 1);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         waitForTitleToBePresent("Financial evidence");
@@ -76,7 +76,7 @@ public class SubmitSelfServeApplication extends BasePage {
 
         //transport manager
         clickById("add");
-        selectValueFromDropDownByIndex("data[registeredUser]",SelectorType.ID,1);
+        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
         clickById("form-actions[continue]");
 
         //transport manager details
@@ -112,8 +112,8 @@ public class SubmitSelfServeApplication extends BasePage {
 
     @Given("i have a self serve account")
     public void iHaveASelfServeAccount() {
-        if (!world.configuration.env.toString().equals("int")) {
-        world.userRegistrationJourney.registerUserWithNoLicence();
+        if (!world.configuration.env.toString().equals("int") || (!world.configuration.env.toString().equals("pp"))) {
+            world.userRegistrationJourney.registerUserWithNoLicence();
         }
     }
 }
