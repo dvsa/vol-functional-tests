@@ -9,7 +9,9 @@ import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.WebElement;
 
+import java.util.List;
 import java.util.Objects;
 
 public class SubmitSelfServeApplication extends BasePage {
@@ -22,23 +24,6 @@ public class SubmitSelfServeApplication extends BasePage {
 
     @And("i start a new licence application")
     public void iStartANewLicenceApplication() {
-        String newPassword = world.configuration.config.getString("internalNewPassword");
-        String intUsername = world.configuration.config.getString("intUsername");
-        String secretKey = world.configuration.config.getString("secretKey");
-        String region = world.configuration.config.getString("region");
-
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
-        DriverUtils.get(myURL);
-
-        if (Objects.equals(world.configuration.env.toString(), "int") || Objects.equals(world.configuration.env.toString(), "pp")) {
-            S3SecretsManager secretsManager = new S3SecretsManager();
-            secretsManager.setRegion(region);
-            String intPassword = secretsManager.getSecretValue(secretKey);
-            world.globalMethods.signIn(intUsername, intPassword);
-        } else {
-            world.globalMethods.enterCredentialsAndLogin(world.UIJourney.getUsername(), world.UIJourney.getEmail(), newPassword);
-        }
-
         waitForTitleToBePresent("Licences");
 
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
@@ -112,8 +97,41 @@ public class SubmitSelfServeApplication extends BasePage {
 
     @Given("i have a self serve account")
     public void iHaveASelfServeAccount() {
-        if (!world.configuration.env.toString().equals("int") || (!world.configuration.env.toString().equals("pp"))) {
-            world.userRegistrationJourney.registerUserWithNoLicence();
+        String newPassword = world.configuration.config.getString("internalNewPassword");
+        String intUsername = world.configuration.config.getString("intUsername");
+        String secretKey = world.configuration.config.getString("secretKey");
+        String region = world.configuration.config.getString("region");
+
+        if (!Objects.equals(world.configuration.env.toString(), "int"))
+            if (!Objects.equals(world.configuration.env.toString(), "pp")) {
+                world.userRegistrationJourney.registerUserWithNoLicence();
+            }
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
+        DriverUtils.get(myURL);
+
+        if (Objects.equals(world.configuration.env.toString(), "int") || Objects.equals(world.configuration.env.toString(), "pp")) {
+            S3SecretsManager secretsManager = new S3SecretsManager();
+            secretsManager.setRegion(region);
+            String intPassword = secretsManager.getSecretValue(secretKey);
+            world.globalMethods.signIn(intUsername, intPassword);
+        } else {
+            world.globalMethods.enterCredentialsAndLogin(world.UIJourney.getUsername(), world.UIJourney.getEmail(), newPassword);
         }
+    }
+
+    @And("i have no existing accounts")
+    public void iHaveNoExistingAccounts() {
+        List<WebElement> applications = findElements("//tbody/tr/td/a", SelectorType.XPATH);
+        for (WebElement element : applications) {
+            element.click();
+            if (isTitlePresent("Application overview", 60)) {
+                clickByLinkText("Withdraw application");
+
+            } else {
+                clickByLinkText("Cancel application");
+            }
+            waitAndClick("form-actions[submit]", SelectorType.NAME);
+        }
+        waitForTitleToBePresent("Licences");
     }
 }

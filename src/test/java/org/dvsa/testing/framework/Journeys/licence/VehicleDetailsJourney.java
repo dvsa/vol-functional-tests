@@ -19,7 +19,7 @@ public class VehicleDetailsJourney extends BasePage {
             clickById("add");
             waitForTitleToBePresent("Add vehicle");
             String num = String.valueOf(Int.random(100,999));
-            waitAndEnterText("vrm", SelectorType.ID, "VRM".concat(num).concat(Str.randomWord(1)));
+            waitAndEnterText("vrm", SelectorType.ID, "P39CUX");
             waitAndEnterText("plated_weight", SelectorType.ID, "5000");
             waitAndClick("form-actions[submit]", SelectorType.ID);
             waitForTitleToBePresent("Vehicle details");
