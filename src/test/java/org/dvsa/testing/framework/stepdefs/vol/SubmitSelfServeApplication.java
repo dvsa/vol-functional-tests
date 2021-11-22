@@ -97,7 +97,6 @@ public class SubmitSelfServeApplication extends BasePage {
 
     @Given("i have a self serve account")
     public void iHaveASelfServeAccount() {
-        String newPassword = world.configuration.config.getString("internalNewPassword");
         String intUsername = world.configuration.config.getString("intUsername");
         String secretKey = world.configuration.config.getString("secretKey");
         String region = world.configuration.config.getString("region");
@@ -105,18 +104,14 @@ public class SubmitSelfServeApplication extends BasePage {
         if (!Objects.equals(world.configuration.env.toString(), "int"))
             if (!Objects.equals(world.configuration.env.toString(), "pp")) {
                 world.userRegistrationJourney.registerUserWithNoLicence();
+                world.globalMethods.navigateToLoginWithoutCookies(world.UIJourney.getUsername(), world.UIJourney.getEmail(), ApplicationType.EXTERNAL);
             }
+        S3SecretsManager secretsManager = new S3SecretsManager();
+        secretsManager.setRegion(region);
+        String intPassword = secretsManager.getSecretValue(secretKey);
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         DriverUtils.get(myURL);
-
-        if (Objects.equals(world.configuration.env.toString(), "int") || Objects.equals(world.configuration.env.toString(), "pp")) {
-            S3SecretsManager secretsManager = new S3SecretsManager();
-            secretsManager.setRegion(region);
-            String intPassword = secretsManager.getSecretValue(secretKey);
-            world.globalMethods.signIn(intUsername, intPassword);
-        } else {
-            world.globalMethods.enterCredentialsAndLogin(world.UIJourney.getUsername(), world.UIJourney.getEmail(), newPassword);
-        }
+        world.globalMethods.signIn(intUsername, intPassword);
     }
 
     @And("i have no existing accounts")
