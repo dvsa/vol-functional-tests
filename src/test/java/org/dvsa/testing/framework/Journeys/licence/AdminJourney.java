@@ -101,4 +101,15 @@ public class AdminJourney extends BasePage {
         waitAndClick(description, SelectorType.LINKTEXT);
         waitForTextToBePresent("System Team");
     }
+    public void navigateToAdminScanning() {
+        waitAndClick("//ul[@class='admin']//li",SelectorType.XPATH);
+        waitAndClick("Scanning",SelectorType.LINKTEXT);
+    }
+
+    public void selectComplianceScanningCategory() {
+        selectValueFromDropDown("category", SelectorType.ID, "Compliance");
+        selectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");
+        enterText("entity_identifier", SelectorType.ID, String.valueOf(world.updateLicence.getCaseId()));
+    }
 }
+
