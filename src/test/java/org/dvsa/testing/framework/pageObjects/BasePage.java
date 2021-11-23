@@ -53,6 +53,11 @@ public abstract class BasePage extends DriverUtils {
         return getText(selector, SelectorType.CSS);
     }
 
+
+    public static String getTextFromNestedElement(WebElement webElement, String selector) {
+        return webElement.findElement(By.xpath(selector)).getText();
+    }
+
     protected static void untilElementWithText(String selector, SelectorType selectorType, String text, ChronoUnit unit, long duration) {
         new FluentWait<>(getDriver())
                 .ignoreAll(Arrays.asList(NoSuchElementException.class, StaleElementReferenceException.class))

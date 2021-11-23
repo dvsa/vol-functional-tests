@@ -5,6 +5,7 @@ import activesupport.aws.s3.S3;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
+import apiCalls.enums.VehicleType;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.cucumber.datatable.DataTable;
@@ -179,5 +180,14 @@ public class ManageApplications {
             world.createApplication.addOperatingCentre();
         world.APIJourney.submitApplication();
         world.APIJourney.grantLicenceAndPayFees();
+    }
+
+    @Given("I have a {string} lgv only application")
+    public void iHaveALgvOnlyApplication(String NIFlag) {
+        world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
+        world.createApplication.setTotalOperatingCentreLgvAuthority(5);
+        world.licenceCreation.createApplication("goods", "standard_international");
     }
 }
