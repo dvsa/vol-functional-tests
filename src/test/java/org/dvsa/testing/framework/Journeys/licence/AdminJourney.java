@@ -106,10 +106,15 @@ public class AdminJourney extends BasePage {
         waitAndClick("Scanning",SelectorType.LINKTEXT);
     }
 
-    public void selectComplianceScanningCategory() {
+    public void completeComplianceScanningDetails() {
+        waitForPageLoad();
         selectValueFromDropDown("category", SelectorType.ID, "Compliance");
+        waitAndClick("subCategory", SelectorType.ID);
         selectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");
-        enterText("entity_identifier", SelectorType.ID, String.valueOf(world.updateLicence.getCaseId()));
+        selectValueFromDropDownByIndex("description",SelectorType.ID, 0);
+        enterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+
     }
 }
 
