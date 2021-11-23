@@ -9,7 +9,7 @@
     <version>1.3</version>
 
     <properties>
-        <active-support.version>1.5.2</active-support.version>
+        <active-support.version>1.6</active-support.version>
         <api-calls.version>1.1.4</api-calls.version>
         <uri-constructor.version>1.5.4</uri-constructor.version>
 
