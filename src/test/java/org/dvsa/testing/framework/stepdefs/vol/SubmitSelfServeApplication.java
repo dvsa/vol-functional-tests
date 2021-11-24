@@ -19,7 +19,6 @@ import scanner.ReportGenerator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystemAlreadyExistsException;
 import java.util.List;
 import java.util.Objects;
@@ -127,7 +126,7 @@ public class SubmitSelfServeApplication extends BasePage {
             world.globalMethods.signIn(intUsername, intPassword);
         } else {
             world.userRegistrationJourney.registerUserWithNoLicence();
-            world.globalMethods.navigateToLoginWithoutCookies(world.UIJourney.getUsername(), world.UIJourney.getEmail(), ApplicationType.EXTERNAL);
+            world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL);
         }
     }
 

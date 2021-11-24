@@ -20,6 +20,6 @@ public class UserRegistrationJourney extends BasePage {
         world.selfServeNavigation.navigateToLoginPage();
         world.selfServeNavigation.navigateToCreateAnAccount();
         world.UIJourney.addNewOperator(null, false);
-        assertTrue(isTextPresent(world.UIJourney.getEmail()));
+        assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
     }
 }

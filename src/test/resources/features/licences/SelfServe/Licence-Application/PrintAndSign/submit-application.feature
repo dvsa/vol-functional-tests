@@ -1,7 +1,7 @@
 @prod_smokeTest
 @ss_regression
 @Accessibility
-Feature: Submit an application on int env
+Feature: Complete an application manually
 
   Scenario: Submit an application
     Given i have a self serve account

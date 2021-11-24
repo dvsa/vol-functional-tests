@@ -43,7 +43,6 @@ public class DataGenerator extends BasePage {
         this.operatorUserEmail = operatorUserEmail;
     }
 
-
     public DataGenerator(World world) {this.world = world;}
 
     public void generateOperatorValues() {
