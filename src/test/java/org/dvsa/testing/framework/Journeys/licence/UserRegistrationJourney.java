@@ -1,7 +1,11 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

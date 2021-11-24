@@ -1,9 +1,15 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class BusinessDetailsJourney extends BasePage {
     private World world;

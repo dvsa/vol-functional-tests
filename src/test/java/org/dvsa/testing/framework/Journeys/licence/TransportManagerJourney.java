@@ -1,17 +1,21 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class TransportManagerJourney extends BasePage {
 
@@ -42,6 +46,11 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void addTransportManagerDetails()  {
+        try {
+            accessibilityScanner();
+        } catch (IllegalBrowserException | IOException e) {
+            e.printStackTrace();
+        }
         //Add Personal Details
         String birthPlace = world.createApplication.getTransportManagerTown();
         String postCode = "NG1 6LP";

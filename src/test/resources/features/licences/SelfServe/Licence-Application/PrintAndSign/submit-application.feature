@@ -1,5 +1,6 @@
 @prod_smokeTest
 @ss_regression
+@Accessibility
 Feature: Submit an application on int env
 
   Scenario: Submit an application

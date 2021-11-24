@@ -18,10 +18,16 @@ public class VehicleDetailsJourney extends BasePage {
         if (choice) {
             clickById("add");
             waitForTitleToBePresent("Add vehicle");
-            String num = String.valueOf(Int.random(100,999));
-            waitAndEnterText("vrm", SelectorType.ID, "P39CUX");
+            String num = String.valueOf(Int.random(10,99));
+            String letter = String.valueOf(Str.randomLetter());
+            waitAndEnterText("vrm", SelectorType.ID, String.format("P%sCUX",num));
             waitAndEnterText("plated_weight", SelectorType.ID, "5000");
             waitAndClick("form-actions[submit]", SelectorType.ID);
+            if(isElementPresent("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH))
+            {
+                waitAndClick("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH);
+                waitAndClick("form-actions[submit]", SelectorType.ID);
+            }
             waitForTitleToBePresent("Vehicle details");
         } else {
             waitAndClick("//*[contains(text(),'No')]", SelectorType.XPATH);
