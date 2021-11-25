@@ -15,7 +15,7 @@ Feature: Checking visibility of LGV Related information on the snapshot
     And i close and refocus the tab
 
   Scenario: Check for NI SI LGV Only display on LGV Only SI application and check declaration present on snapshot
-    Given I have a "GB" lgv only application
+    Given I have a "NI" lgv only application
     And i have logged in to self serve
     When i navigate to the snapshot on the review and declarations page
     Then the lgv choice and declaration confirmation are visible as "Yes" and "Confirmed"
