@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -8,9 +9,12 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -26,7 +30,7 @@ public class DirectorJourney extends BasePage {
     public String directorsTitle = "Directors";
     public String directorLinks = "//tbody/tr/td[1]/input";
     public String addButton = "//button[@name='table[action]']";
-    public String directorDetailsTitle = "Add a director";
+    public String directorDetailsTitle = "Add person";
     public String directorTitleDropdown = "//select[@id='title']";
     public String firstNameField = "//input[@name='data[forename]']";
     public String lastNameField = "//input[@name='data[familyName]']";
@@ -71,11 +75,21 @@ public class DirectorJourney extends BasePage {
     public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties()  {
         click(addButton, SelectorType.XPATH);
         addDirectorDetails();
+        try {
+            accessibilityScanner();
+        } catch (IllegalBrowserException | IOException e) {
+            e.printStackTrace();
+        }
         completeDirectorFinancialHistory("N");
         completeConvictionsAndPenalties("N");
     }
 
     public void addDirectorDetails()  {
+        try {
+            accessibilityScanner();
+        } catch (IllegalBrowserException | IOException e) {
+            e.printStackTrace();
+        }
         waitForTitleToBePresent(directorDetailsTitle);
         selectValueFromDropDown(directorTitleDropdown, SelectorType.XPATH, "Dr");
         directorFirstName = faker.generateFirstName();
@@ -84,7 +98,7 @@ public class DirectorJourney extends BasePage {
         enterText(lastNameField, SelectorType.XPATH, directorLastName);
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         replaceDateFieldsByPartialId("dob", dates);
-        clickByXPath(saveAndContinue);
+        clickByName("form-actions[submit]");
     }
 
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
@@ -113,7 +127,7 @@ public class DirectorJourney extends BasePage {
         } else {
             findSelectAllRadioButtonsByValue("Y");
             click("add", SelectorType.ID);
-            world.UIJourney.addPreviousConviction();
+            world.convictionsAndPenaltiesJourney.addPreviousConviction();
         }
     }
 

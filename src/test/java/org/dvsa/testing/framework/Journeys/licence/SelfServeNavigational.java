@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import com.sun.istack.NotNull;
@@ -11,10 +12,13 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class SelfServeNavigational extends BasePage {
 
@@ -55,6 +59,11 @@ public class SelfServeNavigational extends BasePage {
     public void navigateToLoginPage() {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
         navigate().get(myURL);
+        try {
+            accessibilityScanner();
+        } catch (IllegalBrowserException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void navigateToCreateAnAccount() {

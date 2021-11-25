@@ -399,6 +399,10 @@ public abstract class BasePage extends DriverUtils {
         });
     }
 
+    public static boolean isFieldEnabled(String field, SelectorType selectorType){
+        return Boolean.parseBoolean(findElement(field, selectorType).getAttribute("disabled"));
+    }
+
     public static Object javaScriptExecutor(String jsScript) {
         return ((JavascriptExecutor) getDriver()).executeScript(jsScript);
     }

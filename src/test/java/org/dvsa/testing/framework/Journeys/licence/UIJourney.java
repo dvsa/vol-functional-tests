@@ -21,7 +21,6 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.time.Duration;
@@ -40,7 +39,7 @@ public class UIJourney extends BasePage {
 
     private World world;
     private FakerUtils faker = new FakerUtils();
-    String uploadLaterRadioButton =  "//input[@id='uploadLaterRadio']";
+    String uploadLaterRadioButton = "//input[@id='uploadLaterRadio']";
     String saveButton = "//*[@id='form-actions[save]']";
 
     public UIJourney(World world) {
@@ -59,7 +58,7 @@ public class UIJourney extends BasePage {
         waitForPageLoad();
     }
 
-    public void addPreviousConviction()  {
+    public void addPreviousConviction() {
         selectValueFromDropDown("data[title]", SelectorType.ID, "Ms");
         enterText("data[forename]", SelectorType.NAME, Str.randomWord(8));
         enterText("data[familyName]", SelectorType.NAME, Str.randomWord(8));
@@ -77,7 +76,6 @@ public class UIJourney extends BasePage {
         enterText("data[penalty]", SelectorType.NAME, "Severe");
         clickByName("form-actions[submit]");
     }
-
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
         world.DataGenerator.generateOperatorValues();
@@ -119,7 +117,6 @@ public class UIJourney extends BasePage {
         world.internalSearchJourney.searchUser();
     }
 
-
     public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env).toString();
 
@@ -130,7 +127,7 @@ public class UIJourney extends BasePage {
         skipToMainContentAndCheck();
     }
 
-    public void generateLetter()  {
+    public void generateLetter() {
         Browser.navigate().manage().window().maximize();
         clickByLinkText("Docs & attachments");
         waitForElementToBePresent("//button[@id='New letter']");
@@ -143,7 +140,7 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("Amend letter");
     }
 
-    public void saveDocumentInInternal()  {
+    public void saveDocumentInInternal() {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitAndClick("//*[@id='close']", SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
@@ -489,7 +486,7 @@ public class UIJourney extends BasePage {
 
     public void addNewAddressDetails(HashMap<String, String> address, String postcodeMatchingTrafficArea, String typeOfAddress) {
         String[] addressFields = {"addressLine1", "addressLine2", "addressLine3", "addressLine4", "town"};
-        for (String addressField : addressFields )
+        for (String addressField : addressFields)
             replaceText(String.format("//*[contains(@name,'%s[%s]')]", typeOfAddress, addressField), SelectorType.XPATH, address.get(addressField));
         replaceText(String.format("//*[contains(@name,'%s[postcode]')]", typeOfAddress), SelectorType.XPATH, postcodeMatchingTrafficArea);
     }
@@ -531,6 +528,7 @@ public class UIJourney extends BasePage {
         waitAndEnterText("vehicle-search[search-value]",SelectorType.ID,licenceNumber);
         waitAndClick("vehicle-search[submit]",SelectorType.ID);
     }
+
     public void removeVehicle() {
         findSelectAllRadioButtonsByValue("remove");
         waitAndClick("next",SelectorType.ID);
