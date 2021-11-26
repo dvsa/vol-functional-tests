@@ -55,11 +55,11 @@ public class AdminJourney extends BasePage {
 
     public void editTaskAllocationRule() {
         waitAndClick("50", SelectorType.LINKTEXT);
-        selectRandomRadioBtn();
+        selectRandomRadioBtnFromDataTable();
         waitAndClick("edit", SelectorType.ID);
         if (isElementPresent("//th[text()='Assign operator tasks starting with these letters']", SelectorType.XPATH)) {
             generateAbbreviation();
-            selectRandomRadioBtn();
+            selectRandomRadioBtnFromDataTable();
             waitAndClick("editAlphasplit", SelectorType.ID);
             waitForElementToBeClickable("taskAlphaSplit[letters]", SelectorType.ID);
             replaceText("taskAlphaSplit[letters]", SelectorType.ID, abbreviation);
@@ -67,6 +67,7 @@ public class AdminJourney extends BasePage {
         } else {
             {
                 selectValueFromDropDown("team", SelectorType.ID, "System Team");
+                waitForElementToBeClickable("user", SelectorType.ID);
                 String ownerName = selectRandomValueFromDropDown("user");
                 setOwnerName(ownerName);
                 waitAndClick("//button[text()='Save']", SelectorType.XPATH);
