@@ -132,7 +132,7 @@ public abstract class BasePage extends DriverUtils {
         return ownerName;
     }
 
-    public void selectRandomRadioBtn() {
+    public void selectRandomRadioBtnFromDataTable(){
         List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
         int rows_count = rows_table.size();
         outsideloop:
