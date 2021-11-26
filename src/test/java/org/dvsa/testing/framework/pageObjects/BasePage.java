@@ -62,7 +62,7 @@ public abstract class BasePage extends DriverUtils {
         boolean itsFound = true;
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), 30);
-            wait.until(ExpectedConditions.visibilityOf(findElement(String.format("//*[contains(text(),\"%s\")]", locator),SelectorType.XPATH)));
+            wait.until(ExpectedConditions.visibilityOf(findElement(String.format("//*[contains(text(),\"%s\")]", locator), SelectorType.XPATH)));
         } catch (Exception e) {
             return false;
 
@@ -70,7 +70,7 @@ public abstract class BasePage extends DriverUtils {
         return itsFound;
     }
 
-    public static boolean isErrorMessagePresent(){
+    public static boolean isErrorMessagePresent() {
         boolean hasError = false;
 
         if (isTextPresent(ERROR_MESSAGE_HEADING) || isElementPresent(ERROR_CLASS, SelectorType.CSS)) hasError = true;
@@ -96,19 +96,19 @@ public abstract class BasePage extends DriverUtils {
     }
 
     protected static void clickByLinkText(@NotNull String selector) {
-        findElement(selector,SelectorType.PARTIALLINKTEXT).click();
+        findElement(selector, SelectorType.PARTIALLINKTEXT).click();
     }
 
     protected static void clickByXPath(@NotNull String selector) {
-        findElement(selector,SelectorType.XPATH).click();
+        findElement(selector, SelectorType.XPATH).click();
     }
 
     protected static void clickById(@NotNull String selector) {
-        findElement(selector,SelectorType.ID).click();
+        findElement(selector, SelectorType.ID).click();
     }
 
     protected static void clickByName(@NotNull String selector) {
-        findElement(selector,SelectorType.NAME).click();
+        findElement(selector, SelectorType.NAME).click();
     }
 
     protected static void selectValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String listValue) {
@@ -127,9 +127,27 @@ public abstract class BasePage extends DriverUtils {
         List<WebElement> dropdown = select.getOptions();
         int size = dropdown.size();
         int randomNo = random.nextInt(size);
-        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]",idArgument,randomNo),SelectorType.XPATH).getText();
+        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]", idArgument, randomNo), SelectorType.XPATH).getText();
         selectValueFromDropDown(idArgument, SelectorType.ID, ownerName);
         return ownerName;
+    }
+
+    public void selectRandomRadioBtn() {
+        List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
+        int rows_count = rows_table.size();
+        outsideloop:
+        for (int row = 0; row < rows_count; row++) {
+            List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
+            int columns_count = Columns_row.size();
+            for (int column = 0; column < columns_count;) {
+                List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
+                Random random = new Random();
+                int size = options.size();
+                int index = random.nextInt(size);
+                options.get(index).click();
+                break outsideloop;
+            }
+        }
     }
 
     protected static boolean isLinkPresent(String locator, int duration) {
