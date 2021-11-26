@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
-import activesupport.aws.s3.S3SecretsManager;
+import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -118,7 +118,7 @@ public class SubmitSelfServeApplication extends BasePage {
         String region = world.configuration.config.getString("region");
 
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            S3SecretsManager secretsManager = new S3SecretsManager();
+            SecretsManager secretsManager = new SecretsManager();
             secretsManager.setRegion(region);
             String intPassword = secretsManager.getSecretValue(secretKey);
             String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
