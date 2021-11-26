@@ -67,7 +67,7 @@ public class AdminJourney extends BasePage {
         } else {
             {
                 selectValueFromDropDown("team", SelectorType.ID, "System Team");
-                waitForElementToBeClickable("user", SelectorType.ID);
+                waitForElementToBeClickable("trafficArea", SelectorType.ID);
                 String ownerName = selectRandomValueFromDropDown("user");
                 setOwnerName(ownerName);
                 waitAndClick("//button[text()='Save']", SelectorType.XPATH);
