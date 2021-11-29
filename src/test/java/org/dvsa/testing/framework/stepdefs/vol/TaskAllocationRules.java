@@ -36,6 +36,7 @@ public class TaskAllocationRules extends BasePage {
     @Then("that rule should have been edited")
     public void thatRuleShouldHaveBeenEdited() {
         if (isElementPresent("//th[text()='Assign operator tasks starting with these letters']", SelectorType.XPATH)) {
+            Assert.assertTrue(isElementPresent("//p[text()='Alpha split updated']", SelectorType.XPATH));
             Assert.assertTrue(isTextPresent(world.adminJourney.getAbbreviation()));
         } else {
             Assert.assertTrue(isTextPresent(world.adminJourney.getOwnerName()));

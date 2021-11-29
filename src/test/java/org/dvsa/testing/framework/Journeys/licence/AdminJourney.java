@@ -14,7 +14,6 @@ public class AdminJourney extends BasePage {
     private String ownerName;
     private String abbreviation;
 
-
     Dates date = new Dates(org.joda.time.LocalDate::new);
 
     public String getDescription(){
@@ -24,8 +23,6 @@ public class AdminJourney extends BasePage {
     public String getOwnerName() {return ownerName;}
 
     public String getAbbreviation() { return abbreviation;}
-
-    public void setAbbreviation(String abbreviation) {this.abbreviation = abbreviation;}
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
@@ -64,13 +61,15 @@ public class AdminJourney extends BasePage {
             waitForElementToBeClickable("taskAlphaSplit[letters]", SelectorType.ID);
             replaceText("taskAlphaSplit[letters]", SelectorType.ID, abbreviation);
             waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitForElementToBeClickable("addAlphaSplit", SelectorType.ID);
+            waitForTextToBePresent("Alpha split updated");
         } else {
             {
                 selectValueFromDropDown("team", SelectorType.ID, "System Team");
-                waitForElementToBeClickable("trafficArea", SelectorType.ID);
+                waitForElementToBeClickable("user", SelectorType.ID);
                 String ownerName = selectRandomValueFromDropDown("user");
                 setOwnerName(ownerName);
-                waitAndClick("//button[text()='Save']", SelectorType.XPATH);
+                waitAndClick("form-actions[submit]", SelectorType.ID);
                 waitAndClick("50", SelectorType.LINKTEXT);
             }
         }
