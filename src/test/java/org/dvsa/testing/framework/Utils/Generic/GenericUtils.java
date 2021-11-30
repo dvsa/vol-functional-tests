@@ -130,11 +130,12 @@ public class GenericUtils extends BasePage {
         return myDate;
     }
 
-    public static void zipFolder() {
+    public static String createZipFolder(String fileName) {
         /*
         / Uses Open source util zt-zip https://github.com/zeroturnaround/zt-zip
          */
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File("./src/test/resources/EBSR.zip"));
+        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("./src/test/resources/%s",fileName)));
+        return String.format("./src/test/resources/%s",fileName);
     }
 
     public void executeJenkinsBatchJob(String command) throws Exception {

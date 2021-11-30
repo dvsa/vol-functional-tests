@@ -44,13 +44,12 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     When I upload an ebsr file with "41" days notice
     Then A short notice flag should be displayed in selfserve
 
-  @smoketest
+
   Scenario: import EBSR in self-serve smoke test
     Given I have a psv application with traffic area "west" and enforcement area "west" which has been granted
     When I upload an ebsr file with "42" days notice
     Then A short notice flag should not be displayed in selfserve
 
-  @smoketest
   Scenario: import EBSR for curtailed and suspended licence in self-serve smoke test
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And the licence status is "curtail"

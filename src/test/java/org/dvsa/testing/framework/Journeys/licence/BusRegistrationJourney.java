@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import activesupport.aws.s3.S3;
 import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
@@ -15,6 +16,7 @@ import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 
+import java.io.File;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
@@ -23,13 +25,12 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 public class BusRegistrationJourney extends BasePage {
 
     private World world;
-    private static final String zipFilePath = "/src/test/resources/EBSR.zip";
 
-    public BusRegistrationJourney(World world){
+    public BusRegistrationJourney(World world) {
         this.world = world;
     }
 
-    public void internalSearchForBusReg()  {
+    public void internalSearchForBusReg() {
         selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Bus registrations");
         do {
             SearchNavBar.search(SearchType.Licence, world.applicationDetails.getLicenceNumber());
@@ -37,7 +38,7 @@ public class BusRegistrationJourney extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
-    public void internalSiteAddBusNewReg(int month)  {
+    public void internalSiteAddBusNewReg(int month) {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
         click(nameAttribute("button", "action"), SelectorType.CSS);
@@ -72,7 +73,7 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
-    public void closeBusReg()  {
+    public void closeBusReg() {
         clickByLinkText("" + world.applicationDetails.getLicenceNumber() + "");
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
@@ -80,7 +81,7 @@ public class BusRegistrationJourney extends BasePage {
         click("form-actions[submit]", SelectorType.ID);
     }
 
-    public void payFeesAndGrantNewBusReg()  {
+    public void payFeesAndGrantNewBusReg() {
         clickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
         world.feeAndPaymentJourney.payFee("60", "cash");
@@ -101,14 +102,14 @@ public class BusRegistrationJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType)  {
+    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) {
         if (licenceType.equals("standard_international")) {
             world.createApplication.setLicenceType("standard_international");
         } else {
             world.createApplication.setLicenceType("standard_national");
         }
         world.createApplication.setTrafficArea(TrafficArea.valueOf(TrafficArea.NORTH_EAST.name()));
-        world. createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name()));
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name()));
         world.createApplication.setOperatorType(operatorType);
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourney.createApplication();
@@ -128,7 +129,7 @@ public class BusRegistrationJourney extends BasePage {
         world.updateLicence.createCase();
     }
 
-    public void viewEBSRInExternal()  {
+    public void viewEBSRInExternal() {
 
         long kickOutTime = System.currentTimeMillis() + 120000;
 
@@ -146,17 +147,28 @@ public class BusRegistrationJourney extends BasePage {
 
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
+        String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
+        String path = String.format("BusReg/%s", ebsrFileName);
+
         world.genericUtils.modifyXML(state, interval);
-        GenericUtils.zipFolder();
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
 
         clickByLinkText("Bus registrations");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
-        String workingDir = System.getProperty("user.dir");
+
         String jScript = "document.getElementById('fields[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
-        enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, workingDir + zipFilePath);
+
+        if (System.getProperty("platform") == null) {
+            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, zipFilePath);
+        } else {
+            S3.uploadObject(world.configuration.getBucketName(), path, System.getProperty("user.dir").concat(zipFilePath));
+            if(S3.objectExists(path)){
+                //get Path
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(S3.getS3Object(world.configuration.getBucketName(), path)));
+            }
+        }
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
 }
