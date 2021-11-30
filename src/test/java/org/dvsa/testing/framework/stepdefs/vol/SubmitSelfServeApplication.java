@@ -19,7 +19,6 @@ import scanner.ReportGenerator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.FileSystemAlreadyExistsException;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +34,7 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     @And("i start a new licence application")
-    public void iStartANewLicenceApplication() throws IllegalBrowserException, IOException, URISyntaxException {
+    public void iStartANewLicenceApplication() throws IllegalBrowserException, IOException {
         waitForTitleToBePresent("Licences");
         accessibilityScanner();
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
@@ -157,7 +156,7 @@ public class SubmitSelfServeApplication extends BasePage {
                 reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
                 reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
                 reportGenerator.createReport(scanner);
-            } catch ( FileSystemAlreadyExistsException |URISyntaxException e ) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
