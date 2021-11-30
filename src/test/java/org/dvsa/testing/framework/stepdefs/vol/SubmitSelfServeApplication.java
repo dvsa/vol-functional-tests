@@ -108,6 +108,7 @@ public class SubmitSelfServeApplication extends BasePage {
         //Convictions
         accessibilityScanner();
         world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit();
+        generateAccessibilityReport();
     }
 
     @Given("i have a self serve account")
@@ -152,15 +153,12 @@ public class SubmitSelfServeApplication extends BasePage {
         scanner.scan();
         if (scanner.getTotalViolationsCount() != 0) {
             LOGGER.info("ERROR: Violation found");
-            try {
-                reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
-                reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
-                reportGenerator.createReport(scanner);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            LOGGER.info("No violation found");
+            reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
+            reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
         }
+    }
+
+    public static void generateAccessibilityReport() {
+        reportGenerator.createReport(scanner);
     }
 }
