@@ -42,4 +42,14 @@ public class TaskAllocationRules extends BasePage {
             Assert.assertTrue(isTextPresent(world.adminJourney.getOwnerName()));
         }
     }
+
+    @Given("I add an allocated rule")
+    public void iAddAnAllocatedRule() {
+        world.adminJourney.addTaskAllocationRule();
+    }
+
+    @Then("the rule should have been added")
+    public void theRuleShouldHaveBeenAdded() {
+        Assert.assertTrue(isTextPresent(world.adminJourney.getOwnerName()));
+    }
 }

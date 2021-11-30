@@ -13,3 +13,7 @@ Feature: User is able to Add, edit and delete a Task allocation rule
       Given I edit an allocated rule
       Then that rule should have been edited
 
+      Scenario: User wants to add a task allocation rule
+        Given I add an allocated rule
+        Then the rule should have been added
+

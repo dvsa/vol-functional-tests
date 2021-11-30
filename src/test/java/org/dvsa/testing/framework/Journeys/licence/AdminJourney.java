@@ -13,48 +13,47 @@ public class AdminJourney extends BasePage {
     private String description;
     private String ownerName;
     private String abbreviation;
+    public String alphaSplit = "Assign operator tasks starting with these letters";
 
     Dates date = new Dates(org.joda.time.LocalDate::new);
 
-    public String getDescription(){
-    return description;
-    }
+    public String getDescription() {return description;}
 
     public String getOwnerName() {return ownerName;}
 
-    public String getAbbreviation() { return abbreviation;}
+    public String getAbbreviation() {return abbreviation;}
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
+    public void setOwnerName(String ownerName) {this.ownerName = ownerName;}
 
-    public AdminJourney(World world){
-        this.world = world;
-    }
+    public AdminJourney(World world) {this.world = world;}
 
-    public void clickAdminMenuBtn() {waitAndClick("//ul[@class='admin']//li", SelectorType.XPATH); }
+    public void clickAdminMenuBtn() {waitAndClick("//ul[@class='admin']//li", SelectorType.XPATH);}
 
     public void generateCompany() {
         description = faker.generateCompanyName();
     }
 
-    public void generateAbbreviation() { abbreviation = RandomStringUtils.randomAlphabetic(2).toUpperCase();}
+    public void generateAbbreviation() {abbreviation = RandomStringUtils.randomAlphabetic(2).toUpperCase();}
 
     public void navigateToTaskAllocationRules() {
         clickAdminMenuBtn();
         waitAndClick("Task allocation rules", SelectorType.LINKTEXT);
     }
-    public void deleteTaskAllocationRule() {
-        waitAndClick("(//input[@type='checkbox'])[2]", SelectorType.XPATH);
-        waitAndClick("delete", SelectorType.ID);
-        waitAndClick("form-actions[confirm]", SelectorType.ID);
+
+    public void addTaskAllocationRule() {
+        waitAndClick("add", SelectorType.ID);
+        selectValueFromDropDown("category", SelectorType.ID, "Application");
+        waitForElementToBeClickable("//input[@class='govuk-radios__input']", SelectorType.XPATH);
+        waitAndClick("(//input[@type='radio'])[3]", SelectorType.XPATH);
+        selectRandomValueFromDropDown("trafficArea");
+        selectDropDownValues();
     }
 
     public void editTaskAllocationRule() {
         waitAndClick("50", SelectorType.LINKTEXT);
         selectRandomRadioBtnFromDataTable();
         waitAndClick("edit", SelectorType.ID);
-        if (isElementPresent("//th[text()='Assign operator tasks starting with these letters']", SelectorType.XPATH)) {
+        if (isTextPresent(alphaSplit)) {
             generateAbbreviation();
             selectRandomRadioBtnFromDataTable();
             waitAndClick("editAlphasplit", SelectorType.ID);
@@ -65,14 +64,24 @@ public class AdminJourney extends BasePage {
             waitForTextToBePresent("Alpha split updated");
         } else {
             {
-                selectValueFromDropDown("team", SelectorType.ID, "System Team");
-                waitForElementToBeClickable("user", SelectorType.ID);
-                String ownerName = selectRandomValueFromDropDown("user");
-                setOwnerName(ownerName);
-                waitAndClick("form-actions[submit]", SelectorType.ID);
-                waitAndClick("50", SelectorType.LINKTEXT);
+               selectDropDownValues();
             }
         }
+    }
+
+    public void selectDropDownValues() {
+        selectValueFromDropDown("team", SelectorType.ID, "System Team");
+        waitForElementToBeClickable("user", SelectorType.ID);
+        String ownerName = selectRandomValueFromDropDown("user");
+        setOwnerName(ownerName);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick("50", SelectorType.LINKTEXT);
+    }
+
+    public void deleteTaskAllocationRule() {
+        waitAndClick("(//input[@type='checkbox'])[2]", SelectorType.XPATH);
+        waitAndClick("delete", SelectorType.ID);
+        waitAndClick("form-actions[confirm]", SelectorType.ID);
     }
 
     public void selectSystemTeam() {
