@@ -165,9 +165,11 @@ public class BusRegistrationJourney extends BasePage {
             enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, zipFilePath);
         } else {
             S3.uploadObject(world.configuration.getBucketName(), path, System.getProperty("user.dir").concat(zipFilePath));
-            //get Path
-            S3.downloadObject(world.configuration.getBucketName(), path,"var/scratch/".concat(ebsrFileName));
-            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(S3.getS3Object(world.configuration.getBucketName(), path)));
+            //get Pat
+            if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
+                S3.downloadObject(world.configuration.getBucketName(), path, "var/scratch/".concat(ebsrFileName));
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(S3.getS3Object(world.configuration.getBucketName(), path)));
+            }
         }
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
