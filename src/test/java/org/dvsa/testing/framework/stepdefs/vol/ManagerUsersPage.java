@@ -1,8 +1,8 @@
+package org.dvsa.testing.framework.stepdefs.vol;
+
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
-import activesupport.faker.FakerUtils;
-import activesupport.number.Int;
 import apiCalls.enums.UserType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;

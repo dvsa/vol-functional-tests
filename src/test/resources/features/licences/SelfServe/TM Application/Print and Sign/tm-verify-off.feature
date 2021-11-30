@@ -9,13 +9,13 @@ Feature: Countersigning declaration page for the operator Print and Sign
   @OLCS-21374
   Scenario: Add TM as the Operator Print and Sign
     When the transport manager is the owner
-    And i choose to sign with print and sign
+    And i choose to print and sign
     Then transport manager details approved banner appears
     And transport manager status is "green" and "Not yet received"
 
   @OLCS-21678
   Scenario: Add TM who is not the Operator Print and Sign
     When the transport manager is not the owner
-    And i choose to sign with print and sign
+    And i choose to print and sign
     Then submit to operator button is displayed
     And transport manager status is "orange" and "With operator"
