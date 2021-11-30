@@ -1,3 +1,5 @@
+@int_regression
+@INT
 Feature: User is able to Add, edit and delete a Task allocation rule
 
   Background:
