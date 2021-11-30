@@ -134,8 +134,8 @@ public class GenericUtils extends BasePage {
         /*
         / Uses Open source util zt-zip https://github.com/zeroturnaround/zt-zip
          */
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("/src/test/resources/%s",fileName)));
-        return String.format("./src/test/resources/%s",fileName);
+        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("./src/test/resources/%s",fileName)));
+        return String.format("/src/test/resources/%s",fileName);
     }
 
     public void executeJenkinsBatchJob(String command) throws Exception {
