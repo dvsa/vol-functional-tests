@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
-import activesupport.aws.s3.S3SecretsManager;
+import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -19,7 +19,6 @@ import scanner.ReportGenerator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.FileSystemAlreadyExistsException;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,7 +34,7 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     @And("i start a new licence application")
-    public void iStartANewLicenceApplication() throws IllegalBrowserException, IOException, URISyntaxException {
+    public void iStartANewLicenceApplication() throws IllegalBrowserException, IOException {
         waitForTitleToBePresent("Licences");
         accessibilityScanner();
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
@@ -118,7 +117,7 @@ public class SubmitSelfServeApplication extends BasePage {
         String region = world.configuration.config.getString("region");
 
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            S3SecretsManager secretsManager = new S3SecretsManager();
+            SecretsManager secretsManager = new SecretsManager();
             secretsManager.setRegion(region);
             String intPassword = secretsManager.getSecretValue(secretKey);
             String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
@@ -157,7 +156,7 @@ public class SubmitSelfServeApplication extends BasePage {
                 reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
                 reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
                 reportGenerator.createReport(scanner);
-            } catch ( FileSystemAlreadyExistsException |URISyntaxException e ) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
