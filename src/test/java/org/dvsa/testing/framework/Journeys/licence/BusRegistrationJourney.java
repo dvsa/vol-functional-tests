@@ -17,7 +17,6 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
@@ -146,7 +145,7 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
-    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException {
+    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         String path = String.format("BusReg/%s", ebsrFileName);
