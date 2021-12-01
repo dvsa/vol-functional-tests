@@ -15,7 +15,7 @@ public class TaskAllocationRules extends BasePage {
 
     @Given("I am on the task allocation rules page")
     public void iAmOnTheTaskAllocationRulesPage() {
-        world.internalNavigation.navigateToTaskAllocationRules();
+        world.internalNavigation.adminPageUiNavigation("Task allocation rules");
     }
 
     @And("I delete an allocation rule")

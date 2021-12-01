@@ -47,17 +47,70 @@ public class InternalNavigational extends BasePage {
         clickByLinkText("Processing");
     }
 
-    public void navigateToTaskAllocationRules() {
+    public void adminPageUiNavigation(String page) {
         if (world.updateLicence.getInternalUserId() == null)
             world.APIJourney.createAdminUser();
         logInAsAdmin();
         click(adminDropdown, SelectorType.XPATH);
-        click("Task allocation rules", SelectorType.LINKTEXT);
-    }
-
-    public void navigateToScanning() {
-        click(adminDropdown, SelectorType.XPATH);
-        click("Scanning", SelectorType.LINKTEXT);
+        switch (page) {
+            case "Scanning":
+                clickByLinkText("Scanning");
+                break;
+            case "Printing":
+                clickByLinkText("Printing");
+                break;
+            case "Task allocation rules":
+                clickByLinkText("Task allocation rules");
+                break;
+            case "Public holidays":
+                clickByLinkText("Public holidays");
+                break;
+            case "Bus registrations":
+                clickByLinkText("Bus registrations");
+                break;
+            case "Continuations" :
+                clickByLinkText("Continuations");
+                break;
+            case "Your account":
+                clickByLinkText("Your account");
+                break;
+            case "System parameters":
+                clickByLinkText("System parameters");
+                break;
+            case "Permits":
+                clickByLinkText("Permits");
+                break;
+            case "Data rentention":
+                clickByLinkText("Data retention");
+                break;
+            case "User management":
+                clickByLinkText("User management");
+                break;
+            case "Publications":
+                clickByLinkText("Publications ");
+                break;
+            case "Payment processing":
+                clickByLinkText("Payment processing");
+                break;
+            case "Reports":
+                clickByLinkText("Reports");
+                break;
+            case "Feature toggle":
+                clickByLinkText("Feature toggle");
+                break;
+            case "System messages":
+                clickByLinkText("System messages");
+                break;
+            case "Content Management":
+                clickByLinkText("Content management");
+                break;
+            case "Fee rates":
+                clickByLinkText("Fee rates");
+                break;
+            case "Financial standing rates":
+                clickByLinkText("Finanical standing rates");
+                break;
+        }
     }
 
     public void loginAndGetApplication(boolean variation) {
