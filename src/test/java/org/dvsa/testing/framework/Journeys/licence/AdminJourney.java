@@ -41,9 +41,6 @@ public class AdminJourney extends BasePage {
         selectDropDownValues();
     }
 
-
-
-
     public void editTaskAllocationRule() {
         waitAndClick("50", SelectorType.LINKTEXT);
         selectRandomRadioBtnFromDataTable();
