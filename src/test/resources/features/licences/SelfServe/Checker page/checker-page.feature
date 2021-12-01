@@ -1,4 +1,5 @@
 @ss_regression
+@checker-page
 
 Feature: User should be able to view the checker page before registering as a Self Service user
 

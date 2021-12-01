@@ -1,17 +1,21 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class TransportManagerJourney extends BasePage {
 
@@ -42,9 +46,14 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void addTransportManagerDetails()  {
+        try {
+            accessibilityScanner();
+        } catch (IllegalBrowserException | IOException e) {
+            e.printStackTrace();
+        }
         //Add Personal Details
         String birthPlace = world.createApplication.getTransportManagerTown();
-        String postCode = world.createApplication.getTransportManagerPostCode();
+        String postCode = "NG1 6LP";
 
         HashMap<String, String> dob;
         dob = world.globalMethods.date.getDateHashMap(0, 0, -25);
@@ -53,19 +62,17 @@ public class TransportManagerJourney extends BasePage {
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'External')]", SelectorType.XPATH);
-        world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        findSelectAllRadioButtonsByValue("Y");
 
         //Add Home Address
         enterText("postcodeInput1", SelectorType.ID, postCode);
         clickByName("homeAddress[searchPostcode][search]");
-        waitAndClick("homeAddress[searchPostcode][addresses]", SelectorType.ID);
-        selectValueFromDropDownByIndex("homeAddress[searchPostcode][addresses]", SelectorType.ID, 1);
+        waitAndSelectByIndex("Select an address","//*[@id='selectAddress1']",SelectorType.XPATH, 1);
 
         //Add Work Address
         waitAndEnterText("postcodeInput2", SelectorType.ID, postCode);
         waitAndClick("workAddress[searchPostcode][search]", SelectorType.ID);
-        waitAndClick("workAddress[searchPostcode][addresses]", SelectorType.ID);
-        selectValueFromDropDownByIndex("workAddress[searchPostcode][addresses]", SelectorType.ID, 1);
+        waitAndSelectByIndex("Select an address","//*[@id='selectAddress2']",SelectorType.XPATH, 1);
 
         //Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);
@@ -108,6 +115,8 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("//*[@id='lic-no']", SelectorType.XPATH, "PD263849");
         waitAndEnterText("//*[@id='holderName']", SelectorType.XPATH, "PD263849");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
+        waitAndClick("form-actions[submit]",SelectorType.ID);
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
     public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) {
@@ -215,5 +224,27 @@ public class TransportManagerJourney extends BasePage {
     public void assertTMDetailsIncomplete() {
         Assert.assertTrue(isElementPresent("//span[contains(text(),'Incomplete')]", SelectorType.XPATH));
         Assert.assertTrue(isLinkPresent("Provide details", 10));
+    }
+
+    public void submitTMApplicationAndSignWithVerify(){
+        addTransportManagerDetails();
+        waitForTitleToBePresent("Check your answers");
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        waitForTitleToBePresent("Declaration");
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        world.UIJourney.signWithVerify();
+        waitAndClick("//*[contains(text(),'Finish')]",SelectorType.XPATH);
+    }
+
+    public void submitTMApplicationPrintAndSign(){
+        addTransportManagerDetails();
+        waitForTitleToBePresent("Check your answers");
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        waitForTitleToBePresent("Declaration");
+        waitAndClick("//*[contains(text(),'Print')]",SelectorType.XPATH);
+        waitAndClick("form-actions[submit]",SelectorType.ID);
+        clickByLinkText("Back to Transport Managers");
+        waitForTitleToBePresent("Transport Managers");
+        waitAndClick("form-actions[saveAndContinue]",SelectorType.ID);
     }
 }

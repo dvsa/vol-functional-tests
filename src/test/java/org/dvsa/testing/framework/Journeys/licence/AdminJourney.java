@@ -1,42 +1,87 @@
 package org.dvsa.testing.framework.Journeys.licence;
-
 import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.faker.FakerUtils;
-import cucumber.api.java.eo.Se;
-import cucumber.api.java8.Pa;
-import org.apache.poi.ss.formula.functions.Na;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.jetbrains.annotations.NotNull;
-
-import java.time.LocalDate;
-import java.util.Arrays;
+import org.apache.commons.lang3.RandomStringUtils;
 import java.util.HashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 
 public class AdminJourney extends BasePage {
     private World world;
     private FakerUtils faker = new FakerUtils();
     private String description;
     private String ownerName;
+    private String abbreviation;
+    public String alphaSplit = "Assign operator tasks starting with these letters";
 
     Dates date = new Dates(org.joda.time.LocalDate::new);
 
-    public String getDescription(){
-    return description;
-    }
+    public String getDescription() {return description;}
 
     public String getOwnerName() {return ownerName;}
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public String getAbbreviation() {return abbreviation;}
+
+    public void setOwnerName(String ownerName) {this.ownerName = ownerName;}
+
+    public AdminJourney(World world) {this.world = world;}
+
+    public void clickAdminMenuBtn() {waitAndClick("//ul[@class='admin']//li", SelectorType.XPATH);}
+
+    public void generateCompany() {
+        description = faker.generateCompanyName();
     }
 
-    public AdminJourney(World world){
-        this.world = world;
+    public void generateAbbreviation() {abbreviation = RandomStringUtils.randomAlphabetic(2).toUpperCase();}
+
+    public void navigateToTaskAllocationRules() {
+        clickAdminMenuBtn();
+        waitAndClick("Task allocation rules", SelectorType.LINKTEXT);
+    }
+
+    public void addTaskAllocationRule() {
+        waitAndClick("add", SelectorType.ID);
+        selectValueFromDropDown("category", SelectorType.ID, "Application");
+        waitForElementToBeClickable("//input[@class='govuk-radios__input']", SelectorType.XPATH);
+        waitAndClick("(//input[@type='radio'])[3]", SelectorType.XPATH);
+        selectRandomValueFromDropDown("trafficArea");
+        selectDropDownValues();
+    }
+
+    public void editTaskAllocationRule() {
+        waitAndClick("50", SelectorType.LINKTEXT);
+        selectRandomRadioBtnFromDataTable();
+        waitAndClick("edit", SelectorType.ID);
+        if (isTextPresent(alphaSplit)) {
+            generateAbbreviation();
+            selectRandomRadioBtnFromDataTable();
+            waitAndClick("editAlphasplit", SelectorType.ID);
+            waitForElementToBeClickable("taskAlphaSplit[letters]", SelectorType.ID);
+            replaceText("taskAlphaSplit[letters]", SelectorType.ID, abbreviation);
+            waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitForElementToBeClickable("addAlphaSplit", SelectorType.ID);
+            waitForTextToBePresent("Alpha split updated");
+        } else {
+            {
+               selectDropDownValues();
+            }
+        }
+    }
+
+    public void selectDropDownValues() {
+        selectValueFromDropDown("team", SelectorType.ID, "System Team");
+        waitForElementToBeClickable("user", SelectorType.ID);
+        String ownerName = selectRandomValueFromDropDown("user");
+        setOwnerName(ownerName);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick("50", SelectorType.LINKTEXT);
+    }
+
+    public void deleteTaskAllocationRule() {
+        waitAndClick("(//input[@type='checkbox'])[2]", SelectorType.XPATH);
+        waitAndClick("delete", SelectorType.ID);
+        waitAndClick("form-actions[confirm]", SelectorType.ID);
     }
 
     public void selectSystemTeam() {
@@ -63,10 +108,6 @@ public class AdminJourney extends BasePage {
         waitAndClick("assignedToTeam", SelectorType.ID);
         selectSystemTeam();
         clickById("form-actions[submit]");
-    }
-
-    public void generateCompany() {
-        description = faker.generateCompanyName();
     }
 
     public void editTask() {
@@ -118,3 +159,5 @@ public class AdminJourney extends BasePage {
     }
 }
 
+
+ }
