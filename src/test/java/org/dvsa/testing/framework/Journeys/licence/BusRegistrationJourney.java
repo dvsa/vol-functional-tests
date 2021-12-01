@@ -169,7 +169,7 @@ public class BusRegistrationJourney extends BasePage {
             if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
                 System.out.println("I AM HERE+++++++++++++++++++++++++++++");
 //                S3.downloadObject(world.configuration.getBucketName(), path, "/var/scratch/".concat(ebsrFileName));
-                File file = new File("/var/scratch/".concat(ebsrFileName));
+                File file = new File("/var/scratch/testing.txt");
                boolean e = file.canWrite();
                 System.out.println("===========" + e);
                 System.out.println(System.getProperty("user.dir") + "=============");
