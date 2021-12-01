@@ -29,7 +29,9 @@ public class DataGenerator extends BasePage {
         this.operatorFamilyName = operatorFamilyName;
     }
 
-    public String getOperatorUser() { return operatorUser; }
+    public String getOperatorUser() {
+        return operatorUser;
+    }
 
     public void setOperatorUser(String operatorUser) {
         this.operatorUser = operatorUser;
@@ -43,7 +45,9 @@ public class DataGenerator extends BasePage {
         this.operatorUserEmail = operatorUserEmail;
     }
 
-    public DataGenerator(World world) {this.world = world;}
+    public DataGenerator(World world) {
+        this.world = world;
+    }
 
     public void generateOperatorValues() {
         FakerUtils faker = new FakerUtils();
