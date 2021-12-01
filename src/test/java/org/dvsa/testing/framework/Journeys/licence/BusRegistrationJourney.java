@@ -170,7 +170,7 @@ public class BusRegistrationJourney extends BasePage {
                 System.out.println("I AM HERE+++++++++++++++++++++++++++++");
                 S3.downloadObject(world.configuration.getBucketName(), path, "/var/scratch/EBSR".concat(ebsrFileName));
                 System.out.println("DOWNLOADED+++++++++++++++++++++++++");
-                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "var/scratch/EBSR/".concat(ebsrFileName));
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "/var/scratch/EBSR/".concat(ebsrFileName));
                 System.out.println("ENTERED+++++++++++++");
             }
         }
