@@ -4,7 +4,6 @@ import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
-import apiCalls.enums.VehicleType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -31,6 +30,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class PublicationsRelatedSteps extends BasePage implements En {
     private final World world;
 
+    private final String fiftyResultsPerPageLink = "//li/a[text()='50']";
+    private final String publicationDatesColumn = "//table/tbody/tr/td[5]";
+    private final String publicationNumberColumn = "//table/tbody/tr[*]/td[2]";
+    private final String radioButtonsColumn = "//*[@type='radio']";
+
     public PublicationsRelatedSteps(World world) {
         this.world = world;
     }
@@ -41,7 +45,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
     }
 
-    @When("i generate {string} publications and check their docman link")
+    @When("i generate {int} publications and check their docman link")
     public void iGeneratePublicationsAndCheckTheirDocmanLink(Integer noOfDifferentLicences) {
         String currentPubNo;
         int missingLinks = 0;
@@ -50,18 +54,18 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             List<WebElement> radioButtons;
             List<WebElement> publicationNumbers;
 
-            publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr[*]/td[2]");
+            publicationNumbers = show50ResultsAndUpdateWebElementsList(publicationNumberColumn);
             currentPubNo = publicationNumbers.get(i).getText();
 
-            if (Browser.navigate().findElements(By.linkText(currentPubNo)).size() == 0 || Browser.navigate().findElements(By.xpath(String.format("//*[contains(text(),%s)]",currentPubNo))).size()>1) {
+            if (size(currentPubNo, SelectorType.LINKTEXT) == 0 || size(String.format("//*[contains(text(),%s)]", currentPubNo), SelectorType.XPATH) > 1) {
 
-                radioButtons = Browser.navigate().findElements(By.xpath("//*[@type='radio']"));
+                radioButtons = findElements(radioButtonsColumn, SelectorType.XPATH);
                 radioButtons.get(i).click();
 
                 waitAndClick("//*[@id='generate']", SelectorType.XPATH);
                 waitForTextToBePresent("Publication was generated, a new publication was also created");
 
-                radioButtons = show50ResultsAndUpdateWebElementsList("//*[@type='radio']");
+                radioButtons = show50ResultsAndUpdateWebElementsList(radioButtonsColumn);
 
                 clickByLinkText(currentPubNo);
                 waitForTextToBePresent("Open document");
@@ -72,7 +76,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
                 click("//*[contains(text(),'Close')]",SelectorType.XPATH);
 
-                waitForElementToBeClickable("//*[@type='radio']",SelectorType.XPATH);
+                waitForElementToBeClickable(radioButtonsColumn, SelectorType.XPATH);
                 radioButtons.get(i + 1).click();
                 waitAndClick("//*[@id='publish']", SelectorType.XPATH);
                 waitForTextToBePresent("Update successful");
@@ -94,19 +98,19 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             List<WebElement> radioButtons;
             List<WebElement> publicationNumbers;
 
-            publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr[*]/td[2]");
+            publicationNumbers = show50ResultsAndUpdateWebElementsList(publicationNumberColumn);
             currentPubNo = publicationNumbers.get(i).getText();
 
-            if (Browser.navigate().findElements(By.linkText(currentPubNo)).size() == 0 || Browser.navigate().findElements(By.xpath(String.format("//*[contains(text(),%s)]", currentPubNo))).size() > 1) {
+            if (size(currentPubNo, SelectorType.LINKTEXT) == 0 || size(String.format("//*[contains(text(),%s)]", currentPubNo), SelectorType.XPATH) > 1) {
 
-                radioButtons = Browser.navigate().findElements(By.xpath("//*[@type='radio']"));
+                radioButtons = findElements(radioButtonsColumn, SelectorType.XPATH);
                 radioButtons.get(i).click();
 
                 waitAndClick("//*[@id='generate']", SelectorType.XPATH);
                 waitForTextToBePresent("Publication was generated, a new publication was also created");
 
-                radioButtons = show50ResultsAndUpdateWebElementsList("//*[@type='radio']");
-                List<WebElement> publicationDates = Browser.navigate().findElements(By.xpath("//table/tbody/tr/td[5]"));
+                radioButtons = show50ResultsAndUpdateWebElementsList(radioButtonsColumn);
+                List<WebElement> publicationDates = findElements(publicationDatesColumn, SelectorType.XPATH);
 
                 publishedDate = publicationDates.get(i + 1).getText();
                 radioButtons.get(i + 1).click();
@@ -126,13 +130,13 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 click("//*[@id='filter']", SelectorType.XPATH);
 
                 // Increasing table if possible
-                show50ResultsAndUpdateWebElementsList("//table/tbody/tr/td[2]");
+                show50ResultsAndUpdateWebElementsList(publicationNumberColumn);
                 int pageNumber = 1;
                 boolean kickOut = true;
                 //Start looping over pages here
                 while (kickOut) {
                     // Storing numbers
-                    publicationNumbers = Browser.navigate().findElements(By.xpath("//table/tbody/tr/td[2]"));
+                    publicationNumbers = findElements(publicationNumberColumn, SelectorType.XPATH);
 
                     // Changing into an array with the element's text
                     List<String> textList = new ArrayList<>(publicationNumbers.size());
@@ -141,7 +145,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                     }
 
                     if (textList.contains(currentPubNo)) {
-                        assertTrue(Browser.navigate().findElements(By.linkText(currentPubNo)).size() != 0);
+                        assertTrue(findElements(currentPubNo, SelectorType.LINKTEXT).size() != 0);
                         kickOut = false;
                     } else {
                         pageNumber++;
@@ -160,7 +164,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
     @Then("the corresponding publication is generated and published")
     public void theCorrespondingPublicationIsGeneratedAndPublished() {
         world.internalNavigation.navigateToAdminPublication();
-        click("//li/a[contains(text(),'25')]", SelectorType.XPATH);
+        click(fiftyResultsPerPageLink, SelectorType.XPATH);
         String trafficArea = ParseUtils.parseTrafficArea(world.createApplication.getTrafficArea());
         String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
         String radioButton = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
@@ -168,7 +172,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         click(radioButton, SelectorType.XPATH);
         click("generate", SelectorType.ID);
         waitForTextToBePresent("Publication was generated, a new publication was also created");
-        click("//li/a[contains(text(),'25')]", SelectorType.XPATH);
+        click(fiftyResultsPerPageLink, SelectorType.XPATH);
         String matchingRadioButton = String.format("//tr/td/label/input[@value='%s']", radioButtonValue);
         click(matchingRadioButton, SelectorType.XPATH);
         click("publish", SelectorType.ID);
@@ -184,29 +188,16 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     };
 
-
     @And("the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
     public void thePublicationTextIsCorrectWithHGVsAndLGVs(String publicationType, String variationType, String hgvs, String lgvs) {
         WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]/p[3]", world.applicationDetails.getLicenceNumber(), publicationType), SelectorType.XPATH);
         String adaptiveVehicleTypeText = world.licenceCreation.isAGoodsInternationalLicence() ? "Heavy Goods Vehicle" : "vehicle";
-        String correspondenceAddress = String.format("%s, %s, %s, %s, %s, %s ",
-                world.createApplication.getCorrespondenceAddressLine1(),
-                world.createApplication.getCorrespondenceAddressLine2(),
-                world.createApplication.getCorrespondenceAddressLine3(),
-                world.createApplication.getCorrespondenceAddressLine4(),
-                world.createApplication.getCorrespondenceTown(),
-                world.createApplication.getCorrespondencePostCode());
+        String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
 
         StringBuilder expectedText = new StringBuilder("");
 
         if (variationType.contains("HGV")) {
-            String operatingCentreAddress = String.format("%s, %s, %s, %s, %s, %s",
-                    world.createApplication.getOperatingCentreAddressLine1(),
-                    world.createApplication.getOperatingCentreAddressLine2(),
-                    world.createApplication.getOperatingCentreAddressLine3(),
-                    world.createApplication.getOperatingCentreAddressLine4(),
-                    world.createApplication.getOperatingCentreTown(),
-                    world.createApplication.getOperatingCentrePostCode());
+            String operatingCentreAddress = world.formattedStrings.getFullCommaOperatingAddress();
             String hgvIncreaseText = String.format("Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) ",
                     operatingCentreAddress,
                     hgvs,
@@ -340,12 +331,12 @@ public class PublicationsRelatedSteps extends BasePage implements En {
     }
 
     public List<WebElement> show50ResultsAndUpdateWebElementsList(String webElementsXpath)  {
-        List<WebElement> webElements = Browser.navigate().findElements(By.xpath(webElementsXpath));
-        if (Browser.navigate().findElements(By.xpath("//li//a[contains(text(),'50')]")).size() != 0) {
-            click("//li//a[contains(text(),'50')]", SelectorType.XPATH);
-            webElements = Browser.navigate().findElements(By.xpath(webElementsXpath));
-            while (webElements.size()<=10) {
-                webElements = Browser.navigate().findElements(By.xpath(webElementsXpath));
+        List<WebElement> webElements = findElements(webElementsXpath, SelectorType.XPATH);
+        if (size(fiftyResultsPerPageLink, SelectorType.XPATH) != 0) {
+            click(fiftyResultsPerPageLink, SelectorType.XPATH);
+            webElements = findElements(webElementsXpath, SelectorType.XPATH);
+            while (webElements.size() <= 10) {
+                webElements = findElements(webElementsXpath, SelectorType.XPATH);
             }
         }
         return webElements;
