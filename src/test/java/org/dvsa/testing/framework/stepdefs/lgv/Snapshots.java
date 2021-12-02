@@ -67,14 +67,7 @@ public class Snapshots extends BasePage {
 
     @Then("the total number of vehicles title still displays vehicles and the operating centre is still present")
     public void theTotalNumberOfVehiclesTitleStillDisplaysVehiclesAndTheOperatingCentreIsStillPresent() {
-        String operatingCentreAddress = String.format("%s, %s, %s, %s, %s, %s",
-                world.createApplication.getOperatingCentreAddressLine1(),
-                world.createApplication.getOperatingCentreAddressLine2(),
-                world.createApplication.getOperatingCentreAddressLine3(),
-                world.createApplication.getOperatingCentreAddressLine4(),
-                world.createApplication.getOperatingCentreTown(),
-                world.createApplication.getOperatingCentrePostCode()
-        );
+        String operatingCentreAddress = world.formattedStrings.getFullCommaOperatingAddress();
         isTextPresent("6. Operating centres");
         isTextPresent(world.createApplication.getOperatingCentreAddressLine1()
                 + ", " + world.createApplication.getOperatingCentreTown());
