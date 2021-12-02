@@ -1,13 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.dates.Dates;
 import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
-import apiCalls.enums.TrafficArea;
+import apiCalls.enums.VehicleType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Utils.Generic.ParseUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.jupiter.api.Assertions;
@@ -22,6 +24,7 @@ import java.util.List;
 import static org.apache.maven.shared.utils.StringUtils.capitalise;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -41,8 +44,6 @@ public class PublicationsRelatedSteps extends BasePage implements En {
     @When("i generate {string} publications and check their docman link")
     public void iGeneratePublicationsAndCheckTheirDocmanLink(Integer noOfDifferentLicences) {
         String currentPubNo;
-        String linkedPubNo;
-        String publishedDate;
         int missingLinks = 0;
         for (int i = 0; i < noOfDifferentLicences; i++) {
 
@@ -87,7 +88,6 @@ public class PublicationsRelatedSteps extends BasePage implements En {
     @And("i generate and publish all {int} publications")
     public void iGenerateAndPublishAllPublications(Integer noOfDifferentLicences) {
         String currentPubNo;
-        String linkedPubNo;
         String publishedDate;
         for (int i = 0; i < noOfDifferentLicences; i++) {
             // Pending Page
@@ -118,7 +118,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 waitAndClick("//*[@id='menu-admin-dashboard/admin-publication/published']", SelectorType.XPATH);
 
                 String[] dateArray = publishedDate.split("/");
-                String month = returnMonth(dateArray[1]);
+                String month = ParseUtils.parseMonth(dateArray[1]);
                 String year = dateArray[2];
 
                 selectValueFromDropDown("//*[@name='pubDate[month]']", SelectorType.XPATH, month);
@@ -126,7 +126,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 click("//*[@id='filter']", SelectorType.XPATH);
 
                 // Increasing table if possible
-                publicationNumbers = show50ResultsAndUpdateWebElementsList("//table/tbody/tr/td[2]");
+                show50ResultsAndUpdateWebElementsList("//table/tbody/tr/td[2]");
                 int pageNumber = 1;
                 boolean kickOut = true;
                 //Start looping over pages here
@@ -160,15 +160,15 @@ public class PublicationsRelatedSteps extends BasePage implements En {
     @Then("the corresponding publication is generated and published")
     public void theCorrespondingPublicationIsGeneratedAndPublished() {
         world.internalNavigation.navigateToAdminPublication();
-        clickByLinkText("25");
-        String trafficArea = getTrafficArea(world.createApplication.getTrafficArea());
+        click("//li/a[contains(text(),'25')]", SelectorType.XPATH);
+        String trafficArea = ParseUtils.parseTrafficArea(world.createApplication.getTrafficArea());
         String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
         String radioButton = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
         String radioButtonValue = getAttribute(radioButton, SelectorType.XPATH, "value");
         click(radioButton, SelectorType.XPATH);
         click("generate", SelectorType.ID);
         waitForTextToBePresent("Publication was generated, a new publication was also created");
-        clickByLinkText("25");
+        click("//li/a[contains(text(),'25')]", SelectorType.XPATH);
         String matchingRadioButton = String.format("//tr/td/label/input[@value='%s']", radioButtonValue);
         click(matchingRadioButton, SelectorType.XPATH);
         click("publish", SelectorType.ID);
@@ -177,12 +177,13 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
     @Then("^the publication is visible via self serve search$")
     public void thePublicationIsVisibleViaSelfServeSearch() {
+        String licenceNumber = world.applicationDetails.getLicenceNumber();
         world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
-        enterText("search", SelectorType.ID, world.applicationDetails.getLicenceNumber());
-        String licenceNo = world.applicationDetails.getLicenceNumber();
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNo, 120, "New Variation publication wasn't present. Possibly the backend didn't process in time.");
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNo), SelectorType.XPATH);
+        enterText("search", SelectorType.ID, licenceNumber);
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 120, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
+        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     };
+
 
     @And("the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
     public void thePublicationTextIsCorrectWithHGVsAndLGVs(String publicationType, String variationType, String hgvs, String lgvs) {
@@ -235,6 +236,96 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         assertEquals(getText("//li/dt[contains(text(),'Total Number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
 
+
+    @And("i navigate to the application publications page")
+    public void iNavigateToTheApplicationPublicationsPage() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
+        clickByLinkText("Processing");
+        waitForTextToBePresent("Category");
+        clickByLinkText("Publications");
+    }
+
+    @Then("the new application publication for LGV Only should be correct on internal")
+    public void theNewApplicationPublicationForLGVOnlyShouldBeCorrectOnInternal() {
+        Dates date = new Dates(org.joda.time.LocalDate::new);
+        String todayDate = date.getFormattedDate(0, 0, 0, "dd/MM/yyyy");
+        clickByLinkText(todayDate);
+        waitForTextToBePresent("Edit publication");
+        checkLGVOnlyTextBeforePublicationOnInternal();
+    }
+
+    @And("the new application publication text for LGV Only should be correct on self serve")
+    public void theNewApplicationPublicationTextForLGVOnlyShouldBeCorrectOnSelfServe() {
+        checkGoodsLicencePublicationTextOnSelfServe("New Application");
+    }
+
+    @And("the new application publication text for Non SI Goods should be correct on self serve")
+    public void theNewApplicationPublicationTextForNonGoodsSIShouldBeCorrectOnSelfServe() {
+        checkGoodsLicencePublicationTextOnSelfServe("New Application");
+    }
+
+    @And("the application granted publication text for LGV Only should be correct on self serve")
+    public void theApplicationGrantedPublicationTextForLGVOnlyShouldBeCorrectOnSelfServe() {
+        checkGoodsLicencePublicationTextOnSelfServe("Application Granted");
+    }
+
+    @And("the application refused publication text for LGV Only should be correct on self serve")
+    public void theApplicationRefusedPublicationTextForLGVOnlyShouldBeCorrectOnSelfServe() {
+        checkGoodsLicencePublicationTextOnSelfServe("Application Refused");
+    }
+
+    @And("the application withdrawn publication text for LGV Only should be correct on self serve")
+    public void theApplicationWithdrawnPublicationTextForLGVOnlyShouldBeCorrectOnSelfServe() {
+        checkGoodsLicencePublicationTextOnSelfServe("Application Withdrawn");
+    }
+
+    @And("the licence view of the publication for LGV Only is correct on self serve")
+    public void theLicenceViewOfThePublicationForLGVOnlyIsCorrectOnSelfServe() {
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
+
+        String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
+        assertTrue(operatingCentreSection.contains("The table is empty"));
+
+        String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
+        assertTrue(authorisationSection.contains("Total number of Light Goods Vehicles"));
+        assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority())));
+        assertFalse(authorisationSection.contains("vehicles"));
+        assertFalse(authorisationSection.contains("trailers"));
+    }
+
+
+    @And("the licence view of the publication for PSV SI is correct on self serve")
+    public void theLicenceViewOfThePublicationForPSVSIIsCorrectOnSelfServe() {
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
+
+        String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
+        assertTrue(operatingCentreSection.contains(world.formattedStrings.getFullCommaOperatingAddress()));
+        assertTrue(operatingCentreSection.contains("Vehicles"));
+
+        String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
+        assertTrue(authorisationSection.contains("Total number of vehicles"));
+        assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority())));
+        assertFalse(authorisationSection.contains("trailers"));
+    }
+
+    @And("the licence view of the publication for Goods SN is correct on self serve")
+    public void theLicenceViewOfThePublicationForGoodsSNIsCorrectOnSelfServe() {
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
+
+        String operatingCentreSection = getText("//h4[contains(text(),'Operating centres')]/../..", SelectorType.XPATH);
+        assertTrue(operatingCentreSection.contains(world.formattedStrings.getFullCommaOperatingAddress()));
+        assertTrue(operatingCentreSection.contains("Vehicles"));
+        assertTrue(operatingCentreSection.contains("Trailers"));
+
+        String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
+        assertTrue(authorisationSection.contains("Total number of vehicles"));
+        assertTrue(authorisationSection.contains("Total number of trailers"));
+        assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority())));
+        assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority())));
+    }
+
     @Then("^the out of objection date is present on the application (\\d+) days after the publication date$")
     public void theOutOfObjectionDateIsPresentOnTheApplication(Integer arg0) {
         world.internalNavigation.logInAndNavigateToApplicationProcessingPage(true);
@@ -259,84 +350,47 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         }
         return webElements;
     }
-    public static String returnMonth(String monthNumber) {
-        String monthName;
-        switch (monthNumber) {
-            case "01":
-                monthName = "January";
-                break;
-            case "02":
-                monthName = "February";
-                break;
-            case "03":
-                monthName = "March";
-                break;
-            case "04":
-                monthName = "April";
-                break;
-            case "05":
-                monthName = "May";
-                break;
-            case "06":
-                monthName = "June";
-                break;
-            case "07":
-                monthName = "July";
-                break;
-            case "08":
-                monthName = "August";
-                break;
-            case "09":
-                monthName = "September";
-                break;
-            case "10":
-                monthName = "October";
-                break;
-            case "11":
-                monthName = "November";
-                break;
-            case "12":
-                monthName = "December";
-                break;
-            default:
-                monthName = "Date Not Found";
-        }
-        return monthName;
+
+    public void checkLGVOnlyTextBeforePublicationOnInternal() {
+        String publicationText = getText("//*[@name='fields[text3]']", SelectorType.XPATH);
+        String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
+        String expectedAuthorisationText = String.format("Authorisation: %s Light goods vehicle(s).", world.createApplication.getTotalOperatingCentreLgvAuthority());
+        String transportManagerName = "Transport Manager(s): ".concat(world.formattedStrings.getFullTransportManagerName());
+        assertTrue(publicationText.contains(correspondenceAddress));
+        assertTrue(publicationText.contains(expectedAuthorisationText));
+        assertTrue(publicationText.contains(transportManagerName));
     }
 
-    public static String getTrafficArea(TrafficArea trafficArea) {
-        String trafficAreaString;
-        switch (trafficArea) {
-            case NORTH_EAST:
-                trafficAreaString = "North East of England";
-                break;
-            case NORTH_WEST:
-                trafficAreaString = "North West of England";
-                break;
-            case MIDLANDS:
-                trafficAreaString = "West Midlands";
-                break;
-            case EAST:
-                trafficAreaString = "East of England";
-                break;
-            case WALES:
-                trafficAreaString = "Wales";
-                break;
-            case WEST:
-                trafficAreaString = "West of England";
-                break;
-            case LONDON:
-                trafficAreaString = "London and the South East of England";
-                break;
-            case SCOTLAND:
-                trafficAreaString = "Scotland";
-                break;
-            case NORTHERN_IRELAND:
-                trafficAreaString = "Northern Ireland";
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + trafficArea);
+    public void checkGoodsLicencePublicationTextOnSelfServe(String applicationStatus) {
+        String publicationText = getText(
+                String.format("//li[*//a[contains(text(),'%s')] and *//p[contains(text(),'%s')]]",
+                        world.applicationDetails.getLicenceNumber(),
+                        applicationStatus), SelectorType.XPATH);
+
+        String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
+        String operatingAddress = world.formattedStrings.getFullCommaOperatingAddress();
+        String transportManagerName = "Transport Manager(s): ".concat(world.formattedStrings.getFullTransportManagerName());
+
+        String expectedAuthorisationText;
+        if (world.licenceCreation.isLGVOnlyLicence()) {
+            expectedAuthorisationText = String.format("Authorisation: %s Light goods vehicle(s).", world.createApplication.getTotalOperatingCentreLgvAuthority());
+        } else {
+            expectedAuthorisationText = String.format("Authorisation: %s vehicle(s)", world.createApplication.getTotalOperatingCentreHgvAuthority());
+            if (world.createApplication.getNoOfOperatingCentreTrailerAuthorised() != 0) {
+                expectedAuthorisationText.concat(String.format(", %s trailer(s)", world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+            }
         }
-        return trafficAreaString;
+
+        if (applicationStatus.contains("Refused") || applicationStatus.contains("Withdrawn")) {
+            assertFalse(publicationText.contains(correspondenceAddress));
+            if (!world.licenceCreation.isLGVOnlyLicence()) assertFalse(publicationText.contains(operatingAddress));
+            assertFalse(publicationText.contains(expectedAuthorisationText));
+            assertFalse(publicationText.contains(transportManagerName));
+        } else {
+            assertTrue(publicationText.contains(correspondenceAddress));
+            if (!world.licenceCreation.isLGVOnlyLicence()) assertTrue(publicationText.contains(operatingAddress));
+            assertTrue(publicationText.contains(expectedAuthorisationText));
+            assertTrue(publicationText.contains(transportManagerName));
+        }
     }
 }

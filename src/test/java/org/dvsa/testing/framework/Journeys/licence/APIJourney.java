@@ -46,7 +46,7 @@ public class APIJourney {
         world.createApplication.addAddressDetails();
         world.createApplication.addDirectors();
         world.createApplication.submitTaxiPhv();
-        if (!world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString()))
+        if (!world.licenceCreation.isLGVOnlyLicence())
             world.createApplication.addOperatingCentre();
         world.createApplication.updateOperatingCentre();
         world.createApplication.addFinancialEvidence();

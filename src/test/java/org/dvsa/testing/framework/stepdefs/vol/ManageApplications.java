@@ -190,4 +190,14 @@ public class ManageApplications {
         world.createApplication.setTotalOperatingCentreLgvAuthority(5);
         world.licenceCreation.createApplication("goods", "standard_international");
     }
+
+    @Given("I have a submitted {string} lgv only application")
+    public void iSubmittedHaveALgvOnlyApplication(String NIFlag) {
+        world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
+        world.createApplication.setTotalOperatingCentreLgvAuthority(5);
+        world.licenceCreation.createApplication("goods", "standard_international");
+        world.APIJourney.submitApplication();
+    }
 }

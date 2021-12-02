@@ -91,4 +91,8 @@ public class LicenceCreation {
         return world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString());
     }
 
+    public boolean isLGVOnlyLicence() {
+        return world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString());
+    }
+
 }

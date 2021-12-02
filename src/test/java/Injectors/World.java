@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.licence.AdminJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
+import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 
 public class World {
@@ -19,6 +20,7 @@ public class World {
 
     public Configuration configuration;
     public DBUtils DBUtils;
+    public FormattedStrings formattedStrings;
     public GenericUtils genericUtils;
     public GlobalMethods globalMethods;
     public LicenceCreation licenceCreation;
