@@ -65,6 +65,10 @@ public class LicenceCreation {
         createLicence(operatorType, licenceType);
     }
 
+    public void createLGVOnlyApplication() {
+
+    }
+
     public void createNILicence(String operatorType, String licenceType) {
         world.createApplication.setNiFlag("Y");
         createLicence(operatorType, licenceType);

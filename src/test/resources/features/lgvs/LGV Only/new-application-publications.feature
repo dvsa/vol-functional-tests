@@ -12,7 +12,7 @@ Feature: Publications display the right LGV related information on LGV only lice
     And the new application publication text for LGV Only should be correct on self serve
 
   Scenario: A submitted Goods SN application displays the correct information upon publishing
-    Given I have submitted a "goods" "standard_national" application
+    Given I have a submitted "goods" "standard_national" application
     When the corresponding publication is generated and published
     Then the publication is visible via self serve search
     And the new application publication text for Non SI Goods should be correct on self serve

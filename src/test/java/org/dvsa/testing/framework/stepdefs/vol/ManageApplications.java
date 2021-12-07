@@ -46,8 +46,8 @@ public class ManageApplications {
         world.licenceCreation.createSubmittedApplicationWithVehicles(operatorType, licenceType, "5");
     }
 
-    @Given("I have submitted a {string} {string} application")
-    public void iHaveSubmittedApplication(String operatorType, String licenceType) {
+    @Given("I have a submitted {string} {string} application")
+    public void iHaveASubmittedApplication(String operatorType, String licenceType) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createSubmittedApplication(operatorType, licenceType);
     }
@@ -188,16 +188,33 @@ public class ManageApplications {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         world.createApplication.setTotalOperatingCentreLgvAuthority(5);
+        world.createApplication.setNoOfAddedHgvVehicles(0);
+        world.createApplication.setNoOfAddedLgvVehicles(5);
         world.licenceCreation.createApplication("goods", "standard_international");
     }
 
     @Given("I have a submitted {string} lgv only application")
-    public void iSubmittedHaveALgvOnlyApplication(String NIFlag) {
+    public void iHaveASubmittedLgvOnlyApplication(String NIFlag) {
         world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         world.createApplication.setTotalOperatingCentreLgvAuthority(5);
+        world.createApplication.setNoOfAddedHgvVehicles(0);
+        world.createApplication.setNoOfAddedLgvVehicles(5);
         world.licenceCreation.createApplication("goods", "standard_international");
         world.APIJourney.submitApplication();
+    }
+
+    @Given("I have a valid {string} lgv only application")
+    public void iHaveAValidLgvOnlyApplication(String NIFlag) {
+        world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
+        world.createApplication.setTotalOperatingCentreLgvAuthority(5);
+        world.createApplication.setNoOfAddedHgvVehicles(0);
+        world.createApplication.setNoOfAddedLgvVehicles(5);
+        world.licenceCreation.createApplication("goods", "standard_international");
+        world.APIJourney.submitApplication();
+        world.APIJourney.grantLicenceAndPayFees();
     }
 }
