@@ -67,7 +67,7 @@ public class ManagerUsersPage extends BasePage implements En {
 
     @Then("colour of the {string} button should be green")
     public void colourOfTheAddAUserButtonShouldBeGreen(String buttonName) {
-        String buttonColour = Color.fromString(findElement(buttonName, SelectorType.NAME).getCssValue("background-color")).asHex();
+        String buttonColour = Color.fromString(findElement(String.format("//*[contains(text(),'%s')]",buttonName), SelectorType.XPATH).getCssValue("background-color")).asHex();
         Assert.assertEquals("#00823b", buttonColour);
     }
 
@@ -77,9 +77,9 @@ public class ManagerUsersPage extends BasePage implements En {
     }
 
     @Then("remove button column should be named {string}")
-    public void removeButtonColumnShouldBeNamedAction() {
+    public void removeButtonColumnShouldBeNamedAction(String column) {
         findElements(".//tr/th[4]", SelectorType.XPATH).forEach(
-                title -> Assert.assertTrue(title.getText().contains("Action")));
+                title -> Assert.assertTrue(title.getText().contains(column)));
     }
 
     @Then("user text should displaying current users")
