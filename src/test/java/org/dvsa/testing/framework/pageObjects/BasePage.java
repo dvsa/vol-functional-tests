@@ -141,7 +141,7 @@ public abstract class BasePage extends DriverUtils {
         for (int row = 0; row < rows_count; row++) {
             List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
             int columns_count = Columns_row.size();
-            for (int column = 0; column < columns_count; ) {
+            for (int column = 0; column < columns_count; ){
                 List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
                 Random random = new Random();
                 int size = options.size();
@@ -170,8 +170,6 @@ public abstract class BasePage extends DriverUtils {
         int size = button.size();
         int randomNo = random.nextInt(size);
         button.get(randomNo).click();
-        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]", typeArgument, randomNo), SelectorType.XPATH).getText();
-   
     }
 
     protected static boolean isTitlePresent(String locator, int duration) {
