@@ -6,6 +6,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
@@ -28,7 +29,7 @@ public class DirectorVariation extends BasePage {
 
     @And("i navigate to the directors page")
     public void iNavigateToTheDirectorsPage() {
-        world.selfServeNavigation.navigateToPage("licence", "Directors");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.DIRECTORS);
     }
 
     @When("^I begin adding a new director and their details$")
@@ -154,7 +155,7 @@ public class DirectorVariation extends BasePage {
         incorrectDateValues.put("day", "!@");
         incorrectDateValues.put("month", "£$");
         incorrectDateValues.put("year", "%^&*");
-        replaceDateFieldsByPartialId("dob", incorrectDateValues);
+        enterDateFieldsByPartialId("dob", incorrectDateValues);
 
         clickByXPath(directorJourney.saveAndContinue);
         waitForTextToBePresent(directorJourney.validationTitle);

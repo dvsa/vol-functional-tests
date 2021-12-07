@@ -1,10 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
-import activesupport.dates.Dates;
-import activesupport.dates.LocalDateCalendar;
 import activesupport.faker.FakerUtils;
-import activesupport.number.Int;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

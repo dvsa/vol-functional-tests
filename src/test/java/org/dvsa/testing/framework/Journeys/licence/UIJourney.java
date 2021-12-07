@@ -3,15 +3,18 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
+import activesupport.dates.Dates;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -56,25 +59,6 @@ public class UIJourney extends BasePage {
         waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.NAME);
         selectValueFromDropDownByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
         waitForPageLoad();
-    }
-
-    public void addPreviousConviction() {
-        selectValueFromDropDown("data[title]", SelectorType.ID, "Ms");
-        enterText("data[forename]", SelectorType.NAME, Str.randomWord(8));
-        enterText("data[familyName]", SelectorType.NAME, Str.randomWord(8));
-        enterText("data[notes]", SelectorType.NAME, Str.randomWord(30));
-
-        HashMap<String, String> dates;
-        dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
-
-        enterText("dob_day", SelectorType.ID, dates.get("day"));
-        enterText("dob_month", SelectorType.ID, dates.get("month"));
-        enterText("dob_year", SelectorType.ID, dates.get("year"));
-
-        enterText("data[categoryText]", SelectorType.NAME, Str.randomWord(50));
-        enterText("data[courtFpn]", SelectorType.NAME, "Clown");
-        enterText("data[penalty]", SelectorType.NAME, "Severe");
-        clickByName("form-actions[submit]");
     }
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
@@ -246,7 +230,7 @@ public class UIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
-        world.selfServeNavigation.navigateToPage("variation", "Financial evidence");
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
         click(uploadLaterRadioButton, SelectorType.XPATH);
         click(saveButton, SelectorType.XPATH);
     }
@@ -261,7 +245,7 @@ public class UIJourney extends BasePage {
     }
 
     public void signDeclarationForVariation()  {
-        world.selfServeNavigation.navigateToPage("variation", "Review and declarations");
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (size("//*[@id='submitAndPay']", SelectorType.XPATH) != 0) {
             click("//*[@id='submitAndPay']", SelectorType.XPATH);
@@ -287,18 +271,6 @@ public class UIJourney extends BasePage {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
         waitForTextToBePresent("Licence details");
         Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), arg0.toUpperCase());
-    }
-
-    public void addDisc()  {
-        clickByLinkText("Home");
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
-        clickByLinkText("Licence discs");
-        waitAndClick("//*[@id='add']", SelectorType.XPATH);
-        waitAndEnterText("data[additionalDiscs]", SelectorType.ID, "2");
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
-        world.updateLicence.printLicenceDiscs();
-        clickByLinkText("Home");
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
     public void closeCase()  {
@@ -367,9 +339,8 @@ public class UIJourney extends BasePage {
         click("//*[@id='menu-case_hearings_appeals']", SelectorType.XPATH);
         clickByLinkText("Add Public Inquiry");
         waitForTextToBePresent("Add Traffic Commissioner agreement and legislation");
-        enterText("//*[@id='fields[agreedDate]_day']", SelectorType.XPATH, "21");
-        enterText("//*[@id='fields[agreedDate]_month']", SelectorType.XPATH, "6");
-        enterText("//*[@id='fields[agreedDate]_year']", SelectorType.XPATH, "2014");
+        HashMap<String, String> agreedDate = new Dates(LocalDate::new).getDateHashMap(0, 0, -7);
+        enterDateFieldsByPartialId("fields[agreedDate]", agreedDate);
         selectValueFromDropDownByIndex("fields[agreedByTc]", SelectorType.ID, 1);
         selectValueFromDropDown("//*[@id='fields[agreedByTcRole]']", SelectorType.XPATH, "Traffic Commissioner");
         selectValueFromDropDownByIndex("assignedCaseworker", SelectorType.ID, 1);
@@ -387,9 +358,8 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("Venue");
         selectValueFromDropDown("//*[@id='venue']", SelectorType.XPATH, "Other");
         enterText("//*[@id='venueOther']", SelectorType.XPATH, "Test");
-        enterText("//*[@id='hearingDate_day']", SelectorType.XPATH, "21");
-        enterText("//*[@id='hearingDate_month']", SelectorType.XPATH, "6");
-        enterText("//*[@id='hearingDate_year']", SelectorType.XPATH, "2014");
+        HashMap<String, String> hearingDate = new Dates(LocalDate::new).getDateHashMap(0, 0, -7);
+        enterDateFieldsByPartialId("hearingDate", hearingDate);
         selectValueFromDropDown("//*[@id='hearingDate_hour']", SelectorType.XPATH, "16");
         selectValueFromDropDown("//*[@id='hearingDate_minute']", SelectorType.XPATH, "00");
         selectValueFromDropDown("//*[@id='presidingTc']", SelectorType.XPATH, "Nick Jones");

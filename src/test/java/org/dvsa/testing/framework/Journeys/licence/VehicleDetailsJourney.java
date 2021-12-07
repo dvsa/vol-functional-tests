@@ -23,7 +23,7 @@ public class VehicleDetailsJourney extends BasePage {
             waitAndEnterText("vrm", SelectorType.ID, String.format("P%sCUX",num));
             waitAndEnterText("plated_weight", SelectorType.ID, "5000");
             waitAndClick("form-actions[submit]", SelectorType.ID);
-            if(isElementPresent("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH))
+            if (isElementPresent("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH))
             {
                 waitAndClick("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH);
                 waitAndClick("form-actions[submit]", SelectorType.ID);

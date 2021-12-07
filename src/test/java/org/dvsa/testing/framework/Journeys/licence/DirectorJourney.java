@@ -10,7 +10,6 @@ import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -97,7 +96,7 @@ public class DirectorJourney extends BasePage {
         enterText(firstNameField, SelectorType.XPATH, directorFirstName);
         enterText(lastNameField, SelectorType.XPATH, directorLastName);
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
-        replaceDateFieldsByPartialId("dob", dates);
+        enterDateFieldsByPartialId("dob", dates);
         clickByName("form-actions[submit]");
     }
 

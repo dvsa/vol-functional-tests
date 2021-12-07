@@ -86,7 +86,7 @@ public class FinancialStandingRates extends BasePage {
         click(String.format("//label[contains(text(),'%s')]", vehicleType), SelectorType.XPATH);
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate));
-        replaceDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
+        enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
         click(saveButton, SelectorType.XPATH);
         waitForElementToBePresent(successfulAddedRecordAlert);
     }
@@ -109,7 +109,7 @@ public class FinancialStandingRates extends BasePage {
         click(vehicleTypeRadio, SelectorType.XPATH);
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate + 100));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate + 100));
-        replaceDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
+        enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
         click(saveButton, SelectorType.XPATH);
         waitForElementToBePresent(successfullyEditedRecordAlert);
     }
