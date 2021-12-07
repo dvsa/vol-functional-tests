@@ -5,6 +5,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
@@ -18,11 +19,13 @@ public class PublicHolidays extends BasePage {
 
     @When("I am on the public holidays page")
     public void iAmOnThePublicHolidaysPage() {
-        world.internalNavigation.adminPageUiNavigation("Public holidays");
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.AdminNavigation(AdminOption.PUBLIC_HOLIDAY);
     }
 
     @Given("an admin adds a public holiday")
-    public void anAdminAddsAPublicHoliday() {world.adminJourney.addPublicHoliday();
+    public void anAdminAddsAPublicHoliday(){
+    world.adminJourney.addPublicHoliday();
     }
 
     @Then("that holiday should be displayed")
@@ -33,7 +36,8 @@ public class PublicHolidays extends BasePage {
     }
 
     @Given("an admin edits a public holiday")
-    public void anAdminEditsAPublicHoliday() {world.adminJourney.editPublicHoliday();
+    public void anAdminEditsAPublicHoliday() {
+        world.adminJourney.editPublicHoliday();
     }
 
     @Then("that edited holiday should be displayed")
@@ -44,7 +48,8 @@ public class PublicHolidays extends BasePage {
     }
 
     @Given("an admin deletes a public holiday")
-    public void anAdminDeletesAPublicHoliday() {world.adminJourney.deletePublicHoliday();
+    public void anAdminDeletesAPublicHoliday() {
+        world.adminJourney.deletePublicHoliday();
     }
 
     @Then("that holiday should not be displayed")

@@ -2,11 +2,15 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.system.Properties;
+import com.amazonaws.services.dynamodbv2.xspec.AddAction;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
+import org.jetbrains.annotations.NotNull;
+
 
 public class InternalNavigational extends BasePage {
 
@@ -25,6 +29,8 @@ public class InternalNavigational extends BasePage {
     }
 
     public void logInAsAdmin() {
+        if (world.updateLicence.getInternalUserId() == null)
+            world.APIJourney.createAdminUser();
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
     }
 
@@ -39,71 +45,10 @@ public class InternalNavigational extends BasePage {
         clickByLinkText("Processing");
     }
 
-    public void adminPageUiNavigation(String page) {
-        if (world.updateLicence.getInternalUserId() == null)
-            world.APIJourney.createAdminUser();
-        logInAsAdmin();
+    public void AdminNavigation(@NotNull AdminOption option) {
         click(adminDropdown, SelectorType.XPATH);
-        switch (page) {
-            case "Scanning":
-                clickByLinkText("Scanning");
-                break;
-            case "Printing":
-                clickByLinkText("Printing");
-                break;
-            case "Task allocation rules":
-                clickByLinkText("Task allocation rules");
-                break;
-            case "Public holidays":
-                clickByLinkText("Public holidays");
-                break;
-            case "Bus registrations":
-                clickByLinkText("Bus registrations");
-                break;
-            case "Continuations" :
-                clickByLinkText("Continuations");
-                break;
-            case "Your account":
-                clickByLinkText("Your account");
-                break;
-            case "System parameters":
-                clickByLinkText("System parameters");
-                break;
-            case "Permits":
-                clickByLinkText("Permits");
-                break;
-            case "Data rentention":
-                clickByLinkText("Data retention");
-                break;
-            case "User management":
-                clickByLinkText("User management");
-                break;
-            case "Publications":
-                clickByLinkText("Publications ");
-                break;
-            case "Payment processing":
-                clickByLinkText("Payment processing");
-                break;
-            case "Reports":
-                clickByLinkText("Reports");
-                break;
-            case "Feature toggle":
-                clickByLinkText("Feature toggle");
-                break;
-            case "System messages":
-                clickByLinkText("System messages");
-                break;
-            case "Content Management":
-                clickByLinkText("Content management");
-                break;
-            case "Fee rates":
-                clickByLinkText("Fee rates");
-                break;
-            case "Financial standing rates":
-                clickByLinkText("Financial standing rates");
-                waitForTitleToBePresent(financialStandingTitle);
-                break;
-        }
+        clickByLinkText(option.toString());
+        waitForTitleToBePresent(option.toString());
     }
 
     public void loginAndGetApplication(boolean variation) {

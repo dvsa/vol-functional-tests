@@ -6,6 +6,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
@@ -71,7 +72,7 @@ public class FinancialStandingRates extends BasePage {
 
     @When("i am on the financial standing rates page")
     public void iAmOnTheFinancialStandingRatesPage() {
-       world.internalNavigation.adminPageUiNavigation("Financial standing rates");
+     world.internalNavigation.AdminNavigation(AdminOption.FINANCIAL_STANDING_RATES);
     }
 
     @When("i add a {string} {string} {string} financial standing rate")
