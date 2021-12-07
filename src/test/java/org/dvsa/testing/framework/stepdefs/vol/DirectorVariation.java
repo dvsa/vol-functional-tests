@@ -143,7 +143,7 @@ public class DirectorVariation extends BasePage {
     @When("I wrongly fill in and submit the add a director page")
     public void whenIWronglyFillInAndSubmitTheAddADirectorPage() {
         clickByXPath(directorJourney.addButton);
-        waitForTitleToBePresent(directorJourney.directorDetailsTitle);
+        waitForTitleToBePresent(directorJourney.directorVariationDetailsTitle);
         selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
 
         String incorrectNameValue = "!@£$%^";

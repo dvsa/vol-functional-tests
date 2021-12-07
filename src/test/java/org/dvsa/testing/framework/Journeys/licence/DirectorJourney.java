@@ -62,7 +62,7 @@ public class DirectorJourney extends BasePage {
     public String receivershipValidation = "Receivership: Choose an option";
     public String administrationValidation = "Administration: Choose an option";
     public String disqualifiedValidation = "Disqualified: Choose an option";
-    public String convictionsAndPenaltiesValidation = "validation message not decided yet";
+    public String convictionsAndPenaltiesValidation = "Value is required";
 
 
     public DirectorJourney(World world){
