@@ -506,7 +506,6 @@ public abstract class BasePage extends DriverUtils {
         replaceText(regex.concat("_year"), SelectorType.ID, hashMapDate.get("year"));
     }
 
-
     public void clickAllCheckboxes() {
         getDriver().findElements(By.xpath("//*[@type='checkbox']")).forEach(WebElement::click);
     }
