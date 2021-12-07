@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Utils.Generic;
 import Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.enums.TrafficArea;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import java.util.HashMap;
@@ -98,7 +99,7 @@ public class DataGenerator extends BasePage {
         setOperatorAddressLine1(faker.generateAddress().get("addressLine1"));
         setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
         setOperatorTown(faker.generateAddress().get("town"));
-        setOperatorPostCode(faker.getRandomRealUKPostcode());
+        setOperatorPostCode(TrafficArea.getPostCode(TrafficArea.MIDLANDS));
         this.world = world;
     }
 
