@@ -22,8 +22,7 @@ public class PublicHolidays extends BasePage {
     }
 
     @Given("an admin adds a public holiday")
-    public void anAdminAddsAPublicHoliday() {
-        world.adminJourney.addPublicHoliday();
+    public void anAdminAddsAPublicHoliday() {world.adminJourney.addPublicHoliday();
     }
 
     @Then("that holiday should be displayed")
@@ -34,8 +33,7 @@ public class PublicHolidays extends BasePage {
     }
 
     @Given("an admin edits a public holiday")
-    public void anAdminEditsAPublicHoliday() {
-     world.adminJourney.editPublicHoliday();
+    public void anAdminEditsAPublicHoliday() {world.adminJourney.editPublicHoliday();
     }
 
     @Then("that edited holiday should be displayed")
@@ -43,12 +41,10 @@ public class PublicHolidays extends BasePage {
         String actualDate = getValue("(//input[@type='submit'])[2]", SelectorType.XPATH);
         String expectedDate = LocalDate.now().plusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Assert.assertEquals(expectedDate, actualDate);
-
     }
 
     @Given("an admin deletes a public holiday")
-    public void anAdminDeletesAPublicHoliday() {
-        world.adminJourney.deletePublicHoliday();
+    public void anAdminDeletesAPublicHoliday() {world.adminJourney.deletePublicHoliday();
     }
 
     @Then("that holiday should not be displayed")
