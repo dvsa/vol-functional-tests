@@ -25,7 +25,7 @@ public class PublicHolidays extends BasePage {
 
     @Given("an admin adds a public holiday")
     public void anAdminAddsAPublicHoliday(){
-    world.adminJourney.addPublicHoliday();
+        world.adminJourney.addPublicHoliday();
     }
 
     @Then("that holiday should be displayed")
