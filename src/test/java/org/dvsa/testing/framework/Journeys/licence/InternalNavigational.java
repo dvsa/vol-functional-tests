@@ -47,12 +47,17 @@ public class InternalNavigational extends BasePage {
         clickByLinkText("Processing");
     }
 
-    public void navigateToAdminPublication()  {
+    public void navigateToTaskAllocationRules() {
         if (world.updateLicence.getInternalUserId() == null)
             world.APIJourney.createAdminUser();
         logInAsAdmin();
-        click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
-        click("//*[@id='menu-admin-dashboard/admin-publication']", SelectorType.XPATH);
+        click(adminDropdown, SelectorType.XPATH);
+        click("Task allocation rules", SelectorType.LINKTEXT);
+    }
+
+    public void navigateToScanning() {
+        click(adminDropdown, SelectorType.XPATH);
+        click("Scanning", SelectorType.LINKTEXT);
     }
 
     public void loginAndGetApplication(boolean variation) {

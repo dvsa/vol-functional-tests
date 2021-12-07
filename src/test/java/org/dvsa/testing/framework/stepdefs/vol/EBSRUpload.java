@@ -8,14 +8,18 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
+import org.openqa.selenium.NotFoundException;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertFalse;
 
-public class ESBRupload extends BasePage implements En {
+public class EBSRUpload extends BasePage implements En {
     private final World world;
 
-    public ESBRupload(World world) {this.world = world;}
+    public EBSRUpload(World world) {
+        this.world = world;
+    }
 
     @Then("A short notice flag should be displayed in selfserve")
     public void aShortNoticeFlagShouldBeDisplayedInSelfserve() {
@@ -46,7 +50,7 @@ public class ESBRupload extends BasePage implements En {
         clickByLinkText("TA's");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
-        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']",SelectorType.XPATH);
+        click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result group-option\"]");
         clickByName("form-actions[submit]");
     }
@@ -56,7 +60,7 @@ public class ESBRupload extends BasePage implements En {
         clickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
         world.feeAndPaymentJourney.payFee("60", "cash");
-        waitAndClick("//*[contains(text(),'Grant')]",SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
     @Then("the bus registration should be granted")
@@ -68,7 +72,23 @@ public class ESBRupload extends BasePage implements En {
     public void theTrafficAreasShouldBeDisplayedOnTheServiceDetailsPage() {
         clickByLinkText("Service details");
         clickByLinkText("TA's");
-        String trafficArea = findElement("//*[@id=\"bus-reg-ta\"]/ul/li[1]/dd",SelectorType.XPATH,10).getText();
+        String trafficArea = findElement("//*[@id=\"bus-reg-ta\"]/ul/li[1]/dd", SelectorType.XPATH, 10).getText();
         Assert.assertNotNull(trafficArea);
+    }
+
+    @And("Documents are generated")
+    public void documentsAreGenerated() {
+        waitAndClick(String.format("//*[contains(text(),'%s')]",world.applicationDetails.getLicenceNumber()),SelectorType.XPATH);
+        long kickOutTime = System.currentTimeMillis() + 5000;
+        do {
+            // Refresh page
+            refreshPageWithJavascript();
+        } while ((long) findElements("//*[@class='files']", SelectorType.XPATH).size() <= 3 && System.currentTimeMillis() < kickOutTime);
+        try {
+            assertTrue(findElements("//*[@class='files']", SelectorType.XPATH).stream().anyMatch(
+                    webElement -> webElement.getText().contains("Route Track Map PDF (Auto Scale)")));
+        } catch (Exception e) {
+            throw new NotFoundException("Files not generated.");
+        }
     }
 }

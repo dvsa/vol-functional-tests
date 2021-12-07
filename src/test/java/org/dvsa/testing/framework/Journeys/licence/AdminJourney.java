@@ -27,18 +27,10 @@ public class AdminJourney extends BasePage {
 
     public AdminJourney(World world) {this.world = world;}
 
-    public void clickAdminMenuBtn() {waitAndClick("//ul[@class='admin']//li", SelectorType.XPATH);}
-
     public void generateCompany() {
         description = faker.generateCompanyName();
     }
-
     public void generateAbbreviation() {abbreviation = RandomStringUtils.randomAlphabetic(2).toUpperCase();}
-
-    public void navigateToTaskAllocationRules() {
-        clickAdminMenuBtn();
-        waitAndClick("Task allocation rules", SelectorType.LINKTEXT);
-    }
 
     public void addTaskAllocationRule() {
         waitAndClick("add", SelectorType.ID);

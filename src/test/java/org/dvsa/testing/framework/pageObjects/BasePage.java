@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects;
 
+import activesupport.driver.Browser;
 import com.google.common.base.Function;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
@@ -98,6 +99,7 @@ public abstract class BasePage extends DriverUtils {
     protected static void clickByLinkText(@NotNull String selector) {
         findElement(selector, SelectorType.PARTIALLINKTEXT).click();
     }
+
 
     protected static void clickByXPath(@NotNull String selector) {
         findElement(selector, SelectorType.XPATH).click();
@@ -359,12 +361,13 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class)
-                .ignoring(ElementClickInterceptedException.class);
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(ElementNotInteractableException.class);
 
         WebElement element = wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
