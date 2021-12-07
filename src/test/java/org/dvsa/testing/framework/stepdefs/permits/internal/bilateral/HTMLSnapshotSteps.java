@@ -34,16 +34,16 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             assertTrue(DocumentsPage.getSectionBody(BilateralSection.Licence).contains(world.applicationDetails.getLicenceNumber()));
 
             // Countries selected
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.CountriesSelected),"Morocco");
+            assertEquals(DocumentsPage.getSectionBody(BilateralSection.CountriesSelected), "Morocco");
 
             // Questions answered for
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.QuestionsAnsweredFor),"Morocco");
+            assertEquals(DocumentsPage.getSectionBody(BilateralSection.QuestionsAnsweredFor), "Morocco");
 
             // Permit type
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.PermitType),"Empty Entry single journey permit");
+            assertEquals(DocumentsPage.getSectionBody(BilateralSection.PermitType), "Empty Entry single journey permit");
 
             // Number of Permits
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.NumberOfPermits),"3");
+            assertEquals(DocumentsPage.getSectionBody(BilateralSection.NumberOfPermits), "3");
 
             //advisory text
             Assert.assertEquals("By applying for this permit, you confirm that you:", getText("//div[@class='printable__section']/p[1]", SelectorType.XPATH));

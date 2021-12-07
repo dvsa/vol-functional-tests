@@ -6,7 +6,6 @@ import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
-import activesupport.string.Str;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -164,20 +163,8 @@ public class UIJourney extends BasePage {
         saveDocumentInInternal();
     }
 
-    public void printLicence()  {
-        clickByLinkText("Docs & attachments");
-        waitForElementToBePresent("//a[@id='menu-licence-quick-actions-print-licence']");
-        clickByLinkText("Print licence");
-        waitForTextToBePresent("Licence printed successfully");
-    }
-
     public void deleteLicenceDocument()  {
         clickByLinkText("Docs & attachments");
-        deleteDocument();
-    }
-
-    public void deleteLetterDocument()  {
-        waitForTextToBePresent("Bus Registration");
         deleteDocument();
     }
 
@@ -326,13 +313,6 @@ public class UIJourney extends BasePage {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
         click("//*[contains(@id,'form-actions[save')]", SelectorType.XPATH);
-    }
-
-    public void caseWorkerGrantApplication()  {
-        refreshPageWithJavascript();
-        waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
-        waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
     }
 
     public void createPublicInquiry()  {
@@ -488,32 +468,31 @@ public class UIJourney extends BasePage {
         assertTrue(isElementPresent("//a[contains(text(),'distinctiveName')]", SelectorType.XPATH));
     }
 
-
     public void addAVehicle(String licenceNumber) {
         findSelectAllRadioButtonsByValue("add");
-        waitAndClick("next",SelectorType.ID);
-        waitAndEnterText("vehicle-search[search-value]",SelectorType.ID,licenceNumber);
-        waitAndClick("vehicle-search[submit]",SelectorType.ID);
+        waitAndClick("next", SelectorType.ID);
+        waitAndEnterText("vehicle-search[search-value]", SelectorType.ID,licenceNumber);
+        waitAndClick("vehicle-search[submit]", SelectorType.ID);
     }
 
     public void removeVehicle() {
         findSelectAllRadioButtonsByValue("remove");
-        waitAndClick("next",SelectorType.ID);
+        waitAndClick("next", SelectorType.ID);
     }
 
     public void vehicleRemovalConfirmationPage() {
         removeVehicle();
-        waitAndClick("//*[@name='table[id][]'][1]",SelectorType.XPATH);
-        waitAndClick("action-button",SelectorType.ID);
+        waitAndClick("//*[@name='table[id][]'][1]", SelectorType.XPATH);
+        waitAndClick("action-button", SelectorType.ID);
     }
 
     public void createAndSubmitSubmission() {
         click("//*[@id='menu-licence/cases']", SelectorType.XPATH);
         clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
         clickByLinkText("Submissions");
-        waitAndClick("add",SelectorType.ID);
-        selectValueFromDropDownByIndex("fields[submissionSections][submissionType]",SelectorType.NAME,1);
-        waitAndClick("form-actions[submit]",SelectorType.NAME);
+        waitAndClick("add", SelectorType.ID);
+        selectValueFromDropDownByIndex("fields[submissionSections][submissionType]", SelectorType.NAME, 1);
+        waitAndClick("form-actions[submit]", SelectorType.NAME);
     }
 
     public List<WebElement> getTableBodyRowList() {
@@ -535,11 +514,11 @@ public class UIJourney extends BasePage {
 
     public void createVariationInInternal(boolean variationFeeRequired) {
         String variationFeeDecision = variationFeeRequired ? "Yes" : "No";
-        waitAndClick("//*[@id='menu-licence-quick-actions-create-variation']",SelectorType.XPATH);
+        waitAndClick("//*[@id='menu-licence-quick-actions-create-variation']", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         waitAndClick(String.format("//*[contains(text(),'%s')]", variationFeeDecision), SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
-        waitAndClick("form-actions[submit]",SelectorType.ID);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Variation details");
     }
 }
