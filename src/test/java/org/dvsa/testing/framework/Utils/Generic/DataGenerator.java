@@ -5,6 +5,8 @@ import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
+import java.util.HashMap;
+
 public class DataGenerator extends BasePage {
 
     private World world;
@@ -12,6 +14,12 @@ public class DataGenerator extends BasePage {
     private String operatorUserEmail;
     private String operatorForeName;
     private String operatorFamilyName;
+    private String postCode;
+    private String operatorAddressLine1;
+    private String operatorAddressLine2;
+    private String operatorTown;
+    private String operatorPostCode;
+
 
     public String getOperatorForeName() {
         return operatorForeName;
@@ -45,6 +53,46 @@ public class DataGenerator extends BasePage {
         this.operatorUserEmail = operatorUserEmail;
     }
 
+    public String getOperatorAddressLine1() {
+        return operatorAddressLine1;
+    }
+
+    public void setOperatorAddressLine1(String operatorAddressLine1) {
+        this.operatorAddressLine1 = operatorAddressLine1;
+    }
+
+    public String getOperatorAddressLine2() {
+        return operatorAddressLine2;
+    }
+
+    public void setOperatorAddressLine2(String operatorAddressLine2) {
+        this.operatorAddressLine2 = operatorAddressLine2;
+    }
+
+    public String getOperatorTown() {
+        return operatorTown;
+    }
+
+    public void setOperatorTown(String operatorTown) {
+        this.operatorTown = operatorTown;
+    }
+
+    public String getOperatorPostCode() {
+        return operatorPostCode;
+    }
+
+    public void setOperatorPostCode(String operatorPostCode) {
+        this.operatorPostCode = operatorPostCode;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
     public DataGenerator(World world) {
         this.world = world;
     }
@@ -60,10 +108,15 @@ public class DataGenerator extends BasePage {
         setOperatorUserEmail(
                 getOperatorUser().concat("@dvsaUser.com")
         );
+        setOperatorAddressLine1(faker.generateAddress().get("addressLine1"));
+        setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
+        setOperatorTown(faker.generateAddress().get("town"));
+        setPostCode(faker.getRandomRealUKPostcode());
     }
 
     public void generateAndAddOperatorUser() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.UIJourney.addUser();
     }
+
 }
