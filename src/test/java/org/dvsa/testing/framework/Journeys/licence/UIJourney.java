@@ -78,7 +78,6 @@ public class UIJourney extends BasePage {
     }
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
-        world.DataGenerator.generateOperatorValues();
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         enterText( "forename", SelectorType.ID, faker.generateFirstName());
         enterText("familyName", SelectorType.ID, faker.generateLastName());
@@ -97,7 +96,6 @@ public class UIJourney extends BasePage {
     }
 
     public void addNewInternalUser() {
-       world.DataGenerator.generateOperatorValues();
         selectValueFromDropDown("search-select", SelectorType.ID, "Users");
         enterText("search", SelectorType.NAME, faker.generateCompanyName());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
@@ -237,7 +235,6 @@ public class UIJourney extends BasePage {
     }
 
     public void addUser()  {
-        world.DataGenerator.generateOperatorValues();
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
