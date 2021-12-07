@@ -163,8 +163,8 @@ public abstract class BasePage extends DriverUtils {
         return itsFound;
     }
 
-    public void selectRandomCheckBoxOrRadioBtn(String typeArgument){
-        Select select = new Select(getDriver().findElement(By.xpath(typeArgument)));
+    public void selectRandomCheckBoxOrRadioBtn(String idArgument){
+        Select select = new Select(getDriver().findElement(By.id(idArgument)));
         Random random = new Random();
         List<WebElement> button = select.getOptions();
         int size = button.size();

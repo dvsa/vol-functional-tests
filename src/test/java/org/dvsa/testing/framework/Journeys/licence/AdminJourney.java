@@ -36,7 +36,7 @@ public class AdminJourney extends BasePage {
     public void addPublicHoliday() {
         waitAndClick("add", SelectorType.ID);
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
-        selectRandomCheckBoxOrRadioBtn("checkbox");
+        selectRandomCheckBoxOrRadioBtn("areas");
         HashMap<String, String> currentDate = date.getDateHashMap(0, 0, -1);
         replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
         waitAndClick("form-actions[submit]", SelectorType.ID);
@@ -45,7 +45,7 @@ public class AdminJourney extends BasePage {
     public void editPublicHoliday() {
         waitAndClick("(//input[@type='submit'])[2]", SelectorType.XPATH);
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
-        selectRandomCheckBoxOrRadioBtn("checkbox");
+        selectRandomCheckBoxOrRadioBtn("areas");
         HashMap<String, String> currentDate = date.getDateHashMap(+0, +0, +1);
         replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
         waitAndClick("form-actions[submit]", SelectorType.ID);
