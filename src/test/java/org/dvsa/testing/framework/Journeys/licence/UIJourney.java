@@ -66,16 +66,16 @@ public class UIJourney extends BasePage {
         enterText("familyName", SelectorType.ID, faker.generateLastName());
         enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        if (existingApplication){
+        if (existingApplication) {
             findSelectAllRadioButtonsByValue("Y");
             enterText("fields[licenceNumber]", SelectorType.ID, applicationID);
         }
-       else { findSelectAllRadioButtonsByValue("N");
+        else { findSelectAllRadioButtonsByValue("N");
             enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
             waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
         }
         click("termsAgreed", SelectorType.ID);
-      waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
     public void addNewInternalUser() {
@@ -98,7 +98,7 @@ public class UIJourney extends BasePage {
         world.internalSearchJourney.searchUser();
     }
 
-    public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument, IllegalBrowserException, MalformedURLException {
+    public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env).toString();
 
         if (Browser.isBrowserOpen()) {
@@ -254,13 +254,13 @@ public class UIJourney extends BasePage {
         click("//*[contains(@title,'return to home')]", SelectorType.XPATH);
     }
 
-    public void checkLicenceStatus(String arg0)  {
+    public void checkLicenceStatus(String arg0) {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
         waitForTextToBePresent("Licence details");
         Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), arg0.toUpperCase());
     }
 
-    public void closeCase()  {
+    public void closeCase() {
         clickByLinkText("" + world.updateLicence.getCaseId() + "");
 
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
@@ -271,7 +271,7 @@ public class UIJourney extends BasePage {
         click("form-actions[confirm]", SelectorType.ID);
     }
 
-    public void payForInterimApp()  {
+    public void payForInterimApp() {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
         waitAndClick("form-actions[save]", SelectorType.NAME);
@@ -284,7 +284,7 @@ public class UIJourney extends BasePage {
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 
-    public void addNewOperatingCentre()  {
+    public void addNewOperatingCentre() {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getLicence();
@@ -298,24 +298,24 @@ public class UIJourney extends BasePage {
         click("form-actions[submit]", SelectorType.ID);
     }
 
-    public void caseWorkerCompleteConditionsAndUndertakings()  {
+    public void caseWorkerCompleteConditionsAndUndertakings() {
         clickByLinkText("Conditions and undertakings");
         click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
-    public void caseWorkerCompleteReviewAndDeclarations()  {
+    public void caseWorkerCompleteReviewAndDeclarations() {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
         click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
-    public void caseWorkerCompleteOverview()  {
+    public void caseWorkerCompleteOverview() {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
         click("//*[contains(@id,'form-actions[save')]", SelectorType.XPATH);
     }
 
-    public void createPublicInquiry()  {
+    public void createPublicInquiry() {
         click("//*[@id='menu-case_hearings_appeals']", SelectorType.XPATH);
         clickByLinkText("Add Public Inquiry");
         waitForTextToBePresent("Add Traffic Commissioner agreement and legislation");
@@ -332,7 +332,7 @@ public class UIJourney extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
     }
 
-    public void addAndPublishHearing()  {
+    public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");
         waitForTextToBePresent("Venue");
@@ -349,7 +349,7 @@ public class UIJourney extends BasePage {
         click("//*[@id='form-actions[publish]']", SelectorType.XPATH);
     }
 
-    public void deleteCaseNote()  {
+    public void deleteCaseNote() {
         clickByLinkText("Processing");
         clickByLinkText("Notes");
         click("//*[@name='id']", SelectorType.XPATH);
@@ -358,14 +358,14 @@ public class UIJourney extends BasePage {
         click("//*[@id='form-actions[confirm]']", SelectorType.XPATH);
     }
 
-    public void navigateToChangeHistory()  {
+    public void navigateToChangeHistory() {
         clickByLinkText("Processing");
         waitForTextToBePresent("Tasks");
         clickByLinkText("Change history");
         waitForTextToBePresent("Details");
     }
 
-    public void createCaseUI(String target)  {
+    public void createCaseUI(String target) {
         switch (target.toLowerCase()) {
             case "licence":
                 world.internalNavigation.getLicence();
@@ -425,7 +425,7 @@ public class UIJourney extends BasePage {
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 2));
     }
 
-    public void removeFirstVehicleOnVehiclePage()  {
+    public void removeFirstVehicleOnVehiclePage() {
         navigate().findElements(By.xpath("//tbody//input[@type='checkbox']")).stream().findFirst().get().click();
         navigate().findElements(By.xpath("//tbody//input[@type='submit'][@value='Remove']")).stream().findFirst().get().click();
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);

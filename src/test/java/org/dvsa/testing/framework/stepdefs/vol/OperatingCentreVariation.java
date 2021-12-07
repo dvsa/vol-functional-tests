@@ -109,7 +109,7 @@ public class OperatingCentreVariation extends BasePage {
 
 
     @And("increase the authority on an existing operating centre authorisation and update the total authorisations")
-    public void increaseTheAuthorityOnAnExistingOperatingCentreAuthorisationAndUpdateTheTotalAuthorisations() throws InterruptedException {
+    public void increaseTheAuthorityOnAnExistingOperatingCentreAuthorisationAndUpdateTheTotalAuthorisations() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         String updatedOperatingCentreVehicleAuthorisation = "10";
         world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation);

@@ -124,7 +124,7 @@ public class Continuations extends BasePage implements En {
     }
 
     @Then("the correct checks should display on the continuation review details page and continuation snapshot")
-    public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot() throws IllegalBrowserException {
+    public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot() {
         world.continuationJourney.clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         world.continuationJourney.checkContinuationReviewSections();
