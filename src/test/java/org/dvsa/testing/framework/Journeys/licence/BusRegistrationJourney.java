@@ -167,12 +167,11 @@ public class BusRegistrationJourney extends BasePage {
             S3.uploadObject(world.configuration.getBucketName(), path, System.getProperty("user.dir").concat(zipFilePath));
             //get Pat
             if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
-                File file = new File("/home/seluser/EBSR/testing.txt");
-//                System.out.println("I AM HERE+++++++++++++++++++++++++++++");
-//                S3.downloadObject(world.configuration.getBucketName(), path, "/tmp/".concat(ebsrFileName));
-//                System.out.println("DOWNLOADED+++++++++++++++++++++++++");
-//                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "/tmp/".concat(ebsrFileName));
-//                System.out.println("ENTERED+++++++++++++");
+                System.out.println("I AM HERE+++++++++++++++++++++++++++++");
+                S3.downloadObject(world.configuration.getBucketName(), path, "/home/seluser/EBSR/".concat(ebsrFileName));
+                System.out.println("DOWNLOADED+++++++++++++++++++++++++");
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "/home/seluser/EBSR/".concat(ebsrFileName));
+                System.out.println("ENTERED+++++++++++++");
             }
         }
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
