@@ -72,7 +72,8 @@ public class FinancialStandingRates extends BasePage {
 
     @When("i am on the financial standing rates page")
     public void iAmOnTheFinancialStandingRatesPage() {
-     world.internalNavigation.AdminNavigation(AdminOption.FINANCIAL_STANDING_RATES);
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.AdminNavigation(AdminOption.FINANCIAL_STANDING_RATES);
     }
 
     @When("i add a {string} {string} {string} financial standing rate")
