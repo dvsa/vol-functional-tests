@@ -1,4 +1,4 @@
-Feature: Authoriation updates display correctly on Internal for caseworkers
+Feature: Authorisation updates display correctly on Internal for caseworkers
 
   Scenario: LGV Only authorisation updates correctly
     Given I have a submitted "GB" lgv only application
