@@ -141,7 +141,7 @@ public class FeeAndPaymentJourney extends BasePage {
         enterText("scp_tdsv2AdditionalInfoPage_address_1_input",SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
         enterText("scp_tdsv2AdditionalInfoPage_address_2_input",SelectorType.ID, world.DataGenerator.getOperatorAddressLine2());
         enterText("scp_tdsv2AdditionalInfoPage_city_input",SelectorType.ID, world.DataGenerator.getOperatorTown());
-        enterText("scp_tdsv2AdditionalInfoPage_postcode_input",SelectorType.ID, world.DataGenerator.getPostCode());
+        enterText("scp_tdsv2AdditionalInfoPage_postcode_input",SelectorType.ID, world.DataGenerator.getOperatorPostCode());
         enterText("scp_tdsv2AdditionalInfoPage_email_input",SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         clickById("scp_tdsv2AdditionalInfoPage_buttons_continue_button");
     }

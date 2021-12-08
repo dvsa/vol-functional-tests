@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Utils.Generic;
 import Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import apiCalls.enums.TrafficArea;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import java.util.HashMap;
@@ -14,7 +15,6 @@ public class DataGenerator extends BasePage {
     private String operatorUserEmail;
     private String operatorForeName;
     private String operatorFamilyName;
-    private String postCode;
     private String operatorAddressLine1;
     private String operatorAddressLine2;
     private String operatorTown;
@@ -85,19 +85,7 @@ public class DataGenerator extends BasePage {
         this.operatorPostCode = operatorPostCode;
     }
 
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public void setPostCode(String postCode) {
-        this.postCode = postCode;
-    }
-
     public DataGenerator(World world) {
-        this.world = world;
-    }
-
-    public void generateOperatorValues() {
         FakerUtils faker = new FakerUtils();
         setOperatorForeName(faker.generateFirstName());
         setOperatorFamilyName(faker.generateLastName());
@@ -111,12 +99,12 @@ public class DataGenerator extends BasePage {
         setOperatorAddressLine1(faker.generateAddress().get("addressLine1"));
         setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
         setOperatorTown(faker.generateAddress().get("town"));
-        setPostCode(faker.getRandomRealUKPostcode());
+        setOperatorPostCode(TrafficArea.getPostCode(TrafficArea.MIDLANDS));
+        this.world = world;
     }
 
     public void generateAndAddOperatorUser() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.UIJourney.addUser();
     }
-
 }
