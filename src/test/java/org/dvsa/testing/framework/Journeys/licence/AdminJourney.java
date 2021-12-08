@@ -159,10 +159,6 @@ public class AdminJourney extends BasePage {
         waitAndClick(description, SelectorType.LINKTEXT);
         waitForTextToBePresent("System Team");
     }
-    public void navigateToAdminScanning() {
-        waitAndClick("//ul[@class='admin']//li",SelectorType.XPATH);
-        waitAndClick("Scanning",SelectorType.LINKTEXT);
-    }
 
     public void completeComplianceScanningDetails() {
         waitForPageLoad();
@@ -176,5 +172,3 @@ public class AdminJourney extends BasePage {
     }
 }
 
-
- }
