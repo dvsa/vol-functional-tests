@@ -50,4 +50,5 @@ public class World {
     public ConvictionsAndPenaltiesJourney convictionsAndPenaltiesJourney;
     public UserRegistrationJourney userRegistrationJourney;
     public DataGenerator DataGenerator;
+    public UserAccountJourney UserAccountJourney;
 }
