@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects;
 
+import activesupport.driver.Browser;
 import com.google.common.base.Function;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
@@ -99,6 +100,7 @@ public abstract class BasePage extends DriverUtils {
         findElement(selector, SelectorType.PARTIALLINKTEXT).click();
     }
 
+
     protected static void clickByXPath(@NotNull String selector) {
         findElement(selector, SelectorType.XPATH).click();
     }
@@ -136,10 +138,10 @@ public abstract class BasePage extends DriverUtils {
         List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
         int rows_count = rows_table.size();
         outsideloop:
-        for (int row = 0; row < rows_count; row++) {
+        for (int row = 0; row < rows_count; row++){
             List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
             int columns_count = Columns_row.size();
-            for (int column = 0; column < columns_count;) {
+            for (int column = 0; column < columns_count; ){
                 List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
                 Random random = new Random();
                 int size = options.size();
@@ -149,7 +151,6 @@ public abstract class BasePage extends DriverUtils {
             }
         }
     }
-
     protected static boolean isLinkPresent(String locator, int duration) {
         boolean itsFound = true;
         try {
@@ -160,6 +161,13 @@ public abstract class BasePage extends DriverUtils {
 
         }
         return itsFound;
+    }
+
+    public void selectRandomCheckBoxOrRadioBtn(String typeArgument){
+        List<WebElement> checkbox = findElements(String.format("//input[@type='%s']",typeArgument),SelectorType.XPATH);
+        Random random = new Random();
+        int index = random.nextInt(checkbox.size());
+        checkbox.get(index).click();
     }
 
     protected static boolean isTitlePresent(String locator, int duration) {
@@ -359,12 +367,13 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class)
-                .ignoring(ElementClickInterceptedException.class);
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(ElementNotInteractableException.class);
 
         WebElement element = wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {

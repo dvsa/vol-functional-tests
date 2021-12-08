@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import com.typesafe.config.Config;
+import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
@@ -126,14 +127,23 @@ public class FeeAndPaymentJourney extends BasePage {
             click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
         }
         click("//*[@id='scp_cardPage_buttonsNoBack_continue_button']", SelectorType.XPATH);
-        enterText("//*[@id='scp_additionalInformationPage_cardholderName_input']", SelectorType.XPATH, "Mr Regression Test");
-        click("//*[@id='scp_additionalInformationPage_buttons_continue_button']", SelectorType.XPATH);
+        enterCardHolderDetails();
         waitForTextToBePresent("Payment Confirmation Page");
         click("//*[@id='scp_confirmationPage_buttons_payment_button']", SelectorType.XPATH);
         if (isElementPresent("//*[@id='scp_storeCardConfirmationPage_buttons_back_button']", SelectorType.XPATH)) {
             waitForTextToBePresent("Online Payments");
             click("//*[@value='Save']", SelectorType.XPATH);
         }
+    }
+
+    public void enterCardHolderDetails(){
+        enterText("scp_tdsv2AdditionalInfoPage_cardholderName_input",SelectorType.ID, world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
+        enterText("scp_tdsv2AdditionalInfoPage_address_1_input",SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
+        enterText("scp_tdsv2AdditionalInfoPage_address_2_input",SelectorType.ID, world.DataGenerator.getOperatorAddressLine2());
+        enterText("scp_tdsv2AdditionalInfoPage_city_input",SelectorType.ID, world.DataGenerator.getOperatorTown());
+        enterText("scp_tdsv2AdditionalInfoPage_postcode_input",SelectorType.ID, world.DataGenerator.getOperatorPostCode());
+        enterText("scp_tdsv2AdditionalInfoPage_email_input",SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        clickById("scp_tdsv2AdditionalInfoPage_buttons_continue_button");
     }
 
     public void clickPayAndConfirm(String paymentMethod)  {

@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
@@ -15,7 +16,8 @@ public class TaskAllocationRules extends BasePage {
 
     @Given("I am on the task allocation rules page")
     public void iAmOnTheTaskAllocationRulesPage() {
-        world.adminJourney.navigateToTaskAllocationRules();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.AdminNavigation(AdminOption.TASK_ALLOCATION_RULE);
     }
 
     @And("I delete an allocation rule")
