@@ -159,7 +159,6 @@ public class AdminJourney extends BasePage {
         waitAndClick(description, SelectorType.LINKTEXT);
         waitForTextToBePresent("System Team");
     }
-
     public void completeComplianceScanningDetails() {
         waitForPageLoad();
         selectValueFromDropDown("category", SelectorType.ID, "Compliance");
@@ -168,7 +167,6 @@ public class AdminJourney extends BasePage {
         selectValueFromDropDownByIndex("description",SelectorType.ID, 0);
         enterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
         waitAndClick("form-actions[submit]", SelectorType.ID);
-
     }
 }
 
