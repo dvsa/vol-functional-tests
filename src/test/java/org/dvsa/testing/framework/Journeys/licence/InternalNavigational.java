@@ -2,20 +2,21 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.system.Properties;
+import com.amazonaws.services.dynamodbv2.xspec.AddAction;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
+import org.jetbrains.annotations.NotNull;
+
 
 public class InternalNavigational extends BasePage {
 
     private World world;
     private String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
-
     String adminDropdown = "//li[@class='admin__title']";
-    String financialStandingAdminLink = "//a[@id='menu-admin-dashboard/admin-financial-standing']";
-    String financialStandingTitle = "Financial standing rates";
     public String taskTitle = "//h2[text()='Edit task']";
 
     public InternalNavigational(World world) {
@@ -27,13 +28,9 @@ public class InternalNavigational extends BasePage {
     }
 
     public void logInAsAdmin() {
+        if (world.updateLicence.getInternalUserId() == null)
+            world.APIJourney.createAdminUser();
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-    }
-
-    public void navigateToFinancialStandingRates() {
-        click(adminDropdown, SelectorType.XPATH);
-        click(financialStandingAdminLink, SelectorType.XPATH);
-        waitForTitleToBePresent(financialStandingTitle);
     }
 
     public void logInAndNavigateToApplicationDocsTable(boolean variation)  {
@@ -47,17 +44,10 @@ public class InternalNavigational extends BasePage {
         clickByLinkText("Processing");
     }
 
-    public void navigateToTaskAllocationRules() {
-        if (world.updateLicence.getInternalUserId() == null)
-            world.APIJourney.createAdminUser();
-        logInAsAdmin();
+    public void AdminNavigation(@NotNull AdminOption option) {
         click(adminDropdown, SelectorType.XPATH);
-        click("Task allocation rules", SelectorType.LINKTEXT);
-    }
-
-    public void navigateToScanning() {
-        click(adminDropdown, SelectorType.XPATH);
-        click("Scanning", SelectorType.LINKTEXT);
+        clickByLinkText(option.toString());
+        waitForTitleToBePresent(option.toString());
     }
 
     public void loginAndGetApplication(boolean variation) {
