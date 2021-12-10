@@ -168,9 +168,9 @@ public class BusRegistrationJourney extends BasePage {
             //get Pat
             if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
                 System.out.println("I AM HERE+++++++++++++++++++++++++++++");
-                S3.downloadObject(world.configuration.getBucketName(), path, "/home/seluser/".concat(ebsrFileName));
+                S3.downloadObject(world.configuration.getBucketName(), path, "/home/seluser/EBSR/".concat(ebsrFileName));
                 System.out.println("DOWNLOADED+++++++++++++++++++++++++");
-                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "/home/seluser/".concat(ebsrFileName));
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "/home/seluser/EBSR/".concat(ebsrFileName));
                 System.out.println("ENTERED+++++++++++++");
             }
         }
