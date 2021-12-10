@@ -49,9 +49,9 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         waitAndEnterText("data[penalty]", SelectorType.ID, Str.randomWord(10));
 
         dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
-        enterText("data[convictionDate][day]", SelectorType.ID, dates.get("day"));
-        enterText("data[convictionDate][month]", SelectorType.ID, dates.get("month"));
-        enterText("data[convictionDate][year]", SelectorType.ID, dates.get("year"));
+        enterText("data[convictionDate][day]", SelectorType.NAME, dates.get("day"));
+        enterText("data[convictionDate][month]", SelectorType.NAME, dates.get("month"));
+        enterText("data[convictionDate][year]", SelectorType.NAME, dates.get("year"));
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 }

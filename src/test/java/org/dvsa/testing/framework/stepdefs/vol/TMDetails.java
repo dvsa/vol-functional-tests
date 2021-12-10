@@ -41,13 +41,16 @@ public class TMDetails extends BasePage implements En {
     }
 
     @And("the section buttons should not be displayed")
-    public void theSectionButtonsShouldNotBeDisplayed(String button) {
-        assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
+    public void theSectionButtonsShouldNotBeDisplayed(DataTable dataTable) {
+        List<String> buttonsOnPage = dataTable.asList(String.class);
+        for (String button : buttonsOnPage) {
+            assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
+        }
     }
 
     @When("I select yes to all radio buttons")
     public void iSelectYesToAllRadioButtons() {
-        world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        findSelectAllRadioButtonsByValue("Y");
     }
 
     @Then("the section buttons should be displayed")
@@ -60,7 +63,7 @@ public class TMDetails extends BasePage implements En {
 
     @When("I click on the {string} button")
     public void iClickOnTheButton(String button) {
-        world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        findSelectAllRadioButtonsByValue("Y");
         click(String.format("//*[@data-label=\"%s\"]", button), SelectorType.XPATH);
     }
 
@@ -89,7 +92,6 @@ public class TMDetails extends BasePage implements En {
     public void iClickTheNoRadioButtonForTheQuestion(String arg0) {
         click("//*[@id=\"responsibilities\"]//input[@value='N']", SelectorType.XPATH);
     }
-
 
     @Then("the guidance text should be displayed")
     public void theGuidanceTextShouldBeDisplayed() {

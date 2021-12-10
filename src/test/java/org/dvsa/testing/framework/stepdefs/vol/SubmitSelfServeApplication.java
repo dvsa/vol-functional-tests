@@ -39,13 +39,7 @@ public class SubmitSelfServeApplication extends BasePage {
         accessibilityScanner();
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
 
-        waitForTitleToBePresent("Type of licence");
-        waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Limited Company')]", SelectorType.XPATH);
+        chooseLicenceType();
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
@@ -160,5 +154,15 @@ public class SubmitSelfServeApplication extends BasePage {
 
     public static void generateAccessibilityReport() {
         reportGenerator.createReport(scanner);
+    }
+
+    private void chooseLicenceType() {
+        waitForTitleToBePresent("Type of licence");
+        waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Limited Company')]", SelectorType.XPATH);
     }
 }
