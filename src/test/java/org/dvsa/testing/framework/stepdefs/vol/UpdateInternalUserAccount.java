@@ -9,10 +9,10 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.junit.Assert;
 
-public class EditInternalAccount extends BasePage {
+public class UpdateInternalUserAccount extends BasePage {
     private World world;
 
-    public EditInternalAccount(World world) {this.world = world;}
+    public UpdateInternalUserAccount(World world) {this.world = world;}
 
     @When("I am on the Your Account page")
     public void iAmOnTheYourAccountPage() {
@@ -29,5 +29,15 @@ public class EditInternalAccount extends BasePage {
     public void myNewTeamShouldBeVisible() {
         String name = world.UserAccountJourney.teamName;
         Assert.assertTrue(isTextPresent(name));
+    }
+
+    @Given("I edit my personal details")
+    public void iEditMyPersonalDetails() {
+        world.UserAccountJourney.ChangeUserDetails();
+    }
+
+    @Then("my details should have updated")
+    public void myDetailsShouldHaveUpdated() {
+        Assert.assertTrue(isTextPresent(world.UserAccountJourney.getUserName()));
     }
 }

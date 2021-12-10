@@ -19,6 +19,7 @@ public class DataGenerator extends BasePage {
     private String operatorAddressLine2;
     private String operatorTown;
     private String operatorPostCode;
+    private String operatorPhoneNo;
 
 
     public String getOperatorForeName() {
@@ -27,6 +28,12 @@ public class DataGenerator extends BasePage {
 
     public void setOperatorForeName(String operatorForeName) {
         this.operatorForeName = operatorForeName;
+    }
+
+    public String getOperatorPhoneNo() {return operatorPhoneNo;}
+
+    public void setOperatorPhoneNo(String operatorPhoneNo) {
+        this.operatorPhoneNo = operatorPhoneNo;
     }
 
     public String getOperatorFamilyName() {
