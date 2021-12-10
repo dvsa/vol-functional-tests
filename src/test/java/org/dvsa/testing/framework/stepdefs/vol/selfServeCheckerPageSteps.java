@@ -27,11 +27,11 @@ public class selfServeCheckerPageSteps extends BasePage implements En {
     @Then("I should be on the dashboard")
     public void iShouldBeOnTheDashboard() {
         Assert.assertTrue(isPath("/dashboard"));
-
     }
 
     @Then("I should be on the Self Serve login page")
     public void iShouldBeOnTheSelfServeLoginPage() {
+        waitForElementToBeClickable("auth.login.username", SelectorType.ID);
         Assert.assertTrue(isPath("auth/login/"));
     }
 }
