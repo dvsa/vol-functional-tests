@@ -24,7 +24,7 @@
         <assertj-core-version>3.9.1</assertj-core-version>
         <hamcrest-version>1.3</hamcrest-version>
         <pico-container-version>2.4.0</pico-container-version>
-        <allure-cucumber2-jvm>2.7.0</allure-cucumber2-jvm>
+        <allure-cucumber2-jvm>2.16.1</allure-cucumber2-jvm>
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn-version>2.9</allure-mvn-version>
         <cucable-plugin.version>1.5.0</cucable-plugin.version>
