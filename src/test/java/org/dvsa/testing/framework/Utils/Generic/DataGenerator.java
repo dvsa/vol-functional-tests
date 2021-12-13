@@ -19,7 +19,7 @@ public class DataGenerator extends BasePage {
     private String operatorAddressLine2;
     private String operatorTown;
     private String operatorPostCode;
-    private String operatorPhoneNo;
+
 
 
     public String getOperatorForeName() {
