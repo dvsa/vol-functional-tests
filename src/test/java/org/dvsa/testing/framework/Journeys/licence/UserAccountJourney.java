@@ -10,20 +10,13 @@ import java.util.HashMap;
 public class UserAccountJourney extends BasePage {
     private World world;
     public String teamName;
-    public String userName;
 
     Dates date = new Dates(org.joda.time.LocalDate::new);
 
     public void setTeamName(String teamName) {this.teamName = teamName;}
 
-    public String getUserName() {return userName;}
-
     public UserAccountJourney(World world) {
         this.world = world;
-    }
-
-    public void generateUserName() {
-        userName = world.DataGenerator.getOperatorUser();
     }
 
     public void ChangeTeam() {
@@ -35,8 +28,7 @@ public class UserAccountJourney extends BasePage {
 
     public void ChangeUserDetails() {
         selectRandomValueFromDropDown("team");
-        generateUserName();
-        replaceText("userDetails[loginId]", SelectorType.ID, userName);
+        replaceText("userDetails[loginId]", SelectorType.ID, world.DataGenerator.getOperatorUser());
         selectValueFromDropDown("title", SelectorType.ID, "Mr");
         replaceText("person[forename]", SelectorType.ID, world.DataGenerator.getOperatorForeName());
         replaceText("person[familyName]", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());

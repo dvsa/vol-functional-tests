@@ -36,8 +36,9 @@ public class UpdateInternalUserAccount extends BasePage {
         world.UserAccountJourney.ChangeUserDetails();
     }
 
+
     @Then("my details should have updated")
     public void myDetailsShouldHaveUpdated() {
-        Assert.assertTrue(isTextPresent(world.UserAccountJourney.getUserName()));
+        Assert.assertTrue(isTextPresent(world.DataGenerator.getOperatorFamilyName()));
     }
 }
