@@ -143,7 +143,7 @@ public class DirectorVariation extends BasePage {
     @When("I wrongly fill in and submit the add a director page")
     public void whenIWronglyFillInAndSubmitTheAddADirectorPage() {
         clickByXPath(directorJourney.addButton);
-        waitForTitleToBePresent(directorJourney.directorDetailsTitle);
+        waitForTitleToBePresent(directorJourney.directorVariationDetailsTitle);
         selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
 
         String incorrectNameValue = "!@£$%^";
@@ -165,14 +165,14 @@ public class DirectorVariation extends BasePage {
         // Name fields do not currently contain any incorrect value validation
 
         List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation1, listOfSummaryErrors.get(0).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation2, listOfSummaryErrors.get(1).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfSummaryErrors.get(2).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(0).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(1).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(2).getText());
 
         List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation1, listOfInlineErrors.get(0).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation2, listOfInlineErrors.get(1).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfInlineErrors.get(2).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(0).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(1).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(2).getText());
     }
 
     @Then("the director financial history page empty field validation should appear")
