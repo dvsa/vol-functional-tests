@@ -30,12 +30,6 @@ public class DataGenerator extends BasePage {
         this.operatorForeName = operatorForeName;
     }
 
-    public String getOperatorPhoneNo() {return operatorPhoneNo;}
-
-    public void setOperatorPhoneNo(String operatorPhoneNo) {
-        this.operatorPhoneNo = operatorPhoneNo;
-    }
-
     public String getOperatorFamilyName() {
         return operatorFamilyName;
     }
