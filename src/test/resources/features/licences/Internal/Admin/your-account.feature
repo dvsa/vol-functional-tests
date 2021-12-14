@@ -14,6 +14,3 @@ Feature: User edits their account details
   Scenario: User wishes to edit their personal details
     Given I edit my personal details
     Then my details should have updated
-
-
-
