@@ -20,8 +20,6 @@ public class DataGenerator extends BasePage {
     private String operatorTown;
     private String operatorPostCode;
 
-
-
     public String getOperatorForeName() {
         return operatorForeName;
     }
