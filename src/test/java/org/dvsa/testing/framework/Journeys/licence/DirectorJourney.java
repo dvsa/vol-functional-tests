@@ -30,6 +30,7 @@ public class DirectorJourney extends BasePage {
     public String directorLinks = "//tbody/tr/td[1]/input";
     public String addButton = "//button[@name='table[action]']";
     public String directorDetailsTitle = "Add person";
+    public String directorVariationDetailsTitle = "Add a director";
     public String directorTitleDropdown = "//select[@id='title']";
     public String firstNameField = "//input[@name='data[forename]']";
     public String lastNameField = "//input[@name='data[familyName]']";
@@ -60,7 +61,7 @@ public class DirectorJourney extends BasePage {
     public String receivershipValidation = "Receivership: Choose an option";
     public String administrationValidation = "Administration: Choose an option";
     public String disqualifiedValidation = "Disqualified: Choose an option";
-    public String convictionsAndPenaltiesValidation = "validation message not decided yet";
+    public String convictionsAndPenaltiesValidation = "Value is required";
 
 
     public DirectorJourney(World world){
@@ -73,7 +74,11 @@ public class DirectorJourney extends BasePage {
 
     public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties()  {
         click(addButton, SelectorType.XPATH);
-        addDirectorDetails();
+        if(isTitlePresent(directorDetailsTitle,30)) {
+            addPersonDetails();
+        }else if(isTitlePresent(directorVariationDetailsTitle,30)){
+            addDirectorDetails();
+        }
         try {
             accessibilityScanner();
         } catch (IllegalBrowserException | IOException e) {
@@ -89,7 +94,21 @@ public class DirectorJourney extends BasePage {
         } catch (IllegalBrowserException | IOException e) {
             e.printStackTrace();
         }
-        waitForTitleToBePresent(directorDetailsTitle);
+        personDetails();
+        clickByName("form-actions[saveAndContinue]");
+    }
+
+    public void addPersonDetails()  {
+        try {
+            accessibilityScanner();
+        } catch (IllegalBrowserException | IOException e) {
+            e.printStackTrace();
+        }
+        personDetails();
+        clickByName("form-actions[submit]");
+    }
+
+    private void personDetails() {
         selectValueFromDropDown(directorTitleDropdown, SelectorType.XPATH, "Dr");
         directorFirstName = faker.generateFirstName();
         directorLastName = faker.generateLastName();
@@ -97,8 +116,8 @@ public class DirectorJourney extends BasePage {
         enterText(lastNameField, SelectorType.XPATH, directorLastName);
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         enterDateFieldsByPartialId("dob", dates);
-        clickByName("form-actions[submit]");
     }
+
 
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(financialHistoryAnswers);

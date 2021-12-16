@@ -30,7 +30,32 @@ public class AdminJourney extends BasePage {
     public void generateCompany() {
         description = faker.generateCompanyName();
     }
+
     public void generateAbbreviation() {abbreviation = RandomStringUtils.randomAlphabetic(2).toUpperCase();}
+
+    public void addPublicHoliday() {
+        waitAndClick("add", SelectorType.ID);
+        waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
+        selectRandomCheckBoxOrRadioBtn("checkbox");
+        HashMap<String, String> currentDate = date.getDateHashMap(0, 0, +1);
+        replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+    }
+
+    public void editPublicHoliday() {
+        waitAndClick("(//input[@type='submit'])[2]", SelectorType.XPATH);
+        waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
+        selectRandomCheckBoxOrRadioBtn("checkbox");
+        HashMap<String, String> currentDate = date.getDateHashMap(+0, +0, +1);
+        replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+    }
+
+    public void deletePublicHoliday() {
+        waitAndClick("//input[@value='Remove']", SelectorType.XPATH);
+        waitAndClick("form-actions[confirm]", SelectorType.ID);
+        waitForElementToBeClickable("//p[text()='The public holiday is removed']", SelectorType.XPATH);
+    }
 
     public void addTaskAllocationRule() {
         waitAndClick("add", SelectorType.ID);
@@ -134,4 +159,14 @@ public class AdminJourney extends BasePage {
         waitAndClick(description, SelectorType.LINKTEXT);
         waitForTextToBePresent("System Team");
     }
- }
+    public void completeComplianceScanningDetails() {
+        waitForPageLoad();
+        selectValueFromDropDown("category", SelectorType.ID, "Compliance");
+        waitAndClick("subCategory", SelectorType.ID);
+        selectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");
+        selectValueFromDropDownByIndex("description",SelectorType.ID, 0);
+        enterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+    }
+}
+

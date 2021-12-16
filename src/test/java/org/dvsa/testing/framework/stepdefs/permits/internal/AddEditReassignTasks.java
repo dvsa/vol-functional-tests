@@ -38,6 +38,11 @@ public class AddEditReassignTasks extends BasePage implements En {
 
     @Then("the User has re-assigned a task")
     public void theUserHasReAssignedATask() {
+        Assert.assertTrue(isTextPresent("Forms Digital"));
+        Assert.assertTrue(isTextPresent("GV79 Application"));
+        String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
+        String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        Assert.assertEquals(expectedDate, actualDate);
         String name = world.adminJourney.getOwnerName();
         String[] nameArray = name.split(" (?=[^ ]*$)");
         String reassignedName = String.format("%s, %s",nameArray[1],nameArray[0]);
@@ -47,6 +52,10 @@ public class AddEditReassignTasks extends BasePage implements En {
     @Then("the User has edited a task")
     public void theUserHasEditedATask() {
         Assert.assertTrue(isTextPresent(world.adminJourney.getDescription()));
+        Assert.assertTrue(isTextPresent("Forms Digital"));
+        String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
+        String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        Assert.assertEquals(expectedDate, actualDate);
     }
 
     @Then("the User has added a task")
