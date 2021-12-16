@@ -205,8 +205,8 @@ public class ManageApplications {
         world.APIJourney.submitApplication();
     }
 
-    @Given("I have a valid {string} lgv only application")
-    public void iHaveAValidLgvOnlyApplication(String NIFlag) {
+    @Given("I have a valid {string} lgv only licence")
+    public void iHaveAValidLgvOnlyLicence(String NIFlag) {
         world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
