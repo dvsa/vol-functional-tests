@@ -52,12 +52,10 @@ public class BusRegistrationJourney extends BasePage {
 
         HashMap<String, String> dates;
         dates = world.globalMethods.date.getDateHashMap(0, 0, 0);
-        replaceDateFieldsByPartialId("receivedDate", dates);
+        enterDateFieldsByPartialId("receivedDate", dates);
 
         dates = world.globalMethods.date.getDateHashMap(0, month, 0);
-        enterText("effectiveDate_day", SelectorType.ID, dates.get("day"));
-        enterText("effectiveDate_month", SelectorType.ID, dates.get("month"));
-        enterText("effectiveDate_year", SelectorType.ID, dates.get("year"));
+        enterDateFieldsByPartialId("effectiveDate", dates);
         click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
 
         long kickOutTime = System.currentTimeMillis() + 60000;
@@ -129,9 +127,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void viewEBSRInExternal()  {
-
         long kickOutTime = System.currentTimeMillis() + 120000;
-
         do {
             // Refresh page
             refreshPageWithJavascript();

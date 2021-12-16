@@ -1,9 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import com.sun.istack.NotNull;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -11,10 +14,13 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class SelfServeNavigational extends BasePage {
 
@@ -54,17 +60,21 @@ public class SelfServeNavigational extends BasePage {
     public void navigateToLoginPage() {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
         navigate().get(myURL);
+        try {
+            accessibilityScanner();
+        } catch (IllegalBrowserException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void navigateToCreateAnAccount() {
         clickByLinkText("create an account");
     }
 
-//    Possibly add enums for page titles. Would be a good way to standardise the values accepted.
-    public void navigateToPage(String type, String page)  {
+    public void navigateToPage(String type, SelfServeSection page)  {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
-        String applicationStatus = null;
+        String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
@@ -92,7 +102,7 @@ public class SelfServeNavigational extends BasePage {
                 }
                 break;
         }
-        switch (page) {
+        switch (page.toString()) {
             case "View":
                 break;
             case "Vehicles":
@@ -104,30 +114,25 @@ public class SelfServeNavigational extends BasePage {
                 waitForTitleToBePresent("Convictions and Penalties");
                 break;
             default:
-                clickByLinkText(page);
-                waitForTitleToBePresent(page);
+                clickByLinkText(page.toString());
+                waitForTitleToBePresent(page.toString());
                 break;
         }
     }
 
-    public void navigateToNavBarPage(String page)  {
-        switch (page.toLowerCase()) {
-            case "home":
+    public void navigateToNavBarPage(SelfServeNavBar page)  {
+        switch (page.toString()) {
+            case "Home":
                 clickByLinkText("Home");
-                waitForTextToBePresent("You must keep your records up to date");
+                waitForTextToBePresent("Licences");
                 break;
-            case "manage users":
-                clickByLinkText("Manage users");
-                waitForTextToBePresent("Permission");
-                break;
-            case "your account":
-                clickByLinkText("Your account");
-                waitForTextToBePresent("Username");
-                break;
-            case "sign out":
+            case "Sign out":
                 clickByLinkText("Sign out");
                 waitForTextToBePresent("Thank you");
                 break;
+            default:
+                clickByLinkText(page.toString());
+                waitForTitleToBePresent(page.toString());
         }
     }
 /***

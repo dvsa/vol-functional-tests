@@ -6,6 +6,7 @@ import apiCalls.Utils.volBuilders.VehiclesBuilder;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
@@ -39,7 +40,7 @@ public class OldVehicleDetailsJourney extends BasePage {
     @When("^i am on the vehicle details page$")
     public void iAmOnTheVehicleDetailsPage() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Vehicles");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
     }
 
     @When("i add a vehicle to my licence")

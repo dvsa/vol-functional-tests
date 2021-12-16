@@ -1,11 +1,16 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import java.io.IOException;
 import java.util.HashMap;
+
+import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class OperatingCentreJourney extends BasePage {
 
@@ -22,11 +27,12 @@ public class OperatingCentreJourney extends BasePage {
     String submitButton = "//*[@id='form-actions[submit]']";
 
     public String addOperatingCentre = "//*[@id='add']";
+    String totalAuthorisationField = "//input[@id='totAuthVehicles']";
     String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
     String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
     String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
 
-    String confirmDeclaration =  "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
+    String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
     String submitAndPayForApplication = "//button[@id='submitAndPay']";
 
@@ -54,7 +60,7 @@ public class OperatingCentreJourney extends BasePage {
 
     public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         world.UIJourney.changeLicenceForVariation();
         if (!newHGVTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()))) {
             updateOperatingCentreAuthorisation(newHGVTotalAuthority);
@@ -74,16 +80,25 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
-        replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
         replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
+        if (isElementPresent("totAuthVehicles",SelectorType.ID)) {
+            replaceText(totalAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
+        } else{
+            replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
+        }
         UIJourney.clickSaveAndReturn();
     }
 
     public void addNewOperatingCentre(String vehicles, String trailers) {
         click(addOperatingCentre, SelectorType.XPATH);
+        try {
+            accessibilityScanner();
+        } catch (IllegalBrowserException | IOException e) {
+            e.printStackTrace();
+        }
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
         clickByLinkText(enterAddressManually);
         world.UIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
@@ -95,7 +110,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     private boolean hasHGVAuthorityIncreased(String newHGVTotalAuthority) {
-        return  world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority);
+        return world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority);
     }
 
     private boolean hasLGVAuthorityIncreased(String newLGVTotalAuthority) {

@@ -7,6 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.OperatingCentreJourney;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import scanner.AXEScanner;
@@ -67,7 +68,7 @@ public class OperatingCentreVariation extends BasePage {
     }
 
     @And("the review and declaration page should only display submit application")
-    public void completeTheFinancialEvidenceAndReviewAndDeclarationShouldDisplayOnlyDisplaySubmitApplication() {
+    public void theReviewAndDeclarationShouldDisplayOnlyDisplaySubmitApplication() {
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         assertTrue(isElementPresent(submitApplication, SelectorType.XPATH));
@@ -88,7 +89,7 @@ public class OperatingCentreVariation extends BasePage {
     @When("i change my total HGV vehicle authority to {int} without changing the operating centres")
     public void iChangeMyTotalHGVVehicleAuthorityWithoutChangingTheOperatingCentres(int HGVTotalAuthority) {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         world.UIJourney.changeLicenceForVariation();
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(HGVTotalAuthority), "0", currentTrailerTotalAuthority);
@@ -97,7 +98,7 @@ public class OperatingCentreVariation extends BasePage {
     @When("i add an operating centre and increase the vehicle total authority")
     public void iAddAnOperatingCentreAndIncreaseTheVehicleTotalAuthority() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         world.UIJourney.changeLicenceForVariation();
         numberOfNewOperatingCentreVehicles = "5";
         world.operatingCentreJourney.addNewOperatingCentre( numberOfNewOperatingCentreVehicles, "0");
@@ -108,8 +109,8 @@ public class OperatingCentreVariation extends BasePage {
 
 
     @And("increase the authority on an existing operating centre authorisation and update the total authorisations")
-    public void increaseTheAuthorityOnAnExistingOperatingCentreAuthorisationAndUpdateTheTotalAuthorisations() throws InterruptedException {
-        world.selfServeNavigation.navigateToPage("variation", "Operating centres and authorisation");
+    public void increaseTheAuthorityOnAnExistingOperatingCentreAuthorisationAndUpdateTheTotalAuthorisations() {
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         String updatedOperatingCentreVehicleAuthorisation = "10";
         world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation);
         int newTotalHGVAuthorisation = Integer.parseInt(numberOfNewOperatingCentreVehicles) + Integer.parseInt(updatedOperatingCentreVehicleAuthorisation);
@@ -118,7 +119,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @When("i increase my lgv authorisation and delete the new operating centre")
     public void iIncreaseMyLgvAuthorisationAndDeleteTheNewOperatingCentre() throws InterruptedException {
-        world.selfServeNavigation.navigateToPage("variation", "Operating centres and authorisation");
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         click("//*[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove this operating centre?");
         click("//button[@id='form-actions[submit]']", SelectorType.XPATH);
@@ -154,7 +155,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("i scan the various operating centre and authorisation pages")
     public void iScanTheVariousOperatingCentreAndAuthorisationPages() throws IllegalBrowserException, IOException {
         AXEScanner scanner = new AXEScanner();
-        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         scanner.scan();
         world.UIJourney.changeLicenceForVariation();
         scanner.scan();

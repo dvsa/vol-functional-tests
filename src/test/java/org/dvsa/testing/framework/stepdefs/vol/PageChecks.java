@@ -4,6 +4,7 @@ import Injectors.World;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -18,13 +19,13 @@ public class PageChecks extends BasePage implements En {
         @And("on self serve the withdraw application link is present on {string}")
         public void onSelfServeTheWithdrawApplicationLinkIsPresentOn(String page) {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-            world.selfServeNavigation.navigateToPage(page,"View");
+            world.selfServeNavigation.navigateToPage(page, SelfServeSection.VIEW);
             assertTrue(isElementPresent("//div//a[text()='Withdraw application']", SelectorType.XPATH));
         }
         @Then("on self serve the withdraw application link is not present on {string}")
             public void onSelfServeTheWithdrawApplicationLinkIsNotPresentOn(String page) {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-            world.selfServeNavigation.navigateToPage(page,"View");
+            world.selfServeNavigation.navigateToPage(page,SelfServeSection.VIEW);
             assertFalse(isElementPresent("//div//a[text()='Withdraw application']", SelectorType.XPATH));
         }
         @Then("the {string} document should be generated")

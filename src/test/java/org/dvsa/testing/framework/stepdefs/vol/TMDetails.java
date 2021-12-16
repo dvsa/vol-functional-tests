@@ -7,6 +7,8 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import io.cucumber.datatable.DataTable;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.By;
@@ -23,9 +25,9 @@ public class TMDetails extends BasePage implements En {
     @And("i navigate to the admin transport managers details page")
     public void iNavigateToTheAdminTransportManagersDetailsPage() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToNavBarPage("manage users");
+        world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         String admin = getAttribute("*//td[contains(text(),'Administrator')]/../td[1]/input", SelectorType.XPATH, "value");
-        world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, admin);
@@ -41,13 +43,16 @@ public class TMDetails extends BasePage implements En {
     }
 
     @And("the section buttons should not be displayed")
-    public void theSectionButtonsShouldNotBeDisplayed(String button) {
-        assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
+    public void theSectionButtonsShouldNotBeDisplayed(DataTable dataTable) {
+        List<String> buttonsOnPage = dataTable.asList(String.class);
+        for (String button : buttonsOnPage) {
+            assertTrue(Browser.navigate().findElements(By.xpath("//button")).stream().noneMatch(x -> x.getText().contains(button)));
+        }
     }
 
     @When("I select yes to all radio buttons")
     public void iSelectYesToAllRadioButtons() {
-        world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        findSelectAllRadioButtonsByValue("Y");
     }
 
     @Then("the section buttons should be displayed")
@@ -60,7 +65,7 @@ public class TMDetails extends BasePage implements En {
 
     @When("I click on the {string} button")
     public void iClickOnTheButton(String button) {
-        world.genericUtils.findSelectAllRadioButtonsByValue("Y");
+        findSelectAllRadioButtonsByValue("Y");
         click(String.format("//*[@data-label=\"%s\"]", button), SelectorType.XPATH);
     }
 
@@ -89,7 +94,6 @@ public class TMDetails extends BasePage implements En {
     public void iClickTheNoRadioButtonForTheQuestion(String arg0) {
         click("//*[@id=\"responsibilities\"]//input[@value='N']", SelectorType.XPATH);
     }
-
 
     @Then("the guidance text should be displayed")
     public void theGuidanceTextShouldBeDisplayed() {

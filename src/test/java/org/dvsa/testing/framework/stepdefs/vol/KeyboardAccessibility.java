@@ -5,6 +5,8 @@ import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -20,58 +22,58 @@ public class KeyboardAccessibility extends BasePage implements En {
     @When("i navigate to self serve application main pages i can skip to main content")
     public void iNavigateToSelfServeApplicationMainPagesICanSkipToMainContent() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("application", "Addresses");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.ADDRESSES);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("application", "Financial evidence");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.FINANCIAL_EVIDENCE);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("application", "Vehicle declarations");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.VEHICLE_DECLARATIONS);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("application", "Financial history");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.FINANCIAL_HISTORY);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("application", "Licence history");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.LICENCE_HISTORY);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("application", "Convictions and penalties");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.CONVICTIONS_AND_PENALTIES);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("application", "Review and declarations");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
         world.UIJourney.skipToMainContentAndCheck();
     }
 
     @When("i navigate to self serve licence main pages i can skip to main content")
-    public void iNavigateToSelfServeLicenceMainPagesICanSkipToMainContent() throws IllegalBrowserException, MalformedURLException {
+    public void iNavigateToSelfServeLicenceMainPagesICanSkipToMainContent() {
         world.UIJourney.CheckSkipToMainContentOnExternalUserLogin();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "View");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Type of licence");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TYPE_OF_LICENCE);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Business type");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_TYPE);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Business details");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Address");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.ADDRESSES);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Directors");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.DIRECTORS);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence","Operating centres and authorisation");
+        world.selfServeNavigation.navigateToPage("licence",SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Vehicles");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Trailers");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToPage("licence", "Safety and compliance");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.SAFETY_AND_COMPLIANCE);
         world.UIJourney.skipToMainContentAndCheck();
     }
 
     @When("i navigate to self serve licence nav bar pages i can skip to main content")
     public void iNavigateToSelfServeLicenceNavBarPagesICanSkipToMainContent() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToNavBarPage("Home");
+        world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.HOME);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToNavBarPage("Manage users");
+        world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         world.UIJourney.skipToMainContentAndCheck();
-        world.selfServeNavigation.navigateToNavBarPage("Your account");
+        world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.YOUR_ACCOUNT);
         world.UIJourney.skipToMainContentAndCheck();
     }
 

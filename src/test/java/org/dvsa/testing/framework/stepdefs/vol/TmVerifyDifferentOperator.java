@@ -6,6 +6,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -68,10 +69,10 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        if(Browser.navigate().findElements(By.partialLinkText(world.createApplication.getApplicationId())).size()!=0) {
-            world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+        if (Browser.navigate().findElements(By.partialLinkText(world.createApplication.getApplicationId())).size()!=0) {
+            world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationId())).size()!=0) {
-            world.selfServeNavigation.navigateToPage("variation", "Transport Managers");
+            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.TRANSPORT_MANAGERS);
         }
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         click("form-actions[submit]", SelectorType.ID);
@@ -84,7 +85,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("form-actions[submit]", SelectorType.ID);
         click("//*[contains(text(),'Print')]",SelectorType.XPATH);
@@ -107,7 +108,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         world.TMJourney.assertTMDetailsWithOperator();
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("application", "Transport Managers");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='emailAddress']");
@@ -144,7 +145,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()),true);
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
-        replaceDateFieldsByPartialId("dob", dob);
+        enterDateFieldsByPartialId("dob", dob);
         click("form-actions[submit]", SelectorType.ID);
         waitForPageLoad();
     }
@@ -165,14 +166,14 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @When("i add a new transport manager")
     public void iAddANewTransportManager() {
-        world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
         world.UIJourney.changeLicenceForVariation();
         world.TMJourney.addNewPersonAsTransportManager("variation");
     }
 
     @Then("a transport manager has been created banner is displayed")
     public void aTransportManagerHasBeenCreatedBannerIsDisplayed() {
-        findElement("//p[@role]",SelectorType.XPATH,10).getText().contains("The transport manager's user account has been created and a link sent to them");
+        Assert.assertTrue(findElement("//p[@role]",SelectorType.XPATH,10).getText().contains("The transport manager's user account has been created and a link sent to them"));
     }
 
     @Then("the download TM{int} for should not be displayed on the details page")
