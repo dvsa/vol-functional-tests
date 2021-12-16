@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects;
 
+import activesupport.driver.Browser;
 import com.google.common.base.Function;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
@@ -7,6 +8,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
 
@@ -14,10 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +27,6 @@ public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 10;
     private static final int TIME_OUT_SECONDS = 60;
     private static final int POLLING_SECONDS = 1;
-
     private static String ERROR_MESSAGE_HEADING = "Please correct the following errors";
     private static String ERROR_CLASS = ".error__text";
     protected static String MAIN_TITLE_SELECTOR = "h1";
@@ -70,7 +68,7 @@ public abstract class BasePage extends DriverUtils {
         boolean itsFound = true;
         try {
             WebDriverWait wait = new WebDriverWait(getDriver(), 30);
-            wait.until(ExpectedConditions.visibilityOf(findElement(String.format("//*[contains(text(),\"%s\")]", locator),SelectorType.XPATH)));
+            wait.until(ExpectedConditions.visibilityOf(findElement(String.format("//*[contains(text(),\"%s\")]", locator), SelectorType.XPATH)));
         } catch (Exception e) {
             return false;
 
@@ -78,7 +76,7 @@ public abstract class BasePage extends DriverUtils {
         return itsFound;
     }
 
-    public static boolean isErrorMessagePresent(){
+    public static boolean isErrorMessagePresent() {
         boolean hasError = false;
 
         if (isTextPresent(ERROR_MESSAGE_HEADING) || isElementPresent(ERROR_CLASS, SelectorType.CSS)) hasError = true;
@@ -104,19 +102,20 @@ public abstract class BasePage extends DriverUtils {
     }
 
     protected static void clickByLinkText(@NotNull String selector) {
-        findElement(selector,SelectorType.PARTIALLINKTEXT).click();
+        findElement(selector, SelectorType.PARTIALLINKTEXT).click();
     }
 
+
     protected static void clickByXPath(@NotNull String selector) {
-        findElement(selector,SelectorType.XPATH).click();
+        findElement(selector, SelectorType.XPATH).click();
     }
 
     protected static void clickById(@NotNull String selector) {
-        findElement(selector,SelectorType.ID).click();
+        findElement(selector, SelectorType.ID).click();
     }
 
     protected static void clickByName(@NotNull String selector) {
-        findElement(selector,SelectorType.NAME).click();
+        findElement(selector, SelectorType.NAME).click();
     }
 
     protected static void selectValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String listValue) {
@@ -129,6 +128,34 @@ public abstract class BasePage extends DriverUtils {
         selectItem.selectByIndex(listValue);
     }
 
+    public static String selectRandomValueFromDropDown(String idArgument) {
+        Select select = new Select(getDriver().findElement(By.id(idArgument)));
+        Random random = new Random();
+        List<WebElement> dropdown = select.getOptions();
+        int size = dropdown.size();
+        int randomNo = random.nextInt(size);
+        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]", idArgument, randomNo), SelectorType.XPATH).getText();
+        selectValueFromDropDown(idArgument, SelectorType.ID, ownerName);
+        return ownerName;
+    }
+
+    public void selectRandomRadioBtnFromDataTable(){
+        List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
+        int rows_count = rows_table.size();
+        outsideloop:
+        for (int row = 0; row < rows_count; row++){
+            List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
+            int columns_count = Columns_row.size();
+            for (int column = 0; column < columns_count; ){
+                List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
+                Random random = new Random();
+                int size = options.size();
+                int index = random.nextInt(size);
+                options.get(index).click();
+                break outsideloop;
+            }
+        }
+    }
     protected static boolean isLinkPresent(String locator, int duration) {
         boolean itsFound = true;
         try {
@@ -139,6 +166,13 @@ public abstract class BasePage extends DriverUtils {
 
         }
         return itsFound;
+    }
+
+    public void selectRandomCheckBoxOrRadioBtn(String typeArgument){
+        List<WebElement> checkbox = findElements(String.format("//input[@type='%s']",typeArgument),SelectorType.XPATH);
+        Random random = new Random();
+        int index = random.nextInt(checkbox.size());
+        checkbox.get(index).click();
     }
 
     protected static boolean isTitlePresent(String locator, int duration) {
@@ -338,12 +372,13 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class)
-                .ignoring(ElementClickInterceptedException.class);
+                .ignoring(ElementClickInterceptedException.class)
+                .ignoring(ElementNotInteractableException.class);
 
         WebElement element = wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
@@ -394,6 +429,10 @@ public abstract class BasePage extends DriverUtils {
                 return sendText;
             }
         });
+    }
+
+    public static boolean isFieldEnabled(String field, SelectorType selectorType){
+        return Boolean.parseBoolean(findElement(field, selectorType).getAttribute("disabled"));
     }
 
     public static Object javaScriptExecutor(String jsScript) {
@@ -466,7 +505,7 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
-    public void replaceDateFieldsByPartialId(String regex, HashMap<String, String> hashMapDate) {
+    public void enterDateFieldsByPartialId(String regex, HashMap<String, String> hashMapDate) {
         replaceText(regex.concat("_day"), SelectorType.ID, hashMapDate.get("day"));
         replaceText(regex.concat("_month"), SelectorType.ID, hashMapDate.get("month"));
         replaceText(regex.concat("_year"), SelectorType.ID, hashMapDate.get("year"));

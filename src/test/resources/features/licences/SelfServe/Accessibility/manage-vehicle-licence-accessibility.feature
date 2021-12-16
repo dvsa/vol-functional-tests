@@ -1,4 +1,4 @@
-@Accessibility
+
 Feature: Check that manage vehicle journey is accessible
 
   Background:

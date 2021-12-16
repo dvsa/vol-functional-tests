@@ -6,7 +6,7 @@ import activesupport.system.Properties;
 import com.typesafe.config.Config;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
-public class Configuration{
+public class Configuration {
     public EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     public Config config = new activesupport.config.Configuration(env.toString()).getConfig();
     private World world;
@@ -29,5 +29,4 @@ public class Configuration{
     public String getUsernameResetLink() {
         return String.valueOf(S3.getUsernameInfoLink(world.registerUser.getEmailAddress()));
     }
-
 }

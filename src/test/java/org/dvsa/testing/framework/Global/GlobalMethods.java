@@ -19,12 +19,12 @@ public class GlobalMethods extends BasePage {
     private World world;
     private String loginPassword;
     public Dates date = new Dates(new LocalDateCalendar());
-    private String emailField = nameAttribute("input", "username");
-    private String passwordField = nameAttribute("input", "password");
-    private String submitButton = nameAttribute("input", "submit") + "[value=\"Sign in\"]";
+    private final String emailField = nameAttribute("input", "username");
+    private final String passwordField = nameAttribute("input", "password");
+    private final String submitButton = nameAttribute("input", "submit") + "[value=\"Sign in\"]";
 
 
-    public GlobalMethods(World world){
+    public GlobalMethods(World world) {
         this.world = world;
     }
 
@@ -33,23 +33,28 @@ public class GlobalMethods extends BasePage {
         return loginPassword;
     }
 
-    public void setLoginPassword(String password) { this.loginPassword = password; }
+    public void setLoginPassword(String password) {
+        this.loginPassword = password;
+    }
 
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
-
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+                waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
+            }
         }
-
         DriverUtils.get(myURL);
-        String password = world.configuration.getTempPassword(emailAddress);
+        enterCredentialsAndLogin(username, emailAddress, newPassword);
+    }
 
+    public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
-
+        String password = world.configuration.getTempPassword(emailAddress);
         try {
             signIn(username, password);
         } catch (Exception e) {
@@ -69,9 +74,6 @@ public class GlobalMethods extends BasePage {
 
     public void navigateToLogin(String username, String emailAddress, ApplicationType applicationType) {
         navigateToLoginWithoutCookies(username, emailAddress, applicationType);
-
-        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);}
     }
 
     public void signIn(String userName, String password) {

@@ -10,7 +10,7 @@ Feature: TM signs through verify
     And I am the operator and not the transport manager
     And i have a "goods" "GB" partial application
 
-  Scenario: TM who is not Operator / Applicant signs through Verify
+  Scenario: TM who is not Operator_Applicant signs through Verify
     When i add an existing person as a transport manager who is not the operator on "application"
     And i sign the declaration
     And i choose to sign with verify

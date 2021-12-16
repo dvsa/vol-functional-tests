@@ -53,5 +53,16 @@ public class Initialisation extends BasePage implements En {
         world.UIJourney = new UIJourney(world);
         world.DataGenerator = new DataGenerator(world);
         world.forgottenCredsJourney = new ForgottenCredsJourney(world);
+        world.businessDetailsJourney = new BusinessDetailsJourney(world);
+        world.operatingCentreJourney = new  OperatingCentreJourney(world);
+        world.safetyComplianceJourney = new SafetyComplianceJourney(world);
+        world.safetyInspectorJourney = new SafetyInspectorJourney(world);
+        world.transportManagerJourney = new TransportManagerJourney(world);
+        world.vehicleDetailsJourney = new VehicleDetailsJourney(world);
+        world.financialHistoryJourney = new FinancialHistoryJourney(world);
+        world.licenceDetailsJourney = new LicenceDetailsJourney(world);
+        world.convictionsAndPenaltiesJourney = new ConvictionsAndPenaltiesJourney(world);
+        world.userRegistrationJourney = new UserRegistrationJourney(world);
+        world.UserAccountJourney = new UserAccountJourney(world);
     }
 }

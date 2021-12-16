@@ -7,6 +7,7 @@ import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
@@ -29,7 +30,7 @@ public class DirectorVariation extends BasePage {
 
     @And("i navigate to the directors page")
     public void iNavigateToTheDirectorsPage() {
-        world.selfServeNavigation.navigateToPage("licence", "Directors");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.DIRECTORS);
     }
 
     @When("^I begin adding a new director and their details$")
@@ -148,7 +149,7 @@ public class DirectorVariation extends BasePage {
     @When("I wrongly fill in and submit the add a director page")
     public void whenIWronglyFillInAndSubmitTheAddADirectorPage() {
         clickByXPath(directorJourney.addButton);
-        waitForTitleToBePresent(directorJourney.directorDetailsTitle);
+        waitForTitleToBePresent(directorJourney.directorVariationDetailsTitle);
         selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
 
         String incorrectNameValue = "!@£$%^";
@@ -159,7 +160,7 @@ public class DirectorVariation extends BasePage {
         incorrectDateValues.put("day", "!@");
         incorrectDateValues.put("month", "£$");
         incorrectDateValues.put("year", "%^&*");
-        replaceDateFieldsByPartialId("dob", incorrectDateValues);
+        enterDateFieldsByPartialId("dob", incorrectDateValues);
 
         UIJourney.clickSaveAndReturn();
         //clickByXPath(directorJourney.saveAndContinue);
@@ -171,14 +172,14 @@ public class DirectorVariation extends BasePage {
         // Name fields do not currently contain any incorrect value validation
 
         List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation1, listOfSummaryErrors.get(0).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation2, listOfSummaryErrors.get(1).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfSummaryErrors.get(2).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(0).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(1).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(2).getText());
 
         List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation1, listOfInlineErrors.get(0).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation2, listOfInlineErrors.get(1).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfInlineErrors.get(2).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(0).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(1).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(2).getText());
     }
 
     @Then("the director financial history page empty field validation should appear")
