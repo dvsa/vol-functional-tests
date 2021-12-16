@@ -12,4 +12,3 @@ Feature: Create an Account
     Given I am on the registration page
     And an Operator with no licence
     Then I should be able to register an account
-
