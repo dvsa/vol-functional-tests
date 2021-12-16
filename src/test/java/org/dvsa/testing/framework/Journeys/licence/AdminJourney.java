@@ -37,7 +37,7 @@ public class AdminJourney extends BasePage {
         waitAndClick("add", SelectorType.ID);
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
         selectRandomCheckBoxOrRadioBtn("checkbox");
-        HashMap<String, String> currentDate = date.getDateHashMap(0, 0, -1);
+        HashMap<String, String> currentDate = date.getDateHashMap(0, 0, +1);
         replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
