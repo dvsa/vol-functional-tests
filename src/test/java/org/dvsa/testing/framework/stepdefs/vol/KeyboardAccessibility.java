@@ -39,7 +39,7 @@ public class KeyboardAccessibility extends BasePage implements En {
     }
 
     @When("i navigate to self serve licence main pages i can skip to main content")
-    public void iNavigateToSelfServeLicenceMainPagesICanSkipToMainContent() throws IllegalBrowserException, MalformedURLException {
+    public void iNavigateToSelfServeLicenceMainPagesICanSkipToMainContent() {
         world.UIJourney.CheckSkipToMainContentOnExternalUserLogin();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
