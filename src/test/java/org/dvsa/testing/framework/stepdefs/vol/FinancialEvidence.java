@@ -21,14 +21,14 @@ public class FinancialEvidence extends BasePage {
     World world;
     public static HashMap<String, String[]> licences = new HashMap<>();
     List<FinancialStandingRate> allRates = Arrays.asList( new FinancialStandingRate[] {
-            new FinancialStandingRate("goods","standard_national",null,8000,4500,null),
-            new FinancialStandingRate("goods","standard_international","hgv",8000,4500,null),
-            new FinancialStandingRate("goods","standard_international","lgv",1600,800,null),
-            new FinancialStandingRate("goods","restricted",null,3100,1700,null),
-            new FinancialStandingRate("public","standard_national",null,8000,4500,null),
-            new FinancialStandingRate("public","standard_international",null,8000,4500,null),
-            new FinancialStandingRate("public","restricted",null,3100,1700,null),
-            new FinancialStandingRate("public","special_restricted",null,3100,1700,null)}
+            new FinancialStandingRate("goods", "standard_national", null, 8000, 4500, null),
+            new FinancialStandingRate("goods", "standard_international", "hgv", 8000, 4500, null),
+            new FinancialStandingRate("goods", "standard_international", "lgv", 1600, 800, null),
+            new FinancialStandingRate("goods", "restricted", null, 3100, 1700, null),
+            new FinancialStandingRate("public", "standard_national", null, 8000, 4500, null),
+            new FinancialStandingRate("public", "standard_international", null, 8000, 4500, null),
+            new FinancialStandingRate("public", "restricted", null, 3100, 1700, null),
+            new FinancialStandingRate("public", "special_restricted", null, 3100, 1700, null)}
     );
 
     int expectedFinancialEvidenceValue;

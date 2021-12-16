@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourn
 import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -53,7 +54,7 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             CommonSteps.waitUntilPermitHasStatus(world);
         });
         And ("^I navigate to permit dashboard page", () -> {
-            world.selfServeNavigation.navigateToNavBarPage("home");
+            world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.HOME);
         });
         And ("^I'm on the ECMT international submitted page for my active application", () -> {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

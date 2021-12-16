@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import apiCalls.enums.LicenceType;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -42,7 +43,7 @@ public class SurrenderJourney extends BasePage {
 
     public void navigateToSurrendersStartPage()  {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "View");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Apply to surrender licence");
     }
 
@@ -73,10 +74,6 @@ public class SurrenderJourney extends BasePage {
 
     public String getSurrenderCountry()  {
         return getText("//dt[contains(text(),'Country')]//..//dd", SelectorType.XPATH);
-    }
-
-    public String getSurrenderContactNumber()  {
-        return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
     }
 
     public void submitSurrender() {
@@ -151,18 +148,5 @@ public class SurrenderJourney extends BasePage {
         waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, getDiscsStolen());
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
-    }
-
-    public void removeDisc() {
-        waitAndClick("form-actions[submit]", SelectorType.ID);
-        addDiscInformation();
-        clickByLinkText("Home");
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
-        clickByLinkText("Licence discs");
-        waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
-        waitForElementToBePresent("//*[@id='modal-title']");
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
-        refreshPageWithJavascript();
-        waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }
 }

@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -60,7 +61,7 @@ public class OperatingCentreJourney extends BasePage {
 
     public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Operating centres and authorisation");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         world.UIJourney.changeLicenceForVariation();
         if (!newHGVTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()))) {
             updateOperatingCentreAuthorisation(newHGVTotalAuthority);

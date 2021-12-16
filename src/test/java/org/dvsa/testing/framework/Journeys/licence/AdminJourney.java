@@ -147,7 +147,7 @@ public class AdminJourney extends BasePage {
         waitAndClick("create task", SelectorType.ID);
         waitForTextToBePresent("Action date");
         HashMap<String, String> currentDate = date.getDateHashMap(0, 0, 1);
-        replaceDateFieldsByPartialId("details[actionDate]", currentDate);
+        enterDateFieldsByPartialId("details[actionDate]", currentDate);
         selectValueFromDropDown("category", SelectorType.ID, "Licensing");
         waitForElementToBeClickable("subCategory", SelectorType.ID);
         selectValueFromDropDown("subCategory", SelectorType.ID, "General Task");

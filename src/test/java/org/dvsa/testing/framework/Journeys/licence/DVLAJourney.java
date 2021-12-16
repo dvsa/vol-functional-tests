@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -25,7 +26,7 @@ public class DVLAJourney extends BasePage {
     public DVLAJourney(World world){ this.world = world; }
 
     public void navigateToManageVehiclesPage(String licenceStatus) {
-        world.selfServeNavigation.navigateToPage(licenceStatus, "Vehicles");
+        world.selfServeNavigation.navigateToPage(licenceStatus, SelfServeSection.VEHICLES);
     }
 
     public void navigateToAddVehiclePage() {

@@ -11,6 +11,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -72,7 +73,7 @@ public class RemoveTM extends BasePage implements En {
     @When("a self-serve user removes the last TM")
     public void aSelfServeUserRemovesTheLastTM() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "Transport Managers");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
         click("//*[@value='Remove']", SelectorType.XPATH);
     }
 
