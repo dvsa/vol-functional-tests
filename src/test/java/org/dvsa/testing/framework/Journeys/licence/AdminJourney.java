@@ -38,7 +38,7 @@ public class AdminJourney extends BasePage {
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
         selectRandomCheckBoxOrRadioBtn("checkbox");
         HashMap<String, String> currentDate = date.getDateHashMap(0, 0, +1);
-        replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
+        enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
@@ -47,7 +47,7 @@ public class AdminJourney extends BasePage {
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
         selectRandomCheckBoxOrRadioBtn("checkbox");
         HashMap<String, String> currentDate = date.getDateHashMap(+0, +0, +1);
-        replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
+        enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
