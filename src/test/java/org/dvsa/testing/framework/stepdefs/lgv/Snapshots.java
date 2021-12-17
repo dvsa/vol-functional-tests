@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.lgv;
 import Injectors.World;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.By;
@@ -28,7 +29,7 @@ public class Snapshots extends BasePage {
 
     @And("i navigate to the snapshot on the review and declarations page")
     public void iNavigateToTheSnapshotOnTheReviewAndDeclarationsPage() {
-        world.selfServeNavigation.navigateToPage("application", "Review and declarations");
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
         clickByLinkText("Check your answers");
         ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
         switchToWindow(tabs.get(1));
