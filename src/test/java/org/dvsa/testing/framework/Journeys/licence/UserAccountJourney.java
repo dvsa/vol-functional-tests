@@ -33,7 +33,7 @@ public class UserAccountJourney extends BasePage {
         replaceText("person[forename]", SelectorType.ID, world.DataGenerator.getOperatorForeName());
         replaceText("person[familyName]", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
         HashMap<String, String> currentDate = date.getDateHashMap(0, 0, -18);
-        replaceDateFieldsByPartialId("birthDate", currentDate);
+        enterDateFieldsByPartialId("birthDate", currentDate);
         replaceText("userContact[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         replaceText("userContact[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         replaceText("addressLine1", SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
