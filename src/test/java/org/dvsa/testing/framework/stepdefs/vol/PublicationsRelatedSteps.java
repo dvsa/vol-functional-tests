@@ -10,6 +10,7 @@ import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.Generic.ParseUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
@@ -163,7 +164,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
     @Then("the corresponding publication is generated and published")
     public void theCorrespondingPublicationIsGeneratedAndPublished() {
-        world.internalNavigation.navigateToAdminPublication();
+        world.internalNavigation.AdminNavigation(AdminOption.PUBLICATIONS);
         click(fiftyResultsPerPageLink, SelectorType.XPATH);
         String trafficArea = ParseUtils.parseTrafficArea(world.createApplication.getTrafficArea());
         String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
