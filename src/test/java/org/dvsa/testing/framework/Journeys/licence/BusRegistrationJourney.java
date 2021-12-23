@@ -13,6 +13,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -24,6 +25,7 @@ import org.openqa.selenium.TimeoutException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,6 +33,7 @@ import java.util.HashMap;
 
 import static activesupport.aws.s3.S3.client;
 import static junit.framework.TestCase.assertTrue;
+import static org.apache.logging.log4j.core.impl.ThrowableFormatOptions.FILE_NAME;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class BusRegistrationJourney extends BasePage {
@@ -197,8 +200,17 @@ public class BusRegistrationJourney extends BasePage {
             //get Pat
             if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
 //                S3.downloadObject(world.configuration.getBucketName(), path, "/tmp/EBSR/".concat(ebsrFileName));
-                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "https://devapp-olcs-pri-olcs-autotest-s3.s3.eu-west-1.amazonaws.com/BusReg/"
-                        .concat(ebsrFileName));
+                try {
+                    FileUtils.copyURLToFile(
+                            new URL("https://devapp-olcs-pri-olcs-autotest-s3.s3.eu-west-1.amazonaws.com/BusReg/"
+                                    .concat(ebsrFileName)),
+                            new File("/tmp/testing"),
+                            2000,
+                            2000);
+                }catch (Exception io){
+                    io.fillInStackTrace();
+                }
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH,"");
 
 //                ProcessBuilder proc = new ProcessBuilder(String.format("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster " +
 //                        " --task 6b773bd3ca7c4f69989e8b84c301e543 --container selenium-node-chrome --interactive " +
