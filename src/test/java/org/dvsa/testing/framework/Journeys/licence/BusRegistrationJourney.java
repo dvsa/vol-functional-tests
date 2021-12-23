@@ -199,9 +199,6 @@ public class BusRegistrationJourney extends BasePage {
                 System.out.println("I AM HERE+++++++++++++++++++++++++++++");
                 S3.downloadObject(world.configuration.getBucketName(), path, "/tmp/EBSR/".concat(ebsrFileName));
                 System.out.println("DOWNLOADED+++++++++++++++++++++++++");
-
-                S3Object s3object = client().getObject(world.configuration.getBucketName(), path);
-                S3ObjectInputStream inputStream = s3object.getObjectContent();
                 System.out.println("DOWNLOADED+++++++++++++++++++++++++");
                 enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "/tmp/EBSR/".concat(ebsrFileName));
 
