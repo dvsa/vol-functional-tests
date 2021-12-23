@@ -17,6 +17,10 @@ import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 import static junit.framework.TestCase.assertTrue;
@@ -149,6 +153,7 @@ public class BusRegistrationJourney extends BasePage {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         String path = String.format("BusReg/%s", ebsrFileName);
+
 
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
