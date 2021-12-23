@@ -173,7 +173,7 @@ public class BusRegistrationJourney extends BasePage {
         return createS3Client(Regions.EU_WEST_1);
     }
 
-    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
+    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         String path = String.format("BusReg/%s", ebsrFileName);
@@ -200,9 +200,12 @@ public class BusRegistrationJourney extends BasePage {
 //                S3.downloadObject(world.configuration.getBucketName(), path, "/home/seluser/EBSR/".concat(ebsrFileName));
 //                System.out.println("DOWNLOADED+++++++++++++++++++++++++");
 
-                S3Object s3object = client().getObject(world.configuration.getBucketName(), path);
-                S3ObjectInputStream inputStream = s3object.getObjectContent();
-                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(inputStream));
+//                S3Object s3object = client().getObject(world.configuration.getBucketName(), path);
+//                S3ObjectInputStream inputStream = s3object.getObjectContent();
+//                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(inputStream));
+
+                ProcessBuilder proc = new ProcessBuilder("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster --task 6b773bd3ca7c4f69989e8b84c301e543 --container selenium-node-chrome --interactive --command \"bash -c 'echo blah>/tmp/testing'\"");
+                proc.start();
                 System.out.println("ENTERED+++++++++++++");
             }
         }
