@@ -7,6 +7,12 @@ import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -23,11 +29,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+import static activesupport.aws.s3.S3.client;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class BusRegistrationJourney extends BasePage {
-
+    private static AmazonS3 client = null;
     private World world;
 
     public BusRegistrationJourney(World world) {
@@ -147,6 +154,25 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
+    public static AmazonS3 client() {
+        return createS3Client();
+    }
+
+    public static AmazonS3 client(Regions region) {
+        return createS3Client(region);
+    }
+
+    public static AmazonS3 createS3Client(Regions region) {
+        if (client == null) {
+            client = AmazonS3ClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).withRegion(region).build();
+        }
+        return client;
+    }
+
+    public static AmazonS3 createS3Client() {
+        return createS3Client(Regions.EU_WEST_1);
+    }
+
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
@@ -170,10 +196,13 @@ public class BusRegistrationJourney extends BasePage {
             S3.uploadObject(world.configuration.getBucketName(), path, System.getProperty("user.dir").concat(zipFilePath));
             //get Pat
             if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
-                System.out.println("I AM HERE+++++++++++++++++++++++++++++");
-                S3.downloadObject(world.configuration.getBucketName(), path, "/home/seluser/EBSR/".concat(ebsrFileName));
-                System.out.println("DOWNLOADED+++++++++++++++++++++++++");
-                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "/home/seluser/EBSR/".concat(ebsrFileName));
+//                System.out.println("I AM HERE+++++++++++++++++++++++++++++");
+//                S3.downloadObject(world.configuration.getBucketName(), path, "/home/seluser/EBSR/".concat(ebsrFileName));
+//                System.out.println("DOWNLOADED+++++++++++++++++++++++++");
+
+                S3Object s3object = client().getObject(world.configuration.getBucketName(), path);
+                S3ObjectInputStream inputStream = s3object.getObjectContent();
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(inputStream));
                 System.out.println("ENTERED+++++++++++++");
             }
         }

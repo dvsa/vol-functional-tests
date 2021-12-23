@@ -265,6 +265,11 @@
             <artifactId>json</artifactId>
             <version>${gson.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-ecs</artifactId>
+            <version>1.12.131</version>
+        </dependency>
     </dependencies>
 
     <!--  Nexus Configuration  -->
