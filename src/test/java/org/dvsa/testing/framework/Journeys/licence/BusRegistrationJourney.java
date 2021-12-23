@@ -205,7 +205,7 @@ public class BusRegistrationJourney extends BasePage {
 //                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(inputStream));
 
                 ProcessBuilder proc = new ProcessBuilder(String.format("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster --container selenium-node-chrome --interactive " +
-                        "--command \"bash cp %s /tmp'\"",ebsrFileName));
+                        "--command \"bash cp %s /tmp'\"",System.getProperty("user.dir").concat(zipFilePath)));
                 try {
                     proc.start();
                 } catch (IOException e) {
