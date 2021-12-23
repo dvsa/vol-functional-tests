@@ -204,7 +204,7 @@ public class BusRegistrationJourney extends BasePage {
                     FileUtils.copyURLToFile(
                             new URL("https://devapp-olcs-pri-olcs-autotest-s3.s3.eu-west-1.amazonaws.com/BusReg/"
                                     .concat(ebsrFileName)),
-                            new File("/tmp/testing"),
+                            new File(System.getProperty("user.dir").concat("/tmp/testing_downloads")),
                             2000,
                             2000);
                 }catch (Exception io){
