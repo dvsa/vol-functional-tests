@@ -7,6 +7,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.OperatingCentreJourney;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -168,5 +169,15 @@ public class OperatingCentreVariation extends BasePage {
         click(world.operatingCentreJourney.addOperatingCentre, SelectorType.XPATH);
         waitForTitleToBePresent("Add operating centre");
         scanner.scan();
+    }
+
+    @And("i create and submit an lgv only operating centre variation")
+    public void iCreateAndSubmitAnLgvOnlyOperatingCentreVariation() {
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_AUTHORISATION);
+        world.UIJourney.changeLicenceForVariation();
+//        replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, world.operatingCentreJourney.newLGVTotalAuthority);
+        UIJourney.clickSaveAndReturn();
+
     }
 }

@@ -1,3 +1,4 @@
+@lgv
 Feature: Publications display the right LGV related information on LGV only licences
 
   Scenario: A submitted LGV Only application generated a publication correctly on internal
