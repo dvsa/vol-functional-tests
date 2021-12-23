@@ -196,22 +196,23 @@ public class BusRegistrationJourney extends BasePage {
             S3.uploadObject(world.configuration.getBucketName(), path, System.getProperty("user.dir").concat(zipFilePath));
             //get Pat
             if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
-//                System.out.println("I AM HERE+++++++++++++++++++++++++++++");
-//                S3.downloadObject(world.configuration.getBucketName(), path, "/home/seluser/EBSR/".concat(ebsrFileName));
-//                System.out.println("DOWNLOADED+++++++++++++++++++++++++");
+                System.out.println("I AM HERE+++++++++++++++++++++++++++++");
+                S3.downloadObject(world.configuration.getBucketName(), path, "/tmp/EBSR/".concat(ebsrFileName));
+                System.out.println("DOWNLOADED+++++++++++++++++++++++++");
 
-//                S3Object s3object = client().getObject(world.configuration.getBucketName(), path);
-//                S3ObjectInputStream inputStream = s3object.getObjectContent();
-//                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(inputStream));
+                S3Object s3object = client().getObject(world.configuration.getBucketName(), path);
+                S3ObjectInputStream inputStream = s3object.getObjectContent();
+                System.out.println("DOWNLOADED+++++++++++++++++++++++++");
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "/tmp/EBSR/".concat(ebsrFileName));
 
-                ProcessBuilder proc = new ProcessBuilder(String.format("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster " +
-                        " --task 6b773bd3ca7c4f69989e8b84c301e543 --container selenium-node-chrome --interactive " +
-                        "--command \"bash cp -R %s tmp/'\"",System.getProperty("user.dir").concat(zipFilePath)));
-                try {
-                    proc.start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                ProcessBuilder proc = new ProcessBuilder(String.format("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster " +
+//                        " --task 6b773bd3ca7c4f69989e8b84c301e543 --container selenium-node-chrome --interactive " +
+//                        "--command \"bash cp -R %s tmp/'\"",System.getProperty("user.dir").concat(zipFilePath)));
+//                try {
+//                    proc.start();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 System.out.println("ENTERED+++++++++++++");
             }
         }
