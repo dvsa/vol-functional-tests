@@ -90,7 +90,7 @@ public class WebDav extends BasePage implements En {
 
     @And("upload a document")
     public void uploadADocument() {
-        world.UIJourney.uploadDocument(String.format("%s/%s",System.getProperty("user.dir"),"src/test/resources/testBusTemplate.rtf"));
+        world.UIJourney.uploadDocument(String.format("%s/%s",System.getProperty("user.dir"), "src/test/resources/testBusTemplate.rtf"));
     }
 
     @Then("the operating system should be updated to {string}")

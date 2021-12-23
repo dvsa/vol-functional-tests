@@ -37,8 +37,8 @@ public class AdminJourney extends BasePage {
         waitAndClick("add", SelectorType.ID);
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
         selectRandomCheckBoxOrRadioBtn("checkbox");
-        HashMap<String, String> currentDate = date.getDateHashMap(0, 0, -1);
-        replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
+        HashMap<String, String> currentDate = date.getDateHashMap(0, 0, +1);
+        enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
@@ -47,7 +47,7 @@ public class AdminJourney extends BasePage {
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
         selectRandomCheckBoxOrRadioBtn("checkbox");
         HashMap<String, String> currentDate = date.getDateHashMap(+0, +0, +1);
-        replaceDateFieldsByPartialId("fields[holidayDate]", currentDate);
+        enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
 
@@ -147,7 +147,7 @@ public class AdminJourney extends BasePage {
         waitAndClick("create task", SelectorType.ID);
         waitForTextToBePresent("Action date");
         HashMap<String, String> currentDate = date.getDateHashMap(0, 0, 1);
-        replaceDateFieldsByPartialId("details[actionDate]", currentDate);
+        enterDateFieldsByPartialId("details[actionDate]", currentDate);
         selectValueFromDropDown("category", SelectorType.ID, "Licensing");
         waitForElementToBeClickable("subCategory", SelectorType.ID);
         selectValueFromDropDown("subCategory", SelectorType.ID, "General Task");

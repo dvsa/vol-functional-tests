@@ -8,6 +8,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -56,7 +57,7 @@ public class Continuations extends BasePage implements En {
 
     @Then("the users of ss should display on the continuation review details page and on the snapshot")
     public void theUsersOfSsShouldDisplayOnTheContinuationReviewDetailsPageAndOnTheSnapshot() {
-        world.selfServeNavigation.navigateToNavBarPage("manage users");
+        world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         List<WebElement> userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
         List<WebElement> userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
         List<WebElement> userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
@@ -96,7 +97,7 @@ public class Continuations extends BasePage implements En {
     }
     @Then("the continuation conditions and undertaking page and snapshot should display the right text")
     public void theContinuationConditionsAndUndertakingPageAndSnapshotShouldDisplayTheRightText() throws FileNotFoundException {
-        world.selfServeNavigation.navigateToNavBarPage("manage users");
+        world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         world.continuationJourney.clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         world.continuationJourney.completeContinuationsReviewPage();
@@ -123,7 +124,7 @@ public class Continuations extends BasePage implements En {
     }
 
     @Then("the correct checks should display on the continuation review details page and continuation snapshot")
-    public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot() throws IllegalBrowserException {
+    public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot() {
         world.continuationJourney.clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         world.continuationJourney.checkContinuationReviewSections();
