@@ -196,8 +196,9 @@ public class BusRegistrationJourney extends BasePage {
             S3.uploadObject(world.configuration.getBucketName(), path, System.getProperty("user.dir").concat(zipFilePath));
             //get Pat
             if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
-                S3.downloadObject(world.configuration.getBucketName(), path, "/tmp/EBSR/".concat(ebsrFileName));
-                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, System.getProperty("user.dir").concat(zipFilePath));
+//                S3.downloadObject(world.configuration.getBucketName(), path, "/tmp/EBSR/".concat(ebsrFileName));
+                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, "https://devapp-olcs-pri-olcs-autotest-s3.s3.eu-west-1.amazonaws.com/BusReg/"
+                        .concat(zipFilePath));
 
 //                ProcessBuilder proc = new ProcessBuilder(String.format("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster " +
 //                        " --task 6b773bd3ca7c4f69989e8b84c301e543 --container selenium-node-chrome --interactive " +
