@@ -204,7 +204,8 @@ public class BusRegistrationJourney extends BasePage {
 //                S3ObjectInputStream inputStream = s3object.getObjectContent();
 //                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, String.valueOf(inputStream));
 
-                ProcessBuilder proc = new ProcessBuilder("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster --container selenium-node-chrome --interactive --command \"bash -c 'echo testing>/tmp/'\"");
+                ProcessBuilder proc = new ProcessBuilder(String.format("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster --container selenium-node-chrome --interactive " +
+                        "--command \"bash cp %s /tmp'\"",ebsrFileName));
                 try {
                     proc.start();
                 } catch (IOException e) {
