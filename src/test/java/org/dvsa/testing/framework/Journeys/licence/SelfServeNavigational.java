@@ -172,7 +172,7 @@ public class SelfServeNavigational extends BasePage {
         waitAndClick("//*[contains(text(),'Upload documents now')]", SelectorType.XPATH);
 //        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
 
-        String jScript = "document.getElementById('fields[files][file]').style.left = 0";
+        String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
 
         if (System.getProperty("platform") == null) {
