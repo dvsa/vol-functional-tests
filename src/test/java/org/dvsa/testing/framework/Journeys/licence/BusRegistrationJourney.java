@@ -200,7 +200,9 @@ public class BusRegistrationJourney extends BasePage {
         if (System.getProperty("platform") == null) {
             enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, zipFilePath);
         } else {
-            WebElement addFile = getDriver().findElement(By.xpath("\"//*[@id='fields[files][file]']"));
+            String jScripts = "document.getElementById('fields[files][file]').style.left = 0";
+            javaScriptExecutor(jScripts);
+            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='fields[files][file]']"));
             ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(zipFilePath);
         }
