@@ -20,8 +20,12 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.io.File;
 import java.io.IOException;
@@ -196,22 +200,9 @@ public class BusRegistrationJourney extends BasePage {
         if (System.getProperty("platform") == null) {
             enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, zipFilePath);
         } else {
-            S3.uploadObject(world.configuration.getBucketName(), path, System.getProperty("user.dir").concat(zipFilePath));
-            //get Pat
-            if (S3.getS3Object(world.configuration.getBucketName(), path).getKey().contains(ebsrFileName)){
-                S3.downloadObject(world.configuration.getBucketName(), path, System.getProperty("user.dir").concat("/tmp/EBSR/".concat(ebsrFileName)));
-                enterText("//*[@id='fields[files][file]']", SelectorType.XPATH,"");
-
-//                ProcessBuilder proc = new ProcessBuilder(String.format("aws ecs execute-command --cluster OLCS-DEVAPPCI-DEVCI-SELENIUM-cluster " +
-//                        " --task 6b773bd3ca7c4f69989e8b84c301e543 --container selenium-node-chrome --interactive " +
-//                        "--command \"bash cp -R %s tmp/'\"",System.getProperty("user.dir").concat(zipFilePath)));
-//                try {
-//                    proc.start();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-                System.out.println("ENTERED+++++++++++++");
-            }
+            WebElement addFile = getDriver().findElement(By.xpath("\"//*[@id='fields[files][file]']"));
+            ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(zipFilePath);
         }
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
