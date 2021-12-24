@@ -183,7 +183,6 @@ public class BusRegistrationJourney extends BasePage {
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
-        String path = String.format("BusReg/%s", ebsrFileName);
 
 
         world.genericUtils.modifyXML(state, interval);
@@ -204,7 +203,7 @@ public class BusRegistrationJourney extends BasePage {
             javaScriptExecutor(jScripts);
             WebElement addFile = getDriver().findElement(By.xpath("//*[@id='fields[files][file]']"));
             ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
-            addFile.sendKeys(zipFilePath);
+            addFile.sendKeys(System.getProperty("user.dir").concat(zipFilePath));
         }
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
