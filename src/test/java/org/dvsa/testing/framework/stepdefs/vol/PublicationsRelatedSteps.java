@@ -164,7 +164,10 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
     @Then("the corresponding publication is generated and published")
     public void theCorrespondingPublicationIsGeneratedAndPublished() {
-        world.internalNavigation.AdminNavigation(AdminOption.PUBLICATIONS);
+        if (world.updateLicence.getInternalUserId() == null)
+            world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.adminNavigation(AdminOption.PUBLICATIONS);
         click(fiftyResultsPerPageLink, SelectorType.XPATH);
         String trafficArea = ParseUtils.parseTrafficArea(world.createApplication.getTrafficArea());
         String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
@@ -195,24 +198,22 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         String adaptiveVehicleTypeText = world.licenceCreation.isAGoodsInternationalLicence() ? "Heavy Goods Vehicle" : "vehicle";
         String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
 
-        StringBuilder expectedText = new StringBuilder("");
-
         if (variationType.contains("HGV")) {
             String operatingCentreAddress = world.formattedStrings.getFullCommaOperatingAddress();
-            String hgvIncreaseText = String.format("Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) ",
+            String hgvIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s)",
                     operatingCentreAddress,
                     hgvs,
                     adaptiveVehicleTypeText.concat("(s)"),
                     world.createApplication.getTotalOperatingCentreTrailerAuthority());
-            expectedText.append(correspondenceAddress);
-            expectedText.append(hgvIncreaseText);
+            String hgvExpectedText = correspondenceAddress.concat(hgvIncreaseText);
+            Assertions.assertTrue(publicationResult.getText().contains(hgvExpectedText));
         }
+
         if (variationType.contains("LGV")) {
-            expectedText.append(correspondenceAddress);
-            String lgvIncreaseText = String.format("Light goods vehicles authorised on the licence. New authorisation will be %s vehicle(s)", lgvs);
-            expectedText.append(lgvIncreaseText);
+            String lgvIncreaseText = String.format(" Light goods vehicles authorised on the licence. New authorisation will be %s vehicle(s)", lgvs);
+            String lgvExpectedText = correspondenceAddress.concat(lgvIncreaseText);
+            Assertions.assertTrue(publicationResult.getText().contains(lgvExpectedText));
         }
-        Assertions.assertEquals(expectedText.toString().trim(), publicationResult.getText());
 
         clickByLinkText(world.applicationDetails.getLicenceNumber());
 
@@ -222,10 +223,10 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
         assertTrue(isElementPresent(String.format("//th[contains(text(),'Operating centre')]/../th[contains(text(),'%s')]", capitalise(adaptiveVehicleTypeText).concat("s")), SelectorType.XPATH));
 
-        assertEquals(getText(String.format("//li/dt[contains(text(),'Total Number of %s')]/../dd", adaptiveVehicleTypeText), SelectorType.XPATH), hgvValue);
+        assertEquals(getText(String.format("//li/dt[contains(text(),'Total number of %s')]/../dd", adaptiveVehicleTypeText), SelectorType.XPATH), hgvValue);
         if (world.licenceCreation.isAGoodsInternationalLicence())
-            assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
-        assertEquals(getText("//li/dt[contains(text(),'Total Number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+            assertEquals(getText("//li/dt[contains(text(),'Total number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
+        assertEquals(getText("//li/dt[contains(text(),'Total number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
 
 
@@ -353,6 +354,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         assertTrue(publicationText.contains(transportManagerName));
     }
 
+
+
     public void checkGoodsLicencePublicationTextOnSelfServe(String applicationStatus) {
         String publicationText = getText(
                 String.format("//li[*//a[contains(text(),'%s')] and *//p[contains(text(),'%s')]]",
@@ -384,5 +387,42 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             assertTrue(publicationText.contains(expectedAuthorisationText));
             assertTrue(publicationText.contains(transportManagerName));
         }
+    }
+
+    @Then("the variation publication for LGV Only should be correct on internal with {int} more lgvs")
+    public void theVariationPublicationForLGVOnlyShouldBeCorrectOnInternal(int additionalAuthority) {
+        String publicationLinkForVariation = "//td[contains(text(),'New Variation')]/../td/a";
+        click(publicationLinkForVariation, SelectorType.XPATH);
+        waitForTextToBePresent("Edit publication");
+
+        String publicationTexts = getText("//*[@name='fields[text1]']", SelectorType.XPATH)
+                .concat(getText("//*[@name='fields[text2]']", SelectorType.XPATH))
+                .concat(getText("//*[@name='fields[text3]']", SelectorType.XPATH));
+        String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
+
+        assertExpectedLGVVariationText(publicationTexts, newAuthority);
+    }
+
+    @And("the variation publication for LGV Only should be correct on self serve with {int} more lgvs")
+    public void theVariationPublicationForLGVOnlyShouldBeCorrectOnSelfServeWithMoreLgvs(int additionalAuthority) {
+        String publicationResult = getText(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]", world.applicationDetails.getLicenceNumber(), "New Variation"), SelectorType.XPATH);
+        String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
+        assertExpectedLGVVariationText(publicationResult, newAuthority);
+    }
+
+    public void assertExpectedLGVVariationText(String actualPublicationText, String newAuthority) {
+        String licenceType = world.applicationDetails.getLicenceNumber().concat(" SI");
+        String organisationName = world.createApplication.getOrganisationName();
+        String directorText = "Director(s): "
+                .concat(world.createApplication.getDirectorForeName())
+                .concat(" ").concat(world.createApplication.getDirectorFamilyName());
+        String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
+        String authorityText = String.format("Light goods vehicles authorised on the licence. New authorisation will be %s vehicle(s)", newAuthority);
+
+        assertTrue(actualPublicationText.contains(licenceType));
+        assertTrue(actualPublicationText.contains(organisationName));
+        assertTrue(actualPublicationText.contains(directorText));
+        assertTrue(actualPublicationText.contains(correspondenceAddress));
+        assertTrue(actualPublicationText.contains(authorityText));
     }
 }

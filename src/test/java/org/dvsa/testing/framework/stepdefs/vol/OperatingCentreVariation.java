@@ -171,13 +171,13 @@ public class OperatingCentreVariation extends BasePage {
         scanner.scan();
     }
 
-    @And("i create and submit an lgv only operating centre variation")
-    public void iCreateAndSubmitAnLgvOnlyOperatingCentreVariation() {
+    @And("i create and submit an lgv only operating centre variation with {int} more LGVs")
+    public void iCreateAndSubmitAnLgvOnlyOperatingCentreVariation(int additionalAuthority) {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_AUTHORISATION);
         world.UIJourney.changeLicenceForVariation();
-//        replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, world.operatingCentreJourney.newLGVTotalAuthority);
-        UIJourney.clickSaveAndReturn();
-
+        String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
+        world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
+        world.operatingCentreJourney.completeLGVOnlyApplicationAfterUpdatingLGVAuthority(newAuthority);
     }
 }

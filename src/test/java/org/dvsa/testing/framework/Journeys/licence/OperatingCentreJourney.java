@@ -44,6 +44,15 @@ public class OperatingCentreJourney extends BasePage {
 
     public void loginAndSubmitOperatingCentreVehicleAuthorisationVariationApplication(String newHGVTotalAuthority, String newLGVTotalAuthority) {
         loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        completeApplicationAfterUpdatingAuthorities(newHGVTotalAuthority, newLGVTotalAuthority);
+    }
+
+    public void completeLGVOnlyApplicationAfterUpdatingLGVAuthority(String newLGVTotalAuthority) {
+        String currentHGVAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority());
+        completeApplicationAfterUpdatingAuthorities(currentHGVAuthority, newLGVTotalAuthority);
+    }
+
+    private void completeApplicationAfterUpdatingAuthorities(String newHGVTotalAuthority, String newLGVTotalAuthority) {
         world.UIJourney.completeFinancialEvidencePage();
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
@@ -53,7 +62,6 @@ public class OperatingCentreJourney extends BasePage {
             click(submitAndPayForApplication, SelectorType.XPATH);
             click(payNow, SelectorType.XPATH);
             world.feeAndPaymentJourney.customerPaymentModule();
-            world.UIJourney.signDeclarationForVariation();
         }
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }
@@ -92,6 +100,11 @@ public class OperatingCentreJourney extends BasePage {
         UIJourney.clickSaveAndReturn();
     }
 
+    public void updateLGVOnlyAuthorityAndSave(String newAuthority) {
+        replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newAuthority);
+        UIJourney.clickSaveAndReturn();
+    }
+
     public void addNewOperatingCentre(String vehicles, String trailers) {
         click(addOperatingCentre, SelectorType.XPATH);
         try {
@@ -110,10 +123,10 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     private boolean hasHGVAuthorityIncreased(String newHGVTotalAuthority) {
-        return world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority);
+        return world.createApplication.getTotalOperatingCentreHgvAuthority() > Integer.parseInt(newHGVTotalAuthority);
     }
 
     private boolean hasLGVAuthorityIncreased(String newLGVTotalAuthority) {
-        return world.createApplication.getTotalOperatingCentreLgvAuthority() >= Integer.parseInt(newLGVTotalAuthority);
+        return world.createApplication.getTotalOperatingCentreLgvAuthority() > Integer.parseInt(newLGVTotalAuthority);
     }
 }
