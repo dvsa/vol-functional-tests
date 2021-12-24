@@ -78,11 +78,14 @@ public class EBSRUpload extends BasePage implements En {
 
     @And("Documents are generated")
     public void documentsAreGenerated() {
-        waitAndClick(String.format("//*[contains(text(),'%s')]",world.applicationDetails.getLicenceNumber()),SelectorType.XPATH);
+        waitAndClick(String.format("//*[contains(text(),'%s')]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
         long kickOutTime = System.currentTimeMillis() + 5000;
         do {
             // Refresh page
             refreshPageWithJavascript();
+            if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
+                waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
+            }
         } while ((long) findElements("//*[@class='files']", SelectorType.XPATH).size() <= 3 && System.currentTimeMillis() < kickOutTime);
         try {
             assertTrue(findElements("//*[@class='files']", SelectorType.XPATH).stream().anyMatch(
