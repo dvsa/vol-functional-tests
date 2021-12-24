@@ -170,7 +170,6 @@ public class SelfServeNavigational extends BasePage {
         waitAndContinuePage("Operating centres and authorisation");
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Upload documents now')]", SelectorType.XPATH);
-//        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
 
         String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
@@ -182,7 +181,6 @@ public class SelfServeNavigational extends BasePage {
             ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(workingDir.concat(financialEvidenceFile));
         }
-        waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
