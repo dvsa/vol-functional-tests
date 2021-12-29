@@ -180,4 +180,15 @@ public class OperatingCentreVariation extends BasePage {
         world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
         world.operatingCentreJourney.completeLGVOnlyApplicationAfterUpdatingLGVAuthority(newAuthority);
     }
+
+    @And("I create and save an lgv only variation on internal with {int} more LGVs")
+    public void iCreateAndPublishAnLgvOnlyVariation(int additionalAuthority) {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
+        world.UIJourney.createVariationInInternal(false);
+        String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
+        clickByLinkText("Licence authorisation");
+        world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
+    }
 }

@@ -236,8 +236,24 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
         clickByLinkText("Processing");
-        waitForTextToBePresent("Category");
+        waitForTextToBePresent("Processing");
         clickByLinkText("Publications");
+    }
+
+    @And("I view the application publications page")
+    public void iViewTheApplicationPublicationsPage() {
+        clickByLinkText("Processing");
+        waitForTextToBePresent("Processing");
+        clickByLinkText("Publications");
+    }
+
+    @And("I publish the application on internal")
+    public void iPublishTheApplicationOnInternal() {
+        waitForTextToBePresent("Publish application");
+        clickByLinkText("Publish application");
+        waitForTextToBePresent("publish this application");
+        world.internalNavigation.clickOk();
+        waitForTextToBePresent("Republish application");
     }
 
     @Then("the new application publication for LGV Only should be correct on internal")
