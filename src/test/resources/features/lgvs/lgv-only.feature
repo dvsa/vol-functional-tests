@@ -23,15 +23,16 @@ Feature: LGV only tests
 
   Scenario Outline: Switch Standard Internation licence type warning message
     Given I am applying for a "<licenceWhere>" "<operatorType>" "<licenceType>" "<vehicleType>" licence
-    And I "<selection>" the LGV undertaking declaration checkbox
     And I click save and continue
-    And I update the vehicle type on the licence to "<newVehicleType>"
-    When I click save and continue
-    Then A change licence type warning message should be displayed
+    And I update the vehicle type on the licence to "<newType>"
+    And A change licence type warning message is displayed
+    When I confirm the warning message
+    Then each section on the application overview page has the correct status for the "<newType>" licence
 
     Examples:
-      | licenceWhere      | operatorType | licenceType            | vehicleType    | selection   | newVehicleType |
-      | great_britain     | goods        | standard_international | lgv_only_fleet | select      | mixed_fleet    |
-      | northern_ireland  | no_selection | standard_international | lgv_only_fleet | select      | mixed_fleet    |
-      | great_britain     | goods        | standard_international | mixed_fleet    | dont_select | lgv_only_fleet |
-      | northern_ireland  | no_selection | standard_international | mixed_fleet    | dont_select | lgv_only_fleet |
+      | licenceWhere      | operatorType | licenceType            | vehicleType    | newType           |
+      | great_britain     | goods        | standard_international | lgv_only_fleet | standard_national |
+      | great_britain     | goods        | standard_international | lgv_only_fleet | mixed_fleet       |
+      | northern_ireland  | no_selection | standard_international | lgv_only_fleet | mixed_fleet       |
+      | great_britain     | goods        | standard_international | mixed_fleet    | lgv_only_fleet    |
+      | northern_ireland  | no_selection | standard_international | mixed_fleet    | lgv_only_fleet    |

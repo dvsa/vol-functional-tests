@@ -10,6 +10,11 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import apiCalls.enums.*;
 import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LgvOnly extends BasePage {
     World world;
@@ -35,6 +40,9 @@ public class LgvOnly extends BasePage {
         if (licenceType.equals("standard_international")){
             if (!"no_selection".equals(vehicleType)){
                 clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
+                if (vehicleType.equals("lgv_only_fleet")) {
+                    clickByXPath(lgvDeclarationCheckbox);
+                }
             }
         }
     }
@@ -47,12 +55,22 @@ public class LgvOnly extends BasePage {
     }
 
     @Given("I update the vehicle type on the licence to {string}")
-    public void iUpdateVehicleTypeOnLicence(String vehicleType) {
+    public void iUpdateVehicleTypeOnLicence(String newType) {
         clickByLinkText("Type of licence");
-        clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
-        if (vehicleType.equals("lgv_only_fleet")){
-            clickByXPath(lgvDeclarationCheckbox);
+        if (newType.equals("mixed_fleet") || newType.equals("lgv_only_fleet")) {
+            clickByXPath("//input[@value='" + VehicleType.valueOf(newType.toUpperCase()).asString() + "']");
+            if (newType.equals("lgv_only_fleet")) {
+                clickByXPath(lgvDeclarationCheckbox);
+            }
+        } else {
+            clickByXPath("//input[@value='" + LicenceType.valueOf(newType.toUpperCase()).asString() + "']");
+            if (newType.equals("standard_international")) {
+            if (!"no_selection".equals(newType)) {
+                clickByXPath("//input[@value='" + VehicleType.valueOf(newType.toUpperCase()).asString() + "']");
+                }
+            }
         }
+        UIJourney.clickSaveAndContinue();
     }
 
     @When("I click save and continue")
@@ -72,9 +90,33 @@ public class LgvOnly extends BasePage {
         Assert.assertTrue(isTextPresent("You must confirm you have read and agree to the undertaking to apply for this licence type."));
     }
 
-    @Then("A change licence type warning message should be displayed")
+    @Then("A change licence type warning message is displayed")
     public void changeLicenceWarningMessage() {
         Assert.assertTrue(isTextPresent("Are you sure you want to make this change?"));
+    }
+
+    @When("I confirm the warning message")
+    public void iConfirmWarningMessage() {
+        waitAndClick("form-actions[submit]", SelectorType.NAME);
+    }
+
+    @When("each section on the application overview page has the correct status for the {string} licence")
+    public void changeLicenceTypeOverviewSectionsStatus(String newType) {
+        Assert.assertTrue(isTextPresent("Apply for a new licence"));
+
+        String[] expectedNonLgvOnlyStatusArray = new String[]{"Type of licence\nCOMPLETE", "Business type\nNOT STARTED", "Business details\nCAN'T START YET", "Addresses\nCAN'T START YET", "Directors\nCAN'T START YET", "Operating centres and authorisation\nNOT STARTED", "Financial evidence\nCAN'T START YET", "Transport Managers\nCAN'T START YET", "Vehicles\nCAN'T START YET", "Safety and compliance\nNOT STARTED", "Financial history\nNOT STARTED", "Licence history\nNOT STARTED", "Convictions and penalties\nNOT STARTED", "Review and declarations\nCAN'T START YET"};
+        String[] expectedLgvOnlyStatusArray = new String[]{"Type of licence\nCOMPLETE", "Business type\nNOT STARTED", "Business details\nCAN'T START YET", "Addresses\nCAN'T START YET", "Directors\nCAN'T START YET", "Licence authorisation\nNOT STARTED", "Financial evidence\nCAN'T START YET", "Transport Managers\nCAN'T START YET", "Vehicles\nCAN'T START YET", "Safety and compliance\nNOT STARTED", "Financial history\nNOT STARTED", "Licence history\nNOT STARTED", "Convictions and penalties\nNOT STARTED", "Review and declarations\nCAN'T START YET"};
+        List<WebElement> applicationOverviewStatusElements = findElements("//ol[@class='overview__list']/li", SelectorType.XPATH);
+
+        if (newType.equals("lgv_only_fleet")) {
+            for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
+                Assert.assertEquals(expectedLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+            }
+        } else {
+            for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
+                Assert.assertEquals(expectedNonLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+            }
+        }
     }
 }
 
