@@ -7,13 +7,9 @@ import cucumber.api.java.en.Given;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-
 import apiCalls.enums.*;
 import org.junit.Assert;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class LgvOnly extends BasePage {
@@ -26,9 +22,39 @@ public class LgvOnly extends BasePage {
     public String greatBritain = "//input[@id='type-of-licence[operator-location]']";
     public String northernIreland = "//input[@name='type-of-licence[operator-location]'][@value='Y']";
     public String lgvDeclarationCheckbox = "//input[@id='lgv-declaration-confirmation']";
+    String[] expectedNonLgvOnlyStatusArray = new String[]{
+            "Type of licence\nCOMPLETE",
+            "Business type\nNOT STARTED",
+            "Business details\nCAN'T START YET",
+            "Addresses\nCAN'T START YET",
+            "Directors\nCAN'T START YET",
+            "Operating centres and authorisation\nNOT STARTED",
+            "Financial evidence\nCAN'T START YET",
+            "Transport Managers\nCAN'T START YET",
+            "Vehicles\nCAN'T START YET",
+            "Safety and compliance\nNOT STARTED",
+            "Financial history\nNOT STARTED",
+            "Licence history\nNOT STARTED",
+            "Convictions and penalties\nNOT STARTED",
+            "Review and declarations\nCAN'T START YET"};
+    String[] expectedLgvOnlyStatusArray = new String[]{
+            "Type of licence\nCOMPLETE",
+            "Business type\nNOT STARTED",
+            "Business details\nCAN'T START YET",
+            "Addresses\nCAN'T START YET",
+            "Directors\nCAN'T START YET",
+            "Licence authorisation\nNOT STARTED",
+            "Financial evidence\nCAN'T START YET",
+            "Transport Managers\nCAN'T START YET",
+            "Vehicles\nCAN'T START YET",
+            "Safety and compliance\nNOT STARTED",
+            "Financial history\nNOT STARTED",
+            "Licence history\nNOT STARTED",
+            "Convictions and penalties\nNOT STARTED",
+            "Review and declarations\nCAN'T START YET"};
 
-    @Given("I am applying for a {string} {string} {string} {string} licence")
-    public void iWantToApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType) {
+    @Given("I am applying for a {string} {string} {string} {string} {string} licence")
+    public void iWantToApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType, String lgvUndertaking) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         clickByLinkText("Apply for a new licence");
@@ -39,8 +65,9 @@ public class LgvOnly extends BasePage {
         clickByXPath("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
         if (licenceType.equals("standard_international")){
             if (!"no_selection".equals(vehicleType)){
+                clickByXPath("//input[@value='standard_international']");
                 clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
-                if (vehicleType.equals("lgv_only_fleet")) {
+                if (lgvUndertaking.equals("checked")) {
                     clickByXPath(lgvDeclarationCheckbox);
                 }
             }
@@ -103,9 +130,6 @@ public class LgvOnly extends BasePage {
     @When("each section on the application overview page has the correct status for the {string} licence")
     public void changeLicenceTypeOverviewSectionsStatus(String newType) {
         Assert.assertTrue(isTextPresent("Apply for a new licence"));
-
-        String[] expectedNonLgvOnlyStatusArray = new String[]{"Type of licence\nCOMPLETE", "Business type\nNOT STARTED", "Business details\nCAN'T START YET", "Addresses\nCAN'T START YET", "Directors\nCAN'T START YET", "Operating centres and authorisation\nNOT STARTED", "Financial evidence\nCAN'T START YET", "Transport Managers\nCAN'T START YET", "Vehicles\nCAN'T START YET", "Safety and compliance\nNOT STARTED", "Financial history\nNOT STARTED", "Licence history\nNOT STARTED", "Convictions and penalties\nNOT STARTED", "Review and declarations\nCAN'T START YET"};
-        String[] expectedLgvOnlyStatusArray = new String[]{"Type of licence\nCOMPLETE", "Business type\nNOT STARTED", "Business details\nCAN'T START YET", "Addresses\nCAN'T START YET", "Directors\nCAN'T START YET", "Licence authorisation\nNOT STARTED", "Financial evidence\nCAN'T START YET", "Transport Managers\nCAN'T START YET", "Vehicles\nCAN'T START YET", "Safety and compliance\nNOT STARTED", "Financial history\nNOT STARTED", "Licence history\nNOT STARTED", "Convictions and penalties\nNOT STARTED", "Review and declarations\nCAN'T START YET"};
         List<WebElement> applicationOverviewStatusElements = findElements("//ol[@class='overview__list']/li", SelectorType.XPATH);
 
         if (newType.equals("lgv_only_fleet")) {
@@ -119,4 +143,3 @@ public class LgvOnly extends BasePage {
         }
     }
 }
-
