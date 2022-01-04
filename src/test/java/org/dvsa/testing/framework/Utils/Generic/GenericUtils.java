@@ -25,6 +25,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -134,8 +135,14 @@ public class GenericUtils extends BasePage {
         /*
         / Uses Open source util zt-zip https://github.com/zeroturnaround/zt-zip
          */
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("./src/test/resources/%s",fileName)));
-        return String.format("/src/test/resources/%s",fileName);
+        Path path = Paths.get("target/EBSR");
+        try {
+            Files.createDirectory(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
+        return String.format("target/EBSR/%s",fileName);
     }
 
     public void executeJenkinsBatchJob(String command) throws Exception {
