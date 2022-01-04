@@ -23,6 +23,7 @@ public class ScenarioTearDown {
         Environments environments = new Environments();
         environments.createResultsFolder();
         environments.generateXML();
+        System.out.println("ABOUT TO START============");
         if(System.getProperty("gridURL").contains("hub-cloud.browserstack.com")){
             BrowserStack.startLocal();
         }
