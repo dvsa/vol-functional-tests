@@ -23,9 +23,9 @@ public class ScenarioTearDown {
         Environments environments = new Environments();
         environments.createResultsFolder();
         environments.generateXML();
-        if(System.getProperty("gridURL") != null && (System.getProperty("gridURL")
-                .contains("hub-cloud.browserstack.com"))){
-            BrowserStack.startLocal();
-        }
+//        if(System.getProperty("gridURL") != null && (System.getProperty("gridURL")
+//                .contains("hub-cloud.browserstack.com"))){
+//            BrowserStack.startLocal();
+//        }
     }
 }
