@@ -4,7 +4,7 @@ public enum SelfServeNavBar {
 
     HOME("Home"),
     BUS_REGISTRATIONS("Bus Registrations"),
-    MANAGE_USERS("Manage Users"),
+    MANAGE_USERS("Manage users"),
     YOUR_ACCOUNT("Your account"),
     SIGN_OUT("Sign out");
 
