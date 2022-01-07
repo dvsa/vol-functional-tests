@@ -104,7 +104,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfFeaturesPerRunner>5</desiredNumberOfFeaturesPerRunner>
+                    <desiredNumberOfRunners>7</desiredNumberOfRunners>
                     <includeScenarioTags>
                         not (@skip
                         or @Deprecated
