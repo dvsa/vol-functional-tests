@@ -12,6 +12,7 @@ import org.openqa.selenium.NotFoundException;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class EBSRUpload extends BasePage implements En {

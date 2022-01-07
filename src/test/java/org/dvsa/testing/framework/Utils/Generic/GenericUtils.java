@@ -137,7 +137,9 @@ public class GenericUtils extends BasePage {
          */
         Path path = Paths.get("target/EBSR");
         try {
-            Files.createDirectory(path);
+            if(!Files.exists(path)) {
+                Files.createDirectory(path);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
