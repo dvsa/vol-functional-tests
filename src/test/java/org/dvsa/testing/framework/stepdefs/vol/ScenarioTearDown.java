@@ -16,9 +16,6 @@ public class ScenarioTearDown {
     @After
     public void afterClass(Scenario scenario) throws Exception {
         Hooks.attach(scenario);
-        if(Browser.isBrowserOpen()){
-            Browser.closeBrowser();
-        }
     }
 
     @Before
