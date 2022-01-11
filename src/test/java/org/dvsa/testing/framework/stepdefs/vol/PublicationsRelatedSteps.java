@@ -252,7 +252,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         waitForTextToBePresent("Publish application");
         clickByLinkText("Publish application");
         waitForTextToBePresent("publish this application");
-        world.internalNavigation.clickOk();
+        world.UIJourney.clickOk();
         waitForTextToBePresent("Republish application");
     }
 
@@ -369,8 +369,6 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         assertTrue(publicationText.contains(expectedAuthorisationText));
         assertTrue(publicationText.contains(transportManagerName));
     }
-
-
 
     public void checkGoodsLicencePublicationTextOnSelfServe(String applicationStatus) {
         String publicationText = getText(

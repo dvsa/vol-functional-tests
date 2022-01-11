@@ -182,7 +182,7 @@ public class OperatingCentreVariation extends BasePage {
     }
 
     @And("I create and save an lgv only variation on internal with {int} more LGVs")
-    public void iCreateAndPublishAnLgvOnlyVariation(int additionalAuthority) {
+    public void iCreateAndSaveAnLgvOnlyVariationOnInternal(int additionalAuthority) {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getLicence();

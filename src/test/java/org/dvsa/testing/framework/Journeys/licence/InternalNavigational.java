@@ -111,8 +111,4 @@ public class InternalNavigational extends BasePage {
         clickByXPath(taskLinkText);
         waitForElementToBePresent(taskTitle);
     }
-
-    public void clickOk()  {
-        waitAndClick("//*[@id='form-actions[ok]']", SelectorType.XPATH);
-    }
 }

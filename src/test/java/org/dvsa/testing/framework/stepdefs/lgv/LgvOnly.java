@@ -21,8 +21,8 @@ public class LgvOnly extends BasePage {
 
     public String greatBritain = "//input[@id='type-of-licence[operator-location]']";
     public String northernIreland = "//input[@name='type-of-licence[operator-location]'][@value='Y']";
-    public String lgvDeclarationCheckbox = "//input[@id='lgv-declaration-confirmation']";
-    String[] expectedNonLgvOnlyStatusArray = new String[]{
+    public static String lgvDeclarationCheckbox = "//input[@id='lgv-declaration-confirmation']";
+    String[] expectedStandardNationalOrMixedFleetStatusArray = new String[]{
             "Type of licence\nCOMPLETE",
             "Business type\nNOT STARTED",
             "Business details\nCAN'T START YET",
@@ -62,16 +62,7 @@ public class LgvOnly extends BasePage {
         if (licenceWhere.equals("great_britain")){
             clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
         }
-        clickByXPath("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
-        if (licenceType.equals("standard_international")){
-            if (!"no_selection".equals(vehicleType)){
-                clickByXPath("//input[@value='standard_international']");
-                clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
-                if (lgvUndertaking.equals("checked")) {
-                    clickByXPath(lgvDeclarationCheckbox);
-                }
-            }
-        }
+        UIJourney.inputLicenceAndVehicleType(licenceType, vehicleType, lgvUndertaking);
     }
 
     @Given("I {string} the LGV undertaking declaration checkbox")
@@ -81,22 +72,10 @@ public class LgvOnly extends BasePage {
         }
     }
 
-    @Given("I update the vehicle type on the licence to {string}")
-    public void iUpdateVehicleTypeOnLicence(String newType) {
+    @Given("I update the vehicle type on the licence to {string} {string} {string}")
+    public void iUpdateVehicleTypeOnLicence(String newLicenceType, String newVehicleType, String newLgvUndertaking) {
         clickByLinkText("Type of licence");
-        if (newType.equals("mixed_fleet") || newType.equals("lgv_only_fleet")) {
-            clickByXPath("//input[@value='" + VehicleType.valueOf(newType.toUpperCase()).asString() + "']");
-            if (newType.equals("lgv_only_fleet")) {
-                clickByXPath(lgvDeclarationCheckbox);
-            }
-        } else {
-            clickByXPath("//input[@value='" + LicenceType.valueOf(newType.toUpperCase()).asString() + "']");
-            if (newType.equals("standard_international")) {
-            if (!"no_selection".equals(newType)) {
-                clickByXPath("//input[@value='" + VehicleType.valueOf(newType.toUpperCase()).asString() + "']");
-                }
-            }
-        }
+        UIJourney.inputLicenceAndVehicleType(newLicenceType, newVehicleType, newLgvUndertaking);
         UIJourney.clickSaveAndContinue();
     }
 
@@ -138,7 +117,7 @@ public class LgvOnly extends BasePage {
             }
         } else {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                Assert.assertEquals(expectedNonLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                Assert.assertEquals(expectedStandardNationalOrMixedFleetStatusArray[i], applicationOverviewStatusElements.get(i).getText());
             }
         }
     }

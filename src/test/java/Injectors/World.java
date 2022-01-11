@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.stepdefs.lgv.LgvOnly;
 
 public class World {
     public GetApplicationDetails applicationDetails;
@@ -53,4 +54,5 @@ public class World {
     public UserRegistrationJourney userRegistrationJourney;
     public DataGenerator DataGenerator;
     public UserAccountJourney UserAccountJourney;
+    public LgvOnly lgvOnly;
 }

@@ -6,11 +6,14 @@ import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
+import apiCalls.enums.LicenceType;
+import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.lgv.LgvOnly;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
@@ -39,7 +42,8 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNum
 
 public class UIJourney extends BasePage {
 
-    private World world;
+    private static World world;
+    //private World world;
     private FakerUtils faker = new FakerUtils();
     String uploadLaterRadioButton = "//input[@id='uploadLaterRadio']";
     String saveButton = "//*[@id='form-actions[save]']";
@@ -528,5 +532,26 @@ public class UIJourney extends BasePage {
 
     public static void clickSaveAndReturn()  {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
+    }
+
+    public void clickOk()  {
+        waitAndClick("//*[@id='form-actions[ok]']", SelectorType.XPATH);
+    }
+
+    public static void inputLicenceAndVehicleType(String licenceType, String vehicleType, String lgvUndertaking) {
+        if (isElementPresent("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']", SelectorType.XPATH)) {
+            clickByXPath("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
+        } else {
+            clickByXPath("//label[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
+        }
+
+        if (licenceType.equals("standard_international")){
+            if (!"no_selection".equals(vehicleType)){
+                clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
+                if (lgvUndertaking.equals("checked")) {
+                    clickByXPath(LgvOnly.lgvDeclarationCheckbox);
+                }
+            }
+        }
     }
 }
