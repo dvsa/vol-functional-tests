@@ -1,7 +1,6 @@
 @lgv
 Feature: Publications generate on LGV related changes and regression
 
-
   Scenario Outline: Publications generate and display correctly on both apps. (LGV variation increase)
     Given i have a valid "goods" "<licenceType>" licence
     And i create and submit an operating centre variation with "<HGVs>" hgvs and "<LGVs>" lgvs

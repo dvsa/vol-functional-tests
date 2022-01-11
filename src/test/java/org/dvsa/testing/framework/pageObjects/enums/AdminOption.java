@@ -2,22 +2,25 @@ package org.dvsa.testing.framework.pageObjects.enums;
 
 public enum AdminOption {
 
-    SCANNING("Scanning"),
-    PRINTING("Printing"),
-    PUBLIC_HOLIDAY("Public holidays"),
+    BUS_REGISTRATIONS("Bus registrations"),
     CONTINUATIONS("Continuations"),
-    YOUR_ACCOUNT("Your account"),
-    SYSTEM_PARAMETERS("System parameters"),
-    PERMITS("Permits"),
-    TASK_ALLOCATION_RULE("Task allocation rules"),
-    USER_MANAGEMENT("User management"),
-    FINANCIAL_STANDING_RATES("Financial standing rates"),
-    PUBLICATIONS("Publications"),
-    PAYMENT_PROCESSING("Payment processing"),
-    REPORTS("Reports"),
+    CONTENT_MANAGEMENT("Content Management"),
+    DATA_RETENTION("Data retention"),
     FEATURE_TOGGLE("Feature toggle"),
+    FEE_RATES("Fee rates"),
+    FINANCIAL_STANDING_RATES("Financial standing rates"),
+    PAYMENT_PROCESSING("Payment processing"),
+    PERMITS("Permits"),
+    PRINTING("Printing"),
+    PUBLIC_HOLIDAYS("Public holidays"),
+    PUBLICATIONS("Publications"),
+    REPORTS("Reports"),
+    SCANNING("Scanning"),
     SYSTEM_MESSAGES("System messages"),
-    DATA_RETENTION("Data retention");
+    SYSTEM_PARAMETERS("System parameters"),
+    TASK_ALLOCATION_RULES("Task allocation rules"),
+    USER_MANAGEMENT("User management"),
+    YOUR_ACCOUNT("Your account");
 
     private String name;
 

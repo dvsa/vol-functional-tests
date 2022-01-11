@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.system.Properties;
-import com.amazonaws.services.dynamodbv2.xspec.AddAction;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -44,10 +43,28 @@ public class InternalNavigational extends BasePage {
         clickByLinkText("Processing");
     }
 
-    public void AdminNavigation(@NotNull AdminOption option) {
+    public void adminNavigation(@NotNull AdminOption option) {
         click(adminDropdown, SelectorType.XPATH);
         clickByLinkText(option.toString());
-        waitForTitleToBePresent(option.toString());
+        switch (option) {
+            case CONTINUATIONS: case PUBLICATIONS: case REPORTS: case PRINTING: case DATA_RETENTION: case USER_MANAGEMENT:
+                waitForElementToBePresent(String.format("//h4[contains(text(),'%s')]", option));
+                break;
+            case BUS_REGISTRATIONS:
+                waitForElementToBePresent("//h4[contains(text(),'Bus Registrations')]");
+                break;
+            case FEATURE_TOGGLE:
+                waitForElementToBePresent("//h4[contains(text(),'Feature toggles')]");
+                break;
+            case FEE_RATES:
+                waitForElementToBePresent("//h4[contains(text(),'Fee Rates')]");
+                break;
+            case CONTENT_MANAGEMENT:
+                waitForElementToBePresent("//h4[contains(text(),'Templates')]");
+                break;
+            default:
+                waitForTitleToBePresent(option.toString());
+        }
     }
 
     public void loginAndGetApplication(boolean variation) {

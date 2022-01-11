@@ -16,7 +16,7 @@ public class UpdateInternalUserAccount extends BasePage {
     @When("I am on the Your Account page")
     public void iAmOnTheYourAccountPage() {
         world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.AdminNavigation(AdminOption.YOUR_ACCOUNT);
+        world.internalNavigation.adminNavigation(AdminOption.YOUR_ACCOUNT);
     }
 
     @Given("I change my team")
