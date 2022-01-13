@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
-import apiCalls.enums.VehicleType;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
