@@ -38,9 +38,9 @@ public class World {
     public DVLAJourney dvlaJourney;
     public FeeAndPaymentJourney feeAndPaymentJourney;
     public InternalSearchJourney internalSearchJourney;
-    public InternalNavigational internalNavigation;
+    public InternalNavigation internalNavigation;
     public OperatingCentreJourney operatingCentreJourney;
-    public SelfServeNavigational selfServeNavigation;
+    public SelfServeNavigation selfServeNavigation;
     public SurrenderJourney surrenderJourney;
     public TransportManagerJourney TMJourney;
     public BusinessDetailsJourney businessDetailsJourney;
@@ -55,4 +55,5 @@ public class World {
     public DataGenerator DataGenerator;
     public UserAccountJourney UserAccountJourney;
     public LgvOnly lgvOnly;
+    public GeneralVariationJourney generalVariationJourney;
 }

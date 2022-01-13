@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.system.Properties;
+import apiCalls.enums.VehicleType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -11,14 +12,14 @@ import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.jetbrains.annotations.NotNull;
 
 
-public class InternalNavigational extends BasePage {
+public class InternalNavigation extends BasePage {
 
     private World world;
     private String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
     String adminDropdown = "//li[@class='admin__title']";
     public String taskTitle = "//h2[text()='Edit task']";
 
-    public InternalNavigational(World world) {
+    public InternalNavigation(World world) {
         this.world = world;
     }
 
@@ -32,12 +33,12 @@ public class InternalNavigational extends BasePage {
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
     }
 
-    public void logInAndNavigateToApplicationDocsTable(boolean variation)  {
+    public void logInAndNavigateToApplicationDocsTable(boolean variation) {
         loginAndGetApplication(variation);
         clickByLinkText("Docs");
     }
 
-    public void logInAndNavigateToApplicationProcessingPage(boolean variation)  {
+    public void logInAndNavigateToApplicationProcessingPage(boolean variation) {
         loginAndGetApplication(variation);
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
@@ -47,7 +48,12 @@ public class InternalNavigational extends BasePage {
         click(adminDropdown, SelectorType.XPATH);
         clickByLinkText(option.toString());
         switch (option) {
-            case CONTINUATIONS: case PUBLICATIONS: case REPORTS: case PRINTING: case DATA_RETENTION: case USER_MANAGEMENT:
+            case CONTINUATIONS:
+            case PUBLICATIONS:
+            case REPORTS:
+            case PRINTING:
+            case DATA_RETENTION:
+            case USER_MANAGEMENT:
                 waitForElementToBePresent(String.format("//h4[contains(text(),'%s')]", option));
                 break;
             case BUS_REGISTRATIONS:
@@ -67,6 +73,13 @@ public class InternalNavigational extends BasePage {
         }
     }
 
+    public void navigateToAuthorisationPage() {
+        if (world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString()))
+            clickByLinkText("Licence authorisation");
+        else
+            clickByLinkText("Operating centres and authorisation");
+    }
+
     public void loginAndGetApplication(boolean variation) {
         if (world.updateLicence.getInternalUserId() == null)
             world.APIJourney.createAdminUser();
@@ -79,26 +92,26 @@ public class InternalNavigational extends BasePage {
     }
 
     public void urlViewUsers() {
-        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env,"/search/user/search/").toString();
+        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "/search/user/search/").toString();
     }
 
-    public void getApplication()  {
+    public void getApplication() {
         get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
 
-    public void getLicence()  {
+    public void getLicence() {
         get(this.url.concat(String.format("licence/%s", world.createApplication.getLicenceId())));
     }
 
-    public void getVariationApplication()  {
+    public void getVariationApplication() {
         get(this.url.concat(String.format("variation/%s", world.updateLicence.getVariationApplicationId())));
     }
 
-    public void getAdminEditFee(String feeNumber)  {
+    public void getAdminEditFee(String feeNumber) {
         get(this.url.concat(String.format("admin/payment-processing/fees/edit-fee/%s", feeNumber)));
     }
 
-    public void getEditUserAccount(String adminUserId)  {
+    public void getEditUserAccount(String adminUserId) {
         get(this.url.concat(String.format("admin/user-management/users/edit/%s", adminUserId)));
     }
 

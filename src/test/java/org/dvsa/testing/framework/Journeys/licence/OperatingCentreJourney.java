@@ -67,9 +67,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         if (!newHGVTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()))) {
             updateOperatingCentreAuthorisation(newHGVTotalAuthority);
         }
@@ -91,7 +89,8 @@ public class OperatingCentreJourney extends BasePage {
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
-        replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
+        if (world.createApplication.getTotalOperatingCentreTrailerAuthority() != Integer.parseInt(trailers))
+            replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
         if (isElementPresent("totAuthVehicles",SelectorType.ID)) {
             replaceText(totalAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
         } else{

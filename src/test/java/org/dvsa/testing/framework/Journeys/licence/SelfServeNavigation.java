@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
+import apiCalls.enums.VehicleType;
 import com.sun.istack.NotNull;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -22,12 +23,12 @@ import java.util.concurrent.TimeUnit;
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
-public class SelfServeNavigational extends BasePage {
+public class SelfServeNavigation extends BasePage {
 
     public World world;
     private String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
-    public SelfServeNavigational(World world) {
+    public SelfServeNavigation(World world) {
         this.world = world;
     }
 
@@ -52,6 +53,7 @@ public class SelfServeNavigational extends BasePage {
         navigateToExternalSearch();
         clickByLinkText("Vehicle operator decisions and applications");
     }
+
     public void navigateToCheckerPage()  {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
         navigate().get(myURL);

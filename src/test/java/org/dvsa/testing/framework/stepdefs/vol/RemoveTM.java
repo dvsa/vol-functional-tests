@@ -52,7 +52,7 @@ public class RemoveTM extends BasePage implements En {
     @Given("the licence has been granted")
     public void theLicenceHasBeenGranted() {
         world.grantApplication.grantLicence();
-        world.grantApplication.payGrantFees();
+        world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
     }
 
     @When("the internal user goes to remove the last transport manager")
