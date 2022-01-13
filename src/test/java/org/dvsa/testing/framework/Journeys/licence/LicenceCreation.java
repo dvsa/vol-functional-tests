@@ -65,13 +65,29 @@ public class LicenceCreation {
         createLicence(operatorType, licenceType);
     }
 
-    public void createLGVOnlyApplication() {
-
-    }
-
     public void createNILicence(String operatorType, String licenceType) {
         world.createApplication.setNiFlag("Y");
         createLicence(operatorType, licenceType);
+    }
+
+    public void createLGVOnlyApplication(String NIFlag) {
+        world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
+        world.createApplication.setTotalOperatingCentreLgvAuthority(5);
+        world.createApplication.setNoOfAddedHgvVehicles(0);
+        world.createApplication.setNoOfAddedLgvVehicles(5);
+        world.licenceCreation.createApplication("goods", "standard_international");
+    }
+
+    public void createSubmittedLGVOnlyApplication(String NIFlag) {
+        createLGVOnlyApplication(NIFlag);
+        world.APIJourney.submitApplication();
+    }
+
+    public void createLGVOnlyLicence(String NIFlag) {
+        createSubmittedLGVOnlyApplication(NIFlag);
+        world.APIJourney.grantLicenceAndPayFees();
     }
 
     public boolean isGoodsLicence() {

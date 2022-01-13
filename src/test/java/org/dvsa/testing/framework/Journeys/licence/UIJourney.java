@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
 import activesupport.driver.Browser;
@@ -27,7 +26,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.time.Duration;
 
 import java.util.*;
@@ -547,7 +545,7 @@ public class UIJourney extends BasePage {
             clickByXPath("//label[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
         }
 
-        if (licenceType.equals("standard_international")){
+        if (licenceType.equals("standard_international")) {
             if (!"no_selection".equals(vehicleType)){
                 clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
                 if (lgvUndertaking.equals("checked")) {

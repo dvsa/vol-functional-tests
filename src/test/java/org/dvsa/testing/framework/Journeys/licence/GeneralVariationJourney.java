@@ -14,7 +14,7 @@ public class GeneralVariationJourney extends BasePage {
     }
 
     public void signInAndBeginLGVAuthorisationVariation() {
-        if (world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString()))
+        if (world.licenceCreation.isLGVOnlyLicence())
             signInAndBeginLicenceAuthorisationVariation();
         else
             signInAndBeginOperatingCentreVariation();
