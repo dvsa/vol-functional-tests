@@ -23,9 +23,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
 
     @When("i increase my vehicle authority count")
     public void iIncreaseMyVehicleAuthorityCount() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         world.operatingCentreJourney.updateOperatingCentreAuthorisation(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ));
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ), null, currentTrailerTotalAuthority);
@@ -38,9 +36,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
 
     @When("A selfserve user increases the vehicle required count by invalid characters")
     public void aSelfserveUserIncreasesTheVehicleRequiredCountByInvalidCharacters() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         world.operatingCentreJourney.updateOperatingCentreAuthorisation("+6");
     }
 
@@ -51,9 +47,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
 
     @And("a selfserve user creates a variation and adds an operating centre with {string} HGVs and {string} trailers")
     public void aSelfserveUserCreatesAVariationAndIncreasesTheVehicleAuthorityCount(String vehicles, String trailers) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         world.operatingCentreJourney.addNewOperatingCentre(vehicles, trailers);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(vehicles, null, trailers);
         world.UIJourney.completeFinancialEvidencePage();
@@ -70,9 +64,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
 
     @And("a selfserve user creates a variation and adds an operating centre")
     public void aSelfserveUserCreatesAVariationAndAddsAnOperatingCentre(String vehicles, String trailers) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         world.operatingCentreJourney.addNewOperatingCentre(vehicles, trailers);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(vehicles, null, trailers);
         world.UIJourney.completeFinancialEvidencePage();
