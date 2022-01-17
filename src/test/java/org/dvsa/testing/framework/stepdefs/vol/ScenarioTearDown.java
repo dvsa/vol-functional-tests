@@ -14,12 +14,7 @@ public class ScenarioTearDown {
     @After
     public void tearDown(Scenario scenario) throws Exception {
         Hooks.attach(scenario);
-        try {
-            Browser.closeBrowser();
-        } catch (SessionNotCreatedException ignored) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        BrowserStack.stopLocal();
     }
 
     @Before
