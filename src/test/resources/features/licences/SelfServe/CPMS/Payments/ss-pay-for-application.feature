@@ -4,7 +4,7 @@
 @smoketest
 Feature: Self Serve Apply for licence
 
-  @CPMS_tests
+  @CPMS_tests_1
   Scenario Outline: Create and pay application fees
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_east |
