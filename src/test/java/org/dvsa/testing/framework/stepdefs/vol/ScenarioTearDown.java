@@ -12,7 +12,7 @@ import org.openqa.selenium.SessionNotCreatedException;
 
 public class ScenarioTearDown {
     @After
-    public void afterClass(Scenario scenario) throws Exception {
+    public void tearDown(Scenario scenario) throws Exception {
         Hooks.attach(scenario);
         try {
             Browser.closeBrowser();
@@ -23,7 +23,7 @@ public class ScenarioTearDown {
     }
 
     @Before
-    public void setUpReportConfig() throws Exception {
+    public void setUp() throws Exception {
         Environments environments = new Environments();
         environments.createResultsFolder();
         environments.generateXML();
