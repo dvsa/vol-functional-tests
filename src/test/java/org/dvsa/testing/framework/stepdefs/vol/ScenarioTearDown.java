@@ -1,13 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import activesupport.driver.Browser;
 import activesupport.driver.BrowserStack;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.dvsa.testing.framework.Report.Config.Environments;
 import org.dvsa.testing.framework.runner.Hooks;
-import org.openqa.selenium.SessionNotCreatedException;
 
 
 public class ScenarioTearDown {
