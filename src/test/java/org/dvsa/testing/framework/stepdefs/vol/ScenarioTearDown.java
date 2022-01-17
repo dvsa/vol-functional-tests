@@ -1,18 +1,25 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import activesupport.driver.BrowserStack;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.dvsa.testing.framework.Report.Config.Environments;
 import org.dvsa.testing.framework.runner.Hooks;
+import org.openqa.selenium.SessionNotCreatedException;
 
 
 public class ScenarioTearDown {
     @After
     public void afterClass(Scenario scenario) throws Exception {
         Hooks.attach(scenario);
-        BrowserStack.stopLocal();
+        try {
+            Browser.closeBrowser();
+        } catch (SessionNotCreatedException ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Before

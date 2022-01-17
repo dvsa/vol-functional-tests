@@ -37,14 +37,4 @@ public class Hooks {
             screenshotStream.close();
         }
     }
-
-    @After
-    public static void tearDown() {
-        try {
-            Browser.closeBrowser();
-        } catch (SessionNotCreatedException ignored) {
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
