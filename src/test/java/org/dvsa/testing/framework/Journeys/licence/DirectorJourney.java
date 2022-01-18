@@ -71,11 +71,11 @@ public class DirectorJourney extends BasePage {
         return directorFirstName.concat(" ").concat(directorLastName);
     }
 
-    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties()  {
+    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties() {
         click(addButton, SelectorType.XPATH);
-        if(isTitlePresent(directorDetailsTitle,30)) {
+        if (isTitlePresent(directorDetailsTitle,30)) {
             addPersonDetails();
-        }else if(isTitlePresent(directorVariationDetailsTitle,30)){
+        } else if (isTitlePresent(directorVariationDetailsTitle,30)) {
             addDirectorDetails();
         }
         try {

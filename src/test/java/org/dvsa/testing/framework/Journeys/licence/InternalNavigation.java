@@ -74,7 +74,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToAuthorisationPage() {
-        if (world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString()))
+        if (world.licenceCreation.isLGVOnlyLicence())
             clickByLinkText("Licence authorisation");
         else
             clickByLinkText("Operating centres and authorisation");
