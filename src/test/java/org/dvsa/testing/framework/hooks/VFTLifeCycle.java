@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.hooks;
 
 import activesupport.driver.Browser;
+import cucumber.api.Scenario;
 import cucumber.api.event.EventListener;
 import cucumber.api.event.EventPublisher;
 import cucumber.api.event.TestRunFinished;
