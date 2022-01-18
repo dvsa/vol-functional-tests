@@ -1,11 +1,9 @@
-package org.dvsa.testing.framework.runner;
+package org.dvsa.testing.framework.hooks;
 
 import cucumber.api.Scenario;
-import cucumber.api.java.After;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
-import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.TakesScreenshot;
 import activesupport.driver.Browser;
 
@@ -14,7 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.Instant;
 
-public class Hooks {
+public class ScreenShotAttachment {
 
 
     private static final File directory = new File(System.getProperty("user.dir") + "/target/img");
@@ -35,17 +33,6 @@ public class Hooks {
             scenarioStatus.embed(attachment, String.valueOf(screenshotStream));
             screenshotStream.write(attachment);
             screenshotStream.close();
-        }
-    }
-
-    public static void tearDown() {
-        if(Browser.isBrowserOpen()) {
-            try {
-                Browser.closeBrowser();
-            } catch (SessionNotCreatedException ignored) {
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 }

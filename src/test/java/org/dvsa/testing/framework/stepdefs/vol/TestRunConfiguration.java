@@ -5,14 +5,13 @@ import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.dvsa.testing.framework.Report.Config.Environments;
-import org.dvsa.testing.framework.runner.Hooks;
+import org.dvsa.testing.framework.hooks.ScreenShotAttachment;
 
 
-public class ScenarioTearDown {
+public class TestRunConfiguration {
     @After
-    public void tearDown(Scenario scenario) throws Exception {
-        Hooks.attach(scenario);
-        BrowserStack.stopLocal();
+    public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
+        ScreenShotAttachment.attach(scenario);
     }
 
     @Before
