@@ -144,7 +144,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>9</forkCount>
+                            <forkCount>8</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
