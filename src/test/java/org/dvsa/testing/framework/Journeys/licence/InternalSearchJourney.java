@@ -57,12 +57,7 @@ public class InternalSearchJourney extends BasePage {
     }
 
     public void searchAndViewAddress()  {
-        String address = String.format("%s, %s, %s, %s, %s",
-                world.createApplication.getOperatingCentreAddressLine1(),
-                world.createApplication.getOperatingCentreAddressLine2(),
-                world.createApplication.getOperatingCentreAddressLine3(),
-                world.createApplication.getOperatingCentreAddressLine4(),
-                world.createApplication.getOperatingCentreTown());
+        String address = world.formattedStrings.getFullCommaOperatingAddress();
         internalSearchUntilTextPresent(SearchType.Address, address, world.applicationDetails.getLicenceNumber());
         clickByLinkText("Addresses");
     }

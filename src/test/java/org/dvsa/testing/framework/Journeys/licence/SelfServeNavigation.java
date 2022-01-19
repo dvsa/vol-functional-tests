@@ -12,27 +12,21 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.LocalFileDetector;
-import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
-public class SelfServeNavigational extends BasePage {
+public class SelfServeNavigation extends BasePage {
 
     public World world;
     private String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
-    public String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
-    public SelfServeNavigational(World world) {
+    public SelfServeNavigation(World world) {
         this.world = world;
     }
 
@@ -48,7 +42,7 @@ public class SelfServeNavigational extends BasePage {
         get(this.url.concat("search/"));
     }
 
-    public void navigateToFindLorryAndBusOperatorsSearch() {
+    public void navigateToFindLorryAndBusOperatorsSearch()  {
         navigateToExternalSearch();
         clickByLinkText("Lorry and bus operators");
     }
@@ -58,13 +52,13 @@ public class SelfServeNavigational extends BasePage {
         clickByLinkText("Vehicle operator decisions and applications");
     }
 
-    public void navigateToCheckerPage() {
+    public void navigateToCheckerPage()  {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
         navigate().get(myURL);
     }
 
     public void navigateToLoginPage() {
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login/").toString();
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
         navigate().get(myURL);
         try {
             accessibilityScanner();
@@ -77,7 +71,7 @@ public class SelfServeNavigational extends BasePage {
         clickByLinkText("create an account");
     }
 
-    public void navigateToPage(String type, SelfServeSection page) {
+    public void navigateToPage(String type, SelfServeSection page)  {
         clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
         String applicationStatus;
@@ -126,7 +120,7 @@ public class SelfServeNavigational extends BasePage {
         }
     }
 
-    public void navigateToNavBarPage(SelfServeNavBar page) {
+    public void navigateToNavBarPage(SelfServeNavBar page)  {
         switch (page.toString()) {
             case "Home":
                 clickByLinkText("Home");
@@ -141,14 +135,12 @@ public class SelfServeNavigational extends BasePage {
                 waitForTitleToBePresent(page.toString());
         }
     }
-
-    /***
-     @exceptionMessage an example of this should be: "KickOut reached. Operator name external search failed."
-     This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
-     */
-    public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage) {
-        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();
-        ;
+/***
+    @exceptionMessage an example of this should be: "KickOut reached. Operator name external search failed."
+    This method is used for the self service search when trying to search for 'address', 'business', 'licence', or 'person'.
+ */
+    public void clickSearchWhileCheckingTextPresent(@NotNull String text, @NotNull int seconds, @NotNull String exceptionMessage)  {
+        long kickOut = System.currentTimeMillis() + Duration.ofSeconds(seconds).toMillis();;
         do {
             click("submit", SelectorType.ID);
             waitForPageLoad();
@@ -158,35 +150,25 @@ public class SelfServeNavigational extends BasePage {
         }
     }
 
-    public void navigateThroughApplication() {
+    public void navigateThroughApplication()  {
         String workingDir = System.getProperty("user.dir");
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
 
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Business type");
         waitAndContinuePage("Business details");
         waitAndContinuePage("Addresses");
         waitAndContinuePage("Directors");
         waitAndContinuePage("Operating centres and authorisation");
         waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[contains(text(),'Upload documents now')]", SelectorType.XPATH);
-
-        String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
-        javaScriptExecutor(jScript);
-
-        if (System.getProperty("platform") == null) {
-            enterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
-        } else {
-            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
-            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
-            addFile.sendKeys(workingDir.concat(financialEvidenceFile));
-        }
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
+        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
 
         if (isTitlePresent("Vehicle declarations", 30)) {
-            waitAndClick(saveAndContinue, SelectorType.XPATH);
+            UIJourney.clickSaveAndContinue();
         }
         waitAndContinuePage("Safety and compliance");
         waitAndContinuePage("Financial history");
@@ -196,7 +178,7 @@ public class SelfServeNavigational extends BasePage {
 
     private void waitAndContinuePage(String pageTitle) {
         waitForTitleToBePresent(pageTitle);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
     }
 
     public void getVariationFinancialEvidencePage() {

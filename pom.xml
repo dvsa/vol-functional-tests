@@ -10,7 +10,7 @@
 
     <properties>
         <active-support.version>1.6.4</active-support.version>
-        <api-calls.version>1.1.8</api-calls.version>
+        <api-calls.version>1.1.9</api-calls.version>
         <uri-constructor.version>1.5.4</uri-constructor.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,8 +18,8 @@
         <cucumber-java.version>4.4.0</cucumber-java.version>
         <cucumber-junit.version>4.4.0</cucumber-junit.version>
         <junit.version>4.12</junit.version>
-        <slf4j.version>2.17.0</slf4j.version>
-        <slf4j-log4j12.version>2.17.0</slf4j-log4j12.version>
+        <slf4j.version>2.17.1</slf4j.version>
+        <slf4j-log4j12.version>2.17.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <axe-scanner-version>2.5</axe-scanner-version>
         <assertj-core-version>3.9.1</assertj-core-version>
@@ -104,7 +104,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfFeaturesPerRunner>5</desiredNumberOfFeaturesPerRunner>
+                    <desiredNumberOfRunners>3</desiredNumberOfRunners>
                     <includeScenarioTags>
                         not (@skip
                         or @Deprecated
@@ -141,10 +141,9 @@
                     <execution>
                         <goals>
                             <goal>integration-test</goal>
-                            <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>7</forkCount>
+                            <forkCount>8</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
@@ -265,11 +264,6 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>${gson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-ecs</artifactId>
-            <version>1.12.131</version>
         </dependency>
     </dependencies>
 

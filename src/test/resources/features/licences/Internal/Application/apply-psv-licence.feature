@@ -5,21 +5,21 @@
 Feature: Apply for a psv licence
 
   Scenario: Apply for a psv restricted licence
-    Given I have submitted a "public" "restricted" application
+    Given I have a submitted "public" "restricted" application
     When I grant licence
     Then the licence should be granted
 
   Scenario: Apply for a psv special restricted licence
-    Given I have submitted a "public" "special_restricted" application
+    Given I have a submitted "public" "special_restricted" application
     When I grant licence
     Then the licence should be granted
 
   Scenario: Apply for a psv standard international licence
-    Given I have submitted a "public" "standard_international" application
+    Given I have a submitted "public" "standard_international" application
     When I grant licence
     Then the licence should be granted
 
   Scenario: Apply for a psv standard national licence
-    Given I have submitted a "public" "standard_national" application
+    Given I have a submitted "public" "standard_national" application
     When I grant licence
     Then the licence should be granted

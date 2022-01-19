@@ -34,7 +34,6 @@ public class DirectorJourney extends BasePage {
     public String directorTitleDropdown = "//select[@id='title']";
     public String firstNameField = "//input[@name='data[forename]']";
     public String lastNameField = "//input[@name='data[familyName]']";
-    public String saveAndContinue = "//button[@name='form-actions[saveAndContinue]']";
     public String additionalInformation = "//*[@id='data[insolvencyDetails]']";
     public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
@@ -72,11 +71,11 @@ public class DirectorJourney extends BasePage {
         return directorFirstName.concat(" ").concat(directorLastName);
     }
 
-    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties()  {
+    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties() {
         click(addButton, SelectorType.XPATH);
-        if(isTitlePresent(directorDetailsTitle,30)) {
+        if (isTitlePresent(directorDetailsTitle,30)) {
             addPersonDetails();
-        }else if(isTitlePresent(directorVariationDetailsTitle,30)){
+        } else if (isTitlePresent(directorVariationDetailsTitle,30)) {
             addDirectorDetails();
         }
         try {
@@ -121,12 +120,12 @@ public class DirectorJourney extends BasePage {
 
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(financialHistoryAnswers);
-        clickByXPath(saveAndContinue);
+        UIJourney.clickSaveAndContinue();
     };
 
     public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
-        clickByXPath(saveAndContinue);
+        UIJourney.clickSaveAndContinue();
     };
 
     public void removeDirector()  {
