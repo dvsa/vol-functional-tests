@@ -36,7 +36,7 @@ public class VerifySwitchedOff extends BasePage implements En {
         clickByLinkText("Back to Transport Managers");
     }
 
-    @And("transport manager status is {string}")
+    @And("transport manager status is {string} and {string}")
     public void transportManagerStatusIs(String classString, String Text) {
         assertTrue(isElementPresent(String.format("//*[contains(@class,'status %s') and contains(text(),'%s')]", classString, Text), SelectorType.XPATH));
     }
@@ -45,12 +45,6 @@ public class VerifySwitchedOff extends BasePage implements En {
     public void submitToOperatorButtonIsDisplayed() {
         assertTrue(isElementPresent("//h1[contains(text(),'Awaiting operator review')]", SelectorType.XPATH));
         clickByLinkText("Back to Transport Managers");
-    }
-
-    @And("submit to operator button is not displayed")
-    public void submitToOperatorIsNotDisplayed() {
-        String buttonName = findElement("form-actions[submit]", SelectorType.ID, 10).getText();
-        assertEquals("Submit", buttonName);
     }
 
     @And("i select a transport manager to add")
@@ -82,34 +76,10 @@ public class VerifySwitchedOff extends BasePage implements En {
         waitForTitleToBePresent("Application overview");
     }
 
-    @Then("application should be signed")
-    public void applicationShouldBeSigned(){
-
-    }
-
     @Then("the print and sign page is displayed")
     public void thePrintAndSignPageIsDisplayed() {
         Assert.assertTrue(isTextPresent("Transport Manager details approved"));
         Assert.assertTrue(isTextPresent("Print, sign and return"));
     }
 
-    @When("i am on the the TM landing page")
-    public void iamOnTheTmLandingPage() {
-        world.TMJourney.submitTMApplicationAndNavigateToTMLandingPage();
-    }
-
-    @Then("a success message banner should be displayed")
-    public void aSuccessMessageBannerShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent("The user account has been created and form has been emailed to the transport manager"));
-    }
-
-    @And("i navigate to the declarations page")
-    public void iNavigateToTheDeclarationsPage() {
-        world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
-    }
-
-    @Then("the 'Awaiting operator review' verify off page is displayed")
-    public void theAwaitingOperatorReviewVerify() {
-        assertTrue(isTextPresent("Awaiting operator review"));
-    }
 }

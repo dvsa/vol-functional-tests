@@ -18,7 +18,7 @@ public class ScanningSeparatorGeneration extends BasePage {
 
     @Given("I am on the Scanning page")
     public void iAmOnTheScanningPage() {
-        world.internalNavigation.AdminNavigation(AdminOption.SCANNING);
+        world.internalNavigation.adminNavigation(AdminOption.SCANNING);
     }
 
     @When("I complete the Compliance Scanning details")

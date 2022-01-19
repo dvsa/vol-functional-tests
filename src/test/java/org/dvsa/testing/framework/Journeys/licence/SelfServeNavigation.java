@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
+import apiCalls.enums.VehicleType;
 import com.sun.istack.NotNull;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -22,13 +23,12 @@ import java.util.concurrent.TimeUnit;
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
-public class SelfServeNavigational extends BasePage {
+public class SelfServeNavigation extends BasePage {
 
     public World world;
     private String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
-    public String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
-    public SelfServeNavigational(World world) {
+    public SelfServeNavigation(World world) {
         this.world = world;
     }
 
@@ -53,6 +53,7 @@ public class SelfServeNavigational extends BasePage {
         navigateToExternalSearch();
         clickByLinkText("Vehicle operator decisions and applications");
     }
+
     public void navigateToCheckerPage()  {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "are-you-ready/").toString();
         navigate().get(myURL);
@@ -155,7 +156,7 @@ public class SelfServeNavigational extends BasePage {
         String workingDir = System.getProperty("user.dir");
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
 
-        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Business type");
         waitAndContinuePage("Business details");
         waitAndContinuePage("Addresses");
@@ -164,12 +165,12 @@ public class SelfServeNavigational extends BasePage {
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
         uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
 
         if (isTitlePresent("Vehicle declarations", 30)) {
-            waitAndClick(saveAndContinue, SelectorType.XPATH);
+            UIJourney.clickSaveAndContinue();
         }
         waitAndContinuePage("Safety and compliance");
         waitAndContinuePage("Financial history");
@@ -179,7 +180,7 @@ public class SelfServeNavigational extends BasePage {
 
     private void waitAndContinuePage(String pageTitle) {
         waitForTitleToBePresent(pageTitle);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
     }
 
     public void getVariationFinancialEvidencePage() {

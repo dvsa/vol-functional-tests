@@ -31,7 +31,6 @@ public class OperatingCentreJourney extends BasePage {
     String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
     String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
     String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
-    public String saveButton = "//*[@id='form-actions[save]']";
 
     String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
@@ -45,6 +44,15 @@ public class OperatingCentreJourney extends BasePage {
 
     public void loginAndSubmitOperatingCentreVehicleAuthorisationVariationApplication(String newHGVTotalAuthority, String newLGVTotalAuthority) {
         loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        completeApplicationAfterUpdatingAuthorities(newHGVTotalAuthority, newLGVTotalAuthority);
+    }
+
+    public void completeLGVOnlyApplicationAfterUpdatingLGVAuthority(String newLGVTotalAuthority) {
+        String currentHGVAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority());
+        completeApplicationAfterUpdatingAuthorities(currentHGVAuthority, newLGVTotalAuthority);
+    }
+
+    private void completeApplicationAfterUpdatingAuthorities(String newHGVTotalAuthority, String newLGVTotalAuthority) {
         world.UIJourney.completeFinancialEvidencePage();
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
@@ -54,15 +62,12 @@ public class OperatingCentreJourney extends BasePage {
             click(submitAndPayForApplication, SelectorType.XPATH);
             click(payNow, SelectorType.XPATH);
             world.feeAndPaymentJourney.customerPaymentModule();
-            world.UIJourney.signDeclarationForVariation();
         }
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }
 
     public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         if (!newHGVTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()))) {
             updateOperatingCentreAuthorisation(newHGVTotalAuthority);
         }
@@ -84,13 +89,19 @@ public class OperatingCentreJourney extends BasePage {
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
-        replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
-        if(isElementPresent("totAuthVehicles",SelectorType.ID)) {
+        if (world.createApplication.getTotalOperatingCentreTrailerAuthority() != Integer.parseInt(trailers))
+            replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
+        if (isElementPresent("totAuthVehicles",SelectorType.ID)) {
             replaceText(totalAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
-        }else{
+        } else{
             replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
         }
-        click(saveButton, SelectorType.XPATH);
+        UIJourney.clickSaveAndReturn();
+    }
+
+    public void updateLGVOnlyAuthorityAndSave(String newAuthority) {
+        replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newAuthority);
+        UIJourney.clickSaveAndReturn();
     }
 
     public void addNewOperatingCentre(String vehicles, String trailers) {
@@ -111,10 +122,10 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     private boolean hasHGVAuthorityIncreased(String newHGVTotalAuthority) {
-        return world.createApplication.getTotalOperatingCentreHgvAuthority() >= Integer.parseInt(newHGVTotalAuthority);
+        return world.createApplication.getTotalOperatingCentreHgvAuthority() > Integer.parseInt(newHGVTotalAuthority);
     }
 
     private boolean hasLGVAuthorityIncreased(String newLGVTotalAuthority) {
-        return world.createApplication.getTotalOperatingCentreLgvAuthority() >= Integer.parseInt(newLGVTotalAuthority);
+        return world.createApplication.getTotalOperatingCentreLgvAuthority() > Integer.parseInt(newLGVTotalAuthority);
     }
 }

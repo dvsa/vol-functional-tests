@@ -26,7 +26,7 @@ public class SelfServePayFees extends BasePage implements En {
         @And("an internal user has granted my application")
         public void anInternalUserHasGrantedMyApplication() {
             world.grantApplication.grant();
-            world.grantApplication.payGrantFees();
+            world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         }
 
         @Then("^my licence should valid")

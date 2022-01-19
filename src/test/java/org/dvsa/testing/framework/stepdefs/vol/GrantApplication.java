@@ -26,7 +26,7 @@ public class GrantApplication extends BasePage implements En {
     @Then("the licence should be granted")
     public void theLicenceShouldBeGranted() {
         if (world.licenceCreation.isGoodsLicence()) {
-            apiResponse = world.grantApplication.payGrantFees();
+            apiResponse = world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         }
         assertTrue(apiResponse.extract().response().asString().contains("documents\\/Licensing\\/Other_Documents"));
     }

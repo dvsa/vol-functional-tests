@@ -78,7 +78,7 @@ public class FeeAndPaymentJourney extends BasePage {
                     selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Card Payment");
                     if (isTextPresent("Customer reference")) {
                         waitAndEnterText("details[customerName]",SelectorType.NAME, "Veena Skish");
-                        waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCardCustomerRef");
+                        waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCardCustomerRef"); // 15 Chars max due to CPSM API value length cap.
                         world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                         clickPayAndConfirm(paymentMethod);
                     }

@@ -35,7 +35,7 @@ public class APIJourney {
         world.APIJourney.createApplication();
         world.APIJourney.submitApplication();
         world.grantApplication.grantLicence();
-        world.grantApplication.payGrantFees();
+        world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         world.updateLicence.getLicenceTrafficArea();
     }
 
@@ -46,7 +46,8 @@ public class APIJourney {
         world.createApplication.addAddressDetails();
         world.createApplication.addDirectors();
         world.createApplication.submitTaxiPhv();
-        world.createApplication.addOperatingCentre();
+        if (!world.licenceCreation.isLGVOnlyLicence())
+            world.createApplication.addOperatingCentre();
         world.createApplication.updateOperatingCentre();
         world.createApplication.addFinancialEvidence();
         world.createApplication.addTransportManager();
@@ -102,7 +103,7 @@ public class APIJourney {
         world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
         if (world.licenceCreation.isGoodsLicence()) {
-            world.grantApplication.payGrantFees();
+            world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         }
     }
 }
