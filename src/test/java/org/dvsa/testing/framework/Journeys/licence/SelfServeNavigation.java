@@ -12,7 +12,11 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -161,6 +165,19 @@ public class SelfServeNavigation extends BasePage {
         waitAndContinuePage("Directors");
         waitAndContinuePage("Operating centres and authorisation");
         waitForTitleToBePresent("Financial evidence");
+        waitAndClick("//*[contains(text(),'Upload documents now')]", SelectorType.XPATH);
+
+        String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
+        javaScriptExecutor(jScript);
+
+        if (System.getProperty("platform") == null) {
+            enterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
+        } else {
+            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(workingDir.concat(financialEvidenceFile));
+        }
+        UIJourney.clickSaveAndContinue();
         waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
         uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
         UIJourney.clickSaveAndContinue();
