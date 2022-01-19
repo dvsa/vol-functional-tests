@@ -7,6 +7,8 @@ import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
+import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.PublicHolidayJourney;
+import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.TaskAllocationRulesJourney;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
@@ -61,5 +63,7 @@ public class Initialisation extends BasePage implements En {
         world.convictionsAndPenaltiesJourney = new ConvictionsAndPenaltiesJourney(world);
         world.userRegistrationJourney = new UserRegistrationJourney(world);
         world.UserAccountJourney = new UserAccountJourney(world);
+        world.publicHolidayJourney = new PublicHolidayJourney(world);
+        world.taskAllocationRulesJourney = new TaskAllocationRulesJourney(world);
     }
 }

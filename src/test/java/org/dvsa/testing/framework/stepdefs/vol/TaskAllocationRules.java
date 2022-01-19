@@ -47,7 +47,7 @@ public class TaskAllocationRules extends BasePage {
 
     @Given("I add an allocated rule")
     public void iAddAnAllocatedRule() {
-        world.adminJourney.addTaskAllocationRule();
+        world.taskAllocationRulesJourney.addTaskAllocationRule();
     }
 
     @Then("the rule should have been added")

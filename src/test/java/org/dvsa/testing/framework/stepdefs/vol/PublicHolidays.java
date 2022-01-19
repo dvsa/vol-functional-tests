@@ -25,7 +25,7 @@ public class PublicHolidays extends BasePage {
 
     @Given("an admin adds a public holiday")
     public void anAdminAddsAPublicHoliday(){
-        world.adminJourney.addPublicHoliday();
+        world.publicHolidayJourney.addPublicHoliday();
     }
 
     @Then("that holiday should be displayed")
@@ -37,7 +37,7 @@ public class PublicHolidays extends BasePage {
 
     @Given("an admin edits a public holiday")
     public void anAdminEditsAPublicHoliday() {
-        world.adminJourney.editPublicHoliday();
+        world.publicHolidayJourney.editPublicHoliday();
     }
 
     @Then("that edited holiday should be displayed")
@@ -49,7 +49,7 @@ public class PublicHolidays extends BasePage {
 
     @Given("an admin deletes a public holiday")
     public void anAdminDeletesAPublicHoliday() {
-        world.adminJourney.deletePublicHoliday();
+        world.publicHolidayJourney.deletePublicHoliday();
     }
 
     @Then("that holiday should not be displayed")
