@@ -20,9 +20,6 @@ public class TestRunConfiguration {
         Environments environments = new Environments();
         environments.createResultsFolder();
         environments.generateXML();
-        if(!Browser.isBrowserOpen()){
-            Browser.navigate();
-        }
         if(System.getProperty("gridURL") != null && (System.getProperty("gridURL")
                 .contains("hub-cloud.browserstack.com"))){
             BrowserStack.startLocal();
