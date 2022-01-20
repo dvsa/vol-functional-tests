@@ -42,9 +42,9 @@ public class CreateApplications extends BasePage implements En {
             waitForTextToBePresent("Would you like to use a stored card?");
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
             waitAndClick("form-actions[pay]", SelectorType.NAME);
-            waitAndEnterText("scp_additionalInformationPage_csc_input",  SelectorType.ID,"265");
-            waitAndClick("//*[@type='submit']", SelectorType.XPATH);
-            waitAndClick("//*[@type='submit']", SelectorType.XPATH);
+            waitAndEnterText("csc",  SelectorType.NAME,"265");
+            world.feeAndPaymentJourney.enterCardHolderDetails();
+            waitAndClick("_eventId_payment", SelectorType.NAME);
             waitForTitleToBePresent("Application overview");
         });
     }

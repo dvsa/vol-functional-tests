@@ -137,13 +137,13 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void enterCardHolderDetails(){
-        enterText("scp_tdsv2AdditionalInfoPage_cardholderName_input",SelectorType.ID, world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
-        enterText("scp_tdsv2AdditionalInfoPage_address_1_input",SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
-        enterText("scp_tdsv2AdditionalInfoPage_address_2_input",SelectorType.ID, world.DataGenerator.getOperatorAddressLine2());
-        enterText("scp_tdsv2AdditionalInfoPage_city_input",SelectorType.ID, world.DataGenerator.getOperatorTown());
-        enterText("scp_tdsv2AdditionalInfoPage_postcode_input",SelectorType.ID, world.DataGenerator.getOperatorPostCode());
-        enterText("scp_tdsv2AdditionalInfoPage_email_input",SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        clickById("scp_tdsv2AdditionalInfoPage_buttons_continue_button");
+        waitAndEnterText("scp_tdsv2AdditionalInfoPage_cardholderName_input",SelectorType.ID, world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
+        waitAndEnterText("scp_tdsv2AdditionalInfoPage_address_1_input",SelectorType.ID, world.DataGenerator.getOperatorAddressLine1());
+        waitAndEnterText("scp_tdsv2AdditionalInfoPage_address_2_input",SelectorType.ID, world.DataGenerator.getOperatorAddressLine2());
+        waitAndEnterText("scp_tdsv2AdditionalInfoPage_city_input",SelectorType.ID, world.DataGenerator.getOperatorTown());
+        waitAndEnterText("scp_tdsv2AdditionalInfoPage_postcode_input",SelectorType.ID, world.DataGenerator.getOperatorPostCode());
+        waitAndEnterText("scp_tdsv2AdditionalInfoPage_email_input",SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndClick("_eventId_continue",SelectorType.NAME);
     }
 
     public void clickPayAndConfirm(String paymentMethod)  {
