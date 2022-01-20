@@ -1,16 +1,18 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
+import apiCalls.enums.LicenceType;
+import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.lgv.LgvOnly;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
@@ -24,7 +26,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.time.Duration;
 
 import java.util.*;
@@ -39,7 +40,8 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNum
 
 public class UIJourney extends BasePage {
 
-    private World world;
+    private static World world;
+    //private World world;
     private FakerUtils faker = new FakerUtils();
     String uploadLaterRadioButton = "//input[@id='uploadLaterRadio']";
     String saveButton = "//*[@id='form-actions[save]']";
@@ -219,7 +221,7 @@ public class UIJourney extends BasePage {
     public void completeFinancialEvidencePage() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
         click(uploadLaterRadioButton, SelectorType.XPATH);
-        click(saveButton, SelectorType.XPATH);
+        clickSaveAndReturn();
     }
 
     public void signDeclaration()  {
@@ -274,7 +276,7 @@ public class UIJourney extends BasePage {
     public void payForInterimApp() {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
-        waitAndClick("form-actions[save]", SelectorType.NAME);
+        clickSaveAndReturn();
         clickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
@@ -300,13 +302,13 @@ public class UIJourney extends BasePage {
 
     public void caseWorkerCompleteConditionsAndUndertakings() {
         clickByLinkText("Conditions and undertakings");
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteReviewAndDeclarations() {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
-        click("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+        clickSaveAndContinue();
     }
 
     public void caseWorkerCompleteOverview() {
@@ -520,5 +522,36 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Variation details");
+        String url = navigate().getCurrentUrl();
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 2));
+    }
+
+    public static void clickSaveAndContinue() {
+        waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+    }
+
+    public static void clickSaveAndReturn()  {
+        waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
+    }
+
+    public void clickOk()  {
+        waitAndClick("//*[@id='form-actions[ok]']", SelectorType.XPATH);
+    }
+
+    public static void inputLicenceAndVehicleType(String licenceType, String vehicleType, String lgvUndertaking) {
+        if (isElementPresent("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']", SelectorType.XPATH)) {
+            clickByXPath("//input[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
+        } else {
+            clickByXPath("//label[@value='" + LicenceType.valueOf(licenceType.toUpperCase()).asString() + "']");
+        }
+
+        if (licenceType.equals("standard_international")) {
+            if (!"no_selection".equals(vehicleType)){
+                clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
+                if (lgvUndertaking.equals("checked")) {
+                    clickByXPath(LgvOnly.lgvDeclarationCheckbox);
+                }
+            }
+        }
     }
 }

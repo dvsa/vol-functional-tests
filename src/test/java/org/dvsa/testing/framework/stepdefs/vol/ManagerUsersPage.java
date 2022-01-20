@@ -36,13 +36,6 @@ public class ManagerUsersPage extends BasePage implements En {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
 
-    @And("i navigate to the manage users page")
-    public void iNavigateToTheManageUsersPage() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        waitAndClick("//*[contains(text(),'Manage users')]", SelectorType.XPATH);
-        Assert.assertEquals("Manage users", getText("h1", SelectorType.CSS));
-    }
-
     @When("i scan for accessibility violations")
     public void iScanForAccessibilityViolations() throws IllegalBrowserException, IOException {
         scanner.scan();

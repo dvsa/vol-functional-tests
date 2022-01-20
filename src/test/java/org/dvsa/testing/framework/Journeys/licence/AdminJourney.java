@@ -116,7 +116,6 @@ public class AdminJourney extends BasePage {
         world.internalNavigation.getLicence();
         waitAndClick("Processing", SelectorType.LINKTEXT);
         waitAndClick("(//input[@type='checkbox'])[3]", SelectorType.XPATH);
-
     }
 
     public void reassignTask() {

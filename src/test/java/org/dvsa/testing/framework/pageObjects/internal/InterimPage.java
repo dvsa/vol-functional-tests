@@ -13,7 +13,6 @@ public class InterimPage extends BasePage{
     private static String HGV_VEHICLE_FIELD = nameAttribute("input", "data[interimAuthHgvVehicles]");
     private static String LGV_VEHICLE_FIELD = nameAttribute("input", "data[interimAuthLgvVehicles]");
     private static String TRAILERS_FIELD = nameAttribute("input", "data[interimAuthTrailers]");
-    private static String SAVE = nameAttribute("button", "form-actions[save]");
     private static String GRANT = nameAttribute("button", "form-actions[grant]");
 
     public static void enterInterimDetail(String interimDetails) {
@@ -42,10 +41,6 @@ public class InterimPage extends BasePage{
 
     public static void trailerAuthority(int trailer) {
         enterText(TRAILERS_FIELD, SelectorType.CSS, String.valueOf(trailer));
-    }
-
-    public static void save() {
-        click(SAVE, SelectorType.CSS);
     }
 
     public static void grant() {

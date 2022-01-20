@@ -11,10 +11,17 @@ import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class InternalApplication extends BasePage implements En {
     private final World world;
+
+    private String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
+    private String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
+    private String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
+    private String numberOfVehicles = "//dt[contains(text(),'No. of vehicles')]/../dd";
+    private String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
 
     public InternalApplication (World world) {this.world = world;}
 
@@ -114,5 +121,61 @@ public class InternalApplication extends BasePage implements En {
     @Then("the document should be deleted")
     public void theDocumentShouldBeDeleted() {
         waitForTextToBePresent("Deleted successfully");
+    }
+
+    @And("I navigate to the application overview")
+    public void iNavigateToTheApplicationOverview() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
+    }
+
+    @Then("the LGV Only authorisation should be correct on the application overview screen")
+    public void theLGVOnlyAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
+        String actualLGVAuthorisation = getText(LGVOnlyAuthorisation, SelectorType.XPATH);
+        String expectedLGVAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreLgvAuthority());
+        assertEquals(expectedLGVAuthority, actualLGVAuthorisation);
+
+        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
+        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedLgvVehicles());
+        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
+
+        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
+        String expectedNumberOfOperatingCentres = "0 (0)";
+        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
+    }
+
+    @Then("the PSV Standard International authorisation should be correct on the application overview screen")
+    public void thePSVStandardInternationalAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
+        String actualVehicleAuthorisation = getText(vehicleAuthorisation, SelectorType.XPATH);
+        String expectedVehicleAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreHgvAuthority());
+        assertEquals(expectedVehicleAuthority, actualVehicleAuthorisation);
+
+        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
+        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedHgvVehicles());
+        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
+
+        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
+        String expectedNumberOfOperatingCentres = "0 (1)";
+        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
+    }
+
+    @Then("the Goods Standard National authorisation should be correct on the application overview screen")
+    public void theGoodsStandardNationalAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
+        String actualHGVAuthorisation = getText(vehicleAuthorisation, SelectorType.XPATH);
+        String expectedHGVAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreHgvAuthority());
+        assertEquals(expectedHGVAuthority, actualHGVAuthorisation);
+
+        String actualTrailerAuthorisation = getText(trailerAuthorisation, SelectorType.XPATH);
+        String expectedTrailerAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreTrailerAuthority());
+        assertEquals(actualTrailerAuthorisation, expectedTrailerAuthority);
+
+        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
+        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedHgvVehicles());
+        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
+
+        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
+        String expectedNumberOfOperatingCentres = "0 (1)";
+        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
     }
 }

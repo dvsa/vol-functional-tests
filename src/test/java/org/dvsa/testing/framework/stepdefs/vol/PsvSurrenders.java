@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -73,7 +74,7 @@ public class PsvSurrenders extends BasePage implements En {
         waitForTitleToBePresent("Addresses");
         findElement("addressTown", SelectorType.ID, 5).clear();
         enterText("addressTown", SelectorType.ID, world.surrenderJourney.getUpdatedTown());
-        click("//*[@id='form-actions[save]']", SelectorType.XPATH);
+        UIJourney.clickSaveAndReturn();
         waitForTitleToBePresent("Review your contact information");
     }
 

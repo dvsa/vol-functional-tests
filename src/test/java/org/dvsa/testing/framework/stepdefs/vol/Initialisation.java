@@ -7,10 +7,15 @@ import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
+import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.PrintingAndScanningJourney;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.PublicHolidayJourney;
+import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.TaskAllocation;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.TaskAllocationRulesJourney;
+import org.dvsa.testing.framework.Journeys.licence.InternalNavigation;
+import org.dvsa.testing.framework.Journeys.licence.SelfServeNavigation;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
+import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
@@ -34,6 +39,7 @@ public class Initialisation extends BasePage implements En {
         world.configuration = new Configuration(world);
         world.globalMethods = new GlobalMethods(world);
         world.DBUtils = new DBUtils(world);
+        world.formattedStrings = new FormattedStrings(world);
         world.licenceCreation = new LicenceCreation(world);
         world.genericUtils = new GenericUtils(world);
         world.APIJourney = new APIJourney(world);
@@ -43,9 +49,9 @@ public class Initialisation extends BasePage implements En {
         world.dvlaJourney = new DVLAJourney(world);
         world.internalSearchJourney = new InternalSearchJourney(world);
         world.feeAndPaymentJourney = new FeeAndPaymentJourney(world);
-        world.internalNavigation = new InternalNavigational(world);
+        world.internalNavigation = new InternalNavigation(world);
         world.operatingCentreJourney = new OperatingCentreJourney(world);
-        world.selfServeNavigation = new SelfServeNavigational(world);
+        world.selfServeNavigation = new SelfServeNavigation(world);
         world.adminJourney = new AdminJourney(world);
         world.surrenderJourney = new SurrenderJourney(world);
         world.TMJourney = new TransportManagerJourney(world);
@@ -61,9 +67,12 @@ public class Initialisation extends BasePage implements En {
         world.financialHistoryJourney = new FinancialHistoryJourney(world);
         world.licenceDetailsJourney = new LicenceDetailsJourney(world);
         world.convictionsAndPenaltiesJourney = new ConvictionsAndPenaltiesJourney(world);
+        world.generalVariationJourney = new GeneralVariationJourney(world);
         world.userRegistrationJourney = new UserRegistrationJourney(world);
         world.UserAccountJourney = new UserAccountJourney(world);
         world.publicHolidayJourney = new PublicHolidayJourney(world);
         world.taskAllocationRulesJourney = new TaskAllocationRulesJourney(world);
+        world.taskAllocation = new TaskAllocation(world);
+        world.printingAndScanningJourney = new PrintingAndScanningJourney(world);
     }
 }

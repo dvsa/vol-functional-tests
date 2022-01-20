@@ -45,8 +45,8 @@ public class ManageApplications {
         world.licenceCreation.createSubmittedApplicationWithVehicles(operatorType, licenceType, "5");
     }
 
-    @Given("I have submitted a {string} {string} application")
-    public void iHaveSubmittedApplication(String operatorType, String licenceType) {
+    @Given("I have a submitted {string} {string} application")
+    public void iHaveASubmittedApplication(String operatorType, String licenceType) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createSubmittedApplication(operatorType, licenceType);
     }
@@ -179,5 +179,20 @@ public class ManageApplications {
             world.createApplication.addOperatingCentre();
         world.APIJourney.submitApplication();
         world.APIJourney.grantLicenceAndPayFees();
+    }
+
+    @Given("I have a {string} lgv only application")
+    public void iHaveALgvOnlyApplication(String NIFlag) {
+        world.licenceCreation.createLGVOnlyApplication(NIFlag);
+    }
+
+    @Given("I have a submitted {string} lgv only application")
+    public void iHaveASubmittedLgvOnlyApplication(String NIFlag) {
+        world.licenceCreation.createSubmittedLGVOnlyApplication(NIFlag);
+    }
+
+    @Given("I have a valid {string} lgv only licence")
+    public void iHaveAValidLgvOnlyLicence(String NIFlag) {
+        world.licenceCreation.createLGVOnlyLicence(NIFlag);
     }
 }

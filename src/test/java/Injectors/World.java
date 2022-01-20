@@ -9,7 +9,9 @@ import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.TransportManagerJourney;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
+import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.stepdefs.lgv.LgvOnly;
 
 
 public class World {
@@ -22,6 +24,7 @@ public class World {
 
     public Configuration configuration;
     public DBUtils DBUtils;
+    public FormattedStrings formattedStrings;
     public GenericUtils genericUtils;
     public GlobalMethods globalMethods;
     public LicenceCreation licenceCreation;
@@ -37,9 +40,9 @@ public class World {
     public DVLAJourney dvlaJourney;
     public FeeAndPaymentJourney feeAndPaymentJourney;
     public InternalSearchJourney internalSearchJourney;
-    public InternalNavigational internalNavigation;
+    public InternalNavigation internalNavigation;
     public OperatingCentreJourney operatingCentreJourney;
-    public SelfServeNavigational selfServeNavigation;
+    public SelfServeNavigation selfServeNavigation;
     public SurrenderJourney surrenderJourney;
     public TransportManagerJourney TMJourney;
     public BusinessDetailsJourney businessDetailsJourney;
@@ -55,5 +58,10 @@ public class World {
     public UserAccountJourney UserAccountJourney;
     public PublicHolidayJourney publicHolidayJourney;
     public TaskAllocationRulesJourney taskAllocationRulesJourney;
+    public TaskAllocation taskAllocation;
+    public PrintingAndScanningJourney printingAndScanningJourney;
 
+
+    public LgvOnly lgvOnly;
+    public GeneralVariationJourney generalVariationJourney;
 }

@@ -2,11 +2,10 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
-import activesupport.number.Int;
+import apiCalls.enums.VehicleType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.dvsa.testing.framework.Journeys.licence.OperatingCentreJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -88,20 +87,16 @@ public class OperatingCentreVariation extends BasePage {
 
     @When("i change my total HGV vehicle authority to {int} without changing the operating centres")
     public void iChangeMyTotalHGVVehicleAuthorityWithoutChangingTheOperatingCentres(int HGVTotalAuthority) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(HGVTotalAuthority), "0", currentTrailerTotalAuthority);
     }
 
     @When("i add an operating centre and increase the vehicle total authority")
     public void iAddAnOperatingCentreAndIncreaseTheVehicleTotalAuthority() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        world.UIJourney.changeLicenceForVariation();
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         numberOfNewOperatingCentreVehicles = "5";
-        world.operatingCentreJourney.addNewOperatingCentre( numberOfNewOperatingCentreVehicles, "0");
+        world.operatingCentreJourney.addNewOperatingCentre(numberOfNewOperatingCentreVehicles, "0");
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         Integer newTotalVehicleAuthority = Integer.parseInt(numberOfNewOperatingCentreVehicles) + world.createApplication.getTotalOperatingCentreHgvAuthority();
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(newTotalVehicleAuthority), "0", currentTrailerTotalAuthority);
@@ -168,5 +163,31 @@ public class OperatingCentreVariation extends BasePage {
         click(world.operatingCentreJourney.addOperatingCentre, SelectorType.XPATH);
         waitForTitleToBePresent("Add operating centre");
         scanner.scan();
+    }
+
+    @And("i create an lgv authorisation variation with {int} more LGVs")
+    public void iCreateAnLGVAuthorisationVariationWithMoreLGVs(int additionalAuthority) {
+        world.generalVariationJourney.signInAndBeginLGVAuthorisationVariation();
+        String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
+        world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
+    }
+
+    @And("i create and submit an lgv authorisation variation with {int} more LGVs")
+    public void iCreateAndSubmitAnLgvAuthorisationVariation(int additionalAuthority) {
+        world.generalVariationJourney.signInAndBeginLGVAuthorisationVariation();
+        String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
+        world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
+        world.operatingCentreJourney.completeLGVOnlyApplicationAfterUpdatingLGVAuthority(newAuthority);
+    }
+
+    @And("I create and save an lgv authorisation variation on internal with {int} more LGVs")
+    public void iCreateAndSaveAnLgvAuthorisationVariationOnInternal(int additionalAuthority) {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getLicence();
+        world.UIJourney.createVariationInInternal(false);
+        String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
+        world.internalNavigation.navigateToAuthorisationPage();
+        world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
     }
 }

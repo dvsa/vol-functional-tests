@@ -20,7 +20,7 @@ public class PublicHolidays extends BasePage {
     @When("I am on the public holidays page")
     public void iAmOnThePublicHolidaysPage() {
         world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.AdminNavigation(AdminOption.PUBLIC_HOLIDAY);
+        world.internalNavigation.adminNavigation(AdminOption.PUBLIC_HOLIDAYS);
     }
 
     @Given("an admin adds a public holiday")
