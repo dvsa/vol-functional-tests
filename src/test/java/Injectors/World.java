@@ -3,14 +3,15 @@ package Injectors;
 import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
-import org.dvsa.testing.framework.Journeys.licence.AdminJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
+import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.TransportManagerJourney;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.stepdefs.lgv.LgvOnly;
+
 
 public class World {
     public GetApplicationDetails applicationDetails;
@@ -27,7 +28,6 @@ public class World {
     public GlobalMethods globalMethods;
     public LicenceCreation licenceCreation;
 
-    public AdminJourney adminJourney;
     public APIJourney APIJourney;
     public UIJourney UIJourney;
 
@@ -54,6 +54,12 @@ public class World {
     public UserRegistrationJourney userRegistrationJourney;
     public DataGenerator DataGenerator;
     public UserAccountJourney UserAccountJourney;
+    public PublicHolidayJourney publicHolidayJourney;
+    public TaskAllocationRulesJourney taskAllocationRulesJourney;
+    public TaskAllocation taskAllocation;
+    public PrintingAndScanningJourney printingAndScanningJourney;
+
+
     public LgvOnly lgvOnly;
     public GeneralVariationJourney generalVariationJourney;
 }

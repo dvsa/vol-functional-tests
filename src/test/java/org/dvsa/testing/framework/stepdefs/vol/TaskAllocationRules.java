@@ -22,7 +22,7 @@ public class TaskAllocationRules extends BasePage {
 
     @And("I delete an allocation rule")
     public void iDeleteAnAllocationRule() {
-        world.adminJourney.deleteTaskAllocationRule();
+        world.taskAllocationRulesJourney.deleteTaskAllocationRule();
     }
 
     @Then("that rule should have been deleted")
@@ -32,26 +32,26 @@ public class TaskAllocationRules extends BasePage {
 
     @Given("I edit an allocated rule")
     public void iEditAnAllocatedRule() {
-        world.adminJourney.editTaskAllocationRule();
+        world.taskAllocationRulesJourney.editTaskAllocationRule();
     }
 
     @Then("that rule should have been edited")
     public void thatRuleShouldHaveBeenEdited() {
         if (isElementPresent("//th[text()='Assign operator tasks starting with these letters']", SelectorType.XPATH)) {
             Assert.assertTrue(isElementPresent("//p[text()='Alpha split updated']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent(world.adminJourney.getAbbreviation()));
+            Assert.assertTrue(isTextPresent(world.taskAllocationRulesJourney.getAbbreviation()));
         } else {
-            Assert.assertTrue(isTextPresent(world.adminJourney.getOwnerName()));
+            Assert.assertTrue(isTextPresent(world.taskAllocationRulesJourney.getOwnerName()));
         }
     }
 
     @Given("I add an allocated rule")
     public void iAddAnAllocatedRule() {
-        world.adminJourney.addTaskAllocationRule();
+        world.taskAllocationRulesJourney.addTaskAllocationRule();
     }
 
     @Then("the rule should have been added")
     public void theRuleShouldHaveBeenAdded() {
-        Assert.assertTrue(isTextPresent(world.adminJourney.getOwnerName()));
+        Assert.assertTrue(isTextPresent(world.taskAllocationRulesJourney.getOwnerName()));
     }
 }
