@@ -20,7 +20,7 @@ public class TaskAllocation extends BasePage {
 
     public String getDescription() {return description;}
 
-    public void findLicenseAndNavigate() {
+    public void findLicenceAndNavigate() {
         enterText("search", SelectorType.NAME,   world.applicationDetails.getLicenceNumber());
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         world.internalNavigation.getLicence();
@@ -37,7 +37,7 @@ public class TaskAllocation extends BasePage {
     }
 
     public void reassignTask() {
-        findLicenseAndNavigate();
+        findLicenceAndNavigate();
         waitAndClick("re-assign task", SelectorType.ID);
         waitAndClick("assignedToTeam", SelectorType.ID);
         selectSystemTeam();
@@ -46,7 +46,7 @@ public class TaskAllocation extends BasePage {
 
     public void editTask() {
         generateCompany();
-        findLicenseAndNavigate();
+        findLicenceAndNavigate();
         waitAndClick("edit", SelectorType.ID);
         waitForElementToBePresent("//*[@id='details[description]']");
         replaceText("details[description]", SelectorType.ID, description);

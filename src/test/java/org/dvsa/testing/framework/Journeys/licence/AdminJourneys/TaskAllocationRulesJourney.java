@@ -65,6 +65,3 @@ public class TaskAllocationRulesJourney extends BasePage {
         waitAndClick("form-actions[confirm]", SelectorType.ID);
     }
 }
-
-
-
