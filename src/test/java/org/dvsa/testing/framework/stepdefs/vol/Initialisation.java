@@ -5,7 +5,6 @@ import apiCalls.actions.*;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
-import org.dvsa.testing.framework.Journeys.licence.AdminJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.PrintingAndScanningJourney;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.PublicHolidayJourney;
@@ -52,7 +51,6 @@ public class Initialisation extends BasePage implements En {
         world.internalNavigation = new InternalNavigation(world);
         world.operatingCentreJourney = new OperatingCentreJourney(world);
         world.selfServeNavigation = new SelfServeNavigation(world);
-        world.adminJourney = new AdminJourney(world);
         world.surrenderJourney = new SurrenderJourney(world);
         world.TMJourney = new TransportManagerJourney(world);
         world.UIJourney = new UIJourney(world);
