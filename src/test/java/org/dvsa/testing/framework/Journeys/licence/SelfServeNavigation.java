@@ -179,9 +179,6 @@ public class SelfServeNavigation extends BasePage {
             addFile.sendKeys(workingDir.concat(financialEvidenceFile));
         }
         UIJourney.clickSaveAndContinue();
-        waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
-        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
-        UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
 
