@@ -16,16 +16,16 @@ Feature: User should be able to continue where they left off
       | OperatorType | LicenceType       |
       | public       | standard_national |
 
-  Scenario Outline: Remove disc from licence and resume surrender journey
-    Given i have a valid "<OperatorType>" "<LicenceType>" licence
-    When i have started a surrender
-    And i remove a disc to my licence
-    Then continue with application link is displayed
-    And user is taken to information change page on clicking continue application
-
-    Examples:
-      | OperatorType | LicenceType            |
-      | public       | standard_international |
+#  Scenario Outline: Remove disc from licence and resume surrender journey
+#    Given i have a valid "<OperatorType>" "<LicenceType>" licence
+#    When i have started a surrender
+#    And i remove a disc to my licence
+#    Then continue with application link is displayed
+#    And user is taken to information change page on clicking continue application
+#
+#    Examples:
+#      | OperatorType | LicenceType            |
+#      | public       | standard_international |
 
 #  Careful here. Will need to change the code to incorporate the new DVLA journey.
 
