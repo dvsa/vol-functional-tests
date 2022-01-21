@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.driver.Browser;
+import apiCalls.enums.LicenceType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -10,6 +11,7 @@ import cucumber.api.java8.En;
 import io.cucumber.datatable.DataTable;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
 
@@ -100,17 +102,22 @@ public class SurrenderLogic extends BasePage implements En {
         assertTrue(Browser.navigate().getCurrentUrl().contains("current-discs"));
     }
 
-    And("^i am on the operator licence page$", () -> {
+    @And("i am on the operator licence page")
+            public void iAmOnTheOperatorLicencePage(){
         waitAndClick("form-actions[submit]", SelectorType.ID);
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
-    });
-    And("^user is taken to the operator licence page on clicking continue application$", () -> {
+    }
+
+    @And("user is taken to the operator licence page on clicking continue application")
+            public void userIsTakenToContinueApplication(){
         clickByLinkText("Continue");
         assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
-    });
-    And("^i am on the community licence page$", () -> {
+    }
+
+    @And("i am on the community licence page")
+    public void iAmOnTheCommunityLicencePage(){
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             waitAndClick("form-actions[submit]", SelectorType.ID);
             world.surrenderJourney.addDiscInformation();
@@ -120,12 +127,16 @@ public class SurrenderLogic extends BasePage implements En {
         } else {
             throw new InvalidArgumentException("Only a goods standard international licence has community pages");
         }
-    });
-    And("^user is taken to the community licence page on clicking continue application$", () -> {
+    }
+
+    @And("user is taken to the community licence page on clicking continue application")
+            public void userIsTakenToCommunityLicencePageOnClickingContinueApplication(){
         clickByLinkText("Continue");
         assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
-    });
-    And("^i am on the disc and doc review page$", () -> {
+    }
+
+    @And("i am on the disc and doc review page")
+            public void iAmOnTheDiscAndDocReviewPage(){
         waitAndClick("form-actions[submit]", SelectorType.ID);
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
@@ -135,12 +146,16 @@ public class SurrenderLogic extends BasePage implements En {
             world.surrenderJourney.addCommunityLicenceDetails();
         }
         assertTrue(Browser.navigate().getCurrentUrl().contains("review"));
-    });
-    And("^user is taken to the disc and doc review page on clicking continue application$", () -> {
+    }
+
+    @And("user is taken to the disc and doc review page on clicking continue application")
+            public void userIsTakenToTheDiscReviewPage(){
         clickByLinkText("Continue");
         assertTrue(Browser.navigate().getCurrentUrl().contains("review"));
-    });
-    And("^i am on the destroy disc page$", () -> {
+    }
+
+    @And("i am on the destroy disc page")
+            public void iAmOnTheDestroyDiscPage(){
         waitAndClick("form-actions[submit]", SelectorType.ID);
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
@@ -151,8 +166,10 @@ public class SurrenderLogic extends BasePage implements En {
         }
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         assertTrue(Browser.navigate().getCurrentUrl().contains("destroy"));
-    });
-    And("^i am on the declaration page$", () -> {
+    }
+
+    @And("i am on the declaration page")
+            public void iAmOnTheDeclarationPage(){
         waitAndClick("form-actions[submit]", SelectorType.ID);
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
@@ -164,58 +181,88 @@ public class SurrenderLogic extends BasePage implements En {
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         waitAndClick("form-actions[submit]", SelectorType.NAME);
         assertTrue(Browser.navigate().getCurrentUrl().contains("declaration"));
-    });
-    And("^my application to surrender is under consideration$", () -> {
+    }
+
+    @And("my application to surrender is under consideration")
+            public void myApplicationToSurrenderIsUnderConsideration(){
         world.updateLicence.printLicenceDiscs();
         world.surrenderJourney.submitSurrender();
-    });
-    When("^the caseworker approves the surrender$", () -> {
+    }
+
+    @When("the caseworker approves the surrender")
+            public void theCaseWorkerApprovesTheSurrender(){
         world.surrenderJourney.caseworkManageSurrender();
         // Refresh page
         refreshPageWithJavascript();
         waitAndClick("actions[surrender]", SelectorType.ID);
-    });
-    Then("^the licence status should be \"([^\"]*)\"$", (String status) -> {
+    }
+
+    @Then("the licence status should be {String}")
+            public void theLicenceStatusShouldBe(String status){
         world.UIJourney.checkLicenceStatus(status);
-    });
-    And("^the surrender menu should be hidden in internal$", () -> {
+    }
+
+    @And("the surrender menu should be hidden in internal")
+            public void theSurrenderMenuShouldBeHiddenInInternal(){
         assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender", SelectorType.XPATH));
-    });
-    And("^the \"([^\"]*)\" page should display$", (String page) -> {
+    }
+
+    @And("the {String} page should display")
+            public void thePageShouldDisplay(String page){
         assertTrue(isTextPresent(page));
-    });
-    When("^the caseworker attempts to withdraw the surrender$", () -> {
+    }
+
+    @When("the caseworker attempts to withdraw the surrender")
+            public void theCaseworkerAttemptsToWithdrawTheSurrender(){
         world.surrenderJourney.caseworkManageSurrender();
         waitForElementToBeClickable("actions[surrender]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
-    });
-    Then("^a modal box is displayed$", () -> {
+    }
+
+    @Then("a modal box is displayed")
+            public void aModalBoxIsDisplayed(){
         assertTrue(isElementPresent("//*[contains(text(),'Continue')]", SelectorType.XPATH));
-    });
-    And("^the caseworker confirms the withdraw$", () -> {
+    }
+
+    @And("the caseworker confirms the withdraw")
+            public void theCaseworkConfirmsTheWithdraw(){
         waitAndClick("continue", SelectorType.ID);
-    });
-    Then("^the modal box is hidden$", () -> {
+    }
+
+    @Then("the modal box is hidden")
+            public void theModalBoxIsHidden(){
         assertFalse(isElementPresent("//*[@class='modal']", SelectorType.XPATH));
-    });
-    And("^the caseworker cancels the withdraw$", () -> {
+    }
+
+    @And("the caseworker cancels the withdraw")
+            public void theCaseworkerCancelsTheWithdraw(){
         waitAndClick("cancel", SelectorType.ID);
-    });
-    And("^the surrender menu should be displayed$", () -> {
+    }
+
+    @And("the surrender menu should be displayed")
+            public void theSurrenderMenuShouldBeDisplayed(){
         assertTrue(isElementPresent("//*[contains(text(),'Surrender')]", SelectorType.XPATH));
-    });
-    Then("^the user should remain on the surrender details page$", () -> {
+    }
+
+    @Then("the user should remain on the surrender details page")
+            public void theUserShouldRemainOnTheSurrenderDetailsPage(){
         assertTrue(Browser.navigate().getCurrentUrl().contains("surrender-details"));
         assertTrue(isLinkPresent("Surrender", 30));
-    });
-    And("^the licence should not displayed in selfserve$", () -> {
+    }
+
+    @And("the licence should not displayed in selfserve")
+            public void theLicenceShouldNotDisplayedInSelfserve(){
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 30));
-    });
-    And("^the user should be able to re apply for a surrender in internal$", () -> {
+    }
+
+    @And("the user should be able to re apply for a surrender in internal")
+            public void theUserShouldBeAbleToReApply(){
         world.surrenderJourney.submitSurrender();
-    });
-    Then("^the quick actions and decision buttons are not displayed for the menu items listed$", (DataTable buttons) -> {
+    }
+
+    @Then("the quick actions and decision buttons are not displayed for the menu items listed")
+            public void menuItemsListed (DataTable buttons){
         assertFalse(isTextPresent("Quick actions"));
         List<String> section_button = buttons.asList(String.class);
         for (String button : section_button) {
@@ -223,8 +270,9 @@ public class SurrenderLogic extends BasePage implements En {
             assertTrue(isElementNotPresent("//*[contains(@id,'menu-licence-quick-actions')]", SelectorType.XPATH));
             assertTrue(isElementNotPresent("//*[contains(@id,'menu-licence-decisions')]", SelectorType.XPATH));
         }
-    });
-    And("^the case worker undoes the surrender$", () -> {
+    }
+
+    @And("^the case worker undoes the surrender$", () -> {
         waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
         waitAndClick("form-actions[submit]", SelectorType.ID);
