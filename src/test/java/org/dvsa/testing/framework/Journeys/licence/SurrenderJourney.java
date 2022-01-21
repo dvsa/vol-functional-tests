@@ -149,4 +149,17 @@ public class SurrenderJourney extends BasePage {
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
     }
+
+    public void removeDisc() {
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+        addDiscInformation();
+        clickByLinkText("Home");
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        clickByLinkText("Licence discs");
+        waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@id='modal-title']");
+        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        refreshPageWithJavascript();
+        waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
+    }
 }
