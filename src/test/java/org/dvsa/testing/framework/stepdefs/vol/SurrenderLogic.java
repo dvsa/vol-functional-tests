@@ -183,6 +183,8 @@ public class SurrenderLogic extends BasePage implements En {
             world.surrenderJourney.addCommunityLicenceDetails();
         }
         waitAndClick("form-actions[submit]", SelectorType.NAME);
+        waitForTitleToBePresent("Now securely destroy your licence documentation");
+        waitAndClick("form-actions[submit]", SelectorType.ID);
         assertTrue(Browser.navigate().getCurrentUrl().contains("declaration"));
     }
 
