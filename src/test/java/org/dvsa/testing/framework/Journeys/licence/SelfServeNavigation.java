@@ -111,7 +111,8 @@ public class SelfServeNavigation extends BasePage {
                 break;
             case "Vehicles":
                 clickByLinkText("Vehicles");
-                waitForTitleToBePresent("Manage your vehicles");
+                //Once DVLA integration has been switched on, this needs updating
+                waitForTitleToBePresent("Vehicle details");
                 break;
             case "Convictions and penalties":
                 clickByLinkText("Convictions and penalties");
