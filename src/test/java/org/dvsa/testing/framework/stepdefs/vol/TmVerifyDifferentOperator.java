@@ -26,7 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TmVerifyDifferentOperator extends BasePage implements En {
     private final World world;
 
-    public TmVerifyDifferentOperator(World world) {this.world=world;}
+    public TmVerifyDifferentOperator(World world) {
+        this.world = world;
+    }
 
     @And("I am the operator and not the transport manager")
     public void iAmTheOperatorAndNotTheTransportManager() {
@@ -48,18 +50,17 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     @When("i add an operator as a transport manager")
     public void iAddAnOperatorAsATransportManager() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()),true);
-        click("form-actions[submit]", SelectorType.ID);
-        waitForPageLoad();
+        world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
+        world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
 
     @Then("the {string} post signature page is displayed")
     public void thePostSignaturePageIsDisplayed(String text) {
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         Assert.assertTrue(isTextPresent(text));
-        if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])<10) {
+        if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) < 10) {
             Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
-        } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0])>=10){
+        } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) >= 10) {
             Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy"))));
         }
     }
@@ -69,9 +70,9 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        if (Browser.navigate().findElements(By.partialLinkText(world.createApplication.getApplicationId())).size()!=0) {
+        if (Browser.navigate().findElements(By.partialLinkText(world.createApplication.getApplicationId())).size() != 0) {
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
-        } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationId())).size()!=0) {
+        } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationId())).size() != 0) {
             world.selfServeNavigation.navigateToPage("variation", SelfServeSection.TRANSPORT_MANAGERS);
         }
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
@@ -88,7 +89,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("form-actions[submit]", SelectorType.ID);
-        click("//*[contains(text(),'Print')]",SelectorType.XPATH);
+        click("//*[contains(text(),'Print')]", SelectorType.XPATH);
         click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
 
@@ -143,7 +144,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     @When("i add an operator as a transport manager with a future DOB")
     public void iAddAnOperatorAsATransportManagerWithAFutureDOB() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()),true);
+        world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
         enterDateFieldsByPartialId("dob", dob);
         click("form-actions[submit]", SelectorType.ID);
@@ -153,7 +154,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     @When("i add an operator as a transport manager with a no hours worked")
     public void iAddAnOperatorAsATransportManagerWithANoHoursWorked() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()),true);
+        world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         click("form-actions[submit]", SelectorType.ID);
         waitForPageLoad();
     }
@@ -173,7 +174,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @Then("a transport manager has been created banner is displayed")
     public void aTransportManagerHasBeenCreatedBannerIsDisplayed() {
-        Assert.assertTrue(findElement("//p[@role]",SelectorType.XPATH,10).getText().contains("The transport manager's user account has been created and a link sent to them"));
+        Assert.assertTrue(findElement("//p[@role]", SelectorType.XPATH, 10).getText().contains("The transport manager's user account has been created and a link sent to them"));
     }
 
     @Then("the download TM{int} for should not be displayed on the details page")
