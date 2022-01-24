@@ -1,7 +1,7 @@
 Feature: Operating Centre authorisation variations triggering fees
 
   Scenario: LGVs total authorisation increase on a goods standard international triggers a fee
-    Given I have a "goods" "standard_international" licence
+    Given I have a submitted "goods" "standard_international" application
     When i create an operating centre variation with "5" hgvs and "5" lgvs
     And complete the financial evidence page
     Then the review and declaration page should display pay and submit
