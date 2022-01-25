@@ -12,38 +12,32 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class AddEditReassignTasks extends BasePage implements En {
     private final World world;
 
-
-    public AddEditReassignTasks(World world) {
-        this.world = world;
-    }
+    public AddEditReassignTasks(World world) {this.world = world;}
 
     @Then("I re-assign a task")
     public void iReAssignATask() {
-        world.adminJourney.reassignTask();
+        world.taskAllocation.reassignTask();
     }
 
     @Then("I edit a task")
     public void iEditATask() {
-        world.adminJourney.editTask();
+        world.taskAllocation.editTask();
     }
 
     @Then("I add a new task")
     public void iAddANewTask() {
-        world.adminJourney.addTask();
+        world.taskAllocation.addTask();
     }
 
     @Then("the User has re-assigned a task")
     public void theUserHasReAssignedATask() {
-        Assert.assertTrue(isTextPresent("Forms Digital"));
-        Assert.assertTrue(isTextPresent("GV79 Application"));
         String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
         String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Assert.assertEquals(expectedDate, actualDate);
-        String name = world.adminJourney.getOwnerName();
+        String name = world.taskAllocationRulesJourney.getOwnerName();
         String[] nameArray = name.split(" (?=[^ ]*$)");
         String reassignedName = String.format("%s, %s",nameArray[1],nameArray[0]);
         Assert.assertTrue(isTextPresent(reassignedName));
@@ -51,7 +45,7 @@ public class AddEditReassignTasks extends BasePage implements En {
 
     @Then("the User has edited a task")
     public void theUserHasEditedATask() {
-        Assert.assertTrue(isTextPresent(world.adminJourney.getDescription()));
+        Assert.assertTrue(isTextPresent(world.taskAllocation.getDescription()));
         Assert.assertTrue(isTextPresent("Forms Digital"));
         String actualDate = getText("//tbody/tr[1]/td[4]", SelectorType.XPATH);
         String expectedDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -60,10 +54,9 @@ public class AddEditReassignTasks extends BasePage implements En {
 
     @Then("the User has added a task")
     public void theUserHasAddedATask() {
-          Assert.assertTrue(isTextPresent(world.adminJourney.getDescription()));
+          Assert.assertTrue(isTextPresent(world.taskAllocation.getDescription()));
           String actualDate = getText("//tbody/tr[2]/td[4]", SelectorType.XPATH);
           String expectedDate = LocalDate.now().plusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
           Assert.assertEquals(expectedDate, actualDate);
     }
 }
-

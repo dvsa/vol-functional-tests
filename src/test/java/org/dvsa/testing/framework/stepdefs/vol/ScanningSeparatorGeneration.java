@@ -23,7 +23,7 @@ public class ScanningSeparatorGeneration extends BasePage {
 
     @When("I complete the Compliance Scanning details")
     public void iCompleteTheComplianceScanningDetails() {
-        world.adminJourney.completeComplianceScanningDetails();
+        world.printingAndScanningJourney.completeComplianceScanningDetails();
     }
 
     @Then("A scanning success message banner should be displayed")
