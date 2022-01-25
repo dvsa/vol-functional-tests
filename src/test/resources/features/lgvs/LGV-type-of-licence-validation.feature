@@ -1,5 +1,5 @@
 @lgv
-Feature: LGV only tests
+Feature: Error Validation for Type of Licence LGV Only Declaration
 
   Scenario Outline: Type of Licence LGV only no option selected error check
     Given I am applying for a "<licenceWhere>" "<operatorType>" "<licenceType>" "<vehicleType>" "<lgvUndertaking>" licence
