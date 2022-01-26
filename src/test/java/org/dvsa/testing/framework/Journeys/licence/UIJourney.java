@@ -549,7 +549,7 @@ public class UIJourney extends BasePage {
             if (!"no_selection".equals(vehicleType)){
                 clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
                 if (lgvUndertaking.equals("checked")) {
-                    clickByXPath(LgvOnly.lgvDeclarationCheckbox);
+                    clickByXPath(world.typeOfLicence.lgvDeclarationCheckbox);
                 }
             }
         }
