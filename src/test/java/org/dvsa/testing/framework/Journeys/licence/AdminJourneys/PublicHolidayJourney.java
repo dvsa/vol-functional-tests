@@ -36,4 +36,7 @@ public class PublicHolidayJourney extends BasePage {
         waitAndClick("form-actions[confirm]", SelectorType.ID);
         waitForElementToBeClickable("//p[text()='The public holiday is removed']", SelectorType.XPATH);
     }
+
+
+
 }
