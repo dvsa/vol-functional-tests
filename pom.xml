@@ -11,7 +11,7 @@
     <properties>
         <active-support.version>1.6.4</active-support.version>
         <api-calls.version>1.1.9</api-calls.version>
-        <uri-constructor.version>1.5.4</uri-constructor.version>
+        <uri-constructor.version>1.5.6</uri-constructor.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.7.0</maven.compiler.version>
@@ -143,7 +143,7 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>6</forkCount>
+                            <forkCount>7</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
