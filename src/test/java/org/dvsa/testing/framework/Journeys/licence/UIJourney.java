@@ -534,6 +534,10 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
+    public void clickCancel() {
+        waitAndClick("form-actions[cancel]", SelectorType.NAME);
+    }
+
     public void clickOk()  {
         waitAndClick("//*[@id='form-actions[ok]']", SelectorType.XPATH);
     }
@@ -553,5 +557,6 @@ public class UIJourney extends BasePage {
                 }
             }
         }
+        clickSaveAndContinue();
     }
 }

@@ -46,3 +46,15 @@ Feature: The Type of licence page now features the LGV Mixed and LGV Only select
       | Country |
       | GB      |
       | NI      |
+
+  Scenario Outline: Cancelling switch LGV Only type warning message and no deletion of data
+    Given I have a "GB" lgv only application
+    And i navigate to the apply for a licence page
+    And I go to update the vehicle type on the licence to "<newLicenceType>" "<newVehicleType>" "N/A"
+    When I cancel the warning message and click cancel on the type of licence page
+    Then each section on the application overview page should have the complete status with no data deleted
+
+    Examples:
+      | newLicenceType         | newVehicleType |
+      | standard_national      |                |
+      | standard_international | mixed_fleet    |
