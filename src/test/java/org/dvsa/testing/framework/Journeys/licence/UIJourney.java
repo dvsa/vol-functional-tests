@@ -12,7 +12,6 @@ import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.stepdefs.lgv.LgvOnly;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
@@ -528,6 +527,10 @@ public class UIJourney extends BasePage {
 
     public static void clickSaveAndContinue() {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
+    }
+
+    public void clickSubmit() {
+        click("form-actions[submit]", SelectorType.NAME);
     }
 
     public static void clickSaveAndReturn()  {

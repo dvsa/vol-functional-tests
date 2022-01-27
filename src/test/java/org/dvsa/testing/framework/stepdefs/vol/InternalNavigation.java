@@ -23,4 +23,8 @@ public class InternalNavigation extends BasePage {
         clickByLinkText("Safety and compliance");
     }
 
+    @When("i click submit")
+    public void iClickSubmit() {
+        world.UIJourney.clickSubmit();
+    }
 }
