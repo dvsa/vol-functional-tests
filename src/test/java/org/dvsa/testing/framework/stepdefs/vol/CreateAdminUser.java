@@ -26,6 +26,12 @@ public class CreateAdminUser extends BasePage implements En {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
 
+    @Given("I create a new NI external user")
+    public void iCreateANewNIExternalUser() {
+        world.createApplication.setNiFlag("Y");
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+    }
+
     @Then("^I should be able to login with my new credentials$")
     public void iShouldBeAbleToLoginWithMyNewCredentials(){
         world.internalNavigation.logInAsAdmin();
