@@ -61,5 +61,6 @@ public class World {
 
 
     public LgvOnly lgvOnly;
+    public TypeOfLicenceJourney typeOfLicence;
     public GeneralVariationJourney generalVariationJourney;
 }

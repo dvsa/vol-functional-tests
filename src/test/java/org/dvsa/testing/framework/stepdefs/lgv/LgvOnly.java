@@ -2,9 +2,11 @@ package org.dvsa.testing.framework.stepdefs.lgv;
 
 import Injectors.World;
 import com.amazonaws.services.dynamodbv2.xspec.S;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Given;
+import org.dvsa.testing.framework.Journeys.licence.TypeOfLicenceJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -14,6 +16,8 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -24,47 +28,11 @@ public class LgvOnly extends BasePage {
         this.world = world;
     }
 
-    public String greatBritain = "//input[@id='type-of-licence[operator-location]']";
-    public String northernIreland = "//input[@name='type-of-licence[operator-location]'][@value='Y']";
-    public static String lgvDeclarationCheckbox = "//input[@id='lgv-declaration-confirmation']";
-    String[] expectedStandardNationalOrMixedFleetStatusArray = new String[]{
-            "Type of licence\nCOMPLETE",
-            "Business type\nNOT STARTED",
-            "Business details\nCAN'T START YET",
-            "Addresses\nCAN'T START YET",
-            "Directors\nCAN'T START YET",
-            "Operating centres and authorisation\nNOT STARTED",
-            "Financial evidence\nCAN'T START YET",
-            "Transport Managers\nCAN'T START YET",
-            "Vehicles\nCAN'T START YET",
-            "Safety and compliance\nNOT STARTED",
-            "Financial history\nNOT STARTED",
-            "Licence history\nNOT STARTED",
-            "Convictions and penalties\nNOT STARTED",
-            "Review and declarations\nCAN'T START YET"};
-    String[] expectedLgvOnlyStatusArray = new String[]{
-            "Type of licence\nCOMPLETE",
-            "Business type\nNOT STARTED",
-            "Business details\nCAN'T START YET",
-            "Addresses\nCAN'T START YET",
-            "Directors\nCAN'T START YET",
-            "Licence authorisation\nNOT STARTED",
-            "Financial evidence\nCAN'T START YET",
-            "Transport Managers\nCAN'T START YET",
-            "Vehicles\nCAN'T START YET",
-            "Safety and compliance\nNOT STARTED",
-            "Financial history\nNOT STARTED",
-            "Licence history\nNOT STARTED",
-            "Convictions and penalties\nNOT STARTED",
-            "Review and declarations\nCAN'T START YET"};
-
-    @Given("I am applying for a {string} {string} {string} {string} {string} licence")
-    public void iWantToApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType, String lgvUndertaking) {
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+    @Given("I apply for a {string} {string} {string} {string} {string} licence")
+    public void iApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType, String lgvUndertaking) {
         clickByLinkText("Apply for a new licence");
-        if (licenceWhere.equals("great_britain")) clickByXPath(greatBritain); else clickByXPath(northernIreland);
-        if (licenceWhere.equals("great_britain")){
+        world.typeOfLicence.chooseGBOrNI(licenceWhere);
+        if (licenceWhere.equals("GB")) {
             clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
         }
         UIJourney.inputLicenceAndVehicleType(licenceType, vehicleType, lgvUndertaking);
@@ -73,20 +41,14 @@ public class LgvOnly extends BasePage {
     @Given("I {string} the LGV undertaking declaration checkbox")
     public void iCheckTheLGVUndertakingDeclaration(String checkBoxAction) {
         if (checkBoxAction.equals("select")){
-            clickByXPath(lgvDeclarationCheckbox);
+            clickByXPath(world.typeOfLicence.lgvDeclarationCheckbox);
         }
     }
 
-    @Given("I update the vehicle type on the licence to {string} {string} {string}")
-    public void iUpdateVehicleTypeOnLicence(String newLicenceType, String newVehicleType, String newLgvUndertaking) {
+    @Given("I go to update the vehicle type on the licence to {string} {string} {string}")
+    public void iGoToUpdateVehicleTypeOnLicence(String newLicenceType, String newVehicleType, String newLgvUndertaking) {
         clickByLinkText("Type of licence");
         UIJourney.inputLicenceAndVehicleType(newLicenceType, newVehicleType, newLgvUndertaking);
-        UIJourney.clickSaveAndContinue();
-    }
-
-    @When("I click save and continue")
-    public void iClickSaveAndContinue() {
-        UIJourney.clickSaveAndContinue();
     }
 
     @Then("A LGV only error message should be displayed")
@@ -171,6 +133,12 @@ public class LgvOnly extends BasePage {
         waitAndClick("form-actions[submit]", SelectorType.NAME);
     }
 
+    @When("I cancel the warning message and click cancel on the type of licence page")
+    public void iCancelWarningMessageAndClickCancelOnTheTypeOfLicencePage() {
+        world.UIJourney.clickCancel();
+        world.UIJourney.clickCancel();
+    }
+
     @When("each section on the application overview page has the correct status for the {string} licence")
     public void changeLicenceTypeOverviewSectionsStatus(String newType) {
         Assert.assertTrue(isTextPresent("Apply for a new licence"));
@@ -178,12 +146,69 @@ public class LgvOnly extends BasePage {
 
         if (newType.equals("lgv_only_fleet")) {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                Assert.assertEquals(expectedLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                Assert.assertEquals(world.typeOfLicence.expectedLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
             }
         } else {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                Assert.assertEquals(expectedStandardNationalOrMixedFleetStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                Assert.assertEquals(world.typeOfLicence.expectedStandardNationalOrMixedFleetStatusArray[i], applicationOverviewStatusElements.get(i).getText());
             }
         }
+    }
+
+    @When("i go to apply for a {string} goods standard international licence")
+    public void iManuallyApplyForAGoodsStandardInternationalLicence(String licenceWhere) {
+        clickByLinkText("Apply for a new licence");
+        waitForTitleToBePresent("Type of licence");
+        world.typeOfLicence.chooseGBOrNI(licenceWhere);
+        if (licenceWhere.equals("GB"))
+            click(world.typeOfLicence.goodsLicence, SelectorType.XPATH);
+        click(world.typeOfLicence.standardInternational, SelectorType.XPATH);
+    }
+
+    @Then("i am prompted with the choice of LGV Mixed and LGV Only applications")
+    public void iAmPromptedWithTheChoiceOfLGVMixedAndLGVOnlyApplications() {
+        world.typeOfLicence.isLGVChoiceTextAndRadioButtonsPresent();
+    }
+
+    @And("i choose to have light goods vehicles only and click save and continue")
+    public void iChooseToHaveLightGoodsVehiclesOnly() {
+        click(world.typeOfLicence.lgvOnly, SelectorType.XPATH);
+        click(world.typeOfLicence.lgvDeclarationCheckbox, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
+        String url = navigate().getCurrentUrl();
+        world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 2));
+    }
+
+    @And("i choose to have mixed vehicles and click save and continue")
+    public void iChooseToHaveMixedVehiclesAndClickSaveAndContinue() {
+        click(world.typeOfLicence.mixedFleet, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
+        String url = navigate().getCurrentUrl();
+        world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 2));
+    }
+
+    @Then("the caseworker can review the {string} LGV Only choice on internal")
+    public void theCaseworkerCanReviewTheLGVOnlyChoiceOnInternal(String choice) {
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
+        clickByLinkText("Type of licence");
+        world.typeOfLicence.isLGVChoiceTextAndRadioButtonsPresent();
+
+        if (choice.equals("yes")) {
+            assertTrue(findElement(world.typeOfLicence.lgvOnly, SelectorType.XPATH).isSelected());
+            assertTrue(findElement(world.typeOfLicence.lgvDeclarationCheckbox,SelectorType.XPATH).isSelected());
+        } else {
+            assertTrue(findElement(world.typeOfLicence.mixedFleet, SelectorType.XPATH).isSelected());
+        }
+    }
+
+    @When("each section on the application overview page should have the complete status with no data deleted")
+    public void eachSectionOnTheApplicationOverviewPageShouldHaveTheCompleteStatusWithNoDataDeleted() {
+        Assert.assertTrue(isTextPresent("Apply for a new licence"));
+        List<WebElement> applicationOverviewStatusElements = findElements("//ol[@class='overview__list']/li", SelectorType.XPATH);
+        for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
+            Assert.assertTrue(applicationOverviewStatusElements.get(i).getText().contains("COMPLETE"));
+        }
+
     }
 }

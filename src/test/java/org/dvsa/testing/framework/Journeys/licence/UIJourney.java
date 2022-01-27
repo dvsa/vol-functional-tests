@@ -534,6 +534,10 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
+    public void clickCancel() {
+        waitAndClick("form-actions[cancel]", SelectorType.NAME);
+    }
+
     public void clickOk()  {
         waitAndClick("//*[@id='form-actions[ok]']", SelectorType.XPATH);
     }
@@ -549,9 +553,10 @@ public class UIJourney extends BasePage {
             if (!"no_selection".equals(vehicleType)){
                 clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
                 if (lgvUndertaking.equals("checked")) {
-                    clickByXPath(LgvOnly.lgvDeclarationCheckbox);
+                    clickByXPath(world.typeOfLicence.lgvDeclarationCheckbox);
                 }
             }
         }
+        clickSaveAndContinue();
     }
 }
