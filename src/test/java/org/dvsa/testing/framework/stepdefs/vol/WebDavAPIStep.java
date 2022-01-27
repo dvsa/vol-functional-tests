@@ -27,7 +27,8 @@ public class WebDavAPIStep extends BasePage implements En {
 
     @When("i view their user details")
     public void iViewTheirUserDetails() {
-        this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId, world.registerUser.getEmailAddress());
+        this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId, world.registerUser
+                .getUserName(), world.registerUser.getEmailAddress());
         this.pid = response.extract().jsonPath().getString("pid");
     }
 
@@ -53,7 +54,7 @@ public class WebDavAPIStep extends BasePage implements En {
 
     @Then("their new OS Type should be {string}")
     public void theirNewOSTypeShouldBe(String expectedOSVersion) {
-        this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId, world.registerUser.getEmailAddress());
+        this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId,world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         assertEquals(response.extract().body().jsonPath().get("osType.id"),expectedOSVersion);
     }
 }
