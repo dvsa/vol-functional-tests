@@ -159,7 +159,7 @@ public class SubmitSelfServeApplication extends BasePage {
     private void chooseLicenceType() {
         waitForTitleToBePresent("Type of licence");
         waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Public')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
