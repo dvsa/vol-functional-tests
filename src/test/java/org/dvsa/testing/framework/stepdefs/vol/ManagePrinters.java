@@ -49,6 +49,6 @@ public class ManagePrinters extends BasePage  {
 
     @Then("that printer should have been deleted")
     public void thatPrinterShouldHaveBeenDeleted() {
-        Assert.assertTrue(isTextPresent(world.printingAndScanningJourney.getRemovedPrinter()));
+        Assert.assertTrue(isTextPresent("The printer is removed"));
     }
 }

@@ -129,14 +129,17 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
+        scrollAndClick("50", SelectorType.LINKTEXT);
+        waitForElementToBePresent("//div[@class='table__wrapper']//table/tbody[1]/tr[50]/td[1]");
         List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='pagination right-aligned']"));
         int pagination_count = pagination.size() + 1;
+        outsideloop:
         while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT))
             for (int i = 0; i <= pagination_count; i++) {
                 isElementNotPresent(linkTextArgument, SelectorType.LINKTEXT);
-                waitAndClick("Next", SelectorType.LINKTEXT);
+                scrollAndClick("Next", SelectorType.LINKTEXT);
                 if(isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
-                break; }
+                break outsideloop; }
                 }
             }
 
@@ -155,10 +158,10 @@ public abstract class BasePage extends DriverUtils {
         List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
         int rows_count = rows_table.size();
         outsideloop:
-        for (int row = 0; row < rows_count; row++){
+        for (int row = 2; row < rows_count; row++){
             List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
             int columns_count = Columns_row.size();
-            for (int column = 0; column < columns_count; ){
+            for (int column = 2; column < columns_count; ){
                 List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
                 Random random = new Random();
                 int size = options.size();

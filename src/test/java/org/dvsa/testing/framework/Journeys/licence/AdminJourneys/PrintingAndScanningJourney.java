@@ -15,7 +15,6 @@ public class PrintingAndScanningJourney extends BasePage {
     private String postCode;
     public String createdRecord = "//p[text()='Created record']";
     public String updatedRecord = "//p[text()='Updated record']";
-    public String removedPrinter = "//a[text()='Close']/following-sibling::p";
 
     public PrintingAndScanningJourney(World world) {this.world = world;}
 
@@ -25,16 +24,9 @@ public class PrintingAndScanningJourney extends BasePage {
 
     public String getUniqueId() {return uniqueId;}
 
-    public String getRemovedPrinter() {return removedPrinter;}
-
     public void generatePostCodeAndUniqueId() {
         generateUniqueId();
         generatePostCode();
-    }
-
-    public void findAddedorEditedPrinter() {
-        waitAndClick("50", SelectorType.LINKTEXT);
-        cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
     }
 
     public void completeComplianceScanningDetails() {
@@ -46,6 +38,7 @@ public class PrintingAndScanningJourney extends BasePage {
         enterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
         waitAndClick("form-actions[submit]", SelectorType.ID);
     }
+
     public void addPrinter() {
         generatePostCodeAndUniqueId();
         waitAndClick("add", SelectorType.ID);
@@ -53,24 +46,24 @@ public class PrintingAndScanningJourney extends BasePage {
         waitAndEnterText("printer-details[description]", SelectorType.ID, postCode);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForElementToBePresent(createdRecord);
-        findAddedorEditedPrinter();
+        cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
     }
 
     public void editPrinter() {
         generatePostCodeAndUniqueId();
         selectRandomCheckBoxOrRadioBtn("checkbox");
         waitAndClick("edit", SelectorType.ID);
-        waitForPageLoad();
+        waitForTextToBePresent("Edit printer");
         replaceText("printer-details[printerName]", SelectorType.ID, uniqueId);
         replaceText("printer-details[description]", SelectorType.ID, postCode);
         waitAndClick("form-actions[submit]", SelectorType.ID);
-        findAddedorEditedPrinter();
+        waitForElementToBePresent(updatedRecord);
+        cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
     }
 
     public void deletePrinter() {
         selectRandomCheckBoxOrRadioBtn("checkbox");
         waitAndClick("delete", SelectorType.ID);
         waitAndClick("form-actions[confirm]", SelectorType.ID);
-        waitForElementToBePresent(removedPrinter);
     }
 }
