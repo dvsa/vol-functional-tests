@@ -28,10 +28,8 @@ public class LgvOnly extends BasePage {
         this.world = world;
     }
 
-    @Given("I am applying for a {string} {string} {string} {string} {string} licence")
-    public void iWantToApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType, String lgvUndertaking) {
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+    @Given("I apply for a {string} {string} {string} {string} {string} licence")
+    public void iApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType, String lgvUndertaking) {
         clickByLinkText("Apply for a new licence");
         world.typeOfLicence.chooseGBOrNI(licenceWhere);
         if (licenceWhere.equals("GB")) {
@@ -47,16 +45,10 @@ public class LgvOnly extends BasePage {
         }
     }
 
-    @Given("I update the vehicle type on the licence to {string} {string} {string}")
-    public void iUpdateVehicleTypeOnLicence(String newLicenceType, String newVehicleType, String newLgvUndertaking) {
+    @Given("I go to update the vehicle type on the licence to {string} {string} {string}")
+    public void iGoToUpdateVehicleTypeOnLicence(String newLicenceType, String newVehicleType, String newLgvUndertaking) {
         clickByLinkText("Type of licence");
         UIJourney.inputLicenceAndVehicleType(newLicenceType, newVehicleType, newLgvUndertaking);
-        UIJourney.clickSaveAndContinue();
-    }
-
-    @When("I click save and continue")
-    public void iClickSaveAndContinue() {
-        UIJourney.clickSaveAndContinue();
     }
 
     @Then("A LGV only error message should be displayed")
@@ -141,6 +133,12 @@ public class LgvOnly extends BasePage {
         waitAndClick("form-actions[submit]", SelectorType.NAME);
     }
 
+    @When("I cancel the warning message and click cancel on the type of licence page")
+    public void iCancelWarningMessageAndClickCancelOnTheTypeOfLicencePage() {
+        world.UIJourney.clickCancel();
+        world.UIJourney.clickCancel();
+    }
+
     @When("each section on the application overview page has the correct status for the {string} licence")
     public void changeLicenceTypeOverviewSectionsStatus(String newType) {
         Assert.assertTrue(isTextPresent("Apply for a new licence"));
@@ -202,5 +200,15 @@ public class LgvOnly extends BasePage {
         } else {
             assertTrue(findElement(world.typeOfLicence.mixedFleet, SelectorType.XPATH).isSelected());
         }
+    }
+
+    @When("each section on the application overview page should have the complete status with no data deleted")
+    public void eachSectionOnTheApplicationOverviewPageShouldHaveTheCompleteStatusWithNoDataDeleted() {
+        Assert.assertTrue(isTextPresent("Apply for a new licence"));
+        List<WebElement> applicationOverviewStatusElements = findElements("//ol[@class='overview__list']/li", SelectorType.XPATH);
+        for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
+            Assert.assertTrue(applicationOverviewStatusElements.get(i).getText().contains("COMPLETE"));
+        }
+
     }
 }
