@@ -129,7 +129,6 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
-        scrollAndClick("50", SelectorType.LINKTEXT);
         waitForElementToBePresent("//div[@class='table__wrapper']//table/tbody[1]/tr[50]/td[1]");
         List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='pagination right-aligned']"));
         int pagination_count = pagination.size() + 1;

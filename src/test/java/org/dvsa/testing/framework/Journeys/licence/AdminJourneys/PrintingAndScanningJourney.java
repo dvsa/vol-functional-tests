@@ -46,6 +46,7 @@ public class PrintingAndScanningJourney extends BasePage {
         waitAndEnterText("printer-details[description]", SelectorType.ID, postCode);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForElementToBePresent(createdRecord);
+        scrollAndClick("50", SelectorType.LINKTEXT);
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
     }
 
@@ -58,6 +59,7 @@ public class PrintingAndScanningJourney extends BasePage {
         replaceText("printer-details[description]", SelectorType.ID, postCode);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForElementToBePresent(updatedRecord);
+        scrollAndClick("50", SelectorType.LINKTEXT);
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
     }
 
