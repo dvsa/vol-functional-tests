@@ -20,7 +20,7 @@ public class PrintingAndScanningJourney extends BasePage {
 
     public void generateUniqueId() {uniqueId = faker.generateUniqueId(10);}
 
-    public void generatePostCode() {postCode = faker.getRandomRealUKPostcode();}
+    public void generatePostCode() {postCode = world.DataGenerator.getOperatorPostCode();}
 
     public String getUniqueId() {return uniqueId;}
 
