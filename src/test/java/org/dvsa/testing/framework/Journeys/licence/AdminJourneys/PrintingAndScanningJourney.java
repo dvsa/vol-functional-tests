@@ -1,12 +1,8 @@
 package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
 import Injectors.World;
 import activesupport.faker.FakerUtils;
-import activesupport.string.Str;
-import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-
-import java.util.concurrent.TimeUnit;
 
 public class PrintingAndScanningJourney extends BasePage {
     private final World world;
