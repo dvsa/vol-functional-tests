@@ -6,6 +6,7 @@ import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums.Self;
 import org.junit.Assert;
 
 public class SelfServeNavigation extends BasePage {
@@ -36,5 +37,15 @@ public class SelfServeNavigation extends BasePage {
     public void iNavigateToTheApplyForALicencePage() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.VIEW);
+    }
+
+    @And("i navigate to the application licence authorisation page")
+    public void iNavigateToTheLicenceAuthorisationPage() {
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.LICENCE_AUTHORISATION);
+    }
+
+    @And("i navigate to the application operating centres and authorisations page")
+    public void iNavigateToTheOperatingCentresAndAuthorisationsPage() {
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
     }
 }
