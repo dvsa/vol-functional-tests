@@ -33,16 +33,15 @@ public class SubmitSelfServeApplication extends BasePage {
         this.world = world;
     }
 
-    @And("i start a new licence application")
-    public void iStartANewLicenceApplication() throws IllegalBrowserException, IOException {
+    @And("i start a new {string} licence application")
+    public void iStartANewLicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
         waitForTitleToBePresent("Licences");
         accessibilityScanner();
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
 
-        chooseLicenceType();
+        chooseLicenceType(licenceType);
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
         waitAndClick(saveAndContinue, SelectorType.XPATH);
-
         //business details
         accessibilityScanner();
         world.businessDetailsJourney.addBusinessDetails();
@@ -53,12 +52,15 @@ public class SubmitSelfServeApplication extends BasePage {
             }
             waitAndClick(saveAndContinue, SelectorType.XPATH);
         }
-
         //operating centre
         accessibilityScanner();
         String authority = "2";
         String trailers = "4";
-        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, null, trailers);
+        if(licenceType.equals("Goods")) {
+            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, "0", trailers);
+        }else{
+            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
+        }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectByIndex("Traffic area", "//*[@id='trafficArea']", SelectorType.XPATH, 1);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
@@ -81,11 +83,10 @@ public class SubmitSelfServeApplication extends BasePage {
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-
         //vehicleDetails
         accessibilityScanner();
-        world.vehicleDetailsJourney.addAVehicle(true);
+        boolean add = licenceType.equals("Goods");
+        world.vehicleDetailsJourney.addAVehicle(add);
         accessibilityScanner();
         world.safetyComplianceJourney.addSafetyAndComplianceData();
         accessibilityScanner();
@@ -156,10 +157,10 @@ public class SubmitSelfServeApplication extends BasePage {
         reportGenerator.createReport(scanner);
     }
 
-    private void chooseLicenceType() {
+    private void chooseLicenceType(String licenceType) {
         waitForTitleToBePresent("Type of licence");
         waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Public')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'" + licenceType + "')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);

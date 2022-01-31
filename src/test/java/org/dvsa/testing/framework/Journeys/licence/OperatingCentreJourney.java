@@ -90,6 +90,7 @@ public class OperatingCentreJourney extends BasePage {
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
         if (world.createApplication.getTotalOperatingCentreTrailerAuthority() != Integer.parseInt(trailers))
+         if(isElementPresent(totalTrailersAuthorisationField, SelectorType.XPATH))
             replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
         if (isElementPresent("totAuthVehicles",SelectorType.ID)) {
             replaceText(totalAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
@@ -115,9 +116,11 @@ public class OperatingCentreJourney extends BasePage {
         clickByLinkText(enterAddressManually);
         world.UIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         enterText(operatingCentreVehicleField, SelectorType.XPATH, vehicles);
-        enterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
+        if(isElementPresent(operatingCentreTrailerField, SelectorType.XPATH)) {
+            enterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
+            click(uploadAdvertLater, SelectorType.XPATH);
+        }
         click(confirmOffStreetParkingCheckbox, SelectorType.XPATH);
-        click(uploadAdvertLater, SelectorType.XPATH);
         click(submitButton, SelectorType.XPATH);
     }
 

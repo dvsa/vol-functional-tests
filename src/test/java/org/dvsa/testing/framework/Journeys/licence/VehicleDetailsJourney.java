@@ -30,6 +30,7 @@ public class VehicleDetailsJourney extends BasePage {
             }
             waitForTitleToBePresent("Vehicle details");
         } else {
+            refreshPage();
             waitAndClick("//*[contains(text(),'No')]", SelectorType.XPATH);
         }
         waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
