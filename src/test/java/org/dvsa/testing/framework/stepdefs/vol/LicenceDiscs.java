@@ -16,7 +16,7 @@ public class LicenceDiscs extends BasePage implements En {
 
     @And("the licence discs should be present")
     public void theLicenceDiscsShouldBPresent() throws SQLException, UnsupportedDatabaseDriverException {
-        int psvDiscNumber = world.DBUtils.getFirstPsvDiscNumber(world.createApplication.getLicenceId(), world.configuration);
+        int psvDiscNumber = Integer.parseInt(world.updateLicence.getStartNumber());
         for (int i = 0; i < 5; i++){
             Assert.assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i)));
         }

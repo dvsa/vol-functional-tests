@@ -50,9 +50,8 @@ public class InternalSearchJourney extends BasePage {
         internalSearchUntilTextPresent(SearchType.Case, caseId, caseId);
     }
 
-    public void searchAndViewPSVDisc() throws UnsupportedDatabaseDriverException, SQLException {
-        int psvDiscNumber = world.DBUtils.getFirstPsvDiscNumber(world.createApplication.getLicenceId(), world.configuration);
-        internalSearchUntilTextPresent(SearchType.PsvDisc, String.valueOf(psvDiscNumber), world.applicationDetails.getLicenceNumber());
+    public void searchAndViewPSVDisc() {
+        internalSearchUntilTextPresent(SearchType.PsvDisc,world.updateLicence.getStartNumber(), world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
     }
 
