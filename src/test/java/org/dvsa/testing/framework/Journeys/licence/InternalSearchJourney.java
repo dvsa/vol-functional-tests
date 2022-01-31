@@ -66,7 +66,7 @@ public class InternalSearchJourney extends BasePage {
         do {
             SearchNavBar.search(searchType, searchString);
         } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", linkText), SelectorType.XPATH);
+        waitForElementToBeClickable(String.format("//*[contains(text(),'%s')]", linkText), SelectorType.XPATH);
         clickByLinkText(linkText);
     }
 }
