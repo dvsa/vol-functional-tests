@@ -1,3 +1,4 @@
+@lgv
 Feature: The Type of licence page now features the LGV Mixed and LGV Only selection with validation
 
   Scenario Outline: When choosing a Goods SI licence, the LGV Mixed and LGV Only options appear
