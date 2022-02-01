@@ -1,3 +1,4 @@
+@lgv
 Feature: Licence Authorisation page checks and validations
 
   Background:

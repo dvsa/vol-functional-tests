@@ -1,3 +1,4 @@
+@lgv
 Feature: Caseworkers can apply for lgv only and mixed fleet licences and are redirected to the correct application overview
 
   Scenario: Caseworker applying for a Goods SI is prompted to enter lgv only or not
