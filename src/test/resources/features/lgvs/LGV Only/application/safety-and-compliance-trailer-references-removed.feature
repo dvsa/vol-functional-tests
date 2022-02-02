@@ -1,5 +1,5 @@
 @lgv
-Feature: Any references to trailers in safety and compliance texts are removed only for LGV Only variations
+Feature: Any references to trailers in safety and compliance texts are removed only for LGV Only applications
 
   Scenario: LGV Only safety and compliance page has no mention of trailers (Self serve) GB
     Given I have a "GB" lgv only application
