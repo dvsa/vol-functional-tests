@@ -26,8 +26,8 @@ public class PrintingAndScanningJourney extends BasePage {
     }
 
     public void ClickPage50AndWait(){
-        waitForElementToBePresent("//div[@class='table__wrapper']//table/tbody[1]/tr[50]/td[1]");
         scrollAndClick("50", SelectorType.LINKTEXT);
+        waitForElementToBePresent("//div[@class='table__wrapper']//table/tbody[1]/tr[50]/td[1]");
     }
 
     public void completeComplianceScanningDetails() {
