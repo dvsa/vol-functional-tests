@@ -21,8 +21,8 @@ import static org.junit.Assert.*;
 public class InterimLicence extends BasePage implements En {
 
     private static String VehicleErrorMessage = "The interim vehicle authority cannot exceed the total vehicle authority";
-    private static String HgvVehicleErrorMessage = "The interim Heavy Goods Vehicle Authority cannot exceed the total Heavy Goods Vehicle Authority";
-    private static String LgvVehicleErrorMessage = "The interim Light Goods Vehicle Authority cannot exceed the total Light Goods Vehicle Authority";
+    private static String HgvVehicleErrorMessage = "The interim Heavy goods vehicle authority cannot exceed the total Heavy goods vehicle authority";
+    private static String LgvVehicleErrorMessage = "The interim Light goods vehicle authority cannot exceed the total Light goods vehicle authority";
     private static String errorMessageTitle = "There is a problem";
     private static String valueIsRequiredErrorMessage = "Value is required";
     private static String valueCannotBe0ErrorMessage = "A value greater than 0 must be entered";
@@ -116,12 +116,12 @@ public class InterimLicence extends BasePage implements En {
         InterimPage.vehicleHgvAuthority((world.createApplication.getTotalOperatingCentreHgvAuthority()));
         InterimPage.trailerAuthority(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         // Not sure why this is setting authorities.
-    };
+    }
 
     @And("i create a variation in internal")
     public void iCreateAVariationInInternal() {
         world.UIJourney.createVariationInInternal(false);
-    };
+    }
 
     @And("I submit the application with an interim")
     public void iSubmitTheApplicationWithAnInterim() {
