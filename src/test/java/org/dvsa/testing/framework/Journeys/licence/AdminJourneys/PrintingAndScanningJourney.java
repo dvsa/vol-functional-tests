@@ -25,6 +25,11 @@ public class PrintingAndScanningJourney extends BasePage {
         generatePostCode();
     }
 
+    public void ClickPage50AndWait(){
+        waitForElementToBePresent("//div[@class='table__wrapper']//table/tbody[1]/tr[50]/td[1]");
+        scrollAndClick("50", SelectorType.LINKTEXT);
+    }
+
     public void completeComplianceScanningDetails() {
         waitForPageLoad();
         selectValueFromDropDown("category", SelectorType.ID, "Compliance");
@@ -42,7 +47,7 @@ public class PrintingAndScanningJourney extends BasePage {
         waitAndEnterText("printer-details[description]", SelectorType.ID, postCode);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForElementToBePresent(createdRecord);
-        scrollAndClick("50", SelectorType.LINKTEXT);
+        ClickPage50AndWait();
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
     }
 
@@ -55,7 +60,7 @@ public class PrintingAndScanningJourney extends BasePage {
         replaceText("printer-details[description]", SelectorType.ID, postCode);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForElementToBePresent(updatedRecord);
-        scrollAndClick("50", SelectorType.LINKTEXT);
+        ClickPage50AndWait();
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
     }
 
