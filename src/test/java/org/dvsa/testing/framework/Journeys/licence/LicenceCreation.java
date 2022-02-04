@@ -72,7 +72,6 @@ public class LicenceCreation {
 
     public void createLGVOnlyApplication(String NIFlag) {
         world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         world.createApplication.setTotalOperatingCentreLgvAuthority(5);
         world.createApplication.setNoOfAddedHgvVehicles(0);
@@ -88,6 +87,12 @@ public class LicenceCreation {
     public void createLGVOnlyLicence(String NIFlag) {
         createSubmittedLGVOnlyApplication(NIFlag);
         world.APIJourney.grantLicenceAndPayFees();
+    }
+
+    public void createLGVOnlyLicenceWithTrafficArea(String NIFlag, TrafficArea trafficArea) {
+        world.createApplication.setTrafficArea(trafficArea);
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
+        createLGVOnlyLicence(NIFlag);
     }
 
     public boolean isGoodsLicence() {

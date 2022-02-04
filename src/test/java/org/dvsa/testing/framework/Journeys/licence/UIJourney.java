@@ -12,7 +12,6 @@ import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.stepdefs.lgv.LgvOnly;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
@@ -530,8 +529,16 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
+    public void clickSubmit() {
+        click("form-actions[submit]", SelectorType.NAME);
+    }
+
     public static void clickSaveAndReturn()  {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
+    }
+
+    public void clickCancel() {
+        waitAndClick("form-actions[cancel]", SelectorType.NAME);
     }
 
     public void clickOk()  {
@@ -549,9 +556,10 @@ public class UIJourney extends BasePage {
             if (!"no_selection".equals(vehicleType)){
                 clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
                 if (lgvUndertaking.equals("checked")) {
-                    clickByXPath(LgvOnly.lgvDeclarationCheckbox);
+                    clickByXPath(world.typeOfLicence.lgvDeclarationCheckbox);
                 }
             }
         }
+        clickSaveAndContinue();
     }
 }

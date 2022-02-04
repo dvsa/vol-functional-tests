@@ -178,4 +178,14 @@ public class InternalApplication extends BasePage implements En {
         String expectedNumberOfOperatingCentres = "0 (1)";
         assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
     }
+
+    @And("I click cancel")
+    public void clicksCancel() {
+        world.UIJourney.clickCancel();
+    }
+
+    @And("the caseworker is still on the operators page")
+    public void theCaseworkerIsStillOnTheOperatorsPage() {
+        assertTrue(isTitlePresent(world.registerUser.getOrganisationName(), 10));
+    }
 }

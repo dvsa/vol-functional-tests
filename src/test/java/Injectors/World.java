@@ -10,7 +10,6 @@ import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
-import org.dvsa.testing.framework.stepdefs.lgv.LgvOnly;
 
 
 public class World {
@@ -19,6 +18,7 @@ public class World {
     public GetUserDetails userDetails;
     public CreateApplication createApplication;
     public GrantLicence grantApplication;
+    public InternalDetails internalDetails;
     public UpdateLicence updateLicence;
 
     public Configuration configuration;
@@ -60,6 +60,6 @@ public class World {
     public PrintingAndScanningJourney printingAndScanningJourney;
 
 
-    public LgvOnly lgvOnly;
+    public TypeOfLicenceJourney typeOfLicence;
     public GeneralVariationJourney generalVariationJourney;
 }
