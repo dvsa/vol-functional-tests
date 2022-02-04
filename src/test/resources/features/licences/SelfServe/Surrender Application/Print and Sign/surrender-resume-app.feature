@@ -13,7 +13,7 @@ Feature: User should be able to continue where they left off
     And the new correspondence details are displayed on correspondence page
 
     Examples:
-      | OperatorType | LicenceType            |
+      | OperatorType | LicenceType       |
       | public       | standard_national |
 
 #  Scenario Outline: Remove disc from licence and resume surrender journey
@@ -113,4 +113,5 @@ Feature: User should be able to continue where they left off
     Examples:
       | OperatorType | LicenceType            |
       | public       | standard_national      |
-#      | goods        | standard_international |
+#      | goods        | stand
+#      ard_international |

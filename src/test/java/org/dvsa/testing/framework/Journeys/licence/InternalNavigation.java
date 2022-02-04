@@ -28,8 +28,9 @@ public class InternalNavigation extends BasePage {
     }
 
     public void logInAsAdmin() {
-        if (world.updateLicence.getInternalUserId() == null)
+        if (world.updateLicence.getInternalUserId() == null) {
             world.APIJourney.createAdminUser();
+        }
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
     }
 

@@ -50,9 +50,8 @@ public class InternalSearchJourney extends BasePage {
         internalSearchUntilTextPresent(SearchType.Case, caseId, caseId);
     }
 
-    public void searchAndViewPSVDisc() throws UnsupportedDatabaseDriverException, SQLException {
-        int psvDiscNumber = world.DBUtils.getFirstPsvDiscNumber(world.createApplication.getLicenceId(), world.configuration);
-        internalSearchUntilTextPresent(SearchType.PsvDisc, String.valueOf(psvDiscNumber), world.applicationDetails.getLicenceNumber());
+    public void searchAndViewPSVDisc() {
+        internalSearchUntilTextPresent(SearchType.PsvDisc,world.updateLicence.getStartNumber(), world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
     }
 
@@ -67,7 +66,7 @@ public class InternalSearchJourney extends BasePage {
         do {
             SearchNavBar.search(searchType, searchString);
         } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
-        waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", linkText), SelectorType.XPATH);
+        waitForElementToBeClickable(String.format("//*[contains(text(),'%s')]", linkText), SelectorType.XPATH);
         clickByLinkText(linkText);
     }
 }

@@ -16,3 +16,7 @@ cardExpiryYear =
 bucketName =
 apiHeader=
 secretKey=
+proxyHost=
+proxyPort=
+browserStackKey=
+binaryPath=
