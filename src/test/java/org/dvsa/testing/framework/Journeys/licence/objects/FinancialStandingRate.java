@@ -30,6 +30,7 @@ public class FinancialStandingRate {
         this.additionalRate = row.get(4).getText();
         this.effectiveDate = row.get(5).getText();
     }
+
     public FinancialStandingRate(String operatorType, String licenceType, String vehicleType, int firstRate, int additionalRate, HashMap<String, String> effectiveDate) {
         this.operatorType = operatorType;
         this.licenceType = licenceType;
@@ -85,5 +86,9 @@ public class FinancialStandingRate {
 
     public String getAdditionalRate() {
         return additionalRate;
+    }
+
+    public String getEffectiveDate() {
+        return effectiveDate;
     }
 }

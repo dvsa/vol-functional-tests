@@ -18,6 +18,7 @@ public class World {
     public GetUserDetails userDetails;
     public CreateApplication createApplication;
     public GrantLicence grantApplication;
+    public InternalDetails internalDetails;
     public UpdateLicence updateLicence;
 
     public Configuration configuration;
