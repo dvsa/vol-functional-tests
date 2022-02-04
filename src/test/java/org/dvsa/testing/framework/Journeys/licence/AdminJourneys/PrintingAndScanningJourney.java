@@ -53,7 +53,7 @@ public class PrintingAndScanningJourney extends BasePage {
 
     public void editPrinter() {
         generatePostCodeAndUniqueId();
-        selectRandomCheckBoxOrRadioBtn("checkbox");
+        selectRandomRadioBtnFromDataTable();
         waitAndClick("edit", SelectorType.ID);
         waitForTextToBePresent("Edit printer");
         replaceText("printer-details[printerName]", SelectorType.ID, uniqueId);
@@ -65,7 +65,7 @@ public class PrintingAndScanningJourney extends BasePage {
     }
 
     public void deletePrinter() {
-        selectRandomCheckBoxOrRadioBtn("checkbox");
+        selectRandomRadioBtnFromDataTable();
         waitAndClick("delete", SelectorType.ID);
         waitAndClick("form-actions[confirm]", SelectorType.ID);
     }

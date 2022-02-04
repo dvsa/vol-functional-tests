@@ -156,10 +156,10 @@ public abstract class BasePage extends DriverUtils {
         List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
         int rows_count = rows_table.size();
         outsideloop:
-        for (int row = 2; row < rows_count; row++){
+        for (int row = 0; row < rows_count; row++){
             List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
             int columns_count = Columns_row.size();
-            for (int column = 2; column < columns_count; ){
+            for (int column = 0; column < columns_count; ){
                 List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
                 Random random = new Random();
                 int size = options.size();
@@ -169,6 +169,7 @@ public abstract class BasePage extends DriverUtils {
             }
         }
     }
+
     protected static boolean isLinkPresent(String locator, int duration) {
         boolean itsFound = true;
         try {
