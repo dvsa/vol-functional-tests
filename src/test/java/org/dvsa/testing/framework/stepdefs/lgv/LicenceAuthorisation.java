@@ -60,7 +60,6 @@ public class LicenceAuthorisation extends BasePage {
         UIJourney.clickSaveAndContinue();
     }
 
-
     @Then("a maximum authorisation value error message should appear")
     public void aMaximumAuthorisationValueErrorMessageShouldAppear() {
         waitForTextToBePresent("There is a problem");
@@ -91,5 +90,12 @@ public class LicenceAuthorisation extends BasePage {
         replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, "5");
         replaceText(world.operatingCentreJourney.totalCommunityAuthorisationField, SelectorType.XPATH, "20");
         UIJourney.clickSaveAndContinue();
+    }
+
+    @When("I create an lgv only authorisation variation with {string}")
+    public void iCreateAnLgvOnlyAuthorisationVariationWith(String newLGVTotalAuthority) {
+        world.generalVariationJourney.signInAndBeginLicenceAuthorisationVariation();
+        replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
+        UIJourney.clickSaveAndReturn();
     }
 }
