@@ -183,16 +183,19 @@ public class ManageApplications {
 
     @Given("I have a {string} lgv only application")
     public void iHaveALgvOnlyApplication(String NIFlag) {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLGVOnlyApplication(NIFlag);
     }
 
     @Given("I have a submitted {string} lgv only application")
     public void iHaveASubmittedLgvOnlyApplication(String NIFlag) {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createSubmittedLGVOnlyApplication(NIFlag);
     }
 
     @Given("I have a valid {string} lgv only licence")
     public void iHaveAValidLgvOnlyLicence(String NIFlag) {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLGVOnlyLicence(NIFlag);
     }
 }

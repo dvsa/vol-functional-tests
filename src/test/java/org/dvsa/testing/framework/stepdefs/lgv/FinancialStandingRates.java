@@ -59,7 +59,6 @@ public class FinancialStandingRates extends BasePage {
     public FinancialStandingRates(World world) {
         this.world = world;
         this.effectiveDate = world.globalMethods.date.getDateHashMap(Int.random(-20, 20), Int.random(-20, 20), Int.random(-20, 20));
-
     }
 
     public void setRowBeforeChange(FinancialStandingRate rowBeforeChange) {

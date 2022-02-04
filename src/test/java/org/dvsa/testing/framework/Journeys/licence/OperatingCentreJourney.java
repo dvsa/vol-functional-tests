@@ -28,9 +28,11 @@ public class OperatingCentreJourney extends BasePage {
 
     public String addOperatingCentre = "//*[@id='add']";
     String totalAuthorisationField = "//input[@id='totAuthVehicles']";
-    String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
-    String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
+    public String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
+    public String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
+    public String totalCommunityAuthorisationField = "//input[@id='totCommunityLicences']";
     String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
+    public String vehicleAuthorisationHelpLink = "//span[contains(text(),'Help with vehicle authorisation')]";
 
     String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
