@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementSelectionStateToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 
 public abstract class BasePage extends DriverUtils {
@@ -104,7 +105,7 @@ public abstract class BasePage extends DriverUtils {
     protected static void clickByLinkText(@NotNull String selector) {
         findElement(selector, SelectorType.PARTIALLINKTEXT).click();
     }
-    
+
     protected static void clickByXPath(@NotNull String selector) {
         findElement(selector, SelectorType.XPATH).click();
     }
@@ -126,6 +127,19 @@ public abstract class BasePage extends DriverUtils {
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByIndex(listValue);
     }
+
+    public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
+        List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='pagination right-aligned']"));
+        int pagination_count = pagination.size() + 1;
+        outsideloop:
+        while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT))
+            for (int i = 0; i <= pagination_count; i++) {
+                isElementNotPresent(linkTextArgument, SelectorType.LINKTEXT);
+                scrollAndClick("Next", SelectorType.LINKTEXT);
+                if(isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
+                break outsideloop; }
+                }
+            }
 
     public static String selectRandomValueFromDropDown(String idArgument) {
         Select select = new Select(getDriver().findElement(By.id(idArgument)));
@@ -155,6 +169,7 @@ public abstract class BasePage extends DriverUtils {
             }
         }
     }
+
     protected static boolean isLinkPresent(String locator, int duration) {
         boolean itsFound = true;
         try {
