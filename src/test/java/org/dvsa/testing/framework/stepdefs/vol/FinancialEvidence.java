@@ -6,6 +6,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.joda.time.LocalDate;
@@ -17,7 +18,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FinancialEvidence extends BasePage {
 
@@ -36,9 +37,19 @@ public class FinancialEvidence extends BasePage {
     @Given("i have a {string} {string} licence with a hgv authorisation of {string} in traffic area {string}")
     public void iHaveALicenceWithAHgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority, String trafficArea) {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
+        world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
+    }
+
+    @Given("i have a {string} {string} licence with a hgv authorisation of {string} lgv authorisation of {string} in traffic area {string}")
+    public void iHaveALicenceWithAHgvAuthorisationOfLgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority, String lgvAuthority, String trafficArea) {
+        world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
+        world.createApplication.setTotalOperatingCentreLgvAuthority(Integer.parseInt(lgvAuthority.replaceAll(" ", "")));
+        TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
+        world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
+        licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, lgvAuthority, null, null});
     }
 
     @And("I have a valid {string} lgv only licence in traffic area {string}")
@@ -163,7 +174,6 @@ public class FinancialEvidence extends BasePage {
         validRates.add(getEffectiveFinancialStandingRateMatchingCriteria(allFinancialStandingRates, OperatorType.PUBLIC, LicenceType.STANDARD_NATIONAL, FinancialStandingRateVehicleType.NA).get());
         validRates.add(getEffectiveFinancialStandingRateMatchingCriteria(allFinancialStandingRates, OperatorType.PUBLIC, LicenceType.STANDARD_INTERNATIONAL, FinancialStandingRateVehicleType.NA).get());
         validRates.add(getEffectiveFinancialStandingRateMatchingCriteria(allFinancialStandingRates, OperatorType.PUBLIC, LicenceType.RESTRICTED, FinancialStandingRateVehicleType.NA).get());
-        validRates.add(getEffectiveFinancialStandingRateMatchingCriteria(allFinancialStandingRates, OperatorType.PUBLIC, LicenceType.SPECIAL_RESTRICTED, FinancialStandingRateVehicleType.NA).get());
     }
 
     private String clipValueBeginningWithZero(String string) {
@@ -185,4 +195,46 @@ public class FinancialEvidence extends BasePage {
         }));
     }
 
+    @Then("the valid financial standing rate values should be present")
+    public void theValidFinancialStandingRateValuesShouldBePresent() {
+        refreshFinancialStandingRateValues();
+        String genericVehicleTableString = "//caption[text()='%s licence type']/../tbody/tr/th[contains(text(),'%s')]/..";
+
+        LinkedList<String[]> parametersList = new LinkedList<>();
+        parametersList.add(new String[] {"goods", "restricted", "na", "Restricted", "Heavy goods"});
+        parametersList.add(new String[] {"public", "restricted", "na", "Restricted", "Passenger Service"});
+        parametersList.add(new String[] {"goods", "standard_national", "na", "Standard National", "Heavy goods"});
+        parametersList.add(new String[] {"public", "standard_national", "na", "Standard National", "Passenger Service"});
+        parametersList.add(new String[] {"goods", "standard_international", "hgv", "Standard International", "Heavy goods"});
+        parametersList.add(new String[] {"goods", "standard_international", "lgv", "Standard International", "Light goods"});
+        parametersList.add(new String[] {"public", "standard_international", "na", "Standard International", "Passenger Service"});
+
+        for (String[] parameters : parametersList) {
+            FinancialStandingRate validStandingRateMatchingCriteria = validRates.stream().filter(x ->
+                            x.getOperatorType().equals(parameters[0]) &&
+                            x.getLicenceType().equals(parameters[1]) &&
+                            x.getVehicleType().equals(parameters[2])).findFirst().get();
+
+            String financialStandingRateValuesSelector = String.format(genericVehicleTableString, parameters[3], parameters[4]);
+            List<String> actualFirstAndAdditionalRate = findElements(financialStandingRateValuesSelector.concat("/td"), SelectorType.XPATH)
+                    .stream().map(x-> x.getText().replaceAll("[£,]", "")).collect(Collectors.toList());
+
+            assertEquals(validStandingRateMatchingCriteria.getFirstRate(), actualFirstAndAdditionalRate.get(0));
+            assertEquals(validStandingRateMatchingCriteria.getAdditionalRate(), actualFirstAndAdditionalRate.get(1));
+        }
+    }
+
+    @Then("i should be prompted to enter financial evidence information")
+    public void iShouldBePromptedToEnterFinancialEvidenceInformation() {
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
+        assertTrue(isElementPresent("//span[contains(text(),'Financial evidence')]/../span[2][contains(text(),'REQUIRES ATTENTION')]", SelectorType.XPATH));
+        assertTrue(isLinkPresent("Financial evidence", 10));
+    }
+
+    @Then("i should not be prompted to enter financial evidence information")
+    public void iShouldNotBePromptedToEnterFinancialEvidenceInformation() {
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
+        assertFalse(isElementPresent("//span[contains(text(),'Financial evidence')]/../span[2][contains(text(),'REQUIRES ATTENTION')]", SelectorType.XPATH));
+        assertFalse(isLinkPresent("Financial evidence", 10));
+    }
 }
