@@ -144,7 +144,7 @@
                         </goals>
                         <configuration>
                             <forkCount>7</forkCount>
-                            <reuseForks>true</reuseForks>
+                            <reuseForks>false</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>

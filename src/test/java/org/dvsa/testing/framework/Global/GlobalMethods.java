@@ -55,7 +55,6 @@ public class GlobalMethods extends BasePage {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password = world.configuration.getTempPassword(emailAddress);
-        System.out.println("PASS: " + password);
         try {
             signIn(username, password);
         } catch (Exception e) {

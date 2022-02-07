@@ -431,17 +431,16 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
-        final Wait<WebDriver> wait = new FluentWait<WebDriver>(getDriver())
+        final Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
-        WebElement element = (WebElement) wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                WebElement sendText = wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
-                sendText.sendKeys(textValue);
-                return sendText;
-            }
+        wait.until((Function<WebDriver, WebElement>) driver -> {
+            WebElement sendText = wait.until(ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
+            sendText.clear();
+            sendText.sendKeys(textValue);
+            return sendText;
         });
     }
 
