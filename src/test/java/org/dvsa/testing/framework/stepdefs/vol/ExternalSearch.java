@@ -26,6 +26,7 @@ public class ExternalSearch extends BasePage implements En {
         String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);
         world.globalMethods.signIn(user,password);
+        waitAndClick("Lorry and bus operators",SelectorType.PARTIALLINKTEXT);
     }
 
     @And("I am on the external search page")

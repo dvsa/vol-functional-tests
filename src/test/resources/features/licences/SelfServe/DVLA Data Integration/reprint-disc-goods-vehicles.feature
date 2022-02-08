@@ -1,5 +1,4 @@
 @VOL-133 @VOL-134 @DVLA
-
 Feature: Reprint a vehicle more than 10 vehicles
 
   Scenario: Reprint vehicle disc on application

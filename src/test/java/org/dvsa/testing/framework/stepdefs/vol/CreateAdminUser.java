@@ -21,8 +21,19 @@ public class CreateAdminUser extends BasePage implements En {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
+    @When("I create a new system admin user")
+    public void iCreateANewSystemAdminUser() {
+        world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
+    }
+
     @Given("I create a new external user")
     public void iCreateANewExternalUser() {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+    }
+
+    @Given("I create a new NI external user")
+    public void iCreateANewNIExternalUser() {
+        world.createApplication.setNiFlag("Y");
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
 

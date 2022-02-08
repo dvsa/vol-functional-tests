@@ -1,7 +1,4 @@
-@DVLA @VOL-147 @skip
-@ss_regression
-
-
+@DVLA @VOL-147
 Feature: Search and add a vehicle
 
   Scenario Outline: Add a vehicle to a licence

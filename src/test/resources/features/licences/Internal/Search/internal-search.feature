@@ -3,7 +3,6 @@
 @int_regression
 Feature: Internal Search
 
-
   Background:
     Given i have a valid "public" "standard_national" licence
 

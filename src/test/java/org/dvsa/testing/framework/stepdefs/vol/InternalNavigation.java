@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
@@ -23,4 +24,14 @@ public class InternalNavigation extends BasePage {
         clickByLinkText("Safety and compliance");
     }
 
+    @When("i click submit")
+    public void iClickSubmit() {
+        world.UIJourney.clickSubmit();
+    }
+
+    @And("i have logged in to internal")
+    public void iHaveLoggedIntoInternal() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+    }
 }

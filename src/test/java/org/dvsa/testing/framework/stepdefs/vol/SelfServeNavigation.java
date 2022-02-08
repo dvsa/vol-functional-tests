@@ -31,4 +31,26 @@ public class SelfServeNavigation extends BasePage {
         waitAndClick("//*[contains(text(),'Manage users')]", SelectorType.XPATH);
         Assert.assertEquals("Manage users", getText("h1", SelectorType.CSS));
     }
+
+    @And("i navigate to the apply for a licence page")
+    public void iNavigateToTheApplyForALicencePage() {
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.VIEW);
+    }
+
+    @And("i navigate to the application licence authorisation page")
+    public void iNavigateToTheLicenceAuthorisationPage() {
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.LICENCE_AUTHORISATION);
+    }
+
+    @And("i navigate to the application operating centres and authorisations page")
+    public void iNavigateToTheOperatingCentresAndAuthorisationsPage() {
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
+    }
+
+    @When("i am on the {string} financial evidence page and click on the How Did We Calculate This Link")
+    public void iAmOnTheFinancialEvidencePageAndClickOnTheHowDidWeCalculateThisLink(String statusType) {
+        world.selfServeNavigation.navigateToPage(statusType, SelfServeSection.FINANCIAL_EVIDENCE);
+        click("//span[contains(text(),'How did we calculate this?')]", SelectorType.XPATH);
+    }
 }

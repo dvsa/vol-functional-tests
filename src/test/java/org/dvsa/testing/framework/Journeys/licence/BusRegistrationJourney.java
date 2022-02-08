@@ -2,34 +2,53 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
+import activesupport.aws.s3.S3;
 import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
+import static activesupport.aws.s3.S3.client;
 import static junit.framework.TestCase.assertTrue;
+import static org.apache.logging.log4j.core.impl.ThrowableFormatOptions.FILE_NAME;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class BusRegistrationJourney extends BasePage {
-
+    private static AmazonS3 client = null;
     private World world;
-    private static final String zipFilePath = "/src/test/resources/EBSR.zip";
 
-    public BusRegistrationJourney(World world){
+    public BusRegistrationJourney(World world) {
         this.world = world;
     }
 
-    public void internalSearchForBusReg()  {
+    public void internalSearchForBusReg() {
         selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH, "Bus registrations");
         do {
             SearchNavBar.search(SearchType.Licence, world.applicationDetails.getLicenceNumber());
@@ -37,7 +56,7 @@ public class BusRegistrationJourney extends BasePage {
         clickByLinkText(world.applicationDetails.getLicenceNumber());
     }
 
-    public void internalSiteAddBusNewReg(int month)  {
+    public void internalSiteAddBusNewReg(int month) {
         waitForTextToBePresent("Overview");
         clickByLinkText("Bus registrations");
         click(nameAttribute("button", "action"), SelectorType.CSS);
@@ -70,7 +89,7 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
-    public void closeBusReg()  {
+    public void closeBusReg() {
         clickByLinkText("" + world.applicationDetails.getLicenceNumber() + "");
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
@@ -78,7 +97,7 @@ public class BusRegistrationJourney extends BasePage {
         click("form-actions[submit]", SelectorType.ID);
     }
 
-    public void payFeesAndGrantNewBusReg()  {
+    public void payFeesAndGrantNewBusReg() {
         clickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
         world.feeAndPaymentJourney.payFee("60", "cash");
@@ -99,14 +118,14 @@ public class BusRegistrationJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType)  {
+    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) {
         if (licenceType.equals("standard_international")) {
             world.createApplication.setLicenceType("standard_international");
         } else {
             world.createApplication.setLicenceType("standard_national");
         }
         world.createApplication.setTrafficArea(TrafficArea.valueOf(TrafficArea.NORTH_EAST.name()));
-        world. createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name()));
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(EnforcementArea.NORTH_EAST.name()));
         world.createApplication.setOperatorType(operatorType);
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourney.createApplication();
@@ -126,8 +145,10 @@ public class BusRegistrationJourney extends BasePage {
         world.updateLicence.createCase();
     }
 
-    public void viewEBSRInExternal()  {
+    public void viewEBSRInExternal() {
+
         long kickOutTime = System.currentTimeMillis() + 120000;
+
         do {
             // Refresh page
             refreshPageWithJavascript();
@@ -140,19 +161,46 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
+    public static AmazonS3 client() {
+        return createS3Client();
+    }
+
+    public static AmazonS3 client(Regions region) {
+        return createS3Client(region);
+    }
+
+    public static AmazonS3 createS3Client(Regions region) {
+        if (client == null) {
+            client = AmazonS3ClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).withRegion(region).build();
+        }
+        return client;
+    }
+
+    public static AmazonS3 createS3Client() {
+        return createS3Client(Regions.EU_WEST_1);
+    }
+
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
+        String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         world.genericUtils.modifyXML(state, interval);
-        GenericUtils.zipFolder();
+        String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
         clickByLinkText("Bus registrations");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
-        String workingDir = System.getProperty("user.dir");
+
         String jScript = "document.getElementById('fields[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
-        enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, workingDir + zipFilePath);
+
+        if (System.getProperty("platform") == null) {
+            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, System.getProperty("user.dir").concat("/"+zipFilePath));
+        } else {
+            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='fields[files][file]']"));
+            ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
+        }
         waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
 }

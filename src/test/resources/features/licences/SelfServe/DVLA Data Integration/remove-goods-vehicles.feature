@@ -1,6 +1,5 @@
 @VOL-84 @VOL-85 @DVLA
-
-Feature: Remove a vehicle more than 10 vehicles
+Feature: Remove a vehicle
 
   Scenario: Remove vehicle on application
     Given I have a "goods" "standard_national" application
@@ -9,7 +8,6 @@ Feature: Remove a vehicle more than 10 vehicles
     Then the "1 vehicle has been removed" confirmation banner should appear
     And the vehicle should no longer be present
 
-  @ss_regression
   Scenario: Remove vehicle on licence
     Given I have a "goods" "standard_national" licence
     And I navigate to manage vehicle page on a licence

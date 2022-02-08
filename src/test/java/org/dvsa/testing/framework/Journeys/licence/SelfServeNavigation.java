@@ -4,7 +4,6 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
-import apiCalls.enums.VehicleType;
 import com.sun.istack.NotNull;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -13,10 +12,13 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.LocalFileDetector;
+import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
@@ -109,7 +111,8 @@ public class SelfServeNavigation extends BasePage {
                 break;
             case "Vehicles":
                 clickByLinkText("Vehicles");
-                waitForTitleToBePresent("Manage your vehicles");
+                //Once DVLA integration has been switched on, this needs updating
+                waitForTitleToBePresent("Vehicle details");
                 break;
             case "Convictions and penalties":
                 clickByLinkText("Convictions and penalties");
@@ -163,8 +166,18 @@ public class SelfServeNavigation extends BasePage {
         waitAndContinuePage("Directors");
         waitAndContinuePage("Operating centres and authorisation");
         waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[contains(text(),'Upload documents now')]",SelectorType.XPATH);
-        uploadFile("//*[@id='evidence[files][file]']", workingDir + financialEvidenceFile, "document.getElementById('evidence[files][file]').style.left = 0", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Upload documents now')]", SelectorType.XPATH);
+
+        String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
+        javaScriptExecutor(jScript);
+
+        if (System.getProperty("platform") == null) {
+            enterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
+        } else {
+            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(workingDir.concat(financialEvidenceFile));
+        }
         UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
