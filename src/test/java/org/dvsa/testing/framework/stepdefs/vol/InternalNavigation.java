@@ -34,4 +34,11 @@ public class InternalNavigation extends BasePage {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
     }
+
+    @When("i am on the internal application overview page")
+    public void iAmOnTheApplicationOverviewPage() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
+    }
 }
