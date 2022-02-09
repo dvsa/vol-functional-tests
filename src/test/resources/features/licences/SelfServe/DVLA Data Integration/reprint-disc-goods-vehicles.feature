@@ -1,5 +1,4 @@
 @VOL-133 @VOL-134 @DVLA
-@ss_regression
 
 Feature: Reprint a vehicle more than 10 vehicles
 
