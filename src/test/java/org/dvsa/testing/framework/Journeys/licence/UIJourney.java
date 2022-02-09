@@ -560,6 +560,11 @@ public class UIJourney extends BasePage {
                 }
             }
         }
+        if (vehicleType.equals("lgv_only_fleet"))
+            world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
+        else
+            world.createApplication.setVehicleType(VehicleType.MIXED_FLEET.asString());
         clickSaveAndContinue();
+        world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
     }
 }

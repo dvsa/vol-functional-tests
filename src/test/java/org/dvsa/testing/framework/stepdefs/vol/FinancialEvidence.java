@@ -52,6 +52,14 @@ public class FinancialEvidence extends BasePage {
         licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, lgvAuthority, null, null});
     }
 
+    @Given("i have a {string} {string} licence with a hgv authorisation of {string} in the North West Of England")
+    public void iHaveALicenceWithAHgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority) {
+        world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
+        TrafficArea ta = trafficAreaList()[1];
+        world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
+        licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
+    }
+
     @And("I have a valid {string} lgv only licence in traffic area {string}")
     public void iHaveAValidLgvOnlyLicenceFinancialEvidence(String NIFlag, String trafficArea) {
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
