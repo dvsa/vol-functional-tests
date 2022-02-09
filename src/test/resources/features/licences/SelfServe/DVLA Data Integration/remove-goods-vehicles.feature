@@ -1,4 +1,5 @@
 @VOL-84 @VOL-85 @DVLA
+@ss_regression
 
 Feature: Remove a vehicle
 

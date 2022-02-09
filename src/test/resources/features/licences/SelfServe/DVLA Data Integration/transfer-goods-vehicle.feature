@@ -1,4 +1,5 @@
 @VOL-90 @VOL-91 @DVLA
+@ss_regression
 
 Feature: Transfer a vehicle
 
