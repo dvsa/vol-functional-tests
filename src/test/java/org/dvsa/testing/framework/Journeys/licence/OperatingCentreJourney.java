@@ -56,6 +56,9 @@ public class OperatingCentreJourney extends BasePage {
 
     private void completeApplicationAfterUpdatingAuthorities(String newHGVTotalAuthority, String newLGVTotalAuthority) {
         world.UIJourney.completeFinancialEvidencePage();
+        if (world.licenceCreation.isPSVLicence()) {
+            world.psvJourney.completeVehicleDeclarationsPage();
+        }
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         if (hasHGVAuthorityIncreased(newHGVTotalAuthority) || hasLGVAuthorityIncreased(newLGVTotalAuthority))

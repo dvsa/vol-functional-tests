@@ -58,6 +58,7 @@ public class World {
     public TaskAllocationRulesJourney taskAllocationRulesJourney;
     public TaskAllocation taskAllocation;
     public PrintingAndScanningJourney printingAndScanningJourney;
+    public PSVJourney psvJourney;
 
 
     public TypeOfLicenceJourney typeOfLicence;

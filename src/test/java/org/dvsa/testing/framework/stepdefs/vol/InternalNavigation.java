@@ -41,4 +41,11 @@ public class InternalNavigation extends BasePage {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
     }
+
+    @When("i am on the internal variation overview page")
+    public void iAmOnTheVariationOverviewPage() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getVariationApplication();
+    }
 }
