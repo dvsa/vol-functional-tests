@@ -43,6 +43,11 @@ public class SelfServeNavigation extends BasePage {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.LICENCE_AUTHORISATION);
     }
 
+    @And("i navigate to the application review and declarations page")
+    public void iNavigateToTheApplicationReviewAndDeclarationsPage() {
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
+    }
+
     @And("i navigate to the application operating centres and authorisations page")
     public void iNavigateToTheOperatingCentresAndAuthorisationsPage() {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
