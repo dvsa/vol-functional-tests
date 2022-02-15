@@ -46,9 +46,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("i create and submit and grant an operating centre variation with {string} hgvs and {string} lgvs")
     public void iCreateAndSubmitAndGrantAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) {
         world.operatingCentreJourney.loginAndSubmitOperatingCentreVehicleAuthorisationVariationApplication(numberOfHGVs, numberOfLGVs);
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getVariationApplication();
+        world.internalNavigation.navigateToPage("variation", SelfServeSection.VIEW);
         world.UIJourney.caseWorkerCompleteOverview();
         waitForTextToBePresent("The overview page has been saved");
         world.UIJourney.grantApplicationUnderDelegatedAuthority();
@@ -126,9 +124,7 @@ public class OperatingCentreVariation extends BasePage {
     @When("i create a lgv authorisation increase variation with {string} on internal")
     public void iCreateALgvAuthorisationIncreaseVariationWithOnInternal(String feeRequired) {
         boolean variationFeeRequired = feeRequired.equals("Fee Required");
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.UIJourney.createVariationInInternal(variationFeeRequired);
     }
 
@@ -182,9 +178,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("I create and save an lgv authorisation variation on internal with {int} more LGVs")
     public void iCreateAndSaveAnLgvAuthorisationVariationOnInternal(int additionalAuthority) {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.UIJourney.createVariationInInternal(false);
         String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
         world.internalNavigation.navigateToAuthorisationPage();

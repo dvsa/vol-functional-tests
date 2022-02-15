@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Given;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -129,9 +130,7 @@ public class TypeOfLicence extends BasePage {
 
     @Then("the caseworker can review the {string} LGV Only choice on internal")
     public void theCaseworkerCanReviewTheLGVOnlyChoiceOnInternal(String choice) {
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getApplication();
-        clickByLinkText("Type of licence");
+        world.internalNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
         world.typeOfLicence.isLGVChoiceTextAndRadioButtonsPresent();
 
         if (choice.equals("yes")) {

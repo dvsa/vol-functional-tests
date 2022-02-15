@@ -9,6 +9,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -28,9 +29,7 @@ public class Continuations extends BasePage implements En {
 
     @When("i change my continuation and review date on Internal")
     public void iChangeMyContinuationAndReviewDateOnInternal() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         continuationDate = dates.getDateHashMap(10, 0, 0);
         world.continuationJourney.replaceContinuationAndReviewDates(continuationDate, continuationDate);
     }
@@ -47,9 +46,7 @@ public class Continuations extends BasePage implements En {
 
     @Then("the continuation should be approved and a snapshot generated on Internal")
     public void theContinuationShouldBeApprovedAndASnapshotGeneratedOnInternal() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
         Assert.assertTrue(isTextPresent("Digital continuation snapshot"));

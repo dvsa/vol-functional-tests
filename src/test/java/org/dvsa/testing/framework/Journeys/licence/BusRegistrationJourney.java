@@ -15,6 +15,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
@@ -137,9 +138,7 @@ public class BusRegistrationJourney extends BasePage {
             world.APIJourney.grantLicenceAndPayFees();
             System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         }
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         internalSiteAddBusNewReg(5);
         payFeesAndGrantNewBusReg();
         world.updateLicence.createCase();

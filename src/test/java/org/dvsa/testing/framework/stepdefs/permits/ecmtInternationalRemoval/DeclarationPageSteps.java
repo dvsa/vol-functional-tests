@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
@@ -34,10 +35,7 @@ public class DeclarationPageSteps extends BasePage implements En {
         });
         Then("^I am directed to the ECMT removals permit fee page$", PermitFeePage::untilOnPage);
         Then("^I'm viewing my saved ECMT International application in internal$", () -> {
-            world.APIJourney.createAdminUser();
-            world.internalNavigation.logInAsAdmin();
-            refreshPage();
-            world.internalNavigation.getLicence();
+            world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
             clickByLinkText("IRHP Permits");
             clickByLinkText(world.applicationDetails.getLicenceNumber());
         });

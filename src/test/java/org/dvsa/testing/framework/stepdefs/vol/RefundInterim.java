@@ -8,6 +8,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
@@ -52,9 +53,7 @@ public class RefundInterim extends BasePage implements En {
 
     @Then("the interim fee should be refunded")
     public void theInterimFeeShouldBeRefunded() {
-        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
         waitForTextToBePresent("£68.00");
@@ -89,9 +88,7 @@ public class RefundInterim extends BasePage implements En {
 
     @Then("the interim fee should not be refunded")
     public void theInterimFeeShouldNotBeRefunded() {
-        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(),UserType.INTERNAL.asString());
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Fees");
         do {
             waitAndClick("//*[@id=\"status\"]/option[@value='all']", SelectorType.XPATH);
