@@ -30,9 +30,6 @@ public class FinancialStandingRates extends BasePage {
     String editButton = "//button[@id='edit']";
     String deleteButton = "//button[@id='delete']";
 
-    String firstRow = "//tbody/tr[1]/td";
-    String firstRowCheckbox = "//td/input[@type='checkbox']";
-
     String modalTitle = "//*[@id='modal-title']";
 
     String operatorTypeRadio = "//*[@value='lcat_%s']";
@@ -92,15 +89,17 @@ public class FinancialStandingRates extends BasePage {
 
     @Then("the table displays the correct financial standing rate information")
     public void theTableDisplaysTheCorrectFinancialStandingRateInformation() {
-        String mostRecentRow = String.format("//input[@name='action[edit][%s]']/../../td", getMostRecentRowId());
+        String mostRecentRow = String.format("//input[@name='action[edit][%s]']/../..", getMostRecentRowId());
         FinancialStandingRate rowAfterAdding = new FinancialStandingRate(mostRecentRow);
         assertTrue(rowAfterAdding.equals(rowBeforeAdding));
     }
 
     @When("i edit and save a financial standing rate")
     public void iEditAndSaveAFinancialStandingRate() {
-        setRowBeforeChange(new FinancialStandingRate(firstRow));
-        click(firstRowCheckbox, SelectorType.XPATH);
+        String mostRecentRow = String.format("//input[@name='action[edit][%s]']/../..", getMostRecentRowId());
+        setRowBeforeChange(new FinancialStandingRate(mostRecentRow));
+
+        click(mostRecentRow.concat("/td/input[@type='checkbox']"), SelectorType.XPATH);
         click(editButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
         click(unselectedOperatorType, SelectorType.XPATH);
@@ -115,15 +114,16 @@ public class FinancialStandingRates extends BasePage {
 
     @Then("the table displays the correct edited financial standing rate information")
     public void theTableDisplaysTheCorrectEditedFinancialStandingRateInformation() {
-        String rowSelector = String.format("//input[@name='action[edit][%s]']/../../td", rowBeforeChange.getId());
+        String rowSelector = String.format("//input[@name='action[edit][%s]']/../..", rowBeforeChange.getId());
         FinancialStandingRate rowAfterEdit = new FinancialStandingRate(rowSelector);
         assertFalse(rowAfterEdit.equals(rowBeforeChange));
     }
 
     @When("i delete a financial standing rate")
     public void iDeleteAFinancialStandingRate() {
-        setRowBeforeChange(new FinancialStandingRate(firstRow));
-        click(firstRowCheckbox, SelectorType.XPATH);
+        String mostRecentRow = String.format("//input[@name='action[edit][%s]']/../..", getMostRecentRowId());
+        setRowBeforeChange(new FinancialStandingRate(mostRecentRow));
+        click(mostRecentRow.concat("/td/input[@type='checkbox']"), SelectorType.XPATH);
         click(deleteButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
         click(continueButton, SelectorType.XPATH);
