@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import Injectors.World;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 public class InternalNavigation extends BasePage {
@@ -15,13 +16,7 @@ public class InternalNavigation extends BasePage {
 
     @When("i navigate to the {string} safety and compliance page on internal")
     public void iNavigateToTheSafetyAndCompliancePageOnInternal(String type) {
-        if (type.equals("application"))
-            world.internalNavigation.getApplication();
-        else if (type.equals("licence"))
-            world.internalNavigation.getLicence();
-        else
-            world.internalNavigation.getVariationApplication();
-        clickByLinkText("Safety and compliance");
+        world.internalNavigation.navigateToPage(type, SelfServeSection.SAFETY_AND_COMPLIANCE);
     }
 
     @When("i click submit")
@@ -37,15 +32,16 @@ public class InternalNavigation extends BasePage {
 
     @When("i am on the internal application overview page")
     public void iAmOnTheApplicationOverviewPage() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getApplication();
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
     }
 
     @When("i am on the internal variation overview page")
     public void iAmOnTheVariationOverviewPage() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getVariationApplication();
+        world.internalNavigation.navigateToPage("variation", SelfServeSection.VIEW);
+    }
+
+    @When("I navigate to the undertakings page on internal")
+    public void iNavigateToTheUndertakingsPageOnInternal() {
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.CONDITIONS_AND_UNDERTAKINGS);
     }
 }

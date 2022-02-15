@@ -5,11 +5,12 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
-import junit.framework.Assert;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.*;
@@ -22,14 +23,15 @@ public class InternalApplication extends BasePage implements En {
     private String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
     private String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
     private String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
+    private String editUndertakingLink = "//tbody/tr//input[contains(@name,'table[action][edit]')]";
+    private String undertakingDescription = "//textarea[@name='fields[notes]']";
+    private String expectedLGVOnlyUndertakingText = "All authorised vehicles shall not exceed 3,500 Kilograms (kg), including when combined with a trailer.";
 
     public InternalApplication (World world) {this.world = world;}
 
     @When("the caseworker completes and submits the application")
     public void theCaseworkerCompletesAndSubmitsTheApplication() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getApplication();
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("has been submitted");
@@ -184,4 +186,34 @@ public class InternalApplication extends BasePage implements En {
         assertEquals(actualText, expectedText);
     }
 
+    @Then("the lgv only undertaking should be generated on internal matching relevant criteria")
+    public void theLgvOnlyUndertakingShouldBeGeneratedOnInternalMatchingRelevantCriteria() {
+        world.internalNavigation.navigateToPage("application", SelfServeSection.CONDITIONS_AND_UNDERTAKINGS);
+
+        String tableElementText = getText("//tbody/tr", SelectorType.XPATH);
+        assertEquals(1, size("//tbody/tr", SelectorType.XPATH));
+        assertTrue(tableElementText.contains("Undertaking"));
+        assertTrue(tableElementText.contains("Application"));
+
+        click(editUndertakingLink, SelectorType.XPATH);
+        waitForTextToBePresent("Condition / Undertaking type");
+
+        String actualLGVUndertakingText = getText(undertakingDescription, SelectorType.XPATH);
+        assertEquals(expectedLGVOnlyUndertakingText, actualLGVUndertakingText);
+
+        String expectedCategory = "Other";
+        String actualCategory = getText("//*[@id='conditionCategory']//option[@selected='selected']", SelectorType.XPATH);
+        assertEquals(expectedCategory, actualCategory);
+
+
+        String licenceNumber = getText("//h1", SelectorType.XPATH).substring(0,9);
+        String expectedAttachedToLicence = String.format("Licence (%s)", licenceNumber);
+        String actualAttachedToLicence = getText("//*[@id='attachedTo']//option[@selected='selected']", SelectorType.XPATH);
+        assertEquals(expectedAttachedToLicence, actualAttachedToLicence);
+    }
+
+    @Then("an undertaking should not be generated on internal")
+    public void anUndertakingShouldNotBeGeneratedOnInternal() {
+        assertEquals(0, size("//tbody/tr", SelectorType.XPATH));
+    }
 }

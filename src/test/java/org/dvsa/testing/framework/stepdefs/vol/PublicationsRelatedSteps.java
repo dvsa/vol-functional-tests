@@ -9,6 +9,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.Generic.ParseUtils;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -223,18 +224,16 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
         assertTrue(isElementPresent(String.format("//th[contains(text(),'Operating centre')]/../th[contains(text(),'%s')]", capitalise(adaptiveVehicleTypeText).concat("s")), SelectorType.XPATH));
 
-        assertEquals(getText(String.format("//li/dt[contains(text(),'Total number of %s')]/../dd", adaptiveVehicleTypeText), SelectorType.XPATH), hgvValue);
+        assertEquals(getText(String.format("//li/dt[contains(text(),'Total Number of %s')]/../dd", adaptiveVehicleTypeText), SelectorType.XPATH), hgvValue);
         if (world.licenceCreation.isAGoodsInternationalLicence())
-            assertEquals(getText("//li/dt[contains(text(),'Total number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
-        assertEquals(getText("//li/dt[contains(text(),'Total number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+            assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
+        assertEquals(getText("//li/dt[contains(text(),'Total Number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
 
 
     @And("i navigate to the application publications page")
     public void iNavigateToTheApplicationPublicationsPage() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getApplication();
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Processing");
         waitForTextToBePresent("Processing");
         clickByLinkText("Publications");
@@ -298,7 +297,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         assertTrue(operatingCentreSection.contains("The table is empty"));
 
         String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
-        assertTrue(authorisationSection.contains("Total number of Light Goods Vehicles"));
+        assertTrue(authorisationSection.contains("Total Number of Light Goods Vehicles"));
         assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority())));
         assertFalse(authorisationSection.contains("vehicles"));
         assertFalse(authorisationSection.contains("trailers"));
@@ -314,7 +313,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         assertTrue(operatingCentreSection.contains("Vehicles"));
 
         String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
-        assertTrue(authorisationSection.contains("Total number of vehicles"));
+        assertTrue(authorisationSection.contains("Total Number of vehicles"));
         assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority())));
         assertFalse(authorisationSection.contains("trailers"));
     }
@@ -329,8 +328,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         assertTrue(operatingCentreSection.contains("Trailers"));
 
         String authorisationSection = getText("//h4[contains(text(),'Authorisation')]/../..", SelectorType.XPATH);
-        assertTrue(authorisationSection.contains("Total number of vehicles"));
-        assertTrue(authorisationSection.contains("Total number of trailers"));
+        assertTrue(authorisationSection.contains("Total Number of vehicles"));
+        assertTrue(authorisationSection.contains("Total Number of trailers"));
         assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority())));
         assertTrue(authorisationSection.contains(String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority())));
     }

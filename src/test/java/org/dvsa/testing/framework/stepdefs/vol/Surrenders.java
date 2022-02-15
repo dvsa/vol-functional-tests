@@ -8,6 +8,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -87,9 +88,7 @@ public class Surrenders extends BasePage implements En {
 
     @Given("a caseworker views the surrender details")
     public void aCaseworkerViewsTheSurrenderDetails() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitAndClick("menu-licence_surrender", SelectorType.ID);
     }
 
@@ -119,9 +118,7 @@ public class Surrenders extends BasePage implements En {
 
     @When("the caseworker checks the case and bus reg is visible in surrenders")
     public void theCaseworkerChecksTheCaseAndBusRegIsVisibleInSurrenders() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitForTextToBePresent("Overview");
         if (isTextPresent("Surrender")) {
             clickByLinkText("Surrender");

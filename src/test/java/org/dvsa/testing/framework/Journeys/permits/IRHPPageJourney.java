@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.permits;
 import Injectors.World;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsPage;
@@ -30,9 +31,7 @@ public class IRHPPageJourney extends BasePermitJourney {
     }
 
     public static void logInToInternalAndIRHPGrantApplication(World world) {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         String browser = String.valueOf(getURL());
         get(browser+"irhp-application/");
         IrhpPermitsApplyPage.viewApplication();

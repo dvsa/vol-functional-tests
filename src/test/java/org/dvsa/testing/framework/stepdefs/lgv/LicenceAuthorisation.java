@@ -81,7 +81,7 @@ public class LicenceAuthorisation extends BasePage {
 
     @Then("the community authorisation exceeding lgv authorisation error appears")
     public void theCommunityAuthorisationExceedingLgvAuthorisationErrorAppears() {
-        assertTrue(isTextPresent("The number of UK licences for the community must not exceed the the total number of vehicles"));
+        assertTrue(isTextPresent("The number of UK licences for the community must not exceed the total number of vehicles"));
     }
 
     @When("i enter a combined hgv and lgv authorisation and a higher community authorisation")
