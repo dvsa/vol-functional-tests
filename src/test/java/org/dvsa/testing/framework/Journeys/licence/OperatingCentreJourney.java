@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
-import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -61,7 +60,7 @@ public class OperatingCentreJourney extends BasePage {
         }
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
-        if (hasHGVAuthorityIncreased(newHGVTotalAuthority) || hasLGVAuthorityIncreased(newLGVTotalAuthority))
+        if (hasTotalHGVAuthorityIncreased(newHGVTotalAuthority) || hasTotalLGVAuthorityIncreased(newLGVTotalAuthority))
             click(submitApplication, SelectorType.XPATH);
         else {
             click(submitAndPayForApplication, SelectorType.XPATH);
@@ -73,17 +72,18 @@ public class OperatingCentreJourney extends BasePage {
 
     public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
         world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
-        if (!newHGVTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()))) {
-            updateOperatingCentreAuthorisation(newHGVTotalAuthority);
+        if (hasNumberOfHGVChanged(newHGVTotalAuthority) || hasNumberOfTrailersChanged(newTrailerTotalAuthority)) {
+            updateOperatingCentreAuthorisation(newHGVTotalAuthority, newTrailerTotalAuthority);
         }
         updateOperatingCentreTotalVehicleAuthority(newHGVTotalAuthority, newLGVTotalAuthority, newTrailerTotalAuthority);
     }
 
-    public void updateOperatingCentreAuthorisation(String newHGVTotalAuthority) {
+    public void updateOperatingCentreAuthorisation(String newHGVTotalAuthority, String newTrailerTotalAuthority) {
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
         click(operatingCentreEditLink, SelectorType.XPATH);
         replaceText(operatingCentreVehicleField, SelectorType.XPATH, newHGVTotalAuthority);
-        if (Integer.parseInt(newHGVTotalAuthority) > world.createApplication.getNoOfOperatingCentreVehicleAuthorised() && world.licenceCreation.isGoodsLicence()) {
+        replaceText(operatingCentreTrailerField, SelectorType.XPATH, newTrailerTotalAuthority);
+        if ((hasHGVAuthorityOnOCIncreased(newHGVTotalAuthority) || hasTrailerAuthorityOnOCIncreased(newTrailerTotalAuthority)) && world.licenceCreation.isGoodsLicence()) {
             waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
             waitForElementToBePresent(advertTitle);
         }
@@ -126,11 +126,27 @@ public class OperatingCentreJourney extends BasePage {
         click(submitButton, SelectorType.XPATH);
     }
 
-    private boolean hasHGVAuthorityIncreased(String newHGVTotalAuthority) {
+    private boolean hasTotalHGVAuthorityIncreased(String newHGVTotalAuthority) {
         return world.createApplication.getTotalOperatingCentreHgvAuthority() > Integer.parseInt(newHGVTotalAuthority);
     }
 
-    private boolean hasLGVAuthorityIncreased(String newLGVTotalAuthority) {
+    private boolean hasTotalLGVAuthorityIncreased(String newLGVTotalAuthority) {
         return world.createApplication.getTotalOperatingCentreLgvAuthority() > Integer.parseInt(newLGVTotalAuthority);
+    }
+
+    private boolean hasHGVAuthorityOnOCIncreased(String newHGVOCAuthority) {
+        return Integer.parseInt(newHGVOCAuthority) > world.createApplication.getNoOfOperatingCentreVehicleAuthorised();
+    }
+
+    private boolean hasTrailerAuthorityOnOCIncreased(String newTrailerOCAuthority) {
+        return Integer.parseInt(newTrailerOCAuthority) > world.createApplication.getNoOfOperatingCentreVehicleAuthorised();
+    }
+
+    private boolean hasNumberOfHGVChanged(String newHGVTotalAuthority) {
+        return !newHGVTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()));
+    }
+
+    private boolean hasNumberOfTrailersChanged(String newTrailerTotalAuthority) {
+        return !newTrailerTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()));
     }
 }

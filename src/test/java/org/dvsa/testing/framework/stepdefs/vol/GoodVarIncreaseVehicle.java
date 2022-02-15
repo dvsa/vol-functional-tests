@@ -24,7 +24,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
     @When("i increase my vehicle authority count")
     public void iIncreaseMyVehicleAuthorityCount() {
         world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
-        world.operatingCentreJourney.updateOperatingCentreAuthorisation(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ));
+        world.operatingCentreJourney.updateOperatingCentreAuthorisation(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ), null, currentTrailerTotalAuthority);
     }
@@ -37,7 +37,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
     @When("A selfserve user increases the vehicle required count by invalid characters")
     public void aSelfserveUserIncreasesTheVehicleRequiredCountByInvalidCharacters() {
         world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
-        world.operatingCentreJourney.updateOperatingCentreAuthorisation("+6");
+        world.operatingCentreJourney.updateOperatingCentreAuthorisation("+6", String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
 
     @Then("An error should appear")

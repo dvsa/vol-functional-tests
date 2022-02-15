@@ -105,7 +105,7 @@ public class OperatingCentreVariation extends BasePage {
     public void increaseTheAuthorityOnAnExistingOperatingCentreAuthorisationAndUpdateTheTotalAuthorisations() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         String updatedOperatingCentreVehicleAuthorisation = "10";
-        world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation);
+        world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         int newTotalHGVAuthorisation = Integer.parseInt(numberOfNewOperatingCentreVehicles) + Integer.parseInt(updatedOperatingCentreVehicleAuthorisation);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(newTotalHGVAuthorisation), "0", String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
@@ -183,5 +183,13 @@ public class OperatingCentreVariation extends BasePage {
         String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
         world.internalNavigation.navigateToAuthorisationPage();
         world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
+    }
+
+    @When("i create an operating centre variation with {int} trailers")
+    public void iCreateAnOperatingCentreVariationWithTrailers(int newNumberOfTrailers) {
+        world.operatingCentreJourney.loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(
+                String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority()),
+                String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()),
+                String.valueOf(newNumberOfTrailers));
     }
 }
