@@ -35,7 +35,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("i create an operating centre variation with {string} hgvs and {string} lgvs")
     public void iCreateAnOperatingCentreVariationWithHgvAndLgvs(String newHGVTotalAuthority, String newLGVTotalAuthority) {
-        world.operatingCentreJourney.loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        world.operatingCentreJourney.loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority);
     }
 
     @And("i create and submit an operating centre variation with {string} hgvs and {string} lgvs")

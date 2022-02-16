@@ -44,7 +44,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void loginAndSubmitOperatingCentreVehicleAuthorisationVariationApplication(String newHGVTotalAuthority, String newLGVTotalAuthority) {
-        loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority);
         completeApplicationAfterUpdatingAuthorities(newHGVTotalAuthority, newLGVTotalAuthority);
     }
 
@@ -70,6 +70,11 @@ public class OperatingCentreJourney extends BasePage {
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }
 
+    public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority) {
+        String trailerCount = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+        loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, trailerCount);
+    }
+
     public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
         world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         if (hasNumberOfHGVChanged(newHGVTotalAuthority) || hasNumberOfTrailersChanged(newTrailerTotalAuthority)) {
@@ -82,7 +87,8 @@ public class OperatingCentreJourney extends BasePage {
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
         click(operatingCentreEditLink, SelectorType.XPATH);
         replaceText(operatingCentreVehicleField, SelectorType.XPATH, newHGVTotalAuthority);
-        replaceText(operatingCentreTrailerField, SelectorType.XPATH, newTrailerTotalAuthority);
+        if (world.createApplication.getTotalOperatingCentreTrailerAuthority() != Integer.parseInt(newTrailerTotalAuthority))
+            replaceText(operatingCentreTrailerField, SelectorType.XPATH, newTrailerTotalAuthority);
         if ((hasHGVAuthorityOnOCIncreased(newHGVTotalAuthority) || hasTrailerAuthorityOnOCIncreased(newTrailerTotalAuthority)) && world.licenceCreation.isGoodsLicence()) {
             waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
             waitForElementToBePresent(advertTitle);
