@@ -137,9 +137,10 @@ public abstract class BasePage extends DriverUtils {
                 isElementNotPresent(linkTextArgument, SelectorType.LINKTEXT);
                 scrollAndClick("Next", SelectorType.LINKTEXT);
                 if(isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
-                break outsideloop; }
+                    break outsideloop;
                 }
             }
+    }
 
     public static String selectRandomValueFromDropDown(String idArgument) {
         Select select = new Select(getDriver().findElement(By.id(idArgument)));
