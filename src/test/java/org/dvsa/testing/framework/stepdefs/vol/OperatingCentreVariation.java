@@ -20,7 +20,7 @@ public class OperatingCentreVariation extends BasePage {
     World world;
 
     // Optimal to head towards page objects method for storing selectors for each page but not sure on best design.
-    String confirmDeclaration =  "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
+    String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
     String submitAndPayForApplication = "//button[@id='submitAndPay']";
 
@@ -71,7 +71,7 @@ public class OperatingCentreVariation extends BasePage {
         assertTrue(isElementPresent(submitApplication, SelectorType.XPATH));
         assertFalse(isElementPresent(submitAndPayForApplication, SelectorType.XPATH));
     }
-    
+
     @Then("the variation fee should be triggered")
     public void theVariationFeeShouldBeTriggered() {
         click(submitAndPayForApplication, SelectorType.XPATH);
@@ -118,7 +118,7 @@ public class OperatingCentreVariation extends BasePage {
         click("//button[@id='form-actions[submit]']", SelectorType.XPATH);
         sleep(3000);
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
-        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("5" , "5", currentTrailerTotalAuthority);
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("5", "5", currentTrailerTotalAuthority);
     }
 
     @When("i create a lgv authorisation increase variation with {string} on internal")
@@ -191,5 +191,10 @@ public class OperatingCentreVariation extends BasePage {
                 String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority()),
                 String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()),
                 String.valueOf(newNumberOfTrailers));
+    }
+
+    @When("i begin an operating centre and authorisation variation")
+    public void iBeginAnOperatingCentreAndAuthorisationVariation() {
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
     }
 }

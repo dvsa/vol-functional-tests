@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
 import Injectors.World;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
@@ -14,6 +15,14 @@ public class LicenceAuthorisation extends BasePage {
 
     World world;
 
+    String lgvAuthorisationPageHintText = "These are vehicles that have a gross plated weight of over 2,500 Kilograms (kg) and up to and including 3,500 Kilograms (kg) including when combined with a trailer";
+    String hgvTotalAuthorisationText = "Heavy goods vehicle authorisation";
+    String lgvTotalAuthorisationText = "Light goods vehicle authorisation";
+    String vehicleTotalAuthorisationText = "Vehicle authorisation";
+    String hgvTableHeading = "//a[@class='sortable' and contains(text(),'Heavy goods vehicles')]";
+    String vehicleTableHeading = "//a[@class='sortable' and contains(text(),'Vehicles')]";
+
+
     public LicenceAuthorisation (World world) {
         this.world = world;
     }
@@ -23,15 +32,15 @@ public class LicenceAuthorisation extends BasePage {
         assertTrue(isTitlePresent("Licence authorisation", 10));
         assertFalse(isTitlePresent("Operating centres and authorisation", 10));
 
-        assertFalse(isTextPresent("Vehicle authorisation"));
+        assertFalse(isTextPresent(vehicleTotalAuthorisationText));
         assertFalse(isTextPresent("How many vehicles do you want to authorise on the licence?"));
 
-        assertFalse(isTextPresent("Heavy goods vehicle authorisation"));
+        assertFalse(isTextPresent(hgvTotalAuthorisationText));
         assertFalse(isTextPresent("How many heavy goods vehicles do you want to authorise on the licence?"));
         assertFalse(isElementPresent(world.operatingCentreJourney.totalHGVAuthorisationField, SelectorType.XPATH));
         assertFalse(isElementPresent(world.operatingCentreJourney.vehicleAuthorisationHelpLink, SelectorType.XPATH));
 
-        assertTrue(isTextPresent("Light goods vehicle authorisation"));
+        assertTrue(isTextPresent(lgvTotalAuthorisationText));
         assertTrue(isTextPresent("How many light goods vehicles do you want to authorise on the licence for international haulage?"));
         assertTrue(isTextPresent("These are vehicles that have a gross plated weight of over 2,500 Kilograms (kg) and up to and including 3,500 Kilograms (kg) including when combined with a trailer"));
         assertTrue(isElementPresent(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH));
@@ -97,5 +106,42 @@ public class LicenceAuthorisation extends BasePage {
         world.generalVariationJourney.signInAndBeginLicenceAuthorisationVariation();
         replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         UIJourney.clickSaveAndReturn();
+    }
+
+    @Then("the lgv hint text is visible")
+    public void theLgvHintTextIsVisible() {
+        assertTrue(isTextPresent(lgvAuthorisationPageHintText));
+    }
+
+    @Then("the hgv and lgv authorisations text are not present")
+    public void theHgvAndLgvAuthorisationsTextAreNotPresent() {
+        assertFalse(isTextPresent(hgvTotalAuthorisationText));
+        assertFalse(isTextPresent(lgvTotalAuthorisationText));
+    }
+
+    @Then("the hgv and lgv authorisations text are present")
+    public void theHgvAndLgvAuthorisationsTextArePresent() {
+        assertTrue(isTextPresent(hgvTotalAuthorisationText));
+        assertTrue(isTextPresent(lgvTotalAuthorisationText));
+    }
+
+    @And("the vehicle authorisation text is present")
+    public void theVehicleAuthorisationTextIsPresent() {
+        assertTrue(isTextPresent(vehicleTotalAuthorisationText));
+    }
+
+    @And("the vehicle authorisation text is not present")
+    public void theVehicleAuthorisationTextIsNotPresent() {
+        assertFalse(isTextPresent(vehicleTotalAuthorisationText));
+    }
+
+    @Then("the operating centre table hgv text is present")
+    public void theOperatingCentreTableHgvTextIsPresent() {
+        assertTrue(isElementPresent(hgvTableHeading, SelectorType.XPATH));
+    }
+
+    @Then("the operating centre table vehicle text is not present")
+    public void theOperatingCentreTableVehicleTextIsNotPresent() {
+        assertTrue(isElementPresent(vehicleTableHeading, SelectorType.XPATH));
     }
 }

@@ -58,4 +58,10 @@ public class SelfServeNavigation extends BasePage {
         world.selfServeNavigation.navigateToPage(statusType, SelfServeSection.FINANCIAL_EVIDENCE);
         click("//span[contains(text(),'How did we calculate this?')]", SelectorType.XPATH);
     }
+
+    @When("i am on the operating centre and authorisations page")
+    public void iAmOnTheOperatingCentreAndAuthorisationsPage() {
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
+    }
 }
