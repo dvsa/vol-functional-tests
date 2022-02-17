@@ -18,7 +18,7 @@ Feature: Financial evidence calculations for hgv and lgv permutations.
       | public       | standard_international |     5       |      1      |   6  |   0  |
       | public       | restricted             |     5       |      1      |   2  |   0  |
 
-  Scenario Outline: Check financial evidence for variations MLH
+  Scenario Outline: MLH variations financial evidence check
     Given I create a new external user
     And i have a "<operatorType>" "<licenceType>" licence with a hgv authorisation of "<vehicleAuth>" in traffic area "<trafficArea>"
     And i have a "<operatorType2>" "<licenceType2>" licence with a hgv authorisation of "<vehicleAuth2>" in traffic area "<trafficArea2>"

@@ -4,13 +4,13 @@ Feature: Financial evidence calculations for lgv only variations
   Background:
     Given I create a new external user
 
-  Scenario: Check financial evidence for lgv only variations
+  Scenario: LGV only variation financial evidence check
     And I have a valid "GB" lgv only licence in traffic area "1"
     When I create an lgv only authorisation variation with "8"
     Then the financial evidence value should be as expected for "0" hgvs and "8" lgvs
     And the same financial evidence value is displayed on internal
 
-  Scenario: Check financial evidence for lgv only variations MLH
+  Scenario: MLH LGV only variation financial evidence check
     And i have a "goods" "standard_national" licence with a hgv authorisation of "5" in traffic area "1"
     And I have a valid "GB" lgv only licence in traffic area "2"
     When I create an lgv only authorisation variation with "8"
