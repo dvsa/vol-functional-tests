@@ -5,6 +5,8 @@ import apiCalls.enums.*;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -23,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class FinancialEvidence extends BasePage {
 
     World world;
+    private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
     public static HashMap<String, String[]> licences = new HashMap<>();
     List<FinancialStandingRate> validRates = new LinkedList<>(); // operatorType, licenceType, vehicleType
 
@@ -78,6 +81,9 @@ public class FinancialEvidence extends BasePage {
         world.selfServeNavigation.getVariationFinancialEvidencePage();
         int actualFinancialEvidenceValue = getFinancialValueFromPage();
         expectedFinancialEvidenceValue = calculateExpectedFinancialEvidenceValue(licences);
+        licences = new HashMap<>();
+        LOGGER.info("Expected Financial Evidence Value £".concat(String.valueOf(expectedFinancialEvidenceValue)));
+        LOGGER.info("Actual Financial Evidence Value £".concat(String.valueOf(actualFinancialEvidenceValue)));
         assertEquals(expectedFinancialEvidenceValue, actualFinancialEvidenceValue);
     }
 
@@ -87,7 +93,6 @@ public class FinancialEvidence extends BasePage {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getVariationFinancialEvidencePage();
         assertEquals(getFinancialValueFromPage(), expectedFinancialEvidenceValue);
-        licences = new HashMap<>();
     }
 
     public int getFinancialValueFromPage() {
@@ -97,14 +102,13 @@ public class FinancialEvidence extends BasePage {
 
     public int calculateExpectedFinancialEvidenceValue(HashMap<String, String[]> licences) {
         List<String[]> numberOfVehiclesAndRatesPerClassificationOfVehicle = new LinkedList<>();
+        refreshFinancialStandingRateValues();
         licences.values().forEach(values -> {
             String operatorType = values[0];
             String licenceType = values[1];
             int numberOfHGVs = Integer.parseInt(values[3]);
             int numberOfLGVs = Integer.parseInt(values[4]);
             boolean notApplicable = !(values[0].equals("goods") && (values[1].equals("standard_international")));
-
-            refreshFinancialStandingRateValues();
 
             Collection<FinancialStandingRate> ratesFilteredToVehicleType = validRates.stream()
                     .filter(rate -> rate.getOperatorType().equals(operatorType))
