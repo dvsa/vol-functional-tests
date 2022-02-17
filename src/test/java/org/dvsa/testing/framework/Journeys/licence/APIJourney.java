@@ -101,7 +101,7 @@ public class APIJourney {
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         world.registerUser.registerUser();
         //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
-        if (env == EnvironmentType.DAILY_ASSURANCE) {
+        if ((env == EnvironmentType.DAILY_ASSURANCE) || (env == EnvironmentType.QUALITY_ASSURANCE)) {
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         }
         world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(),world.configuration.config.getString("internalNewPassword"));
