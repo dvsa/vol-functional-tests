@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
+import apiCalls.enums.OperatorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -26,11 +27,11 @@ public class OperatingCentreJourney extends BasePage {
     String submitButton = "//*[@id='form-actions[submit]']";
 
     public String addOperatingCentre = "//*[@id='add']";
-    String totalAuthorisationField = "//input[@id='totAuthVehicles']";
+    public String totalAuthorisationField = "//input[@id='totAuthVehicles']";
     public String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
     public String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
+    public String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
     public String totalCommunityAuthorisationField = "//input[@id='totCommunityLicences']";
-    String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
     public String vehicleAuthorisationHelpLink = "//span[contains(text(),'Help with vehicle authorisation')]";
 
     String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
@@ -100,11 +101,11 @@ public class OperatingCentreJourney extends BasePage {
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
-        if (world.createApplication.getTotalOperatingCentreTrailerAuthority() != Integer.parseInt(trailers))
+        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()))
             replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
         if (isElementPresent("totAuthVehicles",SelectorType.ID)) {
             replaceText(totalAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
-        } else{
+        } else {
             replaceText(totalHGVAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
         }
         UIJourney.clickSaveAndReturn();
@@ -126,9 +127,11 @@ public class OperatingCentreJourney extends BasePage {
         clickByLinkText(enterAddressManually);
         world.UIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         enterText(operatingCentreVehicleField, SelectorType.XPATH, vehicles);
-        enterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
+        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+            enterText(operatingCentreTrailerField, SelectorType.XPATH, trailers);
+            click(uploadAdvertLater, SelectorType.XPATH);
+        }
         click(confirmOffStreetParkingCheckbox, SelectorType.XPATH);
-        click(uploadAdvertLater, SelectorType.XPATH);
         click(submitButton, SelectorType.XPATH);
     }
 

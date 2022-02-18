@@ -22,6 +22,9 @@ public class LicenceAuthorisation extends BasePage {
     String hgvTableHeading = "//a[@class='sortable' and contains(text(),'Heavy goods vehicles')]";
     String vehicleTableHeading = "//a[@class='sortable' and contains(text(),'Vehicles')]";
 
+    String noHGVAuthErrorText = "Enter a value for the field: \"How many heavy goods vehicles do you want to authorise on the licence?\"";
+    String noLGVAuthErrorText = "Enter a value for the field: \"How many light goods vehicles do you want to authorise on the licence for international haulage? \"";
+    String noTrailerAuthErrorText = "Enter a value for the field: \"How many trailers do you want to authorise on the licence?\"";
 
     public LicenceAuthorisation (World world) {
         this.world = world;
@@ -143,5 +146,72 @@ public class LicenceAuthorisation extends BasePage {
     @Then("the operating centre table vehicle text is not present")
     public void theOperatingCentreTableVehicleTextIsNotPresent() {
         assertTrue(isElementPresent(vehicleTableHeading, SelectorType.XPATH));
+    }
+
+    @When("i clear the authorisation fields and click save")
+    public void iClearTheAuthorisationFieldsAndClickSave() {
+        replaceText(world.operatingCentreJourney.totalHGVAuthorisationField, SelectorType.XPATH, "");
+        replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, "");
+        replaceText(world.operatingCentreJourney.totalTrailersAuthorisationField, SelectorType.XPATH, "");
+        UIJourney.clickSaveAndReturn();
+    }
+
+    @Then("hgv, lgv and trailer missing authorisation value errors should display")
+    public void hgvLgvAndTrailerMissingAuthorisationValueErrorsShouldDisplay() {
+        assertTrue(isLinkPresent(noHGVAuthErrorText, 10));
+        assertTrue(isLinkPresent(noLGVAuthErrorText, 10));
+        assertTrue(isLinkPresent(noTrailerAuthErrorText, 10));
+    }
+
+    @When("i save a hgv authorisation greater that the overall number of vehicles across the licence")
+    public void iSaveAHgvAuthorisationGreaterThatTheOverallNumberOfVehiclesAcrossTheLicence() {
+        String totalNumberOfOCHgvs = getText("//tfoot//td[1]", SelectorType.XPATH);
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(Integer.parseInt(totalNumberOfOCHgvs) + 1),
+                String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()),
+                String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+    }
+
+    @When("i save a hgv authorisation fewer that the overall number of vehicles across the licence")
+    public void iSaveAHgvAuthorisationFewerThatTheOverallNumberOfVehiclesAcrossTheLicence() {
+        String totalNumberOfOCTrailers = getText("//tfoot//td[2]", SelectorType.XPATH);
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("1",
+                String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()), totalNumberOfOCTrailers);
+    }
+
+    @When("i save a trailer authorisation greater that the overall number of vehicles across the licence")
+    public void iSaveATrailerAuthorisationGreaterThatTheOverallNumberOfVehiclesAcrossTheLicence() {
+        String totalNumberOfOCHgvs = getText("//tfoot//td[1]", SelectorType.XPATH);
+        String totalNumberOfOCTrailers = getText("//tfoot//td[2]", SelectorType.XPATH);
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(
+                totalNumberOfOCHgvs,
+                String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()),
+                String.valueOf(Integer.parseInt(totalNumberOfOCTrailers) + 1));
+    }
+
+    @When("i save a trailer authorisation fewer that the overall number of vehicles across the licence")
+    public void iSaveAHgvAuthorisationLowerThatTheOverallNumberOfVehiclesAcrossTheLicence() {
+        String totalNumberOfOCHgvs = getText("//tfoot//td[1]", SelectorType.XPATH);
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(totalNumberOfOCHgvs,
+                String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()), "1");
+    }
+
+    @Then("i am prompted with the total hgv authorisation exceeds number of vehicles on licence error")
+    public void iAmPromptedWithTheTotalHgvAuthorisationExceedsNumberOfVehiclesOnLicenceError() {
+        assertTrue(isLinkPresent("You can't have more vehicles than the total across your operating centres", 10));
+    }
+
+    @Then("i am prompted with the total hgv authorisation is fewer than the largest OC on licence error")
+    public void iAmPromptedWithTheTotalHgvAuthorisationIsFewerThanTheLargestOCOnLicenceError() {
+        assertTrue(isLinkPresent("You can't have fewer vehicles than your largest operating centre", 10));
+    }
+
+    @Then("i am prompted with the total trailer authorisation exceeds number of vehicles on licence error")
+    public void iAmPromptedWithTheTotalTrailerAuthorisationExceedsNumberOfVehiclesOnLicenceError() {
+        assertTrue(isLinkPresent("You can't have more trailers than the total across your operating centres", 10));
+    }
+
+    @Then("i am prompted with the total trailer authorisation is fewer than the largest OC on licence error")
+    public void iAmPromptedWithTheTotalTrailerAuthorisationIsFewerThanTheLargestOCOnLicenceError() {
+        assertTrue(isLinkPresent("You can't have fewer trailers than your largest operating centre", 10));
     }
 }

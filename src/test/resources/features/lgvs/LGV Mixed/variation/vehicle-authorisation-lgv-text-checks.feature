@@ -1,5 +1,5 @@
 @lgv
-Feature: LGV Mixed variation authorisation validation and display
+Feature: LGV Mixed variation authorisation text
 
   Scenario: LGV hint text is visible on the page
     Given i have a valid "goods" "standard_international" licence
