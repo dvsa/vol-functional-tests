@@ -197,4 +197,9 @@ public class OperatingCentreVariation extends BasePage {
     public void iBeginAnOperatingCentreAndAuthorisationVariation() {
         world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
     }
+
+    @And("i create a new operating centre with {string} hgvs and {string} trailers")
+    public void iCreateANewOperatingCentreWithHgvsAndTrailers(String numberOfHGVs, String numberOfTrailers) {
+        world.operatingCentreJourney.addNewOperatingCentre(numberOfHGVs, numberOfTrailers);
+    }
 }
