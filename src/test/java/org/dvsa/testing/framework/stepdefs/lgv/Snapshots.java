@@ -37,10 +37,12 @@ public class Snapshots extends BasePage {
 
     @Then("the lgv choice and declaration confirmation are visible as {string} and {string}")
     public void theLgvChoiceAndDeclarationConfirmationAreVisible(String lgvDecision, String lgvDeclaration) {
+        waitForElementToBePresent(lightGoodsVehicleDecisionElement);
         WebElement lgvDecisionTableSection = findElement(lightGoodsVehicleDecisionElement, SelectorType.XPATH);
         assertEquals(expectedLgvChoiceTableHeading, getTextFromNestedElement(lgvDecisionTableSection, "dt"));
         assertEquals(lgvDecision, getTextFromNestedElement(lgvDecisionTableSection, "dd"));
 
+        waitForElementToBePresent(lightGoodsVehicleDeclarationElement);
         WebElement lgvDeclarationTableSection = findElement(lightGoodsVehicleDeclarationElement, SelectorType.XPATH);
         assertEquals(expectedLgvDeclarationTableHeading, getTextFromNestedElement(lgvDeclarationTableSection, "dt"));
         assertEquals(lgvDeclaration, getTextFromNestedElement(lgvDeclarationTableSection, "dd"));

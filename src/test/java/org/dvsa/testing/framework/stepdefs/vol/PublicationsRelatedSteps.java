@@ -195,7 +195,11 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
     @And("the {string} {string} publication text is correct with {string} hgvs and {string} lgvs")
     public void thePublicationTextIsCorrectWithHGVsAndLGVs(String publicationType, String variationType, String hgvs, String lgvs) {
-        WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]/p[3]", world.applicationDetails.getLicenceNumber(), publicationType), SelectorType.XPATH);
+        String licenceNumber = world.applicationDetails.getLicenceNumber();
+        if (!isElementPresent(licenceNumber, SelectorType.XPATH))
+            waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
+
+        WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]/p[3]", licenceNumber, publicationType), SelectorType.XPATH);
         String adaptiveVehicleTypeText = world.licenceCreation.isAGoodsInternationalLicence() ? "Heavy Goods Vehicle" : "vehicle";
         String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
 
@@ -215,7 +219,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             String lgvExpectedText = correspondenceAddress.concat(lgvIncreaseText);
             Assertions.assertTrue(publicationResult.getText().contains(lgvExpectedText));
         }
-
+        waitForPageLoad();
         clickByLinkText(world.applicationDetails.getLicenceNumber());
 
         boolean licenceHasUpdated = publicationType.equals("Variation Granted");
