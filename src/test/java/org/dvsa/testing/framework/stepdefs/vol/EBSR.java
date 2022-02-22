@@ -5,12 +5,18 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.amazonaws.services.s3control.model.JobManifestFieldName.Key;
+
 public class EBSR {
     World world;
 
-    public EBSR(World world){
+    public EBSR(World world) {
         this.world = world;
     }
+
     @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
     public void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) {
         world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);

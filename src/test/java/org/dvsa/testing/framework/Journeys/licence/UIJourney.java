@@ -9,7 +9,10 @@ import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.enums.SelfServeSection;
+import org.dvsa.testing.framework.hooks.VFTLifeCycle;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -38,9 +41,8 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNum
 
 
 public class UIJourney extends BasePage {
-
+    private static final Logger LOGGER = LogManager.getLogger(UIJourney.class);
     private static World world;
-    //private World world;
     private FakerUtils faker = new FakerUtils();
     String uploadLaterRadioButton = "//input[@id='uploadLaterRadio']";
     String saveButton = "//*[@id='form-actions[save]']";
@@ -400,26 +402,25 @@ public class UIJourney extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForPageLoad();
 
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(navigate())
+        Wait<WebDriver> wait = new FluentWait<>(navigate())
                 .withTimeout(Duration.ofSeconds(30))
                 .pollingEvery(Duration.ofMillis(200))
                 .ignoring(NoSuchElementException.class);
 
-        ExpectedCondition<Boolean> expect = new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                try {
-                    return Browser.navigate().getCurrentUrl().contains("variation");
-                } catch (Exception e) {
-                    return false;
-                }
+        ExpectedCondition<Boolean> expect = driver -> {
+            try {
+                return Browser.navigate().getCurrentUrl().contains("variation");
+            } catch (Exception e) {
+                return false;
             }
         };
 
-        wait.until(expect);
+        wait.until(WebDriver ->
+                expect);
         try {
             assertTrue(Browser.navigate().getCurrentUrl().contains("variation"));
         } catch (Exception e) {
-            System.out.println("Page URL doesn't contain variation and therefore isn't storing the variationNumber.");
+            LOGGER.info("Page URL doesn't contain variation and therefore isn't storing the variationNumber.");
         }
 
         String url = navigate().getCurrentUrl();
