@@ -1,4 +1,4 @@
-@lgv
+@lgv @snapshot
 Feature: Checking visibility of LGV Related information on the snapshot
 
   Scenario: Check for GB SI LGV Only display on LGV Only SI application and check declaration present on snapshot
