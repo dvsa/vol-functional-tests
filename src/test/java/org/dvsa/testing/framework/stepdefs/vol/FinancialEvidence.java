@@ -26,7 +26,7 @@ public class FinancialEvidence extends BasePage {
 
     World world;
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
-    public static HashMap<String, String[]> licences = new HashMap<>();
+    public HashMap<String, String[]> licences = new HashMap<>();
     List<FinancialStandingRate> validRates = new LinkedList<>(); // operatorType, licenceType, vehicleType
 
     int expectedFinancialEvidenceValue;
@@ -43,7 +43,7 @@ public class FinancialEvidence extends BasePage {
         world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
-        licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
+        this.licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
     }
 
     @Given("i have a {string} {string} licence with a hgv authorisation of {string} lgv authorisation of {string} in traffic area {string}")
@@ -52,7 +52,7 @@ public class FinancialEvidence extends BasePage {
         world.createApplication.setTotalOperatingCentreLgvAuthority(Integer.parseInt(lgvAuthority.replaceAll(" ", "")));
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
-        licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, lgvAuthority, null, null});
+        this.licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, lgvAuthority, null, null});
     }
 
     @Given("i have a {string} {string} licence with a hgv authorisation of {string} in the North West Of England")
@@ -60,28 +60,28 @@ public class FinancialEvidence extends BasePage {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         TrafficArea ta = trafficAreaList()[1];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
-        licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
+        this.licences.put(world.createApplication.getLicenceId(), new String[] {operatorType, licenceType, null, hgvAuthority, "0", null, null});
     }
 
     @And("I have a valid {string} lgv only licence in traffic area {string}")
     public void iHaveAValidLgvOnlyLicenceFinancialEvidence(String NIFlag, String trafficArea) {
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLGVOnlyLicenceWithTrafficArea(NIFlag, ta);
-        licences.put(world.createApplication.getLicenceId(), new String[] {"goods", "standard_international", "lgv" , null, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()), null, null});
+        this.licences.put(world.createApplication.getLicenceId(), new String[] {"goods", "standard_international", "lgv" , null, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()), null, null});
     }
 
     @Then("the financial evidence value should be as expected for {string} hgvs and {string} lgvs")
     public void theFinancialEvidenceValueShouldBeAsExpected(String newHGVTotalAuthority, String newLGVTotalAuthority) {
-        if (FinancialEvidence.licences.get(world.createApplication.getLicenceId()) != null) {
-            FinancialEvidence.licences.get(world.createApplication.getLicenceId())[3] = newHGVTotalAuthority;
+        if (this.licences.get(world.createApplication.getLicenceId()) != null) {
+            this.licences.get(world.createApplication.getLicenceId())[3] = newHGVTotalAuthority;
             if (world.licenceCreation.isAGoodsInternationalLicence()) {
-                FinancialEvidence.licences.get(world.createApplication.getLicenceId())[4] = newLGVTotalAuthority;
+                this.licences.get(world.createApplication.getLicenceId())[4] = newLGVTotalAuthority;
             }
         }
         world.selfServeNavigation.getVariationFinancialEvidencePage();
         int actualFinancialEvidenceValue = getFinancialValueFromPage();
         expectedFinancialEvidenceValue = calculateExpectedFinancialEvidenceValue(licences);
-        licences = new HashMap<>();
+        this.licences = new HashMap<>();
         LOGGER.info("Expected Financial Evidence Value £".concat(String.valueOf(expectedFinancialEvidenceValue)));
         LOGGER.info("Actual Financial Evidence Value £".concat(String.valueOf(actualFinancialEvidenceValue)));
         assertEquals(expectedFinancialEvidenceValue, actualFinancialEvidenceValue);
@@ -140,7 +140,12 @@ public class FinancialEvidence extends BasePage {
         int allAdditionalRates = 0;
         for (String[] numberOfVehiclesAndAdditionalValues : numberOfVehiclesAndRatesPerClassificationOfVehicle) {
             allAdditionalRates += Integer.parseInt(numberOfVehiclesAndAdditionalValues[0]) * Integer.parseInt(numberOfVehiclesAndAdditionalValues[2]);
+
+            LOGGER.info("Number of vehicles: ".concat(String.valueOf(numberOfVehiclesAndAdditionalValues[0])));
+            LOGGER.info("Price multiplied by : £".concat(String.valueOf(numberOfVehiclesAndAdditionalValues[2])));
         }
+        LOGGER.info("Most expensive across fleet : £".concat(String.valueOf(highestFirstRateOverEntireFleet)));
+
 
         return allAdditionalRates + highestFirstRateOverEntireFleet - overlappingAdditionalRate;
     }
