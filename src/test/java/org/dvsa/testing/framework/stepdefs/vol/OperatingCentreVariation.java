@@ -151,18 +151,18 @@ public class OperatingCentreVariation extends BasePage {
     public void iScanTheVariousOperatingCentreAndAuthorisationPages() throws IllegalBrowserException, IOException {
         AXEScanner scanner = new AXEScanner();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        scanner.scan();
+        scanner.scan(false);
         world.UIJourney.changeLicenceForVariation();
-        scanner.scan();
+        scanner.scan(false);
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
         click(operatingCentreEditLink, SelectorType.XPATH);
         waitForTitleToBePresent("Edit operating centre");
-        scanner.scan();
+        scanner.scan(false);
         click("//*[@class='govuk-back-link']", SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
         click(world.operatingCentreJourney.addOperatingCentre, SelectorType.XPATH);
         waitForTitleToBePresent("Add operating centre");
-        scanner.scan();
+        scanner.scan(false);
     }
 
     @And("i create an lgv authorisation variation with {int} more LGVs")

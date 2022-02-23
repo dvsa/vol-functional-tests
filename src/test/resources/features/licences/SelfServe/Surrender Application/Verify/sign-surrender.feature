@@ -1,5 +1,5 @@
 @Surrender
-@gov-verify1
+@gov-verify
 Feature: Sign surrender
 
   Background:

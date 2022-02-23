@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
@@ -40,15 +41,15 @@ public class GlobalMethods extends BasePage {
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
-        if (Browser.isBrowserOpen()) {
-            navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-            if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-                waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
-            }
+
+        if (!Browser.isBrowserOpen()) {
+            DriverUtils.get(myURL);
         }
-        DriverUtils.get(myURL);
-        enterCredentialsAndLogin(username, emailAddress, newPassword);
+        if (navigate().getTitle().equalsIgnoreCase("Sign in to your Vehicle Operator Licensing account - Vehicle Operator Licensing - GOV.UK")) {
+            enterCredentialsAndLogin(username, emailAddress, newPassword);
+        } else if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
+        }
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) {

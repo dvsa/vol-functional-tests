@@ -145,7 +145,7 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     public static void accessibilityScanner() throws IllegalBrowserException, IOException {
-        scanner.scan();
+        scanner.scan(false);
         if (scanner.getTotalViolationsCount() != 0) {
             LOGGER.info("ERROR: Violation found");
             reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());

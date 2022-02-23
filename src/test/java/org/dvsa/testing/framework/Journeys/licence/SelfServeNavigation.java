@@ -41,7 +41,7 @@ public class SelfServeNavigation extends BasePage {
     public void navigateToExternalSearch() {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
         get(this.url.concat("search/"));
     }
