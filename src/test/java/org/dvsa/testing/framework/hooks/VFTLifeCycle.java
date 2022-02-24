@@ -11,14 +11,20 @@ import org.apache.logging.log4j.Logger;
 
 public class VFTLifeCycle implements EventListener {
     private static final Logger LOGGER = LogManager.getLogger(VFTLifeCycle.class);
+
     @Override
     public void setEventPublisher(EventPublisher publisher) {
         publisher.registerHandlerFor(TestRunStarted.class, event -> {
-           LOGGER.info("Test is starting");
+            LOGGER.info("Test is starting");
+            if (Browser.isBrowserOpen()) {
+                Browser.navigate();
+            }
         });
         publisher.registerHandlerFor(TestRunFinished.class, event -> {
             LOGGER.info("Test is shutting down");
-            Browser.navigate().close();
+//            if (Browser.isBrowserOpen()) {
+//                Browser.navigate().close();
+//            }
         });
     }
 }
