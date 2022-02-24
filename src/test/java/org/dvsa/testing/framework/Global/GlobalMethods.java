@@ -41,15 +41,15 @@ public class GlobalMethods extends BasePage {
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
-
-        if (!Browser.isBrowserOpen()) {
-            DriverUtils.get(myURL);
+        if (Browser.isBrowserOpen()) {
+            navigate().manage().deleteAllCookies();
+            navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+            if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+                waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
+            }
         }
-        if (navigate().getTitle().equalsIgnoreCase("Sign in to your Vehicle Operator Licensing account - Vehicle Operator Licensing - GOV.UK")) {
-            enterCredentialsAndLogin(username, emailAddress, newPassword);
-        } else if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
-        }
+        DriverUtils.get(myURL);
+        enterCredentialsAndLogin(username, emailAddress, newPassword);
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) {
