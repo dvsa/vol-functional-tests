@@ -35,7 +35,10 @@ public class Snapshots extends BasePage {
     public void iNavigateToTheSnapshotOnTheReviewAndDeclarationsPage() {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
         clickByLinkText("Check your answers");
-        ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
+        //ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
+        //switchToWindow(tabs.get(1));
+
+        ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
         switchToWindow(tabs.get(1));
     }
 
