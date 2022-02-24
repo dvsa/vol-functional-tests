@@ -46,8 +46,11 @@ public class Snapshots extends BasePage {
     public void theLgvChoiceAndDeclarationConfirmationAreVisible(String lgvDecision, String lgvDeclaration) {
         LOGGER.info("Waiting for light goods vehicle decision element");
         waitForElementToBePresent(lightGoodsVehicleDecisionElement);
+        LOGGER.info("Finding light goods vehicle decision element");
         WebElement lgvDecisionTableSection = findElement(lightGoodsVehicleDecisionElement, SelectorType.XPATH);
+        LOGGER.info("Assert table heading");
         assertEquals(expectedLgvChoiceTableHeading, getTextFromNestedElement(lgvDecisionTableSection, "dt"));
+        LOGGER.info("Assert decision");
         assertEquals(lgvDecision, getTextFromNestedElement(lgvDecisionTableSection, "dd"));
 
         LOGGER.info("Waiting for light goods vehicle declaration element");
