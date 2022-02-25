@@ -11,6 +11,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 
@@ -34,12 +36,35 @@ public class Snapshots extends BasePage {
     @And("i navigate to the snapshot on the review and declarations page")
     public void iNavigateToTheSnapshotOnTheReviewAndDeclarationsPage() {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
-        clickByLinkText("Check your answers");
+        //clickByLinkText("Check your answers");
         //ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
         //switchToWindow(tabs.get(1));
+        //ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
+        //switchToWindow(tabs.get(1));
 
-        ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
-        switchToWindow(tabs.get(1));
+        //Store the ID of the original window
+        String originalWindow = getDriver().getWindowHandle();
+
+//Check we don't have other windows open already
+        assertTrue(getDriver().getWindowHandles().size() == 1);
+
+//Click the link which opens in a new window
+        clickByLinkText("Check your answers");
+        //driver.findElement(By.linkText("new window")).click();
+
+//Wait for the new window or tab
+        WebDriverWait wait = new WebDriverWait(getDriver(),0);
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+//Loop through until we find a new window handle
+        for (String windowHandle : getDriver().getWindowHandles()) {
+            if(!originalWindow.contentEquals(windowHandle)) {
+                getDriver().switchTo().window(windowHandle);
+                break;
+            }
+        }
+
+
     }
 
     @Then("the lgv choice and declaration confirmation are visible as {string} and {string}")
