@@ -46,7 +46,10 @@ public class Snapshots extends BasePage {
         String originalWindow = getDriver().getWindowHandle();
 
 //Check we don't have other windows open already
-        assertTrue(getDriver().getWindowHandles().size() == 1);
+        for (String howManyTabs : getDriver().getWindowHandles()) {
+            LOGGER.info("Each open tab ID : " + howManyTabs);
+        };
+        //assertTrue(getDriver().getWindowHandles().size() == 1);
 
 //Click the link which opens in a new window
         clickByLinkText("Check your answers");
@@ -58,6 +61,7 @@ public class Snapshots extends BasePage {
 
 //Loop through until we find a new window handle
         for (String windowHandle : getDriver().getWindowHandles()) {
+            LOGGER.info("Each open tab ID2 : " + windowHandle);
             if(!originalWindow.contentEquals(windowHandle)) {
                 getDriver().switchTo().window(windowHandle);
                 break;
