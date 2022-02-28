@@ -1,8 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
 import Injectors.World;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
+import cucumber.api.Scenario;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -15,6 +17,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -22,6 +25,7 @@ public class Snapshots extends BasePage {
 
     World world;
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
+    private static HashMap<Integer,String> scenarios;
 
     private String expectedLgvChoiceTableHeading = "Will you only be operating Light goods vehicles?";
     private String expectedLgvDeclarationTableHeading = "I will only operate Light goods vehicles with a total maximum weight up to and including 3,500 Kilograms (kg) including when combined with a trailer.";
@@ -31,11 +35,23 @@ public class Snapshots extends BasePage {
 
     public Snapshots(World world) {
         this.world = world;
+
+        if(scenarios == null)
+            scenarios = new HashMap<Integer,String>();
+
+    }
+
+
+    @Before
+    public void beforeHook(Scenario scenario) {
+        addScenario(scenario.getName());
     }
 
     @And("i navigate to the snapshot on the review and declarations page")
     public void iNavigateToTheSnapshotOnTheReviewAndDeclarationsPage() {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
+
+
         //clickByLinkText("Check your answers");
         //ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
         //switchToWindow(tabs.get(1));
@@ -47,6 +63,8 @@ public class Snapshots extends BasePage {
 
 //Check we don't have other windows open already
         for (String howManyTabs : getDriver().getWindowHandles()) {
+            String scenario = getScenario();
+            LOGGER.info("Scenario name: " + scenario);
             LOGGER.info("Each open tab ID : " + howManyTabs);
         };
         //assertTrue(getDriver().getWindowHandles().size() == 1);
@@ -125,5 +143,18 @@ public class Snapshots extends BasePage {
     @And("i close and refocus the tab")
     public void iCloseAndRefocusTheTab() {
         closeTabAndFocusTab(0);
+    }
+
+
+    private void addScenario(String scenario){
+        Thread currentThread = Thread.currentThread();
+        int threadID = currentThread.hashCode();
+        scenarios.put(threadID,scenario);
+    }
+
+    private synchronized String getScenario(){
+        Thread currentThread = Thread.currentThread();
+        int threadID = currentThread.hashCode();
+        return scenarios.get(threadID);
     }
 }
