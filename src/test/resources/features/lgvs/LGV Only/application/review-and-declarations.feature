@@ -12,6 +12,7 @@ Feature: Review and Declarations page text is modified for lgv only applications
     And i have logged in to self serve
     When i navigate to the snapshot on the review and declarations page
     Then the review and declaration page should display the modified lgv only text
+    And i close and refocus the tab
 
   Scenario: Goods SI application declarations page displays the modified declarations as required
     Given I have a "goods" "standard_international" application
@@ -24,6 +25,7 @@ Feature: Review and Declarations page text is modified for lgv only applications
     And i have logged in to self serve
     When i navigate to the snapshot on the review and declarations page
     Then the review and declaration page should display original unmodified declarations text
+    And i close and refocus the tab
 
   Scenario: Goods SN application declarations page displays the modified declarations as required
     Given I have a "goods" "standard_national" application
@@ -36,3 +38,4 @@ Feature: Review and Declarations page text is modified for lgv only applications
     And i have logged in to self serve
     When i navigate to the snapshot on the review and declarations page
     Then the review and declaration page should display original unmodified declarations text
+    And i close and refocus the tab
