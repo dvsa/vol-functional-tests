@@ -33,7 +33,7 @@ public class InternalSearchJourney extends BasePage {
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(SearchType.Users, world.DataGenerator.getOperatorUserEmail());
-        } while (!isTextPresent(world.DataGenerator.getOperatorUserEmail()));
+        } while (!isTextPresent(world.DataGenerator.getOperatorUser()) && System.currentTimeMillis() < kickOut);
     }
 
     public void searchLicense() {

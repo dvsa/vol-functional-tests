@@ -22,6 +22,9 @@ public class GlobalMethods extends BasePage {
     public Dates date = new Dates(new LocalDateCalendar());
     private final String emailField = nameAttribute("input", "username");
     private final String passwordField = nameAttribute("input", "password");
+    private final String oldPasswordField = nameAttribute("input", "oldPassword");
+    private final String newPasswordField = nameAttribute("input", "newPassword");
+    private final String confirmPasswordField = nameAttribute("input", "confirmPassword");
     private final String submitButton = nameAttribute("input", "submit") + "[value=\"Sign in\"]";
 
 
@@ -63,11 +66,12 @@ public class GlobalMethods extends BasePage {
             signIn(username, getLoginPassword());
         } finally {
             if (isTextPresent("Current password")) {
-                enterText(nameAttribute("input", "oldPassword"), SelectorType.CSS, password);
-                enterText(nameAttribute("input", "newPassword"), SelectorType.CSS, newPassword);
-                enterText(nameAttribute("input", "confirmPassword"), SelectorType.CSS, newPassword);
+                waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
+                waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
+                waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
                 click(nameAttribute("input", "submit"), SelectorType.CSS);
                 setLoginPassword(newPassword);
+                untilNotInDOM(submitButton, 5);
             }
         }
     }

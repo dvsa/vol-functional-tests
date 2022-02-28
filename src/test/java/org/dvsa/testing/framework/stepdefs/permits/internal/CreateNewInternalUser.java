@@ -29,6 +29,7 @@ public class CreateNewInternalUser extends BasePage implements En {
     @Then("User should be created")
     public void userShouldBeCreated()
     {
+        world.internalSearchJourney.searchUser();
         Assert.assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
     }
 }

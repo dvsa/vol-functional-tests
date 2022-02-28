@@ -28,7 +28,6 @@ public class UserAccountJourney extends BasePage {
 
     public void ChangeUserDetails() {
         selectRandomValueFromDropDown("team");
-        replaceText("userDetails[loginId]", SelectorType.ID, world.DataGenerator.getOperatorUser());
         selectValueFromDropDown("title", SelectorType.ID, "Mr");
         replaceText("person[forename]", SelectorType.ID, world.DataGenerator.getOperatorForeName());
         replaceText("person[familyName]", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());

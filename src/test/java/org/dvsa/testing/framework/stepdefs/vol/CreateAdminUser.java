@@ -40,7 +40,5 @@ public class CreateAdminUser extends BasePage implements En {
     @Then("^I should be able to login with my new credentials$")
     public void iShouldBeAbleToLoginWithMyNewCredentials(){
         world.internalNavigation.logInAsAdmin();
-    };
-
-
+    }
 }

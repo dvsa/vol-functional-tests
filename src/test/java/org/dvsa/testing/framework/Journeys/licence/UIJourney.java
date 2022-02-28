@@ -97,8 +97,6 @@ public class UIJourney extends BasePage {
         waitAndClick("form-actions[submit]", SelectorType.ID);
         world.internalNavigation.urlViewUsers();
         replaceText("search", SelectorType.NAME, world.DataGenerator.getOperatorUserEmail());
-        waitAndClick("//input[@name='submit']", SelectorType.XPATH);
-        world.internalSearchJourney.searchUser();
     }
 
     public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument {
@@ -117,9 +115,9 @@ public class UIJourney extends BasePage {
         waitForElementToBePresent("//button[@id='New letter']");
         clickById("New letter");
         findElement("//*[@id='modal-title']", SelectorType.XPATH, 60);
-        waitAndSelectByIndex("Generate letter", "//*[@id='category']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("Generate letter", "//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
+        waitAndSelectValueFromDropDown("category",SelectorType.ID,"Bus Registration","Category");
+        waitAndSelectValueFromDropDown("documentSubCategory",SelectorType.ID,"Other Documents","Subcategory");
+        waitAndSelectValueFromDropDown("documentTemplate",SelectorType.ID,"BUS_REG_CANCELLATION","Template");
         waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Amend letter");
     }

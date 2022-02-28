@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
+import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import apiCalls.enums.*;
 import org.dvsa.testing.framework.Global.Configuration;

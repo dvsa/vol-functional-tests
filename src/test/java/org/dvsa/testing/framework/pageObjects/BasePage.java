@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
-    public static final int WAIT_TIME_SECONDS = 10;
+    public static final int WAIT_TIME_SECONDS = 5;
     private static final int TIME_OUT_SECONDS = 60;
     private static final int POLLING_SECONDS = 1;
     private static String ERROR_MESSAGE_HEADING = "Please correct the following errors";
@@ -362,6 +362,19 @@ public abstract class BasePage extends DriverUtils {
                 ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
     }
 
+    public static void waitAndSelectValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String listValue, String textWait) {
+        final Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class);
+
+        wait.until(WebDriver ->
+                visibilityOf(getDriver().findElement(By.xpath(String.format("//*[contains(text(),'%s')]", textWait)))));
+        Select selectItem = new Select(findElement(selector, selectorType));
+        selectItem.selectByVisibleText(listValue);
+    }
+
     public static void waitAndSelectByIndex(@NotNull final String textWait, @NotNull final String selector, @NotNull SelectorType selectorType, @NotNull final int listValue) {
         final Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
@@ -369,9 +382,9 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
 
-         wait.until(driver ->
+         wait.until(WebDriver ->
                 visibilityOf(getDriver().findElement(By.xpath(String.format("//*[contains(text(),'%s')]", textWait)))));
-        Select selectItem = new Select(getDriver().findElement(By.xpath(selector)));
+        Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByIndex(listValue);
     }
 

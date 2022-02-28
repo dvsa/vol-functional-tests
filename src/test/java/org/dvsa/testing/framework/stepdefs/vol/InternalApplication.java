@@ -70,8 +70,6 @@ public class InternalApplication extends BasePage implements En {
         world.UIJourney.generateLetter();
     }
 
-
-
     @Then("The pop up should contain letter details")
     public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
