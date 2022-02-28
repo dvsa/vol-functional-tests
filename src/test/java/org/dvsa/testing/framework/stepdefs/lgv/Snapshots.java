@@ -1,23 +1,17 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
 import Injectors.World;
-import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
-import cucumber.api.Scenario;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.stepdefs.vol.ManagerUsersPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +19,6 @@ public class Snapshots extends BasePage {
 
     World world;
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
-    private static HashMap<Integer,String> scenarios;
 
     private String expectedLgvChoiceTableHeading = "Will you only be operating Light goods vehicles?";
     private String expectedLgvDeclarationTableHeading = "I will only operate Light goods vehicles with a total maximum weight up to and including 3,500 Kilograms (kg) including when combined with a trailer.";
@@ -33,51 +26,22 @@ public class Snapshots extends BasePage {
     private String lightGoodsVehicleDecisionElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvChoiceTableHeading);
     private String lightGoodsVehicleDeclarationElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvDeclarationTableHeading);
 
-    public Snapshots(World world) {
-        this.world = world;
+    public Snapshots(World world) {this.world = world;}
 
-        if(scenarios == null)
-            scenarios = new HashMap<Integer,String>();
-
-    }
-
-
-    @Before
-    public void beforeHook(Scenario scenario) {
-        addScenario(scenario.getName());
-    }
 
     @And("i navigate to the snapshot on the review and declarations page")
     public void iNavigateToTheSnapshotOnTheReviewAndDeclarationsPage() {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
-
-
-        //clickByLinkText("Check your answers");
-        //ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
-        //switchToWindow(tabs.get(1));
-        //ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
-        //switchToWindow(tabs.get(1));
-
-        //Store the ID of the original window
         String originalWindow = getDriver().getWindowHandle();
 
-//Check we don't have other windows open already
         for (String howManyTabs : getDriver().getWindowHandles()) {
-            String scenario = getScenario();
-            LOGGER.info("Scenario name: " + scenario);
             LOGGER.info("Each open tab ID : " + howManyTabs);
-        };
-        //assertTrue(getDriver().getWindowHandles().size() == 1);
+        }
 
-//Click the link which opens in a new window
         clickByLinkText("Check your answers");
-        //driver.findElement(By.linkText("new window")).click();
-
-//Wait for the new window or tab
         WebDriverWait wait = new WebDriverWait(getDriver(),0);
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 
-//Loop through until we find a new window handle
         for (String windowHandle : getDriver().getWindowHandles()) {
             LOGGER.info("Each open tab ID2 : " + windowHandle);
             if(!originalWindow.contentEquals(windowHandle)) {
@@ -85,22 +49,14 @@ public class Snapshots extends BasePage {
                 break;
             }
         }
-
-
     }
 
     @Then("the lgv choice and declaration confirmation are visible as {string} and {string}")
     public void theLgvChoiceAndDeclarationConfirmationAreVisible(String lgvDecision, String lgvDeclaration) {
-        LOGGER.info("Waiting for light goods vehicle decision element");
         waitForElementToBePresent(lightGoodsVehicleDecisionElement);
-        LOGGER.info("Finding light goods vehicle decision element");
         WebElement lgvDecisionTableSection = findElement(lightGoodsVehicleDecisionElement, SelectorType.XPATH);
-        LOGGER.info("Assert table heading");
         assertEquals(expectedLgvChoiceTableHeading, getTextFromNestedElement(lgvDecisionTableSection, "dt"));
-        LOGGER.info("Assert decision");
         assertEquals(lgvDecision, getTextFromNestedElement(lgvDecisionTableSection, "dd"));
-
-        LOGGER.info("Waiting for light goods vehicle declaration element");
         waitForElementToBePresent(lightGoodsVehicleDeclarationElement);
         WebElement lgvDeclarationTableSection = findElement(lightGoodsVehicleDeclarationElement, SelectorType.XPATH);
         assertEquals(expectedLgvDeclarationTableHeading, getTextFromNestedElement(lgvDeclarationTableSection, "dt"));
@@ -112,7 +68,6 @@ public class Snapshots extends BasePage {
         WebElement lgvDecisionTableSection = findElement(lightGoodsVehicleDecisionElement, SelectorType.XPATH);
         assertEquals(expectedLgvChoiceTableHeading, getTextFromNestedElement(lgvDecisionTableSection, "dt"));
         assertEquals("No", getTextFromNestedElement(lgvDecisionTableSection, "dd"));
-
         assertFalse(isTextPresent(expectedLgvDeclarationTableHeading));
     }
 
@@ -123,9 +78,7 @@ public class Snapshots extends BasePage {
 
     @Then("the total number of vehicles title has changed to light goods vehicles")
     public void theTotalNumberOfVehiclesTitleHasChangedToLightGoodsVehicles() {
-        LOGGER.info("Assert LGVs");
         assertTrue(isTextPresent("Total number of Light goods vehicles"));
-        LOGGER.info("Assert Auth");
         assertTrue(isTextPresent("6. Authorisation"));
     }
 
@@ -143,18 +96,5 @@ public class Snapshots extends BasePage {
     @And("i close and refocus the tab")
     public void iCloseAndRefocusTheTab() {
         closeTabAndFocusTab(0);
-    }
-
-
-    private void addScenario(String scenario){
-        Thread currentThread = Thread.currentThread();
-        int threadID = currentThread.hashCode();
-        scenarios.put(threadID,scenario);
-    }
-
-    private synchronized String getScenario(){
-        Thread currentThread = Thread.currentThread();
-        int threadID = currentThread.hashCode();
-        return scenarios.get(threadID);
     }
 }
