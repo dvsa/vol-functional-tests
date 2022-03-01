@@ -36,16 +36,16 @@ Feature: Checking visibility of LGV Related information on the snapshot
     Then the lgv related choices are not visible on the snapshot
     And i close and refocus the tab
 
-  Scenario: Check Goods LGV Only for new title, operating centre not present and LGV: 1 instead of vehicles
-    Given I have a "GB" lgv only application
-    And i have logged in to self serve
-    When i navigate to the snapshot on the review and declarations page
-    Then the total number of vehicles title has changed to light goods vehicles
-    And i close and refocus the tab
-
   Scenario: Check Goods SN for old stuff still present
     Given I have a "goods" "standard_national" application
     And i have logged in to self serve
     When i navigate to the snapshot on the review and declarations page
     Then the total number of vehicles title still displays vehicles and the operating centre is still present
+    And i close and refocus the tab
+
+  Scenario: Check Goods LGV Only for new title, operating centre not present and LGV: 1 instead of vehicles
+    Given I have a "GB" lgv only application
+    And i have logged in to self serve
+    When i navigate to the snapshot on the review and declarations page
+    Then the total number of vehicles title has changed to light goods vehicles
     And i close and refocus the tab

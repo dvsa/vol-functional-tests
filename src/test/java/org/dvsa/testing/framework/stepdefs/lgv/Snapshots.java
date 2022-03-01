@@ -7,12 +7,11 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.stepdefs.vol.ManagerUsersPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.ArrayList;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.Assert.*;
 
@@ -27,27 +26,37 @@ public class Snapshots extends BasePage {
     private String lightGoodsVehicleDecisionElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvChoiceTableHeading);
     private String lightGoodsVehicleDeclarationElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvDeclarationTableHeading);
 
-    public Snapshots(World world) {
-        this.world = world;
-    }
+    public Snapshots(World world) {this.world = world;}
+
 
     @And("i navigate to the snapshot on the review and declarations page")
     public void iNavigateToTheSnapshotOnTheReviewAndDeclarationsPage() {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
+        String originalWindow = getDriver().getWindowHandle();
+
+        for (String howManyTabs : getDriver().getWindowHandles()) {
+            LOGGER.info("Each open tab ID : " + howManyTabs);
+        }
+
         clickByLinkText("Check your answers");
-        ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
-        switchToWindow(tabs.get(1));
+        WebDriverWait wait = new WebDriverWait(getDriver(),0);
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        for (String windowHandle : getDriver().getWindowHandles()) {
+            LOGGER.info("Each open tab ID2 : " + windowHandle);
+            if(!originalWindow.contentEquals(windowHandle)) {
+                getDriver().switchTo().window(windowHandle);
+                break;
+            }
+        }
     }
 
     @Then("the lgv choice and declaration confirmation are visible as {string} and {string}")
     public void theLgvChoiceAndDeclarationConfirmationAreVisible(String lgvDecision, String lgvDeclaration) {
-        LOGGER.info("Waiting for light goods vehicle decision element");
         waitForElementToBePresent(lightGoodsVehicleDecisionElement);
         WebElement lgvDecisionTableSection = findElement(lightGoodsVehicleDecisionElement, SelectorType.XPATH);
         assertEquals(expectedLgvChoiceTableHeading, getTextFromNestedElement(lgvDecisionTableSection, "dt"));
         assertEquals(lgvDecision, getTextFromNestedElement(lgvDecisionTableSection, "dd"));
-
-        LOGGER.info("Waiting for light goods vehicle declaration element");
         waitForElementToBePresent(lightGoodsVehicleDeclarationElement);
         WebElement lgvDeclarationTableSection = findElement(lightGoodsVehicleDeclarationElement, SelectorType.XPATH);
         assertEquals(expectedLgvDeclarationTableHeading, getTextFromNestedElement(lgvDeclarationTableSection, "dt"));
@@ -59,7 +68,6 @@ public class Snapshots extends BasePage {
         WebElement lgvDecisionTableSection = findElement(lightGoodsVehicleDecisionElement, SelectorType.XPATH);
         assertEquals(expectedLgvChoiceTableHeading, getTextFromNestedElement(lgvDecisionTableSection, "dt"));
         assertEquals("No", getTextFromNestedElement(lgvDecisionTableSection, "dd"));
-
         assertFalse(isTextPresent(expectedLgvDeclarationTableHeading));
     }
 
@@ -70,9 +78,7 @@ public class Snapshots extends BasePage {
 
     @Then("the total number of vehicles title has changed to light goods vehicles")
     public void theTotalNumberOfVehiclesTitleHasChangedToLightGoodsVehicles() {
-        LOGGER.info("Assert LGVs");
         assertTrue(isTextPresent("Total number of Light goods vehicles"));
-        LOGGER.info("Assert Auth");
         assertTrue(isTextPresent("6. Authorisation"));
     }
 
