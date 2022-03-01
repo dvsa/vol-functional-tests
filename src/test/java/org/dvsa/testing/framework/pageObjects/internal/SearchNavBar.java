@@ -10,7 +10,9 @@ public class SearchNavBar extends NavigationBar {
 
     public static void search(@NotNull SearchType searchType, @NotNull String search) {
         selectValueFromDropDown("#search-select", SelectorType.CSS, searchType.toString());
-        enterText(SEARCH,SelectorType.XPATH,search);
+       if(findElement(SEARCH,SelectorType.XPATH).getAttribute("value").isEmpty()) {
+           enterText(SEARCH, SelectorType.XPATH, search);
+       }
         click(SEARCH_BUTTON,SelectorType.XPATH);
     }
 }
