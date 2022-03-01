@@ -25,7 +25,6 @@ public class CreateNewInternalUser extends BasePage implements En {
        world.UIJourney.addNewInternalUser();
     }
 
-
     @Then("User should be created")
     public void userShouldBeCreated()
     {

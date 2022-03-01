@@ -83,20 +83,19 @@ public class UIJourney extends BasePage {
 
     public void addNewInternalUser() {
         selectValueFromDropDown("search-select", SelectorType.ID, "Users");
-        enterText("search", SelectorType.NAME, faker.generateCompanyName());
+        enterText("search", SelectorType.NAME, "");
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         waitAndClick("add", SelectorType.ID);
         selectValueFromDropDown("userType[userType]", SelectorType.NAME,"Internal");
         selectValueFromDropDown("userType[team]", SelectorType.NAME,"VOL Development team");
         selectValueFromDropDown("userType[role]", SelectorType.NAME,"Internal - Admin");
-        enterText( "forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
-        enterText("userContactDetails[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        enterText("userContactDetails[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText( "forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        waitAndEnterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        waitAndEnterText("userContactDetails[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText("userContactDetails[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         waitAndClick("form-actions[submit]", SelectorType.ID);
-        world.internalNavigation.urlViewUsers();
-        replaceText("search", SelectorType.NAME, world.DataGenerator.getOperatorUserEmail());
+        waitForTextToBePresent("Created record");
     }
 
     public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument {

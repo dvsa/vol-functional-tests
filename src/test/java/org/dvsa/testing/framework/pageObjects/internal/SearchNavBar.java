@@ -13,6 +13,6 @@ public class SearchNavBar extends NavigationBar {
        if(findElement(SEARCH,SelectorType.XPATH).getAttribute("value").isEmpty()) {
            enterText(SEARCH, SelectorType.XPATH, search);
        }
-        click(SEARCH_BUTTON,SelectorType.XPATH);
+       waitAndClick(SEARCH_BUTTON,SelectorType.XPATH);
     }
 }
