@@ -58,28 +58,24 @@ public class GlobalMethods extends BasePage {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password = world.configuration.getTempPassword(emailAddress);
-        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
-        }
-        if (getDriver().getCurrentUrl().contains("login")) {
-            try {
-                signIn(username, password);
-            } catch (Exception e) {
-                //User is already registered
-                signIn(username, getLoginPassword());
-            } finally {
-                if (isTextPresent("Current password")) {
-                    waitForTextToBePresent("Re-enter new password");
-                    waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
-                    waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
-                    waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
-                    click(nameAttribute("input", "submit"), SelectorType.CSS);
-                    setLoginPassword(newPassword);
-                    untilNotInDOM(submitButton, 5);
-                }
+        try {
+            signIn(username, password);
+        } catch (Exception e) {
+            //User is already registered
+            signIn(username, getLoginPassword());
+        } finally {
+            if (isTextPresent("Current password")) {
+                waitForTextToBePresent("Re-enter new password");
+                waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
+                waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
+                waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
+                click(nameAttribute("input", "submit"), SelectorType.CSS);
+                setLoginPassword(newPassword);
+                untilNotInDOM(submitButton, 5);
             }
         }
     }
+
     public void navigateToLogin(String username, String emailAddress, ApplicationType applicationType) {
         navigateToLoginWithoutCookies(username, emailAddress, applicationType);
     }
