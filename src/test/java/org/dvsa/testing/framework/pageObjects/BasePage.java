@@ -67,7 +67,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTextPresent(String locator) {
         boolean itsFound = true;
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(30)).
+            new WebDriverWait(getDriver(), 30).
                     until(WebDriver ->
                             visibilityOf(findElement(String.format("//*[contains(text(),\"%s\")]", locator), SelectorType.XPATH)));
         } catch (Exception e) {
@@ -173,7 +173,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isLinkPresent(String locator, int duration) {
         boolean itsFound = true;
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(duration))
+            new WebDriverWait(getDriver(), duration)
                     .until(WebDriver ->
                             visibilityOf(findElement(locator, SelectorType.PARTIALLINKTEXT)));
         } catch (Exception e) {
@@ -192,7 +192,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTitlePresent(String locator, int duration) {
         boolean itsFound = true;
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(duration))
+            new WebDriverWait(getDriver(), duration)
                     .until(WebDriver ->
                             visibilityOf(findElement(String.format("//h1[contains(text(),\"%s\")]", locator), SelectorType.XPATH)));
         } catch (Exception e) {
@@ -548,7 +548,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void untilNotInDOM(@NotNull String selector, int seconds) {
-        new WebDriverWait(getDriver(), Duration.ofSeconds(seconds)).until(webDriver ->
+        new WebDriverWait(getDriver(), seconds).until(webDriver ->
                 not(ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
     }
 }
