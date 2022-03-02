@@ -399,7 +399,7 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(ElementNotInteractableException.class);
 
             wait.until(webDriver ->
-                    elementToBeClickable(webDriver.findElement(by(selector, selectorType))));
+                    elementToBeClickable(getDriver().findElement(by(selector, selectorType))));
         getDriver().findElement(by(selector, selectorType)).click();
     }
 

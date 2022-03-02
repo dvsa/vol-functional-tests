@@ -44,13 +44,6 @@ public class GlobalMethods extends BasePage {
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
-        if (Browser.isBrowserOpen()) {
-            navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-            if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-                waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
-            }
-        }
         DriverUtils.get(myURL);
         enterCredentialsAndLogin(username, emailAddress, newPassword);
     }
@@ -59,19 +52,25 @@ public class GlobalMethods extends BasePage {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password = world.configuration.getTempPassword(emailAddress);
+        if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+            waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
+        }
         try {
-            signIn(username, password);
+            if (isTitlePresent("Sign in to your Vehicle Operator Licensing account", 1)) {
+                signIn(username, password);
+            }
         } catch (Exception e) {
             //User is already registered
-            signIn(username, getLoginPassword());
+            if (isTitlePresent("Sign in to your Vehicle Operator Licensing account", 1)) {
+                signIn(username, getLoginPassword());
+            }
         } finally {
-            if (isTextPresent("Current password")) {
+            if (isTitlePresent("Change your password", 1)) {
                 waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
                 waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
                 waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
                 click(nameAttribute("input", "submit"), SelectorType.CSS);
                 setLoginPassword(newPassword);
-                untilNotInDOM(submitButton, 5);
             }
         }
     }

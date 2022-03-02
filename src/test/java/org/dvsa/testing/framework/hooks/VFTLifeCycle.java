@@ -9,6 +9,8 @@ import cucumber.api.event.TestRunStarted;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static activesupport.driver.Browser.navigate;
+
 public class VFTLifeCycle implements EventListener {
     private static final Logger LOGGER = LogManager.getLogger(VFTLifeCycle.class);
 
@@ -19,6 +21,7 @@ public class VFTLifeCycle implements EventListener {
         });
         publisher.registerHandlerFor(TestRunFinished.class, event -> {
             LOGGER.info("Test is shutting down");
+            navigate().manage().deleteAllCookies();
         });
     }
 }
