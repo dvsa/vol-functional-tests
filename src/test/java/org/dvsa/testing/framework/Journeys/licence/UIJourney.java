@@ -187,14 +187,15 @@ public class UIJourney extends BasePage {
         if (isTextPresent("The last company selected on this device was Post Office Stub.")) {
             waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
         }
-        waitForTextToBePresent("Verified");
-        enterText("username", SelectorType.NAME, verifyUsername);
-        enterText("password", SelectorType.NAME, verifyPassword);
-        while (size("//*[contains(text(),'Verified ID Login')]", SelectorType.XPATH) > 0) {
-            click("//*[@value='SignIn']", SelectorType.XPATH);
+        if (getDriver().getCurrentUrl().contains("login")) {
+            enterText("username", SelectorType.NAME, verifyUsername);
+            enterText("password", SelectorType.NAME, verifyPassword);
+            while (size("//*[contains(text(),'Verified ID Login')]", SelectorType.XPATH) > 0) {
+                click("//*[@value='SignIn']", SelectorType.XPATH);
+            }
+            waitForTextToBePresent("Personal Details");
+            click("//*[@id='agree']", SelectorType.XPATH);
         }
-        waitForTextToBePresent("Personal Details");
-        click("//*[@id='agree']", SelectorType.XPATH);
     }
 
     public void resettingExternalPassword() {
