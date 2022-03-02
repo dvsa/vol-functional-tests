@@ -68,13 +68,7 @@ public class GlobalMethods extends BasePage {
                 signIn(username, password);
             } catch (Exception e) {
                 //User is already registered
-                String loginPassword;
-                if(getLoginPassword() == null){
-                    loginPassword = password;
-                } else{
-                    loginPassword = getLoginPassword();
-                }
-                signIn(username, loginPassword);
+                signIn(username, getLoginPassword());
             } finally {
                 if (isTextPresent("Current password")) {
                     waitForTextToBePresent("Re-enter new password");
