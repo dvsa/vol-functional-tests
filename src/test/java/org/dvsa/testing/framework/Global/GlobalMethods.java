@@ -44,6 +44,13 @@ public class GlobalMethods extends BasePage {
     public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
+        if (Browser.isBrowserOpen()) {
+            navigate().manage().deleteAllCookies();
+            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
+                waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
+            }
+        }
         DriverUtils.get(myURL);
         enterCredentialsAndLogin(username, emailAddress, newPassword);
     }
@@ -62,7 +69,7 @@ public class GlobalMethods extends BasePage {
             } catch (Exception e) {
                 //User is already registered
                 String loginPassword;
-                if(getLoginPassword().isEmpty()){
+                if(getLoginPassword() == null){
                     loginPassword = password;
                 } else{
                     loginPassword = getLoginPassword();
@@ -70,6 +77,7 @@ public class GlobalMethods extends BasePage {
                 signIn(username, loginPassword);
             } finally {
                 if (isTextPresent("Current password")) {
+                    waitForTextToBePresent("Re-enter new password");
                     waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
                     waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
                     waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
