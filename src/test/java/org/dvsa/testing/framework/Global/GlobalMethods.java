@@ -65,7 +65,7 @@ public class GlobalMethods extends BasePage {
             //User is already registered
             signIn(username, getLoginPassword());
         } finally {
-            if (isTitlePresent("Change your password",3)) {
+            if (isTextPresent("Current password")) {
                 waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
                 waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
                 waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
