@@ -52,6 +52,7 @@ public class GlobalMethods extends BasePage {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password = world.configuration.getTempPassword(emailAddress);
+        getDriver().manage().deleteAllCookies();
         if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
         }
