@@ -14,6 +14,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class GlobalMethods extends BasePage {
 
@@ -52,6 +53,8 @@ public class GlobalMethods extends BasePage {
         }
         DriverUtils.get(myURL);
         enterCredentialsAndLogin(username, emailAddress, newPassword);
+        // Refresh page
+        refreshPageWithJavascript();
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) {
@@ -59,20 +62,23 @@ public class GlobalMethods extends BasePage {
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password = world.configuration.getTempPassword(emailAddress);
         try {
-            signIn(username, password);
-        } catch (Exception e) {
-            //User is already registered
-            signIn(username, getLoginPassword());
-        } finally {
-            if (isTextPresent("Current password")) {
-                waitForTextToBePresent("Re-enter new password");
-                waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
-                waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
-                waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
-                click(nameAttribute("input", "submit"), SelectorType.CSS);
-                setLoginPassword(newPassword);
-                untilNotInDOM(submitButton, 5);
+            if (getDriver().getCurrentUrl().contains("login")) {
+                if (getLoginPassword() != null) {
+                    password = getLoginPassword();
+                }
+                signIn(username, password);
             }
+        } catch (Exception e) {
+            signIn(username, getLoginPassword());
+        }
+        if (isTextPresent("Current password")) {
+            waitForTextToBePresent("Re-enter new password");
+            waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
+            waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
+            waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
+            click(nameAttribute("input", "submit"), SelectorType.CSS);
+            setLoginPassword(newPassword);
+            untilNotInDOM(submitButton, 5);
         }
     }
 

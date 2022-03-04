@@ -187,7 +187,7 @@ public class BusRegistrationJourney extends BasePage {
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
-        clickByLinkText("Bus registrations");
+        clickByLinkText("Bus");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
 
