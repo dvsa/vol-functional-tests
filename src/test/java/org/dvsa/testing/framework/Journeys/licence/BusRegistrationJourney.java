@@ -146,9 +146,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void viewEBSRInExternal() {
-
         long kickOutTime = System.currentTimeMillis() + 120000;
-
         do {
             // Refresh page
             refreshPageWithJavascript();
@@ -159,25 +157,6 @@ public class BusRegistrationJourney extends BasePage {
         } catch (Exception e) {
             throw new NotFoundException("import EBSR is still displaying as 'processing' when kick out time was reached.");
         }
-    }
-
-    public static AmazonS3 client() {
-        return createS3Client();
-    }
-
-    public static AmazonS3 client(Regions region) {
-        return createS3Client(region);
-    }
-
-    public static AmazonS3 createS3Client(Regions region) {
-        if (client == null) {
-            client = AmazonS3ClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).withRegion(region).build();
-        }
-        return client;
-    }
-
-    public static AmazonS3 createS3Client() {
-        return createS3Client(Regions.EU_WEST_1);
     }
 
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {

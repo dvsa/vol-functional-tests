@@ -54,7 +54,6 @@ public class GlobalMethods extends BasePage {
         DriverUtils.get(myURL);
         enterCredentialsAndLogin(username, emailAddress, newPassword);
         // Refresh page
-        refreshPageWithJavascript();
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) {
@@ -71,8 +70,7 @@ public class GlobalMethods extends BasePage {
         } catch (Exception e) {
             signIn(username, getLoginPassword());
         }
-        if (isTextPresent("Current password")) {
-            waitForTextToBePresent("Re-enter new password");
+        if (isTextPresent("Your password must:")) {
             waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
             waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
             waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
