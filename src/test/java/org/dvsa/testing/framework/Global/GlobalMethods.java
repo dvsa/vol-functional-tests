@@ -62,15 +62,12 @@ public class GlobalMethods extends BasePage {
         String password = world.configuration.getTempPassword(emailAddress);
         try {
             if (getDriver().getCurrentUrl().contains("login")) {
-                if (getLoginPassword() != null) {
-                    password = getLoginPassword();
-                }
                 signIn(username, password);
             }
         } catch (Exception e) {
             signIn(username, getLoginPassword());
-        }
-        if (isTextPresent("Your password must:")) {
+        } finally {
+            if(isTextPresent("Your password must:"))
             waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
             waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
             waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
