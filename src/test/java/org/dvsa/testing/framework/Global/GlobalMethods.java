@@ -68,7 +68,6 @@ public class GlobalMethods extends BasePage {
             signIn(username, getLoginPassword());
         } finally {
             if(isTextPresent("Your password must:"))
-            waitAndEnterText(oldPasswordField, SelectorType.CSS, password);
             waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
             waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
             click(nameAttribute("input", "submit"), SelectorType.CSS);
