@@ -109,15 +109,14 @@ public class UIJourney extends BasePage {
     }
 
     public void generateLetter() {
-        Browser.navigate().manage().window().maximize();
         clickByLinkText("Docs & attachments");
-        waitForElementToBePresent("//button[@id='New letter']");
+        waitForTextToBePresent("New Letter");
         clickById("New letter");
-        findElement("//*[@id='modal-title']", SelectorType.XPATH, 60);
-        waitAndSelectValueFromDropDown("category", SelectorType.ID, "Bus Registration", "Category");
-        waitAndSelectValueFromDropDown("documentSubCategory", SelectorType.ID, "Other Documents", "Subcategory");
-        waitAndSelectValueFromDropDown("documentTemplate", SelectorType.ID, "BUS_REG_CANCELLATION", "Template");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitForTextToBePresent("Generate letter");
+        waitAndSelectByIndex( "//*[@id='category']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex( "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Amend letter");
     }
 

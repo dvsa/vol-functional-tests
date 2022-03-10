@@ -7,6 +7,8 @@ import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
@@ -73,18 +75,10 @@ public class InternalApplication extends BasePage implements En {
     @Then("The pop up should contain letter details")
     public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
-
-        String categoryValue = getText("//*[@id='generate-document']/div[2]", SelectorType.XPATH);
-        assertNotNull(categoryValue);
-
-        String subCategoryValue = getText("//*[@id='generate-document']/div[3]", SelectorType.XPATH);
-        assertNotNull(subCategoryValue);
-
-        String templateValue = getText("//*[@id='generate-document']/div[4]", SelectorType.XPATH);
-        assertNotNull(templateValue);
-
-        String docStoreLink = getAttribute("//a[contains(@href,'ms-word:ofe|u|https://')]", SelectorType.XPATH, "href");
+        String docStoreLink = getText("letter-link",SelectorType.ID);
         assertNotNull(docStoreLink);
+        String webDAVUrl = URL.build(ApplicationType.INTERNAL, world.configuration.env, "documents-dav").toString();
+        assertTrue(docStoreLink.contains(String.format("ms-word:ofe|u|%s",webDAVUrl)));
         assertTrue(docStoreLink.contains(".rtf"));
     }
 

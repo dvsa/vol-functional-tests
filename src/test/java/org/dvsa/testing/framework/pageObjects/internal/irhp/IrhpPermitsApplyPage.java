@@ -184,7 +184,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         String continueButton = "//button[@id='form-actions[withdraw]']";
         untilElementIsPresent(withdrawButton, SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
         scrollAndClick(withdrawButton, SelectorType.XPATH);
-        waitAndSelectByIndex("Withdraw Reason",withdrawReasonButton, SelectorType.XPATH,4);
+        waitAndSelectByIndex(withdrawReasonButton, SelectorType.XPATH,4);
        // waitAndClick(withdrawReason,SelectorType.XPATH);
         untilElementIsPresent(continueButton, SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
         scrollAndClick(continueButton, SelectorType.XPATH);

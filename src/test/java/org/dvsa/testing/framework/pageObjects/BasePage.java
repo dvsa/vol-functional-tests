@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects;
 
+import activesupport.driver.Browser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
@@ -18,6 +19,7 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -362,7 +364,7 @@ public abstract class BasePage extends DriverUtils {
                 ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
     }
 
-    public static void waitAndSelectValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String listValue, String textWait) {
+    public static void waitAndSelectValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String listValue) {
         final Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
@@ -370,22 +372,24 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(StaleElementReferenceException.class);
 
         wait.until(WebDriver ->
-                visibilityOf(getDriver().findElement(By.xpath(String.format("//*[contains(text(),'%s')]", textWait)))));
+                wait.until(ExpectedConditions.elementToBeClickable
+                (getDriver().findElement(By.xpath(selector)))));
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByVisibleText(listValue);
     }
 
-    public static void waitAndSelectByIndex(@NotNull final String textWait, @NotNull final String selector, @NotNull SelectorType selectorType, @NotNull final int listValue) {
+    public static void waitAndSelectByIndex(@NotNull final String selector, @NotNull SelectorType selectorType, @NotNull final int listValue) {
         final Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
 
-         wait.until(WebDriver ->
-                visibilityOf(getDriver().findElement(By.xpath(String.format("//*[contains(text(),'%s')]", textWait)))));
-        Select selectItem = new Select(findElement(selector, selectorType));
-        selectItem.selectByIndex(listValue);
+        wait.until(driver ->
+            wait.until(ExpectedConditions.elementToBeClickable(
+                    (getDriver().findElement(By.xpath(selector))))));
+            Select selectItem = new Select(findElement(selector, selectorType));
+            selectItem.selectByIndex(listValue);
     }
 
 
@@ -398,8 +402,8 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(ElementClickInterceptedException.class)
                 .ignoring(ElementNotInteractableException.class);
 
-            wait.until(webDriver ->
-                    elementToBeClickable(getDriver().findElement(by(selector, selectorType))));
+        wait.until(webDriver ->
+                elementToBeClickable(getDriver().findElement(by(selector, selectorType))));
         getDriver().findElement(by(selector, selectorType)).click();
     }
 
@@ -418,9 +422,9 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
 
-             wait.until(webDriver ->
-                    visibilityOf(getDriver().findElement(By.xpath(
-                    selector))));
+        wait.until(webDriver ->
+                visibilityOf(getDriver().findElement(By.xpath(
+                        selector))));
     }
 
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
@@ -430,10 +434,10 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
 
-            wait.until(webDriver ->
-                    ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
-            getDriver().findElement(by(selector,selectorType)).clear();
-            getDriver().findElement(by(selector,selectorType)).sendKeys(textValue);
+        wait.until(webDriver ->
+                ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
+        getDriver().findElement(by(selector, selectorType)).clear();
+        getDriver().findElement(by(selector, selectorType)).sendKeys(textValue);
     }
 
     public static boolean isFieldEnabled(String field, SelectorType selectorType) {

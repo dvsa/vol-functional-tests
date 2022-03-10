@@ -62,7 +62,7 @@ public class SubmitSelfServeApplication extends BasePage {
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
-        waitAndSelectByIndex("Traffic area", "//*[@id='trafficArea']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='trafficArea']", SelectorType.XPATH, 1);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         waitForTitleToBePresent("Financial evidence");
