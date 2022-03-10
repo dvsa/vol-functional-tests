@@ -62,7 +62,6 @@ public class GlobalMethods extends BasePage {
             signIn(username, getLoginPassword());
         } finally {
             if (isTextPresent("Current password")) {
-                waitForTextToBePresent("Re-enter new password");
                 enterText(nameAttribute("input", "oldPassword"), SelectorType.CSS, password);
                 enterText(nameAttribute("input", "newPassword"), SelectorType.CSS, newPassword);
                 enterText(nameAttribute("input", "confirmPassword"), SelectorType.CSS, newPassword);
