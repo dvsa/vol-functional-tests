@@ -19,11 +19,9 @@ import static org.junit.Assert.assertNotNull;
 public class InternalApplication extends BasePage implements En {
     private final World world;
 
-    private String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
-    private String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
-    private String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
-    private String numberOfVehicles = "//dt[contains(text(),'No. of vehicles')]/../dd";
-    private String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
+    private final String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
+    private final String numberOfVehicles = "//dt[contains(text(),'No. of vehicles')]/../dd";
+    private final String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
 
     public InternalApplication (World world) {this.world = world;}
 
@@ -124,6 +122,7 @@ public class InternalApplication extends BasePage implements En {
 
     @Then("the LGV Only authorisation should be correct on the application overview screen")
     public void theLGVOnlyAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
+        String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
         String actualLGVAuthorisation = getText(LGVOnlyAuthorisation, SelectorType.XPATH);
         String expectedLGVAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreLgvAuthority());
         assertEquals(expectedLGVAuthority, actualLGVAuthorisation);
@@ -158,6 +157,7 @@ public class InternalApplication extends BasePage implements En {
         String expectedHGVAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreHgvAuthority());
         assertEquals(expectedHGVAuthority, actualHGVAuthorisation);
 
+        String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
         String actualTrailerAuthorisation = getText(trailerAuthorisation, SelectorType.XPATH);
         String expectedTrailerAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreTrailerAuthority());
         assertEquals(actualTrailerAuthorisation, expectedTrailerAuthority);

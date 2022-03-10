@@ -47,13 +47,13 @@ public class GlobalMethods extends BasePage {
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
+            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
             if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
                 waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
             }
         }
         DriverUtils.get(myURL);
         enterCredentialsAndLogin(username, emailAddress, newPassword);
-        // Refresh page
     }
 
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) {
@@ -62,6 +62,7 @@ public class GlobalMethods extends BasePage {
         String password = world.configuration.getTempPassword(emailAddress);
         try {
             if (getDriver().getCurrentUrl().contains("login")) {
+                waitForTextToBePresent("Sign in");
                 signIn(username, password);
             }
         } catch (Exception e) {
