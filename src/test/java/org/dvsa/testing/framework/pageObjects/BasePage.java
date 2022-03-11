@@ -435,9 +435,9 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(StaleElementReferenceException.class);
 
         wait.until(webDriver ->
-                ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
-        getDriver().findElement(by(selector, selectorType)).clear();
-        getDriver().findElement(by(selector, selectorType)).sendKeys(textValue);
+                findElement(selector, selectorType));
+        findElement(selector, selectorType).clear();
+        findElement(selector, selectorType).sendKeys(textValue);
     }
 
     public static boolean isFieldEnabled(String field, SelectorType selectorType) {
