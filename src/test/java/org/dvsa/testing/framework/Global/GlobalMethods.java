@@ -82,9 +82,9 @@ public class GlobalMethods extends BasePage {
     }
 
     public void signIn(String userName, String password) {
-        waitAndEnterText(emailField, SelectorType.CSS, userName);
-        waitAndEnterText(passwordField, SelectorType.CSS, password);
-        waitAndClick(submitButton, SelectorType.CSS);
+        replaceText(emailField, SelectorType.CSS, userName);
+        replaceText(passwordField, SelectorType.CSS, password);
+        click(submitButton, SelectorType.CSS);
         untilNotInDOM(submitButton, 5);
     }
 
