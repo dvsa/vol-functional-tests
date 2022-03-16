@@ -19,7 +19,6 @@ public class CreateApplications extends BasePage implements En {
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
 
         When("^i choose to print and sign$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
