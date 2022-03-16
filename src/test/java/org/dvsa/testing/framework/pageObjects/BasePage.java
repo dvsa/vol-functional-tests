@@ -386,11 +386,10 @@ public abstract class BasePage extends DriverUtils {
 
         wait.until(driver ->
                 wait.until(ExpectedConditions.elementToBeClickable(
-                        (getDriver().findElement(By.xpath(selector))))));
+                        by(selector,selectorType))));
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByIndex(listValue);
     }
-
 
     public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
@@ -401,9 +400,10 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(ElementClickInterceptedException.class)
                 .ignoring(ElementNotInteractableException.class);
 
-        wait.until(webDriver ->
-                elementToBeClickable(getDriver().findElement(by(selector, selectorType))));
-        getDriver().findElement(by(selector, selectorType)).click();
+        wait.until(driver ->
+                wait.until(ExpectedConditions.elementToBeClickable(
+                        by(selector,selectorType))));
+           findElement(selector, selectorType).click();
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {

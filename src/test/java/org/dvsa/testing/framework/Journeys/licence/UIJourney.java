@@ -59,7 +59,7 @@ public class UIJourney extends BasePage {
         enterText(addressSelector, SelectorType.ID, postcode);
         click("address[searchPostcode][search]", SelectorType.ID);
         waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.NAME);
-        selectValueFromDropDownByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
+        waitAndSelectByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
         waitForPageLoad();
     }
 

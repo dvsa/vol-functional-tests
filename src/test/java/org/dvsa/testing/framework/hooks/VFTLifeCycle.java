@@ -16,9 +16,11 @@ public class VFTLifeCycle implements EventListener {
     public void setEventPublisher(EventPublisher publisher) {
         publisher.registerHandlerFor(TestRunStarted.class, event -> {
             LOGGER.info("Test is starting");
+            Browser.navigate();
         });
         publisher.registerHandlerFor(TestRunFinished.class, event -> {
             LOGGER.info("Test is shutting down");
+            Browser.navigate().close();
         });
     }
 }
