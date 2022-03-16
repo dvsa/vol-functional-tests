@@ -46,19 +46,15 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void addTransportManagerDetails()  {
-        try {
-            accessibilityScanner();
-        } catch (IllegalBrowserException | IOException e) {
-            e.printStackTrace();
-        }
         //Add Personal Details
+        waitForTitleToBePresent("Transport Manager details");
         String birthPlace = world.createApplication.getTransportManagerTown();
         String postCode = "NG1 6LP";
 
         HashMap<String, String> dob;
         dob = world.globalMethods.date.getDateHashMap(0, 0, -25);
         enterDateFieldsByPartialId("dob", dob);
-        enterText("birthPlace", SelectorType.ID, birthPlace);
+        waitAndEnterText("birthPlace", SelectorType.ID, birthPlace);
 
         waitForElementToBeClickable("//*[contains(text(),'External')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'External')]", SelectorType.XPATH);
@@ -84,8 +80,8 @@ public class TransportManagerJourney extends BasePage {
         refreshPageWithJavascript();
         waitAndEnterText("licNo", SelectorType.ID, "PB123456");
         selectValueFromDropDown("//*[@id='data[role]']", SelectorType.XPATH, role);
-        enterText("//*[@id='operatingCentres']", SelectorType.XPATH, "Test");
-        enterText("//*[@id='hoursPerWeek']", SelectorType.XPATH, "1");
+        waitAndEnterText("//*[@id='operatingCentres']", SelectorType.XPATH, "Test");
+        waitAndEnterText("//*[@id='hoursPerWeek']", SelectorType.XPATH, "1");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
         //Add Other Employment
@@ -103,10 +99,10 @@ public class TransportManagerJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Add convictions and penalties')]", SelectorType.XPATH);
         HashMap<String, String> date = new Dates(LocalDate::new).getDateHashMap(0, 0, -7);
         enterDateFieldsByPartialId("conviction-date", date);
-        enterText("//*[@id='category-text']", SelectorType.XPATH, "Test");
-        enterText("//*[@id='notes']", SelectorType.XPATH, "Test");
-        enterText("//*[@id='court-fpn']", SelectorType.XPATH, "Test");
-        enterText("//*[@id='penalty']", SelectorType.XPATH, "Test");
+        waitAndEnterText("//*[@id='category-text']", SelectorType.XPATH, "Test");
+        waitAndEnterText("//*[@id='notes']", SelectorType.XPATH, "Test");
+        waitAndEnterText("//*[@id='court-fpn']", SelectorType.XPATH, "Test");
+        waitAndEnterText("//*[@id='penalty']", SelectorType.XPATH, "Test");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
 
         waitForTextToBePresent("Add licences");

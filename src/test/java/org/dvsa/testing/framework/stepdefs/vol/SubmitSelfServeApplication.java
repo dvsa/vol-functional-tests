@@ -34,26 +34,22 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     @And("i start a new {string} licence application")
-    public void iStartANewLicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
+    public void iStartANewLicenceApplication(String licenceType){
         waitForTitleToBePresent("Licences");
-        accessibilityScanner();
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
 
         chooseLicenceType(licenceType);
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         //business details
-        accessibilityScanner();
         world.businessDetailsJourney.addBusinessDetails();
         if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
             if (isTextPresent("You haven't added any Directors yet")) {
-                accessibilityScanner();
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
             }
             waitAndClick(saveAndContinue, SelectorType.XPATH);
         }
         //operating centre
-        accessibilityScanner();
         String authority = "2";
         String trailers = "4";
         if(licenceType.equals("Goods")) {
@@ -66,44 +62,33 @@ public class SubmitSelfServeApplication extends BasePage {
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         waitForTitleToBePresent("Financial evidence");
-        accessibilityScanner();
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
         waitAndClick(saveAndContinue, SelectorType.XPATH);
 
         //transport manager
         clickById("add");
-        accessibilityScanner();
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
         clickById("form-actions[continue]");
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            accessibilityScanner();
             clickByName("form-actions[send]");
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
         //vehicleDetails
-        accessibilityScanner();
         boolean add = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(add);
-        accessibilityScanner();
         world.safetyComplianceJourney.addSafetyAndComplianceData();
-        accessibilityScanner();
         world.safetyInspectorJourney.addASafetyInspector();
-        accessibilityScanner();
         clickById("application[safetyConfirmation]");
         waitAndClick(saveAndContinue, SelectorType.XPATH);
         //Financial History
-        accessibilityScanner();
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit();
         //Licence details
-        accessibilityScanner();
         world.licenceDetailsJourney.answerNoToAllQuestionsAndSubmit();
         //Convictions
-        accessibilityScanner();
         world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit();
-        generateAccessibilityReport();
     }
 
     @Given("i have a self serve account")
@@ -126,8 +111,7 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     @And("i have no existing accounts")
-    public void iHaveNoExistingAccounts() throws IllegalBrowserException, IOException, URISyntaxException {
-        accessibilityScanner();
+    public void iHaveNoExistingAccounts() throws IllegalBrowserException, IOException {
         if (isElementPresent("//tbody/tr/td/a", SelectorType.XPATH)) {
             List<WebElement> applications = findElements("//tbody/tr/td/a", SelectorType.XPATH);
             for (WebElement element : applications) {

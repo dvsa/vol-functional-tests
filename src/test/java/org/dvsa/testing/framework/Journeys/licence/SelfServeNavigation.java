@@ -64,11 +64,6 @@ public class SelfServeNavigation extends BasePage {
     public void navigateToLoginPage() {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
         navigate().get(myURL);
-        try {
-            accessibilityScanner();
-        } catch (IllegalBrowserException | IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void navigateToCreateAnAccount() {

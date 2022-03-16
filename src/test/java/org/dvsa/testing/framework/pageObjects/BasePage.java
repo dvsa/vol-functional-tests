@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.pageObjects;
 
-import activesupport.driver.Browser;
+import com.google.common.base.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
@@ -19,19 +19,16 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 5;
     private static final int TIME_OUT_SECONDS = 60;
     private static final int POLLING_SECONDS = 1;
-    private static String ERROR_MESSAGE_HEADING = "Please correct the following errors";
-    private static String ERROR_CLASS = ".error__text";
-    protected static String MAIN_TITLE_SELECTOR = "h1";
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     protected static String getAttribute(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String attribute) {
@@ -69,7 +66,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTextPresent(String locator) {
         boolean itsFound = true;
         try {
-            new WebDriverWait(getDriver(), 30).
+            new WebDriverWait(getDriver(), Duration.ofSeconds(30)).
                     until(WebDriver ->
                             visibilityOf(findElement(String.format("//*[contains(text(),\"%s\")]", locator), SelectorType.XPATH)));
         } catch (Exception e) {
@@ -81,6 +78,8 @@ public abstract class BasePage extends DriverUtils {
     public static boolean isErrorMessagePresent() {
         boolean hasError = false;
 
+        String ERROR_MESSAGE_HEADING = "Please correct the following errors";
+        String ERROR_CLASS = ".error__text";
         if (isTextPresent(ERROR_MESSAGE_HEADING) || isElementPresent(ERROR_CLASS, SelectorType.CSS)) hasError = true;
 
         return hasError;
@@ -175,7 +174,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isLinkPresent(String locator, int duration) {
         boolean itsFound = true;
         try {
-            new WebDriverWait(getDriver(), duration)
+            new WebDriverWait(getDriver(), Duration.ofSeconds(duration))
                     .until(WebDriver ->
                             visibilityOf(findElement(locator, SelectorType.PARTIALLINKTEXT)));
         } catch (Exception e) {
@@ -194,7 +193,7 @@ public abstract class BasePage extends DriverUtils {
     protected static boolean isTitlePresent(String locator, int duration) {
         boolean itsFound = true;
         try {
-            new WebDriverWait(getDriver(), duration)
+            new WebDriverWait(getDriver(), Duration.ofSeconds(duration))
                     .until(WebDriver ->
                             visibilityOf(findElement(String.format("//h1[contains(text(),\"%s\")]", locator), SelectorType.XPATH)));
         } catch (Exception e) {
@@ -288,8 +287,8 @@ public abstract class BasePage extends DriverUtils {
 
     public static void until(ExpectedCondition<?> expectedCondition) {
         new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class)
                 .ignoring(ElementClickInterceptedException.class)
@@ -355,8 +354,8 @@ public abstract class BasePage extends DriverUtils {
 
     public static void waitForElementToBeClickable(@NotNull String selector, @NotNull SelectorType selectorType) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
 
@@ -366,37 +365,37 @@ public abstract class BasePage extends DriverUtils {
 
     public static void waitAndSelectValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String listValue) {
         final Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
 
         wait.until(WebDriver ->
                 wait.until(ExpectedConditions.elementToBeClickable
-                (getDriver().findElement(By.xpath(selector)))));
+                        (getDriver().findElement(By.xpath(selector)))));
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByVisibleText(listValue);
     }
 
     public static void waitAndSelectByIndex(@NotNull final String selector, @NotNull SelectorType selectorType, @NotNull final int listValue) {
         final Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
 
         wait.until(driver ->
-            wait.until(ExpectedConditions.elementToBeClickable(
-                    (getDriver().findElement(By.xpath(selector))))));
-            Select selectItem = new Select(findElement(selector, selectorType));
-            selectItem.selectByIndex(listValue);
+                wait.until(ExpectedConditions.elementToBeClickable(
+                        (getDriver().findElement(By.xpath(selector))))));
+        Select selectItem = new Select(findElement(selector, selectorType));
+        selectItem.selectByIndex(listValue);
     }
 
 
     public static void waitAndClick(@NotNull String selector, @NotNull SelectorType selectorType) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class)
                 .ignoring(ElementClickInterceptedException.class)
@@ -417,8 +416,8 @@ public abstract class BasePage extends DriverUtils {
 
     public static void waitForElementToBePresent(@NotNull String selector) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
                 .ignoring(StaleElementReferenceException.class);
 
@@ -428,15 +427,15 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
-        final Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(NoSuchElementException.class)
+                .ignoring(InvalidElementStateException.class)
                 .ignoring(StaleElementReferenceException.class);
 
-        wait.until(webDriver ->
-                findElement(selector, selectorType));
-        findElement(selector, selectorType).clear();
+        wait.until((Function<WebDriver, WebElement>) driver ->
+                wait.until(elementToBeClickable(by(selector, selectorType))));
         findElement(selector, selectorType).sendKeys(textValue);
     }
 
@@ -486,7 +485,16 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public void enterTextIntoMultipleFields(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String text) {
-        findElements(selector, selectorType).stream().forEach(x -> x.sendKeys(text));
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(InvalidElementStateException.class)
+                .ignoring(StaleElementReferenceException.class);
+
+        wait.until((Function<WebDriver, WebElement>) driver ->
+                wait.until(elementToBeClickable(by(selector, selectorType))));
+        findElements(selector, selectorType).forEach(x -> x.sendKeys(text));
     }
 
     public String getValue(String selector, SelectorType selectorType) {
@@ -495,8 +503,8 @@ public abstract class BasePage extends DriverUtils {
 
     public void waitForPageLoad() {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(Duration.ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(Duration.ofSeconds(POLLING_SECONDS))
+                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(java.util.NoSuchElementException.class);
         ExpectedCondition<Boolean> expect = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
         wait.until(WebDriver -> expect);
@@ -528,9 +536,9 @@ public abstract class BasePage extends DriverUtils {
 
     public void waitForTabsToLoad(int expectedNumberOfTabs, int seconds) {
         ArrayList<String> tabs;
-        long kickOut = System.currentTimeMillis() + (seconds * 1000);
+        long kickOut = System.currentTimeMillis() + (seconds * 1000L);
         do {
-            tabs = new ArrayList<String>(getWindowHandles());
+            tabs = new ArrayList<>(getWindowHandles());
             if (kickOut < System.currentTimeMillis()) {
                 throw new TimeoutException("Incorrect number of tabs or tabs failed to load.");
             }
@@ -552,7 +560,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void untilNotInDOM(@NotNull String selector, int seconds) {
-        new WebDriverWait(getDriver(), seconds).until(webDriver ->
+        new WebDriverWait(getDriver(), ofSeconds(seconds)).until(webDriver ->
                 not(ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
     }
 }

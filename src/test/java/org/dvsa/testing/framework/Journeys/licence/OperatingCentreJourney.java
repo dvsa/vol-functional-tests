@@ -109,11 +109,6 @@ public class OperatingCentreJourney extends BasePage {
 
     public void addNewOperatingCentre(String vehicles, String trailers) {
         click(addOperatingCentre, SelectorType.XPATH);
-        try {
-            accessibilityScanner();
-        } catch (IllegalBrowserException | IOException e) {
-            e.printStackTrace();
-        }
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
         clickByLinkText(enterAddressManually);
         world.UIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
