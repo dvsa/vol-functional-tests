@@ -172,11 +172,17 @@ public abstract class BasePage extends DriverUtils {
     }
 
     protected static boolean isLinkPresent(String locator, int duration) {
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                .withTimeout(ofSeconds(duration))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class);
+
         boolean itsFound = true;
         try {
-            new WebDriverWait(getDriver(), Duration.ofSeconds(duration))
-                    .until(WebDriver ->
-                            visibilityOf(findElement(locator, SelectorType.PARTIALLINKTEXT)));
+            wait.until(WebDriver ->
+                    wait.until(ExpectedConditions.visibilityOf(
+                            (findElement(locator, SelectorType.PARTIALLINKTEXT)))));
         } catch (Exception e) {
             return false;
         }

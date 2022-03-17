@@ -34,19 +34,16 @@ public class ManageVehicle extends BasePage {
 
     @When("I navigate to manage vehicle page on an application")
     public void iNavigateToManageVehiclePageOnAnApplication(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("application");
     }
 
     @When("I navigate to manage vehicle page on a licence")
     public void iNavigateToManageVehiclePageOnALicence(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("licence");
     }
 
     @When("I navigate to manage vehicle page on a variation")
     public void iNavigateToManageVehiclePageOnAVariation(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("variation");
     }
 

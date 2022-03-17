@@ -113,5 +113,4 @@ Feature: User should be able to continue where they left off
     Examples:
       | OperatorType | LicenceType            |
       | public       | standard_national      |
-#      | goods        | stand
-#      ard_international |
+      | goods        | standard_international |

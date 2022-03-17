@@ -6,7 +6,6 @@ Feature: Remove reference to TM1 form
 
   Background:
     Given i have a valid "goods" "standard_national" licence
-    And i have logged in to self serve
 
   Scenario: Update text to remove any reference to the form
     When i add a new transport manager

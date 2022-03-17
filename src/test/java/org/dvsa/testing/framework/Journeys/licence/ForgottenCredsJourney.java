@@ -13,7 +13,6 @@ public class ForgottenCredsJourney extends BasePage {
 
     public void createAccountSignOut()
     {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         waitAndClick("Sign out", SelectorType.LINKTEXT);
         world.selfServeNavigation.navigateToLoginPage();
     }

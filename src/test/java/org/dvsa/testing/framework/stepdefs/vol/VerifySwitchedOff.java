@@ -49,7 +49,6 @@ public class VerifySwitchedOff extends BasePage implements En {
 
     @And("i select a transport manager to add")
     public void iSelectATransportManagerToAdd() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");

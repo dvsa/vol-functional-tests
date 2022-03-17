@@ -160,11 +160,11 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
+        refreshPageWithJavascript();
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
         clickByLinkText("Bus");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);

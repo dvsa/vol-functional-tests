@@ -45,8 +45,8 @@ public class SurrenderLogic extends BasePage implements En {
 
     @Then("continue with application link is displayed")
     public void continueWithApplicationLinkIsDisplayed() {
-        assertFalse(isLinkPresent("Apply to surrender licence", 30));
-        assertTrue(isLinkPresent("Continue with application to surrender licence", 30));
+        assertFalse(isLinkPresent("Apply to surrender licence", 5));
+        assertTrue(isLinkPresent("Continue with application to surrender licence", 5));
     }
 
     @And("user is taken to information change page on clicking continue application")

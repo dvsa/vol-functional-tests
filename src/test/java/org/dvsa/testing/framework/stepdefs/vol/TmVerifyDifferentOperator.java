@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -167,6 +168,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @When("i add a new transport manager")
     public void iAddANewTransportManager() {
+        refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
         world.UIJourney.changeLicenceForVariation();
         world.TMJourney.addNewPersonAsTransportManager("variation");

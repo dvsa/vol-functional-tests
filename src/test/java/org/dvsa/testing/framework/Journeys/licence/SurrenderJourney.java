@@ -42,7 +42,7 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void navigateToSurrendersStartPage()  {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Apply to surrender licence");
     }

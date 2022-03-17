@@ -39,7 +39,6 @@ public class SurrenderStartPage extends BasePage implements En {
 
     @And("the correct licence number should be displayed")
     public void theCorrectLicenceNumberShouldBeDisplayed() {
-        boolean isTrue = findElement("//h3", SelectorType.XPATH,10).getText().contains(world.applicationDetails.getLicenceNumber());
-        assertTrue(isTrue);
+        assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
     }
 }
