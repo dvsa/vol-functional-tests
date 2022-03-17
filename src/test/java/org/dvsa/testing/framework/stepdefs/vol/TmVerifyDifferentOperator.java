@@ -50,7 +50,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @When("i add an operator as a transport manager")
     public void iAddAnOperatorAsATransportManager() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
@@ -96,7 +95,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @When("i add new person as a transport manager and they fill out their details")
     public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.addNewPersonAsTransportManager("application");
         world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
         clickByLinkText("Provide details");

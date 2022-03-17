@@ -463,7 +463,7 @@ public abstract class BasePage extends DriverUtils {
 
     public void replaceText(String selector, SelectorType selectorType, String text) {
         findElement(selector, selectorType).clear();
-        enterText(selector, selectorType, text);
+        waitAndEnterText(selector, selectorType, text);
     }
 
     public static int returnTableRows(@NotNull String selector, @NotNull SelectorType selectorType) {

@@ -37,7 +37,6 @@ public class SubmitSelfServeApplication extends BasePage {
     public void iStartANewLicenceApplication(String licenceType){
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
-
         chooseLicenceType(licenceType);
         String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
         waitAndClick(saveAndContinue, SelectorType.XPATH);

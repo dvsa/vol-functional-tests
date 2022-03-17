@@ -1,4 +1,5 @@
-@SS @ss_regression
+@SS
+@ss_regression
 @SS-GOODS-VAR-OC-INCREASE-VEHICLE
 @OLCS-21133
 
@@ -12,7 +13,7 @@ Feature: Goods Variation increase vehicle count for an OC
     Examples:
       | LicenceType            |
       | standard_national      |
-      | restricted             |
+#      | restricted             |
 
   Scenario: Increasing the vehicle count to an invalid character for required vehicles
     Given i have a valid "goods" "standard_national" licence

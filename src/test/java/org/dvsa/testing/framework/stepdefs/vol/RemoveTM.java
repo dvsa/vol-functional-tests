@@ -72,7 +72,6 @@ public class RemoveTM extends BasePage implements En {
 
     @When("a self-serve user removes the last TM")
     public void aSelfServeUserRemovesTheLastTM() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
         click("//*[@value='Remove']", SelectorType.XPATH);
     }

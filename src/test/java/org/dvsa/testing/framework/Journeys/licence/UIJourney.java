@@ -397,31 +397,10 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForPageLoad();
-
-        Wait<WebDriver> wait = new FluentWait<>(navigate())
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofMillis(200))
-                .ignoring(NoSuchElementException.class);
-
-        ExpectedCondition<Boolean> expect = driver -> {
-            try {
-                return Browser.navigate().getCurrentUrl().contains("variation");
-            } catch (Exception e) {
-                return false;
-            }
-        };
-
-        wait.until(WebDriver ->
-                expect);
-        try {
-            assertTrue(Browser.navigate().getCurrentUrl().contains("variation"));
-        } catch (Exception e) {
-            LOGGER.info("Page URL doesn't contain variation and therefore isn't storing the variationNumber.");
-        }
-
+        refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
-        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 2));
+        waitForTitleToBePresent("Operating centres and authorisation");
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
     public void removeFirstVehicleOnVehiclePage() {

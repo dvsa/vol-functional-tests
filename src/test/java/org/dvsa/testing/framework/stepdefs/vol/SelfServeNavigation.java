@@ -28,7 +28,6 @@ public class SelfServeNavigation extends BasePage {
 
     @And("i navigate to the manage users page")
     public void iNavigateToTheManageUsersPage() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         waitAndClick("//*[contains(text(),'Manage users')]", SelectorType.XPATH);
         Assert.assertEquals("Manage users", getText("h1", SelectorType.CSS));
     }

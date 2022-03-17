@@ -24,7 +24,6 @@ public class TMDetails extends BasePage implements En {
 
     @And("i navigate to the admin transport managers details page")
     public void iNavigateToTheAdminTransportManagersDetailsPage() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         String admin = getAttribute("*//td[contains(text(),'Administrator')]/../td[1]/input", SelectorType.XPATH, "value");
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
