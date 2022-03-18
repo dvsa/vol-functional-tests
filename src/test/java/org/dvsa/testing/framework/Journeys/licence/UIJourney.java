@@ -498,8 +498,9 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Variation details");
+        refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
-        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 2));
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
     public static void clickSaveAndContinue() {
