@@ -1,11 +1,13 @@
 @lgv
 Feature: Publications display the right LGV related information on LGV only licences
 
+  @int_regression
   Scenario: A submitted LGV Only application generated a publication correctly on internal
     Given I have a submitted "GB" lgv only application
     And i navigate to the application publications page
     Then the new application publication for LGV Only should be correct on internal
 
+  @ss_regression
   Scenario: A submitted LGV Only application displays the correct information upon publishing
     Given I have a submitted "GB" lgv only application
     When the corresponding publication is generated and published

@@ -35,6 +35,7 @@ Feature: Caseworkers can apply for lgv only and mixed fleet licences and are red
     When i click submit
     Then A LGV only error message should be displayed
 
+  @int_regression
   Scenario: Caseworker clicks yes to lgv only and clicks create is redirected to lgv only application overview and type of licence is marked complete
     Given I create a new external user
     And i have logged in to internal

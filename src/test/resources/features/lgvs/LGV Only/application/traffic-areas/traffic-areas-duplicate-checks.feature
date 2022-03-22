@@ -4,6 +4,7 @@ Feature: When applying for a licence or variation in the same traffic area as a 
   Background:
     Given I create a new external user
 
+  @ss_regression
   Scenario: Applying for a Goods SI licence with an already Goods SI licenced traffic area triggers an error
     And i have a "goods" "standard_international" licence with a hgv authorisation of "5" in the North West Of England
     When i apply for a new "GB" lgv only application and enter a postcode in the North West of England
