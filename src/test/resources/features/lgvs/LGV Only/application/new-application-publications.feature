@@ -1,11 +1,13 @@
 @lgv
 Feature: Publications display the right LGV related information on LGV only licences
 
+  @int_regression
   Scenario: A submitted LGV Only application generated a publication correctly on internal
     Given I have a submitted "GB" lgv only application
     And i navigate to the application publications page
     Then the new application publication for LGV Only should be correct on internal
 
+  @ss_regression
   Scenario: A submitted LGV Only application displays the correct information upon publishing
     Given I have a submitted "GB" lgv only application
     When the corresponding publication is generated and published
@@ -39,6 +41,7 @@ Feature: Publications display the right LGV related information on LGV only lice
     Then the publication is visible via self serve search
     And the application withdrawn publication text for LGV Only should be correct on self serve
 
+  @smoketest
   Scenario: A LGV Only licence displays the correct licence information upon publishing (application shows nothing)
     Given I have a submitted "GB" lgv only application
     And the licence is granted
