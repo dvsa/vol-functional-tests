@@ -4,17 +4,19 @@ import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.net.QuotedPrintableCodec;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
 
 import static activesupport.driver.Browser.navigate;
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class GlobalMethods extends BasePage {
 
@@ -53,23 +55,30 @@ public class GlobalMethods extends BasePage {
             }
         }
         DriverUtils.get(myURL);
-        enterCredentialsAndLogin(username, emailAddress, newPassword);
+        try {
+            enterCredentialsAndLogin(username, emailAddress, newPassword);
+        } catch (DecoderException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) {
+    public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
-        String password = world.configuration.getTempPassword(emailAddress);
+        String password = null;
+        if(getLoginPassword() == null) {
+            QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
+            password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
+        }
+        
         try {
-            if (getDriver().getCurrentUrl().contains("login")) {
-                waitForTextToBePresent("Sign in");
-                signIn(username, password);
-            }
+            System.out.println("OLD PASSWORD: " + password);
+            signIn(username, password);
         } catch (Exception e) {
             signIn(username, getLoginPassword());
         } finally {
-            if(isTextPresent("Your password must:"))
-            waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
+            if (isTextPresent("Your password must:"))
+                waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
             waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
             click(nameAttribute("input", "submit"), SelectorType.CSS);
             setLoginPassword(newPassword);

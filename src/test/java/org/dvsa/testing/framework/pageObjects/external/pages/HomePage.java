@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+
 public class HomePage extends BasePage {
 
     private static String APPLY_FOR_LICENCE_BUTTON = "//*/a[contains(text(), 'Apply for a')]";
@@ -25,8 +27,8 @@ public class HomePage extends BasePage {
 
 
     public static void selectTab(Tab tab) {
+        refreshPageWithJavascript();
         String selector = String.format(TAB_TEMPLATE, tab.toString());
-
         untilElementIsPresent(selector, SelectorType.XPATH, BasePage.WAIT_TIME_SECONDS, TimeUnit.SECONDS);
         click(selector, SelectorType.XPATH);
     }

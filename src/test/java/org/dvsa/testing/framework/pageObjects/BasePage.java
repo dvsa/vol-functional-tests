@@ -566,7 +566,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void untilNotInDOM(@NotNull String selector, int seconds) {
-        new WebDriverWait(getDriver(), ofSeconds(seconds)).until(webDriver ->
-                not(ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
+        new WebDriverWait(getDriver(), Duration.ofSeconds(seconds)).until(webDriver ->
+                (ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
     }
 }

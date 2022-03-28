@@ -49,16 +49,13 @@ public class CommonSteps extends BasePermitJourney implements En {
             FeeDetailsPageJourney.whileFeesPresentWaveFee();
         });
         And("^I am on the permits dashboard on external$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
         });
     }
 
     public static void clickToPermitTypePage(@NotNull World world) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.beginPermitApplication();
     }
-
 
     public static void waitUntilPermitHasStatus(World world) {
         HomePage.PermitsTab.untilPermitHasStatus(
