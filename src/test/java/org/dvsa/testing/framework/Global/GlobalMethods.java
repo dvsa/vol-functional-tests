@@ -70,9 +70,7 @@ public class GlobalMethods extends BasePage {
             QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
             password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
         }
-        
         try {
-            System.out.println("OLD PASSWORD: " + password);
             signIn(username, password);
         } catch (Exception e) {
             signIn(username, getLoginPassword());
