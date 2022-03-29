@@ -28,7 +28,6 @@ public class GeneralVariationJourney extends BasePage {
     }
 
     public void signInAndBeginVariation(SelfServeSection selfServePage) {
-        world.selfServeNavigation.navigateToPage("licence", selfServePage);
         world.UIJourney.changeLicenceForVariation();
     }
 }

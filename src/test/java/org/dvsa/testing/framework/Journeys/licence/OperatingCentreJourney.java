@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.io.IOException;
 import java.util.HashMap;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class OperatingCentreJourney extends BasePage {
@@ -69,6 +70,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
+        refreshPageWithJavascript();
         world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
         if (!newHGVTotalAuthority.equals(String.valueOf(world.createApplication.getNoOfOperatingCentreVehicleAuthorised()))) {
             updateOperatingCentreAuthorisation(newHGVTotalAuthority);

@@ -15,6 +15,7 @@ import org.joda.time.LocalDate;
 
 import java.util.HashMap;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.*;
 
 
@@ -125,8 +126,7 @@ public class InterimLicence extends BasePage implements En {
 
     @And("I submit the application with an interim")
     public void iSubmitTheApplicationWithAnInterim() {
-        world.selfServeNavigation.navigateToLoginPage();
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
         click("//*[@id='interim[goodsApplicationInterim]']", SelectorType.XPATH);
         enterText("applicationInterimReason", SelectorType.ID, "Sample Text For Interim");

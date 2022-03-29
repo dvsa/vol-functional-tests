@@ -9,6 +9,8 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums.Self;
 import org.junit.Assert;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+
 public class SelfServeNavigation extends BasePage {
 
     public World world;
@@ -45,6 +47,7 @@ public class SelfServeNavigation extends BasePage {
 
     @And("i navigate to the application operating centres and authorisations page")
     public void iNavigateToTheOperatingCentresAndAuthorisationsPage() {
+        refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
     }
 }
