@@ -71,6 +71,7 @@ public class TaskAllocation extends BasePage {
         enterText("details[description]", SelectorType.ID, description);
         selectSystemTeam();
         waitAndClick("submit", SelectorType.ID);
+        waitForTextToBePresent("Task(s) successfully created");
         waitAndClick("date", SelectorType.ID);
         selectValueFromDropDown("date", SelectorType.ID,"All" );
         waitAndClick(description, SelectorType.LINKTEXT);
