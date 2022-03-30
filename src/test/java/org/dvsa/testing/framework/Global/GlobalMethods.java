@@ -65,11 +65,9 @@ public class GlobalMethods extends BasePage {
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
-        String password = null;
-        if(getLoginPassword() == null) {
-            QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
-            password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-        }
+        QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
+        String password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
+
         try {
             signIn(username, password);
         } catch (Exception e) {
