@@ -56,6 +56,9 @@ public class GlobalMethods extends BasePage {
         }
         DriverUtils.get(myURL);
         try {
+            if(isElementPresent("declarationRead",SelectorType.ID)) {
+                waitAndClick("declarationRead",SelectorType.ID);
+            }
             enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
             e.printStackTrace();
