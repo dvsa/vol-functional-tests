@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.system.Properties;
 import apiCalls.enums.VehicleType;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -124,5 +125,41 @@ public class InternalNavigation extends BasePage {
         logInAndNavigateToApplicationProcessingPage(false);
         clickByXPath(taskLinkText);
         waitForElementToBePresent(taskTitle);
+    }
+
+    public void navigateToPage(String type, SelfServeSection page) {
+        if (world.updateLicence.getInternalUserId() == null)
+            world.APIJourney.createAdminUser();
+        if (!getCurrentUrl().contains("iuap1"))
+            world.internalNavigation.logInAsAdmin();
+
+        switch(type) {
+            case "application":
+                getApplication();
+                break;
+            case "licence":
+                getLicence();
+                break;
+            case "variation":
+                getVariationApplication();
+                break;
+        }
+        switch (page.toString()) {
+            case "View":
+                break;
+            case "Vehicles":
+                clickByLinkText("Vehicles");
+                //Once DVLA integration has been switched on, this needs updating
+                waitForTextToBePresent("Vehicle details");
+                break;
+            case "Convictions and penalties":
+                clickByLinkText("Convictions and penalties");
+                waitForTextToBePresent("Convictions and Penalties");
+                break;
+            default:
+                clickByLinkText(page.toString());
+                waitForTextToBePresent(page.toString());
+                break;
+        }
     }
 }

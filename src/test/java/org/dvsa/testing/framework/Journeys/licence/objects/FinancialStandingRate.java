@@ -20,15 +20,15 @@ public class FinancialStandingRate {
     String effectiveDate;
 
     public FinancialStandingRate(String selector) {
-        List<WebElement> row = findElements(selector, SelectorType.XPATH);
-        WebElement firstCell = row.get(0).findElement(By.xpath("input"));
+        List<WebElement> rowElements = findElements(selector.concat("/td"), SelectorType.XPATH);
+        WebElement firstCell = rowElements.get(0).findElement(By.xpath("input"));
         this.id = firstCell.getAttribute("name").replaceAll("\\D+","");
         this.operatorType = firstCell.getAttribute("value");
-        this.licenceType = row.get(1).getText();
-        this.vehicleType = row.get(2).getText();
-        this.firstRate = row.get(3).getText();
-        this.additionalRate = row.get(4).getText();
-        this.effectiveDate = row.get(5).getText();
+        this.licenceType = rowElements.get(1).getText();
+        this.vehicleType = rowElements.get(2).getText();
+        this.firstRate = rowElements.get(3).getText();
+        this.additionalRate = rowElements.get(4).getText();
+        this.effectiveDate = rowElements.get(5).getText();
     }
 
     public FinancialStandingRate(String operatorType, String licenceType, String vehicleType, int firstRate, int additionalRate, HashMap<String, String> effectiveDate) {

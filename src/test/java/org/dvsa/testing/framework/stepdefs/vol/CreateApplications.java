@@ -44,5 +44,8 @@ public class CreateApplications extends BasePage implements En {
             waitAndClick("_eventId_payment", SelectorType.NAME);
             waitForTitleToBePresent("Application overview");
         });
+        Given("^i set to have (\\d+) lgvs on my licence$", (Integer numberOfLGVs) -> {
+            world.createApplication.setTotalOperatingCentreLgvAuthority(numberOfLGVs);
+        });
     }
 }

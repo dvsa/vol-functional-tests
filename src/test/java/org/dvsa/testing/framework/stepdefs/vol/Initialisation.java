@@ -74,5 +74,6 @@ public class Initialisation extends BasePage implements En {
         world.taskAllocation = new TaskAllocation(world);
         world.printingAndScanningJourney = new PrintingAndScanningJourney(world);
         world.typeOfLicence = new TypeOfLicenceJourney(world);
+        world.psvJourney = new PSVJourney(world);
     }
 }

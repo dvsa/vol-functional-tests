@@ -5,6 +5,7 @@ import activesupport.database.exception.UnsupportedDatabaseDriverException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -56,23 +57,17 @@ public class InternalSearch extends BasePage implements En {
 
     @And("i create an admin and url search for my licence")
     public void iCreateAnAdminAndUrlSearchForMyLicence() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
     }
 
     @And("i create an admin and url search for my application")
     public void iCreateAnAdminAndUrlSearchForMyApplication() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getApplication();
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
     }
 
     @And("i create an admin and url search for my variation")
     public void iCreateAnAdminAndUrlSearchForMyVariation() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getVariationApplication();
+        world.internalNavigation.navigateToPage("variation", SelfServeSection.VIEW);
     }
 
     @And("i url search for my licence")

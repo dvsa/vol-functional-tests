@@ -1,4 +1,5 @@
 @lgv
+@cross-browser
 Feature: The Type of licence page now features the LGV Mixed and LGV Only selection with validation
 
   Scenario Outline: When choosing a Goods SI licence, the LGV Mixed and LGV Only options appear
@@ -12,6 +13,7 @@ Feature: The Type of licence page now features the LGV Mixed and LGV Only select
     | GB      |
     | NI      |
 
+  @smoketest
   Scenario Outline: Clicking Yes to LGV Goods starts the LGV Only application route and type of licence is marked as complete
     Given I create a new external user
     And i have logged in to self serve

@@ -34,6 +34,10 @@ public class InterimLicence extends BasePage implements En {
     private static String trailerAuthField = "//*[@id='interimAuthTrailers']";
     private static String vehicleAuthLabelElement = "//label[text()='Vehicle Authority']";
     private static String trailerAuthLabelElement = "//label[text()='Trailer Authority']";
+    private static String interimGrantModalHeading = "Are you sure you want to grant this interim?";
+    private static String interimGrantConfirmation = "The interim has been granted and a fee request letter has been generated";
+    private String interimOfferText = "Do you want to apply for a time limited interim authority? There's an additional charge for this";
+    private String interimRadioYes = "//*[@id='interim[goodsApplicationInterim]']";
     private World world;
 
     public InterimLicence(World world) { this.world = world; }
@@ -139,8 +143,7 @@ public class InterimLicence extends BasePage implements En {
 
     @When("i view the application interim on internal")
     public void iViewTheApplicationInterimOnInternal() {
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getApplication();
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Interim details");
         waitForTextToBePresent("Interim requested");
     }
@@ -247,5 +250,34 @@ public class InterimLicence extends BasePage implements En {
         HashMap<String, String> randomDate = new Dates(LocalDate::new).getDateHashMap(0,0,0);
         enterDateFieldsByPartialId("interimStart", randomDate);
         enterDateFieldsByPartialId("interimEnd", randomDate);
+    }
+
+    @And("the lgv mixed interim is granted on internal")
+    public void theLgvMixedInterimIsGrantedOnInternal() {
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
+        clickByLinkText("Interim details");
+        waitForTextToBePresent("Interim requested");
+        HashMap<String, String> futureDate = new Dates(LocalDate::new).getDateHashMap(1, 0, 0);
+        enterDateFieldsByPartialId("interimStart", futureDate);
+        enterDateFieldsByPartialId("interimEnd", futureDate);
+        enterText("interimAuthLgvVehicles", SelectorType.ID, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()));
+        click("grant", SelectorType.ID);
+        waitForTextToBePresent(interimGrantModalHeading);
+        click("form-actions[submit]", SelectorType.ID);
+        waitForTextToBePresent(interimGrantConfirmation);
+    }
+
+    @Then("i can request an interim on the {string}")
+    public void iCanRequestAnInterim(String applicationType) {
+        world.selfServeNavigation.navigateToPage(applicationType, SelfServeSection.REVIEW_AND_DECLARATIONS);
+        assertTrue(isTextPresent(interimOfferText));
+        assertTrue(isElementPresent(interimRadioYes, SelectorType.XPATH));
+    }
+
+    @Then("i cannot request an interim on the {string}")
+    public void iCannotRequestAnInterim(String applicationType) {
+        world.selfServeNavigation.navigateToPage(applicationType, SelfServeSection.REVIEW_AND_DECLARATIONS);
+        assertFalse(isTextPresent(interimOfferText));
+        assertFalse(isElementPresent(interimRadioYes, SelectorType.XPATH));
     }
 }

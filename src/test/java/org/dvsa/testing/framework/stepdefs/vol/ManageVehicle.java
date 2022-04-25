@@ -9,6 +9,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.ValidatableResponse;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.api.URL;
@@ -351,5 +352,17 @@ public class ManageVehicle extends BasePage {
         List<Object> responseArray = response.extract().body().jsonPath().get("results.id.findAll()");
         json.put("ids", responseArray);
         RestUtils.delete(json.toString(), URL.build(this.env, "licence-vehicle/").toString(), apiHeaders.headers);
+    }
+
+    @Then("i remove the {int} extra vehicles")
+    public void iRemoveTheExtraVehicles(int numberOfVehicles) {
+        isTextPresent("");
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VEHICLES);
+        for (int i = 0; i < numberOfVehicles; i++) {
+            waitAndClick("//input[@value='Remove']", SelectorType.XPATH);
+            waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
+            world.UIJourney.clickSubmit();
+            waitForElementToBeClickable("//input[@value='Remove']", SelectorType.XPATH);
+        }
     }
 }

@@ -20,7 +20,7 @@ public class OperatingCentreVariation extends BasePage {
     World world;
 
     // Optimal to head towards page objects method for storing selectors for each page but not sure on best design.
-    String confirmDeclaration =  "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
+    String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
     String submitAndPayForApplication = "//button[@id='submitAndPay']";
 
@@ -35,7 +35,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("i create an operating centre variation with {string} hgvs and {string} lgvs")
     public void iCreateAnOperatingCentreVariationWithHgvAndLgvs(String newHGVTotalAuthority, String newLGVTotalAuthority) {
-        world.operatingCentreJourney.loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        world.operatingCentreJourney.loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority);
     }
 
     @And("i create and submit an operating centre variation with {string} hgvs and {string} lgvs")
@@ -46,9 +46,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("i create and submit and grant an operating centre variation with {string} hgvs and {string} lgvs")
     public void iCreateAndSubmitAndGrantAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) {
         world.operatingCentreJourney.loginAndSubmitOperatingCentreVehicleAuthorisationVariationApplication(numberOfHGVs, numberOfLGVs);
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getVariationApplication();
+        world.internalNavigation.navigateToPage("variation", SelfServeSection.VIEW);
         world.UIJourney.caseWorkerCompleteOverview();
         waitForTextToBePresent("The overview page has been saved");
         world.UIJourney.grantApplicationUnderDelegatedAuthority();
@@ -73,7 +71,7 @@ public class OperatingCentreVariation extends BasePage {
         assertTrue(isElementPresent(submitApplication, SelectorType.XPATH));
         assertFalse(isElementPresent(submitAndPayForApplication, SelectorType.XPATH));
     }
-    
+
     @Then("the variation fee should be triggered")
     public void theVariationFeeShouldBeTriggered() {
         click(submitAndPayForApplication, SelectorType.XPATH);
@@ -107,7 +105,7 @@ public class OperatingCentreVariation extends BasePage {
     public void increaseTheAuthorityOnAnExistingOperatingCentreAuthorisationAndUpdateTheTotalAuthorisations() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         String updatedOperatingCentreVehicleAuthorisation = "10";
-        world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation);
+        world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         int newTotalHGVAuthorisation = Integer.parseInt(numberOfNewOperatingCentreVehicles) + Integer.parseInt(updatedOperatingCentreVehicleAuthorisation);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(newTotalHGVAuthorisation), "0", String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
@@ -120,15 +118,13 @@ public class OperatingCentreVariation extends BasePage {
         click("//button[@id='form-actions[submit]']", SelectorType.XPATH);
         sleep(3000);
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
-        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("5" , "5", currentTrailerTotalAuthority);
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("5", "5", currentTrailerTotalAuthority);
     }
 
     @When("i create a lgv authorisation increase variation with {string} on internal")
     public void iCreateALgvAuthorisationIncreaseVariationWithOnInternal(String feeRequired) {
         boolean variationFeeRequired = feeRequired.equals("Fee Required");
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.UIJourney.createVariationInInternal(variationFeeRequired);
     }
 
@@ -182,12 +178,28 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("I create and save an lgv authorisation variation on internal with {int} more LGVs")
     public void iCreateAndSaveAnLgvAuthorisationVariationOnInternal(int additionalAuthority) {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.UIJourney.createVariationInInternal(false);
         String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);
         world.internalNavigation.navigateToAuthorisationPage();
         world.operatingCentreJourney.updateLGVOnlyAuthorityAndSave(newAuthority);
+    }
+
+    @When("i create an operating centre variation with {int} trailers")
+    public void iCreateAnOperatingCentreVariationWithTrailers(int newNumberOfTrailers) {
+        world.operatingCentreJourney.loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(
+                String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority()),
+                String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()),
+                String.valueOf(newNumberOfTrailers));
+    }
+
+    @When("i begin an operating centre and authorisation variation")
+    public void iBeginAnOperatingCentreAndAuthorisationVariation() {
+        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+    }
+
+    @And("i create a new operating centre with {string} hgvs and {string} trailers")
+    public void iCreateANewOperatingCentreWithHgvsAndTrailers(String numberOfHGVs, String numberOfTrailers) {
+        world.operatingCentreJourney.addNewOperatingCentre(numberOfHGVs, numberOfTrailers);
     }
 }

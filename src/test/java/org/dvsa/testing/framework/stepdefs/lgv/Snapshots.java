@@ -6,16 +6,19 @@ import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.openqa.selenium.By;
+import org.dvsa.testing.framework.stepdefs.vol.ManagerUsersPage;
 import org.openqa.selenium.WebElement;
-
-import java.util.ArrayList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.Assert.*;
 
 public class Snapshots extends BasePage {
 
     World world;
+    private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
     private String expectedLgvChoiceTableHeading = "Will you only be operating Light goods vehicles?";
     private String expectedLgvDeclarationTableHeading = "I will only operate Light goods vehicles with a total maximum weight up to and including 3,500 Kilograms (kg) including when combined with a trailer.";
@@ -23,24 +26,38 @@ public class Snapshots extends BasePage {
     private String lightGoodsVehicleDecisionElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvChoiceTableHeading);
     private String lightGoodsVehicleDeclarationElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvDeclarationTableHeading);
 
-    public Snapshots(World world) {
-        this.world = world;
-    }
+    public Snapshots(World world) {this.world = world;}
+
 
     @And("i navigate to the snapshot on the review and declarations page")
     public void iNavigateToTheSnapshotOnTheReviewAndDeclarationsPage() {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
+        String originalWindow = getDriver().getWindowHandle();
+
+        for (String howManyTabs : getDriver().getWindowHandles()) {
+            LOGGER.info("Each open tab ID : " + howManyTabs);
+        }
+
         clickByLinkText("Check your answers");
-        ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
-        switchToWindow(tabs.get(1));
+        WebDriverWait wait = new WebDriverWait(getDriver(),0);
+        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
+        for (String windowHandle : getDriver().getWindowHandles()) {
+            LOGGER.info("Each open tab ID2 : " + windowHandle);
+            if(!originalWindow.contentEquals(windowHandle)) {
+                getDriver().switchTo().window(windowHandle);
+                break;
+            }
+        }
     }
 
     @Then("the lgv choice and declaration confirmation are visible as {string} and {string}")
     public void theLgvChoiceAndDeclarationConfirmationAreVisible(String lgvDecision, String lgvDeclaration) {
+        waitForElementToBePresent(lightGoodsVehicleDecisionElement);
         WebElement lgvDecisionTableSection = findElement(lightGoodsVehicleDecisionElement, SelectorType.XPATH);
         assertEquals(expectedLgvChoiceTableHeading, getTextFromNestedElement(lgvDecisionTableSection, "dt"));
         assertEquals(lgvDecision, getTextFromNestedElement(lgvDecisionTableSection, "dd"));
-
+        waitForElementToBePresent(lightGoodsVehicleDeclarationElement);
         WebElement lgvDeclarationTableSection = findElement(lightGoodsVehicleDeclarationElement, SelectorType.XPATH);
         assertEquals(expectedLgvDeclarationTableHeading, getTextFromNestedElement(lgvDeclarationTableSection, "dt"));
         assertEquals(lgvDeclaration, getTextFromNestedElement(lgvDeclarationTableSection, "dd"));
@@ -51,7 +68,6 @@ public class Snapshots extends BasePage {
         WebElement lgvDecisionTableSection = findElement(lightGoodsVehicleDecisionElement, SelectorType.XPATH);
         assertEquals(expectedLgvChoiceTableHeading, getTextFromNestedElement(lgvDecisionTableSection, "dt"));
         assertEquals("No", getTextFromNestedElement(lgvDecisionTableSection, "dd"));
-
         assertFalse(isTextPresent(expectedLgvDeclarationTableHeading));
     }
 

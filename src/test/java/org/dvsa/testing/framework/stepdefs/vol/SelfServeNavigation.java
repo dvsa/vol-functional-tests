@@ -6,7 +6,6 @@ import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums.Self;
 import org.junit.Assert;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
@@ -45,9 +44,26 @@ public class SelfServeNavigation extends BasePage {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.LICENCE_AUTHORISATION);
     }
 
+    @And("i navigate to the application review and declarations page")
+    public void iNavigateToTheApplicationReviewAndDeclarationsPage() {
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
+    }
+
     @And("i navigate to the application operating centres and authorisations page")
     public void iNavigateToTheOperatingCentresAndAuthorisationsPage() {
         refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
+    }
+
+    @When("i am on the {string} financial evidence page and click on the How Did We Calculate This Link")
+    public void iAmOnTheFinancialEvidencePageAndClickOnTheHowDidWeCalculateThisLink(String statusType) {
+        world.selfServeNavigation.navigateToPage(statusType, SelfServeSection.FINANCIAL_EVIDENCE);
+        click("//span[contains(text(),'How did we calculate this?')]", SelectorType.XPATH);
+    }
+
+    @When("i am on the operating centre and authorisations page")
+    public void iAmOnTheOperatingCentreAndAuthorisationsPage() {
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
     }
 }

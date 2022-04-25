@@ -285,10 +285,7 @@ public class UIJourney extends BasePage {
     }
 
     public void addNewOperatingCentre() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalNavigation.getLicence();
-        clickByLinkText("Operating centres and authorisation");
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         click("//*[@id='add']", SelectorType.XPATH);
         searchAndSelectAddress("postcodeInput1", "FK10 1AA", 1);
         waitForTextToBePresent("Total number of vehicles");
@@ -538,6 +535,12 @@ public class UIJourney extends BasePage {
                 }
             }
         }
+        if (vehicleType.equals("lgv_only_fleet"))
+            world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
+        else
+            world.createApplication.setVehicleType(VehicleType.MIXED_FLEET.asString());
         clickSaveAndContinue();
+        if (!getCurrentUrl().contains("#validationSummary"))
+            world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
     }
 }
