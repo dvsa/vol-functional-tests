@@ -3,7 +3,6 @@ Feature: When setting the correspondence and establishment address, traffic area
 
   Background:
     Given I create a new external user
-    And i have logged in to self serve
 
   Scenario: When setting correspondence and establishment address on on lgv only NI application then traffic area should be NI
     And I apply for a "NI" "goods" "standard_international" "lgv_only_fleet" "checked" licence
