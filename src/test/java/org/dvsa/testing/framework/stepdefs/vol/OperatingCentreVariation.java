@@ -35,7 +35,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("i create an operating centre variation with {string} hgvs and {string} lgvs")
     public void iCreateAnOperatingCentreVariationWithHgvAndLgvs(String newHGVTotalAuthority, String newLGVTotalAuthority) {
-        world.operatingCentreJourney.loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority);
+        world.operatingCentreJourney.saveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority);
     }
 
     @And("i create and submit an operating centre variation with {string} hgvs and {string} lgvs")
@@ -85,14 +85,14 @@ public class OperatingCentreVariation extends BasePage {
 
     @When("i change my total HGV vehicle authority to {int} without changing the operating centres")
     public void iChangeMyTotalHGVVehicleAuthorityWithoutChangingTheOperatingCentres(int HGVTotalAuthority) {
-        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+        world.generalVariationJourney.beginOperatingCentreVariation();
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(HGVTotalAuthority), "0", currentTrailerTotalAuthority);
     }
 
     @When("i add an operating centre and increase the vehicle total authority")
     public void iAddAnOperatingCentreAndIncreaseTheVehicleTotalAuthority() {
-        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+        world.generalVariationJourney.beginOperatingCentreVariation();
         numberOfNewOperatingCentreVehicles = "5";
         world.operatingCentreJourney.addNewOperatingCentre(numberOfNewOperatingCentreVehicles, "0");
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
@@ -187,7 +187,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @When("i create an operating centre variation with {int} trailers")
     public void iCreateAnOperatingCentreVariationWithTrailers(int newNumberOfTrailers) {
-        world.operatingCentreJourney.loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(
+        world.operatingCentreJourney.saveOperatingCentreVehicleAuthorisationVariationChange(
                 String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority()),
                 String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()),
                 String.valueOf(newNumberOfTrailers));
@@ -195,7 +195,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @When("i begin an operating centre and authorisation variation")
     public void iBeginAnOperatingCentreAndAuthorisationVariation() {
-        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+        world.generalVariationJourney.beginOperatingCentreVariation();
     }
 
     @And("i create a new operating centre with {string} hgvs and {string} trailers")

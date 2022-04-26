@@ -16,19 +16,19 @@ public class GeneralVariationJourney extends BasePage {
         if (world.licenceCreation.isLGVOnlyLicence())
             signInAndBeginLicenceAuthorisationVariation();
         else
-            signInAndBeginOperatingCentreVariation();
+            beginOperatingCentreVariation();
     }
 
     public void signInAndBeginLicenceAuthorisationVariation() {
-        signInAndBeginVariation(SelfServeSection.LICENCE_AUTHORISATION);
+        beginVariation(SelfServeSection.LICENCE_AUTHORISATION);
     }
 
-    public void signInAndBeginOperatingCentreVariation() {
-        signInAndBeginVariation(SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
+    public void beginOperatingCentreVariation() {
+        beginVariation(SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
     }
 
-    public void signInAndBeginVariation(SelfServeSection selfServePage) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+    public void beginVariation(SelfServeSection selfServePage) {
+        //world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", selfServePage);
         world.UIJourney.changeLicenceForVariation();
     }

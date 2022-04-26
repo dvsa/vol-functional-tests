@@ -7,7 +7,7 @@ Feature: Operating Centre authorisation variations triggering fees
     When i create an operating centre variation with "5" hgvs and "5" lgvs
     And complete the financial evidence page
     Then the review and declaration page should display pay and submit
-    Then the variation fee should be triggered
+    And the variation fee should be triggered
 
   Scenario: HGVs total authorisation increase on a goods standard international doesn't trigger a fee
     Given I have a "goods" "standard_international" licence with 2 operating centres
@@ -20,21 +20,21 @@ Feature: Operating Centre authorisation variations triggering fees
     When i create an operating centre variation with "8" hgvs and "0" lgvs
     And complete the financial evidence page
     Then the review and declaration page should display pay and submit
-    Then the variation fee should be triggered
+    And the variation fee should be triggered
 
   Scenario: Adding a new operating centre on a goods standard international triggers a fee
     Given I have a "goods" "standard_international" licence
     When i add an operating centre and increase the vehicle total authority
     And complete the financial evidence page
     Then the review and declaration page should display pay and submit
-    Then the variation fee should be triggered
+    And the variation fee should be triggered
 
   Scenario: Increasing HGVs at an operating centre and increasing the LGVs total authorisation on a goods standard international triggers a fee
     Given I have a "goods" "standard_international" licence
     When i create an operating centre variation with "8" hgvs and "5" lgvs
     And complete the financial evidence page
     Then the review and declaration page should display pay and submit
-    Then the variation fee should be triggered
+    And the variation fee should be triggered
 
   Scenario Outline: Adding an OC and increasing vehicles on an existing OC triggers a fee
     Given I have a "goods" "<licenceType>" licence
@@ -51,11 +51,11 @@ Feature: Operating Centre authorisation variations triggering fees
 
   Scenario: Increasing HGVs at an OC, increasing LGVs total authorisation and reverting the HGVs increase triggers a fee
     Given I have a "goods" "standard_international" licence
-    When i add an operating centre and increase the vehicle total authority
+    And i add an operating centre and increase the vehicle total authority
     When i increase my lgv authorisation and delete the new operating centre
     And complete the financial evidence page
     Then the review and declaration page should display pay and submit
-    Then the variation fee should be triggered
+    And the variation fee should be triggered
 
   Scenario: Variation created by a caseworker with "Fee Required" triggers a fee
     Given I have a "goods" "standard_international" licence
@@ -69,6 +69,6 @@ Feature: Operating Centre authorisation variations triggering fees
 
   Scenario: Accessibility scan the pages (use new Accessibility library in pom)
     Given I have a "goods" "standard_international" licence
-    And i have logged in to self serve
-    And i scan the various operating centre and authorisation pages
+    #And i have logged in to self serve
+    When i scan the various operating centre and authorisation pages
     Then no issues should be present on the page
