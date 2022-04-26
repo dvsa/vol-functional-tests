@@ -6,6 +6,7 @@ import activesupport.dates.Dates;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
 import org.junit.Assert;
 
@@ -144,6 +145,7 @@ public class TransportManagerJourney extends BasePage {
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
+        world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(),world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL);
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         } else {

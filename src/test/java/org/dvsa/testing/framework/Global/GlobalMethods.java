@@ -84,10 +84,6 @@ public class GlobalMethods extends BasePage {
         }
     }
 
-    public void navigateToLogin(String username, String emailAddress, ApplicationType applicationType) {
-        navigateToLoginWithoutCookies(username, emailAddress, applicationType);
-    }
-
     public void signIn(String userName, String password) {
         replaceText(emailField, SelectorType.CSS, userName);
         replaceText(passwordField, SelectorType.CSS, password);

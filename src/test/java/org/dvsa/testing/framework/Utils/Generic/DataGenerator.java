@@ -103,7 +103,6 @@ public class DataGenerator extends BasePage {
     }
 
     public void generateAndAddOperatorUser() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.UIJourney.addUser();
     }
 }

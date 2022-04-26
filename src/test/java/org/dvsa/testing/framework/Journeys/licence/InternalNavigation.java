@@ -25,7 +25,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToLogin(String username, String emailAddress) {
-        world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.INTERNAL);
+        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.INTERNAL);
     }
 
     public void logInAsAdmin() {
