@@ -39,8 +39,7 @@ Feature: Financial evidence calculations for hgv and lgv permutations.
 
   Scenario Outline: Financial Evidence Page should display the valid financial standing rates on self serve matching those on internal
     Given i have a valid "<operatorType>" "<licenceType>" licence
-    And i have logged in to self serve
-    When i create an operating centre variation with "6" hgvs and "6" lgvs
+    And i create an operating centre variation with "6" hgvs and "6" lgvs
     When i am on the "variation" financial evidence page and click on the How Did We Calculate This Link
     Then the valid financial standing rate values should be present
 
