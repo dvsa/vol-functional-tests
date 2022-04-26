@@ -25,7 +25,6 @@ public class GlobalMethods extends BasePage {
     public Dates date = new Dates(new LocalDateCalendar());
     private final String emailField = nameAttribute("input", "username");
     private final String passwordField = nameAttribute("input", "password");
-    private final String oldPasswordField = nameAttribute("input", "oldPassword");
     private final String newPasswordField = nameAttribute("input", "newPassword");
     private final String confirmPasswordField = nameAttribute("input", "confirmPassword");
     private final String submitButton = nameAttribute("input", "submit") + "[value=\"Sign in\"]";
