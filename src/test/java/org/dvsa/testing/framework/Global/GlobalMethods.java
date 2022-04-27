@@ -55,8 +55,8 @@ public class GlobalMethods extends BasePage {
         }
         DriverUtils.get(myURL);
         try {
-            if(isElementPresent("declarationRead",SelectorType.ID)) {
-                waitAndClick("declarationRead",SelectorType.ID);
+            if (isElementPresent("declarationRead", SelectorType.ID)) {
+                waitAndClick("declarationRead", SelectorType.ID);
             }
             enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
@@ -69,20 +69,22 @@ public class GlobalMethods extends BasePage {
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
         String password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-
         try {
             signIn(username, password);
-        } catch (Exception e) {
-            signIn(username, getLoginPassword());
+            if (isTextPresent("Please check your username and password")) {
+                signIn(username, getLoginPassword());
+            }
         } finally {
-            if (isTextPresent("Your password must:"))
+            if (isTextPresent("Your password must:")) {
                 waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
-            waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
-            click(nameAttribute("input", "submit"), SelectorType.CSS);
-            setLoginPassword(newPassword);
-            untilNotInDOM(submitButton, 5);
+                waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
+                click(nameAttribute("input", "submit"), SelectorType.CSS);
+                setLoginPassword(newPassword);
+                untilNotInDOM(submitButton, 1);
+            }
         }
     }
+
 
     public void signIn(String userName, String password) {
         replaceText(emailField, SelectorType.CSS, userName);

@@ -113,9 +113,9 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("New Letter");
         clickById("New letter");
         waitForTextToBePresent("Generate letter");
-        waitAndSelectByIndex( "//*[@id='category']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex( "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 1);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Amend letter");
     }
@@ -186,9 +186,9 @@ public class UIJourney extends BasePage {
         if (isTextPresent("The last company selected on this device was Post Office Stub.")) {
             waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
         }
-        if (getDriver().getCurrentUrl().contains("login")) {
-            enterText("username", SelectorType.NAME, verifyUsername);
-            enterText("password", SelectorType.NAME, verifyPassword);
+        if (isTextPresent("Use your existing username and password")) {
+            waitAndEnterText("username", SelectorType.NAME, verifyUsername);
+            waitAndEnterText("password", SelectorType.NAME, verifyPassword);
             while (size("//*[contains(text(),'Verified ID Login')]", SelectorType.XPATH) > 0) {
                 click("//*[@value='SignIn']", SelectorType.XPATH);
             }
