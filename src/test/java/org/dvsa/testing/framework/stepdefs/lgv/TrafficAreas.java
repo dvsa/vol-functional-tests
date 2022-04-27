@@ -77,7 +77,6 @@ public class TrafficAreas extends BasePage {
 
     @When("i apply for a new {string} lgv only application and enter a postcode in the North West of England")
     public void iApplyForANewGoodsStandardInternationalApplicationAndEnterAPostcodeInTheNorthWestOfEngland(String GBOrNI) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         clickByLinkText("Apply for a new licence");
         world.typeOfLicence.chooseGBOrNI(GBOrNI);
         clickByXPath("//input[@value='lcat_gv']");
@@ -86,7 +85,7 @@ public class TrafficAreas extends BasePage {
         click("lgv-declaration-confirmation", SelectorType.ID);
         UIJourney.clickSaveAndContinue();
         waitForTitleToBePresent("Apply for a new licence");
-        world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
+        world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         clickByLinkText("Business type");
         UIJourney.clickSaveAndContinue();
