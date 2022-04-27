@@ -509,6 +509,7 @@ public class UIJourney extends BasePage {
         if (isElementPresent("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH))
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
         click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
+        waitAndClick("//a[@aria-label='Close notification']", SelectorType.XPATH);
     }
 
     public void createVariationInInternal(boolean variationFeeRequired) {
