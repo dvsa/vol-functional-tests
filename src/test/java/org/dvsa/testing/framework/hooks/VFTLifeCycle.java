@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.hooks;
 
+import activesupport.driver.Browser;
 import cucumber.api.event.EventListener;
 import cucumber.api.event.EventPublisher;
 import cucumber.api.event.TestRunFinished;
@@ -18,6 +19,7 @@ public class VFTLifeCycle implements EventListener {
         });
         publisher.registerHandlerFor(TestRunFinished.class, event -> {
             LOGGER.info("Test is shutting down");
+            Browser.navigate().close();
         });
     }
 }
