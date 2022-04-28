@@ -117,7 +117,7 @@ public class TypeOfLicence extends BasePage {
         click(world.typeOfLicence.lgvDeclarationCheckbox, SelectorType.XPATH);
         UIJourney.clickSaveAndContinue();
         String url = navigate().getCurrentUrl();
-        world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 2));
+        world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
     @And("i choose to have mixed vehicles and click save and continue")
@@ -125,7 +125,7 @@ public class TypeOfLicence extends BasePage {
         click(world.typeOfLicence.mixedFleet, SelectorType.XPATH);
         UIJourney.clickSaveAndContinue();
         String url = navigate().getCurrentUrl();
-        world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 2));
+        world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
     @Then("the caseworker can review the {string} LGV Only choice on internal")

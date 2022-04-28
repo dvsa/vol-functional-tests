@@ -34,7 +34,6 @@ public class SelfServeNavigation extends BasePage {
 
     @And("i navigate to the apply for a licence page")
     public void iNavigateToTheApplyForALicencePage() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.VIEW);
     }
 
