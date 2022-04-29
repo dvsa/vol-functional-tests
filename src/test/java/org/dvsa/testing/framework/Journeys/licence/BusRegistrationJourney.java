@@ -133,10 +133,8 @@ public class BusRegistrationJourney extends BasePage {
         world.APIJourney.submitApplication();
         if (String.valueOf(operatorType).equals("public")) {
             world.APIJourney.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         } else {
             world.APIJourney.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         }
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         internalSiteAddBusNewReg(5);

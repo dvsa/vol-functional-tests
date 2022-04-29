@@ -262,9 +262,8 @@ public class UIJourney extends BasePage {
 
     public void closeCase() {
         clickByLinkText("" + world.updateLicence.getCaseId() + "");
-
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        String casePath = String.format("/case/details/%s", world.updateLicence.getCaseId());
+        String casePath = String.format("case/details/%s", world.updateLicence.getCaseId());
         navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
