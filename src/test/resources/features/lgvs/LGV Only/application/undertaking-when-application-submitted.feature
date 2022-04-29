@@ -3,7 +3,6 @@ Feature: Undertakings are generated on internal side when lgv only applications 
 
   Scenario: Undertaking is created on internal when a user submits and application
     Given I have a "GB" lgv only application
-    And i have logged in to self serve
     And i navigate to the application review and declarations page
     When i submit and pay for the application
     Then the lgv only undertaking should be generated on internal matching relevant criteria

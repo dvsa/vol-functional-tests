@@ -69,6 +69,5 @@ Feature: Operating Centre authorisation variations triggering fees
 
   Scenario: Accessibility scan the pages (use new Accessibility library in pom)
     Given I have a "goods" "standard_international" licence
-    #And i have logged in to self serve
     When i scan the various operating centre and authorisation pages
     Then no issues should be present on the page
