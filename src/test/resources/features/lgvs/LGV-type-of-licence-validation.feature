@@ -3,7 +3,6 @@ Feature: Error Validation for Type of Licence LGV Only Declaration
 
   Background:
     Given I create a new external user
-    And i have logged in to self serve
 
   Scenario Outline: Type of Licence LGV only no option selected error check
     When I apply for a "<licenceWhere>" "<operatorType>" "<licenceType>" "<vehicleType>" "<lgvUndertaking>" licence

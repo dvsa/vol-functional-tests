@@ -154,7 +154,7 @@ public class TypeOfLicence extends BasePage {
     @When("a caseworker goes to apply for a goods standard_international licence")
     public void aCaseworkerGoesToApplyForAGoodsStandard_internationalLicence() {
         String organisationId = world.userDetails.getOrganisationId().substring(1, world.userDetails.getOrganisationId().length() - 1);
-        String internalOrganisationUrl = String.format("%s/operator/%s/licences/", URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), organisationId);
+        String internalOrganisationUrl = String.format("%soperator/%s/licences/", URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), organisationId);
         get(internalOrganisationUrl);
         waitForTitleToBePresent(world.registerUser.getOrganisationName());
         clickByLinkText("New application");
