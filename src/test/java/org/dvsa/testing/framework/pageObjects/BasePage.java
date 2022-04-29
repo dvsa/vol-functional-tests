@@ -533,7 +533,7 @@ public abstract class BasePage extends DriverUtils {
 
     public static void refreshPageUntilElementAppears(String selector, SelectorType selectorType) {
         boolean elementFound = false;
-        long kickoutTime = System.currentTimeMillis() + 120 * 1000;
+        long kickoutTime = System.currentTimeMillis() + 120 * 2000;
         while (!elementFound && System.currentTimeMillis() < kickoutTime) {
             javaScriptExecutor("location.reload(true)");
             elementFound = isElementPresent(selector, selectorType);

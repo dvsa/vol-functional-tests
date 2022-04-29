@@ -221,6 +221,7 @@ public class SurrenderLogic extends BasePage implements En {
     public void theCaseworkerAttemptsToWithdrawTheSurrender() {
         world.surrenderJourney.caseworkManageSurrender();
         waitForElementToBeClickable("actions[surrender]", SelectorType.ID);
+        refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
     }
 
