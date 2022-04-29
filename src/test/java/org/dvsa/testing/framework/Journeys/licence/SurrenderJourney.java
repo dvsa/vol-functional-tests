@@ -43,6 +43,11 @@ public class SurrenderJourney extends BasePage {
 
     public void navigateToSurrendersStartPage()  {
         refreshPageWithJavascript();
+        if(!getDriver().getCurrentUrl().contains("ssweb")){
+           if(!isTextPresent("Current licences")){
+               world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+           }
+        }
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Apply to surrender licence");
     }
