@@ -10,7 +10,7 @@
 
     <properties>
         <active-support.version>1.6.5</active-support.version>
-        <api-calls.version>1.1.11</api-calls.version>
+        <api-calls.version>1.1.12</api-calls.version>
         <uri-constructor.version>1.5.7</uri-constructor.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
