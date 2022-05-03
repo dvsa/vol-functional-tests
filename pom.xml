@@ -104,7 +104,7 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfRunners>15</desiredNumberOfRunners>
+                    <desiredNumberOfRunners>8</desiredNumberOfRunners>
                     <includeScenarioTags>
                         not (@skip
                         or @Deprecated
@@ -143,8 +143,8 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>7</forkCount>
-                            <reuseForks>true</reuseForks>
+                            <forkCount>10</forkCount>
+                            <reuseForks>false</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
