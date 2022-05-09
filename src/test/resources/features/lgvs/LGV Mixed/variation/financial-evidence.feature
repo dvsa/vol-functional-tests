@@ -1,5 +1,7 @@
 @lgv
 @financial-evidence
+@lgv-smoke
+
 Feature: 1 - Financial evidence calculations for hgv and lgv permutations.
 
   Scenario Outline: Check financial evidence for variations

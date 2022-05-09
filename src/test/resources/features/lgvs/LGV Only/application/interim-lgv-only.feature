@@ -1,4 +1,5 @@
 @lgv
+@lgv-smoke
 Feature: LGV Only interims are applicable and only display LGV Only related information and submissions
 
   Background:

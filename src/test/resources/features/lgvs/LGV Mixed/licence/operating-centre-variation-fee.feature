@@ -36,6 +36,7 @@ Feature: Operating Centre authorisation variations triggering fees
     Then the review and declaration page should display pay and submit
     And the variation fee should be triggered
 
+  @lgv-smoke
   Scenario Outline: Adding an OC and increasing vehicles on an existing OC triggers a fee
     Given I have a "goods" "<licenceType>" licence
     When i add an operating centre and increase the vehicle total authority

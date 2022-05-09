@@ -184,7 +184,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         String continueButton = "//button[@id='form-actions[withdraw]']";
         untilElementIsPresent(withdrawButton, SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
         scrollAndClick(withdrawButton, SelectorType.XPATH);
-        waitAndSelectByIndex("Withdraw Reason",withdrawReasonButton, SelectorType.XPATH,4);
+        waitAndSelectByIndex(withdrawReasonButton, SelectorType.XPATH,4);
        // waitAndClick(withdrawReason,SelectorType.XPATH);
         untilElementIsPresent(continueButton, SelectorType.XPATH, Duration.LONG, TimeUnit.SECONDS);
         scrollAndClick(continueButton, SelectorType.XPATH);
@@ -259,7 +259,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         isElementPresent("//a[@id='menu-irhp-application-decisions-withdraw']",SelectorType.XPATH);
     }
     public static void permitsFeePage(){
-        untilElementWithText("//h1[@class='govuk-heading-xl']", SelectorType.XPATH,"Permit fee", ChronoUnit.SECONDS, Duration.CENTURY);
+        untilElementWithText(ChronoUnit.SECONDS, Duration.CENTURY);
     }
     public static void permitsSelectFeeTab(){
         waitAndClick("//a[@id='menu-licence_irhp_applications-fees']",SelectorType.XPATH);

@@ -1,4 +1,6 @@
 @lgv @financial-evidence
+@lgv-smoke
+
 Feature: Check financial evidence is displaying the correct information
 
   Scenario Outline: Financial Evidence Page should display the valid financial standing rates on self serve matching those on internal

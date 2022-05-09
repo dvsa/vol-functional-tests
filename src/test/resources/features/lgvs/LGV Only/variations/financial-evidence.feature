@@ -1,4 +1,5 @@
 @lgv @financial-evidence
+@lgv-smoke
 Feature: Financial evidence calculations for lgv only variations
 
   Background:

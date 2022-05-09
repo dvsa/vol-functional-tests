@@ -1,4 +1,5 @@
 @lgv
+@lgv-smoke
 Feature: Publications are generated correctly upon creating an lgv increase variation
 
   Scenario: A submitted LGV Only variation creates a publication correctly on internal

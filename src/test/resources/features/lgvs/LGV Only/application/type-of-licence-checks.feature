@@ -12,7 +12,7 @@ Feature: The Type of licence page now features the LGV Mixed and LGV Only select
     | GB      |
     | NI      |
 
-  @smoketest
+  @smoketest @lgv-smoke
   Scenario Outline: Clicking Yes to LGV Goods starts the LGV Only application route and type of licence is marked as complete
     Given I create a new external user
     When i go to apply for a "<Country>" goods standard international licence
