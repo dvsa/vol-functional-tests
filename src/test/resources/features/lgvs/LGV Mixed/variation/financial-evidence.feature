@@ -13,10 +13,10 @@ Feature: 1 - Financial evidence calculations for hgv and lgv permutations.
 
     Examples:
       | operatorType | licenceType            | vehicleAuth | trafficArea | HGVs | LGVs |
-      #| goods        | standard_international |     5       |      1      |   7  |   0  |
-      #| goods        | standard_international |     5       |      1      |   3  |   2  |
-      #| goods        | standard_national      |     5       |      1      |   6  |   0  |
-      #| goods        | restricted             |     5       |      1      |   6  |   0  |
+      | goods        | standard_international |     5       |      1      |   7  |   0  |
+      | goods        | standard_international |     5       |      1      |   3  |   2  |
+      | goods        | standard_national      |     5       |      1      |   6  |   0  |
+      | goods        | restricted             |     5       |      1      |   6  |   0  |
       | public       | standard_national      |     5       |      1      |   6  |   0  |
       | public       | standard_international |     5       |      1      |   6  |   0  |
       | public       | restricted             |     5       |      1      |   2  |   0  |

@@ -35,7 +35,7 @@ public class InterimLicence extends BasePage implements En {
     private static String trailerAuthLabelElement = "//label[text()='Trailer Authority']";
     private static String interimGrantModalHeading = "Are you sure you want to grant this interim?";
     private static String interimGrantConfirmation = "The interim has been granted and a fee request letter has been generated";
-    private String interimOfferText = "Do you want to apply for a time limited interim authority? There's an additional charge for this";
+    private String interimOfferText = "Do you want to apply for a time limited interim authority?";
     private String interimRadioYes = "//*[@id='interim[goodsApplicationInterim]']";
     private World world;
 
