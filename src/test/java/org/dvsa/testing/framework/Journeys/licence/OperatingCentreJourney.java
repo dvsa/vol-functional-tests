@@ -3,16 +3,20 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
+import apiCalls.actions.CreateApplication;
 import apiCalls.enums.OperatorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.io.IOException;
 import java.util.HashMap;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class OperatingCentreJourney extends BasePage {
+    private static final Logger LOGGER = LogManager.getLogger(OperatingCentreJourney.class);
 
     World world;
     private FakerUtils faker = new FakerUtils();
@@ -99,9 +103,13 @@ public class OperatingCentreJourney extends BasePage {
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
+            waitForElementToBePresent(totalLGVAuthorisationField);
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
+        LOGGER.info("AP operator type: " + world.createApplication.getOperatorType());
+        LOGGER.info("AP operator type: " + OperatorType.GOODS.asString());
         if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()))
+            waitForElementToBePresent(totalTrailersAuthorisationField);
             replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
         if (isElementPresent("totAuthVehicles",SelectorType.ID)) {
             replaceText(totalAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
@@ -117,6 +125,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void addNewOperatingCentre(String vehicles, String trailers) {
+        waitForElementToBePresent(addOperatingCentre);
         click(addOperatingCentre, SelectorType.XPATH);
         try {
             accessibilityScanner();
