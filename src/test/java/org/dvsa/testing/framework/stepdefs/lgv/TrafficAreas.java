@@ -91,8 +91,7 @@ public class TrafficAreas extends BasePage {
         UIJourney.clickSaveAndContinue();
         UIJourney.clickSaveAndContinue();
         enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNorthWestPostcode);
-        enterText("phone_primary", SelectorType.ID, "01827353");
-        enterText("email", SelectorType.ID, "test@test.com");
+        enterPhoneAndEmail();
         UIJourney.clickSaveAndContinue();
     }
 
@@ -168,6 +167,7 @@ public class TrafficAreas extends BasePage {
         enterPhoneAndEmail();
         clickByLinkText("Enter the address yourself");
         waitForElementToBePresent(establishmentAddressPostcode);
+        waitAndClick(establishmentAddressPostcode, SelectorType.XPATH);
         enterText(establishmentAddressLine1, SelectorType.XPATH, "test");
         enterText(establishmentAddressTown, SelectorType.XPATH, "test");
         enterText(establishmentAddressPostcode, SelectorType.XPATH, "FG67FG");
@@ -220,6 +220,7 @@ public class TrafficAreas extends BasePage {
     }
 
     private void clearEstablishmentAddress() {
+        waitAndClick(establishmentAddressPostcode, SelectorType.XPATH);
         replaceText(establishmentAddressLine1, SelectorType.XPATH, "");
         replaceText(establishmentAddressLine2, SelectorType.XPATH, "");
         replaceText(establishmentAddressLine3, SelectorType.XPATH, "");
@@ -229,6 +230,7 @@ public class TrafficAreas extends BasePage {
     }
 
     private void enterPhoneAndEmail() {
+        waitAndClick("//input[@id='phone_primary']", SelectorType.XPATH);
         enterText("phone_primary", SelectorType.ID, "01827353");
         enterText("email", SelectorType.ID, "test@test.com");
     }
