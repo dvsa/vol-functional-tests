@@ -395,7 +395,12 @@ public class UIJourney extends BasePage {
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
-        waitForTitleToBePresent("Operating centres and authorisation");
+        if (world.licenceCreation.isLGVOnlyLicence()) {
+            waitForTitleToBePresent("Licence authorisation");
+        } else {
+            waitForTitleToBePresent("Operating centres and authorisation");
+        }
+        //waitForTitleToBePresent("Operating centres and authorisation");
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 

@@ -107,7 +107,8 @@ public class LicenceAuthorisation extends BasePage {
     @When("I create an lgv only authorisation variation with {string}")
     public void iCreateAnLgvOnlyAuthorisationVariationWith(String newLGVTotalAuthority) {
         world.generalVariationJourney.signInAndBeginLicenceAuthorisationVariation();
-        waitForElementToBeClickable(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH);
+        //waitForElementToBeClickable(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH);
+        waitAndClick(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH);
         replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         UIJourney.clickSaveAndReturn();
     }
