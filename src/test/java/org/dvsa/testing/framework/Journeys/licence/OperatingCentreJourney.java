@@ -86,7 +86,6 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void updateOperatingCentreAuthorisation(String newHGVTotalAuthority, String newTrailerTotalAuthority) {
-        waitForElementToBePresent(addOperatingCentre);
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
         click(operatingCentreEditLink, SelectorType.XPATH);
         replaceText(operatingCentreVehicleField, SelectorType.XPATH, newHGVTotalAuthority);
@@ -102,13 +101,11 @@ public class OperatingCentreJourney extends BasePage {
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
-            //waitForElementToBePresent(totalLGVAuthorisationField);
             waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
         if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
-            //waitForElementToBePresent(totalTrailersAuthorisationField);
-            waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
+            waitAndClick(totalHGVAuthorisationField, SelectorType.XPATH);
             replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
         }
         if (isElementPresent("totAuthVehicles",SelectorType.ID)) {
@@ -120,6 +117,7 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void updateLGVOnlyAuthorityAndSave(String newAuthority) {
+        waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
         replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newAuthority);
         UIJourney.clickSaveAndReturn();
     }

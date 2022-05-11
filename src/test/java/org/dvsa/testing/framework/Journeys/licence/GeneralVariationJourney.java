@@ -13,10 +13,11 @@ public class GeneralVariationJourney extends BasePage {
     }
 
     public void signInAndBeginLGVAuthorisationVariation() {
-        if (world.licenceCreation.isLGVOnlyLicence())
+        if (world.licenceCreation.isLGVOnlyLicence()) {
             signInAndBeginLicenceAuthorisationVariation();
-        else
+        } else {
             beginOperatingCentreVariation();
+        }
     }
 
     public void signInAndBeginLicenceAuthorisationVariation() {
