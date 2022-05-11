@@ -102,7 +102,7 @@
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
-                    <desiredNumberOfFeaturesPerRunner>8</desiredNumberOfFeaturesPerRunner>
+                    <desiredNumberOfFeaturesPerRunner>7</desiredNumberOfFeaturesPerRunner>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                     <includeScenarioTags>
@@ -143,7 +143,7 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>8</forkCount>
+                            <forkCount>9</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
