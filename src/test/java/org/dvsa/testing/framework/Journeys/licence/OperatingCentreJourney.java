@@ -102,11 +102,13 @@ public class OperatingCentreJourney extends BasePage {
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
-            waitForElementToBePresent(totalLGVAuthorisationField);
+            //waitForElementToBePresent(totalLGVAuthorisationField);
+            waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
         if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
-            waitForElementToBePresent(totalTrailersAuthorisationField);
+            //waitForElementToBePresent(totalTrailersAuthorisationField);
+            waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
             replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
         }
         if (isElementPresent("totAuthVehicles",SelectorType.ID)) {

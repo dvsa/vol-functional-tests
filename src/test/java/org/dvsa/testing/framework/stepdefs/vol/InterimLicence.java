@@ -169,7 +169,7 @@ public class InterimLicence extends BasePage implements En {
     public void anInterimAuthorityValueIsRequiredErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(valueIsRequiredErrorMessage));
-        String inlineErrorMessage = String.format("//p[@class='error__text' and contains(text(),'%s')]", valueIsRequiredErrorMessage);
+        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", valueIsRequiredErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 
@@ -185,7 +185,7 @@ public class InterimLicence extends BasePage implements En {
     public void anInterimLgvAuthValueExceedsApplicationLgvAuthorityValueErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(LgvVehicleErrorMessage));
-        String inlineErrorMessage = String.format("//p[@class='error__text' and contains(text(),'%s')]", LgvVehicleErrorMessage);
+        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", LgvVehicleErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 
@@ -200,7 +200,7 @@ public class InterimLicence extends BasePage implements En {
     public void aZeroLgvAuthInterimErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(valueCannotBe0ErrorMessage));
-        String inlineErrorMessage = String.format("//p[@class='error__text' and contains(text(),'%s')]", valueCannotBe0ErrorMessage);
+        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", valueCannotBe0ErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 

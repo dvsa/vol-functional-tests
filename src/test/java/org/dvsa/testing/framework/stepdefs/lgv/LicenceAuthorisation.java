@@ -75,13 +75,13 @@ public class LicenceAuthorisation extends BasePage {
     @Then("a maximum authorisation value error message should appear")
     public void aMaximumAuthorisationValueErrorMessageShouldAppear() {
         waitForTextToBePresent("There is a problem");
-        assertTrue(isTextPresent("The input is not between '1' and '5000', inclusively"));
+        assertTrue(isLinkPresent("The input is not between '1' and '5000', inclusively", 10));
     }
 
     @Then("a maximum community authorisation value error message should appear")
     public void aMaximumCommunityAuthorisationValueErrorMessageShouldAppear() {
         waitForTextToBePresent("There is a problem");
-        assertTrue(isTextPresent("The input is not between '0' and '5000', inclusively"));
+        assertTrue(isLinkPresent("The input is not between '0' and '5000', inclusively", 10));
     }
 
     @When("i enter an lgv authorisation and a higher community authorisation")
