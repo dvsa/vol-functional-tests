@@ -187,7 +187,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @When("i create an operating centre variation with {int} trailers")
     public void iCreateAnOperatingCentreVariationWithTrailers(int newNumberOfTrailers) {
-        world.operatingCentreJourney.saveOperatingCentreVehicleAuthorisationVariationChange(
+        world.operatingCentreJourney.saveOCVehicleAuthVarChange(
                 String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority()),
                 String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()),
                 String.valueOf(newNumberOfTrailers));

@@ -74,10 +74,10 @@ public class OperatingCentreJourney extends BasePage {
 
     public void saveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority) {
         String trailerCount = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
-        saveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, trailerCount);
+        saveOCVehicleAuthVarChange(newHGVTotalAuthority, newLGVTotalAuthority, trailerCount);
     }
 
-    public void saveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
+    public void saveOCVehicleAuthVarChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
         world.generalVariationJourney.beginOperatingCentreVariation();
         if (hasNumberOfHGVChanged(newHGVTotalAuthority) || hasNumberOfTrailersChanged(newTrailerTotalAuthority)) {
             updateOperatingCentreAuthorisation(newHGVTotalAuthority, newTrailerTotalAuthority);
@@ -87,7 +87,7 @@ public class OperatingCentreJourney extends BasePage {
 
     public void updateOperatingCentreAuthorisation(String newHGVTotalAuthority, String newTrailerTotalAuthority) {
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
-        click(operatingCentreEditLink, SelectorType.XPATH);
+        waitAndClick(operatingCentreEditLink, SelectorType.XPATH);
         replaceText(operatingCentreVehicleField, SelectorType.XPATH, newHGVTotalAuthority);
         if (world.createApplication.getTotalOperatingCentreTrailerAuthority() != Integer.parseInt(newTrailerTotalAuthority)) {
             replaceText(operatingCentreTrailerField, SelectorType.XPATH, newTrailerTotalAuthority);
