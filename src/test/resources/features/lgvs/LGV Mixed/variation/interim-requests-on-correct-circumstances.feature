@@ -35,7 +35,7 @@ Feature: Interim requests are available upon the correct circumstances
 
     Examples:
       | operatorType | licenceType            |
-      #| goods        | standard_international |
+      | goods        | standard_international |
       | goods        | standard_national      |
 
   Scenario: Can request interim on trailers total authorisation increase

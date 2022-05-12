@@ -362,7 +362,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @Then("i remove the {int} extra vehicles")
-    public void iRemoveTheExtraVehicles(int numberOfVehicles) {
+    public void iRemoveTheExtraVehicles(int numberOfVehicles) throws InterruptedException {
         isTextPresent("");
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VEHICLES);
         for (int i = 0; i < numberOfVehicles; i++) {
@@ -370,11 +370,7 @@ public class ManageVehicle extends BasePage {
             waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
             world.UIJourney.clickSubmit();
             waitForElementToBeClickable("//input[@value='Remove']", SelectorType.XPATH);
-            until(ExpectedConditions.invisibilityOfElementLocated(By.xpath("//div[@class='preloader-overlay--modal']")));
-            waitForElementToBeClickable("add", SelectorType.ID);
-            //UIJourney.refreshPageWithJavascript();
-            untilElementIsNotPresent("//div[@class=\"preloader-overlay--modal\"]", SelectorType.XPATH);
-            //UIJourney.refreshPageWithJavascript();
+            Thread.sleep(2000);
         }
     }
 }

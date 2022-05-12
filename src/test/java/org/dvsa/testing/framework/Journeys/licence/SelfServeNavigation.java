@@ -76,12 +76,12 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page)  {
-        String govUK = "//a[@href='/dashboard/']";
+        //String govUK = "//a[@href='/dashboard/']";
         //waitForPageLoad();
         //waitForElementToBeClickable(govUK, SelectorType.XPATH);
         //waitForElementToBePresent(govUK);
-        waitAndClick(govUK, SelectorType.XPATH);
-        //clickByLinkText("GOV.UK");
+        //waitAndClick(govUK, SelectorType.XPATH);
+        clickByLinkText("GOV.UK");
         waitForTextToBePresent("You must keep your records up to date");
         String applicationStatus;
         String overviewStatus;
