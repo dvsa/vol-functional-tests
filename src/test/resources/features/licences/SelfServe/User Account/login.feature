@@ -4,7 +4,6 @@ Feature: Login into self service
   Scenario: Special characters in login id
     Given I am on Selfserve homepage
     When I attempt to login with a username with special characters
-      | user          |
       | RAIN+CLOUDS   |
       | Jigwel;l      |
       | Messi,Lionel  |
@@ -17,7 +16,6 @@ Feature: Login into self service
   Scenario: Email like login id’s
     Given I am on Selfserve homepage
     When I attempt to login with a username with an email format
-      | user    |
       | a@b.com |
     Then I should be authenticated
     And redirected to the dashboard
@@ -25,7 +23,6 @@ Feature: Login into self service
   Scenario: Users with the same email address
     Given I am on Selfserve homepage
     When I attempt to login with users that share the same email address
-      | user            |
       | .,waynerooney., |
     Then I should be authenticated
     And redirected to the dashboard
