@@ -45,7 +45,6 @@ public class CreateCase extends BasePage implements En {
     @Then("the public inquiry should be published")
     public void thePublicInquiryShouldBePublished() {
         waitForTextToBePresent("There is currently no decision");
-        waitForPageLoad();
     }
 
     @And("I add notes")
