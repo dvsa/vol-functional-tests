@@ -102,7 +102,7 @@
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
-                    <desiredNumberOfFeaturesPerRunner>3</desiredNumberOfFeaturesPerRunner>
+                    <desiredNumberOfFeaturesPerRunner>10</desiredNumberOfFeaturesPerRunner>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                     <includeScenarioTags>
