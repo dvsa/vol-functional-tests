@@ -103,14 +103,16 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <includeScenarioTags>
-                        not (@skip
-                        or @Deprecated
-                        or @Jenkins
-                        or @CLOSES-WINDOW
-                        or @TOGGLE-ECMT)
-                    </includeScenarioTags>
+                    <desiredNumberOfFeaturesPerRunner>6</desiredNumberOfFeaturesPerRunner>
+                    <parallelizationMode>features</parallelizationMode>
+<!--                    <includeScenarioTags>${tag.name}</includeScenarioTags>-->
+<!--                    <includeScenarioTags>-->
+<!--                        not (@skip-->
+<!--                        or @Deprecated-->
+<!--                        or @Jenkins-->
+<!--                        or @CLOSES-WINDOW-->
+<!--                        or @TOGGLE-ECMT)-->
+<!--                    </includeScenarioTags>-->
                 </configuration>
             </plugin>
             <plugin>
