@@ -10,6 +10,9 @@ Feature: Login into self service
       | #BillyBailey1 |
       | Tom_Jerry     |
       | Daffy-Duck    |
+      | abc123+.-/    |
+      | Banana12+_@   |
+      | Apple,,,      |
     Then I should be authenticated
     And redirected to the dashboard
 
