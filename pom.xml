@@ -103,16 +103,15 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfFeaturesPerRunner>6</desiredNumberOfFeaturesPerRunner>
-                    <parallelizationMode>features</parallelizationMode>
-<!--                    <includeScenarioTags>${tag.name}</includeScenarioTags>-->
-<!--                    <includeScenarioTags>-->
-<!--                        not (@skip-->
-<!--                        or @Deprecated-->
-<!--                        or @Jenkins-->
-<!--                        or @CLOSES-WINDOW-->
-<!--                        or @TOGGLE-ECMT)-->
-<!--                    </includeScenarioTags>-->
+                    <desiredNumberOfFeaturesPerRunner>15</desiredNumberOfFeaturesPerRunner>
+                    <includeScenarioTags>${tag.name}</includeScenarioTags>
+                    <includeScenarioTags>
+                        not (@skip
+                        or @Deprecated
+                        or @Jenkins
+                        or @CLOSES-WINDOW
+                        or @TOGGLE-ECMT)
+                    </includeScenarioTags>
                 </configuration>
             </plugin>
             <plugin>
@@ -144,7 +143,7 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>15</forkCount>
+                            <forkCount>10</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
