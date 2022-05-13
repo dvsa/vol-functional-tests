@@ -30,8 +30,8 @@
         <allure-mvn-version>2.10.0</allure-mvn-version>
         <cucable-plugin.version>1.9.0</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven.failsafe.plugin.version>3.0.0-M5</maven.failsafe.plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
+        <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
+        <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
         <allure-report-version>2.13.5</allure-report-version>
         <apache-commons.version>1.8</apache-commons.version>
         <gson.version>20210307</gson.version>
@@ -102,7 +102,6 @@
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
-                    <desiredNumberOfRunners>8</desiredNumberOfRunners>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                     <includeScenarioTags>
@@ -143,7 +142,7 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>10</forkCount>
+                            <forkCount>7</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
