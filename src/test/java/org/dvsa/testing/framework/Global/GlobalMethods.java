@@ -12,7 +12,9 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
-import java.util.concurrent.TimeUnit;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.util.Arrays;
 
 import static activesupport.driver.Browser.navigate;
 
@@ -47,7 +49,7 @@ public class GlobalMethods extends BasePage {
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
             if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
                 waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
             }
