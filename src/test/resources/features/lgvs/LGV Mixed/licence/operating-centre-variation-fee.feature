@@ -11,9 +11,10 @@ Feature: Operating Centre authorisation variations triggering fees
 
   Scenario: HGVs total authorisation increase on a goods standard international doesn't trigger a fee
     Given I have a "goods" "standard_international" licence with 2 operating centres
-    When i change my total HGV vehicle authority to 10 without changing the operating centres
+    When i change my total vehicle authorities to "10" HGVs "same" LGVs and "same" trailers without changing the operating centres
     And complete the financial evidence page
-    Then the review and declaration page should only display submit application
+    Then the review and declaration page should display pay and submit
+    And the variation fee should be triggered
 
   Scenario: HGV operating centre vehicle increase on a goods standard international triggers a fee
     Given I have a "goods" "standard_international" licence
