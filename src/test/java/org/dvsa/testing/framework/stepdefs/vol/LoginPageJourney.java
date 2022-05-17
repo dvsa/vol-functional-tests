@@ -17,7 +17,7 @@ public class LoginPageJourney extends BasePage {
 
     @When("I attempt to login with a username {string} with special characters")
     public void iAttemptToLoginWithAUsernameWithSpecialCharacters(String username) {
-        world.globalMethods.signIn(username, world.configuration.config.getString("internalNewPassword"));
+        world.globalMethods.signIn(username, world.configuration.config.getString("adminPassword"));
         this.userId = username;
     }
 
@@ -34,13 +34,13 @@ public class LoginPageJourney extends BasePage {
 
     @When("I attempt to login with a {string} with an email format")
     public void iAttemptToLoginWithAWithAnEmailFormat(String usernames) {
-        world.globalMethods.signIn(usernames, world.configuration.config.getString("internalNewPassword"));
+        world.globalMethods.signIn(usernames, world.configuration.config.getString("adminPassword"));
         this.userId = usernames;
     }
 
     @When("I attempt to login with {string} that share the same email address")
     public void iAttemptToLoginWithThatShareTheSameEmailAddress(String users) {
-        world.globalMethods.signIn(users, world.configuration.config.getString("internalNewPassword"));
+        world.globalMethods.signIn(users, world.configuration.config.getString("adminPassword"));
         this.userId = users;
     }
 }
