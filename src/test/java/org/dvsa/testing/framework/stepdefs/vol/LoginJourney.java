@@ -8,6 +8,7 @@ import io.cucumber.datatable.DataTable;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import java.util.List;
+import java.util.Locale;
 
 public class LoginJourney extends BasePage {
     World world = new World();
@@ -24,7 +25,7 @@ public class LoginJourney extends BasePage {
 
     @Then("I should be authenticated")
     public void iShouldBeAuthenticated() {
-        isTextPresent(this.userId);
+        isTextPresent(this.userId.toLowerCase(Locale.ROOT));
     }
 
     @And("redirected to the dashboard")
