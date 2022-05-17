@@ -1,14 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.When;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static com.amazonaws.services.s3control.model.JobManifestFieldName.Key;
 
 public class EBSR {
     World world;

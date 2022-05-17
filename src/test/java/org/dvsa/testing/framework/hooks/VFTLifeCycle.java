@@ -15,7 +15,6 @@ public class VFTLifeCycle implements EventListener {
     public void setEventPublisher(EventPublisher publisher) {
         publisher.registerHandlerFor(TestRunStarted.class, event -> {
             LOGGER.info("Test is starting");
-            System.setProperty("webdriver.chrome.verboseLogging", "true");
         });
         publisher.registerHandlerFor(TestRunFinished.class, event -> {
             LOGGER.info("Test is shutting down");
