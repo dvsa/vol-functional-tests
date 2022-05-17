@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 public class LoginPageJourney extends BasePage {
     World world;
@@ -28,7 +29,7 @@ public class LoginPageJourney extends BasePage {
     @And("redirected to the dashboard")
     public void redirectedToTheDashboard() {
         isTextPresent("Sign out");
-        clickByLinkText("Sign out");
+        waitAndClick("Sign out", SelectorType.LINKTEXT);
     }
 
     @When("I attempt to login with a {string} with an email format")
