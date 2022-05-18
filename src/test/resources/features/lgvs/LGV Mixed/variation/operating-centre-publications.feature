@@ -14,6 +14,6 @@ Feature: 1 - Publications generate on LGV related changes and regression
     Examples:
     | licenceType            | HGVs | LGVs | variationType |
     | standard_international | 5    | 5    | LGV           |
-    #| standard_international | 8    | 0    | HGV           |
-    #| standard_international | 8    | 5    | HGV and LGV   |
-    #| standard_national      | 8    | 0    | HGV           |
+    | standard_international | 8    | 0    | HGV           |
+    | standard_international | 8    | 5    | HGV and LGV   |
+    | standard_national      | 8    | 0    | HGV           |
