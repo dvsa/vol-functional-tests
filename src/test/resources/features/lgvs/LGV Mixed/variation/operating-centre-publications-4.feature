@@ -1,6 +1,5 @@
 @lgv
 @cross-browser
-@lgv-smoke
 
 Feature: 4 - Publications generate for increased vehicle authorities where OCs are not changed
 

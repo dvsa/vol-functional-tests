@@ -470,7 +470,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 .concat(world.createApplication.getDirectorForeName())
                 .concat(" ").concat(world.createApplication.getDirectorFamilyName());
         String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
-        String authorityText = String.format("Light goods vehicles authorised on the licence. New authorisation will be %s vehicle(s)", newAuthority);
+        String authorityText = String.format("New licence authorisation will be %s Light goods vehicle(s)", newAuthority);
 
         assertTrue(actualPublicationText.contains(licenceType));
         assertTrue(actualPublicationText.contains(organisationName));
