@@ -13,6 +13,7 @@ Feature: Set and check criteria for triggering automatic letter
     When a self-serve user removes the last TM
     Then a pop up should be displayed advising the user that they are about to remove the last TM
 
+  @tm-application
   @cross-browser
   Scenario: TM verifies variational not as operator
     When i add an existing person as a transport manager who is not the operator on "variation"

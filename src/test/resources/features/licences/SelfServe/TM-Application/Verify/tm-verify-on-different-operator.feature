@@ -3,6 +3,7 @@
 @OLCS-19792
 @ss_regression
 @gov-verify
+@tm-application
 
 Feature: TM signs through verify
 
