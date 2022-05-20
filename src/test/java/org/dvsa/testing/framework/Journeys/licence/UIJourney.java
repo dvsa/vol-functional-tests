@@ -393,9 +393,8 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
-        waitForTitleToBePresent("Operating centres and authorisation");
+        refreshPageWithJavascript();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
