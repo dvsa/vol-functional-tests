@@ -83,11 +83,34 @@ public class OperatingCentreVariation extends BasePage {
         assertTrue(isElementPresent(payNow, SelectorType.XPATH));
     }
 
-    @When("i change my total HGV vehicle authority to {int} without changing the operating centres")
-    public void iChangeMyTotalHGVVehicleAuthorityWithoutChangingTheOperatingCentres(int HGVTotalAuthority) {
+    //@When("i change my total HGV vehicle authority to {int} without changing the operating centres")
+    @When("i change my total vehicle authorities to {string} HGVs {string} LGVs and {string} trailers without changing the operating centres")
+    //i change my total vehicle authoritiesy to {int} HGVs {int} LGVs and {int} trailers without changing the operating centres
+    public void iChangeMyTotalHGVVehicleAuthorityWithoutChangingTheOperatingCentres(String HGVTotalAuthority, String LGVTotalAuthority, String TrailersTotalAuthority) {
         world.generalVariationJourney.beginOperatingCentreVariation();
-        String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
-        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(HGVTotalAuthority), "0", currentTrailerTotalAuthority);
+        String newTrailerTotalAuthority;
+        if (TrailersTotalAuthority.equals("same")) {
+            newTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+        } else {
+            newTrailerTotalAuthority = TrailersTotalAuthority;
+        }
+
+        String newLGVTotalAuthority;
+        if (LGVTotalAuthority.equals("same")) {
+            newLGVTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority());
+        } else {
+            newLGVTotalAuthority = LGVTotalAuthority;
+        }
+
+        String newHGVTotalAuthority;
+        if (HGVTotalAuthority.equals("same")) {
+            newHGVTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority());
+        } else {
+            newHGVTotalAuthority = HGVTotalAuthority;
+        }
+
+        //String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(newHGVTotalAuthority, newLGVTotalAuthority, newTrailerTotalAuthority);
     }
 
     @When("i add an operating centre and increase the vehicle total authority")
@@ -201,5 +224,16 @@ public class OperatingCentreVariation extends BasePage {
     @And("i create a new operating centre with {string} hgvs and {string} trailers")
     public void iCreateANewOperatingCentreWithHgvsAndTrailers(String numberOfHGVs, String numberOfTrailers) {
         world.operatingCentreJourney.addNewOperatingCentre(numberOfHGVs, numberOfTrailers);
+    }
+
+    @And("The variation is submitted")
+    public void variationsubmitted() {
+        world.UIJourney.completeFinancialEvidencePage();
+        clickByLinkText("Review and declarations");
+        click(confirmDeclaration, SelectorType.XPATH);
+        click(submitAndPayForApplication, SelectorType.XPATH);
+        click(payNow, SelectorType.XPATH);
+        world.feeAndPaymentJourney.customerPaymentModule();
+        waitForTextToBePresent("Thank you, your application has been submitted.");
     }
 }

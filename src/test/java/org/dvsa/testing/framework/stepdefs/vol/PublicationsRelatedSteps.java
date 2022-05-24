@@ -2,27 +2,27 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import activesupport.dates.Dates;
-import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.apache.commons.lang.WordUtils;
 import org.dvsa.testing.framework.Utils.Generic.ParseUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.maven.shared.utils.StringUtils.capitalise;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,6 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class PublicationsRelatedSteps extends BasePage implements En {
+    private static final Logger LOGGER = LogManager.getLogger(PublicationsRelatedSteps.class);
     private final World world;
 
     private final String fiftyResultsPerPageLink = "//li/a[text()='50']";
@@ -201,25 +202,51 @@ public class PublicationsRelatedSteps extends BasePage implements En {
             waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
 
         WebElement publicationResult = findElement(String.format("//li[div/h4/a[contains(text(),'%s')] and div[3]/p[contains(text(),'%s')]]/div[2]/p[3]", licenceNumber, publicationType), SelectorType.XPATH);
-        String adaptiveVehicleTypeText = world.licenceCreation.isAGoodsInternationalLicence() ? "Heavy Goods Vehicle" : "vehicle";
+        String adaptiveVehicleTypeText = world.licenceCreation.isAGoodsInternationalLicence() ? "Heavy goods vehicle" : "vehicle";
+        String operatingCentreAddress = world.formattedStrings.getFullCommaOperatingAddress();
         String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
+        String hgvIncreaseText = String.format(" New licence authorisation will be %s Heavy goods vehicle(s)", hgvs);
+        String lgvIncreaseText = String.format(" New licence authorisation will be %s Light goods vehicle(s)", lgvs);
 
-        if (variationType.contains("HGV")) {
-            String operatingCentreAddress = world.formattedStrings.getFullCommaOperatingAddress();
-            String hgvIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s)",
-                    operatingCentreAddress,
-                    hgvs,
-                    adaptiveVehicleTypeText.concat("(s)"),
-                    world.createApplication.getTotalOperatingCentreTrailerAuthority());
-            String hgvExpectedText = correspondenceAddress.concat(hgvIncreaseText);
-            Assertions.assertTrue(publicationResult.getText().contains(hgvExpectedText));
+        switch(variationType){
+            case "HGV":
+                String hgvOCIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) %s New licence authorisation will be %s %s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),correspondenceAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"));
+                String hgvExpectedText = correspondenceAddress.concat(hgvOCIncreaseText);
+                LOGGER.info("AP HGV Exp text:" + hgvExpectedText);
+                LOGGER.info("AP HGV Act text:" + publicationResult.getText());
+                Assertions.assertTrue(publicationResult.getText().contains(hgvExpectedText));
+                break;
+
+            case "LGV":
+                String lgvExpectedText = correspondenceAddress.concat(lgvIncreaseText);
+                LOGGER.info("AP LGV Exp text:" + lgvExpectedText);
+                LOGGER.info("AP LGV Act text:" + publicationResult.getText());
+                Assertions.assertTrue(publicationResult.getText().toLowerCase().contains(lgvExpectedText.toLowerCase()));
+                break;
+
+            case "HGV and LGV":
+                String hgvAndLgv = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) %s%s%s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),correspondenceAddress,hgvIncreaseText,lgvIncreaseText);
+                String hgvAndLgvExpectedText = correspondenceAddress.concat(hgvAndLgv);
+                LOGGER.info("AP HGVAndLGV Exp text:" + hgvAndLgvExpectedText);
+                LOGGER.info("AP HGVAndLGV Act text:" + publicationResult.getText());
+                Assertions.assertTrue(publicationResult.getText().contains(hgvAndLgvExpectedText));
+                break;
+
+            case "HGV auth":
+                String hgvAuthExpectedText = correspondenceAddress.concat(" New licence authorisation will be " + hgvs + " " + adaptiveVehicleTypeText.concat("(s)"));
+                LOGGER.info("AP HGV auth Exp text:" + hgvAuthExpectedText);
+                LOGGER.info("AP HGV auth Act text:" + publicationResult.getText());
+                Assertions.assertTrue(publicationResult.getText().contains(hgvAuthExpectedText));
+                break;
+
+            case "HGV and LGV auth":
+                String hgvAndLgvAuthExpectedText = correspondenceAddress.concat(hgvIncreaseText + lgvIncreaseText);
+                LOGGER.info("AP HGVAndLGV Exp text:" + hgvAndLgvAuthExpectedText);
+                LOGGER.info("AP HGVAndLGV Act text:" + publicationResult.getText());
+                Assertions.assertTrue(publicationResult.getText().contains(hgvAndLgvAuthExpectedText));
+                break;
         }
 
-        if (variationType.contains("LGV")) {
-            String lgvIncreaseText = String.format(" Light goods vehicles authorised on the licence. New authorisation will be %s vehicle(s)", lgvs);
-            String lgvExpectedText = correspondenceAddress.concat(lgvIncreaseText);
-            Assertions.assertTrue(publicationResult.getText().contains(lgvExpectedText));
-        }
         waitForPageLoad();
         clickByLinkText(world.applicationDetails.getLicenceNumber());
 
@@ -227,11 +254,19 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         String hgvValue = licenceHasUpdated ? hgvs : String.valueOf(world.createApplication.getTotalOperatingCentreHgvAuthority());
         String lgvValue = licenceHasUpdated ? lgvs : String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority());
 
-        assertTrue(isElementPresent(String.format("//th[contains(text(),'Operating centre')]/../th[contains(text(),'%s')]", capitalise(adaptiveVehicleTypeText).concat("s")), SelectorType.XPATH));
+        assertTrue(isElementPresent(String.format("//th[contains(text(),'Operating centre')]/../th[contains(text(),'%s')]", WordUtils.capitalizeFully(adaptiveVehicleTypeText).concat("s")), SelectorType.XPATH));
 
-        assertEquals(getText(String.format("//li/dt[contains(text(),'Total Number of %s')]/../dd", adaptiveVehicleTypeText), SelectorType.XPATH), hgvValue);
-        if (world.licenceCreation.isAGoodsInternationalLicence())
+        if (world.licenceCreation.isAGoodsInternationalLicence()) {
+            assertEquals(getText(String.format("//li/dt[contains(text(),'Total Number of %s')]/../dd", WordUtils.capitalizeFully(adaptiveVehicleTypeText).concat("s")), SelectorType.XPATH), hgvValue);
             assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
+        } else {
+            assertEquals(getText(String.format("//li/dt[contains(text(),'Total Number of %s')]/../dd", adaptiveVehicleTypeText.concat("s")), SelectorType.XPATH), hgvValue);
+        }
+
+        //if (world.licenceCreation.isAGoodsInternationalLicence()){
+        //    assertEquals(getText("//li/dt[contains(text(),'Total Number of Light Goods Vehicles')]/../dd", SelectorType.XPATH), lgvValue);
+        //}
+
         assertEquals(getText("//li/dt[contains(text(),'Total Number of trailers')]/../dd", SelectorType.XPATH), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
 
@@ -435,7 +470,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 .concat(world.createApplication.getDirectorForeName())
                 .concat(" ").concat(world.createApplication.getDirectorFamilyName());
         String correspondenceAddress = world.formattedStrings.getFullCommaCorrespondenceAddress();
-        String authorityText = String.format("Light goods vehicles authorised on the licence. New authorisation will be %s vehicle(s)", newAuthority);
+        String authorityText = String.format("New licence authorisation will be %s Light goods vehicle(s)", newAuthority);
 
         assertTrue(actualPublicationText.contains(licenceType));
         assertTrue(actualPublicationText.contains(organisationName));
