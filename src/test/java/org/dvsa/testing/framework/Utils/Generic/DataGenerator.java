@@ -88,7 +88,7 @@ public class DataGenerator extends BasePage {
         FakerUtils faker = new FakerUtils();
         setOperatorForeName(faker.generateFirstName());
         setOperatorFamilyName(faker.generateLastName());
-        setOperatorUser(String.format("%s.%s%s",
+        setOperatorUser(String.format("%s%s%s",
                 getOperatorForeName(),
                 getOperatorFamilyName(), Int.random(1000, 9999))
         );
