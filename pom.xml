@@ -144,7 +144,6 @@
                         </goals>
                         <configuration>
                             <childDelegation>true</childDelegation>
-                            <forkCount>0</forkCount>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
