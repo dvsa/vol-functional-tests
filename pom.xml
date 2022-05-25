@@ -104,14 +104,14 @@
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <desiredNumberOfRunners>7</desiredNumberOfRunners>
-                    <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <includeScenarioTags>
-                        not (@skip
-                        or @Deprecated
-                        or @Jenkins
-                        or @CLOSES-WINDOW
-                        or @TOGGLE-ECMT)
-                    </includeScenarioTags>
+<!--                    <includeScenarioTags>${tag.name}</includeScenarioTags>-->
+<!--                    <includeScenarioTags>-->
+<!--                        not (@skip-->
+<!--                        or @Deprecated-->
+<!--                        or @Jenkins-->
+<!--                        or @CLOSES-WINDOW-->
+<!--                        or @TOGGLE-ECMT)-->
+<!--                    </includeScenarioTags>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -144,7 +144,6 @@
                         </goals>
                         <configuration>
                             <childDelegation>true</childDelegation>
-                            <enableProcessChecker>native</enableProcessChecker>
                             <forkCount>0</forkCount>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
