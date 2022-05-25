@@ -145,6 +145,7 @@
                         <configuration>
                             <childDelegation>true</childDelegation>
                             <enableProcessChecker>true</enableProcessChecker>
+                            <forkCount>0</forkCount>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
