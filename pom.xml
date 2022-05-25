@@ -144,7 +144,7 @@
                         </goals>
                         <configuration>
                             <childDelegation>true</childDelegation>
-                            <enableProcessChecker>true</enableProcessChecker>
+                            <enableProcessChecker>native</enableProcessChecker>
                             <forkCount>0</forkCount>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
