@@ -3,7 +3,11 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
+import activesupport.driver.Browser;
+import activesupport.system.Properties;
 import apiCalls.enums.*;
+import org.dvsa.testing.framework.Global.Configuration;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.joda.time.LocalDate;
 
 public class APIJourney {
@@ -95,8 +99,11 @@ public class APIJourney {
     }
 
     public void registerAndGetUserDetails(String userType) {
+        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         world.registerUser.registerUser();
-        world.userDetails.getUserDetails(userType, world.registerUser.getUserId());
+        //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), world.configuration.config.getString("internalNewPassword"));
     }
 
     public void grantLicenceAndPayFees() {

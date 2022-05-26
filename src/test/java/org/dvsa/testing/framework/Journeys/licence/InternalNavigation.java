@@ -17,7 +17,7 @@ public class InternalNavigation extends BasePage {
 
     private World world;
     private String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
-    String adminDropdown = "//li[@class='admin__title']";
+    public String adminDropdown = "//li[@class='admin__title']";
     public String taskTitle = "//h2[text()='Edit task']";
 
     public InternalNavigation(World world) {
@@ -128,10 +128,15 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page) {
-        if (world.updateLicence.getInternalUserId() == null)
-            world.APIJourney.createAdminUser();
-        if (!getCurrentUrl().contains("iuap1"))
-            world.internalNavigation.logInAsAdmin();
+        if (isElementNotPresent(world.internalNavigation.adminDropdown,SelectorType.XPATH)) {
+            if (world.updateLicence.getInternalUserId() == null) {
+                world.APIJourney.createAdminUser();
+                if (!getCurrentUrl().contains("iuweb")) {
+                    world.internalNavigation.logInAsAdmin();
+                }
+            }
+        }
+
 
         switch(type) {
             case "application":

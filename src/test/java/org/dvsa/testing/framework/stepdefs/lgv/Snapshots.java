@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 import static org.junit.Assert.*;
 
 public class Snapshots extends BasePage {
@@ -39,7 +41,7 @@ public class Snapshots extends BasePage {
         }
 
         clickByLinkText("Check your answers");
-        WebDriverWait wait = new WebDriverWait(getDriver(),0);
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(1));
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 
         for (String windowHandle : getDriver().getWindowHandles()) {

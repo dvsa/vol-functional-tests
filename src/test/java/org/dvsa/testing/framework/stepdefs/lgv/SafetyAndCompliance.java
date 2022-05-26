@@ -35,7 +35,6 @@ public class SafetyAndCompliance extends BasePage {
             assertTrue(actualRadioButtons.get(i).equals(expectedRadioButtons[i]));
         }
         assertTrue(isTextPresent("Yes"));
-        assertTrue(isTextPresent("No"));
 
         assertTrue(isTextPresent("How do you analyse the information from your digital tachographs"));
         actualRadioButtons = findAll("licence[tachographIns]", SelectorType.NAME).stream().map(x -> x.getAttribute("value")).collect(Collectors.toList());
@@ -65,7 +64,6 @@ public class SafetyAndCompliance extends BasePage {
             assertEquals(actualRadioButtons.get(i), expectedRadioButtons[i]);
         }
         assertTrue(isTextPresent("Yes"));
-        assertTrue(isTextPresent("No"));
 
         assertTrue(isTextPresent("How do you analyse the information from your digital tachographs"));
         actualRadioButtons = findAll("licence[tachographIns]", SelectorType.NAME).stream().map(x -> x.getAttribute("value")).collect(Collectors.toList());

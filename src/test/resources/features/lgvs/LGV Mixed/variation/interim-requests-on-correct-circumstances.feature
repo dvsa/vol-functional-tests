@@ -52,5 +52,4 @@ Feature: Interim requests are available upon the correct circumstances
 
   Scenario: Can request interim on applying for a new licence
     Given I have a "goods" "standard_international" application
-    When i have logged in to self serve
     Then i can request an interim on the "application"

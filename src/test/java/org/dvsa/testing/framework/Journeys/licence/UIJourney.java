@@ -18,14 +18,9 @@ import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 
 import java.io.IOException;
-import java.time.Duration;
 
 import java.util.*;
 
@@ -38,9 +33,7 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNum
 
 
 public class UIJourney extends BasePage {
-
     private static World world;
-    //private World world;
     private FakerUtils faker = new FakerUtils();
     String uploadLaterRadioButton = "//input[@id='uploadLaterRadio']";
     String saveButton = "//*[@id='form-actions[save]']";
@@ -57,21 +50,21 @@ public class UIJourney extends BasePage {
         enterText(addressSelector, SelectorType.ID, postcode);
         click("address[searchPostcode][search]", SelectorType.ID);
         waitForElementToBeClickable("address[searchPostcode][addresses]", SelectorType.NAME);
-        selectValueFromDropDownByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
+        waitAndSelectByIndex("address[searchPostcode][addresses]", SelectorType.NAME, index);
         waitForPageLoad();
     }
 
     public void addNewOperator(String applicationID, boolean existingApplication) {
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-        enterText( "forename", SelectorType.ID, faker.generateFirstName());
+        enterText("forename", SelectorType.ID, faker.generateFirstName());
         enterText("familyName", SelectorType.ID, faker.generateLastName());
         enterText("fields[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("fields[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         if (existingApplication) {
             findSelectAllRadioButtonsByValue("Y");
             enterText("fields[licenceNumber]", SelectorType.ID, applicationID);
-        }
-        else { findSelectAllRadioButtonsByValue("N");
+        } else {
+            findSelectAllRadioButtonsByValue("N");
             enterText("fields[organisationName]", SelectorType.ID, faker.generateCompanyName());
             waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
         }
@@ -81,22 +74,19 @@ public class UIJourney extends BasePage {
 
     public void addNewInternalUser() {
         selectValueFromDropDown("search-select", SelectorType.ID, "Users");
-        enterText("search", SelectorType.NAME, faker.generateCompanyName());
+        enterText("search", SelectorType.NAME, "");
         waitAndClick("//input[@name='submit']", SelectorType.XPATH);
         waitAndClick("add", SelectorType.ID);
-        selectValueFromDropDown("userType[userType]", SelectorType.NAME,"Internal");
-        selectValueFromDropDown("userType[team]", SelectorType.NAME,"VOL Development team");
-        selectValueFromDropDown("userType[role]", SelectorType.NAME,"Internal - Admin");
-        enterText( "forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
-        enterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
-        enterText("userContactDetails[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        enterText("userContactDetails[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        selectValueFromDropDown("userType[userType]", SelectorType.NAME, "Internal");
+        selectValueFromDropDown("userType[team]", SelectorType.NAME, "VOL Development team");
+        selectValueFromDropDown("userType[role]", SelectorType.NAME, "Internal - Admin");
+        waitAndEnterText("forename", SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        waitAndEnterText("familyName", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
+        waitAndEnterText("userContactDetails[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
+        waitAndEnterText("userContactDetails[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         waitAndClick("form-actions[submit]", SelectorType.ID);
-        world.internalNavigation.urlViewUsers();
-        replaceText("search", SelectorType.NAME, world.DataGenerator.getOperatorUserEmail());
-        waitAndClick("//input[@name='submit']", SelectorType.XPATH);
-        world.internalSearchJourney.searchUser();
+        waitForTextToBePresent("Created record");
     }
 
     public void CheckSkipToMainContentOnExternalUserLogin() throws MissingRequiredArgument {
@@ -110,15 +100,14 @@ public class UIJourney extends BasePage {
     }
 
     public void generateLetter() {
-        Browser.navigate().manage().window().maximize();
         clickByLinkText("Docs & attachments");
-        waitForElementToBePresent("//button[@id='New letter']");
+        waitForTextToBePresent("New Letter");
         clickById("New letter");
-        findElement("//*[@id='modal-title']", SelectorType.XPATH, 60);
-        waitAndSelectByIndex("Generate letter", "//*[@id='category']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("Generate letter", "//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("Generate letter", "//*[@id='documentTemplate']", SelectorType.XPATH, 1);
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitForTextToBePresent("Generate letter");
+        waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 1);
+        waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Amend letter");
     }
 
@@ -164,41 +153,42 @@ public class UIJourney extends BasePage {
         saveDocumentInInternal();
     }
 
-    public void deleteLicenceDocument()  {
+    public void deleteLicenceDocument() {
         clickByLinkText("Docs & attachments");
         deleteDocument();
     }
 
-    public void deleteDocument()  {
+    public void deleteDocument() {
         waitAndClick("//input[@name='id[]']", SelectorType.XPATH);
         waitAndClick("//button[@id='delete']", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
         waitAndClick("//button[@id='form-actions[confirm]']", SelectorType.XPATH);
     }
 
-    public void signWithVerify()  {
+    public void signWithVerify() {
         String verifyUsername = world.configuration.config.getString("verifyUsername");
         String verifyPassword = world.configuration.config.getString("verifyPassword");
 
-        if (isTextPresent("The last company selected on this device was Post Office Stub.")) {
-            waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
-        } else {
-            waitForTextToBePresent("This is my first time using GOV.UK Verify");
+        if (isTitlePresent("Sign in with GOV.UK Verify", 3)) {
             click("//*[@id='start_form_selection_false']", SelectorType.XPATH);
             click("//*[@id='next-button']", SelectorType.XPATH);
             click("//*[contains(text(),'Select Post')]", SelectorType.XPATH);
         }
-        waitForTextToBePresent("Verified");
-        enterText("username", SelectorType.NAME, verifyUsername);
-        enterText("password", SelectorType.NAME, verifyPassword);
-        while (size("//*[contains(text(),'Verified ID Login')]", SelectorType.XPATH) > 0) {
-            click("//*[@value='SignIn']", SelectorType.XPATH);
+        if (isTextPresent("The last company selected on this device was Post Office Stub.")) {
+            waitAndClick("//*[@value='Post Office Stub']", SelectorType.XPATH);
         }
-        waitForTextToBePresent("Personal Details");
-        click("//*[@id='agree']", SelectorType.XPATH);
+        if (isTextPresent("Use your existing username and password")) {
+            waitAndEnterText("username", SelectorType.NAME, verifyUsername);
+            waitAndEnterText("password", SelectorType.NAME, verifyPassword);
+            while (size("//*[contains(text(),'Verified ID Login')]", SelectorType.XPATH) > 0) {
+                click("//*[@value='SignIn']", SelectorType.XPATH);
+            }
+            waitForTextToBePresent("Personal Details");
+            click("//*[@id='agree']", SelectorType.XPATH);
+        }
     }
 
-    public void resettingExternalPassword()  {
+    public void resettingExternalPassword() {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
         }
@@ -206,7 +196,7 @@ public class UIJourney extends BasePage {
         clickByLinkText("Forgotten your password?");
     }
 
-    public void addUser()  {
+    public void addUser() {
         clickByLinkText("Manage");
         click("//*[@id='addUser']", SelectorType.XPATH);
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
@@ -223,7 +213,7 @@ public class UIJourney extends BasePage {
         clickSaveAndReturn();
     }
 
-    public void signDeclaration()  {
+    public void signDeclaration() {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
         if (isTitlePresent("Review and declarations", 10)) {
             click("//*[@name='form-actions[sign]']", SelectorType.XPATH);
@@ -232,7 +222,7 @@ public class UIJourney extends BasePage {
         }
     }
 
-    public void signDeclarationForVariation()  {
+    public void signDeclarationForVariation() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (size("//*[@id='submitAndPay']", SelectorType.XPATH) != 0) {
@@ -241,7 +231,7 @@ public class UIJourney extends BasePage {
             click("//*[@id='submit']", SelectorType.XPATH);
     }
 
-    public void signManually()  {
+    public void signManually() {
         String defaultWindow = navigate().getWindowHandle();
         Set<String> windows;
         waitForTextToBePresent("A business owner");
@@ -263,9 +253,8 @@ public class UIJourney extends BasePage {
 
     public void closeCase() {
         clickByLinkText("" + world.updateLicence.getCaseId() + "");
-
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env).toString();
-        String casePath = String.format("/case/details/%s", world.updateLicence.getCaseId());
+        String casePath = String.format("case/details/%s", world.updateLicence.getCaseId());
         navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
@@ -395,32 +384,15 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-        waitForPageLoad();
 
-        Wait<WebDriver> wait = new FluentWait<WebDriver>(navigate())
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofMillis(200))
-                .ignoring(NoSuchElementException.class);
-
-        ExpectedCondition<Boolean> expect = new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                try {
-                    return Browser.navigate().getCurrentUrl().contains("variation");
-                } catch (Exception e) {
-                    return false;
-                }
-            }
-        };
-
-        wait.until(expect);
-        try {
-            assertTrue(Browser.navigate().getCurrentUrl().contains("variation"));
-        } catch (Exception e) {
-            System.out.println("Page URL doesn't contain variation and therefore isn't storing the variationNumber.");
+        if (world.licenceCreation.isLGVOnlyLicence()) {
+            waitForTitleToBePresent("Licence authorisation");
+        } else {
+            waitForTitleToBePresent("Operating centres and authorisation");
         }
-
+        waitForElementToBePresent(saveButton);
         String url = navigate().getCurrentUrl();
-        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 2));
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
     public void removeFirstVehicleOnVehiclePage() {
@@ -455,7 +427,7 @@ public class UIJourney extends BasePage {
         }
     }
 
-    public void uploadDocument(String filePath)  {
+    public void uploadDocument(String filePath) {
         click("//*[@id='upload']", SelectorType.XPATH);
         waitForTextToBePresent("Upload document");
         waitAndEnterText("//*[@id='details[description]']", SelectorType.XPATH, "distinctiveName");
@@ -469,7 +441,7 @@ public class UIJourney extends BasePage {
     public void addAVehicle(String licenceNumber) {
         findSelectAllRadioButtonsByValue("add");
         waitAndClick("next", SelectorType.ID);
-        waitAndEnterText("vehicle-search[search-value]", SelectorType.ID,licenceNumber);
+        waitAndEnterText("vehicle-search[search-value]", SelectorType.ID, licenceNumber);
         waitAndClick("vehicle-search[submit]", SelectorType.ID);
     }
 
@@ -508,6 +480,7 @@ public class UIJourney extends BasePage {
         if (isElementPresent("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH))
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
         click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
+        waitAndClick("//a[@aria-label='Close notification']", SelectorType.XPATH);
     }
 
     public void createVariationInInternal(boolean variationFeeRequired) {
@@ -518,8 +491,9 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
         waitAndClick("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Variation details");
+        refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
-        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 2));
+        world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
     public static void clickSaveAndContinue() {
@@ -530,7 +504,7 @@ public class UIJourney extends BasePage {
         click("form-actions[submit]", SelectorType.NAME);
     }
 
-    public static void clickSaveAndReturn()  {
+    public static void clickSaveAndReturn() {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
@@ -538,7 +512,7 @@ public class UIJourney extends BasePage {
         waitAndClick("form-actions[cancel]", SelectorType.NAME);
     }
 
-    public void clickOk()  {
+    public void clickOk() {
         waitAndClick("//*[@id='form-actions[ok]']", SelectorType.XPATH);
     }
 
@@ -550,7 +524,7 @@ public class UIJourney extends BasePage {
         }
 
         if (licenceType.equals("standard_international")) {
-            if (!"no_selection".equals(vehicleType)){
+            if (!"no_selection".equals(vehicleType)) {
                 clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
                 if (lgvUndertaking.equals("checked")) {
                     clickByXPath(world.typeOfLicence.lgvDeclarationCheckbox);
@@ -563,6 +537,6 @@ public class UIJourney extends BasePage {
             world.createApplication.setVehicleType(VehicleType.MIXED_FLEET.asString());
         clickSaveAndContinue();
         if (!getCurrentUrl().contains("#validationSummary"))
-            world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
+            world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }
 }

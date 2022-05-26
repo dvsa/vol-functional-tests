@@ -33,7 +33,7 @@ public class CreateApplications extends BasePage implements En {
             world.feeAndPaymentJourney.customerPaymentModule();
             waitForTitleToBePresent("Application overview");
         });
-        And("^i choose to pay my second application with my saved card details$", () -> {
+        And("^i pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
             Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);

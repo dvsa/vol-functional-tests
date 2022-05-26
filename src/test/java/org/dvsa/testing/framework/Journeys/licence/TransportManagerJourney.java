@@ -67,12 +67,12 @@ public class TransportManagerJourney extends BasePage {
         //Add Home Address
         enterText("postcodeInput1", SelectorType.ID, postCode);
         clickByName("homeAddress[searchPostcode][search]");
-        waitAndSelectByIndex("Select an address","//*[@id='selectAddress1']",SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='selectAddress1']",SelectorType.XPATH, 1);
 
         //Add Work Address
         waitAndEnterText("postcodeInput2", SelectorType.ID, postCode);
         waitAndClick("workAddress[searchPostcode][search]", SelectorType.ID);
-        waitAndSelectByIndex("Select an address","//*[@id='selectAddress2']",SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='selectAddress2']",SelectorType.XPATH, 1);
 
         //Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);

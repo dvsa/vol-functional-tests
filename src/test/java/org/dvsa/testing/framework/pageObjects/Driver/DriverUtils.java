@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
@@ -59,8 +60,9 @@ public class DriverUtils {
     }
 
     public static WebElement findElement(@NotNull String selector, @NotNull SelectorType selectorType, long timeOutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(getDriver(), timeOutInSeconds);
-        wait.until(ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));
+        new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds)).until(
+                webDriver ->
+                        ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));
 
         return findElement(selector, selectorType);
     }

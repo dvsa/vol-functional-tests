@@ -36,7 +36,7 @@ public class BusinessDetailsJourney extends BasePage {
         waitForTitleToBePresent("Addresses");
         waitAndEnterText("correspondence_address[searchPostcode][postcode]", SelectorType.NAME, "NG1 6LP");
         clickByName("correspondence_address[searchPostcode][search]");
-        waitAndSelectByIndex("Select an address", "//*[@id='selectAddress1']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex( "//*[@id='selectAddress1']", SelectorType.XPATH, 1);
         waitAndEnterText("contact[phone_primary]", SelectorType.NAME, "07123456780");
         waitAndEnterText("contact[email]", SelectorType.NAME, faker.bothify("????????##@volTest.org"));
     }

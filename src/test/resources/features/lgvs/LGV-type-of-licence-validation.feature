@@ -3,7 +3,6 @@ Feature: Error Validation for Type of Licence LGV Only Declaration
 
   Background:
     Given I create a new external user
-    And i have logged in to self serve
 
   Scenario Outline: Type of Licence LGV only no option selected error check
     When I apply for a "<licenceWhere>" "<operatorType>" "<licenceType>" "<vehicleType>" "<lgvUndertaking>" licence
@@ -23,6 +22,7 @@ Feature: Error Validation for Type of Licence LGV Only Declaration
       | GB           | goods        | standard_international | lgv_only_fleet | unchecked      |
       | NI           | no_selection | standard_international | lgv_only_fleet | unchecked      |
 
+  @lgv-smoke
   Scenario Outline: Switch Standard Internation licence type warning message and deletion of data
     And I apply for a "<licenceWhere>" "<operatorType>" "<licenceType>" "<vehicleType>" "<lgvUndertaking>" licence
     And I go to update the vehicle type on the licence to "<newLicenceType>" "<newVehicleType>" "<newLgvUndertaking>"

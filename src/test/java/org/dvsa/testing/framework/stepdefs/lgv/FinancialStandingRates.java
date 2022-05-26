@@ -5,6 +5,7 @@ import activesupport.number.Int;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
+import org.dvsa.testing.framework.hooks.VFTLifeCycle;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -18,7 +19,11 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class FinancialStandingRates extends BasePage {
+    private static final Logger LOGGER = LogManager.getLogger(FinancialStandingRates.class);
     World world;
     FinancialStandingRate rowBeforeAdding;
     FinancialStandingRate rowBeforeChange;
@@ -161,12 +166,10 @@ public class FinancialStandingRates extends BasePage {
     @Then("i should receive the correct financial standing modal errors")
     public void iShouldReceiveTheCorrectFinancialStandingErrors() {
         List<WebElement> summaryErrors = findElements("//li[@class='validation-summary__item']/a", SelectorType.XPATH);
-        List<WebElement> inlineErrors = findElements("//p[@class='error__text']", SelectorType.XPATH);
         String[] inputTypes = {"Operator type", "Licence type", "First vehicle", "Additional vehicle", "Effective date"};
         for(int i = 0; i < inputTypes.length; i++) {
             String errorMessage = String.format("%s: value is required", inputTypes[i]);
             assertEquals(errorMessage, summaryErrors.get(i).getText());
-            assertEquals(errorMessage, inlineErrors.get(i).getText());
         }
     }
 

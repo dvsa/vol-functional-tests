@@ -9,9 +9,9 @@
     <version>1.6</version>
 
     <properties>
-        <active-support.version>1.6.5</active-support.version>
-        <api-calls.version>1.1.10</api-calls.version>
-        <uri-constructor.version>1.5.6</uri-constructor.version>
+        <active-support.version>1.6.6</active-support.version>
+        <api-calls.version>1.1.11</api-calls.version>
+        <uri-constructor.version>1.5.7</uri-constructor.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.7.0</maven.compiler.version>
@@ -28,10 +28,10 @@
         <allure-cucumber4-jvm.version>2.13.2</allure-cucumber4-jvm.version>
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn-version>2.10.0</allure-mvn-version>
-        <cucable-plugin.version>1.8.0</cucable-plugin.version>
+        <cucable-plugin.version>1.9.0</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
-        <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
+        <maven.failsafe.plugin.version>3.0.0-M6</maven.failsafe.plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <allure-report-version>2.13.5</allure-report-version>
         <apache-commons.version>1.8</apache-commons.version>
         <gson.version>20210307</gson.version>
@@ -102,9 +102,10 @@
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
+                    <desiredNumberOfFeaturesPerRunner>7</desiredNumberOfFeaturesPerRunner>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-                    <desiredNumberOfRunners>7</desiredNumberOfRunners>
+
                     <includeScenarioTags>
                         not (@skip
                         or @Deprecated
@@ -143,7 +144,7 @@
                             <goal>integration-test</goal>
                         </goals>
                         <configuration>
-                            <forkCount>4</forkCount>
+                            <forkCount>10</forkCount>
                             <reuseForks>true</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>

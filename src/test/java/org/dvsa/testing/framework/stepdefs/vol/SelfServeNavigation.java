@@ -34,7 +34,6 @@ public class SelfServeNavigation extends BasePage {
 
     @And("i navigate to the apply for a licence page")
     public void iNavigateToTheApplyForALicencePage() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.VIEW);
     }
 
@@ -61,7 +60,6 @@ public class SelfServeNavigation extends BasePage {
 
     @When("i am on the operating centre and authorisations page")
     public void iAmOnTheOperatingCentreAndAuthorisationsPage() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
     }
 }
