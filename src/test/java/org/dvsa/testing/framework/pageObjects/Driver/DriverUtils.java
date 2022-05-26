@@ -60,8 +60,6 @@ public class DriverUtils {
     }
 
     public static WebElement findElement(@NotNull String selector, @NotNull SelectorType selectorType, long timeOutInSeconds) {
-        //WebDriverWait wait = new WebDriverWait(getDriver(), timeOutInSeconds);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));
         new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds)).until(
                 webDriver ->
                         ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));

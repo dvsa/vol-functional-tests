@@ -1,7 +1,6 @@
 @lgv
 @cross-browser
 @lgv-smoke
-
 Feature: 1 - Publications generate on LGV related changes and regression
 
   Scenario Outline: Publications generate and display correctly on both apps. (LGV variation increase)
