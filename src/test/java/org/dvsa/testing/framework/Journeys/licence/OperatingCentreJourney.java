@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
+import apiCalls.actions.CreateApplication;
 import apiCalls.enums.OperatorType;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -46,8 +47,8 @@ public class OperatingCentreJourney extends BasePage {
         this.world = world;
     }
 
-    public void loginAndSubmitOperatingCentreVehicleAuthorisationVariationApplication(String newHGVTotalAuthority, String newLGVTotalAuthority) {
-        loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority);
+    public void submitOperatingCentreVehicleAuthorisationVariationApplication(String newHGVTotalAuthority, String newLGVTotalAuthority) {
+        saveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority);
         completeApplicationAfterUpdatingAuthorities(newHGVTotalAuthority, newLGVTotalAuthority);
     }
 
@@ -63,9 +64,9 @@ public class OperatingCentreJourney extends BasePage {
         }
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
-        if (hasTotalHGVAuthorityIncreased(newHGVTotalAuthority) || hasTotalLGVAuthorityIncreased(newLGVTotalAuthority))
+        if (hasTotalHGVAuthorityIncreased(newHGVTotalAuthority) || hasTotalLGVAuthorityIncreased(newLGVTotalAuthority)) {
             click(submitApplication, SelectorType.XPATH);
-        else {
+        } else {
             click(submitAndPayForApplication, SelectorType.XPATH);
             click(payNow, SelectorType.XPATH);
             world.feeAndPaymentJourney.customerPaymentModule();
@@ -73,13 +74,13 @@ public class OperatingCentreJourney extends BasePage {
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }
 
-    public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority) {
+    public void saveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority) {
         String trailerCount = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
-        loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(newHGVTotalAuthority, newLGVTotalAuthority, trailerCount);
+        saveOCVehicleAuthVarChange(newHGVTotalAuthority, newLGVTotalAuthority, trailerCount);
     }
 
-    public void loginAndSaveOperatingCentreVehicleAuthorisationVariationChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
-        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+    public void saveOCVehicleAuthVarChange(String newHGVTotalAuthority, String newLGVTotalAuthority, String newTrailerTotalAuthority) {
+        world.generalVariationJourney.beginOperatingCentreVariation();
         if (hasNumberOfHGVChanged(newHGVTotalAuthority) || hasNumberOfTrailersChanged(newTrailerTotalAuthority)) {
             updateOperatingCentreAuthorisation(newHGVTotalAuthority, newTrailerTotalAuthority);
         }
@@ -88,10 +89,11 @@ public class OperatingCentreJourney extends BasePage {
 
     public void updateOperatingCentreAuthorisation(String newHGVTotalAuthority, String newTrailerTotalAuthority) {
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
-        click(operatingCentreEditLink, SelectorType.XPATH);
+        waitAndClick(operatingCentreEditLink, SelectorType.XPATH);
         replaceText(operatingCentreVehicleField, SelectorType.XPATH, newHGVTotalAuthority);
-        if (world.createApplication.getTotalOperatingCentreTrailerAuthority() != Integer.parseInt(newTrailerTotalAuthority))
+        if (world.createApplication.getTotalOperatingCentreTrailerAuthority() != Integer.parseInt(newTrailerTotalAuthority)) {
             replaceText(operatingCentreTrailerField, SelectorType.XPATH, newTrailerTotalAuthority);
+        }
         if ((hasHGVAuthorityOnOCIncreased(newHGVTotalAuthority) || hasTrailerAuthorityOnOCIncreased(newTrailerTotalAuthority)) && world.licenceCreation.isGoodsLicence()) {
             waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
             waitForElementToBePresent(advertTitle);
@@ -101,10 +103,13 @@ public class OperatingCentreJourney extends BasePage {
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
         if (world.licenceCreation.isAGoodsInternationalLicence() && newLGVTotalAuthority != null) {
+            waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
             replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
         }
-        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()))
+        if (world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString())) {
+            waitAndClick(totalHGVAuthorisationField, SelectorType.XPATH);
             replaceText(totalTrailersAuthorisationField, SelectorType.XPATH, trailers);
+        }
         if (isElementPresent("totAuthVehicles",SelectorType.ID)) {
             replaceText(totalAuthorisationField, SelectorType.XPATH, newHGVTotalAuthority);
         } else {
@@ -114,11 +119,13 @@ public class OperatingCentreJourney extends BasePage {
     }
 
     public void updateLGVOnlyAuthorityAndSave(String newAuthority) {
+        waitAndClick(totalLGVAuthorisationField, SelectorType.XPATH);
         replaceText(totalLGVAuthorisationField, SelectorType.XPATH, newAuthority);
         UIJourney.clickSaveAndReturn();
     }
 
     public void addNewOperatingCentre(String vehicles, String trailers) {
+        waitForElementToBePresent(addOperatingCentre);
         click(addOperatingCentre, SelectorType.XPATH);
         try {
             accessibilityScanner();

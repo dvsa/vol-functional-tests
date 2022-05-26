@@ -15,7 +15,6 @@ import org.joda.time.LocalDate;
 
 import java.util.HashMap;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.*;
 
 
@@ -36,7 +35,7 @@ public class InterimLicence extends BasePage implements En {
     private static String trailerAuthLabelElement = "//label[text()='Trailer Authority']";
     private static String interimGrantModalHeading = "Are you sure you want to grant this interim?";
     private static String interimGrantConfirmation = "The interim has been granted and a fee request letter has been generated";
-    private String interimOfferText = "Do you want to apply for a time limited interim authority? There's an additional charge for this";
+    private String interimOfferText = "Do you want to apply for a time limited interim authority?";
     private String interimRadioYes = "//*[@id='interim[goodsApplicationInterim]']";
     private World world;
 
@@ -130,7 +129,8 @@ public class InterimLicence extends BasePage implements En {
 
     @And("I submit the application with an interim")
     public void iSubmitTheApplicationWithAnInterim() {
-        refreshPageWithJavascript();
+        //world.selfServeNavigation.navigateToLoginPage();
+        //world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
         click("//*[@id='interim[goodsApplicationInterim]']", SelectorType.XPATH);
         enterText("applicationInterimReason", SelectorType.ID, "Sample Text For Interim");
@@ -169,7 +169,7 @@ public class InterimLicence extends BasePage implements En {
     public void anInterimAuthorityValueIsRequiredErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(valueIsRequiredErrorMessage));
-        String inlineErrorMessage = String.format("//p[@class='error__text' and contains(text(),'%s')]", valueIsRequiredErrorMessage);
+        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", valueIsRequiredErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 
@@ -185,7 +185,7 @@ public class InterimLicence extends BasePage implements En {
     public void anInterimLgvAuthValueExceedsApplicationLgvAuthorityValueErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(LgvVehicleErrorMessage));
-        String inlineErrorMessage = String.format("//p[@class='error__text' and contains(text(),'%s')]", LgvVehicleErrorMessage);
+        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", LgvVehicleErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 
@@ -200,7 +200,7 @@ public class InterimLicence extends BasePage implements En {
     public void aZeroLgvAuthInterimErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(valueCannotBe0ErrorMessage));
-        String inlineErrorMessage = String.format("//p[@class='error__text' and contains(text(),'%s')]", valueCannotBe0ErrorMessage);
+        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", valueCannotBe0ErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 

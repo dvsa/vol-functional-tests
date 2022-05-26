@@ -1,4 +1,5 @@
 @lgv
+@lgv-smoke
 Feature: Interim licences for standard international operators with LGVs
 
   Scenario Outline: Interim Vehicle Authority greater than Application Vehicle Authority for standard international operators with LGVs

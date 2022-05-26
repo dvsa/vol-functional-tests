@@ -23,7 +23,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
 
     @When("i increase my vehicle authority count")
     public void iIncreaseMyVehicleAuthorityCount() {
-        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+        world.generalVariationJourney.beginOperatingCentreVariation();
         world.operatingCentreJourney.updateOperatingCentreAuthorisation(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() + 1 ), null, currentTrailerTotalAuthority);
@@ -36,7 +36,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
 
     @When("A selfserve user increases the vehicle required count by invalid characters")
     public void aSelfserveUserIncreasesTheVehicleRequiredCountByInvalidCharacters() {
-        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+        world.generalVariationJourney.beginOperatingCentreVariation();
         world.operatingCentreJourney.updateOperatingCentreAuthorisation("+6", String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
     }
 
@@ -47,7 +47,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
 
     @And("a selfserve user creates a variation and adds an operating centre with {string} HGVs and {string} trailers")
     public void aSelfserveUserCreatesAVariationAndIncreasesTheVehicleAuthorityCount(String vehicles, String trailers) {
-        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+        world.generalVariationJourney.beginOperatingCentreVariation();
         world.operatingCentreJourney.addNewOperatingCentre(vehicles, trailers);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(vehicles, null, trailers);
         world.UIJourney.completeFinancialEvidencePage();
@@ -64,7 +64,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
 
     @And("a selfserve user creates a variation and adds an operating centre")
     public void aSelfserveUserCreatesAVariationAndAddsAnOperatingCentre(String vehicles, String trailers) {
-        world.generalVariationJourney.signInAndBeginOperatingCentreVariation();
+        world.generalVariationJourney.beginOperatingCentreVariation();
         world.operatingCentreJourney.addNewOperatingCentre(vehicles, trailers);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(vehicles, null, trailers);
         world.UIJourney.completeFinancialEvidencePage();

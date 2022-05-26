@@ -77,7 +77,6 @@ public class TrafficAreas extends BasePage {
 
     @When("i apply for a new {string} lgv only application and enter a postcode in the North West of England")
     public void iApplyForANewGoodsStandardInternationalApplicationAndEnterAPostcodeInTheNorthWestOfEngland(String GBOrNI) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         clickByLinkText("Apply for a new licence");
         world.typeOfLicence.chooseGBOrNI(GBOrNI);
         clickByXPath("//input[@value='lcat_gv']");
@@ -86,14 +85,13 @@ public class TrafficAreas extends BasePage {
         click("lgv-declaration-confirmation", SelectorType.ID);
         UIJourney.clickSaveAndContinue();
         waitForTitleToBePresent("Apply for a new licence");
-        world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
+        world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         clickByLinkText("Business type");
         UIJourney.clickSaveAndContinue();
         UIJourney.clickSaveAndContinue();
         enterAndSelectCorrespondenceAddressWithPostcodeSearch(knownRealNorthWestPostcode);
-        enterText("phone_primary", SelectorType.ID, "01827353");
-        enterText("email", SelectorType.ID, "test@test.com");
+        enterPhoneAndEmail();
         UIJourney.clickSaveAndContinue();
     }
 
@@ -169,6 +167,7 @@ public class TrafficAreas extends BasePage {
         enterPhoneAndEmail();
         clickByLinkText("Enter the address yourself");
         waitForElementToBePresent(establishmentAddressPostcode);
+        waitAndClick(establishmentAddressPostcode, SelectorType.XPATH);
         enterText(establishmentAddressLine1, SelectorType.XPATH, "test");
         enterText(establishmentAddressTown, SelectorType.XPATH, "test");
         enterText(establishmentAddressPostcode, SelectorType.XPATH, "FG67FG");
@@ -221,6 +220,7 @@ public class TrafficAreas extends BasePage {
     }
 
     private void clearEstablishmentAddress() {
+        waitAndClick(establishmentAddressPostcode, SelectorType.XPATH);
         replaceText(establishmentAddressLine1, SelectorType.XPATH, "");
         replaceText(establishmentAddressLine2, SelectorType.XPATH, "");
         replaceText(establishmentAddressLine3, SelectorType.XPATH, "");
@@ -230,6 +230,7 @@ public class TrafficAreas extends BasePage {
     }
 
     private void enterPhoneAndEmail() {
+        waitAndClick("//input[@id='phone_primary']", SelectorType.XPATH);
         enterText("phone_primary", SelectorType.ID, "01827353");
         enterText("email", SelectorType.ID, "test@test.com");
     }

@@ -13,22 +13,25 @@ public class GeneralVariationJourney extends BasePage {
     }
 
     public void signInAndBeginLGVAuthorisationVariation() {
-        if (world.licenceCreation.isLGVOnlyLicence())
+        if (world.licenceCreation.isLGVOnlyLicence()) {
             signInAndBeginLicenceAuthorisationVariation();
-        else
-            signInAndBeginOperatingCentreVariation();
+        } else {
+            beginOperatingCentreVariation();
+        }
     }
 
     public void signInAndBeginLicenceAuthorisationVariation() {
-        signInAndBeginVariation(SelfServeSection.LICENCE_AUTHORISATION);
+        beginVariation(SelfServeSection.LICENCE_AUTHORISATION);
     }
 
-    public void signInAndBeginOperatingCentreVariation() {
-        signInAndBeginVariation(SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
+    public void beginOperatingCentreVariation() {
+        beginVariation(SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
     }
 
-    public void signInAndBeginVariation(SelfServeSection selfServePage) {
+    public void beginVariation(SelfServeSection selfServePage) {
+        //world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", selfServePage);
         world.UIJourney.changeLicenceForVariation();
     }
+
 }

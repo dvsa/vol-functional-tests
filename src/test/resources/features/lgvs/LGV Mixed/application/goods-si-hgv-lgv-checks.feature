@@ -1,4 +1,6 @@
 @lgv
+@lgv-smoke
+
 Feature: Goods SI and non Goods SI display the correct authorities on the internal interim pages
 
   Scenario: A goods international should display the hgv, lgv and trailer authorities

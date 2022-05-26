@@ -25,7 +25,7 @@ Feature: Self Serve Apply for licence
     And i choose to print and sign
     When i pay for my application
     Then the application should be submitted
-    And i choose to pay my second application with my saved card details
+    And i pay my second application with my saved card details
     Then the application should be submitted
 
     Examples:

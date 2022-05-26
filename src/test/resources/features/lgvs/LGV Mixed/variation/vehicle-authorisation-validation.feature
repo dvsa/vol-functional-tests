@@ -7,6 +7,7 @@ Feature: Validation is present on the operating centres and authorisations page
     When i clear the authorisation fields and click save
     Then hgv, lgv and trailer missing authorisation value errors should display
 
+  @lgv-smoke
   Scenario Outline: Saving a total vehicle authorisation value above the overall number of vehicle at all OCs triggers an error
     Given i have a valid "<operatorType>" "<licenceType>" licence
     And i begin an operating centre and authorisation variation

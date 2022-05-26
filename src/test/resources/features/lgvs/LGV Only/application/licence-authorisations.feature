@@ -3,7 +3,6 @@ Feature: Licence Authorisation page checks and validations
 
   Background:
     Given I have a "GB" lgv only application
-    And i have logged in to self serve
 
   Scenario: Operating Centres are not present with no ability to add them and all information is for LGVs only
     When i navigate to the application licence authorisation page

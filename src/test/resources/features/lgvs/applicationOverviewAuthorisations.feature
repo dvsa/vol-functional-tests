@@ -1,12 +1,14 @@
 @lgv
 Feature: Authorisation updates display correctly on Internal for caseworkers
 
+  @lgv-smoke
   Scenario: LGV Only application authorisation updates correctly
     Given I have a submitted "GB" lgv only application
     When i am on the internal application overview page
     Then the LGV Only authorisation on the application overview screen should display "0" lgvs to "5" lgvs
     And the application overview displays "0" operating centres to "0" operating centres
 
+  @lgv-smoke
   Scenario: LGV Mixed application authorisation updates correctly
     Given I have a "goods" "standard_international" application
     When i am on the internal application overview page

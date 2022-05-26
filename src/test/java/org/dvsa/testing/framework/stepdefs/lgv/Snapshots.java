@@ -39,9 +39,9 @@ public class Snapshots extends BasePage {
         for (String howManyTabs : getDriver().getWindowHandles()) {
             LOGGER.info("Each open tab ID : " + howManyTabs);
         }
-        clickByLinkText("Check your answers");
 
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(0));
+        clickByLinkText("Check your answers");
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(1));
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 
         for (String windowHandle : getDriver().getWindowHandles()) {

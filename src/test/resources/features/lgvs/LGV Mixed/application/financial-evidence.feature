@@ -1,9 +1,10 @@
 @lgv @financial-evidence
+@lgv-smoke
+
 Feature: Check financial evidence is displaying the correct information
 
   Scenario Outline: Financial Evidence Page should display the valid financial standing rates on self serve matching those on internal
     Given I have a "<operatorType>" "<licenceType>" application
-    And i have logged in to self serve
     When i am on the "application" financial evidence page and click on the How Did We Calculate This Link
     Then the valid financial standing rate values should be present
 
