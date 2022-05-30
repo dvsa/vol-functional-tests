@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.internal.admin.permits;
 
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -12,8 +13,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
-
 public class Permit extends BasePage {
 
     private static final String NEXT = "//a[text() = 'Next']";
@@ -22,13 +21,13 @@ public class Permit extends BasePage {
         Calendar cal = Calendar.getInstance();
         clickAdd();
         untilElementIsPresent("//h2[@id='modal-title']",SelectorType.XPATH,Duration.LONG, TimeUnit.SECONDS);
-        Select permitType = new Select(getBrowser().get().findElement(By.xpath("//select[@id='irhpPermitType']")));
+        Select permitType = new Select(Browser.navigate().findElement(By.xpath("//select[@id='irhpPermitType']")));
         waitAndClick("//select[@id='irhpPermitType']", SelectorType.XPATH);
         permitType.selectByIndex(1);
-        Select appPath = new Select(getBrowser().get().findElement(By.xpath("//select[@id='applicationPathGroup']")));
+        Select appPath = new Select(Browser.navigate().findElement(By.xpath("//select[@id='applicationPathGroup']")));
         waitAndClick("//select[@id='applicationPathGroup']", SelectorType.XPATH);
         appPath.selectByVisibleText("ECMT Annual APGG Euro 5 or Euro 6");
-        Select businessProcess = new Select(getBrowser().get().findElement(By.xpath("//select[@id='businessProcess']")));
+        Select businessProcess = new Select(Browser.navigate().findElement(By.xpath("//select[@id='businessProcess']")));
         waitAndClick("//select[@id='businessProcess']", SelectorType.XPATH);
         businessProcess.selectByValue("app_business_process_apgg");
         String startDay = String.valueOf((cal.get(Calendar.DATE)));

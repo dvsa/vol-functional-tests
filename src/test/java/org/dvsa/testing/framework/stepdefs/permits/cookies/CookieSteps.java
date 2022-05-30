@@ -1,7 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.cookies;
 
 import Injectors.World;
-import io.cucumber.java8.En;;
+import activesupport.driver.Browser;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage;
@@ -12,7 +13,6 @@ import org.openqa.selenium.WebDriver;
 import java.util.Set;
 
 import static org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage.*;
-import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 import static org.junit.Assert.assertTrue;
 
 
@@ -29,10 +29,10 @@ public class CookieSteps extends BasePage implements En {
             HomePageJourney.beginPermitApplication();
         });
         And("^I should see the cookies list$", () -> {
-            Set<Cookie> cookies = getBrowser().get().manage().getCookies();
-            Cookie cookiePHP = getBrowser().get().manage().getCookieNamed("PHPSESSID");
-            Cookie secureToken = getBrowser().get().manage().getCookieNamed("secureToken");
-            Cookie gid = getBrowser().get().manage().getCookieNamed("_gid");
+            Set<Cookie> cookies = Browser.navigate().manage().getCookies();
+            Cookie cookiePHP = Browser.navigate().manage().getCookieNamed("PHPSESSID");
+            Cookie secureToken = Browser.navigate().manage().getCookieNamed("secureToken");
+            Cookie gid = Browser.navigate().manage().getCookieNamed("_gid");
             System.out.println("All Available cookie count is  :  " + cookies.size());
             System.out.println("All Available cookies are  :  " + cookies);
             System.out.println("PHP cookie is  :  " + cookiePHP);
@@ -62,6 +62,5 @@ public class CookieSteps extends BasePage implements En {
             cookiesBannerIsNotPresent();
             cookieSaveTextPresent();
         });
-
     }
 }

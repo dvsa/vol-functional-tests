@@ -1,15 +1,22 @@
-downloadDirectory
-internalNewPassword =
+downloadDirectory =
+adminUser =
 partnerUser =
 partnerUserPassword =
+internalNewPassword =
+adminPassword =
 verifyUsername =
 verifyPassword =
+intUsername =
+region =
 dbUsername =
 dbPassword =
 cardNumber =
 cardExpiryMonth =
 cardExpiryYear =
 bucketName =
-JENKINS_USERNAME =
-JENKINS_PASSWORD =
-apiHeader =
+apiHeader=
+secretKey=
+proxyHost=
+proxyPort=
+browserStackKey=
+binaryPath=

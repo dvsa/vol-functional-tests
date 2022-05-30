@@ -28,8 +28,8 @@ public class LicenceCreation {
         if(licenceType.equals("special_restricted") && Integer.parseInt(vehicles) > 2){
             throw new InvalidArgumentException("Special restricted licences can not have more than 2 vehicles on them.");
         }
-        world.createApplication.setOperatingCentreVehicleCap(Integer.parseInt(vehicles));
-        world.createApplication.setNoOfVehiclesRequested(Integer.parseInt(vehicles));
+        world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicles));
+        world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));
         createApplication(operatorType, licenceType);
     }
 
@@ -70,6 +70,31 @@ public class LicenceCreation {
         createLicence(operatorType, licenceType);
     }
 
+    public void createLGVOnlyApplication(String NIFlag) {
+        world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
+        world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
+        world.createApplication.setTotalOperatingCentreLgvAuthority(5);
+        world.createApplication.setNoOfAddedHgvVehicles(0);
+        world.createApplication.setNoOfAddedLgvVehicles(5);
+        world.licenceCreation.createApplication("goods", "standard_international");
+    }
+
+    public void createSubmittedLGVOnlyApplication(String NIFlag) {
+        createLGVOnlyApplication(NIFlag);
+        world.APIJourney.submitApplication();
+    }
+
+    public void createLGVOnlyLicence(String NIFlag) {
+        createSubmittedLGVOnlyApplication(NIFlag);
+        world.APIJourney.grantLicenceAndPayFees();
+    }
+
+    public void createLGVOnlyLicenceWithTrafficArea(String NIFlag, TrafficArea trafficArea) {
+        world.createApplication.setTrafficArea(trafficArea);
+        world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
+        createLGVOnlyLicence(NIFlag);
+    }
+
     public boolean isGoodsLicence() {
         return world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString());
     }
@@ -77,4 +102,22 @@ public class LicenceCreation {
     public boolean isPSVLicence() {
         return world.createApplication.getOperatorType().equals(OperatorType.PUBLIC.asString());
     }
+
+    public boolean isAGoodsInternationalLicence() {
+        return isGoodsLicence()
+                && isAnInternationalLicence();
+    }
+
+    public boolean isAnInternationalLicence() {
+        return world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString());
+    }
+
+    public boolean isARestrictedLicence() {
+        return world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString());
+    }
+
+    public boolean isLGVOnlyLicence() {
+        return world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString());
+    }
+
 }

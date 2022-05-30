@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.Driver;
 
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
@@ -8,20 +9,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
-import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
-
 public class DriverUtils {
 
+    public static WebDriver getDriver() {
+        return Browser.navigate();
+    }
 
     public static void deleteCookies() {
-        getBrowser().get().manage().deleteAllCookies();
+        getDriver().manage().deleteAllCookies();
     }
 
     public static void refreshPage() {
-        getBrowser().get().navigate().refresh();
+        getDriver().navigate().refresh();
     }
 
     public static By by(@NotNull String selector, @NotNull SelectorType selectorType) {
@@ -53,45 +56,46 @@ public class DriverUtils {
     }
 
     public static WebElement findElement(@NotNull String selector, @NotNull SelectorType selectorType) {
-        return getBrowser().get().findElement(by(selector, selectorType));
+        return getDriver().findElement(by(selector, selectorType));
     }
 
     public static WebElement findElement(@NotNull String selector, @NotNull SelectorType selectorType, long timeOutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(getBrowser().get(), timeOutInSeconds);
-        wait.until(ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));
-
+        new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds)).until(
+                webDriver ->
+                        ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));
         return findElement(selector, selectorType);
     }
 
     public static List<WebElement> findElements(@NotNull String selector, @NotNull SelectorType selectorType) {
-        return getBrowser().get().findElements(by(selector, selectorType));
+        return getDriver().findElements(by(selector, selectorType));
     }
 
     public static String getCurrentUrl() {
-        return getBrowser().get().getCurrentUrl();
+        return getDriver().getCurrentUrl();
     }
 
     public static void get(String url) {
-        getBrowser().get().get(url);
+        getDriver().get(url);
     }
 
     public static void switchToWindow(String windowHandle) {
-        getBrowser().get().switchTo().window(windowHandle);
+        getDriver().switchTo().window(windowHandle);
     }
 
     public static Set<String> getWindowHandles() {
-        return getBrowser().get().getWindowHandles();
+        return getDriver().getWindowHandles();
     }
 
     public static WebDriver.Options manage() {
-        return getBrowser().get().manage();
+        return getDriver().manage();
     }
 
     public static void closeTab() {
-        getBrowser().get().close();
+        getDriver().close();
     }
 
     public static String getTitle() {
-        return getBrowser().get().getTitle();
+        return getDriver().getTitle();
     }
+
 }

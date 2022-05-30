@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class HomePage extends BasePage {
 
@@ -27,8 +27,8 @@ public class HomePage extends BasePage {
 
 
     public static void selectTab(Tab tab) {
+        refreshPageWithJavascript();
         String selector = String.format(TAB_TEMPLATE, tab.toString());
-
         untilElementIsPresent(selector, SelectorType.XPATH, BasePage.WAIT_TIME_SECONDS, TimeUnit.SECONDS);
         click(selector, SelectorType.XPATH);
     }
@@ -119,7 +119,7 @@ public class HomePage extends BasePage {
             while (maxSeconds >= 0 && !found) {
                 maxSeconds -= interval;
                 found = isElementVisible(selector, interval);
-                getBrowser().get().navigate().refresh();
+                getDriver().navigate().refresh();
             }
 
             Assert.assertTrue(found);
@@ -164,5 +164,7 @@ public class HomePage extends BasePage {
         public static boolean areOutstandingFeesPresent() {
             return !isTextPresent("There are currently no outstanding fees to pay");
         }
+
     }
+
 }

@@ -25,6 +25,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,14 +35,9 @@ import java.util.*;
 
 public class GenericUtils extends BasePage {
 
-
-    public String transXchangeZIP;
+    private World world;
     private String registrationNumber;
-    private String zipFileName;
-
-    private final World world;
-    ThreadLocal<File> fileThreadLocal = new ThreadLocal<>();
-    ThreadLocal<File> zipFile = new ThreadLocal<>();
+    private static final String zipFilePath = "/src/test/resources/import EBSR.zip";
 
     public String getRegistrationNumber() {
         return registrationNumber;
@@ -51,36 +47,16 @@ public class GenericUtils extends BasePage {
         this.registrationNumber = registrationNumber;
     }
 
-    public String getZipFileName(){
-        return zipFileName;
-    }
-
-    public ThreadLocal<File> getZipFile() {
-        return zipFile;
-    }
-
-    public ThreadLocal<File> getFileThreadLocal() {
-        return fileThreadLocal;
-    }
-
-    public void setZipFileName(String zipFileName) {
-        this.zipFileName = zipFileName;
-    }
-
     public GenericUtils(World world) throws MissingRequiredArgument {
         this.world = world;
     }
 
     public void modifyXML(String dateState, int months) {
         try {
-            ThreadLocal<String> transXchangeFile = new ThreadLocal<>();
             String xmlFile = "./src/test/resources/EBSR/EBSR.xml";
-
-            transXchangeFile.set(xmlFile);
-
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
-            Document xmlDoc = xmlBuilder.parse(transXchangeFile.get());
+            Document xmlDoc = xmlBuilder.parse(xmlFile);
             //update licence number
             NodeList nodeList = xmlDoc.getElementsByTagName("*");
             for (int i = 0; i < nodeList.getLength(); i++) {
@@ -122,7 +98,7 @@ public class GenericUtils extends BasePage {
             DOMSource source = new DOMSource(xmlDoc);
             System.out.println("-----------Modified File-----------");
 
-            StreamResult result = new StreamResult(new File(transXchangeFile.get()));
+            StreamResult result = new StreamResult(new File(xmlFile));
             transformer.transform(source, result);
             StreamResult consoleResult = new StreamResult(System.out);
             transformer.transform(source, consoleResult);
@@ -155,13 +131,20 @@ public class GenericUtils extends BasePage {
         return myDate;
     }
 
-    public void zipFolder() {
+    public static String createZipFolder(String fileName) {
         /*
         / Uses Open source util zt-zip https://github.com/zeroturnaround/zt-zip
          */
-        String dir = System.getProperty("user.dir");
-        transXchangeZIP = dir + "/" + String.format("EBSR%s.zip",world.applicationDetails.getLicenceNumber());
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(transXchangeZIP));
+        Path path = Paths.get("target/EBSR");
+        try {
+            if(!Files.exists(path)) {
+                Files.createDirectory(path);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
+        return String.format("target/EBSR/%s",fileName);
     }
 
     public void executeJenkinsBatchJob(String command) throws Exception {
@@ -185,25 +168,21 @@ public class GenericUtils extends BasePage {
     }
 
     public static java.time.LocalDate getFutureDate(@NotNull int month) {
-        java.time.LocalDate date = java.time.LocalDate.now().plusMonths(month);
-        return date;
+        return LocalDate.now().plusMonths(month);
     }
 
     public static java.time.LocalDate getPastDate(@NotNull int years) {
-        java.time.LocalDate date = java.time.LocalDate.now().minusYears(years);
-        return date;
+        return LocalDate.now().minusYears(years);
     }
 
     public static String getCurrentDate(String datePattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-        String formatDateTime = LocalDate.now().format(formatter);
-        return formatDateTime;
+        return LocalDate.now().format(formatter);
     }
 
     public static String getFutureFormattedDate(@NotNull int months, String datePattern) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-        String formatDateTime = LocalDate.now().plusMonths(months).format(formatter);
-        return formatDateTime;
+        return LocalDate.now().plusMonths(months).format(formatter);
     }
 
     public String confirmationPanel(String locator, String cssValue)  {
@@ -216,8 +195,7 @@ public class GenericUtils extends BasePage {
     }
 
     public String readFileAsString(String fileName) throws IOException {
-        String data = new String(Files.readAllBytes(Paths.get(fileName)));
-        return data;
+        return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
     public static int getRandomNumberInts(int min, int max){

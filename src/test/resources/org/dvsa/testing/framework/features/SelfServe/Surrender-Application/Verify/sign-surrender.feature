@@ -1,9 +1,10 @@
 @Surrender
+@sign-surrender
 @gov-verify
 Feature: Sign surrender
 
   Background:
-    Given i have a valid "goods" "standard_national" licence
+    Given i have a valid "goods" "standard_international" licence
     And i choose to surrender my licence
 
   @ss_regression

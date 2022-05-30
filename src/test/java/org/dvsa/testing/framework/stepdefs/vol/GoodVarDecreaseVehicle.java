@@ -1,41 +1,51 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import io.cucumber.java8.En;;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
-public class GoodVarDecreaseVehicle extends BasePage implements En {
-    World world = new World();
+public class GoodVarDecreaseVehicle extends BasePage {
+    private final World world;
 
-    public GoodVarDecreaseVehicle(World world) {
-        When("^A selfserve user decreases the vehicle authority count$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested() - 1));
-            world.UIJourney.changeVehicleAuth(String.valueOf(world.createApplication.getNoOfVehiclesRequested() - 1));
-        });
-        When("^A selfserve user decreases the vehicle required count by invalid characters$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq("-6");
-        });
-        When("^A selfserve user decreases the vehicle authority by invalid charecters$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-            clickByLinkText(world.applicationDetails.getLicenceNumber());
-            world.UIJourney.changeVehicleReq(String.valueOf(world.createApplication.getNoOfVehiclesRequested()));
-            world.UIJourney.changeVehicleAuth("-6");
-        });
-        Then("^a status of update required should be shown next to Review and declarations$", () -> {
-            waitForElementToBePresent("//*[@id='overview-item__undertakings']");
-        });
-        And("^removes a vehicle because of new vehicle cap", () -> {
-            world.selfServeNavigation.navigateToPage("variation", "Vehicles");
-            world.UIJourney.removeFirstVehicleOnVehiclePage();
-            refreshPageWithJavascript();
-            waitAndClick("//*[@class='govuk-back-link']",SelectorType.XPATH);
-        });
+    public GoodVarDecreaseVehicle (World world) {this.world = world;}
+
+    @When("A selfserve user decreases the vehicle authority count")
+    public void aSelfserveUserDecreasesTheVehicleAuthorityCount() {
+        world.generalVariationJourney.beginOperatingCentreVariation();
+        world.operatingCentreJourney.updateOperatingCentreAuthorisation(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1), null, currentTrailerTotalAuthority);
+    }
+
+    @And("removes a vehicle because of new vehicle cap")
+    public void removesAVehicleBecauseOfNewVehicleCap() {
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VEHICLES);
+        world.UIJourney.removeFirstVehicleOnVehiclePage();
+        refreshPageWithJavascript();
+        waitAndClick("//*[@class='govuk-back-link']", SelectorType.XPATH);
+    }
+
+    @Then("a status of update required should be shown next to Review and declarations")
+    public void aStatusOfUpdateRequiredShouldBeShownNextToReviewAndDeclarations() {
+        waitForElementToBePresent("//*[@id='overview-item__undertakings']");
+    }
+
+    @When("A selfserve user decreases the vehicle required count by invalid characters")
+    public void aSelfserveUserDecreasesTheVehicleRequiredCountByInvalidCharacters() {
+        world.generalVariationJourney.beginOperatingCentreVariation();
+        world.operatingCentreJourney.updateOperatingCentreAuthorisation("-6", String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+    }
+
+    @When("A selfserve user decreases the vehicle authority by invalid charecters")
+    public void aSelfserveUserDecreasesTheVehicleAuthorityByInvalidCharecters() {
+        world.generalVariationJourney.beginOperatingCentreVariation();
+        String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
+        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("-6", null, currentTrailerTotalAuthority);
     }
 }

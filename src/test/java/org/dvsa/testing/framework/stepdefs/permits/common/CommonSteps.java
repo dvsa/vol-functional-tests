@@ -43,22 +43,19 @@ public class CommonSteps extends BasePermitJourney implements En {
         When("^I save and return to overview$", BasePermitPage::clickReturnToOverview);
         When("^I sign on as an external user$", () -> {
             world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());        });
+        });
         And("^all fees have been waived$", () -> {
             LicenceDetailsPageJourney.clickFeesTab();
             FeeDetailsPageJourney.whileFeesPresentWaveFee();
         });
         And("^I am on the permits dashboard on external$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
         });
     }
 
     public static void clickToPermitTypePage(@NotNull World world) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.beginPermitApplication();
     }
-
 
     public static void waitUntilPermitHasStatus(World world) {
         HomePage.PermitsTab.untilPermitHasStatus(

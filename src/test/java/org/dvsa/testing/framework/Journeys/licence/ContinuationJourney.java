@@ -7,6 +7,7 @@ import activesupport.file.TestResourceReader;
 import activesupport.system.Properties;
 import apiCalls.enums.LicenceType;
 import com.typesafe.config.Config;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
@@ -54,7 +55,7 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void clickContinueLicenceOnSelfServe()  {
-        world.selfServeNavigation.navigateToPage("licence", "View");
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
     }
@@ -69,8 +70,7 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void viewContinuationSnapshotOnInternal()  {
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewApplication();
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
         Assert.assertTrue(isTextPresent("Digital continuation snapshot"));
@@ -82,8 +82,8 @@ public class ContinuationJourney extends BasePage {
 
     public void replaceContinuationAndReviewDates(LinkedHashMap<String, String> continuationDates, LinkedHashMap<String, String> reviewDates)  {
         waitForTextToBePresent("Continuation date");
-        replaceDateFieldsByPartialId("details[continuationDate]", continuationDates);
-        replaceDateFieldsByPartialId("details[reviewDate]", reviewDates);
+        enterDateFieldsByPartialId("details[continuationDate]", continuationDates);
+        enterDateFieldsByPartialId("details[reviewDate]", reviewDates);
         click("form-actions[submit]", SelectorType.ID);
         waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
     }
@@ -132,7 +132,7 @@ public class ContinuationJourney extends BasePage {
         Assert.assertTrue(isTextPresent(testFile.getString("undertakingsTwo")));
     }
 
-    public void checkContinuationReviewSections() throws IllegalBrowserException {
+    public void checkContinuationReviewSections() {
         Assert.assertTrue(isTextPresent("Type of licence"));
         Assert.assertTrue(isTextPresent("Business type"));
         Assert.assertTrue(isTextPresent("Business details"));

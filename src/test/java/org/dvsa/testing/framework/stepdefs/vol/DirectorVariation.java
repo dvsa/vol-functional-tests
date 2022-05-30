@@ -6,6 +6,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
@@ -24,11 +26,6 @@ public class DirectorVariation extends BasePage {
     public DirectorVariation(World world) {
         this.world = world;
         directorJourney = world.directorJourney;
-    }
-
-    @And("i navigate to the directors page")
-    public void iNavigateToTheDirectorsPage() {
-        world.selfServeNavigation.navigateToPage("licence", "Directors");
     }
 
     @When("^I begin adding a new director and their details$")
@@ -53,7 +50,7 @@ public class DirectorVariation extends BasePage {
     @When("^i enter \"([^\"]*)\" to previous convictions details question$")
     public void iEnterPreviousToConvictionDetailsQuestion (String answer) {
         directorJourney.answerConvictionsAndPenalties(answer);
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndContinue();
     }
 
     @And("^an urgent task is created in internal$")
@@ -65,12 +62,12 @@ public class DirectorVariation extends BasePage {
     @And("^i enter \"([^\"]*)\" to financial details question$")
     public void iEnterToFinancialDetailsQuestion(String answer) {
         directorJourney.answerFinancialHistory(answer);
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndContinue();
     }
 
     @Then("^a snapshot should be created in internal$")
     public void aSnapshotShouldBeCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToDocsTable();
+        world.internalNavigation.logInAndNavigateToApplicationDocsTable(false);
         directorJourney.assertDirectorChangeInTable();
     }
 
@@ -102,26 +99,26 @@ public class DirectorVariation extends BasePage {
 
     @Then("^a task should not be created in internal$")
     public void aTaskShouldNotBeCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToTask();
+        world.internalNavigation.logInAndNavigateToApplicationProcessingPage(false);
         directorJourney.assertLastDirectorTaskNotCreated();
     }
 
     @Then("^the last director deleted task is created in internal$")
     public void aLastDirectorDeletedTaskIsCreatedInInternal() {
-        world.internalNavigation.logInAndNavigateToTask();
+        world.internalNavigation.logInAndNavigateToApplicationProcessingPage(false);
         directorJourney.assertLastDirectorTaskCreated();
     }
 
     @When("I begin adding a director but submit empty fields")
     public void iBeginAddingADirectorButSubmitEmptyFields() {
         clickByXPath(directorJourney.addButton);
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndContinue();
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 
     @When("I submit the empty page")
     public void iSubmitAnEmptyPage() {
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndContinue();
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 
@@ -143,7 +140,7 @@ public class DirectorVariation extends BasePage {
     @When("I wrongly fill in and submit the add a director page")
     public void whenIWronglyFillInAndSubmitTheAddADirectorPage() {
         clickByXPath(directorJourney.addButton);
-        waitForTitleToBePresent(directorJourney.directorDetailsTitle);
+        waitForTitleToBePresent(directorJourney.directorVariationDetailsTitle);
         selectValueFromDropDown(directorJourney.directorTitleDropdown, SelectorType.XPATH, "Dr");
 
         String incorrectNameValue = "!@£$%^";
@@ -154,9 +151,9 @@ public class DirectorVariation extends BasePage {
         incorrectDateValues.put("day", "!@");
         incorrectDateValues.put("month", "£$");
         incorrectDateValues.put("year", "%^&*");
-        replaceDateFieldsByPartialId("dob", incorrectDateValues);
+        enterDateFieldsByPartialId("dob", incorrectDateValues);
 
-        clickByXPath(directorJourney.saveAndContinue);
+        UIJourney.clickSaveAndContinue();
         waitForTextToBePresent(directorJourney.validationTitle);
     }
 
@@ -165,14 +162,14 @@ public class DirectorVariation extends BasePage {
         // Name fields do not currently contain any incorrect value validation
 
         List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation1, listOfSummaryErrors.get(0).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation2, listOfSummaryErrors.get(1).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfSummaryErrors.get(2).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(0).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(1).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(2).getText());
 
         List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation1, listOfInlineErrors.get(0).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation2, listOfInlineErrors.get(1).getText());
-        assertEquals(directorJourney.dateOfBirthIncorrectValueValidation3, listOfInlineErrors.get(2).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(0).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(1).getText());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(2).getText());
     }
 
     @Then("the director financial history page empty field validation should appear")

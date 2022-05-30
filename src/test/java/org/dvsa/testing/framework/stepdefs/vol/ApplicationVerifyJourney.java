@@ -6,9 +6,10 @@ import apiCalls.enums.UserType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.pageObjects.BasePage;;
+import org.dvsa.testing.framework.enums.SelfServeSection;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 
-
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,8 +25,8 @@ public class ApplicationVerifyJourney extends BasePage {
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourney.createApplication();
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("application", "Type of licence");
+        refreshPageWithJavascript();
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
         world.selfServeNavigation.navigateThroughApplication();
         world.UIJourney.signDeclaration();
     }

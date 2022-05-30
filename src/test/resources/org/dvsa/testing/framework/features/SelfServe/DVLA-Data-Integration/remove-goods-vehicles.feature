@@ -1,6 +1,6 @@
 @VOL-84 @VOL-85 @DVLA
 
-Feature: Remove a vehicle more than 10 vehicles
+Feature: Remove a vehicle
 
   Scenario: Remove vehicle on application
     Given I have a "goods" "standard_national" application

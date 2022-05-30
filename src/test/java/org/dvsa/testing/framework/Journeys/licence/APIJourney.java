@@ -3,7 +3,11 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
+import activesupport.driver.Browser;
+import activesupport.system.Properties;
 import apiCalls.enums.*;
+import org.dvsa.testing.framework.Global.Configuration;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.joda.time.LocalDate;
 
 public class APIJourney {
@@ -35,7 +39,7 @@ public class APIJourney {
         world.APIJourney.createApplication();
         world.APIJourney.submitApplication();
         world.grantApplication.grantLicence();
-        world.grantApplication.payGrantFees();
+        world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         world.updateLicence.getLicenceTrafficArea();
     }
 
@@ -46,7 +50,8 @@ public class APIJourney {
         world.createApplication.addAddressDetails();
         world.createApplication.addDirectors();
         world.createApplication.submitTaxiPhv();
-        world.createApplication.addOperatingCentre();
+        if (!world.licenceCreation.isLGVOnlyLicence())
+            world.createApplication.addOperatingCentre();
         world.createApplication.updateOperatingCentre();
         world.createApplication.addFinancialEvidence();
         world.createApplication.addTransportManager();
@@ -94,15 +99,18 @@ public class APIJourney {
     }
 
     public void registerAndGetUserDetails(String userType) {
+        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         world.registerUser.registerUser();
-        world.userDetails.getUserDetails(userType, world.registerUser.getUserId());
+        //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), world.configuration.config.getString("internalNewPassword"));
     }
 
     public void grantLicenceAndPayFees() {
         world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
         if (world.licenceCreation.isGoodsLicence()) {
-            world.grantApplication.payGrantFees();
+            world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         }
     }
 }

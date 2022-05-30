@@ -5,8 +5,7 @@ Feature: Add a director variation
 
   Background:
     Given i have a valid "public" "standard_international" licence
-    And i have logged in to self serve
-    And i navigate to the directors page
+    And i navigate to the "licence" directors page
 
   Scenario: Director without any convictions
     When I begin adding a new director and their details

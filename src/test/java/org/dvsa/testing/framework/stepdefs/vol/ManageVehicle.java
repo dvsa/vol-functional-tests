@@ -7,6 +7,9 @@ import apiCalls.Utils.generic.Headers;
 import apiCalls.Utils.generic.Utils;
 import io.cucumber.java.en.*;
 import io.restassured.response.ValidatableResponse;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.enums.SelfServeSection;
+import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.api.URL;
@@ -14,7 +17,9 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.*;
@@ -32,19 +37,16 @@ public class ManageVehicle extends BasePage {
 
     @When("I navigate to manage vehicle page on an application")
     public void iNavigateToManageVehiclePageOnAnApplication(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("application");
     }
 
     @When("I navigate to manage vehicle page on a licence")
     public void iNavigateToManageVehiclePageOnALicence(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("licence");
     }
 
     @When("I navigate to manage vehicle page on a variation")
     public void iNavigateToManageVehiclePageOnAVariation(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("variation");
     }
 
@@ -57,6 +59,10 @@ public class ManageVehicle extends BasePage {
     public void chooseToAddAVehicle(String VRM){
         world.UIJourney.addAVehicle(VRM);
         waitAndClick("confirm", SelectorType.ID);
+        if(isTextPresent(String.format("%s is specified on another licence.", VRM))){
+            findSelectAllRadioButtonsByValue("yes");
+            clickById("next");
+        }
     }
 
     @And("{string} heading")
@@ -242,7 +248,7 @@ public class ManageVehicle extends BasePage {
     @And("all the licence discs number should be updated")
     public void theAllTheLicenceDiscsNumberShouldBeUpdated() {
         world.dvlaJourney.navigateToReprintVehicleDiscPage();
-        for (int i = 0; i < world.createApplication.getVehicleVRMs().length; i++) {
+        for (int i = 0; i < world.createApplication.getHgvVRMs().length; i++) {
             world.dvlaJourney.newDiscNumber = getText(
                     String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourney.allVRMs.get(i)), SelectorType.XPATH);
             Assert.assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
@@ -326,10 +332,6 @@ public class ManageVehicle extends BasePage {
 
     @Then("the {string} should be displayed on the page")
     public void theShouldBeDisplayedOnThePage(String vrm) {
-         if(isTextPresent(String.format("%s is specified on another licence.",vrm))){
-             findSelectAllRadioButtonsByValue("yes");
-             clickById("next");
-        }
         isTextPresent(String.format("Vehicle %s has been added", vrm));
     }
 
@@ -352,5 +354,18 @@ public class ManageVehicle extends BasePage {
         List<Object> responseArray = response.extract().body().jsonPath().get("results.id.findAll()");
         json.put("ids", responseArray);
         RestUtils.delete(json.toString(), URL.build(this.env, "licence-vehicle/").toString(), apiHeaders.headers);
+    }
+
+    @Then("i remove the {int} extra vehicles")
+    public void iRemoveTheExtraVehicles(int numberOfVehicles) throws InterruptedException {
+        isTextPresent("");
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VEHICLES);
+        for (int i = 0; i < numberOfVehicles; i++) {
+            waitAndClick("//input[@value='Remove']", SelectorType.XPATH);
+            waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
+            world.UIJourney.clickSubmit();
+            waitForElementToBeClickable("//input[@value='Remove']", SelectorType.XPATH);
+            Thread.sleep(2000);
+        }
     }
 }

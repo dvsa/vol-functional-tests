@@ -60,6 +60,4 @@ public class EcmtInternationalRemovalJourney extends BasePermitJourney {
         world.feeAndPaymentJourney.customerPaymentModule();
         SubmittedPage.untilOnPage();
     }
-
-
 }

@@ -1,5 +1,4 @@
 @SS-TM-Verify
-@SS
 @OLCS-21298
 @ss_regression
 Feature: TM/operator checks optional wording has been removed for TM details page
@@ -35,9 +34,9 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
 
     Examples:
       | page                           | button                        | page-title                                              |
-#      | add-other-licence-applications | Add other licences            | Add other licence details                               |
-#      | add-employment                 | Add other employment          | Add other employment details                            |
-#      | add-previous-conviction        | Add convictions and penalties | Add Offence                                             |
+      | add-other-licence-applications | Add other licences            | Add other licence details                               |
+      | add-employment                 | Add other employment          | Add other employment details                            |
+      | add-previous-conviction        | Add convictions and penalties | Add Offence                                             |
       | add-previous-licence           | Add licences                  | Add Details of revoked, curtailed or suspended licences |
 
   Scenario: validation checks when no radio button has been selected

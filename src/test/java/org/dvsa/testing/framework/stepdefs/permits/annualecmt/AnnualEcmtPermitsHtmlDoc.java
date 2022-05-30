@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
+import activesupport.driver.Browser;
 import activesupport.string.Str;
 import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
@@ -14,11 +15,6 @@ import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPa
 import org.junit.Assert;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 
 public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
 
@@ -33,8 +29,8 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             DocsAndAttachmentsPage.select(permitApplicationNumber);
         });
         Then("^the annual ECMT Permits HTML document should have the correct information$", () -> {
-            ArrayList<String> tab = new ArrayList<String> (getBrowser().get().getWindowHandles());
-            getBrowser().get().switchTo().window(tab.get(tab.size() - 1));
+            ArrayList<String> tab = new ArrayList<String> (Browser.navigate().getWindowHandles());
+            Browser.navigate().switchTo().window(tab.get(tab.size() - 1));
             DocumentsPage.untilOnPage();
             String selectLicence1 = world.applicationDetails.getLicenceNumber();
             // Check heading contains correct heading

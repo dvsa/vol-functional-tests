@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.permits;
 import Injectors.World;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitType;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsPage;
@@ -22,7 +23,7 @@ public class IRHPPageJourney extends BasePermitJourney {
         IrhpPermitsPage.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
         IrhpPermitsPage.Model.permitType(permitType);
         if (permitType == PermitType.ECMT_ANNUAL || permitType == PermitType.SHORT_TERM_ECMT) {
-            waitAndSelectByIndex("Select a year","//select[@id='yearList']", SelectorType.XPATH,1);
+            waitAndSelectByIndex("//select[@id='yearList']", SelectorType.XPATH,1);
         }
         IrhpPermitsPage.Model.waitForContinueToBeClickable();
         IrhpPermitsPage.Model.continueButton();
@@ -30,9 +31,7 @@ public class IRHPPageJourney extends BasePermitJourney {
     }
 
     public static void logInToInternalAndIRHPGrantApplication(World world) {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         String browser = String.valueOf(getURL());
         get(browser+"irhp-application/");
         IrhpPermitsApplyPage.viewApplication();

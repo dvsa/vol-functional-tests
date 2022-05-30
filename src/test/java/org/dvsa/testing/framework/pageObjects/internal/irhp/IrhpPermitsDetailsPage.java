@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.internal.irhp;
 
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.pageObjects.PermitApplication;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
@@ -13,8 +14,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 
 public class IrhpPermitsDetailsPage extends BaseDetailsPage {
 
@@ -67,7 +66,7 @@ public class IrhpPermitsDetailsPage extends BaseDetailsPage {
         long maxSecondsWait = unit.toSeconds(duration);
 
         while (maxSecondsWait >= 0 && !isElementVisible(selector, 1)) {
-            getBrowser().get().navigate().refresh();
+            Browser.navigate().navigate().refresh();
             maxSecondsWait--;
         }
 

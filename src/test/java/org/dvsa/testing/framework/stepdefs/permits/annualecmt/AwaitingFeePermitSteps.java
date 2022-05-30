@@ -1,7 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
 import Injectors.World;
-import io.cucumber.java8.En;;
+import activesupport.driver.Browser;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
@@ -12,7 +13,6 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.junit.Assert;
 
 import static java.lang.Thread.sleep;
-import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.hamcrest.core.Is.is;
 
@@ -28,7 +28,7 @@ public class AwaitingFeePermitSteps extends BasePage implements En {
             sleep(3000);
             world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
-            getBrowser().get().navigate().refresh();
+            Browser.navigate().navigate().refresh();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
             HomePage.PermitsTab.selectFirstOngoingApplication();
         });

@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal.bilateral;
 
-import io.cucumber.java8.En;;
+import activesupport.driver.Browser;
+import io.cucumber.java8.En;
 import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.external.enums.sections.BilateralSection;
@@ -11,7 +12,6 @@ import org.junit.Assert;
 
 import java.util.ArrayList;
 
-import static org.dvsa.testing.framework.runner.Hooks.getBrowser;
 import static org.junit.Assert.*;
 
 public class HTMLSnapshotSteps extends BasePage implements En {
@@ -19,8 +19,8 @@ public class HTMLSnapshotSteps extends BasePage implements En {
     public HTMLSnapshotSteps(World world) {
         Then("^text for annual bilateral snapshot is displayed as expected$", () -> {
 
-            ArrayList<String> tab = new ArrayList<String> (getBrowser().get().getWindowHandles());
-            getBrowser().get().switchTo().window(tab.get(tab.size() - 1));
+            ArrayList<String> tab = new ArrayList<String> (Browser.navigate().getWindowHandles());
+            Browser.navigate().switchTo().window(tab.get(tab.size() - 1));
 
             DocumentsPage.untilOnPage();
 
@@ -35,16 +35,16 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             assertTrue(DocumentsPage.getSectionBody(BilateralSection.Licence).contains(world.applicationDetails.getLicenceNumber()));
 
             // Countries selected
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.CountriesSelected),"Morocco");
+            assertEquals(DocumentsPage.getSectionBody(BilateralSection.CountriesSelected), "Morocco");
 
             // Questions answered for
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.QuestionsAnsweredFor),"Morocco");
+            assertEquals(DocumentsPage.getSectionBody(BilateralSection.QuestionsAnsweredFor), "Morocco");
 
             // Permit type
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.PermitType),"Empty Entry single journey permit");
+            assertEquals(DocumentsPage.getSectionBody(BilateralSection.PermitType), "Empty Entry single journey permit");
 
             // Number of Permits
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.NumberOfPermits),"3");
+            assertEquals(DocumentsPage.getSectionBody(BilateralSection.NumberOfPermits), "3");
 
             //advisory text
             Assert.assertEquals("By applying for this permit, you confirm that you:", getText("//div[@class='printable__section']/p[1]", SelectorType.XPATH));

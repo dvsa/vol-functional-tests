@@ -1,8 +1,9 @@
 @VOL-90 @VOL-91 @DVLA
+
 Feature: Transfer a vehicle
 
   Scenario: Transfer vehicles for dual licence holder
-    Given I have "2" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "5"
+    Given I have "2" "goods" "standard_international" licences with "3" vehicles and a vehicleAuthority of "5"
     And I navigate to manage vehicle page on a licence
     When i transfer a vehicle to an assumed licence
     Then the "1 vehicle has been transferred to licence" confirmation banner should appear
@@ -13,9 +14,6 @@ Feature: Transfer a vehicle
     When i transfer a vehicle to a specified licence
     Then the "1 vehicle has been transferred to licence" confirmation banner should appear
 
-  @WIP
-  Scenario: View a vehicle via transfer page?
-    Given I have a "goods" "standard_national" licence
 
   Scenario: Transfer all vehicles from licence
     Given I have "2" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
@@ -30,10 +28,6 @@ Feature: Transfer a vehicle
     And I navigate to manage vehicle page on a licence
     When i transfer all the vehicles from my licence
     Then a "Transferring these vehicles would exceed the vehicle authority on licence" error banner should appear
-
-  @WIP
-  Scenario: Check transfer option doesn't appear on SLH
-    Given I have a "goods" "standard_national" licence
 
   Scenario: Error validation
     Given I have "3" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "5"

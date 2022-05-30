@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import apiCalls.enums.LicenceType;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
@@ -41,8 +42,13 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void navigateToSurrendersStartPage()  {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", "View");
+        refreshPageWithJavascript();
+        if(!getDriver().getCurrentUrl().contains("ssweb")){
+           if(!isTextPresent("Current licences")){
+               world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+           }
+        }
+        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Apply to surrender licence");
     }
 
@@ -73,10 +79,6 @@ public class SurrenderJourney extends BasePage {
 
     public String getSurrenderCountry()  {
         return getText("//dt[contains(text(),'Country')]//..//dd", SelectorType.XPATH);
-    }
-
-    public String getSurrenderContactNumber()  {
-        return getText("//*[@class='app-check-your-answers app-check-your-answers--long'][3]/div[@class='app-check-your-answers__contents'][1]/dd[@class='app-check-your-answers__answer']", SelectorType.XPATH);
     }
 
     public void submitSurrender() {
@@ -112,9 +114,7 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void caseworkManageSurrender() {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-        world.internalNavigation.urlSearchAndViewLicence();
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);

@@ -1,18 +1,23 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import io.cucumber.java8.En;;
+import activesupport.database.exception.UnsupportedDatabaseDriverException;
+import io.cucumber.java.en.And;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.junit.Assert;
 
-public class LicenceDiscs extends BasePage implements En {
+import java.sql.SQLException;
 
-    public LicenceDiscs(World world) {
-        And("^the licence discs should be present$", () -> {
-            int psvDiscNumber = world.DBUtils.getFirstPsvDiscNumber(world.createApplication.getLicenceId(), world.configuration);
-            for (int i = 0; i < 5; i++){
-                Assert.assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i)));
-            }
-        });
+public class LicenceDiscs extends BasePage{
+    private final World world;
+
+    public LicenceDiscs (World world) {this.world = world;}
+
+    @And("the licence discs should be present")
+    public void theLicenceDiscsShouldBPresent() throws SQLException, UnsupportedDatabaseDriverException {
+        int psvDiscNumber = Integer.parseInt(world.updateLicence.getStartNumber());
+        for (int i = 0; i < 5; i++){
+            Assert.assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i)));
+        }
     }
 }

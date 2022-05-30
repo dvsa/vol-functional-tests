@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -8,9 +9,11 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -26,11 +29,11 @@ public class DirectorJourney extends BasePage {
     public String directorsTitle = "Directors";
     public String directorLinks = "//tbody/tr/td[1]/input";
     public String addButton = "//button[@name='table[action]']";
-    public String directorDetailsTitle = "Add a director";
+    public String directorDetailsTitle = "Add person";
+    public String directorVariationDetailsTitle = "Add a director";
     public String directorTitleDropdown = "//select[@id='title']";
     public String firstNameField = "//input[@name='data[forename]']";
     public String lastNameField = "//input[@name='data[familyName]']";
-    public String saveAndContinue = "//button[@name='form-actions[saveAndContinue]']";
     public String additionalInformation = "//*[@id='data[insolvencyDetails]']";
     public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
@@ -49,15 +52,12 @@ public class DirectorJourney extends BasePage {
     public String firstNameValidation = "Enter first name";
     public String lastNameValidation = "Enter last name";
     public String dateOfBirthEmptyFieldValidation = "Enter date of birth";
-    public String dateOfBirthIncorrectValueValidation1 = "The date should be entered in number format";
-    public String dateOfBirthIncorrectValueValidation2 = "Please enter all 4 digits of the year";
-    public String dateOfBirthIncorrectValueValidation3 = "The input does not appear to be a valid value";
     public String bankruptcyValidation = "Bankruptcy: Choose an option";
     public String liquidationValidation = "Liquidation: Choose an option";
     public String receivershipValidation = "Receivership: Choose an option";
     public String administrationValidation = "Administration: Choose an option";
     public String disqualifiedValidation = "Disqualified: Choose an option";
-    public String convictionsAndPenaltiesValidation = "validation message not decided yet";
+    public String convictionsAndPenaltiesValidation = "Value is required";
 
 
     public DirectorJourney(World world){
@@ -68,34 +68,47 @@ public class DirectorJourney extends BasePage {
         return directorFirstName.concat(" ").concat(directorLastName);
     }
 
-    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties()  {
+    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties() {
         click(addButton, SelectorType.XPATH);
-        addDirectorDetails();
+        if (isTitlePresent(directorDetailsTitle,30)) {
+            addPersonDetails();
+        } else if (isTitlePresent(directorVariationDetailsTitle,30)) {
+            addDirectorDetails();
+        }
         completeDirectorFinancialHistory("N");
         completeConvictionsAndPenalties("N");
     }
 
     public void addDirectorDetails()  {
-        waitForTitleToBePresent(directorDetailsTitle);
+        personDetails();
+        clickByName("form-actions[saveAndContinue]");
+    }
+
+    public void addPersonDetails()  {
+        personDetails();
+        clickByName("form-actions[submit]");
+    }
+
+    private void personDetails() {
         selectValueFromDropDown(directorTitleDropdown, SelectorType.XPATH, "Dr");
         directorFirstName = faker.generateFirstName();
         directorLastName = faker.generateLastName();
         enterText(firstNameField, SelectorType.XPATH, directorFirstName);
         enterText(lastNameField, SelectorType.XPATH, directorLastName);
         HashMap<String, String> dates = world.globalMethods.date.getDateHashMap(-5, 0, -20);
-        replaceDateFieldsByPartialId("dob", dates);
-        clickByXPath(saveAndContinue);
+        enterDateFieldsByPartialId("dob", dates);
     }
+
 
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(financialHistoryAnswers);
-        clickByXPath(saveAndContinue);
-    };
+        UIJourney.clickSaveAndContinue();
+    }
 
     public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
-        clickByXPath(saveAndContinue);
-    };
+        UIJourney.clickSaveAndContinue();
+    }
 
     public void removeDirector()  {
         click(deleteDirectorButtons, SelectorType.XPATH);
@@ -113,7 +126,7 @@ public class DirectorJourney extends BasePage {
         } else {
             findSelectAllRadioButtonsByValue("Y");
             click("add", SelectorType.ID);
-            world.UIJourney.addPreviousConviction();
+            world.convictionsAndPenaltiesJourney.addPreviousConviction();
         }
     }
 

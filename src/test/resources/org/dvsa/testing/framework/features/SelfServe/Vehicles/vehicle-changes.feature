@@ -1,4 +1,4 @@
-@deprecated
+@OLD_JOURNEY
 Feature: Vehicle management on a licence
 
   Background: Generate a licence and navigate to vehicle page

@@ -1,131 +1,182 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
-import apiCalls.enums.UserType;
-import io.cucumber.java8.En;;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class InternalApplication extends BasePage implements En {
-    public InternalApplication(World world) {
-        Then("^The pop up should contain letter details$", () -> {
+public class InternalApplication extends BasePage{
+    private final World world;
 
-            waitForTextToBePresent("Amend letter");
+    private final String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
+    private final String numberOfVehicles = "//dt[contains(text(),'No. of vehicles')]/../dd";
+    private final String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
 
-            String categoryValue = getText("//*[@id='generate-document']/div[2]", SelectorType.XPATH);
-            assertNotNull(categoryValue);
+    public InternalApplication (World world) {this.world = world;}
 
-            String subCategoryValue = getText("//*[@id='generate-document']/div[3]", SelectorType.XPATH);
-            assertNotNull(subCategoryValue);
+    @When("the caseworker completes and submits the application")
+    public void theCaseworkerCompletesAndSubmitsTheApplication() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
+        click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
+        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitForTextToBePresent("has been submitted");
+        world.UIJourney.caseWorkerCompleteConditionsAndUndertakings();
+        world.UIJourney.caseWorkerCompleteReviewAndDeclarations();
+        world.UIJourney.caseWorkerCompleteOverview();
+    }
 
-            String templateValue = getText("//*[@id='generate-document']/div[4]", SelectorType.XPATH);
-            assertNotNull(templateValue);
+    @And("grants the application")
+    public void grantsTheApplication() {
+        int tableColumns;
+        waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
+        world.feeAndPaymentJourney.selectFee();
+        String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
+        world.feeAndPaymentJourney.payFee(fee, "cash");
+        waitForTextToBePresent("The payment was made successfully");
+        long kickoutTime = System.currentTimeMillis() + 15000;
 
-            String docStoreLink = getAttribute("//a[contains(@href,'file:////')]", SelectorType.XPATH, "href");
-            assertNotNull(docStoreLink);
-            assertTrue(docStoreLink.contains(".rtf"));
-        });
+        do {
+            tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
+            refreshPageWithJavascript();
+        } while (tableColumns > 1 && System.currentTimeMillis() < kickoutTime);
 
-        When("^i generate a letter$", () -> {
-            world.UIJourney.generateLetter();
-        });
+        if (System.currentTimeMillis() > kickoutTime) {
+            throw new TimeoutException("Kickout time for expecting no fee is present when granting a licence exceeded.");
+        }
+        world.UIJourney.grantApplicationUnderDelegatedAuthority();
+    }
 
-        And("^i save the letter$", () -> {
-            click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
-            waitForTextToBePresent("Send letter");
-            click("//*[@id='close']",SelectorType.XPATH);
-            waitForTextToBePresent("The document has been saved");
-        });
+    @Then("the licence is granted in Internal")
+    public void theLicenceIsGrantedInInternal() {
+        waitForTextToBePresent("Overview");
+        world.UIJourney.checkLicenceStatus("Granted");
+    }
 
-        When("^I generate Licence Document$", () -> {
-            world.UIJourney.printLicence();
-        });
+    @When("i generate a letter")
+    public void iGenerateALetter() {
+        world.UIJourney.generateLetter();
+    }
 
-        When("^I delete a licence document from table$", () -> {
-            world.UIJourney.deleteLicenceDocument();
-        });
+    @Then("The pop up should contain letter details")
+    public void thePopUpShouldContainLetterDetails() {
+        waitForTextToBePresent("Amend letter");
+        String docStoreLink = getText("letter-link",SelectorType.ID);
+        assertNotNull(docStoreLink);
+        String webDAVUrl = URL.build(ApplicationType.INTERNAL, world.configuration.env, "documents-dav").toString();
+        assertTrue(docStoreLink.contains(String.format("ms-word:ofe|u|%s",webDAVUrl)));
+        assertTrue(docStoreLink.contains(".rtf"));
+    }
 
-        When("^I delete generated letter above from the table$", () -> {
-            world.UIJourney.deleteLetterDocument();
-        });
+    @Then("the postcode warning message should be displayed on internal")
+    public void thePostcodeWarningMessageShouldBeDisplayedOnInternal() {
+        assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres."));
+        click("form-actions[confirm-add]", SelectorType.ID);
+        click("form-actions[submit]", SelectorType.ID);
+        waitForTextToBePresent("Operating centres and authorisation");
+        assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
+    }
 
-        When("^the document should be deleted$", () -> {
-            waitForTextToBePresent("Deleted successfully");
-        });
+    @When("a caseworker adds a new operating centre out of the traffic area")
+    public void aCaseworkerAddsANewOperatingCentreOutOfTheTrafficArea() {
+        world.UIJourney.addNewOperatingCentre();
+    }
 
-        When("^a caseworker adds a new operating centre out of the traffic area$", () -> {
-            world.UIJourney.addNewOperatingCentre();
-        });
+    @And("i save the letter")
+    public void iSaveTheLetter() {
+        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        waitForTextToBePresent("Send letter");
+        click("//*[@id='close']",SelectorType.XPATH);
+        waitForTextToBePresent("The document has been saved");
+    }
 
-        Then("^the postcode warning message should be displayed on internal$", () -> {
-            assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres."));
-            click("form-actions[confirm-add]", SelectorType.ID);
-            click("form-actions[submit]", SelectorType.ID);
-            waitForTextToBePresent("Operating centres and authorisation");
-            assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
-        });
 
-        Given("^I have partially applied for a \"([^\"]*)\" \"([^\"]*)\" licence$", (String operator, String licenceType) -> {
-            world.createApplication.setOperatorType(operator);
-            world.createApplication.setLicenceType(licenceType);
-            if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
-                world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-                world.APIJourney.createSpecialRestrictedLicence();
-            } else if (world.createApplication.getApplicationId() == null) {
-                world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-                world.APIJourney.createApplication();
+    @And("I delete generated letter above from the table")
+    public void iDeleteGeneratedLetterAboveFromTheTable() {
+        world.UIJourney.deleteLicenceDocument();
+    }
 
-            }
-        });
+    @Then("the document should be deleted")
+    public void theDocumentShouldBeDeleted() {
+        waitForTextToBePresent("Deleted successfully");
+    }
 
-        When("^the caseworker completes and submits the application$", () -> {
-            world.APIJourney.createAdminUser();
-            world.internalNavigation.navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
-            world.internalNavigation.urlSearchAndViewApplication();
-            click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
-            waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    @And("I navigate to the application overview")
+    public void iNavigateToTheApplicationOverview() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
+    }
 
-            waitForTextToBePresent("has been submitted");
+    @Then("the LGV Only authorisation should be correct on the application overview screen")
+    public void theLGVOnlyAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
+        String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
+        String actualLGVAuthorisation = getText(LGVOnlyAuthorisation, SelectorType.XPATH);
+        String expectedLGVAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreLgvAuthority());
+        assertEquals(expectedLGVAuthority, actualLGVAuthorisation);
 
-            world.UIJourney.caseWorkerCompleteConditionsAndUndertakings();
+        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
+        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedLgvVehicles());
+        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
 
-            world.UIJourney.caseWorkerCompleteReviewAndDeclarations();
+        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
+        String expectedNumberOfOperatingCentres = "0 (0)";
+        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
+    }
 
-            world.UIJourney.caseWorkerCompleteOverview();
-        });
+    @Then("the PSV Standard International authorisation should be correct on the application overview screen")
+    public void thePSVStandardInternationalAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
+        String actualVehicleAuthorisation = getText(vehicleAuthorisation, SelectorType.XPATH);
+        String expectedVehicleAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreHgvAuthority());
+        assertEquals(expectedVehicleAuthority, actualVehicleAuthorisation);
 
-        And("^grants the application$", () -> {
-            int tableColumns;
-            waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
-            world.feeAndPaymentJourney.selectFee();
-            String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
-            world.feeAndPaymentJourney.payFee(fee, "cash");
-            waitForTextToBePresent("The payment was made successfully");
-            long kickoutTime = System.currentTimeMillis() + 15000;
+        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
+        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedHgvVehicles());
+        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
 
-            do {
-                tableColumns = returnTableRows("//tbody/tr/*",SelectorType.XPATH);
-                refreshPageWithJavascript();
-            } while (tableColumns > 1 && System.currentTimeMillis() < kickoutTime);
+        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
+        String expectedNumberOfOperatingCentres = "0 (1)";
+        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
+    }
 
-            if (System.currentTimeMillis() > kickoutTime) {
-                throw new TimeoutException("Kickout time for expecting no fee is present when granting a licence exceeded.");
-            }
-            waitAndClick("//*[@id='menu-application-decisions-grant']", SelectorType.XPATH);
-            waitAndClick("//input[@id='grant-authority']", SelectorType.XPATH);
-            waitAndClick("//button[@id='form-actions[continue-to-grant]']", SelectorType.XPATH);
-            waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
-            click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
-        });
+    @Then("the Goods Standard National authorisation should be correct on the application overview screen")
+    public void theGoodsStandardNationalAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
+        String actualHGVAuthorisation = getText(vehicleAuthorisation, SelectorType.XPATH);
+        String expectedHGVAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreHgvAuthority());
+        assertEquals(expectedHGVAuthority, actualHGVAuthorisation);
 
-        Then("^the licence is granted in Internal$", () -> {
-            waitForTextToBePresent("Overview");
-            world.UIJourney.checkLicenceStatus("Granted");
-        });
+        String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
+        String actualTrailerAuthorisation = getText(trailerAuthorisation, SelectorType.XPATH);
+        String expectedTrailerAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreTrailerAuthority());
+        assertEquals(actualTrailerAuthorisation, expectedTrailerAuthority);
+
+        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
+        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedHgvVehicles());
+        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
+
+        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
+        String expectedNumberOfOperatingCentres = "0 (1)";
+        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
+    }
+
+    @And("I click cancel")
+    public void clicksCancel() {
+        world.UIJourney.clickCancel();
+    }
+
+    @And("the caseworker is still on the operators page")
+    public void theCaseworkerIsStillOnTheOperatorsPage() {
+        assertTrue(isTitlePresent(world.registerUser.getOrganisationName(), 10));
     }
 }
