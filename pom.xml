@@ -21,6 +21,8 @@
         <cucumber-junit.version>7.3.4</cucumber-junit.version>
         <cucumber-java.version>7.3.4</cucumber-java.version>
         <pico-container-version>7.3.4</pico-container-version>
+        <junit-platform-suite.version>1.8.2</junit-platform-suite.version>
+        <junit-jupiter.version>5.8.2</junit-jupiter.version>
 
         <allure-cucumber5-jvm.version>2.18.1</allure-cucumber5-jvm.version>
         <allure-report.version>2.18.1</allure-report.version>
@@ -33,7 +35,6 @@
 
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn.version>2.10.0</allure-mvn.version>
-        <cucable-plugin.version>1.8.0</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
         <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
         <apache-commons.version>1.8</apache-commons.version>
@@ -69,13 +70,6 @@
                         -Dcucumber.options="--plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"
                     </argLine>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>${aspectj.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>io.qameta.allure</groupId>
@@ -131,8 +125,20 @@
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>${junit-platform-suite.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.7.2</version>
+            <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
