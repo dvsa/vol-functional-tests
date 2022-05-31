@@ -15,14 +15,8 @@ public class Trailers extends BasePage {
         this.world = world;
     }
 
-    @Given("I add a valid trailer number {string} and longer semi trailer is set to {string}")
+    @Given("I add a valid trailer number {string} and longer semi trailer is set to {string}  on the licence")
     public void addATrailer(String trailerNumber, String isLongerSemiTrailer) {
-        world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
-
-    }
-
-    @When("I save the Trailers Page")
-    public void saveTrailerPage() {
         world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
 
     }
