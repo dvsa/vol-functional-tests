@@ -19,7 +19,6 @@ public class ApplicationVerifyJourney extends BasePage {
     public ApplicationVerifyJourney(World world){
         this.world = world;
     }
-
     @Given("i have an application in progress")
     public void iHaveAnApplicationInProgress() {
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
@@ -30,7 +29,6 @@ public class ApplicationVerifyJourney extends BasePage {
         world.selfServeNavigation.navigateThroughApplication();
         world.UIJourney.signDeclaration();
     }
-
     @When("i choose to sign with verify")
     public void iChooseToSignWithVerify() {
         world.UIJourney.signWithVerify();
