@@ -1,21 +1,8 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
         import Injectors.World;
-        import activesupport.IllegalBrowserException;
-        import activesupport.dates.Dates;
-        import org.dvsa.testing.framework.enums.SelfServeSection;
         import org.dvsa.testing.framework.pageObjects.BasePage;
         import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-        import org.joda.time.LocalDate;
-        import org.junit.Assert;
-
-        import java.io.IOException;
-        import java.util.HashMap;
-        import java.util.LinkedHashMap;
-
-        import static junit.framework.TestCase.assertTrue;
-        import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-        import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class TrailersJourney extends BasePage {
 
