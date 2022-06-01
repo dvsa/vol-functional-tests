@@ -34,7 +34,7 @@ public class Trailers extends BasePage {
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence(trailerNumber);
         world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
-        waitAndClick(submitButton, SelectorType.ID);
+        waitAndClick(submitButton, SelectorType.XPATH);
         //String Selector = "//input[@name='data[longerSemiTrailer][isLongerSemiTrailer]']";
         //untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
         //clickByXPath(Selector + "[@value='Y']");
