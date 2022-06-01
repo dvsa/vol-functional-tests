@@ -25,11 +25,16 @@ public class Trailers extends BasePage {
         this.world = world;
     }
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
+    String submitButton = "//*[@id='form-actions[submit]']";
+    String addTrailerButton = "//*[@id='add']";
 
     @Given("I add a valid trailer number {string} and longer semi trailer is set to {string} on the licence")
     public void addATrailer(String trailerNumber, String isLongerSemiTrailer) {
         world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
-        world.trailersJourney.addTrailerToLicence(trailerNumber, isLongerSemiTrailer);
+        click(addTrailerButton, SelectorType.XPATH);
+        world.trailersJourney.addTrailerToLicence(trailerNumber);
+        world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
+        waitAndClick(submitButton, SelectorType.ID);
         //String Selector = "//input[@name='data[longerSemiTrailer][isLongerSemiTrailer]']";
         //untilElementIsPresent(Selector, SelectorType.XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
         //clickByXPath(Selector + "[@value='Y']");
@@ -54,6 +59,36 @@ public class Trailers extends BasePage {
         //Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Country']",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
         //Assert.assertEquals(trailerNumber, getElementValueByText("//tbody/tr/td[@data-heading='Trailer number']", SelectorType.XPATH));
         UIJourney.clickSaveAndReturn();
+    }
+
+    @When("I add a trailer with no trailer number")
+    public void trailerWithNoNumber() {
+        world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
+        click(addTrailerButton, SelectorType.XPATH);
+        world.trailersJourney.isLongerSemiTrailer("Yes");
+        waitAndClick(submitButton, SelectorType.XPATH);
+    }
+
+    @When("I add a trailer with the longer semi trailer option unanswered")
+    public void trailerWithNoLongerSemiTrailer() {
+        world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
+        click(addTrailerButton, SelectorType.XPATH);
+        world.trailersJourney.addTrailerToLicence("GHTU775");
+        waitAndClick(submitButton, SelectorType.XPATH);
+    }
+
+    @Then("the trailer number mandatory error message appears")
+    public void trailerNumberMandatoryErrorAppears() {
+        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
+        waitForTextToBePresent("There is a problem");
+        Assert.assertTrue(isElementPresent("//a[contains(text(),'Enter a value for the field: \"Trailer number\"')]", SelectorType.XPATH));
+    }
+
+    @Then("the is longer semi trailer mandatory error message appears")
+    public void longerSemiTrailerMandatoryErrorAppears() {
+        isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
+        waitForTextToBePresent("There is a problem");
+        Assert.assertTrue(isElementPresent("//a[contains(text(),'Select yes if this trailer is a longer semi-trailer')]", SelectorType.XPATH));
     }
 
 }
