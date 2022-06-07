@@ -103,7 +103,7 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfRunners>7</desiredNumberOfRunners>
+                    <desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                     <includeScenarioTags>
                         not (@skip
@@ -144,8 +144,8 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>4</forkCount>
-                            <reuseForks>true</reuseForks>
+                            <forkCount>5</forkCount>
+                            <reuseForks>false</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
