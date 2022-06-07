@@ -43,7 +43,7 @@ public class SubmitSelfServeApplication extends BasePage {
         //business details
         world.businessDetailsJourney.addBusinessDetails();
         if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
-            if (isTextPresent("You haven't added any Directors yet")) {
+            if (isElementPresent("add",SelectorType.ID)) {
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
             }
             waitAndClick(saveAndContinue, SelectorType.XPATH);
