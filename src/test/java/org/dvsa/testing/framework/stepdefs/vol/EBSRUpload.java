@@ -80,16 +80,16 @@ public class EBSRUpload extends BasePage implements En {
     @And("Documents are generated")
     public void documentsAreGenerated() {
         waitAndClick(String.format("//*[contains(text(),'%s')]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
-        long kickOutTime = System.currentTimeMillis() + 120000;
+        long kickOutTime = System.currentTimeMillis() + 30000;
         do {
             // Refresh page
             refreshPageWithJavascript();
             if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
                 waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
             }
-        } while ((long) findElements("//*[@class='files']", SelectorType.XPATH).size() <= 3 && System.currentTimeMillis() < kickOutTime);
+        } while ((long) findElements("//*[@class='field file-upload']", SelectorType.XPATH).size() > 2 && System.currentTimeMillis() < kickOutTime);
         try {
-            assertTrue(findElements("//*[@class='files']", SelectorType.XPATH).stream().anyMatch(
+            assertTrue(findElements("//*[@class='field file-upload']", SelectorType.XPATH).stream().anyMatch(
                     webElement -> webElement.getText().contains("Route Track Map PDF (Auto Scale)")));
         } catch (Exception e) {
             throw new NotFoundException("Files not generated.");
