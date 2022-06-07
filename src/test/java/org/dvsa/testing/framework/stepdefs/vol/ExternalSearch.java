@@ -23,6 +23,9 @@ public class ExternalSearch extends BasePage implements En {
     public void iLoginAsAPartnerUser() {
         String user = world.configuration.config.getString("partnerUser");
         String password = world.configuration.config.getString("partnerUserPassword");
+        if(getDriver().getCurrentUrl().contains("dashboard")){
+            clickByLinkText("Sign out");
+        }
         String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);
         world.globalMethods.signIn(user,password);

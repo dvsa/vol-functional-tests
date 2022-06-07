@@ -7,7 +7,7 @@ Feature: Partner user external search by Address, Business name, Licence Number 
     Given i have a valid "goods" "standard_national" licence
     And i login as a partner user
 
-  @smoketest
+  @smoketest1
   Scenario: [Positive]Search for lorry and bus operators by Business name
     When I search for a lorry and bus operator by "business"
     Then search results page should display operator names containing our business name
