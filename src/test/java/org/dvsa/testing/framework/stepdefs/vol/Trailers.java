@@ -41,7 +41,6 @@ public class Trailers extends BasePage {
 
     @When("the trailer {string} and type {string} is successfully added to the trailer table")
     public void trailerAddedCheck(String trailerNumber, String isLongerSemiTrailer) {
-        world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
         assertTrue(isElementPresent("//tbody/tr/td/input[@value='" + trailerNumber + "']", SelectorType.XPATH));
         Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Longer semi-trailer']",SelectorType.XPATH), isLongerSemiTrailer);
         UIJourney.clickSaveAndReturn();
