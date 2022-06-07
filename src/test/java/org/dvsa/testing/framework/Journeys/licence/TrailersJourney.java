@@ -12,7 +12,6 @@ public class TrailersJourney extends BasePage {
         this.world = world;
     }
 
-
     public void addTrailerToLicence(String number) {
         waitForTextToBePresent("Add trailer");
         waitAndEnterText("data[trailerNo]", SelectorType.NAME, number);
