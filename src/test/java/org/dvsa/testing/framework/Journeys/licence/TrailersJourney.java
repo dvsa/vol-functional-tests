@@ -14,12 +14,12 @@ public class TrailersJourney extends BasePage {
 
 
     public void addTrailerToLicence(String number) {
-        waitForTitleToBePresent("Add trailer");
+        waitForTextToBePresent("Add trailer");
         waitAndEnterText("data[trailerNo]", SelectorType.NAME, number);
     }
 
     public void isLongerSemiTrailer(String iLST) {
-        waitForTitleToBePresent("Add trailer");
+        waitForTextToBePresent("Add trailer");
         String Selector = "//input[@name='data[longerSemiTrailer][isLongerSemiTrailer]']";
         String longerSemiTrailerRadioButton = (iLST.equals("Yes") ? Selector + "[@value='Y']" : Selector + "[@value='N']");
         clickByXPath(longerSemiTrailerRadioButton);
