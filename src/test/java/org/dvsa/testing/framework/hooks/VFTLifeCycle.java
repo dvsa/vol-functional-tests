@@ -21,8 +21,4 @@ public class VFTLifeCycle implements EventListener {
             Browser.navigate().quit();
         });
     }
-    @After
-    public void tearDown(){
-        Browser.navigate().quit();
-    }
 }
