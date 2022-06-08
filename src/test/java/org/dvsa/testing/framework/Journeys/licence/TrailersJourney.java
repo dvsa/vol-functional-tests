@@ -18,7 +18,7 @@ public class TrailersJourney extends BasePage {
     }
 
     public void isLongerSemiTrailer(String iLST) {
-        waitForTextToBePresent("Add trailer");
+        waitForTextToBePresent("Is this a longer semi-trailer");
         String Selector = "//input[@name='data[longerSemiTrailer][isLongerSemiTrailer]']";
         String longerSemiTrailerRadioButton = (iLST.equals("Yes") ? Selector + "[@value='Y']" : Selector + "[@value='N']");
         clickByXPath(longerSemiTrailerRadioButton);
