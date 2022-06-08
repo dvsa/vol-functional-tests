@@ -93,13 +93,10 @@ public class SurrenderJourney extends BasePage {
         }
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
-
-
     public void submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
         acknowledgeDestroyPage();
     }
-
     public void submitSurrenderUntilReviewPage()  {
         navigateToSurrendersStartPage();
         startSurrender();
@@ -112,7 +109,6 @@ public class SurrenderJourney extends BasePage {
             addCommunityLicenceDetails();
         }
     }
-
     public void caseworkManageSurrender() {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Surrender");

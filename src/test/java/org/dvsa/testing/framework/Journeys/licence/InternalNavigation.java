@@ -128,17 +128,13 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page) {
-        if (isElementNotPresent(world.internalNavigation.adminDropdown,SelectorType.XPATH)) {
+        if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
             if (world.updateLicence.getInternalUserId() == null) {
                 world.APIJourney.createAdminUser();
-                if (!getCurrentUrl().contains("iuweb")) {
-                    world.internalNavigation.logInAsAdmin();
-                }
+                world.internalNavigation.logInAsAdmin();
             }
         }
-
-
-        switch(type) {
+        switch (type) {
             case "application":
                 getApplication();
                 break;

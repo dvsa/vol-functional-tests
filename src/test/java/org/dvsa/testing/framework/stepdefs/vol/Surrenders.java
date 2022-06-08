@@ -88,6 +88,7 @@ public class Surrenders extends BasePage implements En {
 
     @Given("a caseworker views the surrender details")
     public void aCaseworkerViewsTheSurrenderDetails() {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitAndClick("menu-licence_surrender", SelectorType.ID);
     }
