@@ -46,7 +46,7 @@ public class Trailers extends BasePage {
         UIJourney.clickSaveAndReturn();
     }
 
-    @When("trailer number {string} is changed to {string}")
+    @When("trailer number {string} is changed to longer semi trailer {string}")
     public void changeTrailerType(String trailerNumber, String isLongerSemiTrailer) {
         clickByXPath("//tbody/tr/td/input[@value='" + trailerNumber + "']");
         world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
