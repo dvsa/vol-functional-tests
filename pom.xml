@@ -137,7 +137,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>4</forkCount>
+                            <forkCount>6</forkCount>
                             <reuseForks>false</reuseForks>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                             <argLine>-Dfile.encoding=UTF-8</argLine>
