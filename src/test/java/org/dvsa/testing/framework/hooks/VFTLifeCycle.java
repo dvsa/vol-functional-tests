@@ -18,7 +18,6 @@ public class VFTLifeCycle implements EventListener {
 
         publisher.registerHandlerFor(TestRunFinished.class, event -> {
             LOGGER.info("Test is shutting down");
-            Browser.navigate().quit();
         });
     }
 }
