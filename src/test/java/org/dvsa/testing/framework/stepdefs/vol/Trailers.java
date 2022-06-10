@@ -46,6 +46,13 @@ public class Trailers extends BasePage {
         UIJourney.clickSaveAndReturn();
     }
 
+    @When("trailer number {string} is changed to longer semi trailer {string}")
+    public void changeTrailerType(String trailerNumber, String isLongerSemiTrailer) {
+        clickByXPath("//tbody/tr/td/input[@value='" + trailerNumber + "']");
+        world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
+        waitAndClick(submitButton, SelectorType.XPATH);
+    }
+
     @When("on self serve I add a trailer with no trailer number")
     public void trailerWithNoNumberOnSelfServe() {
         world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
