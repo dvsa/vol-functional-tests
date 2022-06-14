@@ -210,7 +210,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
 
         switch(variationType){
             case "HGV":
-                String hgvOCIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) %s New licence authorisation will be %s %s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),correspondenceAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"));
+                String hgvOCIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) New licence authorisation will be %s %s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),hgvs,adaptiveVehicleTypeText.concat("(s)"));
                 String hgvExpectedText = correspondenceAddress.concat(hgvOCIncreaseText);
                 LOGGER.info("AP HGV Exp text:" + hgvExpectedText);
                 LOGGER.info("AP HGV Act text:" + publicationResult.getText());
@@ -225,7 +225,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 break;
 
             case "HGV and LGV":
-                String hgvAndLgv = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) %s%s%s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),correspondenceAddress,hgvIncreaseText,lgvIncreaseText);
+                String hgvAndLgv = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s)%s%s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),hgvIncreaseText,lgvIncreaseText);
                 String hgvAndLgvExpectedText = correspondenceAddress.concat(hgvAndLgv);
                 LOGGER.info("AP HGVAndLGV Exp text:" + hgvAndLgvExpectedText);
                 LOGGER.info("AP HGVAndLGV Act text:" + publicationResult.getText());
