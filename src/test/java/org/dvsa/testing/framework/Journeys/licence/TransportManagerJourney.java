@@ -43,7 +43,7 @@ public class TransportManagerJourney extends BasePage {
         promptRemovalOfInternalTransportManager();
         waitForTitleToBePresent("Are you sure you want to remove this Transport Manager?");
         findSelectAllRadioButtonsByValue("Y");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void addTransportManagerDetails()  {
@@ -83,7 +83,7 @@ public class TransportManagerJourney extends BasePage {
         selectValueFromDropDown("//*[@id='data[role]']", SelectorType.XPATH, role);
         waitAndEnterText("//*[@id='operatingCentres']", SelectorType.XPATH, "Test");
         waitAndEnterText("//*[@id='hoursPerWeek']", SelectorType.XPATH, "1");
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
 
         //Add Other Employment
         waitForTextToBePresent("Add other employment");
@@ -92,7 +92,7 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.searchAndSelectAddress("postcodeInput1", postCode, 1);
         waitAndEnterText("//*[@id='tm-employment-details[position]']", SelectorType.XPATH, "test");
         waitAndEnterText("//*[@id='tm-employment-details[hoursPerWeek]']", SelectorType.XPATH, "Test");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
 
 
         // Convictions

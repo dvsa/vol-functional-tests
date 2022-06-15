@@ -46,14 +46,14 @@ public class EBSRUpload extends BasePage implements En {
         world.busRegistrationJourney.internalSiteAddBusNewReg(5);
         clickByLinkText("Register");
         findSelectAllRadioButtonsByValue("Y");
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
         clickByLinkText("Service details");
         clickByLinkText("TA's");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
         click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result group-option\"]");
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
     }
 
     @When("it has been paid and granted")

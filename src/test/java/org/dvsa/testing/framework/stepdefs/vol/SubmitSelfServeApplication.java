@@ -121,7 +121,7 @@ public class SubmitSelfServeApplication extends BasePage {
                 } else {
                     clickByLinkText("Cancel application");
                 }
-                waitAndClick("form-actions[submit]", SelectorType.NAME);
+                world.UIJourney.clickSubmit();
             }
             waitForTitleToBePresent("Licences");
         }

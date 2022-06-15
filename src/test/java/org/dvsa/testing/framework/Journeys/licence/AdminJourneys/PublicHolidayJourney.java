@@ -19,7 +19,7 @@ public class PublicHolidayJourney extends BasePage {
         selectRandomCheckBoxOrRadioBtn("checkbox");
         HashMap<String, String> currentDate = date.getDateHashMap(0, 0, +1);
         enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void editPublicHoliday() {
@@ -28,7 +28,7 @@ public class PublicHolidayJourney extends BasePage {
         selectRandomCheckBoxOrRadioBtn("checkbox");
         HashMap<String, String> currentDate = date.getDateHashMap(+0, +0, +1);
         enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void deletePublicHoliday() {

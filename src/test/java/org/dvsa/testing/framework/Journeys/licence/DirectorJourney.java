@@ -86,7 +86,7 @@ public class DirectorJourney extends BasePage {
 
     public void addPersonDetails()  {
         personDetails();
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
     }
 
     private void personDetails() {
