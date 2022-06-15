@@ -5,6 +5,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.When;
 import cucumber.api.java.en.Then;
+import org.apache.commons.lang3.StringUtils;
 import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -166,10 +167,8 @@ public class DirectorVariation extends BasePage {
         assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(1).getText());
         assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(2).getText());
 
-        List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(0).getText());
-        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(1).getText());
-        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(2).getText());
+
+        assertTrue(isTextPresent(directorJourney.dateOfBirthEmptyFieldValidation));
     }
 
     @Then("the director financial history page empty field validation should appear")
@@ -194,7 +193,6 @@ public class DirectorVariation extends BasePage {
         List<WebElement> listOfSummaryErrors = findElements(directorJourney.listOfSummaryErrors, SelectorType.XPATH);
         assertEquals(directorJourney.convictionsAndPenaltiesValidation, listOfSummaryErrors.get(0).getText());
 
-        List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.convictionsAndPenaltiesValidation, listOfInlineErrors.get(0).getText());
+        assertTrue(isTextPresent("Value is required"));
     }
 }

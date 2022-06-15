@@ -419,7 +419,9 @@ public abstract class BasePage extends DriverUtils {
     public static void waitForTitleToBePresent(@NotNull String selector) {
         waitForElementToBePresent(String.format("//h1[contains(text(),'%s')]", selector));
     }
-
+    public static void waitForTitleToBePresent(@NotNull String htmlTag, @NotNull String selector) {
+        waitForElementToBePresent(String.format("//%s[contains(text(),'%s')]", htmlTag, selector));
+    }
     public static void waitForElementToBePresent(@NotNull String selector) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
