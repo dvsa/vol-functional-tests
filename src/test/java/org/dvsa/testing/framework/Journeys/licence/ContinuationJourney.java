@@ -39,7 +39,7 @@ public class ContinuationJourney extends BasePage {
         waitForTextToBePresent("1 licence(s)");
         waitAndClick("id[]", SelectorType.NAME);
         waitAndClick("generate", SelectorType.ID);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
@@ -86,7 +86,7 @@ public class ContinuationJourney extends BasePage {
         enterDateFieldsByPartialId("details[continuationDate]", continuationDates);
         enterDateFieldsByPartialId("details[reviewDate]", reviewDates);
         waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void completeContinuationPayOrSubmit()  {
