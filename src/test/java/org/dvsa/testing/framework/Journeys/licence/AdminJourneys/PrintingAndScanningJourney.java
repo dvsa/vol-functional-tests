@@ -67,6 +67,6 @@ public class PrintingAndScanningJourney extends BasePage {
     public void deletePrinter() {
         selectRandomRadioBtnFromDataTable();
         waitAndClick("delete", SelectorType.ID);
-        waitAndClick("form-actions[confirm]", SelectorType.ID);
+        world.UIJourney.clickConfirm();
     }
 }

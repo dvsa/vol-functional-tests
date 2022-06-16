@@ -33,7 +33,7 @@ public class PublicHolidayJourney extends BasePage {
 
     public void deletePublicHoliday() {
         waitAndClick("//input[@value='Remove']", SelectorType.XPATH);
-        waitAndClick("form-actions[confirm]", SelectorType.ID);
+        world.UIJourney.clickConfirm();
         waitForElementToBeClickable("//p[text()='The public holiday is removed']", SelectorType.XPATH);
     }
 }

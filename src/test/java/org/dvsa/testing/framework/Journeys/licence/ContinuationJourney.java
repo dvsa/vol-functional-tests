@@ -92,7 +92,7 @@ public class ContinuationJourney extends BasePage {
     public void completeContinuationPayOrSubmit()  {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             click("submitAndPay", SelectorType.ID);
-            click("form-actions[pay]", SelectorType.ID);
+            world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {
             click("submit", SelectorType.ID);

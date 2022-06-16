@@ -66,6 +66,6 @@ public class TaskAllocationRulesJourney extends BasePage {
     public void deleteTaskAllocationRule() {
         waitAndClick("(//input[@type='checkbox'])[2]", SelectorType.XPATH);
         waitAndClick("delete", SelectorType.ID);
-        waitAndClick("form-actions[confirm]", SelectorType.ID);
+        world.UIJourney.clickConfirm();
     }
 }

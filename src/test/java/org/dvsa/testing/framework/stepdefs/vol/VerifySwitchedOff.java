@@ -70,7 +70,7 @@ public class VerifySwitchedOff extends BasePage implements En {
     public void iSubmitAndPayForTheApplication() {
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         clickById("submitAndPay");
-        waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
     }

@@ -23,9 +23,7 @@ public class OperatingCentreVariation extends BasePage {
     String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
     String submitAndPayForApplication = "//button[@id='submitAndPay']";
-
     String payNow = "//button[@id='form-actions[pay]']";
-
     String numberOfNewOperatingCentreVehicles;
 
 
@@ -232,7 +230,7 @@ public class OperatingCentreVariation extends BasePage {
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
-        click(payNow, SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }

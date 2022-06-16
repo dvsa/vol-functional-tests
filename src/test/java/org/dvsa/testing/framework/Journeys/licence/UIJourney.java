@@ -172,7 +172,7 @@ public class UIJourney extends BasePage {
         waitAndClick("//input[@name='id[]']", SelectorType.XPATH);
         waitAndClick("//button[@id='delete']", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove the selected record(s)?");
-        waitAndClick("//button[@id='form-actions[confirm]']", SelectorType.XPATH);
+        clickConfirm();
     }
 
     public void signWithVerify() {
@@ -268,7 +268,7 @@ public class UIJourney extends BasePage {
         navigate().get(myURL.concat(casePath));
         clickByLinkText("Close");
         waitForTextToBePresent("Close the case");
-        click("form-actions[confirm]", SelectorType.ID);
+        clickConfirm();
     }
 
     public void payForInterimApp() {
@@ -280,7 +280,7 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
         enterText("interim[goodsApplicationInterimReason]", SelectorType.NAME, "Testing");
         click("submitAndPay", SelectorType.ID);
-        click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+        clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 
@@ -352,7 +352,7 @@ public class UIJourney extends BasePage {
         click("//*[@name='id']", SelectorType.XPATH);
         click("//*[@id='delete']", SelectorType.XPATH);
         waitForTextToBePresent("Delete record");
-        click("//*[@id='form-actions[confirm]']", SelectorType.XPATH);
+        clickConfirm();
     }
 
     public void navigateToChangeHistory() {
@@ -515,6 +515,14 @@ public class UIJourney extends BasePage {
 
     public void clickOk() {
         waitAndClick("//*[@id='form-actions[ok]']", SelectorType.XPATH);
+    }
+
+    public void clickConfirm() {
+        waitAndClick("//*[@id='form-actions[confirm]']", SelectorType.XPATH);
+    }
+
+    public void clickPay() {
+        waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
     }
 
     public static void inputLicenceAndVehicleType(String licenceType, String vehicleType, String lgvUndertaking) {
