@@ -110,25 +110,17 @@ public class ValidLicenceChanges extends BasePage implements En {
             if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
                 waitForTextToBePresent("Vehicle details");
                 waitAndClick("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
-                //click("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you want to remove these records?");
                 world.UIJourney.clickSubmit();
-                //click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
                 waitForElementToBeClickable("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
             } else {
                 click("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you want to remove these vehicle(s)");
                 world.UIJourney.clickSubmit();
-                //click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
                 waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             }
         }
-        waitForTextToBePresent("Vehicle details");
-        //waitForTextToBePresent("2 Vehicles");
-        //input[@id='uploadLaterRadio']
-        //waitAndClick("input[@id='shareInfo[shareInfo]']", SelectorType.ID);
-        click("input[@id='shareInfo[shareInfo]']", SelectorType.ID);
-        //click("//*[@id='shareInfo[shareInfo]']", SelectorType.XPATH);
+        click("//*[@id='shareInfo[shareInfo]']", SelectorType.XPATH);
         UIJourney.clickSaveAndReturn();
     }
 
@@ -147,17 +139,16 @@ public class ValidLicenceChanges extends BasePage implements En {
     public void iMakeChangesToTheLicenceDiscsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
         for (int i = 0; i < 3; i++) {
+            waitForTextToBePresent("Licence discs");
             click("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you would like to void these discs?");
             world.UIJourney.clickSubmit();
-            //click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
             waitForElementToBeClickable("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
         }
         click("//*[@id='add']",SelectorType.XPATH);
         waitForTextToBePresent("How many additional discs are required?");
         enterText("//*[@id='data[additionalDiscs]']", SelectorType.XPATH, "2");
         world.UIJourney.clickSubmit();
-        //click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
     }
 
     @Then("the changes to the licence discs page are made")
@@ -183,7 +174,6 @@ public class ValidLicenceChanges extends BasePage implements En {
         clickByLinkText("Enter the address yourself");
         world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         world.UIJourney.clickSubmit();
-        //click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         waitForTextToBePresent("Safety inspectors");
         UIJourney.clickSaveAndReturn();
     }

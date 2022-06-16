@@ -46,6 +46,7 @@ public class UIJourney extends BasePage {
     private FakerUtils faker = new FakerUtils();
     String uploadLaterRadioButton = "//input[@id='uploadLaterRadio']";
     String saveButton = "//*[@id='form-actions[save]']";
+    String submitButton = "//*[@id='form-actions[submit]']";
 
     public UIJourney(World world) {
         this.world = world;
@@ -78,7 +79,7 @@ public class UIJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Limited')]", SelectorType.XPATH);
         }
         click("termsAgreed", SelectorType.ID);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick(submitButton, SelectorType.ID);
     }
 
     public void addNewInternalUser() {
@@ -94,7 +95,7 @@ public class UIJourney extends BasePage {
         waitAndEnterText("userContactDetails[emailAddress]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndEnterText("userContactDetails[emailConfirm]", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         waitAndEnterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick(submitButton, SelectorType.ID);
         waitForTextToBePresent("Created record");
     }
 
@@ -116,7 +117,7 @@ public class UIJourney extends BasePage {
         waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
         waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 1);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick(submitButton, SelectorType.ID);
         waitForTextToBePresent("Amend letter");
     }
 
