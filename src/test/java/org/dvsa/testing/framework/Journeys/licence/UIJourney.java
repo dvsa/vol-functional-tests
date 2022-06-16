@@ -492,7 +492,7 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("Applying to change a licence");
         waitAndClick(String.format("//*[contains(text(),'%s')]", variationFeeDecision), SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Phone')]", SelectorType.XPATH);
-        waitAndClick(submitButton, SelectorType.ID);
+        clickSubmit();
         waitForTextToBePresent("Variation details");
         refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();

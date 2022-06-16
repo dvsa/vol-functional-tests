@@ -9,7 +9,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 public class VehicleDetailsJourney extends BasePage {
 
     private World world;
-    String submitButton = "form-actions[submit]";
     public VehicleDetailsJourney(World world){
         this.world = world;
     }
@@ -23,11 +22,11 @@ public class VehicleDetailsJourney extends BasePage {
             String letter = String.valueOf(Str.randomLetter());
             waitAndEnterText("vrm", SelectorType.ID, String.format("P%sCUX",num));
             waitAndEnterText("plated_weight", SelectorType.ID, "5000");
-            waitAndClick(submitButton, SelectorType.ID);
+            world.UIJourney.clickSubmit();
             if (isElementPresent("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH))
             {
                 waitAndClick("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH);
-                waitAndClick(submitButton, SelectorType.ID);
+                world.UIJourney.clickSubmit();
             }
             waitForTitleToBePresent("Vehicle details");
         } else {
