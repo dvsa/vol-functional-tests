@@ -166,6 +166,5 @@ public class BusRegistrationJourney extends BasePage {
             addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
         }
         world.UIJourney.clickSubmit();
-        //waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
     }
 }

@@ -111,7 +111,6 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("//*[@id='lic-no']", SelectorType.XPATH, "PD263849");
         waitAndEnterText("//*[@id='holderName']", SelectorType.XPATH, "PD263849");
         world.UIJourney.clickSubmit();
-        waitAndClick("form-actions[submit]",SelectorType.ID);
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
     public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) {
@@ -182,17 +181,14 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursWed]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursThu]", SelectorType.ID, hours);
         world.UIJourney.clickSubmit();
-        //click("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Check your answers");
         world.UIJourney.clickSubmit();
-        //click("form-actions[submit]", SelectorType.ID);
         waitForTextToBePresent("Declaration");
     }
 
     public void submitTMApplicationAndNavigateToTMLandingPage() {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         world.UIJourney.clickSubmit();
-        //click("form-actions[submit]", SelectorType.ID);
         clickByLinkText("Back to Transport");
         waitForTextToBePresent("Transport Managers");
     }

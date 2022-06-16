@@ -42,7 +42,7 @@ public class WebDav extends BasePage implements En {
         world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @And("i open the document in word for the first time")
@@ -98,6 +98,6 @@ public class WebDav extends BasePage implements En {
         world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 }

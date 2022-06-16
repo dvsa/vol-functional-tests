@@ -20,6 +20,7 @@ public class SurrenderJourney extends BasePage {
     private String discsLost = "2";
     private String discsStolen = "1";
     private String updatedTown;
+    String submitButton = "form-actions[submit]";
 
     public String getDiscsLost() { return discsLost; }
 
@@ -60,13 +61,13 @@ public class SurrenderJourney extends BasePage {
     public void addOperatorLicenceDetails()  {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndClick(submitButton, SelectorType.ID);
     }
 
     public void addCommunityLicenceDetails()  {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndClick(submitButton, SelectorType.ID);
     }
 
     public String getSurrenderAddressLine1()  {
@@ -100,7 +101,7 @@ public class SurrenderJourney extends BasePage {
     public void submitSurrenderUntilReviewPage()  {
         navigateToSurrendersStartPage();
         startSurrender();
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick(submitButton, SelectorType.ID);
         addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
@@ -129,9 +130,9 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void acknowledgeDestroyPage()  {
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndClick(submitButton, SelectorType.ID);
         waitForTextToBePresent("Securely destroy");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndClick(submitButton, SelectorType.ID);
         waitForTitleToBePresent("Declaration");
     }
 
@@ -150,14 +151,14 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void removeDisc() {
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick(submitButton, SelectorType.ID);
         addDiscInformation();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='modal-title']");
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        waitAndClick(submitButton, SelectorType.ID);
         refreshPageWithJavascript();
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }
