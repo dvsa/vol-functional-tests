@@ -9,10 +9,7 @@ import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.enums.SelfServeSection;
-import org.dvsa.testing.framework.hooks.VFTLifeCycle;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -21,14 +18,9 @@ import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 
 import java.io.IOException;
-import java.time.Duration;
 
 import java.util.*;
 
@@ -41,7 +33,6 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNum
 
 
 public class UIJourney extends BasePage {
-    private static final Logger LOGGER = LogManager.getLogger(UIJourney.class);
     private static World world;
     private FakerUtils faker = new FakerUtils();
     String uploadLaterRadioButton = "//input[@id='uploadLaterRadio']";
@@ -393,8 +384,14 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
         waitForTextToBePresent("Applying to change a licence");
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
+        if (world.licenceCreation.isLGVOnlyLicence()) {
+            waitForTitleToBePresent("Licence authorisation");
+        } else {
+            waitForTitleToBePresent("Operating centres and authorisation");
+        }
+        waitForElementToBePresent(saveButton);
         String url = navigate().getCurrentUrl();
-        refreshPageWithJavascript();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
@@ -483,6 +480,7 @@ public class UIJourney extends BasePage {
         if (isElementPresent("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH))
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
         click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
+        waitAndClick("//a[@aria-label='Close notification']", SelectorType.XPATH);
     }
 
     public void createVariationInInternal(boolean variationFeeRequired) {
@@ -539,6 +537,6 @@ public class UIJourney extends BasePage {
             world.createApplication.setVehicleType(VehicleType.MIXED_FLEET.asString());
         clickSaveAndContinue();
         if (!getCurrentUrl().contains("#validationSummary"))
-            world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
+            world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }
 }
