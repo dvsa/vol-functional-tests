@@ -49,6 +49,6 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         enterText("data[convictionDate][day]", SelectorType.NAME, dates.get("day"));
         enterText("data[convictionDate][month]", SelectorType.NAME, dates.get("month"));
         enterText("data[convictionDate][year]", SelectorType.NAME, dates.get("year"));
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 }

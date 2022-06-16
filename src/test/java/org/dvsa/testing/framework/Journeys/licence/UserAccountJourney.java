@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class UserAccountJourney extends BasePage {
     private World world;
     public String teamName;
+    String submitButton = "form-actions[submit]";
 
     Dates date = new Dates(org.joda.time.LocalDate::new);
 
@@ -23,7 +24,7 @@ public class UserAccountJourney extends BasePage {
         String teamName = selectRandomValueFromDropDown("team");
         setTeamName(teamName);
         selectValueFromDropDown("title", SelectorType.ID, "Mr");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick(submitButton, SelectorType.ID);
     }
 
     public void ChangeUserDetails() {
@@ -39,7 +40,7 @@ public class UserAccountJourney extends BasePage {
         replaceText("addressTown", SelectorType.ID, world.DataGenerator.getOperatorTown());
         replaceText("postcode", SelectorType.ID, world.DataGenerator.getOperatorPostCode());
         selectRandomValueFromDropDown("officeAddress[countryCode]");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick(submitButton, SelectorType.ID);
         waitForElementToBeClickable("team", SelectorType.ID);
     }
 }

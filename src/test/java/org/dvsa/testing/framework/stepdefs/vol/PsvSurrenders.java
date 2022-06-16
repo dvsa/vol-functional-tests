@@ -101,7 +101,7 @@ public class PsvSurrenders extends BasePage implements En {
 
     @And("i navigate to the current discs page")
     public void iNavigateToTheCurrentDiscsPage() {
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("the number of disc should match the vehicles registered on the licence")

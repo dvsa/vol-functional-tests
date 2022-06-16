@@ -22,7 +22,7 @@ public class FeeAndPaymentJourney extends BasePage {
         waitForTextToBePresent("Create new fee");
         selectValueFromDropDown("fee-details[feeType]", SelectorType.NAME, feeType);
         waitAndEnterText("amount", SelectorType.ID, amount);
-        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     public void payFee(String amount, @NotNull String paymentMethod)  {
