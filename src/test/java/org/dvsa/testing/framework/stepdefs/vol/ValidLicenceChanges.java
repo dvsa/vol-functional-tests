@@ -48,7 +48,6 @@ public class ValidLicenceChanges extends BasePage implements En {
         waitAndEnterText("//*[@id='name']", SelectorType.XPATH,companyName);
         enterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
         world.UIJourney.clickSubmit();
-        //click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
         click("//*[@id='allow-email[allowEmail]']", SelectorType.XPATH);
         UIJourney.clickSaveAndReturn();
     }

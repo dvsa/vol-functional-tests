@@ -77,7 +77,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         }
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         world.UIJourney.clickSubmit();
-        //click("form-actions[submit]", SelectorType.ID);
         world.UIJourney.signDeclaration();
         world.UIJourney.signWithVerify();
     }
