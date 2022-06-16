@@ -71,7 +71,7 @@ public class TypeOfLicence extends BasePage {
 
     @When("I confirm the warning message")
     public void iConfirmWarningMessage() {
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        world.UIJourney.clickSubmit();
     }
 
     @When("I cancel the warning message and click cancel on the type of licence page")

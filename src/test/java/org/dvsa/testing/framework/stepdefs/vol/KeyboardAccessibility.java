@@ -16,7 +16,6 @@ import static junit.framework.TestCase.assertTrue;
 
 public class KeyboardAccessibility extends BasePage implements En {
     private final World world;
-    String submitButton = "form-actions[submit]";
 
     public KeyboardAccessibility (World world) {this.world = world;}
 
@@ -84,7 +83,7 @@ public class KeyboardAccessibility extends BasePage implements En {
         world.UIJourney.skipToMainContentAndCheck();
         world.surrenderJourney.startSurrender();
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick(submitButton, SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.UIJourney.skipToMainContentAndCheck();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
@@ -96,10 +95,10 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.surrenderJourney.addCommunityLicenceDetails();
         }
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick(submitButton, SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Securely destroy");
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick(submitButton, SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 }

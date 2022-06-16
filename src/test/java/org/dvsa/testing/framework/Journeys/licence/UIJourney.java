@@ -503,9 +503,7 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
-    public void clickSubmit() {
-        click("form-actions[submit]", SelectorType.NAME);
-    }
+    public void clickSubmit() { waitAndClick("form-actions[submit]", SelectorType.NAME);}
 
     public static void clickSaveAndReturn() {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);

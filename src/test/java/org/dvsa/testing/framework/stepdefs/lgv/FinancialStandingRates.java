@@ -51,7 +51,6 @@ public class FinancialStandingRates extends BasePage {
     String additionalVehicleRateField = "//*[@name='details[additionalVehicleRate]']";
     String effectiveDateFieldPartialSelector = "details[effectiveFrom]";
 
-    String saveButton = "//*[@id='form-actions[submit]']";
     String continueButton = "//*[@id='form-actions[confirm]']";
 
     String successfulAddedRecordAlert = "//p[@role='alert' and contains(text(),'Created record')]";
@@ -88,7 +87,7 @@ public class FinancialStandingRates extends BasePage {
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate));
         enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
-        click(saveButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForElementToBePresent(successfulAddedRecordAlert);
     }
 
@@ -113,7 +112,7 @@ public class FinancialStandingRates extends BasePage {
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate + 100));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate + 100));
         enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
-        click(saveButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForElementToBePresent(successfullyEditedRecordAlert);
     }
 
@@ -159,7 +158,7 @@ public class FinancialStandingRates extends BasePage {
     public void iSubmitNoInformationOnAFinancialStandingRate() {
         click(addButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
-        click(saveButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("There is a problem");
     }
 

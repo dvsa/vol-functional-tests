@@ -22,7 +22,6 @@ public class InternalApplication extends BasePage implements En {
     private final String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
     private final String numberOfVehicles = "//dt[contains(text(),'No. of vehicles')]/../dd";
     private final String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
-    String submitButton = "form-actions[submit]";
 
     public InternalApplication (World world) {this.world = world;}
 
@@ -32,7 +31,7 @@ public class InternalApplication extends BasePage implements En {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
         click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
-        waitAndClick(submitButton, SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("has been submitted");
         world.UIJourney.caseWorkerCompleteConditionsAndUndertakings();
         world.UIJourney.caseWorkerCompleteReviewAndDeclarations();
