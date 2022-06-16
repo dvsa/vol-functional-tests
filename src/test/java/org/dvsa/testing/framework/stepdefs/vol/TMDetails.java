@@ -81,7 +81,7 @@ public class TMDetails extends BasePage implements En {
 
     @When("the users attempts to save without entering any data")
     public void theUsersAttemptsToSaveWithoutEnteringAnyData() {
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("a validation message should be displayed")

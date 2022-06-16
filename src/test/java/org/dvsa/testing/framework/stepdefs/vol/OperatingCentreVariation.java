@@ -138,7 +138,7 @@ public class OperatingCentreVariation extends BasePage {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         click("//*[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove this operating centre?");
-        click("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         sleep(3000);
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("5", "5", currentTrailerTotalAuthority);

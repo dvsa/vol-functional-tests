@@ -263,7 +263,7 @@ public class InterimLicence extends BasePage implements En {
         enterText("interimAuthLgvVehicles", SelectorType.ID, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()));
         click("grant", SelectorType.ID);
         waitForTextToBePresent(interimGrantModalHeading);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent(interimGrantConfirmation);
     }
 

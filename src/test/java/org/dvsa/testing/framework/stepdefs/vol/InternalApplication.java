@@ -22,6 +22,7 @@ public class InternalApplication extends BasePage implements En {
     private final String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
     private final String numberOfVehicles = "//dt[contains(text(),'No. of vehicles')]/../dd";
     private final String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
+    String submitButton = "form-actions[submit]";
 
     public InternalApplication (World world) {this.world = world;}
 
@@ -31,7 +32,7 @@ public class InternalApplication extends BasePage implements En {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
         click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        waitAndClick(submitButton, SelectorType.ID);
         waitForTextToBePresent("has been submitted");
         world.UIJourney.caseWorkerCompleteConditionsAndUndertakings();
         world.UIJourney.caseWorkerCompleteReviewAndDeclarations();
@@ -84,7 +85,7 @@ public class InternalApplication extends BasePage implements En {
     public void thePostcodeWarningMessageShouldBeDisplayedOnInternal() {
         assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres."));
         click("form-actions[confirm-add]", SelectorType.ID);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Operating centres and authorisation");
         assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
     }
@@ -96,7 +97,7 @@ public class InternalApplication extends BasePage implements En {
 
     @And("i save the letter")
     public void iSaveTheLetter() {
-        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Send letter");
         click("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");

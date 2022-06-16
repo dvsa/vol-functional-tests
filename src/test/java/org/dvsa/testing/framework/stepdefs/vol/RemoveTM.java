@@ -94,7 +94,7 @@ public class RemoveTM extends BasePage implements En {
     @And("user attempts to remove the last TM without selecting an option")
     public void userAttemptsToRemoveTheLastTMWithoutSelectingAnOption() {
         waitForTextToBePresent(alertHeaderValue);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("an error message should be displayed")
