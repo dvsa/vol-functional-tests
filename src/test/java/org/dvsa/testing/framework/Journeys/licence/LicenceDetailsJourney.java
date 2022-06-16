@@ -17,7 +17,7 @@ public class LicenceDetailsJourney extends BasePage {
     public void answerNoToAllQuestionsAndSubmit() {
         waitForTitleToBePresent("Licence history");
         findSelectAllRadioButtonsByValue("N");
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
     //TODO: Licence details for every No selected
     public void answerYesToAllQuestionsAndSubmit(){

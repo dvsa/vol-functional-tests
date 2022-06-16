@@ -80,7 +80,7 @@ public class DirectorJourney extends BasePage {
 
     public void addDirectorDetails()  {
         personDetails();
-        clickByName("form-actions[saveAndContinue]");
+        UIJourney.clickSaveAndContinue();
     }
 
     public void addPersonDetails()  {

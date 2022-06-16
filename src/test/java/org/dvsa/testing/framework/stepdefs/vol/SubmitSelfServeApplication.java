@@ -8,6 +8,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -38,15 +39,14 @@ public class SubmitSelfServeApplication extends BasePage {
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
         chooseLicenceType(licenceType);
-        String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         //business details
         world.businessDetailsJourney.addBusinessDetails();
         if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
             if (isElementPresent("add",SelectorType.ID)) {
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
             }
-            waitAndClick(saveAndContinue, SelectorType.XPATH);
+            UIJourney.clickSaveAndContinue();
         }
         //operating centre
         String authority = "2";
@@ -58,11 +58,11 @@ public class SubmitSelfServeApplication extends BasePage {
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectByIndex("//*[@id='trafficArea']", SelectorType.XPATH, 1);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
 
         //transport manager
         clickById("add");
@@ -81,7 +81,7 @@ public class SubmitSelfServeApplication extends BasePage {
         world.safetyComplianceJourney.addSafetyAndComplianceData();
         world.safetyInspectorJourney.addASafetyInspector();
         clickById("application[safetyConfirmation]");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         //Financial History
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit();
         //Licence details

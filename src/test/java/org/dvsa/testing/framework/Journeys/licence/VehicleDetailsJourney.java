@@ -33,6 +33,6 @@ public class VehicleDetailsJourney extends BasePage {
             refreshPage();
             waitAndClick("//*[contains(text(),'No')]", SelectorType.XPATH);
         }
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
 }

@@ -237,6 +237,6 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.clickSubmit();
         clickByLinkText("Back to Transport Managers");
         waitForTitleToBePresent("Transport Managers");
-        waitAndClick("form-actions[saveAndContinue]",SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
 }
