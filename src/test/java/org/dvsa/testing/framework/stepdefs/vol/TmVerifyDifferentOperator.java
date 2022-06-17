@@ -76,7 +76,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             world.selfServeNavigation.navigateToPage("variation", SelfServeSection.TRANSPORT_MANAGERS);
         }
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
         world.UIJourney.signWithVerify();
     }
@@ -88,9 +88,9 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @When("i add new person as a transport manager and they fill out their details")
@@ -146,7 +146,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
         enterDateFieldsByPartialId("dob", dob);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForPageLoad();
     }
 
@@ -154,7 +154,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     public void iAddAnOperatorAsATransportManagerWithANoHoursWorked() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForPageLoad();
     }
 

@@ -14,7 +14,6 @@ import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication
 public class BusinessDetailsJourney extends BasePage {
     private World world;
     FakerUtils faker = new FakerUtils();
-    String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
 
     public BusinessDetailsJourney(World world) {
         this.world = world;
@@ -28,11 +27,11 @@ public class BusinessDetailsJourney extends BasePage {
             waitAndEnterText("natureOfBusiness", SelectorType.ID, faker.generateCompanyName());
         }
         enterAddress();
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
     }
 
     public void enterAddress() {
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         waitForTitleToBePresent("Addresses");
         waitAndEnterText("correspondence_address[searchPostcode][postcode]", SelectorType.NAME, "NG1 6LP");
         clickByName("correspondence_address[searchPostcode][search]");

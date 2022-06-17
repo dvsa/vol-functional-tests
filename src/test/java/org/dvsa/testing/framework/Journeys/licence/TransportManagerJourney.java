@@ -43,7 +43,7 @@ public class TransportManagerJourney extends BasePage {
         promptRemovalOfInternalTransportManager();
         waitForTitleToBePresent("Are you sure you want to remove this Transport Manager?");
         findSelectAllRadioButtonsByValue("Y");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void addTransportManagerDetails()  {
@@ -83,7 +83,7 @@ public class TransportManagerJourney extends BasePage {
         selectValueFromDropDown("//*[@id='data[role]']", SelectorType.XPATH, role);
         waitAndEnterText("//*[@id='operatingCentres']", SelectorType.XPATH, "Test");
         waitAndEnterText("//*[@id='hoursPerWeek']", SelectorType.XPATH, "1");
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
 
         //Add Other Employment
         waitForTextToBePresent("Add other employment");
@@ -92,7 +92,7 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.searchAndSelectAddress("postcodeInput1", postCode, 1);
         waitAndEnterText("//*[@id='tm-employment-details[position]']", SelectorType.XPATH, "test");
         waitAndEnterText("//*[@id='tm-employment-details[hoursPerWeek]']", SelectorType.XPATH, "Test");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
 
 
         // Convictions
@@ -104,15 +104,13 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("//*[@id='notes']", SelectorType.XPATH, "Test");
         waitAndEnterText("//*[@id='court-fpn']", SelectorType.XPATH, "Test");
         waitAndEnterText("//*[@id='penalty']", SelectorType.XPATH, "Test");
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
 
         waitForTextToBePresent("Add licences");
         waitAndClick("//*[contains(text(),'Add licences')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='lic-no']", SelectorType.XPATH, "PD263849");
         waitAndEnterText("//*[@id='holderName']", SelectorType.XPATH, "PD263849");
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-
-        waitAndClick("form-actions[submit]",SelectorType.ID);
+        world.UIJourney.clickSubmit();
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
     public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) {
@@ -120,7 +118,7 @@ public class TransportManagerJourney extends BasePage {
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         enterDateFieldsByPartialId("dob", dob);
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
-        click("form-actions[send]", SelectorType.ID);
+        world.UIJourney.clickSend();
     }
 
     public void addOperatorAdminAsTransportManager() {
@@ -139,7 +137,7 @@ public class TransportManagerJourney extends BasePage {
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        world.UIJourney.clickContinue();
     }
 
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
@@ -182,15 +180,15 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursTue]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursWed]", SelectorType.ID, hours);
         waitAndEnterText("responsibilities[hoursOfWeek][hoursPerWeekContent][hoursThu]", SelectorType.ID, hours);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Check your answers");
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Declaration");
     }
 
     public void submitTMApplicationAndNavigateToTMLandingPage() {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         clickByLinkText("Back to Transport");
         waitForTextToBePresent("Transport Managers");
     }
@@ -206,7 +204,7 @@ public class TransportManagerJourney extends BasePage {
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         enterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("emailConfirm", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        click("form-actions[continue]", SelectorType.ID);
+        world.UIJourney.clickContinue();
         waitForTextToBePresent("user account has been created and a link sent to them");
     }
 
@@ -223,9 +221,9 @@ public class TransportManagerJourney extends BasePage {
     public void submitTMApplicationAndSignWithVerify(){
         addTransportManagerDetails();
         waitForTitleToBePresent("Check your answers");
-        waitAndClick("form-actions[submit]",SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
-        waitAndClick("form-actions[submit]",SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.UIJourney.signWithVerify();
         waitAndClick("//*[contains(text(),'Finish')]",SelectorType.XPATH);
     }
@@ -233,12 +231,12 @@ public class TransportManagerJourney extends BasePage {
     public void submitTMApplicationPrintAndSign(){
         addTransportManagerDetails();
         waitForTitleToBePresent("Check your answers");
-        waitAndClick("form-actions[submit]",SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
         waitAndClick("//*[contains(text(),'Print')]",SelectorType.XPATH);
-        waitAndClick("form-actions[submit]",SelectorType.ID);
+        world.UIJourney.clickSubmit();
         clickByLinkText("Back to Transport Managers");
         waitForTitleToBePresent("Transport Managers");
-        waitAndClick("form-actions[saveAndContinue]",SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
 }

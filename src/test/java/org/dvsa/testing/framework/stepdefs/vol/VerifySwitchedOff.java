@@ -53,7 +53,7 @@ public class VerifySwitchedOff extends BasePage implements En {
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()));
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        world.UIJourney.clickContinue();
     }
 
     @When("the transport manager is the owner")
@@ -70,7 +70,7 @@ public class VerifySwitchedOff extends BasePage implements En {
     public void iSubmitAndPayForTheApplication() {
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         clickById("submitAndPay");
-        waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
     }

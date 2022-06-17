@@ -64,7 +64,7 @@ public class BusRegistrationJourney extends BasePage {
 
         dates = world.globalMethods.date.getDateHashMap(0, month, 0);
         enterDateFieldsByPartialId("effectiveDate", dates);
-        click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
+        world.UIJourney.clickSubmit();
 
         long kickOutTime = System.currentTimeMillis() + 60000;
 
@@ -83,7 +83,7 @@ public class BusRegistrationJourney extends BasePage {
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
         enterText("fields[reason]", SelectorType.ID, "Mistake");
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void payFeesAndGrantNewBusReg() {
@@ -96,14 +96,14 @@ public class BusRegistrationJourney extends BasePage {
         } while (!isLinkPresent("Register service", 5) && System.currentTimeMillis() < kickOutTime);
         clickByLinkText("Register service");
         findSelectAllRadioButtonsByValue("Y");
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
         clickByLinkText("Service details");
         clickByLinkText("TA's");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
         click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result group-option\"]");
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
@@ -165,6 +165,6 @@ public class BusRegistrationJourney extends BasePage {
             ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
         }
-        waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 }

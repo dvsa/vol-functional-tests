@@ -26,7 +26,7 @@ public class CreateApplications extends BasePage implements En {
             assertTrue(isTextPresent("Your application reference number is"));
         });
         When("^i pay for my application$", () -> {
-            waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+            world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
             waitForTitleToBePresent("Application overview");
         });
@@ -38,7 +38,7 @@ public class CreateApplications extends BasePage implements En {
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
             waitForTextToBePresent("Would you like to use a stored card?");
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
-            waitAndClick("form-actions[pay]", SelectorType.NAME);
+            world.UIJourney.clickPay();
             waitAndEnterText("csc",  SelectorType.NAME,"265");
             world.feeAndPaymentJourney.enterCardHolderDetails();
             waitAndClick("_eventId_payment", SelectorType.NAME);

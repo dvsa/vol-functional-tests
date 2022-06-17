@@ -1,6 +1,8 @@
 package org.dvsa.testing.framework.pageObjects.external.pages;
 
+import Injectors.World;
 import org.apache.commons.lang3.StringUtils;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.PermitApplication;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
@@ -145,6 +147,8 @@ public class HomePage extends BasePage {
 
     public static class FeesTab {
 
+        private static World world;
+
         public static void selectAllOutstandingFees() {
             String selector = "//th[last()]/input";
             boolean isNotSelected = !findElement(selector, SelectorType.XPATH).isSelected();
@@ -154,7 +158,7 @@ public class HomePage extends BasePage {
         }
 
         public static void payNowButton() {
-            waitAndClick("//button[@id='form-actions[pay]']",SelectorType.XPATH);
+            world.UIJourney.clickPay();
         }
 
         public static void pay() {

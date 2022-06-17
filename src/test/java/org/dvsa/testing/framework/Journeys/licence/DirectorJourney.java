@@ -37,7 +37,6 @@ public class DirectorJourney extends BasePage {
     public String additionalInformation = "//*[@id='data[insolvencyDetails]']";
     public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
-    public String deleteDirectorConfirmation = "//button[@name='form-actions[submit]']";
     public String lastDirectorRemovedMessage = "Last director removed";
 
     public String internalDirectorTask = "//a[text()='Add director(s)']";
@@ -81,12 +80,12 @@ public class DirectorJourney extends BasePage {
 
     public void addDirectorDetails()  {
         personDetails();
-        clickByName("form-actions[saveAndContinue]");
+        UIJourney.clickSaveAndContinue();
     }
 
     public void addPersonDetails()  {
         personDetails();
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
     }
 
     private void personDetails() {
@@ -113,7 +112,7 @@ public class DirectorJourney extends BasePage {
     public void removeDirector()  {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
-        clickByXPath(deleteDirectorConfirmation);
+        world.UIJourney.clickSubmit();
     }
 
     public boolean isDirectorPresentInDirectorTable(List<WebElement> directors, String director) {

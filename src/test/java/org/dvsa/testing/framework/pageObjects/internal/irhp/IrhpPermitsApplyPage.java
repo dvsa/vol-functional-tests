@@ -1,8 +1,10 @@
 package org.dvsa.testing.framework.pageObjects.internal.irhp;
 
 
+import Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.string.Str;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
@@ -22,6 +24,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
     static Dates date = new Dates(LocalDate::new);
 
     static LinkedHashMap<String, String> currentDate = date.getDateHashMap(0, 0, 0);
+    private static World world;
 
     public static void applyForPermit() {
         scrollAndClick("//button[@id='Apply']", SelectorType.XPATH);
@@ -223,7 +226,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
 
     public static void continueButton() {
         BaseModel.untilModalIsPresent(30L, TimeUnit.SECONDS);
-        waitAndClick("//button[@id='form-actions[confirm]']",SelectorType.XPATH);
+        world.UIJourney.clickConfirm();
     }
 
     public static void underConsiderationStatusExists() {
