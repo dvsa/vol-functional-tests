@@ -53,7 +53,7 @@ public class VerifySwitchedOff extends BasePage implements En {
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()));
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        world.UIJourney.clickContinue();
     }
 
     @When("the transport manager is the owner")

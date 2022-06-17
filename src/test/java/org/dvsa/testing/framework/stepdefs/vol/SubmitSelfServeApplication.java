@@ -67,11 +67,11 @@ public class SubmitSelfServeApplication extends BasePage {
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        clickById("form-actions[continue]");
+        world.UIJourney.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            clickByName("form-actions[send]");
+            world.UIJourney.clickSend();
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }

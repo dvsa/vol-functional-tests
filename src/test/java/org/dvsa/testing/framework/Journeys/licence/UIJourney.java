@@ -45,7 +45,6 @@ public class UIJourney extends BasePage {
     private static World world;
     private FakerUtils faker = new FakerUtils();
     String uploadLaterRadioButton = "//input[@id='uploadLaterRadio']";
-    String saveButton = "//*[@id='form-actions[save]']";
     String submitButton = "form-actions[submit]";
 
     public UIJourney(World world) {
@@ -309,7 +308,7 @@ public class UIJourney extends BasePage {
     public void caseWorkerCompleteOverview() {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        click("//*[contains(@id,'form-actions[save')]", SelectorType.XPATH);
+        clickSaveAndContinue();
     }
 
     public void createPublicInquiry() {
@@ -504,6 +503,10 @@ public class UIJourney extends BasePage {
     }
 
     public void clickSubmit() { waitAndClick("form-actions[submit]", SelectorType.NAME);}
+
+    public void clickSend() { waitAndClick("form-actions[send]", SelectorType.NAME);}
+
+    public void clickContinue() { waitAndClick("form-actions[continue]", SelectorType.ID);}
 
     public static void clickSaveAndReturn() {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);

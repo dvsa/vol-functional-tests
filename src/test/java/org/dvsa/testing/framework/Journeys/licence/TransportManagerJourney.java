@@ -118,7 +118,7 @@ public class TransportManagerJourney extends BasePage {
         nominateOperatorUserAsTransportManager(user, applicationOrNot);
         enterDateFieldsByPartialId("dob", dob);
         waitForElementToBeClickable("form-actions[send]", SelectorType.ID);
-        click("form-actions[send]", SelectorType.ID);
+        world.UIJourney.clickSend();
     }
 
     public void addOperatorAdminAsTransportManager() {
@@ -137,7 +137,7 @@ public class TransportManagerJourney extends BasePage {
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, user);
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        world.UIJourney.clickContinue();
     }
 
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
@@ -204,7 +204,7 @@ public class TransportManagerJourney extends BasePage {
         enterText("username", SelectorType.ID, world.DataGenerator.getOperatorUser());
         enterText("emailAddress", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
         enterText("emailConfirm", SelectorType.ID, world.DataGenerator.getOperatorUserEmail());
-        click("form-actions[continue]", SelectorType.ID);
+        world.UIJourney.clickContinue();
         waitForTextToBePresent("user account has been created and a link sent to them");
     }
 
