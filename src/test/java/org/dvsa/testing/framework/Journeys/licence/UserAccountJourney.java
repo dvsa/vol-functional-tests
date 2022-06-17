@@ -23,12 +23,11 @@ public class UserAccountJourney extends BasePage {
         String teamName = selectRandomValueFromDropDown("team");
         setTeamName(teamName);
         selectValueFromDropDown("title", SelectorType.ID, "Mr");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void ChangeUserDetails() {
         selectRandomValueFromDropDown("team");
-        replaceText("userDetails[loginId]", SelectorType.ID, world.DataGenerator.getOperatorUser());
         selectValueFromDropDown("title", SelectorType.ID, "Mr");
         replaceText("person[forename]", SelectorType.ID, world.DataGenerator.getOperatorForeName());
         replaceText("person[familyName]", SelectorType.ID, world.DataGenerator.getOperatorFamilyName());
@@ -40,7 +39,7 @@ public class UserAccountJourney extends BasePage {
         replaceText("addressTown", SelectorType.ID, world.DataGenerator.getOperatorTown());
         replaceText("postcode", SelectorType.ID, world.DataGenerator.getOperatorPostCode());
         selectRandomValueFromDropDown("officeAddress[countryCode]");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForElementToBeClickable("team", SelectorType.ID);
     }
 }

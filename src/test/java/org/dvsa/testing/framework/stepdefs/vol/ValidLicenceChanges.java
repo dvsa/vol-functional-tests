@@ -47,7 +47,7 @@ public class ValidLicenceChanges extends BasePage implements En {
         click("//*[@id='add']", SelectorType.XPATH);
         waitAndEnterText("//*[@id='name']", SelectorType.XPATH,companyName);
         enterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         click("//*[@id='allow-email[allowEmail]']", SelectorType.XPATH);
         UIJourney.clickSaveAndReturn();
     }
@@ -107,14 +107,15 @@ public class ValidLicenceChanges extends BasePage implements En {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
         for (int i = 0; i < 3; i++) {
             if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
-                click("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
+                waitForTextToBePresent("Vehicle details");
+                waitAndClick("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you want to remove these records?");
-                click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+                world.UIJourney.clickSubmit();
                 waitForElementToBeClickable("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
             } else {
                 click("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you want to remove these vehicle(s)");
-                click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+                world.UIJourney.clickSubmit();
                 waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             }
         }
@@ -137,15 +138,16 @@ public class ValidLicenceChanges extends BasePage implements En {
     public void iMakeChangesToTheLicenceDiscsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
         for (int i = 0; i < 3; i++) {
+            waitForTextToBePresent("Licence discs");
             click("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you would like to void these discs?");
-            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            world.UIJourney.clickSubmit();
             waitForElementToBeClickable("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
         }
         click("//*[@id='add']",SelectorType.XPATH);
         waitForTextToBePresent("How many additional discs are required?");
         enterText("//*[@id='data[additionalDiscs]']", SelectorType.XPATH, "2");
-        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("the changes to the licence discs page are made")
@@ -170,7 +172,7 @@ public class ValidLicenceChanges extends BasePage implements En {
         enterText("//*[@id='contactDetails[fao]']", SelectorType.XPATH, safetyInspector);
         clickByLinkText("Enter the address yourself");
         world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Safety inspectors");
         UIJourney.clickSaveAndReturn();
     }

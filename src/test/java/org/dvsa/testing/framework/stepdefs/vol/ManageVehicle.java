@@ -5,6 +5,8 @@ import activesupport.http.RestUtils;
 import activesupport.system.Properties;
 import apiCalls.Utils.generic.Headers;
 import apiCalls.Utils.generic.Utils;
+import apiCalls.actions.AccessToken;
+import apiCalls.enums.UserType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -30,28 +32,23 @@ import static org.junit.Assert.*;
 
 public class ManageVehicle extends BasePage {
     World world;
-
     private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-
     public ManageVehicle(World world) {
         this.world = world;
     }
 
     @When("I navigate to manage vehicle page on an application")
     public void iNavigateToManageVehiclePageOnAnApplication(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("application");
     }
 
     @When("I navigate to manage vehicle page on a licence")
     public void iNavigateToManageVehiclePageOnALicence(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("licence");
     }
 
     @When("I navigate to manage vehicle page on a variation")
     public void iNavigateToManageVehiclePageOnAVariation(){
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.dvlaJourney.navigateToManageVehiclesPage("variation");
     }
 
@@ -353,7 +350,7 @@ public class ManageVehicle extends BasePage {
         }
         ValidatableResponse response;
         Headers apiHeaders = new Headers();
-        apiHeaders.headers.put("x-pid", Utils.config.getString("apiHeader"));
+        apiHeaders.headers.put("Authorization", "Bearer " + AccessToken.getToken(Utils.config.getString("adminUser"), Utils.config.getString("adminPassword"), UserType.INTERNAL.asString()));
 
         response = RestUtils.getWithQueryParams(String.format(URL.build(this.env, "licence/%s/vehicles/").toString(), world.createApplication.getLicenceId()), queryParams, world.createApplication.apiHeaders.getHeaders());
         List<Object> responseArray = response.extract().body().jsonPath().get("results.id.findAll()");

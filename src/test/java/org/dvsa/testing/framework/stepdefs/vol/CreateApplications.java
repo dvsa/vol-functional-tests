@@ -16,10 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateApplications extends BasePage implements En {
     public CreateApplications(World world) {
-        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-
         When("^i choose to print and sign$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
@@ -29,7 +26,7 @@ public class CreateApplications extends BasePage implements En {
             assertTrue(isTextPresent("Your application reference number is"));
         });
         When("^i pay for my application$", () -> {
-            waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+            world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
             waitForTitleToBePresent("Application overview");
         });
@@ -41,7 +38,7 @@ public class CreateApplications extends BasePage implements En {
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
             waitForTextToBePresent("Would you like to use a stored card?");
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
-            waitAndClick("form-actions[pay]", SelectorType.NAME);
+            world.UIJourney.clickPay();
             waitAndEnterText("csc",  SelectorType.NAME,"265");
             world.feeAndPaymentJourney.enterCardHolderDetails();
             waitAndClick("_eventId_payment", SelectorType.NAME);

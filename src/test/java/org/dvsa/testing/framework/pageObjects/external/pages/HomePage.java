@@ -1,6 +1,8 @@
 package org.dvsa.testing.framework.pageObjects.external.pages;
 
+import Injectors.World;
 import org.apache.commons.lang3.StringUtils;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.PermitApplication;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
@@ -17,6 +19,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+
 public class HomePage extends BasePage {
 
     private static String APPLY_FOR_LICENCE_BUTTON = "//*/a[contains(text(), 'Apply for a')]";
@@ -25,8 +29,8 @@ public class HomePage extends BasePage {
 
 
     public static void selectTab(Tab tab) {
+        refreshPageWithJavascript();
         String selector = String.format(TAB_TEMPLATE, tab.toString());
-
         untilElementIsPresent(selector, SelectorType.XPATH, BasePage.WAIT_TIME_SECONDS, TimeUnit.SECONDS);
         click(selector, SelectorType.XPATH);
     }
@@ -143,6 +147,8 @@ public class HomePage extends BasePage {
 
     public static class FeesTab {
 
+        private static World world;
+
         public static void selectAllOutstandingFees() {
             String selector = "//th[last()]/input";
             boolean isNotSelected = !findElement(selector, SelectorType.XPATH).isSelected();
@@ -152,7 +158,7 @@ public class HomePage extends BasePage {
         }
 
         public static void payNowButton() {
-            waitAndClick("//button[@id='form-actions[pay]']",SelectorType.XPATH);
+            world.UIJourney.clickPay();
         }
 
         public static void pay() {

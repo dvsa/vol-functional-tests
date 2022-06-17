@@ -38,7 +38,7 @@ public class ManagerUsersPage extends BasePage implements En {
 
     @When("i scan for accessibility violations")
     public void iScanForAccessibilityViolations() throws IllegalBrowserException, IOException {
-        scanner.scan();
+        scanner.scan(false);
     }
 
     @Then("no issues should be present on the page")

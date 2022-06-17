@@ -19,7 +19,7 @@ public class SelfServePayFees extends BasePage implements En {
 
         @When("^I pay fees on self serve")
         public void iPayFeesOnSelfServe() {
-        click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.payFee(null, "card");
     }
 

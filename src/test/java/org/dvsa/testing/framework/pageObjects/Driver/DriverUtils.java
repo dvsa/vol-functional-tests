@@ -63,7 +63,6 @@ public class DriverUtils {
         new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds)).until(
                 webDriver ->
                         ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));
-
         return findElement(selector, selectorType);
     }
 

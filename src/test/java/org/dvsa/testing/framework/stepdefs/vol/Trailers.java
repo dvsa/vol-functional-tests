@@ -18,7 +18,6 @@ public class Trailers extends BasePage {
         this.world = world;
     }
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
-    String submitButton = "//*[@id='form-actions[submit]']";
     String addTrailerButton = "//*[@id='add']";
 
     @Given("on self serve I add a valid trailer number {string} and longer semi trailer is set to {string} on the licence")
@@ -27,7 +26,7 @@ public class Trailers extends BasePage {
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence(trailerNumber);
         world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Given("on internal I add a valid trailer number {string} and longer semi trailer is set to {string} on the licence")
@@ -36,7 +35,7 @@ public class Trailers extends BasePage {
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence(trailerNumber);
         world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @When("the trailer {string} and type {string} is successfully added to the trailer table")
@@ -50,7 +49,7 @@ public class Trailers extends BasePage {
     public void changeTrailerType(String trailerNumber, String isLongerSemiTrailer) {
         clickByXPath("//tbody/tr/td/input[@value='" + trailerNumber + "']");
         world.trailersJourney.isLongerSemiTrailer(isLongerSemiTrailer);
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @When("on self serve I add a trailer with no trailer number")
@@ -58,7 +57,7 @@ public class Trailers extends BasePage {
         world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.isLongerSemiTrailer("Yes");
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @When("on internal I add a trailer with no trailer number")
@@ -66,7 +65,7 @@ public class Trailers extends BasePage {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.isLongerSemiTrailer("Yes");
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @When("on self serve I add a trailer with the longer semi trailer option unanswered")
@@ -74,7 +73,7 @@ public class Trailers extends BasePage {
         world.selfServeNavigation.navigateToPage("Licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence("GHTU775");
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @When("on internal I add a trailer with the longer semi trailer option unanswered")
@@ -82,7 +81,7 @@ public class Trailers extends BasePage {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence("GHTU775");
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("the trailer number mandatory error message appears")

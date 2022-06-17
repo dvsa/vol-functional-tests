@@ -37,7 +37,7 @@ public class PrintingAndScanningJourney extends BasePage {
         selectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");
         selectValueFromDropDownByIndex("description",SelectorType.ID, 0);
         enterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void addPrinter() {
@@ -45,7 +45,7 @@ public class PrintingAndScanningJourney extends BasePage {
         waitAndClick("add", SelectorType.ID);
         waitAndEnterText("printer-details[printerName]", SelectorType.ID, uniqueId);
         waitAndEnterText("printer-details[description]", SelectorType.ID, postCode);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForElementToBePresent(createdRecord);
         ClickPage50AndWait();
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
@@ -58,7 +58,7 @@ public class PrintingAndScanningJourney extends BasePage {
         waitForTextToBePresent("Edit printer");
         replaceText("printer-details[printerName]", SelectorType.ID, uniqueId);
         replaceText("printer-details[description]", SelectorType.ID, postCode);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForElementToBePresent(updatedRecord);
         ClickPage50AndWait();
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
@@ -67,6 +67,6 @@ public class PrintingAndScanningJourney extends BasePage {
     public void deletePrinter() {
         selectRandomRadioBtnFromDataTable();
         waitAndClick("delete", SelectorType.ID);
-        waitAndClick("form-actions[confirm]", SelectorType.ID);
+        world.UIJourney.clickConfirm();
     }
 }

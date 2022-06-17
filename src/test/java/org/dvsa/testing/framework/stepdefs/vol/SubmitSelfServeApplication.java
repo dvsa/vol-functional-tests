@@ -8,6 +8,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -33,76 +34,60 @@ public class SubmitSelfServeApplication extends BasePage {
         this.world = world;
     }
 
-    @And("i start a new licence application")
-    public void iStartANewLicenceApplication() throws IllegalBrowserException, IOException {
+    @And("i start a new {string} licence application")
+    public void iStartANewLicenceApplication(String licenceType){
         waitForTitleToBePresent("Licences");
-        accessibilityScanner();
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
-
-        chooseLicenceType();
-        String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-
+        chooseLicenceType(licenceType);
+        UIJourney.clickSaveAndContinue();
         //business details
-        accessibilityScanner();
         world.businessDetailsJourney.addBusinessDetails();
         if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
-            if (isTextPresent("You haven't added any Directors yet")) {
-                accessibilityScanner();
+            if (isElementPresent("add",SelectorType.ID)) {
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
             }
-            waitAndClick(saveAndContinue, SelectorType.XPATH);
+            UIJourney.clickSaveAndContinue();
         }
-
         //operating centre
-        accessibilityScanner();
         String authority = "2";
         String trailers = "4";
-        world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, null, trailers);
+        if(licenceType.equals("Goods")) {
+            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, "0", trailers);
+        }else{
+            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
+        }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectByIndex("//*[@id='trafficArea']", SelectorType.XPATH, 1);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
-        accessibilityScanner();
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
 
         //transport manager
         clickById("add");
-        accessibilityScanner();
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        clickById("form-actions[continue]");
+        world.UIJourney.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            accessibilityScanner();
-            clickByName("form-actions[send]");
+            world.UIJourney.clickSend();
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
-
         //vehicleDetails
-        accessibilityScanner();
-        world.vehicleDetailsJourney.addAVehicle(true);
-        accessibilityScanner();
+        boolean add = licenceType.equals("Goods");
+        world.vehicleDetailsJourney.addAVehicle(add);
         world.safetyComplianceJourney.addSafetyAndComplianceData();
-        accessibilityScanner();
         world.safetyInspectorJourney.addASafetyInspector();
-        accessibilityScanner();
         clickById("application[safetyConfirmation]");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         //Financial History
-        accessibilityScanner();
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit();
         //Licence details
-        accessibilityScanner();
         world.licenceDetailsJourney.answerNoToAllQuestionsAndSubmit();
         //Convictions
-        accessibilityScanner();
         world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit();
-        generateAccessibilityReport();
     }
 
     @Given("i have a self serve account")
@@ -125,8 +110,7 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     @And("i have no existing accounts")
-    public void iHaveNoExistingAccounts() throws IllegalBrowserException, IOException, URISyntaxException {
-        accessibilityScanner();
+    public void iHaveNoExistingAccounts() throws IllegalBrowserException, IOException {
         if (isElementPresent("//tbody/tr/td/a", SelectorType.XPATH)) {
             List<WebElement> applications = findElements("//tbody/tr/td/a", SelectorType.XPATH);
             for (WebElement element : applications) {
@@ -137,14 +121,14 @@ public class SubmitSelfServeApplication extends BasePage {
                 } else {
                     clickByLinkText("Cancel application");
                 }
-                waitAndClick("form-actions[submit]", SelectorType.NAME);
+                world.UIJourney.clickSubmit();
             }
             waitForTitleToBePresent("Licences");
         }
     }
 
     public static void accessibilityScanner() throws IllegalBrowserException, IOException {
-        scanner.scan();
+        scanner.scan(false);
         if (scanner.getTotalViolationsCount() != 0) {
             LOGGER.info("ERROR: Violation found");
             reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
@@ -156,10 +140,10 @@ public class SubmitSelfServeApplication extends BasePage {
         reportGenerator.createReport(scanner);
     }
 
-    private void chooseLicenceType() {
+    private void chooseLicenceType(String licenceType) {
         waitForTitleToBePresent("Type of licence");
         waitAndClick("//*[contains(text(),'Great Britain')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'" + licenceType + "')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Standard National')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);

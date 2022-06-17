@@ -5,12 +5,14 @@ import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import apiCalls.actions.CreateApplication;
 import apiCalls.enums.OperatorType;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.io.IOException;
 import java.util.HashMap;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class OperatingCentreJourney extends BasePage {
@@ -25,14 +27,13 @@ public class OperatingCentreJourney extends BasePage {
     String confirmOffStreetParkingCheckbox = "//*[@id='permission']";
     String advertTitle = "//h3[text()='Newspaper advert']";
     String uploadAdvertLater = "//*[@value='adPlacedLater']";
-    String submitButton = "//*[@id='form-actions[submit]']";
 
     public String addOperatingCentre = "//*[@id='add']";
     public String totalAuthorisationField = "//input[@id='totAuthVehicles']";
     public String totalHGVAuthorisationField = "//input[@id='totAuthHgvVehicles']";
     public String totalLGVAuthorisationField = "//input[@id='totAuthLgvVehicles']";
-    public String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
     public String totalCommunityAuthorisationField = "//input[@id='totCommunityLicences']";
+    public String totalTrailersAuthorisationField = "//input[@id='totAuthTrailers']";
     public String vehicleAuthorisationHelpLink = "//span[contains(text(),'Help with vehicle authorisation')]";
 
     String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
@@ -96,7 +97,7 @@ public class OperatingCentreJourney extends BasePage {
             waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
             waitForElementToBePresent(advertTitle);
         }
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
@@ -139,7 +140,7 @@ public class OperatingCentreJourney extends BasePage {
             click(uploadAdvertLater, SelectorType.XPATH);
         }
         click(confirmOffStreetParkingCheckbox, SelectorType.XPATH);
-        click(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     private boolean hasTotalHGVAuthorityIncreased(String newHGVTotalAuthority) {

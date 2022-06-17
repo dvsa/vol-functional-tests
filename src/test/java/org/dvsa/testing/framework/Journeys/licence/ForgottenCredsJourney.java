@@ -13,7 +13,6 @@ public class ForgottenCredsJourney extends BasePage {
 
     public void createAccountSignOut()
     {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         waitAndClick("Sign out", SelectorType.LINKTEXT);
         world.selfServeNavigation.navigateToLoginPage();
     }
@@ -34,6 +33,6 @@ public class ForgottenCredsJourney extends BasePage {
         waitAndClick("Forgotten your username?", SelectorType.LINKTEXT);
         waitAndEnterText("fields[licenceNumber]", SelectorType.ID, world.applicationDetails.getLicenceNumber());
         waitAndEnterText("fields[emailAddress]", SelectorType.ID, world.registerUser.getEmailAddress());
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 }

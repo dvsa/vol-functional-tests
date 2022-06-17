@@ -25,7 +25,6 @@ public class GlobalMethods extends BasePage {
     public Dates date = new Dates(new LocalDateCalendar());
     private final String emailField = nameAttribute("input", "username");
     private final String passwordField = nameAttribute("input", "password");
-    private final String oldPasswordField = nameAttribute("input", "oldPassword");
     private final String newPasswordField = nameAttribute("input", "newPassword");
     private final String confirmPasswordField = nameAttribute("input", "confirmPassword");
     private final String submitButton = nameAttribute("input", "submit") + "[value=\"Sign in\"]";
@@ -56,8 +55,8 @@ public class GlobalMethods extends BasePage {
         }
         DriverUtils.get(myURL);
         try {
-            if(isElementPresent("declarationRead",SelectorType.ID)) {
-                waitAndClick("declarationRead",SelectorType.ID);
+            if (isElementPresent("declarationRead", SelectorType.ID)) {
+                waitAndClick("declarationRead", SelectorType.ID);
             }
             enterCredentialsAndLogin(username, emailAddress, newPassword);
         } catch (DecoderException e) {
@@ -68,28 +67,24 @@ public class GlobalMethods extends BasePage {
     public void enterCredentialsAndLogin(String username, String emailAddress, String newPassword) throws DecoderException {
         // TODO: Setup way to store new passwords after they are set and once they are set default to them?
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
-
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
         String password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-
         try {
             signIn(username, password);
-        } catch (Exception e) {
-            //User is already registered
-            signIn(username, getLoginPassword());
+            if (isTextPresent("Please check your username and password")) {
+                signIn(username, getLoginPassword());
+            }
         } finally {
-            if (isTextPresent("Your password must:"))
+            if (isTextPresent("Your password must:")) {
                 waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
                 waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
                 click(nameAttribute("input", "submit"), SelectorType.CSS);
                 setLoginPassword(newPassword);
-                untilNotInDOM(submitButton, 5);
+                untilNotInDOM(submitButton, 1);
+            }
         }
     }
 
-    public void navigateToLogin(String username, String emailAddress, ApplicationType applicationType) {
-        navigateToLoginWithoutCookies(username, emailAddress, applicationType);
-    }
 
     public void signIn(String userName, String password) {
         replaceText(emailField, SelectorType.CSS, userName);

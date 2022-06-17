@@ -128,8 +128,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 String month = ParseUtils.parseMonth(dateArray[1]);
                 String year = dateArray[2];
 
-                selectValueFromDropDown("//*[@name='pubDate[month]']", SelectorType.XPATH, month);
-                selectValueFromDropDown("//*[@name='pubDate[year]']", SelectorType.XPATH, year);
+                waitAndSelectValueFromDropDown("//*[@name='pubDate[month]']", SelectorType.XPATH, month);
+                waitAndSelectValueFromDropDown("//*[@name='pubDate[year]']", SelectorType.XPATH, year);
                 click("//*[@id='filter']", SelectorType.XPATH);
 
                 // Increasing table if possible

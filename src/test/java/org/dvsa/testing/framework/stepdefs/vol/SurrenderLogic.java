@@ -10,6 +10,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import io.cucumber.datatable.DataTable;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
@@ -33,20 +34,20 @@ public class SurrenderLogic extends BasePage implements En {
 
     @Given("i update my address details on my licence")
     public void iUpdateMyAddressDetailsOnMyLicence() {
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Addresses");
         world.UIJourney.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
         String contactNumber = "07123465976";
         replaceText("phone_primary", SelectorType.ID, contactNumber);
-        waitAndClick("form-actions[save]", SelectorType.ID);
+        UIJourney.clickSaveAndReturn();
     }
 
     @Then("continue with application link is displayed")
     public void continueWithApplicationLinkIsDisplayed() {
-        assertFalse(isLinkPresent("Apply to surrender licence", 30));
-        assertTrue(isLinkPresent("Continue with application to surrender licence", 30));
+        assertFalse(isLinkPresent("Apply to surrender licence", 5));
+        assertTrue(isLinkPresent("Continue with application to surrender licence", 5));
     }
 
     @And("user is taken to information change page on clicking continue application")
@@ -96,7 +97,7 @@ public class SurrenderLogic extends BasePage implements En {
 
     @Given("i am on the surrenders current discs page")
     public void iAmOnTheSurrendersCurrentDiscsPage() {
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         assertTrue(Browser.navigate().getCurrentUrl().contains("current-discs"));
     }
 
@@ -108,7 +109,7 @@ public class SurrenderLogic extends BasePage implements En {
 
     @And("i am on the operator licence page")
     public void iAmOnTheOperatorLicencePage() {
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
@@ -123,7 +124,7 @@ public class SurrenderLogic extends BasePage implements En {
     @And("i am on the community licence page")
     public void iAmOnTheCommunityLicencePage() {
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
-            waitAndClick("form-actions[submit]", SelectorType.ID);
+            world.UIJourney.clickSubmit();
             world.surrenderJourney.addDiscInformation();
             waitForTextToBePresent("In your possession");
             world.surrenderJourney.addOperatorLicenceDetails();
@@ -141,7 +142,7 @@ public class SurrenderLogic extends BasePage implements En {
 
     @And("i am on the disc and doc review page")
     public void iAmOnTheDiscAndDocReviewPage() {
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         world.surrenderJourney.addOperatorLicenceDetails();
@@ -160,7 +161,7 @@ public class SurrenderLogic extends BasePage implements En {
 
     @And("i am on the destroy disc page")
     public void iAmOnTheDestroyDiscPage() {
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         world.surrenderJourney.addOperatorLicenceDetails();
@@ -168,13 +169,13 @@ public class SurrenderLogic extends BasePage implements En {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
         }
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        world.UIJourney.clickSubmit();
         assertTrue(Browser.navigate().getCurrentUrl().contains("destroy"));
     }
 
     @And("i am on the declaration page")
     public void iAmOnTheDeclarationPage() {
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         world.surrenderJourney.addOperatorLicenceDetails();
@@ -182,9 +183,9 @@ public class SurrenderLogic extends BasePage implements En {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
         }
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Now securely destroy your licence documentation");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         assertTrue(Browser.navigate().getCurrentUrl().contains("declaration"));
     }
 
@@ -221,6 +222,7 @@ public class SurrenderLogic extends BasePage implements En {
     public void theCaseworkerAttemptsToWithdrawTheSurrender() {
         world.surrenderJourney.caseworkManageSurrender();
         waitForElementToBeClickable("actions[surrender]", SelectorType.ID);
+        refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Withdraw')]", SelectorType.XPATH);
     }
 
@@ -277,7 +279,7 @@ public class SurrenderLogic extends BasePage implements En {
     public void theCaseWorkerUndoesTheSurrender() {
         waitAndClick("//*[contains(@id,'menu-licence-decisions-undo-surrender')]", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to undo the surrender of this licence?");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("The licence surrender has been undone");
     }
 

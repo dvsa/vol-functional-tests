@@ -35,13 +35,13 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToLogin(String username, String emailAddress) {
-        world.globalMethods.navigateToLogin(username, emailAddress, ApplicationType.EXTERNAL);
+        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL);
     }
 
     public void navigateToExternalSearch() {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
         get(this.url.concat("search/"));
     }
@@ -64,11 +64,6 @@ public class SelfServeNavigation extends BasePage {
     public void navigateToLoginPage() {
         String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env,"auth/login/").toString();
         navigate().get(myURL);
-        try {
-            accessibilityScanner();
-        } catch (IllegalBrowserException | IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void navigateToCreateAnAccount() {
@@ -112,7 +107,7 @@ public class SelfServeNavigation extends BasePage {
             case "Vehicles":
                 clickByLinkText("Vehicles");
                 //Once DVLA integration has been switched on, this needs updating
-                waitForTitleToBePresent("Vehicle details");
+//                waitForTitleToBePresent("Vehicle details");
                 break;
             case "Convictions and penalties":
                 clickByLinkText("Convictions and penalties");

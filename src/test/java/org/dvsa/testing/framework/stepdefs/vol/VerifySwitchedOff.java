@@ -49,12 +49,11 @@ public class VerifySwitchedOff extends BasePage implements En {
 
     @And("i select a transport manager to add")
     public void iSelectATransportManagerToAdd() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()));
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        world.UIJourney.clickContinue();
     }
 
     @When("the transport manager is the owner")
@@ -71,7 +70,7 @@ public class VerifySwitchedOff extends BasePage implements En {
     public void iSubmitAndPayForTheApplication() {
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         clickById("submitAndPay");
-        waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
     }

@@ -5,6 +5,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+
 public class TaskAllocationRulesJourney extends BasePage {
     private final World world;
     private String ownerName;
@@ -31,25 +33,27 @@ public class TaskAllocationRulesJourney extends BasePage {
     }
 
     public void selectDropDownValues() {
-        selectValueFromDropDown("team", SelectorType.ID, "System Team");
-        waitForElementToBeClickable("user", SelectorType.ID);
-        String ownerName = selectRandomValueFromDropDown("user");
+        waitAndSelectValueFromDropDown("details[team]", SelectorType.NAME, "Team");
+        selectValueFromDropDownByIndex("user",SelectorType.ID,4);
         setOwnerName(ownerName);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitAndClick("50", SelectorType.LINKTEXT);
     }
 
     public void editTaskAllocationRule() {
+        waitForTitleToBePresent("Task allocation rules");
         waitAndClick("50", SelectorType.LINKTEXT);
         selectRandomRadioBtnFromDataTable();
         waitAndClick("edit", SelectorType.ID);
         if (isTextPresent(alphaSplit)) {
             generateAbbreviation();
             selectRandomRadioBtnFromDataTable();
+            refreshPageWithJavascript();
             waitAndClick("editAlphasplit", SelectorType.ID);
+            waitForTextToBePresent("Edit alpha split");
             waitForElementToBeClickable("taskAlphaSplit[letters]", SelectorType.ID);
             replaceText("taskAlphaSplit[letters]", SelectorType.ID, abbreviation);
-            waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+            world.UIJourney.clickSubmit();
             waitForElementToBeClickable("addAlphaSplit", SelectorType.ID);
             waitForTextToBePresent("Alpha split updated");
         } else {
@@ -62,6 +66,6 @@ public class TaskAllocationRulesJourney extends BasePage {
     public void deleteTaskAllocationRule() {
         waitAndClick("(//input[@type='checkbox'])[2]", SelectorType.XPATH);
         waitAndClick("delete", SelectorType.ID);
-        waitAndClick("form-actions[confirm]", SelectorType.ID);
+        world.UIJourney.clickConfirm();
     }
 }

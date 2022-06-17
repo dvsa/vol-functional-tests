@@ -4,6 +4,7 @@
 
 Feature: Continuations journey through internal and self serve
 
+  @int_regression
   Scenario Outline: Continue a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
@@ -53,7 +54,7 @@ Feature: Continuations journey through internal and self serve
         | public       | restricted             |
         | public       | special_restricted     |
 
-  @int_regression @skip
+  @WIP
   Scenario Outline: The correct checks should display when reviewing a continuation and snapshot
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal

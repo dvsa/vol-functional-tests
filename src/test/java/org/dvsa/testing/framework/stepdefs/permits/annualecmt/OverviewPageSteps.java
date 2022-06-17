@@ -43,7 +43,8 @@ public class OverviewPageSteps extends BasePage implements En {
                 overviewSections.add(OverviewSection.toEnum(section));
             }
             for (OverviewSection section : overviewSections) {
-                assertThat(OverviewPage.getStatusOfSection(section), isIn(PermitStatus.values()));
+                assertThat(OverviewPage.getStatusOfSection(section),
+                        isIn(PermitStatus.values()));
             }
         });
 
