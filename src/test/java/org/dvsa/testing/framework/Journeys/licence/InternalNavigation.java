@@ -47,7 +47,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void adminNavigation(@NotNull AdminOption option) {
-        click(adminDropdown, SelectorType.XPATH);
+        waitAndClick(adminDropdown, SelectorType.XPATH);
         clickByLinkText(option.toString());
         switch (option) {
             case CONTINUATIONS:
