@@ -5,23 +5,29 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
+import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class InternalApplication extends BasePage implements En {
     private final World world;
 
-    private final String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
-    private final String numberOfVehicles = "//dt[contains(text(),'No. of vehicles')]/../dd";
-    private final String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
+    private String HGVOnlyAuthorisation = "//dt[contains(text(),'Total Heavy goods vehicle authorisation')]/../dd";
+    private String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
+    private String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
+    private String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
+    private String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
+    private String editUndertakingLink = "//tbody/tr//input[contains(@name,'table[action][edit]')]";
+    private String undertakingDescription = "//textarea[@name='fields[notes]']";
+    private String expectedLGVOnlyUndertakingText = "All authorised vehicles shall not exceed 3,500 Kilograms (kg), including when combined with a trailer.";
 
     public InternalApplication (World world) {this.world = world;}
 
@@ -102,7 +108,6 @@ public class InternalApplication extends BasePage implements En {
         waitForTextToBePresent("The document has been saved");
     }
 
-
     @And("I delete generated letter above from the table")
     public void iDeleteGeneratedLetterAboveFromTheTable() {
         world.UIJourney.deleteLicenceDocument();
@@ -120,55 +125,45 @@ public class InternalApplication extends BasePage implements En {
         world.internalNavigation.getApplication();
     }
 
-    @Then("the LGV Only authorisation should be correct on the application overview screen")
-    public void theLGVOnlyAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
-        String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
-        String actualLGVAuthorisation = getText(LGVOnlyAuthorisation, SelectorType.XPATH);
-        String expectedLGVAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreLgvAuthority());
-        assertEquals(expectedLGVAuthority, actualLGVAuthorisation);
+    @Then("the LGV Only authorisation on the application overview screen should display {string} lgvs to {string} lgvs")
+    public void theLGVOnlyAuthorisationOnTheApplicationOverviewScreenShouldDisplayLgvsToLgvs(String oldAuthorisation, String newAuthorisation) {
+        checkExpectedValuesOnApplicationOverview(LGVOnlyAuthorisation, oldAuthorisation, newAuthorisation);
 
-        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
-        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedLgvVehicles());
-        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
-
-        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
-        String expectedNumberOfOperatingCentres = "0 (0)";
-        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
+        assertFalse(isTextPresent("Total Heavy goods vehicle authorisation"));
+        assertFalse(isTextPresent("Total vehicle authorisation"));
     }
 
-    @Then("the PSV Standard International authorisation should be correct on the application overview screen")
-    public void thePSVStandardInternationalAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
-        String actualVehicleAuthorisation = getText(vehicleAuthorisation, SelectorType.XPATH);
-        String expectedVehicleAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreHgvAuthority());
-        assertEquals(expectedVehicleAuthority, actualVehicleAuthorisation);
+    @Then("the LGV Mixed authorisation on the application overview screen should display {string} hgvs to {string} hgvs and {string} lgvs to {string} lgvs")
+    public void theLGVMixedAuthorisationShouldBeCorrectOnTheApplicationOverviewScreenShouldDisplayHgvsToHgvsAndLgvsToLgvs(String oldHgvAuthorisation, String newHgvAuthorisation, String oldLgvAuthorisation, String newLgvAuthorisation) {
+        checkExpectedValuesOnApplicationOverview(HGVOnlyAuthorisation, oldHgvAuthorisation, newHgvAuthorisation);
 
-        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
-        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedHgvVehicles());
-        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
+        checkExpectedValuesOnApplicationOverview(LGVOnlyAuthorisation, oldLgvAuthorisation, newLgvAuthorisation);
 
-        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
-        String expectedNumberOfOperatingCentres = "0 (1)";
-        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
+        assertFalse(isTextPresent("Total vehicle authorisation"));
     }
 
-    @Then("the Goods Standard National authorisation should be correct on the application overview screen")
-    public void theGoodsStandardNationalAuthorisationShouldBeCorrectOnTheApplicationOverviewScreen() {
-        String actualHGVAuthorisation = getText(vehicleAuthorisation, SelectorType.XPATH);
-        String expectedHGVAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreHgvAuthority());
-        assertEquals(expectedHGVAuthority, actualHGVAuthorisation);
+    @Then("the Goods Standard National authorisation on the application overview screen should display {string} vehicles to {string} vehicles and {string} trailers to {string} trailers")
+    public void theGoodsStandardNationalAuthorisationOnTheApplicationOverviewScreenShouldDisplayVehiclesToVehicles(String oldAuthorisation, String newAuthorisation, String oldTrailers, String newTrailers) {
+        checkExpectedValuesOnApplicationOverview(vehicleAuthorisation, oldAuthorisation, newAuthorisation);
 
-        String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
-        String actualTrailerAuthorisation = getText(trailerAuthorisation, SelectorType.XPATH);
-        String expectedTrailerAuthority = String.format("0 (%s)", world.createApplication.getTotalOperatingCentreTrailerAuthority());
-        assertEquals(actualTrailerAuthorisation, expectedTrailerAuthority);
+        checkExpectedValuesOnApplicationOverview(trailerAuthorisation, oldTrailers, newTrailers);
 
-        String actualNoOfVehicles = getText(numberOfVehicles, SelectorType.XPATH);
-        String expectedNoOfVehicles = String.format("0 (%s)", world.createApplication.getNoOfAddedHgvVehicles());
-        assertEquals(actualNoOfVehicles, expectedNoOfVehicles);
+        assertFalse(isTextPresent("Total Heavy goods vehicle authorisation"));
+        assertFalse(isTextPresent("Total Light goods vehicle authorisation"));
+    }
 
-        String actualNumberOfOperatingCentres = getText(numberOfOperatingCentres, SelectorType.XPATH);
-        String expectedNumberOfOperatingCentres = "0 (1)";
-        assertEquals(actualNumberOfOperatingCentres, expectedNumberOfOperatingCentres);
+    @Then("the PSV Standard International authorisation on the application overview screen should display {string} vehicles to {string} vehicles")
+    public void thePSVStandardInternationalAuthorisationOnTheApplicationOverviewScreenShouldDisplayVehiclesToVehicles(String oldAuthorisation, String newAuthorisation) {
+        checkExpectedValuesOnApplicationOverview(vehicleAuthorisation, oldAuthorisation, newAuthorisation);
+
+        assertFalse(isTextPresent("Total Heavy goods vehicle authorisation"));
+        assertFalse(isTextPresent("Total Light goods vehicle authorisation"));
+        assertFalse(isTextPresent("Total trailer authorisation"));
+    }
+
+    @And("the application overview displays {string} operating centres to {string} operating centres")
+    public void theApplicationOverviewDisplaysOperatingCentresToOperatingCentres(String oldNumberOfOperatingCentres, String newNumberOfOperatingCentres) {
+        checkExpectedValuesOnApplicationOverview(numberOfOperatingCentres, oldNumberOfOperatingCentres, newNumberOfOperatingCentres);
     }
 
     @And("I click cancel")
@@ -179,5 +174,46 @@ public class InternalApplication extends BasePage implements En {
     @And("the caseworker is still on the operators page")
     public void theCaseworkerIsStillOnTheOperatorsPage() {
         assertTrue(isTitlePresent(world.registerUser.getOrganisationName(), 10));
+    }
+
+    private void checkExpectedValuesOnApplicationOverview(String location, String oldValue, String newValue) {
+        String actualText = getText(location, SelectorType.XPATH);
+        String expectedText;
+        if (oldValue.equals(newValue) && !location.equals(numberOfOperatingCentres))
+            expectedText = oldValue;
+        else
+            expectedText = String.format("%s (%s)", oldValue, newValue);
+        assertEquals(actualText, expectedText);
+    }
+
+    @Then("the lgv only undertaking should be generated on internal matching relevant criteria")
+    public void theLgvOnlyUndertakingShouldBeGeneratedOnInternalMatchingRelevantCriteria() {
+        world.internalNavigation.navigateToPage("application", SelfServeSection.CONDITIONS_AND_UNDERTAKINGS);
+
+        String tableElementText = getText("//tbody/tr", SelectorType.XPATH);
+        assertEquals(1, size("//tbody/tr", SelectorType.XPATH));
+        assertTrue(tableElementText.contains("Undertaking"));
+        assertTrue(tableElementText.contains("Application"));
+
+        click(editUndertakingLink, SelectorType.XPATH);
+        waitForTextToBePresent("Condition / Undertaking type");
+
+        String actualLGVUndertakingText = getText(undertakingDescription, SelectorType.XPATH);
+        assertEquals(expectedLGVOnlyUndertakingText, actualLGVUndertakingText);
+
+        String expectedCategory = "Other";
+        String actualCategory = getText("//*[@id='conditionCategory']//option[@selected='selected']", SelectorType.XPATH);
+        assertEquals(expectedCategory, actualCategory);
+
+
+        String licenceNumber = getText("//h1", SelectorType.XPATH).substring(0,9);
+        String expectedAttachedToLicence = String.format("Licence (%s)", licenceNumber);
+        String actualAttachedToLicence = getText("//*[@id='attachedTo']//option[@selected='selected']", SelectorType.XPATH);
+        assertEquals(expectedAttachedToLicence, actualAttachedToLicence);
+    }
+
+    @Then("an undertaking should not be generated on internal")
+    public void anUndertakingShouldNotBeGeneratedOnInternal() {
+        assertEquals(0, size("//tbody/tr", SelectorType.XPATH));
     }
 }
