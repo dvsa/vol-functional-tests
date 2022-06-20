@@ -308,7 +308,7 @@ public class UIJourney extends BasePage {
     public void caseWorkerCompleteOverview() {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        clickSaveAndContinue();
+        clickSaveAndReturn();
     }
 
     public void createPublicInquiry() {
@@ -483,6 +483,7 @@ public class UIJourney extends BasePage {
         if (isElementPresent("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH))
             waitAndClick("//*[@id='inspection-request-confirm[createInspectionRequest]']", SelectorType.XPATH);
         click("//*[@id='form-actions[grant]']", SelectorType.XPATH);
+        waitForTextToBePresent("The application has been granted");
     }
 
     public void createVariationInInternal(boolean variationFeeRequired) {
