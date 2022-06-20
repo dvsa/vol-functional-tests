@@ -550,6 +550,6 @@ public class UIJourney extends BasePage {
             world.createApplication.setVehicleType(VehicleType.MIXED_FLEET.asString());
         clickSaveAndContinue();
         if (!getCurrentUrl().contains("#validationSummary"))
-            world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 2));
+            world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }
 }
