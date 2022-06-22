@@ -41,6 +41,7 @@ public class TaskAllocationRules extends BasePage {
             Assert.assertTrue(isElementPresent("//p[text()='Alpha split updated']", SelectorType.XPATH));
             Assert.assertTrue(isTextPresent(world.taskAllocationRulesJourney.getAbbreviation()));
         } else {
+            String name = world.taskAllocationRulesJourney.getOwnerName();
             Assert.assertTrue(isTextPresent(world.taskAllocationRulesJourney.getOwnerName()));
         }
     }

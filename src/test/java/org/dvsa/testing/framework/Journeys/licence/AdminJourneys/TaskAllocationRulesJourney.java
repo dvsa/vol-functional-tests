@@ -4,8 +4,10 @@ import Injectors.World;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.support.ui.Select;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.Assert.assertEquals;
 
 public class TaskAllocationRulesJourney extends BasePage {
     private final World world;
@@ -33,9 +35,10 @@ public class TaskAllocationRulesJourney extends BasePage {
     }
 
     public void selectDropDownValues() {
-        waitAndSelectValueFromDropDown("details[team]", SelectorType.NAME, "Team");
-        selectValueFromDropDownByIndex("user",SelectorType.ID,4);
-        setOwnerName(ownerName);
+        selectValueFromDropDownByIndex("details[team]", SelectorType.NAME, 2);
+        waitForElementToBeClickable("details[user]", SelectorType.NAME);
+        waitAndSelectByIndex("details[user]", SelectorType.NAME, 4);
+        setOwnerName(getSelectedTextFromDropDown("//select[@name='details[user]']", SelectorType.XPATH));
         world.UIJourney.clickSubmit();
         waitAndClick("50", SelectorType.LINKTEXT);
     }
@@ -48,7 +51,7 @@ public class TaskAllocationRulesJourney extends BasePage {
         if (isTextPresent(alphaSplit)) {
             generateAbbreviation();
             selectRandomRadioBtnFromDataTable();
-            refreshPageWithJavascript();
+            //refreshPageWithJavascript();
             waitAndClick("editAlphasplit", SelectorType.ID);
             waitForTextToBePresent("Edit alpha split");
             waitForElementToBeClickable("taskAlphaSplit[letters]", SelectorType.ID);
