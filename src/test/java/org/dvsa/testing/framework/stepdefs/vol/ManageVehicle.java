@@ -157,8 +157,7 @@ public class ManageVehicle extends BasePage {
     public void iTransferAVehicleAToASpecifiedLicence() {
         world.dvlaJourney.navigateToTransferVehiclePage();
         assertTrue(isTextPresent("Select the licence that you want to transfer your vehicles to"));
-        Select option = new Select(findElement("//select[@id='select-a-licence']", SelectorType.XPATH));
-        assertEquals("Select a licence", option.getFirstSelectedOption().getText());
+        assertEquals("Select a licence", getSelectedTextFromDropDown("//select[@id='select-a-licence']", SelectorType.XPATH));
         selectValueFromDropDownByIndex("select-a-licence", SelectorType.ID, 1);
         world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "N", "N");
         world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to transfer this vehicle to licence");

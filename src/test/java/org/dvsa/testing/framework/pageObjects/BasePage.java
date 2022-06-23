@@ -571,4 +571,9 @@ public abstract class BasePage extends DriverUtils {
         new WebDriverWait(getDriver(), Duration.ofSeconds(seconds)).until(webDriver ->
                 (ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
     }
+
+    public static String getSelectedTextFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
+        Select option = new Select(findElement(selector, selectorType));
+        return option.getFirstSelectedOption().getText();
+    }
 }
