@@ -39,7 +39,7 @@ public class TaskAllocation extends BasePage {
     public void reassignTask() {
         findLicenceAndNavigate();
         waitAndClick("re-assign task", SelectorType.ID);
-        waitAndClick("assignedToTeam", SelectorType.ID);
+        waitForTextToBePresent("Assigned to");
         selectSystemTeam();
         world.UIJourney.clickSubmit();
     }

@@ -41,7 +41,7 @@ public class TransportManagerJourney extends BasePage {
 
     public void removeInternalTransportManager()  {
         promptRemovalOfInternalTransportManager();
-        waitForTitleToBePresent("Are you sure you want to remove this Transport Manager?");
+        waitForTextToBePresent("Are you sure you want to remove this Transport Manager?");
         findSelectAllRadioButtonsByValue("Y");
         world.UIJourney.clickSubmit();
     }
