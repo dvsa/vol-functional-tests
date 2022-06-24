@@ -7,11 +7,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+import static activesupport.driver.Parallel.ChromeSetUp.driver;
 
 public class DriverUtils {
 
@@ -99,4 +103,40 @@ public class DriverUtils {
         return getDriver().getTitle();
     }
 
+    public static void switchToPopWindow() {
+        String parentWindow = driver.getWindowHandle();
+        Set<String> windowHandles = driver.getWindowHandles();
+        Iterator<String> iterator = windowHandles.iterator();
+        while (iterator.hasNext()) {
+            String handle = iterator.next();
+            if (!handle.contains(parentWindow)) {
+                driver.switchTo().window(handle);
+            }
+
+        }
+    }
+
+    public static String randomdatemonthyear(String requestParam) {
+        String returnValue = null;
+        LocalDate date = LocalDate.now().minusDays(1);
+        DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MM");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd");
+        DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("yyyy");
+        if (requestParam == "getday") {
+            returnValue = date.format(dateFormatter);
+        }
+        if (requestParam == "getmonth") {
+            returnValue = date.format(monthFormatter);
+        }
+        if (requestParam == "getyear") {
+            returnValue = date.format(yearFormatter);
+        }
+        return returnValue;
+    }
+
+
+
 }
+
+
+

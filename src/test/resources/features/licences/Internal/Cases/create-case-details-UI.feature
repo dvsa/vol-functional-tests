@@ -26,13 +26,18 @@ Feature: Public enquiry added and published and deletion of case notes
     When i add a submission
     Then the submission details should be displayed
 
-    #TODO: Need to do UI versions of these
+  @Create_Complaint
   Scenario: Creating a case with a complaint
+    And I select a case to raise a complaint
+    Then Details should fill in the complaint form
+    And Save the form
 
-  Scenario: Add a conviction to a case
-
+  @Condition_undertaking_case
   Scenario: Add a condition-undertaking to a case
+    And I create a new case
+    Then Select a case to create new case for adding a condition-undertaking
+    And add new case details and save the form
+    Then save the form
+    And submit the Condition and Undertaking form
 
-  Scenario: Add a submission
 
-  Scenario: Add a case note

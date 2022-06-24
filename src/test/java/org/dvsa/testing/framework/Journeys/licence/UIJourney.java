@@ -9,16 +9,19 @@ import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.validator.Var;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+import org.jetbrains.annotations.NotNull;
 import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+
 
 import java.io.IOException;
 
@@ -26,10 +29,11 @@ import java.util.*;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
+import static activesupport.driver.Parallel.ChromeSetUp.driver;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
+import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
 
 
 public class UIJourney extends BasePage {
@@ -539,4 +543,78 @@ public class UIJourney extends BasePage {
         if (!getCurrentUrl().contains("#validationSummary"))
             world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }
+
+    public void createComplaint() {
+        enterText("//input[@class='search__input']", SelectorType.XPATH, "case");
+        click("//input[@name='submit']", SelectorType.XPATH);
+        waitAndClick("/html/body/div[5]/div/div/div[2]/div/form/div[2]/table/tbody/tr[1]/td[1]", SelectorType.XPATH);
+        waitAndClick("//a[@id='menu-licence/cases']", SelectorType.XPATH);
+        waitAndClick("/html/body/div[5]/div/div[1]/div/div/form/div[2]/table/tbody/tr/td[1]/a", SelectorType.XPATH);
+        waitAndClick("//a[@id='menu-case_details_complaints']", SelectorType.XPATH);
+        waitAndClick("//*[@value='Add']", SelectorType.XPATH);
+
+    }
+
+    public void completeForm() {
+        switchToPopWindow();
+
+
+        enterText("//input[@id='complainantForename']", SelectorType.XPATH, (faker.generateFirstName()));
+
+
+        enterText("//input[@id='complainantFamilyName']", SelectorType.XPATH, (faker.generateLastName()));
+        enterText("//input[@id='complaintDate_day']", SelectorType.XPATH, randomdatemonthyear("getday"));
+        enterText("//input[@id='complaintDate_month']", SelectorType.XPATH, randomdatemonthyear("getmonth"));
+        enterText("//input[@id='complaintDate_year']", SelectorType.XPATH, randomdatemonthyear("getyear"));
+        selectValueFromDropDownByIndex("//select[@id='complaintType']", SelectorType.XPATH, 1);
+        selectValueFromDropDownByIndex("//select[@id='status']", SelectorType.XPATH, 1);
+        enterText("//textarea[@id='description']", SelectorType.XPATH, (faker.generateNatureOfBusiness()));
+        enterText("//input[@id='vrm']", SelectorType.XPATH, "TH67TGA");
+        enterText("//input[@id='fields[driverForename]']", SelectorType.XPATH, (faker.generateFirstName()));
+        enterText("//input[@id='fields[driverFamilyName]']", SelectorType.XPATH, (faker.generateLastName()));
+        enterText("//input[@id='closedDate_day']", SelectorType.XPATH, randomdatemonthyear("getday"));
+        enterText("//input[@id='closedDate_month']", SelectorType.XPATH, randomdatemonthyear("getmonth"));
+        enterText("//input[@id='closedDate_year']", SelectorType.XPATH, randomdatemonthyear("getyear"));
+    }
+
+    public void saveForm() {
+        click("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    public void createNewCase() {
+        // waitAndClick("//a[@id='menu-licence/cases']", SelectorType.XPATH);
+        click("//a[@id='menu-licence/cases']", SelectorType.XPATH);
+        click("//button[@id='add']", SelectorType.XPATH);
+    }
+
+    public void addNewCaseDetails(){
+        switchToPopWindow();
+        selectValueFromDropDownByIndex("//select[@id='fields[caseType]']", SelectorType.XPATH, 1);
+        selectFirstValueInList("//ul[@class='chosen-choices']");
+        click("//li[normalize-space()='HMRC/Border Force notifications']", SelectorType.XPATH);
+        enterText("//textarea[@id='fields[description]']", SelectorType.XPATH, faker.generateNatureOfBusiness());
+        enterText("//input[@id='fields[ecmsNo]']", SelectorType.XPATH,"123456");
+        selectFirstValueInList("//div[@id='fields_outcomes__chosen']");
+        click("//li[normalize-space()='Appeal/Stay granted']", SelectorType.XPATH);
+
+    }
+
+    public void saveTheForm(){
+        click("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+
+    }
+
+    public void completeConditionAndUndertaking(){
+        click("//*[@id='menu-case_details_conditions_undertakings']", SelectorType.XPATH);
+        click("//button[@id='add']", SelectorType.XPATH);
+        selectValueFromDropDownByIndex("//select[@id='type']", SelectorType.XPATH, 1);
+        selectValueFromDropDownByIndex("//*[@id='conditionCategory']", SelectorType.XPATH, 1);
+        enterText("//*[@id='notes']", SelectorType.XPATH, faker.generateNatureOfBusiness());
+        click("//*[@id='fields[fulfilled]']", SelectorType.XPATH);
+        selectValueFromDropDownByIndex("//*[@id=\"attachedTo\"]",SelectorType.XPATH,1);
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+
+
+    }
+
 }

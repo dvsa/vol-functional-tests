@@ -9,6 +9,7 @@ import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.hamcrest.Matchers;
+import java.sql.ResultSet;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -132,4 +133,41 @@ public class CreateCase extends BasePage implements En {
         world.internalNavigation.logInAsAdmin();
         world.UIJourney.createCaseUI(page);
     }
+
+    @And("I select a case to raise a complaint")
+    public void iSelectacasetoraiseacomplaint() {
+        world.UIJourney.createComplaint();
+    }
+
+    @Then("Details should fill in the complaint form")
+    public void detailsshouldfillinthecomplaintform() {
+        world.UIJourney.completeForm();
+    }
+
+    @And("Save the form")
+    public void savetheform(){
+        world.UIJourney.saveForm();
+    }
+
+    @Then("Select a case to create new case for adding a condition-undertaking")
+    public void caseForAddingConditionUndertaking(){
+        world.UIJourney.createNewCase();
+    }
+
+    @And("add new case details and save the form")
+        public void addNewCaseDetailsAndSaveTheForm(){
+        world.UIJourney.addNewCaseDetails();
+    }
+
+    @Then ("save the form")
+    public void saveTheForm(){
+        world.UIJourney.saveTheForm();
+    }
+
+    @And ("submit the Condition and Undertaking form")
+    public void submitTheConditionAndUndertakingForm(){
+        world.UIJourney.completeConditionAndUndertaking();
+
+    }
+
 }
