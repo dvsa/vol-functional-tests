@@ -18,20 +18,12 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
-import org.junit.jupiter.api.Assertions;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-
 import java.io.IOException;
-import java.time.Duration;
-
 import java.util.*;
-
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
@@ -256,8 +248,8 @@ public class UIJourney extends BasePage {
 
     public void checkLicenceStatus(String arg0) {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
-        waitForTextToBePresent("Licence details");
-        Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), arg0.toUpperCase());
+        waitForTextToBePresent("Licence status");
+        Assert.assertEquals(arg0.toUpperCase(), getElementValueByText("//span[contains(@class,'status')]", SelectorType.XPATH));
     }
 
     public void closeCase() {

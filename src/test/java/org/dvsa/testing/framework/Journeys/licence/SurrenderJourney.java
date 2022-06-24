@@ -91,6 +91,7 @@ public class SurrenderJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             world.UIJourney.signManually();
         }
+        refreshPageWithJavascript();
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
     public void submitSurrenderUntilChoiceOfVerification()  {
