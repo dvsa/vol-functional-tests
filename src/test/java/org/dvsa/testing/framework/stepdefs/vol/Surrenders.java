@@ -119,6 +119,7 @@ public class Surrenders extends BasePage implements En {
 
     @When("the caseworker checks the case and bus reg is visible in surrenders")
     public void theCaseworkerChecksTheCaseAndBusRegIsVisibleInSurrenders() {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitForTextToBePresent("Overview");
         if (isTextPresent("Surrender")) {
