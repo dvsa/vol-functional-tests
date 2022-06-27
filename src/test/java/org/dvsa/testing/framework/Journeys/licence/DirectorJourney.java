@@ -46,7 +46,7 @@ public class DirectorJourney extends BasePage {
 
     public String validationTitle = "There is a problem";
     public String listOfSummaryErrors = "//ol/li/a";
-    public String listOfInlineErrors = "//p[@class='error__text']";
+    public String listOfInlineErrors = "//span[@class='govuk-error-message']";
     public String titleValidation = "Select an option for: \"Title\"";
     public String firstNameValidation = "Enter first name";
     public String lastNameValidation = "Enter last name";
@@ -75,6 +75,7 @@ public class DirectorJourney extends BasePage {
             addDirectorDetails();
         }
         completeDirectorFinancialHistory("N");
+        completeLicenceHistory("N");
         completeConvictionsAndPenalties("N");
     }
 
@@ -106,6 +107,11 @@ public class DirectorJourney extends BasePage {
 
     public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
+        UIJourney.clickSaveAndContinue();
+    }
+
+    public void completeLicenceHistory(String licenceHistoryAnswers) {
+        world.genericUtils.findSelectAllRadioButtonsByValue(licenceHistoryAnswers);
         UIJourney.clickSaveAndContinue();
     }
 

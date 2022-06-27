@@ -66,6 +66,11 @@ public class DirectorVariation extends BasePage {
         UIJourney.clickSaveAndContinue();
     }
 
+    @And("^i enter \"([^\"]*)\" to licence history question$")
+    public void iEnterToLicenceHistoryQuestion(String answer) {
+        directorJourney.completeLicenceHistory(answer);
+    }
+
     @Then("^a snapshot should be created in internal$")
     public void aSnapshotShouldBeCreatedInInternal() {
         world.internalNavigation.logInAndNavigateToApplicationDocsTable(false);
@@ -132,10 +137,10 @@ public class DirectorVariation extends BasePage {
         assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfSummaryErrors.get(3).getText());
 
         List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.titleValidation, listOfInlineErrors.get(0).getText());
-        assertEquals(directorJourney.firstNameValidation, listOfInlineErrors.get(1).getText());
-        assertEquals(directorJourney.lastNameValidation, listOfInlineErrors.get(2).getText());
-        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(3).getText());
+        assertEquals(directorJourney.titleValidation, listOfInlineErrors.get(0).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.firstNameValidation, listOfInlineErrors.get(1).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.lastNameValidation, listOfInlineErrors.get(2).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.dateOfBirthEmptyFieldValidation, listOfInlineErrors.get(3).getText().replace("Error:","").trim());
     }
 
     @When("I wrongly fill in and submit the add a director page")
@@ -181,11 +186,11 @@ public class DirectorVariation extends BasePage {
         assertEquals(directorJourney.disqualifiedValidation, listOfSummaryErrors.get(4).getText());
 
         List<WebElement> listOfInlineErrors = findElements(directorJourney.listOfInlineErrors, SelectorType.XPATH);
-        assertEquals(directorJourney.bankruptcyValidation, listOfInlineErrors.get(0).getText());
-        assertEquals(directorJourney.liquidationValidation, listOfInlineErrors.get(1).getText());
-        assertEquals(directorJourney.receivershipValidation, listOfInlineErrors.get(2).getText());
-        assertEquals(directorJourney.administrationValidation, listOfInlineErrors.get(3).getText());
-        assertEquals(directorJourney.disqualifiedValidation, listOfInlineErrors.get(4).getText());
+        assertEquals(directorJourney.bankruptcyValidation, listOfInlineErrors.get(0).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.liquidationValidation, listOfInlineErrors.get(1).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.receivershipValidation, listOfInlineErrors.get(2).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.administrationValidation, listOfInlineErrors.get(3).getText().replace("Error:","").trim());
+        assertEquals(directorJourney.disqualifiedValidation, listOfInlineErrors.get(4).getText().replace("Error:","").trim());
     }
 
     @Then("the director convictions and penalties page empty field validation should appear")
