@@ -11,6 +11,7 @@ Feature: User should be able to view the checker page before registering as a Se
     Then I should be on the dashboard
 
   Scenario: SS user can view checker page not logged in
-    Given I am on the checker page
+    Given redirected to the dashboard
+    And I am on the checker page
     When I click Continue on the checker page
     Then I should be on the Self Serve login page
