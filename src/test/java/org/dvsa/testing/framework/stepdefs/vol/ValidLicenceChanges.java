@@ -119,6 +119,8 @@ public class ValidLicenceChanges extends BasePage implements En {
                 waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             }
         }
+        UIJourney.refreshPageWithJavascript();
+        waitForTextToBePresent("Tick the box");
         click("//*[@id='shareInfo[shareInfo]']", SelectorType.XPATH);
         UIJourney.clickSaveAndReturn();
     }
@@ -139,12 +141,14 @@ public class ValidLicenceChanges extends BasePage implements En {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
         for (int i = 0; i < 3; i++) {
             waitForTextToBePresent("Licence discs");
-            click("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
+            waitAndClick("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you would like to void these discs?");
             world.UIJourney.clickSubmit();
             waitForElementToBeClickable("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
         }
-        click("//*[@id='add']",SelectorType.XPATH);
+        UIJourney.refreshPageWithJavascript();
+        waitForTextToBePresent("Licence discs");
+        waitAndClick("//*[@id='add']",SelectorType.XPATH);
         waitForTextToBePresent("How many additional discs are required?");
         enterText("//*[@id='data[additionalDiscs]']", SelectorType.XPATH, "2");
         world.UIJourney.clickSubmit();
