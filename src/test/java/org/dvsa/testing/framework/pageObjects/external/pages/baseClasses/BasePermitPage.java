@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class BasePermitPage extends BasePage {
 
     private static String BACK = "//a[contains(text(), 'Back')]";
-    protected static String INLINE_ERROR_TEXT = "//p[@class='error__text']";
+    protected static String INLINE_ERROR_TEXT = "//span[@class='govuk-error-message']";
     protected static String PAGE_HEADING = "//h1[contains(@class,'govuk-fieldset__heading') or contains(@class,'govuk-heading-xl')]";
     protected static String PAGE_SUBHEADING = "//h2[@class='govuk-heading-m']";
     protected static String PANEL_HEADING = "//h1[@class='govuk-panel__title']";
@@ -49,7 +49,7 @@ public class BasePermitPage extends BasePage {
     }
 
     public static String getErrorText() {
-        return getText(INLINE_ERROR_TEXT, SelectorType.XPATH);
+        return getText(INLINE_ERROR_TEXT, SelectorType.XPATH).replace("Error:","").trim();
     }
 
     public static String getCountry() {

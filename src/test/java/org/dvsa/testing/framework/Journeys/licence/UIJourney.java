@@ -514,7 +514,7 @@ public class UIJourney extends BasePage {
     }
 
     public void clickConfirm() {
-        waitAndClick("//*[@id='form-actions[confirm]']", SelectorType.XPATH);
+        waitAndClick("//button[@id='form-actions[confirm]']", SelectorType.XPATH);
     }
 
     public void clickPay() {

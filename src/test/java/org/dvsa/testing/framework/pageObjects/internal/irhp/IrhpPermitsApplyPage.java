@@ -16,15 +16,13 @@ import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class IrhpPermitsApplyPage extends BaseDetailsPage {
-
+    private static World world;
     private static final String EMISSIONS = "//label[contains(text(),'I confirm that I will only use my ECMT permits wit')]";
     private static final String DECLARATION = "//input[@id='declaration']";
     private static final String NEED_ECMT_PERMIT = "//label[contains(text(),'I confirm that I need to apply for an ECMT permit to make 3 cross-trade jobs, cross-trade between EU and non-EU countries or travel to the ECMT member countries listed.')]";
 
     static Dates date = new Dates(LocalDate::new);
-
     static LinkedHashMap<String, String> currentDate = date.getDateHashMap(0, 0, 0);
-    private static World world;
 
     public static void applyForPermit() {
         scrollAndClick("//button[@id='Apply']", SelectorType.XPATH);
@@ -226,7 +224,8 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
 
     public static void continueButton() {
         BaseModel.untilModalIsPresent(30L, TimeUnit.SECONDS);
-        world.UIJourney.clickConfirm();
+        String continueButton = "//button[@id='form-actions[confirm]']";
+        scrollAndClick(continueButton, SelectorType.XPATH);
     }
 
     public static void underConsiderationStatusExists() {
@@ -255,7 +254,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
     }
 
     public static boolean isErrorTextPresent() {
-        String Selector = "//p[@class='error__text' and contains(text(),'You have exceeded the maximum you can apply for')]";
+        String Selector = "//span[@class='govuk-error-message' and contains(text(),'You have exceeded the maximum you can apply for')]";
         return isElementPresent(Selector,SelectorType.XPATH);
     }
     public static void isWithdrawButtonPresent() {
