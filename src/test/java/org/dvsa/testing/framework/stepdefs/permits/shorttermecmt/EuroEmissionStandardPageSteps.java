@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class EuroEmissionStandardPageSteps implements En {
 
     public EuroEmissionStandardPageSteps (World world) {
-        Then("I should get the emissions  page error message", () -> {
+        Then("I should get the emissions page error message", () -> {
             String errorText = EmissionStandardsPage.getErrorText();
             assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
         });
