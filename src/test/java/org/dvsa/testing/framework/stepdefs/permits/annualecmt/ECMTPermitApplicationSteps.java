@@ -33,7 +33,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             untilAnyPermitStatusMatch(PermitStatus.UNDER_CONSIDERATION);
         });
         Then("^There should be no selected licences$", () -> assertFalse(SelectALicencePage.hasSelectedLicence()));
-        And ("^I save and continue$", BasePermitPage::saveAndContinue);
+        And("^I click save and continue$", BasePermitPage::saveAndContinue);
         Then("^I should be taken to the permits dashboard$", () -> assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
         And("^I have completed an ECMT application$", () -> {
