@@ -3,7 +3,6 @@ Feature: Bilaterals Morocco Application Path for standard multiple 15 journeys
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And   I am on the VOL self-serve site
     And  I have selected Morocco and I am on the Bilateral application overview page
 
   @OLCS-28178
