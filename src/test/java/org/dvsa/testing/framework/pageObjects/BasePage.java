@@ -79,7 +79,8 @@ public abstract class BasePage extends DriverUtils {
         boolean hasError = false;
 
         String ERROR_MESSAGE_HEADING = "Please correct the following errors";
-        String ERROR_CLASS = ".error__text";
+        //String ERROR_CLASS = ".error__text";
+        String ERROR_CLASS = ".govuk-error-message";
         if (isTextPresent(ERROR_MESSAGE_HEADING) || isElementPresent(ERROR_CLASS, SelectorType.CSS)) hasError = true;
 
         return hasError;
