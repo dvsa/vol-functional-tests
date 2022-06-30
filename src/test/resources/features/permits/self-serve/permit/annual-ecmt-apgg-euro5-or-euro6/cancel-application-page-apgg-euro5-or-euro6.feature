@@ -3,7 +3,6 @@ Feature: Cancel application page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And I am on the cancel application page
 
   @OLCS-21940
