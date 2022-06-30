@@ -49,10 +49,10 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
         And ("^I have partial ECMT international removal application", () -> {
             EcmtInternationalRemovalJourney.completeUntilDeclarationPage(world);
         });
-        And ("^the application is under issued permits table with status as valid", () -> {
-            refreshPage();
-            CommonSteps.waitUntilPermitHasStatus(world);
-        });
+        //And ("^the application is under issued permits table with status as valid", () -> {
+        //    refreshPage();
+        //    CommonSteps.waitUntilPermitHasStatus(world);
+        //});
         And ("^I navigate to permit dashboard page", () -> {
             world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.HOME);
         });
@@ -68,6 +68,10 @@ public class SubmissionPageSteps extends BasePermitPage implements En {
             HomePage.PermitsTab.selectFirstOngoingApplication();
             OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
             DeclarationPageJourney.completeDeclaration();
+        });
+        Then("^the application is under issued permits table with status as valid$", () -> {
+            refreshPage();
+            CommonSteps.waitUntilPermitHasStatus(world);
         });
 
     }
