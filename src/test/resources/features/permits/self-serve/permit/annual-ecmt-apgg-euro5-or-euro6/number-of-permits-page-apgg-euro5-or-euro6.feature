@@ -3,7 +3,6 @@ Feature: Number of permits required page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    #And I am on the VOL self-serve site
     And I am on the number of permits page
 
   @OLCS-24823 @OLCS-27781 @OLCS-28275

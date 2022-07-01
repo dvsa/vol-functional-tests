@@ -3,7 +3,6 @@ Feature: ECMT International Cabotage Page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And I am on the ECMT International cabotage Page
 
   #AC01
@@ -20,5 +19,5 @@ Feature: ECMT International Cabotage Page
     When save and continue  button is selected without selecting the checkbox
     Then I should get the cabotage page error message
     When I declare not to undertake cabotage
-    And I save and continue
+    And I click save and continue
     Then I should be taken to certificates required page

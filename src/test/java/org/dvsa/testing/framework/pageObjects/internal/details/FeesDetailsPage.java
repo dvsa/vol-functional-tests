@@ -33,7 +33,7 @@ public class FeesDetailsPage extends BaseDetailsPage {
 
     public static void confirmWaive() {
         if (isNotWaived())
-            scrollAndClick(WAIVE, XPATH);
+            waitAndClick(WAIVE, XPATH);
     }
 
     private static boolean isNotWaived() {

@@ -66,7 +66,7 @@ public class NumberOfPermitsPage extends BasePermitPage {
     }
 
     public static boolean isEnterNumberOfPermitsErrorTextPresent() {
-        return isElementPresent("//p[contains(text(),'Enter the number of permits you require')]", SelectorType.XPATH);
+        return isElementPresent("//a[contains(text(),'Enter the number of permits you require')]", SelectorType.XPATH);
     }
 
     public static boolean isShortTermEnterNumberOfPermitsErrorTextPresent() {
@@ -74,7 +74,7 @@ public class NumberOfPermitsPage extends BasePermitPage {
     }
 
     public static boolean isMaximumNumberOfPermitsExceededErrorTextPresent() {
-        return isElementPresent("//p[contains(text(),'You have exceeded the maximum you can apply for')]", SelectorType.XPATH);
+        return isElementPresent("//a[contains(text(),'You have exceeded the maximum you can apply for')]", SelectorType.XPATH);
     }
 
     public static void enterEuro5OrEuro6permitsValue() {

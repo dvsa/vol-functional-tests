@@ -80,7 +80,6 @@ public class ValidPermitsPageSteps extends BasePage implements En {
                             permits.get(idx).getExpiryDate().isEqual(permits.get(idx + 1).getExpiryDate())
             ));
         });
-        //When ("^the user is on self-serve permits dashboard", HomePageJourney::selectPermitTab);
         Then("^the user is on self-serve permits dashboard$", HomePageJourney::selectPermitTab);
     }
 
