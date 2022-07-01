@@ -3,7 +3,6 @@ Feature: ECMT Permit Euro Emission Standard Page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
 
   @OLC-20557,@OLCS-24818 @olcs-27581 @OLCS-28275
   Scenario: Successful navigation of back link
@@ -16,7 +15,7 @@ Feature: ECMT Permit Euro Emission Standard Page
     And I am on the euro emission standard page
     Then the licence number is displayed correctly
     And the texts are displayed correctly
-    When I save and continue
+    When I click save and continue
     Then I should see the validation errors for euro 6 page
     When I save and return to overview
     Then I should get an error message
