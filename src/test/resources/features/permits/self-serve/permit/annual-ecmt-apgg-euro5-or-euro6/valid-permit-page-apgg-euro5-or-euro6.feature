@@ -3,7 +3,6 @@ Feature: ECMT valid permit page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And have valid permits
 
   @OLCS-21464 @OLCS-25083 @OLCS-28352
