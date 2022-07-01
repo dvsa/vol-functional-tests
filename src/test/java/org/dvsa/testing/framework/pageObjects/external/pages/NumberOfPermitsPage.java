@@ -62,7 +62,7 @@ public class NumberOfPermitsPage extends BasePermitPage {
     }
 
     public static boolean isShortTermECMTEmissionErrorTextPresent() {
-        return isElementPresent("//p[contains(text(),'Select one euro emission standard')]", SelectorType.XPATH);
+        return isElementPresent("//a[contains(text(),'Select one euro emission standard')]", SelectorType.XPATH);
     }
 
     public static boolean isEnterNumberOfPermitsErrorTextPresent() {
@@ -70,7 +70,7 @@ public class NumberOfPermitsPage extends BasePermitPage {
     }
 
     public static boolean isShortTermEnterNumberOfPermitsErrorTextPresent() {
-        return isElementPresent("//p[contains(text(),'Enter how many permits you need')]", SelectorType.XPATH);
+        return isElementPresent("//a[contains(text(),'Enter how many permits you need')]", SelectorType.XPATH);
     }
 
     public static boolean isMaximumNumberOfPermitsExceededErrorTextPresent() {
