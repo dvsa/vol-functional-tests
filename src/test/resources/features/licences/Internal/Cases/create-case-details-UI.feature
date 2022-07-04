@@ -40,4 +40,26 @@ Feature: Public enquiry added and published and deletion of case notes
     Then save the form
     And submit the Condition and Undertaking form
 
+  @Add_Case_Note
+  Scenario Outline: Add a new case note
+    And select a "<NoteType>" to the complete all forms by clicking add
+    Then save the form
+
+  Examples:
+    | NoteType          |
+#    | Application       |
+#    | Bus Registration  |
+    | Case              |
+#    | Licence           |
+#    | Permit            |
+#    | Transport Manager |
+
+  @Add_conviction_to_case
+  Scenario: Add a conviction to a case
+    And add conviction to a case
+
+
+
+
+
 

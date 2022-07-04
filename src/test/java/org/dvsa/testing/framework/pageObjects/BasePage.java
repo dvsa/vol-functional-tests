@@ -16,12 +16,15 @@ import org.openqa.selenium.support.ui.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static activesupport.driver.Parallel.ChromeSetUp.driver;
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
@@ -392,7 +395,7 @@ public abstract class BasePage extends DriverUtils {
 
         wait.until(driver ->
                 wait.until(ExpectedConditions.elementToBeClickable(
-                        by(selector,selectorType))));
+                        by(selector, selectorType))));
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByIndex(listValue);
     }
@@ -568,5 +571,44 @@ public abstract class BasePage extends DriverUtils {
     public static void untilNotInDOM(@NotNull String selector, int seconds) {
         new WebDriverWait(getDriver(), Duration.ofSeconds(seconds)).until(webDriver ->
                 (ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
+    }
+
+    public static void switchToPopWindow() {
+        String parentWindow = driver.getWindowHandle();
+        Set<String> windowHandles = driver.getWindowHandles();
+        Iterator<String> iterator = windowHandles.iterator();
+        while (iterator.hasNext()) {
+            String handle = iterator.next();
+            if (!handle.contains(parentWindow)) {
+                driver.switchTo().window(handle);
+            }
+        }
+    }
+
+    public static String randomDateMonthYear(String requestParam) {
+        String returnValue = null;
+        LocalDate date = LocalDate.now().minusDays(1);
+        DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MM");
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd");
+        DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("yyyy");
+        if (requestParam == "getday") {
+            returnValue = date.format(dateFormatter);
+        }
+        if (requestParam == "getmonth") {
+            returnValue = date.format(monthFormatter);
+        }
+        if (requestParam == "getyear") {
+            returnValue = date.format(yearFormatter);
+        }
+        return returnValue;
+    }
+
+    public static String generateRandomText(int len) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        Random text = new Random();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+            sb.append(chars.charAt(text.nextInt(chars.length())));
+        return sb.toString();
     }
 }

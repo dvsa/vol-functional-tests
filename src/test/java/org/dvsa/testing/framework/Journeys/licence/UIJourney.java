@@ -8,6 +8,7 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.Var;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -552,29 +553,24 @@ public class UIJourney extends BasePage {
         waitAndClick("/html/body/div[5]/div/div[1]/div/div/form/div[2]/table/tbody/tr/td[1]/a", SelectorType.XPATH);
         waitAndClick("//a[@id='menu-case_details_complaints']", SelectorType.XPATH);
         waitAndClick("//*[@value='Add']", SelectorType.XPATH);
-
     }
 
     public void completeForm() {
         switchToPopWindow();
-
-
         enterText("//input[@id='complainantForename']", SelectorType.XPATH, (faker.generateFirstName()));
-
-
         enterText("//input[@id='complainantFamilyName']", SelectorType.XPATH, (faker.generateLastName()));
-        enterText("//input[@id='complaintDate_day']", SelectorType.XPATH, randomdatemonthyear("getday"));
-        enterText("//input[@id='complaintDate_month']", SelectorType.XPATH, randomdatemonthyear("getmonth"));
-        enterText("//input[@id='complaintDate_year']", SelectorType.XPATH, randomdatemonthyear("getyear"));
+        enterText("//input[@id='complaintDate_day']", SelectorType.XPATH, randomDateMonthYear("getday"));
+        enterText("//input[@id='complaintDate_month']", SelectorType.XPATH, randomDateMonthYear("getmonth"));
+        enterText("//input[@id='complaintDate_year']", SelectorType.XPATH, randomDateMonthYear("getyear"));
         selectValueFromDropDownByIndex("//select[@id='complaintType']", SelectorType.XPATH, 1);
         selectValueFromDropDownByIndex("//select[@id='status']", SelectorType.XPATH, 1);
         enterText("//textarea[@id='description']", SelectorType.XPATH, (faker.generateNatureOfBusiness()));
-        enterText("//input[@id='vrm']", SelectorType.XPATH, "TH67TGA");
+        enterText("//input[@id='vrm']", SelectorType.XPATH, faker.generateUniqueId(6));
         enterText("//input[@id='fields[driverForename]']", SelectorType.XPATH, (faker.generateFirstName()));
         enterText("//input[@id='fields[driverFamilyName]']", SelectorType.XPATH, (faker.generateLastName()));
-        enterText("//input[@id='closedDate_day']", SelectorType.XPATH, randomdatemonthyear("getday"));
-        enterText("//input[@id='closedDate_month']", SelectorType.XPATH, randomdatemonthyear("getmonth"));
-        enterText("//input[@id='closedDate_year']", SelectorType.XPATH, randomdatemonthyear("getyear"));
+        enterText("//input[@id='closedDate_day']", SelectorType.XPATH, randomDateMonthYear("getday"));
+        enterText("//input[@id='closedDate_month']", SelectorType.XPATH, randomDateMonthYear("getmonth"));
+        enterText("//input[@id='closedDate_year']", SelectorType.XPATH, randomDateMonthYear("getyear"));
     }
 
     public void saveForm() {
@@ -582,39 +578,78 @@ public class UIJourney extends BasePage {
     }
 
     public void createNewCase() {
-        // waitAndClick("//a[@id='menu-licence/cases']", SelectorType.XPATH);
         click("//a[@id='menu-licence/cases']", SelectorType.XPATH);
         click("//button[@id='add']", SelectorType.XPATH);
     }
 
-    public void addNewCaseDetails(){
+    public void addNewCaseDetails() {
         switchToPopWindow();
         selectValueFromDropDownByIndex("//select[@id='fields[caseType]']", SelectorType.XPATH, 1);
         selectFirstValueInList("//ul[@class='chosen-choices']");
         click("//li[normalize-space()='HMRC/Border Force notifications']", SelectorType.XPATH);
         enterText("//textarea[@id='fields[description]']", SelectorType.XPATH, faker.generateNatureOfBusiness());
-        enterText("//input[@id='fields[ecmsNo]']", SelectorType.XPATH,"123456");
+        enterText("//input[@id='fields[ecmsNo]']", SelectorType.XPATH, faker.generateUniqueId(3));
         selectFirstValueInList("//div[@id='fields_outcomes__chosen']");
         click("//li[normalize-space()='Appeal/Stay granted']", SelectorType.XPATH);
-
     }
 
-    public void saveTheForm(){
+    public void saveTheForm() {
         click("//button[@id='form-actions[submit]']", SelectorType.XPATH);
-
     }
 
-    public void completeConditionAndUndertaking(){
+    public void completeConditionAndUndertaking() {
         click("//*[@id='menu-case_details_conditions_undertakings']", SelectorType.XPATH);
         click("//button[@id='add']", SelectorType.XPATH);
         selectValueFromDropDownByIndex("//select[@id='type']", SelectorType.XPATH, 1);
         selectValueFromDropDownByIndex("//*[@id='conditionCategory']", SelectorType.XPATH, 1);
         enterText("//*[@id='notes']", SelectorType.XPATH, faker.generateNatureOfBusiness());
         click("//*[@id='fields[fulfilled]']", SelectorType.XPATH);
-        selectValueFromDropDownByIndex("//*[@id=\"attachedTo\"]",SelectorType.XPATH,1);
+        selectValueFromDropDownByIndex("//*[@id=\"attachedTo\"]", SelectorType.XPATH, 1);
         click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
 
+    public void addAllNoteTypeCase(String NoteType) {
+        enterText("//input[@class='search__input']", SelectorType.XPATH, "case");
+        click("//input[@name='submit']", SelectorType.XPATH);
+        waitAndClick("/html/body/div[5]/div/div/div[2]/div/form/div[2]/table/tbody/tr[1]/td[1]", SelectorType.XPATH);
+        click("//a[@id='menu-licence_processing']", SelectorType.XPATH);
+        click("//a[@id='menu-licence_processing_notes']", SelectorType.XPATH);
+        selectValueFromDropDown("//select[@id='noteType']", SelectorType.XPATH, NoteType);
+        click("//button[@id='add']", SelectorType.XPATH);
+        switchToPopWindow();
+        enterText("//textarea[@id='fields[comment]']", SelectorType.XPATH, generateRandomText(10));
+    }
 
+    public void addConvictionToCase(){
+        enterText("//input[@class='search__input']", SelectorType.XPATH, "case");
+        click("//input[@name='submit']", SelectorType.XPATH);
+        click("//a[@id='menu-search-case']", SelectorType.XPATH);
+        click("/html/body/div[5]/div/div/div[2]/div/div[2]/table/tbody/tr[1]/td[2]/a", SelectorType.XPATH);
+        click("//a[@id='menu-case_details_convictions']", SelectorType.XPATH);
+        click("//button[@id='add']", SelectorType.XPATH);
+        switchToPopWindow();
+        selectValueFromDropDownByIndex("//select[@id='defendantType']", SelectorType.XPATH, 1);
+        enterText("//input[@id='fields[personFirstname]']", SelectorType.XPATH, faker.generateFirstName());
+        enterText("//input[@id='fields[personLastname]']", SelectorType.XPATH, faker.generateLastName());
+        enterText("//input[@id='fields[birthDate]_day']", SelectorType.XPATH, randomDateMonthYear("getday"));
+        enterText("//input[@id='fields[birthDate]_month']", SelectorType.XPATH, randomDateMonthYear("getmonth") );
+        enterText("//input[@id='fields[birthDate]_year']", SelectorType.XPATH, randomDateMonthYear("getyear"));
+        selectValueFromDropDownByIndex("//select[@id='fields[msi]']", SelectorType.XPATH, 1);
+        enterText("//textarea[@id='categoryText']", SelectorType.XPATH, generateRandomText(10));
+        enterText("//input[@id='fields[offenceDate]_day']", SelectorType.XPATH, randomDateMonthYear("getday"));
+        enterText("//input[@id='fields[offenceDate]_month']", SelectorType.XPATH, randomDateMonthYear("getmonth"));
+        enterText("//input[@id='fields[offenceDate]_year']", SelectorType.XPATH, randomDateMonthYear("getyear"));
+        enterText("//input[@id='fields[convictionDate]_day']", SelectorType.XPATH, randomDateMonthYear("getday"));
+        enterText("//input[@id='fields[convictionDate]_month']", SelectorType.XPATH, randomDateMonthYear("getmonth"));
+        enterText("//input[@id='fields[convictionDate]_year']", SelectorType.XPATH, randomDateMonthYear("getyear"));
+        selectValueFromDropDownByIndex("//select[@id='fields[msi]']", SelectorType.XPATH, 1);
+        enterText("//input[@id='fields[court]']", SelectorType.XPATH, generateRandomText(5));
+        enterText("//input[@id='fields[penalty]']", SelectorType.XPATH, generateRandomText(3));
+        enterText("//input[@id='fields[costs]']", SelectorType.XPATH, generateRandomText(3));
+        enterText("//textarea[@id='fields[notes]']", SelectorType.XPATH, generateRandomText(10));
+        enterText("//textarea[@id='fields[takenIntoConsideration]']", SelectorType.XPATH, generateRandomText(10));
+        selectValueFromDropDownByIndex("//select[@id='fields[isDeclared]']", SelectorType.XPATH, 1);
+        click("//button[@id='form-actions[submit]']",SelectorType.XPATH);
     }
 
 }

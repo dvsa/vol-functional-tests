@@ -9,6 +9,7 @@ import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.hamcrest.Matchers;
+
 import java.sql.ResultSet;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
@@ -17,13 +18,15 @@ public class CreateCase extends BasePage implements En {
     private final World world;
     private ValidatableResponse response;
 
-    public CreateCase (World world) {this.world = world;}
+    public CreateCase(World world) {
+        this.world = world;
+    }
 
     @Then("I should be able to view the case details")
     public void iShouldBeAbleToViewTheCaseDetails() {
         response = world.updateLicence.getCaseDetails("cases", world.updateLicence.getCaseId());
         assertThat(response.body("description", Matchers.equalTo("Sent through the API"),
-                "caseType.id",  Matchers.equalTo("case_t_lic")));
+                "caseType.id", Matchers.equalTo("case_t_lic")));
     }
 
     @When("I create a new case")
@@ -77,7 +80,7 @@ public class CreateCase extends BasePage implements En {
     public void complaintShouldBeCreated() {
         response = world.updateLicence.getCaseDetails("complaint", world.updateLicence.getComplaintId());
         assertThat(response.body("driverFamilyName", Matchers.equalTo(world.updateLicence.getDriverFamilyName()),
-                "complaintType.id",  Matchers.equalTo("ct_cov")));
+                "complaintType.id", Matchers.equalTo("ct_cov")));
     }
 
     @When("I add a complaint details")
@@ -94,7 +97,7 @@ public class CreateCase extends BasePage implements En {
     public void convictionShouldBeCreated() {
         response = world.updateLicence.getCaseDetails("conviction", world.updateLicence.getConvictionId());
         assertThat(response.body("birthDate", Matchers.equalTo("1999-06-10"),
-                "convictionCategory.id",  Matchers.equalTo("conv_c_cat_1065")));
+                "convictionCategory.id", Matchers.equalTo("conv_c_cat_1065")));
     }
 
     @When("I add condition undertaking details")
@@ -104,9 +107,9 @@ public class CreateCase extends BasePage implements En {
 
     @Then("the condition undertaking should be created")
     public void theConditionUndertakingShouldBeCreated() {
-        response = world.updateLicence.getCaseDetails("condition-undertaking",world.updateLicence.getConditionUndertaking());
+        response = world.updateLicence.getCaseDetails("condition-undertaking", world.updateLicence.getConditionUndertaking());
         assertThat(response.body("conditionCategory.id", Matchers.equalTo("cu_cat_fin"),
-                "licence.id.toString()",  Matchers.hasToString( world.createApplication.getLicenceId())));
+                "licence.id.toString()", Matchers.hasToString(world.createApplication.getLicenceId())));
     }
 
     @When("I add submission details")
@@ -128,7 +131,7 @@ public class CreateCase extends BasePage implements En {
     }
 
     @And("i add a case in internal on the {string} page")
-        public void iAddACaseInInternalOnThePage(String page) {
+    public void iAddACaseInInternalOnThePage(String page) {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.UIJourney.createCaseUI(page);
@@ -145,29 +148,37 @@ public class CreateCase extends BasePage implements En {
     }
 
     @And("Save the form")
-    public void savetheform(){
+    public void savetheform() {
         world.UIJourney.saveForm();
     }
 
     @Then("Select a case to create new case for adding a condition-undertaking")
-    public void caseForAddingConditionUndertaking(){
+    public void caseForAddingConditionUndertaking() {
         world.UIJourney.createNewCase();
     }
 
     @And("add new case details and save the form")
-        public void addNewCaseDetailsAndSaveTheForm(){
+    public void addNewCaseDetailsAndSaveTheForm() {
         world.UIJourney.addNewCaseDetails();
     }
 
-    @Then ("save the form")
-    public void saveTheForm(){
+    @Then("save the form")
+    public void saveTheForm() {
         world.UIJourney.saveTheForm();
     }
 
-    @And ("submit the Condition and Undertaking form")
-    public void submitTheConditionAndUndertakingForm(){
+    @And("submit the Condition and Undertaking form")
+    public void submitTheConditionAndUndertakingForm() {
         world.UIJourney.completeConditionAndUndertaking();
+    }
+    @And("select a {string} to the complete all forms by clicking add")
+    public void addNoteTypeCase(String NoteType){
+        world.UIJourney.addAllNoteTypeCase(NoteType);
+    }
 
+    @And("add conviction to a case")
+    public void addConviction(){
+        world.UIJourney.addConvictionToCase();
     }
 
 }
