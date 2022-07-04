@@ -3,7 +3,6 @@ Feature: Bilaterals Turkey end to end happy path journey including validations
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And  I am on the VOL self-serve site
     And I have selected Turkey and I am on the Bilateral application overview page
 
   @olcs-27606 @OLCS-28230
@@ -21,7 +20,7 @@ Feature: Bilaterals Turkey end to end happy path journey including validations
     When I select Yes radio button on the Turkey third country page
     And  I save and continue on the Turkey third country page
     Then I am on the annual bilateral number of permits page with correct information and content
-    And I save and continue
+    And I click save and continue
     Then I should get the validation error message on the number of permits page
     When I enter the number of bilateral permits required
     Then I am on the Annual Bilateral Turkey check your answers page with correct information and content

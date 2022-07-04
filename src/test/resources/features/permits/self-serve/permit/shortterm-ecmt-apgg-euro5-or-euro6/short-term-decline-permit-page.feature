@@ -3,7 +3,6 @@ Feature: Short term APGG decline page permit page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And I have a short term application in awaiting fee status
 
   @OLCS-25666  @shortterm_apgg_euro5_or_euro6e2e @olcs-27581

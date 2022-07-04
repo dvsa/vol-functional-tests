@@ -3,7 +3,6 @@ Feature: ECMT International Declaration Page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And I am on  the ECMT Removal Declaration page
 
   @EXTERNAL @OLCS-24980 @olcs-28201

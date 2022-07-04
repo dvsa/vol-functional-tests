@@ -3,7 +3,6 @@ Feature: Licence page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    Given I am on the VOL self-serve site
 
   @OLCS-21186 @olcs-27581
   Scenario: No default licence selection when there are multiple licences
@@ -19,7 +18,7 @@ Feature: Licence page
   @OLCS-21186  @olcs-27581
   Scenario: User successfully progresses past licences page when saving and continuing
     And I am on the Annual ECMT licence selection page
-    When I save and continue
+    When I click save and continue
     Then I will get an error message on the licence page
 
   @OLCS-24820 @olcs-27581

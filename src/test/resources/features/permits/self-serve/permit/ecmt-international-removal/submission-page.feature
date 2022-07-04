@@ -3,7 +3,6 @@ Feature: ECMT International Removal submission page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
 
   @EXTERNAL @OLCS-26739 @olcs-28201
   Scenario: Application submission page details are displayed correctly

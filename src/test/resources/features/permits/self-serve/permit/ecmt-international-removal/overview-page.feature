@@ -2,7 +2,6 @@
 Feature: ECMT International Removal  overview page
 
   Background:
-    Given I am on the VOL self-serve site
     Given I have a "goods" "standard_international" licence
     And  I am on the ECMT International Removal overview page
 

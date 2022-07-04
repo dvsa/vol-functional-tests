@@ -3,7 +3,6 @@ Feature: Awaiting fee permit page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And I am viewing an application that's awaiting fees
 
   @EXTERNAL @OLCS-21462 @OLCS-28275

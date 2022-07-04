@@ -7,7 +7,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BaseCer
 public class VehicleRegistrationNumberPage extends BaseCertificateOfRoadWorthiness {
 
     public static String getRequiredFieldValidation() {
-        return getText("//p[contains(text(),'Enter the registration number plate')]", SelectorType.XPATH);
+        return getText("//a[contains(text(),'Enter the registration number plate')]", SelectorType.XPATH);
     }
 
     public static void enterRegistrationNumber() {

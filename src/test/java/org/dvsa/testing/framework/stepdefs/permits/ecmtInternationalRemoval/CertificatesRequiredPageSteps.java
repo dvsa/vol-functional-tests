@@ -22,15 +22,14 @@ public class CertificatesRequiredPageSteps extends BasePage implements En {
             String actualReference = BasePermitPage.getReferenceFromPage();
             Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
-        And ("^the advisory texts on certificates required page are displayed", () -> {
-            assertEquals("If your permit application is successful, you are required to have the appropriate Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer you intend to use.", CertificatesRequiredPage.getAdvisoryText());
-        });
         And ("^the correct text is displayed next to the checkbox$", () -> {
             assertTrue(CertificatesRequiredPage.isCheckboxTextPresent());
         });
         And ("^I am on the ecmt removals permit start date page$", () -> {
             isPath("/application/\\d+/permit-start-date/");
         });
-
+        And("^on the certificates required page advisory texts are displayed$", () -> {
+            assertEquals("If your permit application is successful, you are required to have the appropriate Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer you intend to use.", CertificatesRequiredPage.getAdvisoryText());
+        });
     }
 }

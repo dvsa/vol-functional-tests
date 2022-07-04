@@ -3,7 +3,6 @@ Feature: Self-serve dashboard
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
 
   @OLCS-21112 @olcs-27382
   Scenario: Displays all ECMT permit applications

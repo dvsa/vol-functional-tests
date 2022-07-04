@@ -12,12 +12,12 @@ public class PermitTypePageSteps implements En {
         And("^I am on the permit type page$", () -> {
             clickToPermitTypePage(world);
         });
-        Then ("continue button is selected without confirming the permit type$", PermitTypePage::clickContinue);
-        Then ("^the error message is displayed in the permit type page$", () -> {
+        When("^continue button is selected without confirming the permit type$", PermitTypePage::clickContinue);
+        Then("^the permit type page error message is displayed$", () -> {
             String errorText = PermitTypePage.getErrorText();
             assertEquals("You must select an option to continue", errorText);
         });
-        Then ("^I click cancel button$", PermitTypePage::clickCancel);
+        When("^I click cancel button$", PermitTypePage::clickCancel);
 
     }
 }

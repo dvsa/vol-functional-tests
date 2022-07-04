@@ -3,7 +3,6 @@ Feature: ECMT International Number Check your answers Page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And I am on ECMT Removal check your answers page
 
   Scenario: Verify the contents and functionality on ECMT International removals page is as per the ACs
