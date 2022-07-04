@@ -105,7 +105,7 @@ public class SubmitSelfServeApplication extends BasePage {
             world.globalMethods.signIn(intUsername, intPassword);
         } else {
             world.userRegistrationJourney.registerUserWithNoLicence();
-            world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL);
+            world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
         }
     }
 

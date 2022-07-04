@@ -21,10 +21,10 @@ public class CookieSteps extends BasePage implements En {
 
         WebDriver driver;
         And("^I logged into Self Serve site before accepting cookies$", () -> {
-            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
+            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL, "no");
         });
         And("^I am on the permit type page before accepting cookies$", () -> {
-            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
+            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL, "no");
             HomePageJourney.beginPermitApplication();
         });
         And("^I should see the cookies list$", () -> {

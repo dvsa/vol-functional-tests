@@ -143,7 +143,7 @@ public class TransportManagerJourney extends BasePage {
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
-        world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(),world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL);
+        world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(),world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         } else {
