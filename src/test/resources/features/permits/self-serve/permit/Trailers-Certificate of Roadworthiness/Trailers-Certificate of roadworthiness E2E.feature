@@ -3,7 +3,6 @@ Feature: Certificate of roadworthiness for Trailers end to end happy path journe
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And  I am on the VOL self-serve site
     And I select Certificate of Roadworthiness for trailers on the select permit page
     And I select any licence number for Certificate of Roadworthiness for trailers
 
