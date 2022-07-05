@@ -35,7 +35,7 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToLogin(String username, String emailAddress) {
-        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL);
+        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL, "yes");
     }
 
     public void navigateToExternalSearch() {
