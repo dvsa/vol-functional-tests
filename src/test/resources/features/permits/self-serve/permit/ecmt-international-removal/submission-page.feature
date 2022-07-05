@@ -18,6 +18,7 @@ Feature: ECMT International Removal submission page
   Scenario: Fee waived, view receipt link is NOT displayed
     And I have partial ECMT international removal application
     And i create an admin and url search for my licence
+    And I am on the fee details page
     And all fees have been waived
     When I'm on the ECMT international submitted page for my active application
     Then I should not see the view receipt link
