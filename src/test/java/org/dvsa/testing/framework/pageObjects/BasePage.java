@@ -603,12 +603,4 @@ public abstract class BasePage extends DriverUtils {
         return returnValue;
     }
 
-    public static String generateRandomText(int len) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        Random text = new Random();
-        StringBuilder sb = new StringBuilder(len);
-        for (int i = 0; i < len; i++)
-            sb.append(chars.charAt(text.nextInt(chars.length())));
-        return sb.toString();
-    }
 }

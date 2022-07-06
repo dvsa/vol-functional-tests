@@ -138,17 +138,17 @@ public class CreateCase extends BasePage implements En {
     }
 
     @And("I select a case to raise a complaint")
-    public void iSelectacasetoraiseacomplaint() {
+    public void iSelectCaseToRaiseComplaint() {
         world.UIJourney.createComplaint();
     }
 
     @Then("Details should fill in the complaint form")
-    public void detailsshouldfillinthecomplaintform() {
-        world.UIJourney.completeForm();
+    public void detailsShouldFillInTheComplaintForm() {
+        world.UIJourney.completeTheComplaintForm();
     }
 
     @And("Save the form")
-    public void savetheform() {
+    public void saveTheComplaintForm() {
         world.UIJourney.saveForm();
     }
 
@@ -174,6 +174,11 @@ public class CreateCase extends BasePage implements En {
     @And("select a {string} to the complete all forms by clicking add")
     public void addNoteTypeCase(String NoteType){
         world.UIJourney.addAllNoteTypeCase(NoteType);
+    }
+
+    @Then("I search for case before adding conviction")
+    public void iSearchForCaseBeforeAddingConviction(){
+        world.UIJourney.searchCaseForAddingConviction();
     }
 
     @And("add conviction to a case")

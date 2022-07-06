@@ -56,6 +56,7 @@ Feature: Public enquiry added and published and deletion of case notes
 
   @Add_conviction_to_case
   Scenario: Add a conviction to a case
+    Then I search for case before adding conviction
     And add conviction to a case
 
 
