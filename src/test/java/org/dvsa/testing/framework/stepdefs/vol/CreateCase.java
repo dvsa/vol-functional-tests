@@ -147,7 +147,7 @@ public class CreateCase extends BasePage implements En {
         world.UIJourney.completeTheComplaintForm();
     }
 
-    @And("Save the form")
+    @And("I save the form")
     public void saveTheComplaintForm() {
         world.UIJourney.saveForm();
     }
@@ -157,31 +157,25 @@ public class CreateCase extends BasePage implements En {
         world.UIJourney.createNewCase();
     }
 
-    @And("add new case details and save the form")
+    @And("I add new case details")
     public void addNewCaseDetailsAndSaveTheForm() {
         world.UIJourney.addNewCaseDetails();
-    }
-
-    @Then("save the form")
-    public void saveTheForm() {
-        world.UIJourney.saveTheForm();
     }
 
     @And("submit the Condition and Undertaking form")
     public void submitTheConditionAndUndertakingForm() {
         world.UIJourney.completeConditionAndUndertaking();
     }
-    @And("select a {string} to the complete all forms by clicking add")
+
+    @And("select a {string} to complete all forms by clicking add the button")
     public void addNoteTypeCase(String NoteType){
         world.UIJourney.addAllNoteTypeCase(NoteType);
     }
 
-    @Then("I search for case before adding conviction")
-    public void iSearchForCaseBeforeAddingConviction(){
-        world.UIJourney.searchCaseForAddingConviction();
-    }
+    @Then("I search for the case before adding conviction")
+    public void iSearchForTheCaseBeforeAddingConviction(){ world.UIJourney.searchCaseForAddingConviction();}
 
-    @And("add conviction to a case")
+    @And("add conviction to the case")
     public void addConviction(){
         world.UIJourney.addConvictionToCase();
     }
