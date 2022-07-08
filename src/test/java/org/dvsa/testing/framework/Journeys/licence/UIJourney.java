@@ -544,4 +544,9 @@ public class UIJourney extends BasePage {
         if (!getCurrentUrl().contains("#validationSummary"))
             world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }
+
+    public void closeAlert() {
+        waitForElementToBePresent("//p[@role='alert']");
+        waitAndClick("//*[contains(text(),'Close')]",SelectorType.XPATH);
+    }
 }
