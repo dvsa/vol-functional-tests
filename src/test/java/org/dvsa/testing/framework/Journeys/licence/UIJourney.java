@@ -8,15 +8,12 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.validator.Var;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.jetbrains.annotations.NotNull;
 import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
@@ -30,12 +27,11 @@ import java.util.*;
 
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
-import static activesupport.driver.Parallel.ChromeSetUp.driver;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.*;
-import static org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage.date;
+
 
 
 public class UIJourney extends BasePage {
@@ -568,9 +564,8 @@ public class UIJourney extends BasePage {
         enterText("//input[@id='vrm']", SelectorType.XPATH, faker.generateUniqueId(6));
         enterText("//input[@id='fields[driverForename]']", SelectorType.XPATH, (faker.generateFirstName()));
         enterText("//input[@id='fields[driverFamilyName]']", SelectorType.XPATH, (faker.generateLastName()));
-        enterText("//input[@id='closedDate_day']", SelectorType.XPATH, randomDateMonthYear("getday"));
-        enterText("//input[@id='closedDate_month']", SelectorType.XPATH, randomDateMonthYear("getmonth"));
-        enterText("//input[@id='closedDate_year']", SelectorType.XPATH, randomDateMonthYear("getyear"));
+        HashMap<String, String> closeDate = new Dates(LocalDate::new).getDateHashMap(0, 0, -1);
+        enterDateFieldsByPartialId("closedDate", closeDate);
     }
 
     public void saveForm() {

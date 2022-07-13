@@ -585,22 +585,5 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
-    public static String randomDateMonthYear(String requestParam) {
-        String returnValue = null;
-        LocalDate date = LocalDate.now().minusDays(1);
-        DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MM");
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd");
-        DateTimeFormatter yearFormatter = DateTimeFormatter.ofPattern("yyyy");
-        if (requestParam == "getday") {
-            returnValue = date.format(dateFormatter);
-        }
-        if (requestParam == "getmonth") {
-            returnValue = date.format(monthFormatter);
-        }
-        if (requestParam == "getyear") {
-            returnValue = date.format(yearFormatter);
-        }
-        return returnValue;
-    }
 
 }

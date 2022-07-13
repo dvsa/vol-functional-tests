@@ -47,12 +47,12 @@ Feature: Public enquiry added and published and deletion of case notes
 
   Examples:
     | NoteType          |
-#    | Application       |
-#    | Bus Registration  |
+    | Application       |
+    | Bus Registration  |
     | Case              |
-#    | Licence           |
-#    | Permit            |
-#    | Transport Manager |
+    | Licence           |
+    | Permit            |
+    | Transport Manager |
 
   @Add_conviction_to_case
   Scenario: Add a conviction to a case
