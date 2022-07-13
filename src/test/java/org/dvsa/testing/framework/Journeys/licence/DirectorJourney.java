@@ -37,7 +37,6 @@ public class DirectorJourney extends BasePage {
     public String additionalInformation = "//*[@id='data[insolvencyDetails]']";
     public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
-    public String deleteDirectorConfirmation = "//button[@name='form-actions[submit]']";
     public String lastDirectorRemovedMessage = "Last director removed";
 
     public String internalDirectorTask = "//a[text()='Add director(s)']";
@@ -47,14 +46,11 @@ public class DirectorJourney extends BasePage {
 
     public String validationTitle = "There is a problem";
     public String listOfSummaryErrors = "//ol/li/a";
-    public String listOfInlineErrors = "//p[@class='error__text']";
+    public String listOfInlineErrors = "//span[@class='govuk-error-message']";
     public String titleValidation = "Select an option for: \"Title\"";
     public String firstNameValidation = "Enter first name";
     public String lastNameValidation = "Enter last name";
     public String dateOfBirthEmptyFieldValidation = "Enter date of birth";
-    public String dateOfBirthIncorrectValueValidation1 = "The date should be entered in number format";
-    public String dateOfBirthIncorrectValueValidation2 = "Please enter all 4 digits of the year";
-    public String dateOfBirthIncorrectValueValidation3 = "The input does not appear to be a valid value";
     public String bankruptcyValidation = "Bankruptcy: Choose an option";
     public String liquidationValidation = "Liquidation: Choose an option";
     public String receivershipValidation = "Receivership: Choose an option";
@@ -78,33 +74,19 @@ public class DirectorJourney extends BasePage {
         } else if (isTitlePresent(directorVariationDetailsTitle,30)) {
             addDirectorDetails();
         }
-        try {
-            accessibilityScanner();
-        } catch (IllegalBrowserException | IOException e) {
-            e.printStackTrace();
-        }
         completeDirectorFinancialHistory("N");
+        completeLicenceHistory("N");
         completeConvictionsAndPenalties("N");
     }
 
     public void addDirectorDetails()  {
-        try {
-            accessibilityScanner();
-        } catch (IllegalBrowserException | IOException e) {
-            e.printStackTrace();
-        }
         personDetails();
-        clickByName("form-actions[saveAndContinue]");
+        UIJourney.clickSaveAndContinue();
     }
 
     public void addPersonDetails()  {
-        try {
-            accessibilityScanner();
-        } catch (IllegalBrowserException | IOException e) {
-            e.printStackTrace();
-        }
         personDetails();
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
     }
 
     private void personDetails() {
@@ -121,17 +103,22 @@ public class DirectorJourney extends BasePage {
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(financialHistoryAnswers);
         UIJourney.clickSaveAndContinue();
-    };
+    }
 
     public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
         world.genericUtils.findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
         UIJourney.clickSaveAndContinue();
-    };
+    }
+
+    public void completeLicenceHistory(String licenceHistoryAnswers) {
+        world.genericUtils.findSelectAllRadioButtonsByValue(licenceHistoryAnswers);
+        UIJourney.clickSaveAndContinue();
+    }
 
     public void removeDirector()  {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
-        clickByXPath(deleteDirectorConfirmation);
+        world.UIJourney.clickSubmit();
     }
 
     public boolean isDirectorPresentInDirectorTable(List<WebElement> directors, String director) {

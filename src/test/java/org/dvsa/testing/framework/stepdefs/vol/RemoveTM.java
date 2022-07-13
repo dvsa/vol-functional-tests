@@ -70,7 +70,6 @@ public class RemoveTM extends BasePage implements En {
 
     @When("a self-serve user removes the last TM")
     public void aSelfServeUserRemovesTheLastTM() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
         click("//*[@value='Remove']", SelectorType.XPATH);
     }
@@ -95,7 +94,7 @@ public class RemoveTM extends BasePage implements En {
     @And("user attempts to remove the last TM without selecting an option")
     public void userAttemptsToRemoveTheLastTMWithoutSelectingAnOption() {
         waitForTextToBePresent(alertHeaderValue);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("an error message should be displayed")

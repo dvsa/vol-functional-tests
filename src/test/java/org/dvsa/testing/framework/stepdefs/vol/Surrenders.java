@@ -88,6 +88,7 @@ public class Surrenders extends BasePage implements En {
 
     @Given("a caseworker views the surrender details")
     public void aCaseworkerViewsTheSurrenderDetails() {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitAndClick("menu-licence_surrender", SelectorType.ID);
     }
@@ -118,6 +119,7 @@ public class Surrenders extends BasePage implements En {
 
     @When("the caseworker checks the case and bus reg is visible in surrenders")
     public void theCaseworkerChecksTheCaseAndBusRegIsVisibleInSurrenders() {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitForTextToBePresent("Overview");
         if (isTextPresent("Surrender")) {

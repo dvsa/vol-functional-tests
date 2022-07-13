@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.FeeDetailsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -45,20 +44,16 @@ public class CommonSteps extends BasePermitJourney implements En {
             world.APIJourney.createAdminUser();
         });
         And("^all fees have been waived$", () -> {
-            LicenceDetailsPageJourney.clickFeesTab();
             FeeDetailsPageJourney.whileFeesPresentWaveFee();
         });
         And("^I am on the permits dashboard on external$", () -> {
-            world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
             HomePageJourney.selectPermitTab();
         });
     }
 
     public static void clickToPermitTypePage(@NotNull World world) {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.beginPermitApplication();
     }
-
 
     public static void waitUntilPermitHasStatus(World world) {
         HomePage.PermitsTab.untilPermitHasStatus(

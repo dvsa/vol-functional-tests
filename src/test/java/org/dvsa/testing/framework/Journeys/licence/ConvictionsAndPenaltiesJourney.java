@@ -20,7 +20,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         waitForTitleToBePresent("Convictions and Penalties");
         findSelectAllRadioButtonsByValue("N");
         clickById("convictionsConfirmation[convictionsConfirmation]");
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
 
     public void answerYesToAllQuestionsAndSubmit() {
@@ -30,7 +30,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         addPreviousConviction();
         waitForTitleToBePresent("Convictions and Penalties");
         waitAndClick("convictionsConfirmation[convictionsConfirmation]", SelectorType.ID);
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
 
     public void addPreviousConviction() {
@@ -49,6 +49,6 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         enterText("data[convictionDate][day]", SelectorType.NAME, dates.get("day"));
         enterText("data[convictionDate][month]", SelectorType.NAME, dates.get("month"));
         enterText("data[convictionDate][year]", SelectorType.NAME, dates.get("year"));
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 }

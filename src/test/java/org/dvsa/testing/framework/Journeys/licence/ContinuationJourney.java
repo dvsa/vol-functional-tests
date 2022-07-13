@@ -28,18 +28,18 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month)  {
-        click("//*[contains(text(),'Admin')]", SelectorType.XPATH);
-        click("menu-admin-dashboard/continuations", SelectorType.ID);
+        waitAndClick("//*[contains(text(),'Admin')]", SelectorType.XPATH);
+        waitAndClick("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='generate-continuation-type']");
         selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, Integer.parseInt(month) - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
-        click("form-actions[generate]", SelectorType.ID);
-        enterText("filters[licenceNo]",  SelectorType.ID, licenceNo);
-        click("main", SelectorType.ID);
+        waitAndClick("form-actions[generate]", SelectorType.ID);
+        waitAndEnterText("filters[licenceNo]",  SelectorType.ID, licenceNo);
+        waitAndClick("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
         waitAndClick("id[]", SelectorType.NAME);
-        click("generate", SelectorType.ID);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        waitAndClick("generate", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
@@ -70,6 +70,7 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void viewContinuationSnapshotOnInternal()  {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
@@ -84,14 +85,14 @@ public class ContinuationJourney extends BasePage {
         waitForTextToBePresent("Continuation date");
         enterDateFieldsByPartialId("details[continuationDate]", continuationDates);
         enterDateFieldsByPartialId("details[reviewDate]", reviewDates);
-        click("form-actions[submit]", SelectorType.ID);
         waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void completeContinuationPayOrSubmit()  {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             click("submitAndPay", SelectorType.ID);
-            click("form-actions[pay]", SelectorType.ID);
+            world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {
             click("submit", SelectorType.ID);

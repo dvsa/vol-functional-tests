@@ -39,9 +39,9 @@ public class TaskAllocation extends BasePage {
     public void reassignTask() {
         findLicenceAndNavigate();
         waitAndClick("re-assign task", SelectorType.ID);
-        waitAndClick("assignedToTeam", SelectorType.ID);
+        waitForTextToBePresent("Assigned to");
         selectSystemTeam();
-        clickById("form-actions[submit]");
+        world.UIJourney.clickSubmit();
     }
 
     public void editTask() {
@@ -71,6 +71,7 @@ public class TaskAllocation extends BasePage {
         enterText("details[description]", SelectorType.ID, description);
         selectSystemTeam();
         waitAndClick("submit", SelectorType.ID);
+        waitForTextToBePresent("Task(s) successfully created");
         waitAndClick("date", SelectorType.ID);
         selectValueFromDropDown("date", SelectorType.ID,"All" );
         waitAndClick(description, SelectorType.LINKTEXT);

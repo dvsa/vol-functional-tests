@@ -14,10 +14,13 @@ import org.junit.Assert;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+
 public class ValidPermitPageSteps implements En {
 
     public ValidPermitPageSteps(World world) {
         And("^I have a valid ECMT removal permit$", () -> {
+            refreshPageWithJavascript();
             EcmtInternationalRemovalJourney.completeAndSubmitApplication(world);
             SubmittedPage.goToPermitsDashboard();
             CommonSteps.waitUntilPermitHasStatus(world);

@@ -11,7 +11,6 @@ Feature: ECMT Permit Application
   @OLCS-21940
   Scenario: Displays validation error summary box
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     Given I have completed an ECMT application
     When I withdraw without confirming
     Then I should get an error message on cancel application page

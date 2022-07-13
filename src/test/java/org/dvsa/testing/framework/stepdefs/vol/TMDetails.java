@@ -24,14 +24,13 @@ public class TMDetails extends BasePage implements En {
 
     @And("i navigate to the admin transport managers details page")
     public void iNavigateToTheAdminTransportManagersDetailsPage() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         String admin = getAttribute("*//td[contains(text(),'Administrator')]/../td[1]/input", SelectorType.XPATH, "value");
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, admin);
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        world.UIJourney.clickContinue();
     }
 
     @Then("the optional wording should not be displayed on the page")
@@ -82,7 +81,7 @@ public class TMDetails extends BasePage implements En {
 
     @When("the users attempts to save without entering any data")
     public void theUsersAttemptsToSaveWithoutEnteringAnyData() {
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("a validation message should be displayed")

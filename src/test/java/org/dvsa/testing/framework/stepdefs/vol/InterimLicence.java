@@ -136,7 +136,7 @@ public class InterimLicence extends BasePage implements En {
         enterText("applicationInterimReason", SelectorType.ID, "Sample Text For Interim");
         click("//*[contains(text(),'Print, sign and return')]/../../input", SelectorType.XPATH);
         click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
-        click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
     }
@@ -263,7 +263,7 @@ public class InterimLicence extends BasePage implements En {
         enterText("interimAuthLgvVehicles", SelectorType.ID, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()));
         click("grant", SelectorType.ID);
         waitForTextToBePresent(interimGrantModalHeading);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent(interimGrantConfirmation);
     }
 

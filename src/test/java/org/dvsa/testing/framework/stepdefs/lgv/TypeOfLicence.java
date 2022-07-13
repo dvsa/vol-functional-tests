@@ -71,7 +71,7 @@ public class TypeOfLicence extends BasePage {
 
     @When("I confirm the warning message")
     public void iConfirmWarningMessage() {
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        world.UIJourney.clickSubmit();
     }
 
     @When("I cancel the warning message and click cancel on the type of licence page")
@@ -155,6 +155,7 @@ public class TypeOfLicence extends BasePage {
     public void aCaseworkerGoesToApplyForAGoodsStandard_internationalLicence() {
         String organisationId = world.userDetails.getOrganisationId().substring(1, world.userDetails.getOrganisationId().length() - 1);
         String internalOrganisationUrl = String.format("%soperator/%s/licences/", URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), organisationId);
+        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         get(internalOrganisationUrl);
         waitForTitleToBePresent(world.registerUser.getOrganisationName());
         clickByLinkText("New application");

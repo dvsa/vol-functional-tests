@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.Journeys.permits.pages.RestrictedCountriesPage
 import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
+import static org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage.selectAllCookies;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -21,6 +22,7 @@ public class CertificatesRequiredPageSteps implements En {
         And("^The application reference is displayed on the page$", CertificatesRequiredPage::getReferenceFromPage);
         And("^the certificates required page heading is as per the AC$",() -> {
             CertificatesRequiredPage.untilOnPage();
+            selectAllCookies();
             String heading = CertificatesRequiredPage.getPageHeading();
             assertEquals("Mandatory certificates for vehicles and trailers you intend to use", heading);
         });

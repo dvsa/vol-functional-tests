@@ -3,7 +3,6 @@ Feature: ECMT International Removals Certificates required  Page
 
   Background:
     Given I have a "goods" "standard_national" licence
-    And I am on the VOL self-serve site
     And I am on the ECMT Removals certificates required page
 
   #AC01
@@ -23,5 +22,5 @@ Feature: ECMT International Removals Certificates required  Page
     When I save and return to overview
     Then I should get the certificates required page error message
     When I confirm the Certificates Required checkbox
-    And  I save and continue
+    And  I click save and continue
     Then I am on the ecmt removals permit start date page

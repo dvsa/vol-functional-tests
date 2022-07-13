@@ -31,7 +31,7 @@ public class PublicHolidays extends BasePage {
     @Then("that holiday should be displayed")
     public void thatHolidayShouldBeDisplayed() {
         String actualDate = getValue("(//input[@type='submit'])[2]", SelectorType.XPATH);
-        String expectedDate = LocalDate.now().plusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String expectedDate = LocalDate.now().plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         waitForTitleToBePresent("Public holidays");
         Assert.assertEquals(expectedDate, actualDate);
     }
@@ -44,7 +44,7 @@ public class PublicHolidays extends BasePage {
     @Then("that edited holiday should be displayed")
     public void thatEditedHolidayShouldBeDisplayed() {
         String actualDate = getValue("(//input[@type='submit'])[2]", SelectorType.XPATH);
-        String expectedDate = LocalDate.now().plusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String expectedDate = LocalDate.now().plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Assert.assertEquals(expectedDate, actualDate);
     }
 

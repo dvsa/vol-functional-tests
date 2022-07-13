@@ -22,7 +22,7 @@ public class FeeAndPaymentJourney extends BasePage {
         waitForTextToBePresent("Create new fee");
         selectValueFromDropDown("fee-details[feeType]", SelectorType.NAME, feeType);
         waitAndEnterText("amount", SelectorType.ID, amount);
-        waitAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     public void payFee(String amount, @NotNull String paymentMethod)  {
@@ -42,7 +42,7 @@ public class FeeAndPaymentJourney extends BasePage {
                     waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationCashCustomerRef");
                     clickPayAndConfirm(paymentMethod);
                 } else {
-                    clickByName("form-actions[pay]");
+                    world.UIJourney.clickPay();
                 }
                 break;
             case "cheque":
@@ -151,7 +151,7 @@ public class FeeAndPaymentJourney extends BasePage {
     public void clickPayAndConfirm(String paymentMethod)  {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='postcode']");
-        waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         if (!paymentMethod.toLowerCase().trim().equals("card"))
             waitForTextToBePresent("The payment was made successfully");
     }

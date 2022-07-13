@@ -16,7 +16,7 @@ public class FinancialHistoryJourney extends BasePage {
         waitForTitleToBePresent("Financial history");
         clickById("data[financialHistoryConfirmation][insolvencyConfirmation]");
         findSelectAllRadioButtonsByValue("N");
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
 
     public void answerYesToAllQuestionsAndSubmit(){
@@ -24,6 +24,6 @@ public class FinancialHistoryJourney extends BasePage {
         clickById("data[financialHistoryConfirmation][insolvencyConfirmation]");
         findSelectAllRadioButtonsByValue("Y");
         waitAndEnterText("data[insolvencyDetails]",SelectorType.ID,Str.randomWord(155));
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
 }

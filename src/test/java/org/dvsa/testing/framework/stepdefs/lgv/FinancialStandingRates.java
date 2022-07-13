@@ -34,26 +34,17 @@ public class FinancialStandingRates extends BasePage {
     String addButton = "//button[@id='add']";
     String editButton = "//button[@id='edit']";
     String deleteButton = "//button[@id='delete']";
-
     String modalTitle = "//*[@id='modal-title']";
-
     String operatorTypeRadio = "//*[@value='lcat_%s']";
     String licenceTypeRadio = "//label[text()='%s']";
     String vehicleTypeRadio = "//*[@name='details[vehicleType]' and not(@disabled)]";
-
     String unselectedOperatorType = "//*[@name='details[goodsOrPsv]' and not(@checked)]";
     String unselectedLicenceTypeRadio = "//*[@name='details[licenceType]' and not(@checked)]";
-
     String heavyGoodsVehicleVehicleType = "//input[@value='fin_sta_veh_typ_hgv']";
     String lightGoodsVehicleVehicleType = "//input[@value='fin_sta_veh_typ_lgv']";
-
     String firstVehicleRateField = "//*[@name='details[firstVehicleRate]']";
     String additionalVehicleRateField = "//*[@name='details[additionalVehicleRate]']";
     String effectiveDateFieldPartialSelector = "details[effectiveFrom]";
-
-    String saveButton = "//*[@id='form-actions[submit]']";
-    String continueButton = "//*[@id='form-actions[confirm]']";
-
     String successfulAddedRecordAlert = "//p[@role='alert' and contains(text(),'Created record')]";
     String successfullyEditedRecordAlert = "//p[@role='alert' and contains(text(),'Updated record')]";
     String successfullyDeletedRecordAlert = "//p[@role='alert' and contains(text(),'Rate(s) deleted')]";
@@ -88,7 +79,7 @@ public class FinancialStandingRates extends BasePage {
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate));
         enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
-        click(saveButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForElementToBePresent(successfulAddedRecordAlert);
     }
 
@@ -113,7 +104,7 @@ public class FinancialStandingRates extends BasePage {
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate + 100));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate + 100));
         enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
-        click(saveButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForElementToBePresent(successfullyEditedRecordAlert);
     }
 
@@ -131,7 +122,7 @@ public class FinancialStandingRates extends BasePage {
         click(mostRecentRow.concat("/td/input[@type='checkbox']"), SelectorType.XPATH);
         click(deleteButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
-        click(continueButton, SelectorType.XPATH);
+        world.UIJourney.clickConfirm();
         waitForElementToBePresent(successfullyDeletedRecordAlert);
     }
 
@@ -159,7 +150,7 @@ public class FinancialStandingRates extends BasePage {
     public void iSubmitNoInformationOnAFinancialStandingRate() {
         click(addButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
-        click(saveButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("There is a problem");
     }
 

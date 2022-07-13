@@ -21,7 +21,7 @@
         <slf4j.version>2.17.1</slf4j.version>
         <slf4j-log4j12.version>2.17.1</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
-        <axe-scanner-version>2.5</axe-scanner-version>
+        <axe-scanner-version>2.6</axe-scanner-version>
         <assertj-core-version>3.9.1</assertj-core-version>
         <hamcrest-version>1.3</hamcrest-version>
         <pico-container-version>4.4.0</pico-container-version>
@@ -30,8 +30,8 @@
         <allure-mvn-version>2.10.0</allure-mvn-version>
         <cucable-plugin.version>1.9.0</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven.failsafe.plugin.version>3.0.0-M6</maven.failsafe.plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
+        <maven.failsafe.plugin.version>3.0.0-M7</maven.failsafe.plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <allure-report-version>2.13.5</allure-report-version>
         <apache-commons.version>1.8</apache-commons.version>
         <gson.version>20210307</gson.version>
@@ -102,17 +102,9 @@
                     <sourceFeatures>src/test/resources/features</sourceFeatures>
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
-                    <desiredNumberOfFeaturesPerRunner>7</desiredNumberOfFeaturesPerRunner>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
+                    <desiredNumberOfRunners>7</desiredNumberOfRunners>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
-
-                    <includeScenarioTags>
-                        not (@skip
-                        or @Deprecated
-                        or @Jenkins
-                        or @CLOSES-WINDOW
-                        or @TOGGLE-ECMT)
-                    </includeScenarioTags>
                 </configuration>
             </plugin>
             <plugin>
@@ -142,11 +134,14 @@
                     <execution>
                         <goals>
                             <goal>integration-test</goal>
+                            <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>10</forkCount>
-                            <reuseForks>true</reuseForks>
+                            <forkCount>2</forkCount>
+                            <reuseForks>false</reuseForks>
+                            <testFailureIgnore>true</testFailureIgnore>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
+                            <argLine>-Dfile.encoding=UTF-8</argLine>
                         </configuration>
                     </execution>
                 </executions>

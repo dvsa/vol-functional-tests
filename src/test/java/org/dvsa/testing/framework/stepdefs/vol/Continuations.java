@@ -46,6 +46,7 @@ public class Continuations extends BasePage implements En {
 
     @Then("the continuation should be approved and a snapshot generated on Internal")
     public void theContinuationShouldBeApprovedAndASnapshotGeneratedOnInternal() {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);

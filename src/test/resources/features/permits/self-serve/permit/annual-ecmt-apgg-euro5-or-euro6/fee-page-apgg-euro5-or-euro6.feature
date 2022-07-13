@@ -3,7 +3,6 @@ Feature: Annual ECMT Fee page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And  I am on the VOL self-serve site
     And  I am on the fee page
 
   @OLCS-21129 @OLCS-24975 @olcs-27502 @olcs-27581

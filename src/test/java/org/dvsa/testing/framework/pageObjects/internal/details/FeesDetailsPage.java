@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.pageObjects.internal.details;
 
 import activesupport.string.Str;
 import org.dvsa.testing.framework.enums.Duration;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +12,7 @@ public class FeesDetailsPage extends BaseDetailsPage {
 
     private static final String WAIVE = "//*[@id='fee-details[waiveRemainder]']";
 
-    private static final String NTH_FEE = "(//*[@data-heading='Description'])[%d]//a";
+    private static final String NTH_FEE = "//button[@id='pay']";
 
     public static void pay() {
         scrollAndClick("//*[text()='Pay']", XPATH);
@@ -28,18 +29,12 @@ public class FeesDetailsPage extends BaseDetailsPage {
     }
 
     public static boolean hasFee() {
-        return tryUntilElementIsPresent(String.format(NTH_FEE, 1), XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
+        return isElementPresent(NTH_FEE, SelectorType.XPATH);
     }
 
     public static void confirmWaive() {
-        if (isNotWaived())
-            scrollAndClick(WAIVE, XPATH);
-    }
-
-    private static boolean isNotWaived() {
         waitForElementToBePresent(WAIVE);
-        return !tryUntilElementIsPresent(
-                WAIVE + "/ancestor::label[@class='selected']", XPATH, Duration.MEDIUM, TimeUnit.SECONDS);
+        waitAndClick(WAIVE, XPATH);
     }
 
     public static void enterWaiveNote() {
@@ -50,6 +45,10 @@ public class FeesDetailsPage extends BaseDetailsPage {
 
     public static void clickRecommend() {
         scrollAndClick("button#recommend");
+    }
+
+    public static void clickApprove() {
+        scrollAndClick("button#approve");
     }
 
     public static void clickBackToHome() {

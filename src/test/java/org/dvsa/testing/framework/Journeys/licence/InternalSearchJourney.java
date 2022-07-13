@@ -30,10 +30,10 @@ public class InternalSearchJourney extends BasePage {
     }
 
     public void searchUser() {
-        long kickOut = System.currentTimeMillis() + 120000;
+        long kickOut = System.currentTimeMillis() + 200000;
         do {
             SearchNavBar.search(SearchType.Users, world.DataGenerator.getOperatorUserEmail());
-        } while (!isTextPresent(world.DataGenerator.getOperatorUserEmail()));
+        } while (!isTextPresent(world.DataGenerator.getOperatorUserEmail()) && System.currentTimeMillis() < kickOut);
     }
 
     public void searchLicense() {

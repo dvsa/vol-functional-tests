@@ -8,6 +8,8 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertEquals;
@@ -31,9 +33,11 @@ public class InternalApplication extends BasePage implements En {
 
     @When("the caseworker completes and submits the application")
     public void theCaseworkerCompletesAndSubmitsTheApplication() {
-        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
         click("//*[@id='menu-application-decisions-submit']", SelectorType.XPATH);
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("has been submitted");
         world.UIJourney.caseWorkerCompleteConditionsAndUndertakings();
         world.UIJourney.caseWorkerCompleteReviewAndDeclarations();
@@ -72,23 +76,13 @@ public class InternalApplication extends BasePage implements En {
         world.UIJourney.generateLetter();
     }
 
-
-
     @Then("The pop up should contain letter details")
     public void thePopUpShouldContainLetterDetails() {
         waitForTextToBePresent("Amend letter");
-
-        String categoryValue = getText("//*[@id='generate-document']/div[2]", SelectorType.XPATH);
-        assertNotNull(categoryValue);
-
-        String subCategoryValue = getText("//*[@id='generate-document']/div[3]", SelectorType.XPATH);
-        assertNotNull(subCategoryValue);
-
-        String templateValue = getText("//*[@id='generate-document']/div[4]", SelectorType.XPATH);
-        assertNotNull(templateValue);
-
-        String docStoreLink = getAttribute("//a[contains(@href,'ms-word:ofe|u|https://')]", SelectorType.XPATH, "href");
+        String docStoreLink = getText("letter-link",SelectorType.ID);
         assertNotNull(docStoreLink);
+        String webDAVUrl = URL.build(ApplicationType.INTERNAL, world.configuration.env, "documents-dav").toString();
+        assertTrue(docStoreLink.contains(String.format("ms-word:ofe|u|%s",webDAVUrl)));
         assertTrue(docStoreLink.contains(".rtf"));
     }
 
@@ -96,7 +90,7 @@ public class InternalApplication extends BasePage implements En {
     public void thePostcodeWarningMessageShouldBeDisplayedOnInternal() {
         assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres."));
         click("form-actions[confirm-add]", SelectorType.ID);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Operating centres and authorisation");
         assertTrue(isElementPresent("//input[@value='2 MAR PLACE, ALLOA, FK10 1AA']", SelectorType.XPATH));
     }
@@ -108,12 +102,11 @@ public class InternalApplication extends BasePage implements En {
 
     @And("i save the letter")
     public void iSaveTheLetter() {
-        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Send letter");
         click("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
     }
-
 
     @And("I delete generated letter above from the table")
     public void iDeleteGeneratedLetterAboveFromTheTable() {
@@ -123,6 +116,13 @@ public class InternalApplication extends BasePage implements En {
     @Then("the document should be deleted")
     public void theDocumentShouldBeDeleted() {
         waitForTextToBePresent("Deleted successfully");
+    }
+
+    @And("I navigate to the application overview")
+    public void iNavigateToTheApplicationOverview() {
+        world.APIJourney.createAdminUser();
+        world.internalNavigation.logInAsAdmin();
+        world.internalNavigation.getApplication();
     }
 
     @Then("the LGV Only authorisation on the application overview screen should display {string} lgvs to {string} lgvs")

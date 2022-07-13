@@ -17,7 +17,7 @@ public class LicenceDetailsJourney extends BasePage {
     public void answerNoToAllQuestionsAndSubmit() {
         waitForTitleToBePresent("Licence history");
         findSelectAllRadioButtonsByValue("N");
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
     //TODO: Licence details for every No selected
     public void answerYesToAllQuestionsAndSubmit(){
@@ -29,8 +29,8 @@ public class LicenceDetailsJourney extends BasePage {
         waitAndEnterText("data[licNo]",SelectorType.NAME,"OB".concat(String.valueOf(Int.random(8))));
         waitAndEnterText("data[holderName]",SelectorType.NAME,faker.generateFirstName());
         waitAndClick("//*[contains(text(),'Yes')]",SelectorType.XPATH);
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Licence history");
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
+        UIJourney.clickSaveAndContinue();
     }
 }

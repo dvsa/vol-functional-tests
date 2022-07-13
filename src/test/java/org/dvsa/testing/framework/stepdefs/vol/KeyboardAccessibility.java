@@ -83,7 +83,7 @@ public class KeyboardAccessibility extends BasePage implements En {
         world.UIJourney.skipToMainContentAndCheck();
         world.surrenderJourney.startSurrender();
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.UIJourney.skipToMainContentAndCheck();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
@@ -95,10 +95,10 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.surrenderJourney.addCommunityLicenceDetails();
         }
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Securely destroy");
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 }

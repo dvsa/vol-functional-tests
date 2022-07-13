@@ -42,7 +42,12 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void navigateToSurrendersStartPage()  {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        refreshPageWithJavascript();
+        if(!getDriver().getCurrentUrl().contains("ssweb")){
+           if(!isTextPresent("Current licences")){
+               world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+           }
+        }
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Apply to surrender licence");
     }
@@ -55,13 +60,13 @@ public class SurrenderJourney extends BasePage {
     public void addOperatorLicenceDetails()  {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     public void addCommunityLicenceDetails()  {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     public String getSurrenderAddressLine1()  {
@@ -86,19 +91,17 @@ public class SurrenderJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             world.UIJourney.signManually();
         }
+        refreshPageWithJavascript();
         assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
-
-
     public void submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
         acknowledgeDestroyPage();
     }
-
     public void submitSurrenderUntilReviewPage()  {
         navigateToSurrendersStartPage();
         startSurrender();
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
@@ -107,7 +110,6 @@ public class SurrenderJourney extends BasePage {
             addCommunityLicenceDetails();
         }
     }
-
     public void caseworkManageSurrender() {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Surrender");
@@ -128,9 +130,9 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void acknowledgeDestroyPage()  {
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Securely destroy");
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 
@@ -149,14 +151,14 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void removeDisc() {
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         addDiscInformation();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='modal-title']");
-        waitAndClick("form-actions[submit]", SelectorType.NAME);
+        world.UIJourney.clickSubmit();
         refreshPageWithJavascript();
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }

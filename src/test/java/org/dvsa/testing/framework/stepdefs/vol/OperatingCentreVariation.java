@@ -23,9 +23,7 @@ public class OperatingCentreVariation extends BasePage {
     String confirmDeclaration = "//input[@id='declarationsAndUndertakings[declarationConfirmation]']";
     String submitApplication = "//button[@id='submit']";
     String submitAndPayForApplication = "//button[@id='submitAndPay']";
-
     String payNow = "//button[@id='form-actions[pay]']";
-
     String numberOfNewOperatingCentreVehicles;
 
 
@@ -138,7 +136,7 @@ public class OperatingCentreVariation extends BasePage {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         click("//*[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove this operating centre?");
-        click("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         sleep(3000);
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("5", "5", currentTrailerTotalAuthority);
@@ -170,18 +168,18 @@ public class OperatingCentreVariation extends BasePage {
     public void iScanTheVariousOperatingCentreAndAuthorisationPages() throws IllegalBrowserException, IOException {
         AXEScanner scanner = new AXEScanner();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        scanner.scan();
+        scanner.scan(false);
         world.UIJourney.changeLicenceForVariation();
-        scanner.scan();
+        scanner.scan(false);
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
         click(operatingCentreEditLink, SelectorType.XPATH);
         waitForTitleToBePresent("Edit operating centre");
-        scanner.scan();
+        scanner.scan(false);
         click("//*[@class='govuk-back-link']", SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
         click(world.operatingCentreJourney.addOperatingCentre, SelectorType.XPATH);
         waitForTitleToBePresent("Add operating centre");
-        scanner.scan();
+        scanner.scan(false);
     }
 
     @And("i create an lgv authorisation variation with {int} more LGVs")
@@ -232,7 +230,7 @@ public class OperatingCentreVariation extends BasePage {
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
         click(submitAndPayForApplication, SelectorType.XPATH);
-        click(payNow, SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTextToBePresent("Thank you, your application has been submitted.");
     }

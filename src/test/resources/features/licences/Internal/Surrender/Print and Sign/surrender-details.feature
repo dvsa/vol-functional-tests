@@ -1,6 +1,5 @@
-@INT
 @OLCS-22990
-@regression
+@int_regression
 
 Feature: View Surrender Menu and details on Internal
 

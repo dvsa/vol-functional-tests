@@ -5,12 +5,12 @@ Feature: Add a director variation
 
   Background:
     Given i have a valid "public" "standard_international" licence
-    And i have logged in to self serve
     And i navigate to the "licence" directors page
 
   Scenario: Director without any convictions
     When I begin adding a new director and their details
     And i enter "No" to financial details question
+    And i enter "N" to licence history question
     And i enter "No" to previous convictions details question
     Then a new director should be added to my licence
     And a non urgent task is created in internal
@@ -18,6 +18,7 @@ Feature: Add a director variation
   Scenario: Director with convictions and bankruptcy
     When I begin adding a new director and their details
     And i enter "Yes" to financial details question
+    And i enter "N" to licence history question
     And i enter "Yes" to previous convictions details question
     Then a new director should be added to my licence
     And an urgent task is created in internal
@@ -25,6 +26,7 @@ Feature: Add a director variation
   Scenario: Director with convictions and no bankruptcy
     When I begin adding a new director and their details
     And i enter "No" to financial details question
+    And i enter "N" to licence history question
     And i enter "Yes" to previous convictions details question
     Then a new director should be added to my licence
     And an urgent task is created in internal
@@ -63,5 +65,6 @@ Feature: Add a director variation
   Scenario: Director convictions and penalties page validation
     When I begin adding a new director and their details
     And i enter "No" to financial details question
+    And i enter "N" to licence history question
     When I submit the empty page
     Then the director convictions and penalties page empty field validation should appear

@@ -3,7 +3,6 @@ Feature: ECMT International Removal Eligiblity page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And   I am on the VOL self-serve site
     And  I am on the ECMT International Removal Eligibity page
 
   #AC01

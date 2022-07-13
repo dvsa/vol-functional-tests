@@ -21,7 +21,7 @@ Feature: Bilaterals Ukraine end to end happy path journey including validations
      When I select Euro 3 or Euro 4 radio button on the Ukraine emissions standards page
      And  I save and continue on the Ukraine emissions standards page
      Then I am on the annual bilateral number of permits page with correct information and content
-     And I save and continue
+     And I click save and continue
      Then I should get the validation error message on the number of permits page
      When I enter the number of bilateral permits required
      Then I am on the Annual Bilateral Ukraine check your answers page with correct information and content

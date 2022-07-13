@@ -22,6 +22,6 @@ public class SafetyInspectorJourney extends BasePage {
         waitAndEnterText("addressLine1", SelectorType.ID, faker.generateCompanyName());
         waitAndEnterText("addressTown", SelectorType.ID, "Nottingham");
         waitAndEnterText("postcode", SelectorType.ID, "NG1 6LP");
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 }

@@ -3,7 +3,7 @@ Feature: ECMT International Removal Cancel application Page
 
   Background:
     Given I have a "goods" "standard_national" licence
-    And I am on the VOL self-serve site
+    #And I am on the VOL self-serve site
     And I am on the ECMT International Removal overview page
     And I click cancel application link on the International removal overview page
 

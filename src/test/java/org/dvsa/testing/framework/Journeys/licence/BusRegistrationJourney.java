@@ -7,13 +7,7 @@ import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
-import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -28,17 +22,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
-import static activesupport.aws.s3.S3.client;
 import static junit.framework.TestCase.assertTrue;
-import static org.apache.logging.log4j.core.impl.ThrowableFormatOptions.FILE_NAME;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class BusRegistrationJourney extends BasePage {
@@ -76,7 +64,7 @@ public class BusRegistrationJourney extends BasePage {
 
         dates = world.globalMethods.date.getDateHashMap(0, month, 0);
         enterDateFieldsByPartialId("effectiveDate", dates);
-        click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
+        world.UIJourney.clickSubmit();
 
         long kickOutTime = System.currentTimeMillis() + 60000;
 
@@ -95,7 +83,7 @@ public class BusRegistrationJourney extends BasePage {
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
         enterText("fields[reason]", SelectorType.ID, "Mistake");
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void payFeesAndGrantNewBusReg() {
@@ -108,14 +96,14 @@ public class BusRegistrationJourney extends BasePage {
         } while (!isLinkPresent("Register service", 5) && System.currentTimeMillis() < kickOutTime);
         clickByLinkText("Register service");
         findSelectAllRadioButtonsByValue("Y");
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
         clickByLinkText("Service details");
         clickByLinkText("TA's");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
         click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result group-option\"]");
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
@@ -133,10 +121,8 @@ public class BusRegistrationJourney extends BasePage {
         world.APIJourney.submitApplication();
         if (String.valueOf(operatorType).equals("public")) {
             world.APIJourney.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         } else {
             world.APIJourney.grantLicenceAndPayFees();
-            System.out.println("Licence: " + world.applicationDetails.getLicenceNumber());
         }
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         internalSiteAddBusNewReg(5);
@@ -145,9 +131,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void viewEBSRInExternal() {
-
         long kickOutTime = System.currentTimeMillis() + 120000;
-
         do {
             // Refresh page
             refreshPageWithJavascript();
@@ -160,33 +144,14 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
-    public static AmazonS3 client() {
-        return createS3Client();
-    }
-
-    public static AmazonS3 client(Regions region) {
-        return createS3Client(region);
-    }
-
-    public static AmazonS3 createS3Client(Regions region) {
-        if (client == null) {
-            client = AmazonS3ClientBuilder.standard().withCredentials(new DefaultAWSCredentialsProviderChain()).withRegion(region).build();
-        }
-        return client;
-    }
-
-    public static AmazonS3 createS3Client() {
-        return createS3Client(Regions.EU_WEST_1);
-    }
-
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
+        refreshPageWithJavascript();
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
 
-        clickByLinkText("Bus registrations");
+        clickByLinkText("Bus");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
 
@@ -200,6 +165,6 @@ public class BusRegistrationJourney extends BasePage {
             ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
         }
-        waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 }

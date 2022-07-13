@@ -19,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -49,14 +50,13 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @When("i add an operator as a transport manager")
     public void iAddAnOperatorAsATransportManager() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
 
     @Then("the {string} post signature page is displayed")
     public void thePostSignaturePageIsDisplayed(String text) {
-        Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
+        waitForElementToBePresent("//*[@class='govuk-panel govuk-panel--confirmation']");
         Assert.assertTrue(isTextPresent(text));
         if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) < 10) {
             Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
@@ -76,7 +76,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             world.selfServeNavigation.navigateToPage("variation", SelfServeSection.TRANSPORT_MANAGERS);
         }
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
         world.UIJourney.signWithVerify();
     }
@@ -88,14 +88,13 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        click("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @When("i add new person as a transport manager and they fill out their details")
     public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.addNewPersonAsTransportManager("application");
         world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
         clickByLinkText("Provide details");
@@ -147,7 +146,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(1, 0, 0);
         enterDateFieldsByPartialId("dob", dob);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForPageLoad();
     }
 
@@ -155,7 +154,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     public void iAddAnOperatorAsATransportManagerWithANoHoursWorked() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForPageLoad();
     }
 
@@ -167,6 +166,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @When("i add a new transport manager")
     public void iAddANewTransportManager() {
+        refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
         world.UIJourney.changeLicenceForVariation();
         world.TMJourney.addNewPersonAsTransportManager("variation");

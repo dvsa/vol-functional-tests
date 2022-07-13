@@ -82,7 +82,7 @@ public abstract class BasePage extends DriverUtils {
         boolean hasError = false;
 
         String ERROR_MESSAGE_HEADING = "Please correct the following errors";
-        String ERROR_CLASS = ".error__text";
+        String ERROR_CLASS = ".govuk-error-message";
         if (isTextPresent(ERROR_MESSAGE_HEADING) || isElementPresent(ERROR_CLASS, SelectorType.CSS)) hasError = true;
 
         return hasError;
@@ -422,7 +422,9 @@ public abstract class BasePage extends DriverUtils {
     public static void waitForTitleToBePresent(@NotNull String selector) {
         waitForElementToBePresent(String.format("//h1[contains(text(),'%s')]", selector));
     }
-
+    public static void waitForTitleToBePresent(@NotNull String htmlTag, @NotNull String selector) {
+        waitForElementToBePresent(String.format("//%s[contains(text(),'%s')]", htmlTag, selector));
+    }
     public static void waitForElementToBePresent(@NotNull String selector) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
@@ -585,5 +587,8 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
-
+    public static String getSelectedTextFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
+        Select option = new Select(findElement(selector, selectorType));
+        return option.getFirstSelectedOption().getText();
+    }
 }

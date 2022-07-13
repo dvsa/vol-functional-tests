@@ -33,7 +33,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             untilAnyPermitStatusMatch(PermitStatus.UNDER_CONSIDERATION);
         });
         Then("^There should be no selected licences$", () -> assertFalse(SelectALicencePage.hasSelectedLicence()));
-        And ("^I save and continue$", BasePermitPage::saveAndContinue);
+        And("^I click save and continue$", BasePermitPage::saveAndContinue);
         Then("^I should be taken to the permits dashboard$", () -> assertTrue(isPath(HomePage.PermitsTab.RESOURCE)));
 
         And("^I have completed an ECMT application$", () -> {
@@ -49,7 +49,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             BasePermitPage.back();
         });
         When("^I view the application from ongoing permit application table$", HomePage.PermitsTab::selectFirstOngoingApplication);
-        Then ("^I have an annual ECMT application in awaiting fee status$", () -> {
+        And("^I have an annual ECMT application in awaiting fee status$", () -> {
             EcmtApplicationJourney.completeEcmtApplication(world);
             IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
             sleep(5000);
@@ -58,7 +58,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
         });
-        Then ("^the user is navigated to awaiting fee page$", () -> isPath("/permits/\\d+/ecmt-awaiting-fee/"));
+        Then("^the user is navigated to awaiting fee page$", () -> isPath("/permits/\\d+/ecmt-awaiting-fee/"));
 
         When("^I try applying with a licence that has an existing annual ECMT application$", () -> {
             HomePageJourney.beginPermitApplication();

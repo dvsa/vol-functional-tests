@@ -3,7 +3,6 @@ Feature:Check your answers page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And I am on the application overview page
     And I have completed all steps prior to check your answers page
 

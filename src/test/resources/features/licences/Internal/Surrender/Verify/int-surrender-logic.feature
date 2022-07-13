@@ -1,5 +1,4 @@
 @OLCS-22913
-@INT
 @Surrender-int
 @int_regression
 @gov-verify
