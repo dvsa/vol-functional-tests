@@ -26,13 +26,41 @@ Feature: Public enquiry added and published and deletion of case notes
     When i add a submission
     Then the submission details should be displayed
 
-    #TODO: Need to do UI versions of these
+  @Create_Complaint
   Scenario: Creating a case with a complaint
+    And I select a case to raise a complaint
+    Then Details should fill in the complaint form
+    And I save the form
 
-  Scenario: Add a conviction to a case
-
+  @Condition_undertaking_case
   Scenario: Add a condition-undertaking to a case
+    And I create a new case
+    Then Select a case to create new case for adding a condition-undertaking
+    And I add new case details
+    Then I save the form
+    And submit the Condition and Undertaking form
 
-  Scenario: Add a submission
+  @Add_Case_Note
+  Scenario Outline: Add a new case note
+    And select a "<NoteType>" to complete all forms by clicking add the button
+    Then I save the form
 
-  Scenario: Add a case note
+  Examples:
+    | NoteType          |
+    | Application       |
+    | Bus Registration  |
+    | Case              |
+    | Licence           |
+    | Permit            |
+    | Transport Manager |
+
+  @Add_conviction_to_case
+  Scenario: Add a conviction to a case
+    Then I search for the case before adding conviction
+    And add conviction to the case
+
+
+
+
+
+
