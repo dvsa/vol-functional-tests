@@ -22,6 +22,14 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import java.io.IOException;
+import java.util.*;
+import static activesupport.autoITX.AutoITX.initiateAutoItX;
+import static activesupport.driver.Browser.navigate;
+import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 
 
 public class UIJourney extends BasePage {
@@ -537,7 +545,6 @@ public class UIJourney extends BasePage {
             world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }
 
-<<<<<<< src/test/java/org/dvsa/testing/framework/Journeys/licence/UIJourney.java
     public void createComplaint() {
         enterText("//input[@class='search__input']", SelectorType.XPATH, "case");
         click("//input[@name='submit']", SelectorType.XPATH);
