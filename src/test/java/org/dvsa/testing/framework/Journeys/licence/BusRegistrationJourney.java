@@ -131,7 +131,7 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void viewEBSRInExternal() {
-        long kickOutTime = System.currentTimeMillis() + 200000;
+        long kickOutTime = System.currentTimeMillis() + 250000;
         do {
             // Refresh page
             refreshPageWithJavascript();
