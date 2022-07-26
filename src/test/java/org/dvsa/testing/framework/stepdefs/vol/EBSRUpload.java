@@ -80,7 +80,7 @@ public class EBSRUpload extends BasePage implements En {
     @And("Documents are generated")
     public void documentsAreGenerated() {
         waitAndClick(String.format("//*[contains(text(),'%s')]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
-        long kickOutTime = System.currentTimeMillis() + 30000;
+        long kickOutTime = System.currentTimeMillis() + 200000;
         do {
             // Refresh page
             refreshPageWithJavascript();
