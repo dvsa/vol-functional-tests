@@ -80,7 +80,11 @@ public class HomePage extends BasePage {
         }
 
         public static void selectFirstValidPermit() {
-            scrollAndClick(REFERENCE_NUMBER_TEMPLATE, SelectorType.XPATH);
+            long kickoutTime = System.currentTimeMillis() + 60000;
+            do {
+                refreshPageWithJavascript();
+            } while(!getText("//*//tr//th", SelectorType.XPATH).toLowerCase().contains("licence number") && System.currentTimeMillis() < kickoutTime);
+            waitAndClick(REFERENCE_NUMBER_TEMPLATE, SelectorType.XPATH);
         }
 
         public static void selectFirstOngoingApplication() {
