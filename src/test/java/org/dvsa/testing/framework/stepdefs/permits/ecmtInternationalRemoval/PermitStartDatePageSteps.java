@@ -43,5 +43,8 @@ public class PermitStartDatePageSteps extends BasePage implements En {
         And ("^I should get a valid error message$", () -> {
             assertTrue(PermitStartDatePage.checkDaysAheadErrorMessagePresent());
         });
+        And("^the advisory texts on certificates required page are displayed$", () -> {
+            assertTrue(PermitStartDatePage.checkCertificateAdvisoryTextPresent());
+        });
     }
 }

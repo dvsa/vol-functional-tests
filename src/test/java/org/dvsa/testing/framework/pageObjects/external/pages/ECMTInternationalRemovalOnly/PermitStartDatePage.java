@@ -60,6 +60,10 @@ public class PermitStartDatePage extends BasePermitPage {
         return isTextPresent("Choose any date up to 60 days ahead.");
     }
 
+    public static boolean checkCertificateAdvisoryTextPresent() {
+        return isTextPresent("You must carry your vehicle and trailer certificates at all times.");
+    }
+
 }
 
 
