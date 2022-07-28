@@ -1,4 +1,4 @@
-@bilateral_morocco @eupa_regression @ap
+@bilateral_morocco @eupa_regression
 Feature: Bilaterals Morocco Application Path for Hors Contingent Single Journey
 
   Background:
