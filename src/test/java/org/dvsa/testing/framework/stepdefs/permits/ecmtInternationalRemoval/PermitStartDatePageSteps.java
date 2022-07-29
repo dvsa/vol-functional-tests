@@ -34,7 +34,7 @@ public class PermitStartDatePageSteps extends BasePage implements En {
             Assert.assertEquals("Enter a valid permit start date and include a day, month and year", errorText);
         });
         And ("^I am taken to the number of permits page$", () -> {
-            isPath("/permits/application/\\d+/number-of-permits/");
+            Assert.assertTrue(isPath("/permits/application/\\d+/number-of-permits/"));
         });
         When ("^I enter the valid date$", PermitStartDatePage::permitDate);
         When ("^I dont enter all the fields$", PermitStartDatePage::leaveDateBlank);

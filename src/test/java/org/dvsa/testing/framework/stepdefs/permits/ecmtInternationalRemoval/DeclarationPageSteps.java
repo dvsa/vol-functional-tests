@@ -15,6 +15,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
+import org.junit.Assert;
 
 public class DeclarationPageSteps extends BasePage implements En {
 
@@ -45,7 +46,7 @@ public class DeclarationPageSteps extends BasePage implements En {
             HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         Then("^I am on the ECMT removal application submitted page$", () -> {
-           isPath("/permits/application/\\d+/submitted/");
+           Assert.assertTrue(isPath("/permits/application/\\d+/submitted/"));
         });
         Then("^I select the back to home link$", () -> {
            FeesDetailsPage.untilOnFeePage();

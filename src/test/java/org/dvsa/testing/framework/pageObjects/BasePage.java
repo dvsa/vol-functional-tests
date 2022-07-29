@@ -344,10 +344,7 @@ public abstract class BasePage extends DriverUtils {
         Matcher m = p.matcher(url);
         LOGGER.info("path: " + path);
         LOGGER.info("URL: " + url);
-
-        Boolean f = m.find();
-        LOGGER.info("Match: " + f);
-        return f.equals(true);
+        return m.find();
     }
 
     public static URL getURL() {
