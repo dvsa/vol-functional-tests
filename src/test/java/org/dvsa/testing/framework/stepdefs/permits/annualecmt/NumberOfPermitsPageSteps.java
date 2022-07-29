@@ -33,7 +33,7 @@ public class NumberOfPermitsPageSteps extends BasePage implements En {
             world.feeAndPaymentJourney.customerPaymentModule();
         });
         Then("^I am taken to the payment successful page$", () -> {
-            isPath("//fees/receipt/");
+            assertTrue(isPath("/fees/receipt/"));
             Assert.assertEquals(BasePage.getElementValueByText("//h1[@class='js-title']",SelectorType.XPATH),"Payment successful");
         });
     }

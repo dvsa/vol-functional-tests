@@ -32,7 +32,7 @@ public class OverviewPageSteps extends BasePage implements En {
 
     public OverviewPageSteps(World world) {
         Then("^I should be on the Annual ECMT overview page$", () -> {
-            isPath("/permits/application/\\d+");
+            assertTrue(isPath("/permits/application/\\d+"));
         });
         And("^I am on the application overview page$", () -> {
             EcmtApplicationJourney.beginApplication(world);

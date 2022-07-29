@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.PermitTypePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class YearSelectionPageSteps extends BasePage implements En {
 
@@ -40,7 +41,8 @@ public class YearSelectionPageSteps extends BasePage implements En {
             }
         });
         When ("^the user is navigated to licence selection page$", () -> {
-            isPath("/permits/type/\\d+/licence/");
+            Boolean t = isPath("/permits/licence/add/");
+            assertTrue("Unexpected URL", t.equals(true));
         });
     }
 }
