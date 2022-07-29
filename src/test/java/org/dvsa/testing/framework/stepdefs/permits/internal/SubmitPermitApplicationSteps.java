@@ -187,7 +187,8 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         int numberOfPermits = Int.random(1, 5);
 
         //Fill application
-        isPath("/licence/\\d+/irhp-application/edit/\\d+/");
+        waitForTextToBePresent("Edit");
+        assertTrue(isPath("/licence/\\d+/irhp-application/edit/\\d+/"));
         emissionRadioSelectNew();
         needECMTPermit();
         cabotageEligibility();
