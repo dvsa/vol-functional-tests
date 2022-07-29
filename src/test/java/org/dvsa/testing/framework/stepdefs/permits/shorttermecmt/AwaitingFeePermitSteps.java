@@ -61,7 +61,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         });
         And("^I click the view permit restriction link$", PermitFeePage::clickPermitRestrictionLink);
         And("^the user is taken to the allocated candidate permit view page$", () -> {
-            isPath("/application/\\d+/unpaid-permits/");
+            assertTrue(isPath("/application/\\d+/unpaid-permits/"));
         });
         And("^the details are displayed as expected$", () -> {
             String heading = GrantedPermitRestrictionsPage.getPageHeading();

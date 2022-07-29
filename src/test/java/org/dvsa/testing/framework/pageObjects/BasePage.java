@@ -340,8 +340,10 @@ public abstract class BasePage extends DriverUtils {
 
     public static boolean isPath(@NotNull String path) {
         Pattern p = Pattern.compile(path);
-        Matcher m = p.matcher(getURL().getPath());
-
+        String url = getURL().getPath();
+        Matcher m = p.matcher(url);
+        LOGGER.info("path: " + path);
+        LOGGER.info("URL: " + url);
         return m.find();
     }
 

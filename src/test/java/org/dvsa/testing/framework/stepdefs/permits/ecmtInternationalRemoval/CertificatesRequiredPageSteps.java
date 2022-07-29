@@ -26,7 +26,7 @@ public class CertificatesRequiredPageSteps extends BasePage implements En {
             assertTrue(CertificatesRequiredPage.isCheckboxTextPresent());
         });
         And ("^I am on the ecmt removals permit start date page$", () -> {
-            isPath("/application/\\d+/permit-start-date/");
+            Assert.assertTrue(isPath("/application/\\d+/permit-start-date/"));
         });
         And("^on the certificates required page advisory texts are displayed$", () -> {
             assertEquals("If your permit application is successful, you are required to have the appropriate Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer you intend to use.", CertificatesRequiredPage.getAdvisoryText());

@@ -27,8 +27,9 @@ public class PermitStartDatePage extends BasePermitPage {
     public static void inValidDate() {
         LinkedHashMap<String, String> invalidDate = new LinkedHashMap<>();
         invalidDate.put("day", "33");
+        invalidDate.put("month", "13");
         enterDay(invalidDate);
-        enterMonth(currentDate);
+        enterMonth(invalidDate);
         enterYear(currentDate);
     }
 
@@ -38,17 +39,17 @@ public class PermitStartDatePage extends BasePermitPage {
         enterYear(currentDate);
     }
 
-    private static void enterDay(LinkedHashMap<String, String> date) {
-        click("//label[contains(text(),'Day')]",SelectorType.XPATH);
+    public static void enterDay(LinkedHashMap<String, String> date) {
+        findElement("//input[contains(@id,'_day')]",SelectorType.XPATH).clear();
         waitAndEnterText("//input[contains(@id,'_day')]",SelectorType.XPATH, date.get("day"));
     }
 
-    private static void enterMonth(LinkedHashMap<String, String> date) {
-        click("//label[contains(text(),'Month')]",SelectorType.XPATH);
+    public static void enterMonth(LinkedHashMap<String, String> date) {
+        findElement("//input[contains(@id,'_month')]",SelectorType.XPATH).clear();
         waitAndEnterText("//input[contains(@id,'_month')]",SelectorType.XPATH, date.get("month"));
     }
-    private static void enterYear(LinkedHashMap<String, String> date) {
-        click("//label[contains(text(),'Year')]",SelectorType.XPATH);
+    public static void enterYear(LinkedHashMap<String, String> date) {
+        findElement("//input[contains(@id,'_year')]",SelectorType.XPATH).clear();
         waitAndEnterText("//input[contains(@id,'_year')]",SelectorType.XPATH, date.get("year"));
     }
 
@@ -58,6 +59,10 @@ public class PermitStartDatePage extends BasePermitPage {
 
     public static boolean checkAdvisoryTextPresent() {
         return isTextPresent("Choose any date up to 60 days ahead.");
+    }
+
+    public static boolean checkCertificateAdvisoryTextPresent() {
+        return isTextPresent("You must carry your vehicle and trailer certificates at all times.");
     }
 
 }
