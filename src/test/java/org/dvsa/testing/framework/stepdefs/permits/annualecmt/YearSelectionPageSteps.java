@@ -41,8 +41,7 @@ public class YearSelectionPageSteps extends BasePage implements En {
             }
         });
         When ("^the user is navigated to licence selection page$", () -> {
-            Boolean t = isPath("/permits/licence/add/");
-            assertTrue("Unexpected URL", t.equals(true));
+            assertTrue(isPath("/permits/licence/add/"));
         });
     }
 }
