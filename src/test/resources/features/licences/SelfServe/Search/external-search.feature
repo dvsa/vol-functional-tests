@@ -1,4 +1,4 @@
-@OLCS-20956
+@OLCS-20956 @ap
 @SS-EXTERNAL-SEARCH
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
@@ -6,21 +6,21 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     Given i have a valid "goods" "standard_national" licence
     And  I am on the external search page
 
-  Scenario: [Positive]Search for lorry and bus operators by Address
+  Scenario: Address external user search for lorry and bus operators
     When I search for a lorry and bus operator by "address"
     Then search results page addresses should only display address belonging to our post code
 
   @smoketest
-  Scenario: [Positive]Search for lorry and bus operators by Business name
+  Scenario: Business name external search for lorry and bus operators
     When I search for a lorry and bus operator by "business"
     Then search results page should display operator names containing our business name
     And I am able to view the applications license number
 
-  Scenario: [Positive]Search for lorry and bus operators by Licence number
+  Scenario: Licence number external search for lorry and bus operators
     When I search for a lorry and bus operator by "licence"
     Then search results page should only display our licence number
     And I am able to view the license number
 
-  Scenario: [Positive]Search for lorry and bus operators by Person's name
+  Scenario: Person's name external search for lorry and bus operators
     When I search for a lorry and bus operator by "person"
     Then search results page should display names containing our operator name

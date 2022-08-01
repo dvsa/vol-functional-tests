@@ -111,6 +111,8 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("//*[@id='lic-no']", SelectorType.XPATH, "PD263849");
         waitAndEnterText("//*[@id='holderName']", SelectorType.XPATH, "PD263849");
         world.UIJourney.clickSubmit();
+        waitForTitleToBePresent("Transport Manager details");
+        world.UIJourney.clickSubmit();
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
     public void addOperatorUserAsTransportManager(HashMap<String, String> dob, boolean applicationOrNot) {

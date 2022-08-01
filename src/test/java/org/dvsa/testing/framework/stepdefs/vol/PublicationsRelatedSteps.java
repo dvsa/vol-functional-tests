@@ -176,8 +176,8 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
         String radioButton = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
         String radioButtonValue = getAttribute(radioButton, SelectorType.XPATH, "value");
-        click(radioButton, SelectorType.XPATH);
-        click("generate", SelectorType.ID);
+        waitAndClick(radioButton, SelectorType.XPATH);
+        waitAndClick("generate", SelectorType.ID);
         waitForTextToBePresent("Publication was generated, a new publication was also created");
         click(fiftyResultsPerPageLink, SelectorType.XPATH);
         String matchingRadioButton = String.format("//tr/td/label/input[@value='%s']", radioButtonValue);
@@ -191,7 +191,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
         enterText("search", SelectorType.ID, licenceNumber);
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 120, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 240, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     };
 
