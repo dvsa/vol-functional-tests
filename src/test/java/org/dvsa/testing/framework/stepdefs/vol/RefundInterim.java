@@ -15,7 +15,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.clickSaveAndContinue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -61,10 +60,7 @@ public class RefundInterim extends BasePage implements En {
         waitForTextToBePresent("£68.00");
         clickByLinkText("Grant Interim Fee for application");
         waitForTextToBePresent("Fee details");
-        waitAndClick("refund", SelectorType.ID);
-        waitForTextToBePresent("All payments will be refunded");
-        world.UIJourney.clickSubmit();
-        long kickoutTime = System.currentTimeMillis() + 30000;
+        long kickoutTime = System.currentTimeMillis() + 60000;
         do {
             refreshPageWithJavascript();
         } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
