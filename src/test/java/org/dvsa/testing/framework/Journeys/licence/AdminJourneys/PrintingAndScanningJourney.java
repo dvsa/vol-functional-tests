@@ -3,6 +3,7 @@ import Injectors.World;
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 
 public class PrintingAndScanningJourney extends BasePage {
     private final World world;
@@ -65,8 +66,13 @@ public class PrintingAndScanningJourney extends BasePage {
     }
 
     public void deletePrinter() {
-        selectRandomRadioBtnFromDataTable();
-        waitAndClick("delete", SelectorType.ID);
+        long kickOut = System.currentTimeMillis() + 120000;
+        do {
+            selectRandomRadioBtnFromDataTable();
+            waitAndClick("delete", SelectorType.ID);
+        } while (!isTextPresent("Remove printer") && System.currentTimeMillis() < kickOut);
+
+        waitForTextToBePresent("Remove printer");
         world.UIJourney.clickConfirm();
     }
 }
