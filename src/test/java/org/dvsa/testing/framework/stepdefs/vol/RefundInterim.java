@@ -8,6 +8,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -59,7 +60,7 @@ public class RefundInterim extends BasePage implements En {
         waitForTextToBePresent("£68.00");
         clickByLinkText("Grant Interim Fee for application");
         waitForTextToBePresent("Fee details");
-        long kickoutTime = System.currentTimeMillis() + 30000;
+        long kickoutTime = System.currentTimeMillis() + 60000;
         do {
             refreshPageWithJavascript();
         } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
