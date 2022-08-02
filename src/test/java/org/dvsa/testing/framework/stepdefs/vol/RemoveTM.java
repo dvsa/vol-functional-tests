@@ -125,7 +125,7 @@ public class RemoveTM extends BasePage implements En {
     @And("the removal date is changed to {int} hours into the future")
     public void theRemovalDateIsChangedToHoursIntoTheFuture(int arg0) throws SQLException, UnsupportedDatabaseDriverException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime futureDate = LocalDateTime.now().minusDays(2);
+        LocalDateTime futureDate = LocalDateTime.now().plusHours(arg0);
         String dateAndTime = dtf.format(futureDate);
         String sqlStatement = String.format(
                 "UPDATE `OLCS_RDS_OLCSDB`.`transport_manager_licence` SET `deleted_date` = '%s' WHERE (`licence_id` = '%s')",
