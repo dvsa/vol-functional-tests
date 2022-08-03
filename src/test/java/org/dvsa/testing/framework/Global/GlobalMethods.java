@@ -91,6 +91,7 @@ public class GlobalMethods extends BasePage {
 
     public void signIn(String userName, String password) {
         replaceText(emailField, SelectorType.CSS, userName);
+        waitForElementToBeClickable(passwordField, SelectorType.CSS);
         replaceText(passwordField, SelectorType.CSS, password);
         click(submitButton, SelectorType.CSS);
         untilNotInDOM(submitButton, 5);
