@@ -28,6 +28,7 @@ public class ExternalSearch extends BasePage implements En {
         }
         String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);
+        waitForTextToBePresent("Password");
         world.globalMethods.signIn(user,password);
         waitAndClick("Lorry and bus operators",SelectorType.PARTIALLINKTEXT);
     }
