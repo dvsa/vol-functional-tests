@@ -5,8 +5,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -17,7 +15,6 @@ import static org.junit.Assert.assertTrue;
 import org.openqa.selenium.WebElement;
 
 public class ExternalSearch extends BasePage implements En {
-    private static final Logger LOGGER = LogManager.getLogger(ExternalSearch.class);
     private final World world;
 
     public ExternalSearch(World world) {this.world = world;}
@@ -26,8 +23,6 @@ public class ExternalSearch extends BasePage implements En {
     public void iLoginAsAPartnerUser() {
         String user = world.configuration.config.getString("partnerUser");
         String password = world.configuration.config.getString("partnerUserPassword");
-        LOGGER.info("partnerUser:" + user);
-        LOGGER.info("partnerPw:" + password);
         if(getDriver().getCurrentUrl().contains("dashboard")){
             clickByLinkText("Sign out");
         }
