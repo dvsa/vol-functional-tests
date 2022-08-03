@@ -106,7 +106,7 @@ public class ExternalSearch extends BasePage implements En {
     @Then("search results page should display names containing our operator name")
     public void searchResultsPageShouldDisplayNamesContainingOurOperatorName() {
         String operatorName = String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName());
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(operatorName, 300, "KickOut reached. Operator name external search failed.");
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(operatorName, 420, "KickOut reached. Operator name external search failed.");
         WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", operatorName), SelectorType.XPATH);
         assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
         assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
