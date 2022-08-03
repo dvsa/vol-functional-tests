@@ -8,26 +8,26 @@ Feature: Add case details
     And I create a new case
 
   @Complaint
-  Scenario: Creating a case with a complaint
+  Scenario: API - Creating a case with a complaint
     When I add a complaint details
     Then Complaint should be created
 
   @Convictions
-  Scenario: Add a conviction to a case
+  Scenario: API - Add a conviction to a case
     When I add conviction details
     Then Conviction should be created
 
   @Conditions-Undertaking
-  Scenario: Add a condition-undertaking to a case
+  Scenario: API - Add a condition-undertaking to a case
     When I add condition undertaking details
     Then the condition undertaking should be created
 
   @Submission
-  Scenario: Add a submission
+  Scenario: API - Add a submission
     When I add submission details
     Then the submission should be created
 
   @CaseNote
-  Scenario: Add a case note
+  Scenario: API - Add a case note
     When I add notes
     Then case notes should be created

@@ -7,19 +7,19 @@ Feature: Remove last Transport Manager (TM) pop up
     Given i have an application with a transport manager
 
   @int_regression
-  Scenario: Pop up should be displayed when last TM is removed
+  Scenario: Last TM is removed displays a pop up
     Given the licence has been granted
     When the internal user goes to remove the last transport manager
     Then a pop up message should be displayed
 
   @int_regression
-  Scenario: Pop up should display new warning message when a self-serve user removes a TM
+  Scenario: Self-serve user removes a TM displays warning pop up
     Given the licence has been granted
     When a self-serve user removes the last TM
     Then the remove TM popup should not be displaying new TM remove text
 
   @int_regression
-  Scenario: Pop up should display new warning message when the last TM is removed from an application
+  Scenario: Application last TM is removed displays a pop up
     And the licence has been granted
     When the internal user goes to remove the last transport manager
     Then the remove TM popup should not be displaying new TM remove text

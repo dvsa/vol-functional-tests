@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.pageObjects.internal.enums;
 public enum SearchType {
     Licence("Licence"),
     Application("Applications"),
-    Case("Case"),
+    Case("Cases"),
     PsvDisc("Psv Disc"),
     Vehicle("Vehicle"),
     Address("Address"),
