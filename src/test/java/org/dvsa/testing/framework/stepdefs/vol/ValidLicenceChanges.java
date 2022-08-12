@@ -40,7 +40,7 @@ public class ValidLicenceChanges extends BasePage implements En {
     public void iMakeChangesToTheBusinessDetailsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
         enterText("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH, tradingName);
-        click("//a[@class='add-another-trigger']", SelectorType.XPATH);
+        click("//a[@class='add-another-trigger govuk-link']", SelectorType.XPATH);
         enterText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH, tradingName2);
         replaceText("//*[@id='natureOfBusiness']", SelectorType.XPATH, natureOfBusiness);
         world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
