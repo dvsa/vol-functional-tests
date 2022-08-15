@@ -92,7 +92,7 @@ public class SurrenderJourney extends BasePage {
             world.UIJourney.signManually();
         }
         refreshPageWithJavascript();
-        assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+        assertEquals(getText("//*[@class='govuk-tag govuk-tag--green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
     public void submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
