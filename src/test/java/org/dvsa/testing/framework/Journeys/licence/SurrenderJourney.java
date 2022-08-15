@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
+import java.util.Objects;
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -92,7 +93,7 @@ public class SurrenderJourney extends BasePage {
             world.UIJourney.signManually();
         }
         refreshPageWithJavascript();
-        assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
     public void submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
@@ -115,9 +116,14 @@ public class SurrenderJourney extends BasePage {
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
+        world.UIJourney.closeAlert();
         // Refresh page
         refreshPageWithJavascript();
-        waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
+        if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
+            waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
+        } else {
+            waitAndClick("//*[contains(text(),'Physical signature has been checked')]", SelectorType.XPATH);
+        }
     }
 
     public void checkVerifyConfirmation()  {

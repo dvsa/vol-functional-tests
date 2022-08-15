@@ -249,7 +249,7 @@ public class UIJourney extends BasePage {
     public void checkLicenceStatus(String arg0) {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
         waitForTextToBePresent("Licence status");
-        Assert.assertEquals(arg0.toUpperCase(), getElementValueByText("//span[contains(@class,'status')]", SelectorType.XPATH));
+        Assert.assertEquals(arg0.toUpperCase(), getElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH));
     }
 
     public void closeCase() {
