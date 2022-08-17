@@ -365,7 +365,7 @@ public class UIJourney extends BasePage {
                 world.internalNavigation.getVariationApplication();
                 break;
         }
-        if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equals("UNDER CONSIDERATION")) {
+        if (getText("//*/strong[contains(@class,'govuk-tag govuk-tag--orange')]", SelectorType.XPATH).equals("UNDER CONSIDERATION")) {
             waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
         } else if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equals("VALID")) {
             waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);

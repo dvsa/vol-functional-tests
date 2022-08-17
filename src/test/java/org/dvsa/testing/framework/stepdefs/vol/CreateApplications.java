@@ -32,8 +32,7 @@ public class CreateApplications extends BasePage implements En {
         });
         And("^i pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
-            Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(2).findAny().ifPresent(WebElement::click);
-            waitForTitleToBePresent("Apply for a new licence");
+            Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]/table/tbody/tr[2]/td")).stream().skip(1).findAny().ifPresent(WebElement::click);
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
