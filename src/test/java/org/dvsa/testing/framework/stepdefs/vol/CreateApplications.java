@@ -32,7 +32,13 @@ public class CreateApplications extends BasePage implements En {
         });
         And("^i pay my second application with my saved card details$", () -> {
             clickByLinkText("Home");
-            Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]/table/tbody/tr[2]/td")).stream().skip(1).findAny().ifPresent(WebElement::click);
+            String applicationStatus;
+            String lastApplication;
+            lastApplication = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.createApplication.getApplicationId());
+            applicationStatus = getText(lastApplication, SelectorType.XPATH);
+            clickByLinkText(world.createApplication.getApplicationId());
+            applicationStatus.equals("NOT YET SUBMITTED");
+            waitForTitleToBePresent("Apply for a new licence");
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
