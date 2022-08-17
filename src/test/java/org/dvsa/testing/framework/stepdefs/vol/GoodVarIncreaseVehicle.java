@@ -5,7 +5,6 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
-import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -59,7 +58,7 @@ public class GoodVarIncreaseVehicle extends BasePage implements En {
         clickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH,"All");
         waitForTextToBePresent("Grant Fee for application");
-        assertEquals(getText("//table//tr[td//text()[contains(., 'Variation Fee for application')]]//*[contains(@class,'status')]",SelectorType.XPATH),"PAID");
+        assertEquals(getText("//table//tbody[tr//*[contains(text(),'Variation Fee for application')]]//strong[contains(@class,'govuk-tag govuk-tag--green')]",SelectorType.XPATH),"PAID");
     }
 
     @And("a selfserve user creates a variation and adds an operating centre")
