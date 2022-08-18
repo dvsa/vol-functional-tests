@@ -46,7 +46,7 @@ public class DirectorJourney extends BasePage {
 
     public String validationTitle = "There is a problem";
     public String listOfSummaryErrors = "//ol/li/a";
-    public String listOfInlineErrors = "//span[@class='govuk-error-message']";
+    public String listOfInlineErrors = "//*[@class='govuk-error-message']";
     public String titleValidation = "Select an option for: \"Title\"";
     public String firstNameValidation = "Enter first name";
     public String lastNameValidation = "Enter last name";
