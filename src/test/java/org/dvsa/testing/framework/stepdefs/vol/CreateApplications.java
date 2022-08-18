@@ -31,13 +31,9 @@ public class CreateApplications extends BasePage implements En {
             waitForTitleToBePresent("Application overview");
         });
         And("^i pay my second application with my saved card details$", () -> {
+            String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
             clickByLinkText("Home");
-            String applicationStatus;
-            String lastApplication;
-            lastApplication = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.createApplication.getApplicationId());
-            applicationStatus = getText(lastApplication, SelectorType.XPATH);
-            clickByLinkText(world.createApplication.getApplicationId());
-            applicationStatus.equals("NOT YET SUBMITTED");
+            getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().distinct().filter(x -> x.getText().contains(app)).findAny().ifPresent(WebElement::click);
             waitForTitleToBePresent("Apply for a new licence");
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
