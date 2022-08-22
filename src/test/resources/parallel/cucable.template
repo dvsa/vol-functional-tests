@@ -1,0 +1,21 @@
+package runners;
+
+import cucumber.api.java.After;
+import cucumber.api.CucumberOptions;
+import cucumber.api.junit.Cucumber;
+import org.junit.runner.RunWith;
+import cucumber.api.event.EventListener;
+import cucumber.api.event.EventPublisher;
+import cucumber.api.event.TestRunFinished;
+import cucumber.api.event.TestRunStarted;
+import activesupport.driver.Browser;
+
+ @RunWith(Cucumber.class)
+ @CucumberOptions(plugin = {"io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
+ ,"json:target/cucumber-report/[CUCABLE:RUNNER].json", "org.dvsa.testing.framework.hooks.VFTLifeCycle"},
+         features = {"target/parallel/features/[CUCABLE:FEATURE].feature"},
+         glue = {"org.dvsa.testing.framework.stepdefs"},
+         strict = true
+ )
+ public class [CUCABLE:RUNNER] {
+ }
