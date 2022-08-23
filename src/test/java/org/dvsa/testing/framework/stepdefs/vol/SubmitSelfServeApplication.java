@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
+import apiCalls.enums.OperatorType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.apache.logging.log4j.LogManager;
@@ -52,8 +53,10 @@ public class SubmitSelfServeApplication extends BasePage {
         String authority = "2";
         String trailers = "4";
         if(licenceType.equals("Goods")) {
+            world.createApplication.setOperatorType(OperatorType.GOODS.name());
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, "0", trailers);
         }else{
+            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
@@ -78,6 +81,10 @@ public class SubmitSelfServeApplication extends BasePage {
         //vehicleDetails
         boolean add = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(add);
+        if(licenceType.equals("Public")) {
+            world.psvJourney.completeVehicleDeclarationsPage();
+            waitAndClick("overview-item__safety", SelectorType.ID);
+        }
         world.safetyComplianceJourney.addSafetyAndComplianceData();
         world.safetyInspectorJourney.addASafetyInspector();
         clickById("application[safetyConfirmation]");
