@@ -23,7 +23,7 @@ public class HomePage extends BasePage {
 
     private static String APPLY_FOR_LICENCE_BUTTON = "//*/a[contains(text(), 'Apply for a')]";
 
-    private static String TAB_TEMPLATE = "//*/div[@class='tab-list']//a[contains(text(), '%s')]";
+    private static String TAB_TEMPLATE = "//*/div[@class='govuk-tabs']//a[contains(text(), '%s')]";
 
 
     public static void selectTab(Tab tab) {
