@@ -61,7 +61,7 @@ public class ValidPermitsPage extends BasePermitPage {
     }
 
     private static String getStatusFromRowElement(WebElement row) {
-        return row.findElement(By.xpath("./td[@data-heading='Status']/span")).getText();
+        return row.findElement(By.xpath("./td[@data-heading='Status']/strong")).getText();
     }
 
     public static void returnToPermitDashboard() {
