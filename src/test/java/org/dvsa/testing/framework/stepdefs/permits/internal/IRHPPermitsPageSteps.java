@@ -53,7 +53,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
             IRHPPermitsPageSteps.payOutstandingFees(world);
         });
         Then("^my application should be under consideration$", () -> {
-            assertEquals("UNDER CONSIDERATION", getText("//*[@class='govuk-summary-list__value']/span", SelectorType.XPATH));
+            assertEquals("UNDER CONSIDERATION", getText("//*[@class='govuk-summary-list__value']/strong", SelectorType.XPATH));
         });
         Then("^my permit application is under consideration$", () -> {
             IrhpPermitsDetailsPage.Tab.select(DetailsTab.IrhpPermits);
