@@ -39,8 +39,7 @@ public class PermitFeePage extends BasePermitPage {
     }
 
     public static boolean isAlertMessagePresent() {
-        return isElementPresent("//strong[@class='govuk-warning-text__text']", SelectorType.XPATH) &&
-        isElementPresent("//span[@class='govuk-visually-hidden']", SelectorType.XPATH);
+        return isElementPresent("//strong[@class='govuk-warning-text__text']", SelectorType.XPATH);
     }
 
     public static void clickPermitRestrictionLink() {
