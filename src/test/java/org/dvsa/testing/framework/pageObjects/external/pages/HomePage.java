@@ -54,7 +54,7 @@ public class HomePage extends BasePage {
         private static String REFERENCE_NUMBER = ".//td[@data-heading='Application reference']//span | .//td[@data-heading='Application reference']";
         private static String NO_OF_PERMITS = ".//td[@data-heading='Number of permits']";
         private static String TYPE = ".//td[@data-heading='Type']";
-        private static String STATUS = ".//td[@data-heading='Status']//span";
+        private static String STATUS = ".//td[@data-heading='Status']//strong";
         public static String RESOURCE = "/permits";
 
         public static void untilOnPage() {
