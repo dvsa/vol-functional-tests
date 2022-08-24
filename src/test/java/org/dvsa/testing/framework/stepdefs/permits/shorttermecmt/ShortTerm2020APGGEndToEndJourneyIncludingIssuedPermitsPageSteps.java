@@ -35,7 +35,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
         });
 
         Then("^I am navigated back to the permits dashboard page with my application status shown as Not yet Submitted", () -> {
-            Assert.assertEquals(getElementValueByText("//span[@class='status grey']",SelectorType.XPATH),"NOT YET SUBMITTED");
+            Assert.assertEquals(getElementValueByText("//strong[@class='govuk-tag govuk-tag--grey']",SelectorType.XPATH),"NOT YET SUBMITTED");
             HomePage.PermitsTab.selectFirstOngoingApplication();
         });
 
