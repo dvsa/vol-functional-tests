@@ -254,7 +254,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
     }
 
     public static boolean isErrorTextPresent() {
-        String Selector = "//span[@class='govuk-error-message' and contains(text(),'You have exceeded the maximum you can apply for')]";
+        String Selector = "//p[@class='govuk-error-message' and contains(text(),'You have exceeded the maximum you can apply for')]";
         return isElementPresent(Selector,SelectorType.XPATH);
     }
     public static void isWithdrawButtonPresent() {
