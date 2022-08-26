@@ -43,7 +43,7 @@ public class PsvSurrenders extends BasePage implements En {
     @And("the surrender status is {string}")
     public void theSurrenderStatusIs(String status) {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
-        Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), status.toUpperCase());
+        Assertions.assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), status.toUpperCase());
     }
 
     @And("the correct contact details should be displayed")
