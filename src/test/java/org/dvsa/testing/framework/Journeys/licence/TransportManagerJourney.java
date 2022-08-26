@@ -211,12 +211,12 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void assertTMDetailsWithOperator() {
-        Assert.assertTrue(isElementPresent("//span[contains(text(),'With operator')]",SelectorType.XPATH));
+        Assert.assertTrue(isElementPresent("//strong[contains(text(),'With operator')]",SelectorType.XPATH));
         Assert.assertTrue(isLinkPresent("View details", 10));
     }
 
     public void assertTMDetailsIncomplete() {
-        Assert.assertTrue(isElementPresent("//span[contains(text(),'Incomplete')]", SelectorType.XPATH));
+        Assert.assertTrue(isElementPresent("//strong[contains(text(),'Incomplete')]", SelectorType.XPATH));
         Assert.assertTrue(isLinkPresent("Provide details", 10));
     }
 
