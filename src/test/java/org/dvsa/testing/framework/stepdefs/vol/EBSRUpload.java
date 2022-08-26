@@ -83,7 +83,7 @@ public class EBSRUpload extends BasePage implements En {
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
         }
-        long kickOutTime = System.currentTimeMillis() + 10000;
+        long kickOutTime = System.currentTimeMillis() + 30000;
         do {
             // Refresh page
             refreshPageWithJavascript();
