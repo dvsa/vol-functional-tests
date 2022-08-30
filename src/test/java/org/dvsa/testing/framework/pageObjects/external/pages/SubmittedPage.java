@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class SubmittedPage extends BasePermitPage {
 
-    private static final String RECEIPT = "//a[text() = 'your receipt']";
+    private static final String RECEIPT = "//a[text() = 'your receipt (opens in new tab)']";
 
     public static void untilOnPage() {
         untilUrlMatches("permits/application/\\d+/submitted/", Duration.LONG, ChronoUnit.SECONDS);

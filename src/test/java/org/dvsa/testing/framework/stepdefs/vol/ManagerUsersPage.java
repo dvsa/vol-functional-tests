@@ -61,7 +61,7 @@ public class ManagerUsersPage extends BasePage implements En {
     @Then("colour of the {string} button should be green")
     public void colourOfTheAddAUserButtonShouldBeGreen(String buttonName) {
         String buttonColour = Color.fromString(findElement(String.format("//*[contains(text(),'%s')]",buttonName), SelectorType.XPATH).getCssValue("background-color")).asHex();
-        Assert.assertEquals("#00823b", buttonColour);
+        Assert.assertEquals("#00703c", buttonColour);
     }
 
     @When("i add a user")

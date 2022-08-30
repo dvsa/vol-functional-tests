@@ -22,6 +22,6 @@ public class RestrictedCountriesPage extends BasePermitPage {
     }
 
     public static String getAdvisoryText() {
-        return getText("//div[@class='guidance-blue']", SelectorType.XPATH);
+        return getText("//div[@class='govuk-inset-text']", SelectorType.XPATH);
     }
 }

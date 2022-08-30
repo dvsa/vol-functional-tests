@@ -29,10 +29,11 @@ public class VehicleDetailsJourney extends BasePage {
                 world.UIJourney.clickSubmit();
             }
             waitForTitleToBePresent("Vehicle details");
+            UIJourney.clickSaveAndContinue();
         } else {
             refreshPage();
-            waitAndClick("//*[contains(text(),'No')]", SelectorType.XPATH);
+            waitAndClick("//label[contains(text(),'No')]", SelectorType.XPATH);
+            UIJourney.clickSaveAndReturn();
         }
-        UIJourney.clickSaveAndContinue();
     }
 }

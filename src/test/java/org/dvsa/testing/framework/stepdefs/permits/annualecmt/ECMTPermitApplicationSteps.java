@@ -58,7 +58,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage implements En {
             refreshPage();
             untilAnyPermitStatusMatch(PermitStatus.AWAITING_FEE);
         });
-        Then("^the user is navigated to awaiting fee page$", () -> assertTrue(isPath("/permits/\\d+/ecmt-awaiting-fee/")));
+        Then("^the user is navigated to awaiting fee page$", () -> assertTrue(isPath("/permits/application/\\d+/awaiting-fee/")));
 
         When("^I try applying with a licence that has an existing annual ECMT application$", () -> {
             HomePageJourney.beginPermitApplication();

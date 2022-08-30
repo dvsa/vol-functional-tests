@@ -31,8 +31,10 @@ public class CreateApplications extends BasePage implements En {
             waitForTitleToBePresent("Application overview");
         });
         And("^i pay my second application with my saved card details$", () -> {
+            String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
             clickByLinkText("Home");
-            Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
+            getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().distinct().filter(x -> x.getText().contains(app)).findAny().ifPresent(WebElement::click);
+            waitForTitleToBePresent("Apply for a new licence");
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);

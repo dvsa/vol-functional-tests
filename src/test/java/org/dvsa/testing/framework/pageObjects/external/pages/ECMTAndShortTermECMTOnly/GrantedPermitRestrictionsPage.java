@@ -10,6 +10,7 @@ public class GrantedPermitRestrictionsPage extends BasePermitPage {
 
     public static List<String> getTableRowHeadings() {
         refreshPage();
+        refreshPageUntilElementAppears("//th[1]", SelectorType.XPATH);
         List<String> headings = new LinkedList<>();
         headings.add(getText("//th[1]", SelectorType.XPATH));
         headings.add(getText("//th[2]", SelectorType.XPATH));
@@ -18,7 +19,7 @@ public class GrantedPermitRestrictionsPage extends BasePermitPage {
     }
 
    public static void returnToFeeSummaryPage() {
-        waitAndClick("//a[@class='return-overview']", SelectorType.XPATH);
+       waitAndClick("//*[contains(text(),'Return to fee summary')]", SelectorType.XPATH);
    }
 
 }
