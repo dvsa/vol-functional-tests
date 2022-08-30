@@ -211,7 +211,7 @@ public class TransportManagerJourney extends BasePage {
     }
 
     public void assertTMDetailsWithOperator() {
-        Assert.assertTrue(isElementPresent("//strong[contains(text(),'With operator')]",SelectorType.XPATH));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'With operator')]", SelectorType.XPATH));
         Assert.assertTrue(isLinkPresent("View details", 10));
     }
 
