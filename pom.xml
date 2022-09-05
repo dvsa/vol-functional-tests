@@ -65,7 +65,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Dcucumber.options="--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
                     </argLine>
-                    <argLine>-Xmx1024m</argLine>
+                    <argLine>-Xmx2058m</argLine>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -143,7 +143,7 @@
                             <testFailureIgnore>true</testFailureIgnore>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                             <argLine>-Dfile.encoding=UTF-8</argLine>
-                            <argLine>-Xmx1024m</argLine>
+                            <argLine>-Xmx2058m</argLine>
                         </configuration>
                     </execution>
                 </executions>
