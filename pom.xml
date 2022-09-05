@@ -104,7 +104,7 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfRunners>7</desiredNumberOfRunners>
+                    <desiredNumberOfRunners>13</desiredNumberOfRunners>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                 </configuration>
             </plugin>
