@@ -65,6 +65,7 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Dcucumber.options="--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
                     </argLine>
+                    <argLine>-Xmx1024m</argLine>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -103,7 +104,7 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfRunners>13</desiredNumberOfRunners>
+                    <desiredNumberOfRunners>7</desiredNumberOfRunners>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                 </configuration>
             </plugin>
@@ -142,6 +143,7 @@
                             <testFailureIgnore>true</testFailureIgnore>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                             <argLine>-Dfile.encoding=UTF-8</argLine>
+                            <argLine>-Xmx1024m</argLine>
                         </configuration>
                     </execution>
                 </executions>
