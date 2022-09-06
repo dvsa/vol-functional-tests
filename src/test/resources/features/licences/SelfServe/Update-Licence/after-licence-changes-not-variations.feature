@@ -1,4 +1,3 @@
-@SS
 @SS-changes-not-variation
 @ss_regression
 
