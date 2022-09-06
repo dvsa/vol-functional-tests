@@ -13,7 +13,7 @@
     <Loggers>
         <Logger name="com.jcg" level="debug" />
         <Root level="info">
-<!--            <AppenderRef ref="STDOUT" />-->
+            <AppenderRef ref="STDOUT" />
 <!--            <AppenderRef ref="FILE" />-->
         </Root>
     </Loggers>
