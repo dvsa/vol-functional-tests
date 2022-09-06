@@ -65,7 +65,6 @@
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
                         -Dcucumber.options="--plugin io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm"
                     </argLine>
-                    <argLine>-Xmx2058m -XX:MaxPermSize=1024m</argLine>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -140,7 +139,7 @@
                         <configuration>
                             <forkCount>3</forkCount>
                             <reuseForks>false</reuseForks>
-                            <argLine>-Xmx2058m -XX:MaxPermSize=1024m</argLine>
+                            <argLine>-Xmx4096m</argLine>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
