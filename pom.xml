@@ -139,7 +139,7 @@
                         <configuration>
                             <forkCount>3</forkCount>
                             <reuseForks>false</reuseForks>
-                            <argLine>-Xmx6144m</argLine>
+                            <argLine>-Xmx5120m</argLine>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
