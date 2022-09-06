@@ -103,7 +103,7 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfRunners>13</desiredNumberOfRunners>
+                    <desiredNumberOfRunners>6</desiredNumberOfRunners>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                 </configuration>
             </plugin>
@@ -139,6 +139,7 @@
                         <configuration>
                             <forkCount>2</forkCount>
                             <reuseForks>true</reuseForks>
+                            <argLine>-Xmx2058m -XX:MaxPermSize=1024m</argLine>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
