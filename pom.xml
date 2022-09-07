@@ -137,7 +137,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>3</forkCount>
+                            <forkCount>2</forkCount>
                             <reuseForks>false</reuseForks>
                             <argLine>-Xmx4096m</argLine>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
