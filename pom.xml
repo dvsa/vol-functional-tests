@@ -103,7 +103,7 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfFeaturesPerRunner>6</desiredNumberOfFeaturesPerRunner>
+                    <desiredNumberOfFeaturesPerRunner>4</desiredNumberOfFeaturesPerRunner>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                 </configuration>
             </plugin>
@@ -137,9 +137,9 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>2</forkCount>
+                            <forkCount>3</forkCount>
                             <reuseForks>false</reuseForks>
-                            <argLine>-Xmx4096m</argLine>
+                            <argLine>-Xmx6144m</argLine>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
