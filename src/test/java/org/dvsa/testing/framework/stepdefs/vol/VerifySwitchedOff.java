@@ -13,6 +13,8 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class VerifySwitchedOff extends BasePage implements En {
@@ -63,12 +65,12 @@ public class VerifySwitchedOff extends BasePage implements En {
     }
 
     @When("the transport manager is the owner")
-    public void theTransportManagerIsTheOwner() {
+    public void theTransportManagerIsTheOwner() throws IOException {
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
 
     @And("the transport manager is not the owner")
-    public void theTransportManagerIsNotTheOwner() {
+    public void theTransportManagerIsNotTheOwner() throws IOException {
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
     }
 
