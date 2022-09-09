@@ -609,7 +609,7 @@ public class UIJourney extends BasePage {
     public void addAllNoteTypeCase(String NoteType) {
         enterText("//input[@class='search__input']", SelectorType.XPATH, "case");
         click("//input[@name='submit']", SelectorType.XPATH);
-        waitAndClick("//table[@class='govuk-table']/tbody[1]/tr[1]/td[1]/a[1]", SelectorType.XPATH);
+        waitAndClick("/html/body/div[5]/div/div/div[2]/div/form/div[2]/table/tbody/tr[1]/td[1]", SelectorType.XPATH);
         click("//a[@id='menu-licence_processing']", SelectorType.XPATH);
         click("//a[@id='menu-licence_processing_notes']", SelectorType.XPATH);
         selectValueFromDropDown("//select[@id='noteType']", SelectorType.XPATH, NoteType);
