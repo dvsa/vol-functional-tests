@@ -37,7 +37,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @When("i add an existing person as a transport manager who is not the operator on {string}")
-    public void iAddAnExistingPersonAsATransportManagerWhoIsNotTheOperatorOn(String applicationType) {
+    public void iAddAnExistingPersonAsATransportManagerWhoIsNotTheOperatorOn(String applicationType) throws IOException {
         boolean applicationOrNot = applicationType.equals("application");
         world.DataGenerator.generateAndAddOperatorUser();
         world.TMJourney.addAndCompleteOperatorUserAsTransportManager("N", applicationOrNot);
@@ -49,7 +49,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @When("i add an operator as a transport manager")
-    public void iAddAnOperatorAsATransportManager() {
+    public void iAddAnOperatorAsATransportManager() throws IOException {
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
@@ -94,7 +94,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @When("i add new person as a transport manager and they fill out their details")
-    public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() {
+    public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() throws IOException {
         world.TMJourney.addNewPersonAsTransportManager("application");
         world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
         clickByLinkText("Provide details");
@@ -102,7 +102,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @When("the operator rejects the transport managers details")
-    public void theOperatorRejectsTheTransportManagersDetails() {
+    public void theOperatorRejectsTheTransportManagersDetails() throws IOException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Home");
         waitForTextToBePresent("Home");

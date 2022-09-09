@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
 import org.junit.Assert;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication
 public class TransportManagerJourney extends BasePage {
 
     private World world;
+
     static int tmCount;
 
     public TransportManagerJourney(World world){
@@ -123,7 +125,7 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.clickSend();
     }
 
-    public void addOperatorAdminAsTransportManager() {
+    public void addOperatorAdminAsTransportManager() throws IOException {
         String user = String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName());
         nominateOperatorUserAsTransportManager(user, true);
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
@@ -142,7 +144,7 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.clickContinue();
     }
 
-    public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
+    public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) throws IOException {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
         world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(),world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
@@ -155,7 +157,7 @@ public class TransportManagerJourney extends BasePage {
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
-    public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) {
+    public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) throws IOException {
         String hours = "8";
         findElement("//*[@value='Y'][@name='details[hasUndertakenTraining]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + OtherLicence + "'][@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 30).click();
@@ -188,7 +190,7 @@ public class TransportManagerJourney extends BasePage {
         waitForTextToBePresent("Declaration");
     }
 
-    public void submitTMApplicationAndNavigateToTMLandingPage() {
+    public void submitTMApplicationAndNavigateToTMLandingPage() throws IOException {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         world.UIJourney.clickSubmit();
         clickByLinkText("Back to Transport");
@@ -210,7 +212,7 @@ public class TransportManagerJourney extends BasePage {
         waitForTextToBePresent("user account has been created and a link sent to them");
     }
 
-    public void assertTMDetailsWithOperator() {
+    public void assertTMDetailsWithOperator() throws IOException {
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'With operator')]", SelectorType.XPATH));
         Assert.assertTrue(isLinkPresent("View details", 10));
     }
