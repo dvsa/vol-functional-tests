@@ -2,6 +2,8 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import apiCalls.enums.UserType;
+import cucumber.api.Scenario;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -20,6 +22,10 @@ public class VerifySwitchedOff extends BasePage implements En {
         this.world = world;
     }
 
+    @Before
+    public void getScenarioName(Scenario scenario){
+        System.out.println("Testing Scenario:" + scenario.getName());
+    }
     @And("i have a {string} {string} partial application")
     public void iHaveAPartialApplication(String operatorType, String country) {
         world.createApplication.setOperatorType(operatorType);

@@ -1,4 +1,3 @@
-@SS
 @OLCS-21390
 Business Need: A TM should no longer be able to access a download link to the TM1 form from VOL, or expect to have a form sent to them via email from VOL.
 
