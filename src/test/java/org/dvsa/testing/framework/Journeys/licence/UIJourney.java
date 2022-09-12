@@ -548,9 +548,9 @@ public class UIJourney extends BasePage {
     public void createComplaint() {
         enterText("//input[@class='search__input']", SelectorType.XPATH, "case");
         click("//input[@name='submit']", SelectorType.XPATH);
-        waitAndClick("/html/body/div[5]/div/div/div[2]/div/form/div[2]/table/tbody/tr[1]/td[1]", SelectorType.XPATH);
+        waitAndClick("//*/tbody/tr[1]/td[1]/a", SelectorType.XPATH);
         waitAndClick("//a[@id='menu-licence/cases']", SelectorType.XPATH);
-        waitAndClick("/html/body/div[5]/div/div[1]/div/div/form/div[2]/table/tbody/tr/td[1]/a", SelectorType.XPATH);
+        waitAndClick("//*/tbody/tr[1]/td[1]/a", SelectorType.XPATH);
         waitAndClick("//a[@id='menu-case_details_complaints']", SelectorType.XPATH);
         waitAndClick("//*[@value='Add']", SelectorType.XPATH);
     }
