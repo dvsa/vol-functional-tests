@@ -50,7 +50,7 @@ public class HomePage extends BasePage {
     public static class PermitsTab {
 
         private static String TABLE_ROW = "//tbody//tr";
-        private static String REFERENCE_NUMBER_TEMPLATE = "//td[@data-heading='Licence number']";
+        private static String REFERENCE_NUMBER_TEMPLATE = "//a[@class='overview__link']";
         private static String REFERENCE_NUMBER = ".//td[@data-heading='Application reference']//span | .//td[@data-heading='Application reference']";
         private static String NO_OF_PERMITS = ".//td[@data-heading='Number of permits']";
         private static String TYPE = ".//td[@data-heading='Type']";
@@ -83,7 +83,7 @@ public class HomePage extends BasePage {
             long kickoutTime = System.currentTimeMillis() + 60000;
             do {
                 refreshPageWithJavascript();
-            } while(!getText("//*//tr//th", SelectorType.XPATH).toLowerCase().contains("licence number") && System.currentTimeMillis() < kickoutTime);
+            } while(!isElementPresent("//span[@class='overview__link--underline']", SelectorType.XPATH) && System.currentTimeMillis() < kickoutTime);
             waitAndClick(REFERENCE_NUMBER_TEMPLATE, SelectorType.XPATH);
         }
 
