@@ -27,6 +27,7 @@ public class UserAccountJourney extends BasePage {
     }
 
     public void ChangeUserDetails() {
+        waitForTitleToBePresent("Your account");
         selectRandomValueFromDropDown("team");
         selectValueFromDropDown("title", SelectorType.ID, "Mr");
         replaceText("person[forename]", SelectorType.ID, world.DataGenerator.getOperatorForeName());
