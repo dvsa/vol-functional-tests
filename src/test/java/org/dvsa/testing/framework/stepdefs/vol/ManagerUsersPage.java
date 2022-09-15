@@ -9,6 +9,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Utils.Generic.Axe;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.apache.logging.log4j.LogManager;
@@ -25,8 +26,7 @@ import java.net.URISyntaxException;
 public class ManagerUsersPage extends BasePage implements En {
     private final World world;
 
-    AXEScanner scanner = new AXEScanner();
-    ReportGenerator reportGenerator = new ReportGenerator();
+
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
     public ManagerUsersPage(World world) {this.world = world;}
@@ -38,19 +38,19 @@ public class ManagerUsersPage extends BasePage implements En {
 
     @When("i scan for accessibility violations")
     public void iScanForAccessibilityViolations() throws IllegalBrowserException, IOException {
-        scanner.scan(false);
+        Axe.axeScanner().scan(false);
     }
 
     @Then("no issues should be present on the page")
     public void noIssuesShouldBePresentOnThePage() throws IOException, URISyntaxException {
-        if (scanner.getTotalViolationsCount() != 0) {
+        if (Axe.axeScanner().getTotalViolationsCount() != 0) {
             LOGGER.info("ERROR: Violation found");
         } else {
             LOGGER.info("No violation found");
         }
-        reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
-        reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
-        reportGenerator.createReport(scanner);
+        Axe.reportGenerator().urlScannedReportSection(Browser.navigate().getCurrentUrl());
+        Axe.reportGenerator().violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), Axe.axeScanner());
+        Axe.reportGenerator().createReport(Axe.axeScanner());
     }
 
     @Then("name of button should be {string}")
