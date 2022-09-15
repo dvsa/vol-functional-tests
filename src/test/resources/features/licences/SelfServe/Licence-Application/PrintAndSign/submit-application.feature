@@ -14,4 +14,4 @@ Feature: Complete an application manually
     Examples:
       | Licence |
       | Goods   |
-      | Public  |
+#      | Public  |
