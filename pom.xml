@@ -36,6 +36,10 @@
         <apache-commons.version>1.8</apache-commons.version>
         <gson.version>20210307</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
+
+        <forks>2</forks>
+        <featuresPerRunner>5</featuresPerRunner>
+        <jvmMemory>8192</jvmMemory>
     </properties>
 
     <repositories>
@@ -103,7 +107,7 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfFeaturesPerRunner>6</desiredNumberOfFeaturesPerRunner>
+                    <desiredNumberOfFeaturesPerRunner>${featuresPerRunner}</desiredNumberOfFeaturesPerRunner>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                 </configuration>
             </plugin>
@@ -137,9 +141,9 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>2</forkCount>
+                            <forkCount>${forks}</forkCount>
                             <reuseForks>false</reuseForks>
-                            <argLine>-Xmx4096m</argLine>
+                            <argLine>-Xmx${jvmMemory}m</argLine>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
                     </execution>
