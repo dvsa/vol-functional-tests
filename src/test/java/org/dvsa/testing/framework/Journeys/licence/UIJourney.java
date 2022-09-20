@@ -105,9 +105,9 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("New Letter");
         clickById("New letter");
         waitForTextToBePresent("Generate letter");
-        waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 5);
+        waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 3);
+        waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 24);
         waitAndClick(submitButton, SelectorType.ID);
         waitForTextToBePresent("Amend letter");
     }
