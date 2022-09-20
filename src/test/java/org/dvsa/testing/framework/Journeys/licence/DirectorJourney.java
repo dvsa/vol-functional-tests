@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
@@ -119,6 +120,8 @@ public class DirectorJourney extends BasePage {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
         world.UIJourney.clickSubmit();
+        waitForTitleToBePresent("Directors");
+        refreshPageWithJavascript();
     }
 
     public boolean isDirectorPresentInDirectorTable(List<WebElement> directors, String director) {
