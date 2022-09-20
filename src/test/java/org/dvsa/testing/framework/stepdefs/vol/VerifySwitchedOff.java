@@ -13,8 +13,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
-
-
 import static org.junit.Assert.*;
 
 public class VerifySwitchedOff extends BasePage implements En {
