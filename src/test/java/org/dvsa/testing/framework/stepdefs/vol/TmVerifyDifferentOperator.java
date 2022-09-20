@@ -37,7 +37,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @When("i add an existing person as a transport manager who is not the operator on {string}")
-    public void iAddAnExistingPersonAsATransportManagerWhoIsNotTheOperatorOn(String applicationType) throws IOException {
+    public void iAddAnExistingPersonAsATransportManagerWhoIsNotTheOperatorOn(String applicationType) {
         boolean applicationOrNot = applicationType.equals("application");
         world.DataGenerator.generateAndAddOperatorUser();
         world.TMJourney.addAndCompleteOperatorUserAsTransportManager("N", applicationOrNot);
@@ -187,7 +187,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @Then("the correct information is displayed on the declaration page")
-    public void theCorrectInformationIsDisplayedOnTheDeclarationPage() throws IOException, URISyntaxException, IOException {
+    public void theCorrectInformationIsDisplayedOnTheDeclarationPage() throws IOException, URISyntaxException {
         Path fileToRead = getPath(world);
         String data = world.genericUtils.readFileAsString(String.valueOf(fileToRead));
         assertTrue(isTextPresent(data));

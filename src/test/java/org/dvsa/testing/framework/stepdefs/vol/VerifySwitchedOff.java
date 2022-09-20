@@ -13,7 +13,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
-import java.io.IOException;
+
 
 import static org.junit.Assert.*;
 
