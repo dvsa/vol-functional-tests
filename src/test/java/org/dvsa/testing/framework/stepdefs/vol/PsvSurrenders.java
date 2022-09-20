@@ -1,15 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
+import activesupport.driver.Browser;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.Axe;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
+
+import java.io.IOException;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
@@ -43,6 +48,12 @@ public class PsvSurrenders extends BasePage implements En {
     @And("the surrender status is {string}")
     public void theSurrenderStatusIs(String status) {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
+        Assertions.assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), status.toUpperCase());
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
         Assertions.assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), status.toUpperCase());
     }
 

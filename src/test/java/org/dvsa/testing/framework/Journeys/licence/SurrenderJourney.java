@@ -1,12 +1,15 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import apiCalls.enums.LicenceType;
+import org.dvsa.testing.framework.Utils.Generic.Axe;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 
+import java.io.IOException;
 import java.util.Objects;
 import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertEquals;
@@ -15,12 +18,13 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 
 public class SurrenderJourney extends BasePage {
-
+ Axe axe = new Axe();
     private World world;
     private String discsToDestroy = "2";
     private String discsLost = "2";
     private String discsStolen = "1";
     private String updatedTown;
+
 
     public String getDiscsLost() { return discsLost; }
 
@@ -54,17 +58,32 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void startSurrender()  {
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
         click("//*[@id='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Review your contact information");
     }
 
     public void addOperatorLicenceDetails()  {
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
         world.UIJourney.clickSubmit();
     }
 
     public void addCommunityLicenceDetails()  {
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
         world.UIJourney.clickSubmit();
@@ -95,7 +114,7 @@ public class SurrenderJourney extends BasePage {
         refreshPageWithJavascript();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
-    public void submitSurrenderUntilChoiceOfVerification()  {
+    public void  submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
         acknowledgeDestroyPage();
     }
@@ -138,8 +157,18 @@ public class SurrenderJourney extends BasePage {
     public void acknowledgeDestroyPage()  {
         world.UIJourney.clickSubmit();
         waitForTextToBePresent("Securely destroy");
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
         world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void addDiscInformation()  {
@@ -153,6 +182,11 @@ public class SurrenderJourney extends BasePage {
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");
         waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, getDiscsStolen());
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
     }
 
