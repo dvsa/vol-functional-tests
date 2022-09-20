@@ -13,8 +13,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
-
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
@@ -25,7 +23,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import static activesupport.driver.Parallel.ChromeSetUp.driver;
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;

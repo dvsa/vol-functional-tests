@@ -49,7 +49,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @When("i add an operator as a transport manager")
-    public void iAddAnOperatorAsATransportManager() throws IOException {
+    public void iAddAnOperatorAsATransportManager() {
         world.TMJourney.nominateOperatorUserAsTransportManager(String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()), true);
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
@@ -94,7 +94,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @When("i add new person as a transport manager and they fill out their details")
-    public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() throws IOException {
+    public void iAddNewPersonAsATransportManagerAndTheyFillOutTheirDetails() {
         world.TMJourney.addNewPersonAsTransportManager("application");
         world.selfServeNavigation.navigateToLogin(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail());
         clickByLinkText("Provide details");
@@ -102,7 +102,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @When("the operator rejects the transport managers details")
-    public void theOperatorRejectsTheTransportManagersDetails() throws IOException {
+    public void theOperatorRejectsTheTransportManagersDetails() {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Home");
         waitForTextToBePresent("Home");
@@ -187,7 +187,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     }
 
     @Then("the correct information is displayed on the declaration page")
-    public void theCorrectInformationIsDisplayedOnTheDeclarationPage() throws IOException, URISyntaxException {
+    public void theCorrectInformationIsDisplayedOnTheDeclarationPage() throws IOException, URISyntaxException, IOException {
         Path fileToRead = getPath(world);
         String data = world.genericUtils.readFileAsString(String.valueOf(fileToRead));
         assertTrue(isTextPresent(data));

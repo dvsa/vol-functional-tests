@@ -9,7 +9,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
 import org.junit.Assert;
-import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,7 +21,6 @@ import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication
 public class TransportManagerJourney extends BasePage {
 
     private World world;
-
     static int tmCount;
 
     public TransportManagerJourney(World world){
