@@ -58,7 +58,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implemen
         });
         Then("^I am navigated back to the permits dashboard page with my application status shown as Under Consideration", () -> {
             HomePage.PermitsTab.selectFirstOngoingApplication();
-            assertEquals(getElementValueByText("//span[@class='status orange']",SelectorType.XPATH),"UNDER CONSIDERATION");
+            assertEquals(getElementValueByText("//strong[@class='govuk-tag govuk-tag--orange']",SelectorType.XPATH),"UNDER CONSIDERATION");
         });
     }
 }

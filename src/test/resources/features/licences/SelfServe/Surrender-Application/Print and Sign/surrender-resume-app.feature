@@ -1,5 +1,4 @@
 @OLCS-22275
-@SS
 @Surrenders-resume
 @ss_regression
 Feature: User should be able to continue where they left off

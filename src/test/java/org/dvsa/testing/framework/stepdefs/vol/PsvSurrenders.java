@@ -54,6 +54,7 @@ public class PsvSurrenders extends BasePage implements En {
         } catch (IOException | IllegalBrowserException e) {
             throw new RuntimeException(e);
         }
+        Assertions.assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), status.toUpperCase());
     }
 
     @And("the correct contact details should be displayed")

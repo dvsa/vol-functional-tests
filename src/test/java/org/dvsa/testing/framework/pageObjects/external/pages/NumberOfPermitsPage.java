@@ -44,7 +44,7 @@ public class NumberOfPermitsPage extends BasePermitPage {
     }
 
     public static boolean isFeeTextPresent() {
-        return isElementPresent("//div[@class='guidance-blue']", SelectorType.XPATH) &&
+        return isElementPresent("//div[@class='govuk-inset-text']", SelectorType.XPATH) &&
         isElementPresent("//strong[contains(text(),'£18')]", SelectorType.XPATH);
     }
 

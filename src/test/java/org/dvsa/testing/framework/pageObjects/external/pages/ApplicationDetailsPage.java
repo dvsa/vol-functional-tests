@@ -13,7 +13,7 @@ public class ApplicationDetailsPage extends BaseDetailsPage {
                 detail.toString()
         );
 
-        selector += (detail == ApplicationDetail.Status) ? "/span" : "";
+        selector += (detail == ApplicationDetail.Status) ? "/strong" : "";
 
         return getText(selector, SelectorType.XPATH);
     }
@@ -27,7 +27,7 @@ public class ApplicationDetailsPage extends BaseDetailsPage {
     }
 
     public static String getAdvisoryText() {
-        return getText("//div[@class='guidance-blue']", SelectorType.XPATH);
+        return getText("//div[@class='govuk-inset-text']", SelectorType.XPATH);
     }
 
 }
