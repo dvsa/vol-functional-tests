@@ -65,12 +65,12 @@ public class VerifySwitchedOff extends BasePage implements En {
     }
 
     @When("the transport manager is the owner")
-    public void theTransportManagerIsTheOwner() throws IOException {
+    public void theTransportManagerIsTheOwner() {
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
     }
 
     @And("the transport manager is not the owner")
-    public void theTransportManagerIsNotTheOwner() throws IOException {
+    public void theTransportManagerIsNotTheOwner() {
         world.TMJourney.updateTMDetailsAndNavigateToDeclarationsPage("N", "N", "N", "N", "N");
     }
 

@@ -125,7 +125,7 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.clickSend();
     }
 
-    public void addOperatorAdminAsTransportManager() throws IOException {
+    public void addOperatorAdminAsTransportManager() {
         String user = String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName());
         nominateOperatorUserAsTransportManager(user, true);
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
@@ -144,7 +144,7 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.clickContinue();
     }
 
-    public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) throws IOException {
+    public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
         world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(),world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
@@ -157,7 +157,7 @@ public class TransportManagerJourney extends BasePage {
         updateTMDetailsAndNavigateToDeclarationsPage(isOwner, "N", "N", "N", "N");
     }
 
-    public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences) throws IOException {
+    public void updateTMDetailsAndNavigateToDeclarationsPage(String isOwner, String OtherLicence, String hasEmployment, String hasConvictions, String hasPreviousLicences)  {
         String hours = "8";
         findElement("//*[@value='Y'][@name='details[hasUndertakenTraining]']", SelectorType.XPATH, 30).click();
         findElement("//*[@value='" + OtherLicence + "'][@name='responsibilities[otherLicencesFieldset][hasOtherLicences]']", SelectorType.XPATH, 30).click();
@@ -190,7 +190,7 @@ public class TransportManagerJourney extends BasePage {
         waitForTextToBePresent("Declaration");
     }
 
-    public void submitTMApplicationAndNavigateToTMLandingPage() throws IOException {
+    public void submitTMApplicationAndNavigateToTMLandingPage() {
         updateTMDetailsAndNavigateToDeclarationsPage("Y", "N", "N", "N", "N");
         world.UIJourney.clickSubmit();
         clickByLinkText("Back to Transport");
@@ -212,7 +212,7 @@ public class TransportManagerJourney extends BasePage {
         waitForTextToBePresent("user account has been created and a link sent to them");
     }
 
-    public void assertTMDetailsWithOperator() throws IOException {
+    public void assertTMDetailsWithOperator() {
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'With operator')]", SelectorType.XPATH));
         Assert.assertTrue(isLinkPresent("View details", 10));
     }
