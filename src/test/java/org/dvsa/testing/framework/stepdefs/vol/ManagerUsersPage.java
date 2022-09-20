@@ -77,6 +77,6 @@ public class ManagerUsersPage extends BasePage implements En {
 
     @Then("user text should displaying current users")
     public void userTextShouldDisplayingCurrentUsers() {
-        Assert.assertEquals("2 Current users", getText("//*[@class='govuk-table__caption govuk-table__caption--m']", SelectorType.XPATH));
+        Assert.assertEquals("2 Current users", getText("//caption[@class='govuk-table__caption govuk-table__caption--m']", SelectorType.XPATH));
     }
 }
