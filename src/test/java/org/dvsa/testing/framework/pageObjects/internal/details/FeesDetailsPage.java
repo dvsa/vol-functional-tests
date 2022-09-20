@@ -3,7 +3,9 @@ package org.dvsa.testing.framework.pageObjects.internal.details;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.WebElement;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.pageObjects.enums.SelectorType.XPATH;
@@ -19,7 +21,7 @@ public class FeesDetailsPage extends BaseDetailsPage {
     }
 
     public static void outstanding() {
-        scrollAndClick("//th[last()]", XPATH);
+        waitAndClick("id[]",SelectorType.NAME);
     }
 
     public static void select1stFee() {

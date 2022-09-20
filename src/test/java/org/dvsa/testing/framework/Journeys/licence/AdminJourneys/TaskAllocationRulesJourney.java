@@ -46,6 +46,7 @@ public class TaskAllocationRulesJourney extends BasePage {
     public void editTaskAllocationRule() {
         waitForTitleToBePresent("Task allocation rules");
         waitAndClick("50", SelectorType.LINKTEXT);
+        waitForTitleToBePresent("Task allocation rules");
         selectRandomRadioBtnFromDataTable();
         waitAndClick("edit", SelectorType.ID);
         if (isTextPresent(alphaSplit)) {
