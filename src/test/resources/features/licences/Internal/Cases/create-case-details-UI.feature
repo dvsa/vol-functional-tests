@@ -47,7 +47,7 @@ Feature: Public enquiry added and published and deletion of case notes
 
   Examples:
     | NoteType          |
-    | Application       |
+    | AppApplicationlication       |
     | Bus Registration  |
     | Case              |
     | Licence           |
