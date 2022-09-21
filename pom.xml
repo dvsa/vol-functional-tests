@@ -37,9 +37,9 @@
         <gson.version>20210307</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
 
-        <forks>3</forks>
+        <forks>2</forks>
         <featuresPerRunner>6</featuresPerRunner>
-        <jvmMemory>5120</jvmMemory>
+        <jvmMemory>4096</jvmMemory>
     </properties>
 
     <repositories>
