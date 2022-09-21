@@ -37,7 +37,7 @@
         <gson.version>20210307</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
 
-        <forks>4</forks>
+        <forks>3</forks>
         <featuresPerRunner>7</featuresPerRunner>
         <jvmMemory>8192</jvmMemory>
     </properties>
@@ -142,7 +142,7 @@
                         </goals>
                         <configuration>
                             <forkCount>${forks}</forkCount>
-                            <reuseForks>true</reuseForks>
+                            <reuseForks>false</reuseForks>
                             <argLine>-Xmx${jvmMemory}m</argLine>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
                         </configuration>
