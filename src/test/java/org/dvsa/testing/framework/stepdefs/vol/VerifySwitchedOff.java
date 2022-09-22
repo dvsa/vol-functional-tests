@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import apiCalls.enums.UserType;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
@@ -8,10 +9,13 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Utils.Generic.Axe;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
+
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 

@@ -1,11 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Utils.Generic.Axe;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -175,6 +177,11 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @Then("a transport manager has been created banner is displayed")
     public void aTransportManagerHasBeenCreatedBannerIsDisplayed() {
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
         Assert.assertTrue(findElement("//p[@role]", SelectorType.XPATH, 10).getText().contains("The transport manager's user account has been created and a link sent to them"));
     }
 
