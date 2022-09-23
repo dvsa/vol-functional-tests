@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.CancellationConfirm
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class AnnualBilateralCancelPageSteps extends BasePage implements En {
 
@@ -17,7 +17,7 @@ public class AnnualBilateralCancelPageSteps extends BasePage implements En {
         Then ("^I should be taken to cancel confirmation page$", () -> {
             CancellationConfirmationPage.untilOnPage();
             assertEquals("Application cancelled", CancellationConfirmationPage.getPanelHeading());
-            assertEquals(BasePermitJourney.getFullReferenceNumber(), CancellationConfirmationPage.getReferenceNumberHeading());
+            assertTrue(BasePermitJourney.getFullReferenceNumber().contains(CancellationConfirmationPage.getReferenceNumberHeading()));
             assertEquals("What happens now", CancellationConfirmationPage.getAdvisoryHeadingPresent());
             assertEquals("You have cancelled your application and you will no longer be able to view or access it.", CancellationConfirmationPage.getAdvisoryTextPresent());
         });
