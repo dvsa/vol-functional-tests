@@ -47,6 +47,9 @@ public class TaskAllocationRulesJourney extends BasePage {
         waitForTitleToBePresent("Task allocation rules");
         waitAndClick("50", SelectorType.LINKTEXT);
         waitForTitleToBePresent("Task allocation rules");
+        //waitForTextToBePresent("Next");
+        //waitForElementToBeClickable("//tbody/tr[50]/td/input[@type='checkbox']", SelectorType.XPATH);
+        //waitForElementToBePresent("//tbody/tr[50]/td/input[@type='checkbox']");
         selectRandomRadioBtnFromDataTable();
         waitAndClick("edit", SelectorType.ID);
         if (isTextPresent(alphaSplit)) {
