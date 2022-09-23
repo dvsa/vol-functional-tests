@@ -30,7 +30,7 @@ public class PermitFeePage extends BasePermitPage {
                 "1 permit for Euro 5 minimum emission standard", "£10", "£10 (non-refundable)"};
 
         for (int i = 0; i <= tableHeadings.length - 1; i++) {
-            Assert.assertEquals(tableValues[i], getTableSectionValue(tableHeadings[i]));
+            Assert.assertTrue(tableValues[i].contains(getTableSectionValue(tableHeadings[i])));
         }
     }
 
