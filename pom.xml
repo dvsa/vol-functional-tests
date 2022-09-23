@@ -38,7 +38,7 @@
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
 
         <forks>5</forks>
-        <featuresPerRunner>6</featuresPerRunner>
+        <featuresPerRunner>5</featuresPerRunner>
         <jvmMemory>6144</jvmMemory>
     </properties>
 
