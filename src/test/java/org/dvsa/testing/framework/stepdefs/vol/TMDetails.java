@@ -1,18 +1,21 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
 import io.cucumber.datatable.DataTable;
+import org.dvsa.testing.framework.Utils.Generic.Axe;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.By;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -24,12 +27,16 @@ public class TMDetails extends BasePage implements En {
 
     @And("i navigate to the admin transport managers details page")
     public void iNavigateToTheAdminTransportManagersDetailsPage() {
-
         world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         String admin = getAttribute("*//td[contains(text(),'Administrator')]/../td[1]/input", SelectorType.XPATH, "value");
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
+        try {
+            Axe.axeScanner().scan(false);
+        } catch (IOException | IllegalBrowserException e) {
+            throw new RuntimeException(e);
+        }
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, admin);
         world.UIJourney.clickContinue();
     }

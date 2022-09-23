@@ -177,11 +177,6 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @Then("a transport manager has been created banner is displayed")
     public void aTransportManagerHasBeenCreatedBannerIsDisplayed() {
-        try {
-            Axe.axeScanner().scan(false);
-        } catch (IOException | IllegalBrowserException e) {
-            throw new RuntimeException(e);
-        }
         Assert.assertTrue(findElement("//p[@role]", SelectorType.XPATH, 10).getText().contains("The transport manager's user account has been created and a link sent to them"));
     }
 
