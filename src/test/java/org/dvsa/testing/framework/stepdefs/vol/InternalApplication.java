@@ -145,6 +145,7 @@ public class InternalApplication extends BasePage implements En {
         assertTrue(isTextPresent("(transportConsultantAddress)"));
         assertTrue(isTextPresent("(registeredAddress)"));
         assertTrue(isTextPresent("(operatingCentreAddress1)"));
+        assertTrue(isTextPresent("In Office Revocation (emailed)"));
     }
 
     @And("I delete generated letter above from the table")
