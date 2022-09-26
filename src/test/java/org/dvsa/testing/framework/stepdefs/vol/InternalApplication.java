@@ -141,7 +141,6 @@ public class InternalApplication extends BasePage implements En {
     @Then("all copies of the letter have been saved")
     public void allCopiesOfTheLetterHaveBeenSaved() {
         assertTrue(isTextPresent("(correspondenceAddress)"));
-        assertTrue(isTextPresent("(establishmentAddress)"));
         assertTrue(isTextPresent("(transportConsultantAddress)"));
         assertTrue(isTextPresent("(registeredAddress)"));
         assertTrue(isTextPresent("(operatingCentreAddress1)"));
