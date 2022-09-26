@@ -19,4 +19,7 @@ Feature: Generate letter pop up should contain letter details
       | email        |
       | printAndPost |
 
-#    Need full generation test and check it exists.
+  Scenario: Check Propose to revoke letter process
+    When i generate a letter of Subcategory In Office Revocation
+    And i save the letter clicking the Propose To Revoke button
+    Then all copies of the letter have been saved
