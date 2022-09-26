@@ -244,14 +244,14 @@ public class FinancialEvidence extends BasePage {
     @Then("i should be prompted to enter financial evidence information")
     public void iShouldBePromptedToEnterFinancialEvidenceInformation() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
-        assertTrue(isElementPresent("//span[contains(text(),'Financial evidence')]/../span[2][contains(text(),'REQUIRES ATTENTION')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//span[contains(text(),'Financial evidence')]/../strong[contains(text(),'REQUIRES ATTENTION')]", SelectorType.XPATH));
         assertTrue(isLinkPresent("Financial evidence", 10));
     }
 
     @Then("i should not be prompted to enter financial evidence information")
     public void iShouldNotBePromptedToEnterFinancialEvidenceInformation() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VIEW);
-        assertFalse(isElementPresent("//span[contains(text(),'Financial evidence')]/../span[2][contains(text(),'REQUIRES ATTENTION')]", SelectorType.XPATH));
+        assertFalse(isElementPresent("//span[contains(text(),'Financial evidence')]/../strong[contains(text(),'REQUIRES ATTENTION')]", SelectorType.XPATH));
         assertFalse(isLinkPresent("Financial evidence", 10));
     }
 }

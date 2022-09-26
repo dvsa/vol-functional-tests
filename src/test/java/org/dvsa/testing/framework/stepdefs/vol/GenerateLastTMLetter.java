@@ -5,6 +5,8 @@ import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
 import apiCalls.enums.UserType;
+import cucumber.api.Scenario;
+import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -20,6 +22,11 @@ public class GenerateLastTMLetter extends BasePage implements En {
 
     public GenerateLastTMLetter(World world) {
         this.world = world;
+    }
+
+    @Before
+    public void getScenarioName(Scenario scenario) {
+        System.out.println("Testing Scenario:" + scenario.getName());
     }
 
     @And("the last tm letter batch job has run")

@@ -105,9 +105,9 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("New Letter");
         clickById("New letter");
         waitForTextToBePresent("Generate letter");
-        waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 1);
-        waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 5);
+        waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 3);
+        waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 24);
         waitAndClick(submitButton, SelectorType.ID);
         waitForTextToBePresent("Amend letter");
     }
@@ -261,7 +261,7 @@ public class UIJourney extends BasePage {
     public void checkLicenceStatus(String arg0) {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
         waitForTextToBePresent("Licence status");
-        Assert.assertEquals(arg0.toUpperCase(), getElementValueByText("//span[contains(@class,'status')]", SelectorType.XPATH));
+        Assert.assertEquals(arg0.toUpperCase(), getElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH));
     }
 
     public void closeCase() {
@@ -377,7 +377,7 @@ public class UIJourney extends BasePage {
                 world.internalNavigation.getVariationApplication();
                 break;
         }
-        if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equals("UNDER CONSIDERATION")) {
+        if (getText("//*/strong[contains(@class,'govuk-tag govuk-tag--orange')]", SelectorType.XPATH).equals("UNDER CONSIDERATION")) {
             waitAndClick("//*[@id='menu-application_case']", SelectorType.XPATH);
         } else if (getText("//*/span[contains(@class,'status')]", SelectorType.XPATH).equals("VALID")) {
             waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);

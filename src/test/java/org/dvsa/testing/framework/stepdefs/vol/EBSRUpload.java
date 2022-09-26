@@ -25,19 +25,18 @@ public class EBSRUpload extends BasePage implements En {
     @Then("A short notice flag should be displayed in selfserve")
     public void aShortNoticeFlagShouldBeDisplayedInSelfserve() {
         world.busRegistrationJourney.viewEBSRInExternal();
-        assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
-        assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'New')]", SelectorType.XPATH));
-        assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'short notice')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'successful')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'short notice')]", SelectorType.XPATH));
     }
 
     @Then("A short notice flag should not be displayed in selfserve")
     public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() {
         world.busRegistrationJourney.viewEBSRInExternal();
         waitForTextToBePresent("successful");
-        assertTrue(isElementPresent("//span[@class='status green' and contains(text(),'successful')]", SelectorType.XPATH));
-        assertTrue(isElementPresent("//span[@class='status orange' and contains(text(),'New')]", SelectorType.XPATH));
-        assertFalse(isElementPresent("//span[@class='status orange' and contains(text(),'short notice')]", SelectorType.XPATH));
-
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'successful')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
+        assertFalse(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'short notice')]", SelectorType.XPATH));
     }
 
     @And("i add a new bus registration")
@@ -84,7 +83,7 @@ public class EBSRUpload extends BasePage implements En {
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
         }
-        long kickOutTime = System.currentTimeMillis() + 10000;
+        long kickOutTime = System.currentTimeMillis() + 30000;
         do {
             // Refresh page
             refreshPageWithJavascript();

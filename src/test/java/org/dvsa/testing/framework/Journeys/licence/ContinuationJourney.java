@@ -17,6 +17,7 @@ import org.openqa.selenium.By;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 public class ContinuationJourney extends BasePage {
 
@@ -107,10 +108,14 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void completeContinuationsSignPage()  {
-        click("content[signatureOptions]", SelectorType.ID);
-        click("sign", SelectorType.ID);
-        world.UIJourney.signWithVerify();
-        waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+        if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
+            click("content[signatureOptions]", SelectorType.ID);
+            click("sign", SelectorType.ID);
+            world.UIJourney.signWithVerify();
+            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+        } else {
+            waitAndClick("//*[contains(text(),'Print, sign and return')]", SelectorType.XPATH);
+        }
     }
 
     public void completeContinuationConditionsAndUndertakingsPage() {

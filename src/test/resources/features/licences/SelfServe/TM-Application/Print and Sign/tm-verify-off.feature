@@ -1,4 +1,3 @@
-@SS
 @Verify-Off
 Feature: Countersigning declaration page for the operator Print and Sign
 

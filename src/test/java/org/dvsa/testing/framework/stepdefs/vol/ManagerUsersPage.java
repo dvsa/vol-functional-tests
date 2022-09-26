@@ -61,7 +61,7 @@ public class ManagerUsersPage extends BasePage implements En {
     @Then("colour of the {string} button should be green")
     public void colourOfTheAddAUserButtonShouldBeGreen(String buttonName) {
         String buttonColour = Color.fromString(findElement(String.format("//*[contains(text(),'%s')]",buttonName), SelectorType.XPATH).getCssValue("background-color")).asHex();
-        Assert.assertEquals("#00823b", buttonColour);
+        Assert.assertEquals("#00703c", buttonColour);
     }
 
     @When("i add a user")
@@ -74,7 +74,6 @@ public class ManagerUsersPage extends BasePage implements En {
         findElements(".//tr/th[4]", SelectorType.XPATH).forEach(
                 title -> Assert.assertTrue(title.getText().contains(column)));
     }
-
     @Then("user text should displaying current users")
     public void userTextShouldDisplayingCurrentUsers() {
         Assert.assertEquals("2 Current users", getText("h2", SelectorType.CSS));

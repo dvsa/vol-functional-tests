@@ -1,4 +1,3 @@
-@SS
 @SS-Verify-On
 @OLCS-19792
 @ss_regression

@@ -13,9 +13,9 @@ import java.time.temporal.ChronoUnit;
 public class OverviewPage extends BasePermitPage {
 
     public static final String RESOURCE_URL = "permits/application/\\d+/";
-    private static String ACTIVE_SECTION_STATUS_TEMPLATE = "//span[contains(text(), '%s')]/following-sibling::span";
+    private static String ACTIVE_SECTION_STATUS_TEMPLATE = "//span[contains(text(), '%s')]/following-sibling::strong";
     private static String ACTIVE_BILATERAL_SECTION_STATUS_TEMPLATE = "//span/a[contains(text(), '%s')]/../following-sibling::span";
-    private static String DISABLED_SECTION_STATUS_TEMPLATE = "//div[contains(text(), '%s')]/span";
+    private static String DISABLED_SECTION_STATUS_TEMPLATE = "//div[contains(text(), '%s')]/strong";
     private static String DISABLED_BILATERAL_SECTION_STATUS_TEMPLATE = "//span/a[contains(text(), '%s')]/../span";
 
     public static void untilOnPage() {

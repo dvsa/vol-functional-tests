@@ -92,6 +92,20 @@ public class InternalApplication extends BasePage implements En {
         world.UIJourney.generatePTRLetter();
     }
 
+    @Then("The letter is sent by {string}")
+    public void theLetterIsSentBy(String sendOption) {
+        String objDef = String.format("form-actions[%s]", sendOption);
+        world.UIJourney.clickSubmit();
+        waitForTextToBePresent("Send letter");
+        click(objDef,SelectorType.ID);
+        if (sendOption.equals("email")) {
+            assertTrue(isTextPresent("The document has been saved and sent by email"));
+        } else {
+            assertTrue(isTextPresent("The document has been saved, printed and sent by post"));
+        }
+        assertEquals(generatedLetterType, getElementValueByText("//tbody/tr/td[@data-heading='Description']/a[1]",SelectorType.XPATH));
+    }
+
     @Then("the postcode warning message should be displayed on internal")
     public void thePostcodeWarningMessageShouldBeDisplayedOnInternal() {
         assertTrue(isTextPresent("This operating centre is in a different traffic area from the other centres."));

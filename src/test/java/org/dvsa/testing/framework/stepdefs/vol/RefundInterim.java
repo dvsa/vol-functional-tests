@@ -63,11 +63,11 @@ public class RefundInterim extends BasePage implements En {
         long kickoutTime = System.currentTimeMillis() + 60000;
         do {
             refreshPageWithJavascript();
-        } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
+        } while(!getText("//*//dd//strong", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
         if (System.currentTimeMillis() > kickoutTime) {
             throw new TimeoutException("Kickout time for expecting the interim fee to be refunded.");
         }
-        assertTrue(getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded"));
+        assertTrue(getText("//*//dd//strong", SelectorType.XPATH).toLowerCase().contains("refunded"));
         assertTrue(checkForPartialMatch("£68.00"));
     }
 

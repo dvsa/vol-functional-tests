@@ -67,6 +67,6 @@ public class PaymentProcessing extends BasePage {
         world.internalNavigation.getAdminEditFee(getFeeNumber());
         waitForTextToBePresent("Payments and adjustments");
         refreshPageWithJavascript();
-        assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), "PAID");
     }
 }

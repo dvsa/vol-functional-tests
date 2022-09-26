@@ -6,10 +6,10 @@
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
 
     <properties>
-        <active-support.version>1.6.6</active-support.version>
+        <active-support.version>1.6.6.1</active-support.version>
         <api-calls.version>1.1.11</api-calls.version>
         <uri-constructor.version>1.5.7</uri-constructor.version>
 
@@ -18,11 +18,11 @@
         <cucumber-java.version>4.4.0</cucumber-java.version>
         <cucumber-junit.version>4.4.0</cucumber-junit.version>
         <junit.version>4.12</junit.version>
-        <slf4j.version>2.17.1</slf4j.version>
-        <slf4j-log4j12.version>2.17.1</slf4j-log4j12.version>
+        <slf4j.version>2.18.0</slf4j.version>
+        <slf4j-log4j12.version>2.18.0</slf4j-log4j12.version>
         <commons-lang3.version>3.7</commons-lang3.version>
         <axe-scanner-version>2.6</axe-scanner-version>
-        <assertj-core-version>3.9.1</assertj-core-version>
+        <assertj-core-version>3.23.1</assertj-core-version>
         <hamcrest-version>1.3</hamcrest-version>
         <pico-container-version>4.4.0</pico-container-version>
         <allure-cucumber4-jvm.version>2.15.0</allure-cucumber4-jvm.version>
@@ -30,12 +30,16 @@
         <allure-mvn-version>2.10.0</allure-mvn-version>
         <cucable-plugin.version>1.9.0</cucable-plugin.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven.failsafe.plugin.version>3.0.0-M7</maven.failsafe.plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <maven.failsafe.plugin.version>2.22.0</maven.failsafe.plugin.version>
+        <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
         <allure-report-version>2.13.5</allure-report-version>
         <apache-commons.version>1.8</apache-commons.version>
         <gson.version>20210307</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
+
+        <forks>3</forks>
+        <featuresPerRunner>6</featuresPerRunner>
+        <jvmMemory>5120</jvmMemory>
     </properties>
 
     <repositories>
@@ -103,7 +107,7 @@
                     <generatedFeatureDirectory>${project.basedir}/target/parallel/features
                     </generatedFeatureDirectory>
                     <generatedRunnerDirectory>${project.basedir}/target/parallel/runners</generatedRunnerDirectory>
-                    <desiredNumberOfRunners>13</desiredNumberOfRunners>
+                    <desiredNumberOfFeaturesPerRunner>${featuresPerRunner}</desiredNumberOfFeaturesPerRunner>
                     <includeScenarioTags>${tag.name}</includeScenarioTags>
                 </configuration>
             </plugin>
@@ -137,11 +141,10 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <forkCount>2</forkCount>
+                            <forkCount>${forks}</forkCount>
                             <reuseForks>false</reuseForks>
-                            <testFailureIgnore>true</testFailureIgnore>
+                            <argLine>-Xmx${jvmMemory}m</argLine>
                             <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                            <argLine>-Dfile.encoding=UTF-8</argLine>
                         </configuration>
                     </execution>
                 </executions>

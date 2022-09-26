@@ -105,6 +105,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     public void theOperatorRejectsTheTransportManagersDetails() {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Home");
+        waitForTextToBePresent("Home");
         world.TMJourney.assertTMDetailsWithOperator();
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
