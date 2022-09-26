@@ -23,8 +23,9 @@ public class ExternalSearchFilter extends BasePage implements En {
         findSelectAllRadioButtonsByValue("licence");
         enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
         click(nameAttribute("input","submit"), SelectorType.CSS);
-        do { click(nameAttribute("button","submit"), SelectorType.CSS);}
-        while(!isElementPresent("//*[@class='table__wrapper']",SelectorType.XPATH));
+        while (!isLinkPresent(world.applicationDetails.getLicenceNumber(),20)){
+            click(nameAttribute("button","submit"), SelectorType.CSS);
+        }
     }
 
     @Then("the Organisation Type filter should be displayed")

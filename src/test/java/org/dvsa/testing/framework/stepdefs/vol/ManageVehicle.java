@@ -11,9 +11,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import io.restassured.response.ValidatableResponse;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
-import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.api.URL;
@@ -21,10 +19,7 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 
 import java.util.*;
 
