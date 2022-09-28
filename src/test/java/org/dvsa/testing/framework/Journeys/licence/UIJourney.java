@@ -112,6 +112,18 @@ public class UIJourney extends BasePage {
         waitForTextToBePresent("Amend letter");
     }
 
+    public void generatePTRLetter() {
+        clickByLinkText("Docs & attachments");
+        waitForTextToBePresent("New Letter");
+        clickById("New letter");
+        waitForTextToBePresent("Generate letter");
+        waitAndSelectByIndex("//*[@id='category']", SelectorType.XPATH, 2);
+        waitAndSelectByIndex("//*[@id='documentSubCategory']", SelectorType.XPATH, 4);
+        waitAndSelectByIndex("//*[@id='documentTemplate']", SelectorType.XPATH, 1);
+        waitAndClick(submitButton, SelectorType.ID);
+        waitForTextToBePresent("Amend letter");
+    }
+
     public void saveDocumentInInternal() {
         waitAndClick(submitButton, SelectorType.ID);
         waitAndClick("//*[@id='close']", SelectorType.XPATH);

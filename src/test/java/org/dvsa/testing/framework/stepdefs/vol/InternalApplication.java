@@ -28,6 +28,8 @@ public class InternalApplication extends BasePage implements En {
     private String editUndertakingLink = "//tbody/tr//input[contains(@name,'table[action][edit]')]";
     private String undertakingDescription = "//textarea[@name='fields[notes]']";
     private String expectedLGVOnlyUndertakingText = "All authorised vehicles shall not exceed 3,500 Kilograms (kg), including when combined with a trailer.";
+    private String proposeToRevoke = "//button[text()='Propose to revoke']";
+
     private String generatedLetterType = "GV blank letter to operator";
 
     public InternalApplication (World world) {this.world = world;}
@@ -87,6 +89,11 @@ public class InternalApplication extends BasePage implements En {
         assertTrue(docStoreLink.contains(".rtf"));
     }
 
+    @When("i generate a letter of Subcategory In Office Revocation")
+    public void iGenerateALetterOfSubcategoryInOfficeRevocation() {
+        world.UIJourney.generatePTRLetter();
+    }
+
     @Then("The letter is sent by {string}")
     public void theLetterIsSentBy(String sendOption) {
         String objDef = String.format("form-actions[%s]", sendOption);
@@ -121,6 +128,23 @@ public class InternalApplication extends BasePage implements En {
         waitForTextToBePresent("Send letter");
         click("//*[@id='close']",SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved");
+    }
+
+    @And("i save the letter clicking the Propose To Revoke button")
+    public void iSaveTheLetterClickingTheProposeToRevokeButton() {
+        world.UIJourney.clickSubmit();
+        waitForTextToBePresent("Send letter");
+        click(proposeToRevoke, SelectorType.XPATH);
+        waitForTextToBePresent("The document has been saved and sent by post and email");
+    }
+
+    @Then("all copies of the letter have been saved")
+    public void allCopiesOfTheLetterHaveBeenSaved() {
+        assertTrue(isTextPresent("(correspondenceAddress)"));
+        assertTrue(isTextPresent("(transportConsultantAddress)"));
+        assertTrue(isTextPresent("(registeredAddress)"));
+        assertTrue(isTextPresent("(operatingCentreAddress1)"));
+        assertTrue(isTextPresent("In Office Revocation (emailed)"));
     }
 
     @And("I delete generated letter above from the table")
