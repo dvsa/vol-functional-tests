@@ -1,4 +1,4 @@
-
+@long-semi-trailers
 Feature: Adding trailers to a licence on self serve - Longer semi and non longer semi trailers
 
   Scenario Outline: Adding longer semi trailers to a licence on self serve
