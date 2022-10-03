@@ -1,4 +1,4 @@
-
+@long-semi-trailers
 Feature: Change semi-trailer types on self serve
 
   Scenario Outline: Change semi-trailer types on self serve
