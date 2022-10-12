@@ -6,7 +6,7 @@ import activesupport.number.Int;
 import apiCalls.enums.TrafficArea;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import java.util.HashMap;
+import java.util.Random;
 
 public class DataGenerator extends BasePage {
 
@@ -104,5 +104,21 @@ public class DataGenerator extends BasePage {
 
     public void generateAndAddOperatorUser() {
         world.UIJourney.addUser();
+    }
+
+    public static String generateRandomWords(int numberOfWords) {
+        String[] randomStrings = new String[numberOfWords];
+        Random random = new Random();
+        String randomSentence = null;
+        for (int i = 0; i < numberOfWords; i++) {
+            char[] word = new char[random.nextInt(8) + 3];
+            for (int j = 0; j < word.length; j++) {
+                word[j] = (char) ('a' + random.nextInt(26));
+            }
+            randomStrings[i] = new String(word);
+            String delimiter = " ";
+            randomSentence = String.join(delimiter, randomStrings);
+        }
+        return randomSentence;
     }
 }
