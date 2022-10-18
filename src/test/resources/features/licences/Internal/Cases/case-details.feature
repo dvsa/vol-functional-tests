@@ -14,7 +14,7 @@ Feature: Add case details
 
   @Convictions
   Scenario: API - Add a conviction to a case
-    When I add conviction details
+    When I add conviction detailsz
     Then Conviction should be created
 
   @Conditions-Undertaking

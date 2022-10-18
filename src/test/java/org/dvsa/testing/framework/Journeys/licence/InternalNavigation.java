@@ -97,6 +97,14 @@ public class InternalNavigation extends BasePage {
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "/search/user/search/").toString();
     }
 
+    public void getCase() {
+        get(this.url.concat(String.format("case/details/%s", world.updateLicence.getCaseId())));
+    }
+
+    public void getCaseNote() {
+        get(this.url.concat(String.format("case/%s/processing/notes", world.updateLicence.getCaseId())));
+    }
+
     public void getApplication() {
         get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
@@ -143,6 +151,9 @@ public class InternalNavigation extends BasePage {
                 break;
             case "variation":
                 getVariationApplication();
+                break;
+            case "case":
+                getCase();
                 break;
         }
         switch (page.toString()) {

@@ -28,22 +28,23 @@ Feature: Public enquiry added and published and deletion of case notes
 
   @Create_Complaint
   Scenario: UI - Creating a case with a complaint
-    And I select a case to raise a complaint
-    Then Details should fill in the complaint form
-    And I save the form
+    And I navigate to a case
+    Then I raise a complaint
+    When I save the form
+    Then the complaint should be displayed
+
 
   @Condition_undertaking_case
   Scenario: UI - Add a condition-undertaking to a case
-    And I create a new case
-    Then Select a case to create new case for adding a condition-undertaking
-    And I add new case details
-    Then I save the form
-    And submit the Condition and Undertaking form
+    And I complete the conditions & undertakings form
+    Then the condition & undertaking should be displayed
 
   @Add_Case_Note
+  @WIP
   Scenario Outline: UI - Add a new case note
-    And select a "<NoteType>" to complete all forms by clicking add the button
-    Then I save the form
+    And I navigate to Notes
+    Then select a "<NoteType>" to complete all forms by clicking add the button
+    When I save the form
 
   Examples:
     | NoteType          |
@@ -56,8 +57,10 @@ Feature: Public enquiry added and published and deletion of case notes
 
   @Add_conviction_to_case
   Scenario: UI - Add a conviction to a case
-    Then I search for the case before adding conviction
-    And add conviction to the case
+    And I navigate to a case
+    And I add conviction to the case
+    Then the conviction should be created
+
 
 
 
