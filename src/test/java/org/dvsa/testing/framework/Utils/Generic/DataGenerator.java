@@ -4,9 +4,10 @@ import Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.enums.TrafficArea;
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import java.util.Random;
 
 public class DataGenerator extends BasePage {
 
@@ -19,6 +20,12 @@ public class DataGenerator extends BasePage {
     private String operatorAddressLine2;
     private String operatorTown;
     private String operatorPostCode;
+    private String randomWord;
+
+    public String getRandomWord() {return randomWord;}
+    public void setRandomWord(String randomWord) {
+        this.randomWord = randomWord;
+    }
 
     public String getOperatorForeName() {
         return operatorForeName;
@@ -86,6 +93,7 @@ public class DataGenerator extends BasePage {
 
     public DataGenerator(World world) {
         FakerUtils faker = new FakerUtils();
+        Lorem lorem = LoremIpsum.getInstance();
         setOperatorForeName(faker.generateFirstName());
         setOperatorFamilyName(faker.generateLastName());
         setOperatorUser(String.format("%s%s%s",
@@ -99,6 +107,7 @@ public class DataGenerator extends BasePage {
         setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
         setOperatorTown(faker.generateAddress().get("town"));
         setOperatorPostCode(TrafficArea.getPostCode(TrafficArea.MIDLANDS));
+        setRandomWord(lorem.getWords(10, 20));
         this.world = world;
     }
 
@@ -106,19 +115,6 @@ public class DataGenerator extends BasePage {
         world.UIJourney.addUser();
     }
 
-    public static String generateRandomWords(int numberOfWords) {
-        String[] randomStrings = new String[numberOfWords];
-        Random random = new Random();
-        String randomSentence = null;
-        for (int i = 0; i < numberOfWords; i++) {
-            char[] word = new char[random.nextInt(8) + 3];
-            for (int j = 0; j < word.length; j++) {
-                word[j] = (char) ('a' + random.nextInt(26));
-            }
-            randomStrings[i] = new String(word);
-            String delimiter = " ";
-            randomSentence = String.join(delimiter, randomStrings);
-        }
-        return randomSentence;
-    }
+
+
 }

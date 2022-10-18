@@ -7,6 +7,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
+import org.junit.Assert;
 
 public class SystemMessages extends BasePage {
     private final World world;
@@ -33,6 +34,7 @@ public class SystemMessages extends BasePage {
 
     @Then("The message should be displayed on the external screen")
     public void theMessageShouldBeDisplayedOnTheExternalScreen() {
-        world.systemMessagesJourney.checkForDisplayedMessageOnExternal();
+        world.selfServeNavigation.navigateToLoginPage();
+        Assert.assertTrue(isTextPresent(world.DataGenerator.getRandomWord()));
     }
 }
