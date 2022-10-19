@@ -66,12 +66,12 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     public void addConvictionToCase() {
         clickByLinkText("Convictions");
         waitAndClick("add", SelectorType.ID);
-        selectValueFromDropDownByIndex("//select[@id='defendantType']", SelectorType.XPATH, 1);
+        selectValueFromDropDownByIndex("//select[@id='defendantType']", SelectorType.XPATH, 2);
         enterText("//input[@id='fields[personFirstname]']", SelectorType.XPATH, faker.generateFirstName());
         enterText("//input[@id='fields[personLastname]']", SelectorType.XPATH, faker.generateLastName());
         HashMap<String, String> birthDate = new Dates(LocalDate::new).getDateHashMap(0, 0, -20);
         enterDateFieldsByPartialId("fields[birthDate]", birthDate);
-        selectValueFromDropDownByIndex("//select[@id='fields[msi]']", SelectorType.XPATH, 1);
+        selectValueFromDropDownByIndex("//select[@id='fields[msi]']", SelectorType.XPATH, 2);
         enterText("//textarea[@id='categoryText']", SelectorType.XPATH, convictionDescription);
         HashMap<String, String> offenceDate = new Dates(LocalDate::new).getDateHashMap(0, 0, -1);
         enterDateFieldsByPartialId("fields[offenceDate]", offenceDate);
@@ -97,11 +97,11 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     public void completConditionUndertakings() {
         clickByLinkText("Conditions and undertakings");
         waitAndClick("add", SelectorType.ID);
-        selectValueFromDropDownByIndex("type", SelectorType.ID, 2);
+        selectValueFromDropDownByIndex("type", SelectorType.ID, 3);
         selectValueFromDropDownByIndex("conditionCategory", SelectorType.ID, 3);
         enterText("notes", SelectorType.ID, convictionDescription);
         click("//*[@id='fields[fulfilled]']", SelectorType.XPATH);
-        selectValueFromDropDownByIndex("//*[@id=\"attachedTo\"]", SelectorType.XPATH, 1);
+        selectValueFromDropDownByIndex("//*[@id=\"attachedTo\"]", SelectorType.XPATH, 3);
         world.UIJourney.clickSubmit();
     }
 
