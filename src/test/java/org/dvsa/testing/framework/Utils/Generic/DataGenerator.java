@@ -114,7 +114,4 @@ public class DataGenerator extends BasePage {
     public void generateAndAddOperatorUser() {
         world.UIJourney.addUser();
     }
-
-
-
 }
