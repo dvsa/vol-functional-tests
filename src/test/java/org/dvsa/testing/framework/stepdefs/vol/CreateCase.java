@@ -137,11 +137,7 @@ public class CreateCase extends BasePage implements En {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.UIJourney.createCaseUI(page);
-    }
-    @And("I save the form")
-    public void saveTheComplaintForm() {
-        world.UIJourney.clickSubmit();
-    }
+}
 
     @And("submit the Condition and Undertaking form")
     public void submitTheConditionAndUndertakingForm() {
@@ -177,20 +173,23 @@ public class CreateCase extends BasePage implements En {
     public void iCompleteTheConditionsUndertakingsForm() {
         world.convictionsAndPenaltiesJourney.completConditionUndertakings();
     }
-
-    @And("select a {string} to complete all forms by clicking add the button")
-    public void addNoteTypeCase(String NoteType){
-        world.convictionsAndPenaltiesJourney.addAllNoteTypeCase(NoteType);
-    }
-
     @Then("the condition & undertaking should be displayed")
     public void theConditionUndertakingShouldBeDisplayed() {
         waitForTextToBePresent(world.convictionsAndPenaltiesJourney.getConvictionDescription());
         Assert.assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
     }
-
     @And("I navigate to Notes")
     public void iNavigateToNotes() {
         world.internalNavigation.getCaseNote();
+    }
+
+    @Then("the note should be displayed")
+    public void theNoteShouldBeDisplayed() {
+        Assert.assertTrue(isTextPresent(String.valueOf(world.updateLicence.getCaseId())));
+    }
+
+    @Then("I add a Note")
+    public void iAddANote() {
+        world.convictionsAndPenaltiesJourney.addANote();
     }
 }

@@ -31,9 +31,7 @@ Feature: Public enquiry added and published and deletion of case notes
   Scenario: UI - Creating a case with a complaint
     And I navigate to a case
     Then I raise a complaint
-    When I save the form
     Then the complaint should be displayed
-
 
   @Condition_undertaking_case
   Scenario: UI - Add a condition-undertaking to a case
@@ -41,20 +39,10 @@ Feature: Public enquiry added and published and deletion of case notes
     Then the condition & undertaking should be displayed
 
   @Add_Case_Note
-  @WIP
-  Scenario Outline: UI - Add a new case note
+  Scenario: UI - Add a new case note
     And I navigate to Notes
-    Then select a "<NoteType>" to complete all forms by clicking add the button
-    When I save the form
-
-  Examples:
-    | NoteType          |
-    | Application       |
-    | Bus Registration  |
-    | Case              |
-    | Licence           |
-    | Permit            |
-    | Transport Manager |
+    Then I add a Note
+    Then the note should be displayed
 
   @Add_conviction_to_case
   Scenario: UI - Add a conviction to a case

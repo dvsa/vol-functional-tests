@@ -91,10 +91,10 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         enterDateFieldsByPartialId("complaintDate", complaintDate);
         selectValueFromDropDownByIndex("//select[@id='complaintType']", SelectorType.XPATH, 1);
         selectValueFromDropDownByIndex("//select[@id='status']", SelectorType.XPATH, 1);
+        world.UIJourney.clickSubmit();
     }
 
     public void completConditionUndertakings() {
-        generateConvictionDescription();
         clickByLinkText("Conditions and undertakings");
         waitAndClick("add", SelectorType.ID);
         selectValueFromDropDownByIndex("type", SelectorType.ID, 2);
@@ -105,11 +105,9 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         world.UIJourney.clickSubmit();
     }
 
-    public void addAllNoteTypeCase(String NoteType) {
-     /*   waitAndClick("noteType", SelectorType.ID);
-        selectValueFromDropDown("//select[@id='noteType']", SelectorType.XPATH, NoteType);
-        click("//button[@id='add']", SelectorType.XPATH);*/
-        // WIP
+    public void addANote() {
+        waitAndClick("add", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
 }
