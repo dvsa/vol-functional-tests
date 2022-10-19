@@ -152,9 +152,6 @@ public class InternalNavigation extends BasePage {
             case "variation":
                 getVariationApplication();
                 break;
-            case "case":
-                getCase();
-                break;
         }
         switch (page.toString()) {
             case "View":
