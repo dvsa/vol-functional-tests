@@ -76,5 +76,6 @@ public class Initialisation extends BasePage implements En {
         world.typeOfLicence = new TypeOfLicenceJourney(world);
         world.psvJourney = new PSVJourney(world);
         world.trailersJourney = new TrailersJourney(world);
+        world.govSignInJourney = new GovSignInJourney(world);
     }
 }

@@ -60,6 +60,8 @@ public class World {
     public PrintingAndScanningJourney printingAndScanningJourney;
     public PSVJourney psvJourney;
 
+    public GovSignInJourney govSignInJourney;
+
 
     public TypeOfLicenceJourney typeOfLicence;
     public GeneralVariationJourney generalVariationJourney;

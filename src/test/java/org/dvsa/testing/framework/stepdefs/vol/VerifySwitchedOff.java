@@ -5,6 +5,7 @@ import apiCalls.enums.UserType;
 import cucumber.api.Scenario;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import cucumber.api.java8.En;
@@ -86,5 +87,4 @@ public class VerifySwitchedOff extends BasePage implements En {
         Assert.assertTrue(isTextPresent("Transport Manager details approved"));
         Assert.assertTrue(isTextPresent("Print, sign and return"));
     }
-
 }
