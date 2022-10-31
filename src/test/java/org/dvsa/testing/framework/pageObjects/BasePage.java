@@ -575,18 +575,6 @@ public abstract class BasePage extends DriverUtils {
                 (ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
     }
 
-    public static void switchToPopWindow() {
-        String parentWindow = driver.getWindowHandle();
-        Set<String> windowHandles = driver.getWindowHandles();
-        Iterator<String> iterator = windowHandles.iterator();
-        while (iterator.hasNext()) {
-            String handle = iterator.next();
-            if (!handle.contains(parentWindow)) {
-                driver.switchTo().window(handle);
-            }
-        }
-    }
-
     public static String getSelectedTextFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
         Select option = new Select(findElement(selector, selectorType));
         return option.getFirstSelectedOption().getText();
