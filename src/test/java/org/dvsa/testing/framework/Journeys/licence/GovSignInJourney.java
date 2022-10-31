@@ -1,20 +1,15 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
-import com.mailslurp.apis.InboxControllerApi;
-import com.mailslurp.clients.ApiException;
-import com.mailslurp.models.InboxDto;
+import activesupport.mail.MailSlurp;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-
 import static activesupport.driver.Browser.navigate;
-import static activesupport.driver.MailSlurp.mailslurpClient;
+
 
 public class GovSignInJourney extends BasePage {
 
     private World world;
-
-    private static InboxDto inbox;
 
     public GovSignInJourney(World world) {this.world = world;}
 
@@ -27,10 +22,10 @@ public class GovSignInJourney extends BasePage {
         navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
     }
 
-    public void createGovAccount() throws ApiException {
-        InboxControllerApi inboxControllerApi = new InboxControllerApi(mailslurpClient);
-        inbox =  inboxControllerApi.createInbox(null,null,null,null,null,null,null,null,null,null,null);
-        waitAndEnterText("email", SelectorType.ID, inbox.getEmailAddress());
+    public void createGovAccount() throws Exception {
+        MailSlurp mailSlurp = new MailSlurp();
+        waitAndClick("create-account-link", SelectorType.ID);
+        waitAndEnterText("email", SelectorType.ID, mailSlurp.generateTempEmailAddress());
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
     }
 

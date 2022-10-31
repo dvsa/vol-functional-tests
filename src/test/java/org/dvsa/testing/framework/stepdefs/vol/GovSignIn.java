@@ -17,7 +17,7 @@ public class GovSignIn extends BasePage {
     }
 
     @And("I create an account")
-    public void iCreateAnAccount() throws ApiException {
+    public void iCreateAnAccount() throws Exception {
         world.govSignInJourney.createGovAccount();
     }
 }

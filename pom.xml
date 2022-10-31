@@ -194,11 +194,6 @@
             <version>${active-support.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.mailslurp</groupId>
-            <artifactId>mailslurp-client-java</artifactId>
-            <version>LATEST</version>
-        </dependency>
-        <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>accessibility-library</artifactId>
             <version>${axe-scanner-version}</version>
