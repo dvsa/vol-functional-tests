@@ -64,6 +64,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     }
 
     public void addConvictionToCase() {
+        generateConvictionDescription();
         clickByLinkText("Convictions");
         waitAndClick("add", SelectorType.ID);
         selectValueFromDropDownByIndex("//select[@id='defendantType']", SelectorType.XPATH, 2);
@@ -95,13 +96,14 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
     }
 
     public void completConditionUndertakings() {
+        generateConvictionDescription();
         clickByLinkText("Conditions and undertakings");
         waitAndClick("add", SelectorType.ID);
-        selectValueFromDropDownByIndex("type", SelectorType.ID, 3);
+        selectValueFromDropDownByIndex("type", SelectorType.ID, 2);
         selectValueFromDropDownByIndex("conditionCategory", SelectorType.ID, 3);
         enterText("notes", SelectorType.ID, convictionDescription);
         click("//*[@id='fields[fulfilled]']", SelectorType.XPATH);
-        selectValueFromDropDownByIndex("//*[@id=\"attachedTo\"]", SelectorType.XPATH, 3);
+        selectValueFromDropDownByIndex("attachedTo", SelectorType.ID, 2);
         world.UIJourney.clickSubmit();
     }
 
