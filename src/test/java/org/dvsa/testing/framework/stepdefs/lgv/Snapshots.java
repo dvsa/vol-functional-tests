@@ -15,16 +15,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class Snapshots extends BasePage {
 
     World world;
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
-    private String expectedLgvChoiceTableHeading = "Will you only be operating Light goods vehicles?";
-    private String expectedLgvDeclarationTableHeading = "I will only operate Light goods vehicles with a total maximum weight up to and including 3,500 Kilograms (kg) including when combined with a trailer.";
+    private final String expectedLgvChoiceTableHeading = "Will you only be operating Light goods vehicles?";
+    private final String expectedLgvDeclarationTableHeading = "I will only operate Light goods vehicles with a total maximum weight up to and including 3,500 Kilograms (kg) including when combined with a trailer.";
 
-    private String lightGoodsVehicleDecisionElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvChoiceTableHeading);
-    private String lightGoodsVehicleDeclarationElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvDeclarationTableHeading);
+    private final String lightGoodsVehicleDecisionElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvChoiceTableHeading);
+    private final String lightGoodsVehicleDeclarationElement = String.format("//*[contains(text(),'%s')]/..", expectedLgvDeclarationTableHeading);
 
     public Snapshots(World world) {this.world = world;}
 

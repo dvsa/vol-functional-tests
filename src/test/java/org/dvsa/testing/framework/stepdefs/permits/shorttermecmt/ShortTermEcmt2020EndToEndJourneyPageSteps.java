@@ -13,7 +13,8 @@ import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECM
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
-import static org.junit.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage implements En {
     public ShortTermEcmt2020EndToEndJourneyPageSteps(World world)  {

@@ -12,10 +12,10 @@ import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.hamcrest.core.StringContains;
-import org.junit.Assert;
 
 import static org.dvsa.testing.framework.enums.PermitStatus.COMPLETED;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CheckYourAnswersPageSteps implements En {
 

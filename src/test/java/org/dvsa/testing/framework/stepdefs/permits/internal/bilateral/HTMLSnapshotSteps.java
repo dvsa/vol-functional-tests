@@ -8,11 +8,11 @@ import org.dvsa.testing.framework.pageObjects.external.enums.sections.BilateralS
 import org.dvsa.testing.framework.pageObjects.internal.details.DocumentsPage;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HTMLSnapshotSteps extends BasePage implements En {
 

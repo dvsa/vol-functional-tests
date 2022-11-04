@@ -11,10 +11,10 @@ import org.dvsa.testing.framework.pageObjects.external.pages.CheckYourAnswerPage
 import org.dvsa.testing.framework.pageObjects.external.pages.RestrictedCountriesPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.hamcrest.core.StringContains;
-import org.junit.Assert;
 
 import static org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CheckYourAnswersPageSteps extends BasePage implements En {
     

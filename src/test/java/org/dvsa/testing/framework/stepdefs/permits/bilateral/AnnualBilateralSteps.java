@@ -15,7 +15,6 @@ import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
 import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualBilateralPermit;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.junit.Assert;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,8 +23,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.junit.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AnnualBilateralSteps extends BasePage implements En {
     public AnnualBilateralSteps(World world) {
@@ -94,7 +94,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             // Verify status is pending
             // Changed to assert is VALID
-            assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
+            assertTrue(permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID),message);
 
             // Verify that Type is displayed as per the selection
             assertTrue(NumberOfPermitsPageJourney.getLabel().contains(ValidPermitsPage.getType()));
@@ -106,7 +106,7 @@ public class AnnualBilateralSteps extends BasePage implements En {
                                     Collectors.toList()))
             );
 
-            grouped.forEach((k, v) -> IntStream.range(0, v.size() - 1).forEach(i -> Assert.assertThat(v.get(i),
+            grouped.forEach((k, v) -> IntStream.range(0, v.size() - 1).forEach(i -> assertThat(v.get(i),
                     lessThanOrEqualTo(v.get(i+1)))));
 
             // Verify it's listed by country going in ascending order
@@ -122,9 +122,8 @@ public class AnnualBilateralSteps extends BasePage implements En {
                                 permits.get(idx).getExpiryDate().isEqual(permits.get(idx + 1).getExpiryDate())
                 );
                 // Check expiry date matches that of stock window
-                Assert.assertThat(expiryDates, hasItem(permits.get(idx).getExpiryDate()));
+                assertThat(expiryDates, hasItem(permits.get(idx).getExpiryDate()));
             });
         });
     }
 }
-

@@ -5,8 +5,9 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.EmissionStandardsPage;
 
-import static org.junit.assertEquals;
-import static org.junit.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class UkraineEmissionsStandardsSteps implements En {
     public UkraineEmissionsStandardsSteps(World world) {
@@ -35,4 +36,3 @@ public class UkraineEmissionsStandardsSteps implements En {
         When("^I get advisory text that I don't need Ukraine permits$", EmissionStandardsPage::ukraineSelectNoAdvisoryText);
     }
 }
-

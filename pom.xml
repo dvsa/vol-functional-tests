@@ -22,7 +22,6 @@
         <cucumber-java.version>7.9.0</cucumber-java.version>
         <pico-container-version>7.9.0</pico-container-version>
         <junit-platform-suite.version>1.9.0</junit-platform-suite.version>
-        <junit-jupiter.version>5.9.0</junit-jupiter.version>
 
         <allure-cucumber5-jvm.version>2.19.0</allure-cucumber5-jvm.version>
         <allure-report.version>2.19.0</allure-report.version>
@@ -36,7 +35,7 @@
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn.version>2.10.0</allure-mvn.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <apache-commons.version>1.9.0</apache-commons.version>
         <gson.version>20220924</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
@@ -121,24 +120,22 @@
             <version>${cucumber-junit.version}</version>
             <scope>test</scope>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter</artifactId>-->
-<!--            <version>${junit-jupiter.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.junit.platform</groupId>-->
-<!--            <artifactId>junit-platform-suite</artifactId>-->
-<!--            <version>${junit-platform-suite.version}</version>-->
-<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-suite -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>1.9.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
 <!--        <dependency>-->
 <!--            <groupId>org.junit.jupiter</groupId>-->
 <!--            <artifactId>junit-jupiter-api</artifactId>-->
-<!--            <version>${junit-jupiter.version}</version>-->
+<!--            <version>5.9.1</version>-->
 <!--            <scope>test</scope>-->
 <!--        </dependency>-->
+
+
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>active-support</artifactId>
