@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;

@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.pages.InternalBaseJourney;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;

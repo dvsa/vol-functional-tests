@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
 import io.cucumber.java8.En;;
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 

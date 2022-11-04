@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.*;

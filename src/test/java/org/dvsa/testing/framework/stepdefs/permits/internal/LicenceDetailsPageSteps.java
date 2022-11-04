@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java8.En;
 import org.dvsa.testing.framework.pageObjects.internal.details.BaseDetailsPage;
 import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;

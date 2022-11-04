@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;

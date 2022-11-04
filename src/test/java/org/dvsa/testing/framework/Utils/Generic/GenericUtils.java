@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
 import activesupport.jenkins.Jenkins;

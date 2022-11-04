@@ -1,9 +1,8 @@
 package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 
 public class PrintingAndScanningJourney extends BasePage {
     private final World world;

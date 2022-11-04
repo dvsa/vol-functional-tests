@@ -1,4 +1,4 @@
-package Injectors;
+package org.dvsa.testing.framework.Injectors;
 
 import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;

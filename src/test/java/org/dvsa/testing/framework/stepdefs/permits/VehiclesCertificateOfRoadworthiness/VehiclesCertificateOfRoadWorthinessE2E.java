@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.VehiclesCertificateOfRoadwor
 
 import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.pages.BasePermitPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;

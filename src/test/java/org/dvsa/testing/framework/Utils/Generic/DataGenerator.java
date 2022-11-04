@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.enums.TrafficArea;

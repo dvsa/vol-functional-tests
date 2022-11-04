@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.number.Int;
 import activesupport.system.Properties;
 import io.cucumber.java8.En;

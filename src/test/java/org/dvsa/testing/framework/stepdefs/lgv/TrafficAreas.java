@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.VehicleType;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

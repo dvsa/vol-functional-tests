@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;

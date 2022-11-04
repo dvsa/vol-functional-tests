@@ -2,7 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.internal.bilateral;
 
 import activesupport.driver.Browser;
 import io.cucumber.java8.En;
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.external.enums.sections.BilateralSection;
 import org.dvsa.testing.framework.pageObjects.internal.details.DocumentsPage;

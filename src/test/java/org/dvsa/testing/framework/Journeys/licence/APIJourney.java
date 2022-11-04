@@ -1,12 +1,10 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
-import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import apiCalls.enums.*;
-import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.joda.time.LocalDate;
 

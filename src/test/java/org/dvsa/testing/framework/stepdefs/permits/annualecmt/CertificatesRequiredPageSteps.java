@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.CertificatesRequiredPageJourney;

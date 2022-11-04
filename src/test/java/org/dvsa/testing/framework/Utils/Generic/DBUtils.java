@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.database.exception.UnsupportedDatabaseDriverException;
 import activesupport.system.Properties;
 import org.dvsa.testing.framework.Global.Configuration;

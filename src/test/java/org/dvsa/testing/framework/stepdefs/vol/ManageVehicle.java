@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.http.RestUtils;
 import activesupport.system.Properties;
 import apiCalls.Utils.generic.Headers;
@@ -327,28 +327,6 @@ public class ManageVehicle extends BasePage {
     public void theShouldBeDisplayedOnThePage(String vrm) {
         isTextPresent(String.format("Vehicle %s has been added", vrm));
     }
-
-    @After
-    public void removeVehicleOnLicence() {
-        JSONObject json = new JSONObject();
-        Map<String, String> queryParams = new HashMap<>();
-        {
-            queryParams.put("includeActive", "1");
-            queryParams.put("page", "1");
-            queryParams.put("limit", "100");
-            queryParams.put("sort", "vehicle");
-            queryParams.put("order", "DESC");
-        }
-        ValidatableResponse response;
-        Headers apiHeaders = new Headers();
-        apiHeaders.headers.put("Authorization", "Bearer " + AccessToken.getToken(Utils.config.getString("adminUser"), Utils.config.getString("adminPassword"), UserType.INTERNAL.asString()));
-
-        response = RestUtils.getWithQueryParams(String.format(URL.build(this.env, "licence/%s/vehicles/").toString(), world.createApplication.getLicenceId()), queryParams, world.createApplication.apiHeaders.getHeaders());
-        List<Object> responseArray = response.extract().body().jsonPath().get("results.id.findAll()");
-        json.put("ids", responseArray);
-        RestUtils.delete(json.toString(), URL.build(this.env, "licence-vehicle/").toString(), apiHeaders.headers);
-    }
-
     @Then("i remove the {int} extra vehicles")
     public void iRemoveTheExtraVehicles(int numberOfVehicles) throws InterruptedException {
         isTextPresent("");
