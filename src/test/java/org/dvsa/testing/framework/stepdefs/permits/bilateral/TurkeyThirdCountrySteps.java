@@ -6,8 +6,9 @@ import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.TurkeyThirdCountryPage;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class TurkeyThirdCountrySteps implements En {
     public TurkeyThirdCountrySteps(World world) {
@@ -42,4 +43,3 @@ public class TurkeyThirdCountrySteps implements En {
         });
     }
 }
-

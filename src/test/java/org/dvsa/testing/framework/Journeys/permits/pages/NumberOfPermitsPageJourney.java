@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage.getBilateralErrorMessage;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NumberOfPermitsPageJourney extends BasePermitJourney {
 

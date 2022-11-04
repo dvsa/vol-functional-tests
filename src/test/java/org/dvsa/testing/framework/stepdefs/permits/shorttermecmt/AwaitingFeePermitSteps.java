@@ -10,12 +10,11 @@ import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.DeclineGrantedPermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.GrantedPermitRestrictionsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class AwaitingFeePermitSteps extends BasePermitPage implements En {
 
@@ -28,7 +27,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
             HomePage.PermitsTab.selectFirstOngoingApplication();
         });
         And("^the user is taken to the awaiting fee page$", () -> {
-            Assert.assertTrue(isPath("/permits/application/\\d+/awaiting-fee/"));
+            assertTrue(isPath("/permits/application/\\d+/awaiting-fee/"));
         });
         And("^I should be on the short term decline awarded permits page$", () -> {
             DeclineGrantedPermitPage.untilOnPage();
@@ -53,7 +52,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         });
         And("^the declined permit application is not displayed on the permit dashboard$", () -> {
             String permitLicence= String.valueOf(HomePage.PermitsTab.getPermitsWithStatus(HomePage.PermitsTab.Table.ongoing, PermitStatus.AWAITING_FEE));
-            Assert.assertNotEquals(world.applicationDetails.getLicenceNumber(), permitLicence);
+            assertNotEquals(world.applicationDetails.getLicenceNumber(), permitLicence);
         });
         And("^I select accept and continue button without confirming decline checkbox$", DeclineGrantedPermitPage::saveAndContinue);
         And("^the error message is displayed$", () -> {
@@ -61,17 +60,16 @@ public class AwaitingFeePermitSteps extends BasePermitPage implements En {
         });
         And("^I click the view permit restriction link$", PermitFeePage::clickPermitRestrictionLink);
         And("^the user is taken to the allocated candidate permit view page$", () -> {
-            isPath("/application/\\d+/unpaid-permits/");
+            assertTrue(isPath("/application/\\d+/unpaid-permits/"));
         });
         And("^the details are displayed as expected$", () -> {
             String heading = GrantedPermitRestrictionsPage.getPageHeading();
             assertEquals("Granted permits restrictions", heading);
             List<String> tableHeadings = GrantedPermitRestrictionsPage.getTableRowHeadings();
-            Assert.assertEquals("Permit", tableHeadings.get(0));
-            Assert.assertEquals("Minimum emission standard", tableHeadings.get(1));
-            Assert.assertEquals("Not valid to travel to", tableHeadings.get(2));
+            assertEquals("Permit", tableHeadings.get(0));
+            assertEquals("Minimum emission standard", tableHeadings.get(1));
+            assertEquals("Not valid to travel to", tableHeadings.get(2));
         });
         And("^I select the return to fee overview link$", GrantedPermitRestrictionsPage::returnToFeeSummaryPage);
-
     }
 }

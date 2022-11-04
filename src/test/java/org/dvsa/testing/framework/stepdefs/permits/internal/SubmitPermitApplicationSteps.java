@@ -3,7 +3,7 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 import Injectors.World;
 import activesupport.number.Int;
 import activesupport.system.Properties;
-import io.cucumber.java8.En;;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
@@ -20,7 +20,7 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage.*;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class SubmitPermitApplicationSteps extends BasePage implements En {
@@ -187,7 +187,8 @@ public class SubmitPermitApplicationSteps extends BasePage implements En {
         int numberOfPermits = Int.random(1, 5);
 
         //Fill application
-        isPath("/licence/\\d+/irhp-application/edit/\\d+/");
+        waitForTextToBePresent("Edit");
+        assertTrue(isPath("/licence/\\d+/irhp-application/edit/\\d+/"));
         emissionRadioSelectNew();
         needECMTPermit();
         cabotageEligibility();

@@ -25,7 +25,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToLogin(String username, String emailAddress) {
-        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.INTERNAL);
+        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.INTERNAL, "yes");
     }
 
     public void logInAsAdmin() {
@@ -47,7 +47,7 @@ public class InternalNavigation extends BasePage {
     }
 
     public void adminNavigation(@NotNull AdminOption option) {
-        click(adminDropdown, SelectorType.XPATH);
+        waitAndClick(adminDropdown, SelectorType.XPATH);
         clickByLinkText(option.toString());
         switch (option) {
             case CONTINUATIONS:
@@ -97,6 +97,14 @@ public class InternalNavigation extends BasePage {
         String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "/search/user/search/").toString();
     }
 
+    public void getCase() {
+        get(this.url.concat(String.format("case/details/%s", world.updateLicence.getCaseId())));
+    }
+
+    public void getCaseNote() {
+        get(this.url.concat(String.format("case/%s/processing/notes", world.updateLicence.getCaseId())));
+    }
+
     public void getApplication() {
         get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
@@ -128,17 +136,13 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page) {
-        if (isElementNotPresent(world.internalNavigation.adminDropdown,SelectorType.XPATH)) {
+        if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
             if (world.updateLicence.getInternalUserId() == null) {
                 world.APIJourney.createAdminUser();
-                if (!getCurrentUrl().contains("iuweb")) {
-                    world.internalNavigation.logInAsAdmin();
-                }
+                world.internalNavigation.logInAsAdmin();
             }
         }
-
-
-        switch(type) {
+        switch (type) {
             case "application":
                 getApplication();
                 break;

@@ -12,9 +12,10 @@ import org.dvsa.testing.framework.pageObjects.internal.details.DocsAndAttachment
 import org.dvsa.testing.framework.pageObjects.internal.details.DocumentsPage;
 import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsDetailsPage;
-import org.junit.Assert;
 
 import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
 
@@ -34,20 +35,20 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage implements En {
             DocumentsPage.untilOnPage();
             String selectLicence1 = world.applicationDetails.getLicenceNumber();
             // Check heading contains correct heading
-            Assert.assertTrue(String.valueOf(getText("h2").contains(selectLicence1)),true);
+            assertTrue(true,String.valueOf(getText("h2").contains(selectLicence1)));
             // Verify Euro 6
-            Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.CheckIfYouNeedECMTPermits).isEmpty());
+            assertFalse(DocumentsPage.getSectionBody(ApplicationSection.CheckIfYouNeedECMTPermits).isEmpty());
             // Verify Cabotage
-            Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Cabotage).isEmpty());
+            assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Cabotage).isEmpty());
             // Verify restricted countries
-            Assert.assertEquals(BasePermitJourney.getCountriesWithLimitedPermitsChoice(),
+            assertEquals(BasePermitJourney.getCountriesWithLimitedPermitsChoice(),
                     (Str.find("(?i)(yes|no)", DocumentsPage.getSectionBody(ApplicationSection.RestrictedCountries)).get()).trim().equalsIgnoreCase("yes")
             );
             //TODO hasRestrictedCountries is defaulting to false because it is a null boolean. Needs changing.
 
             // Verify percentage of international journey
-            Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.NumberOfPermits).isEmpty());
-            Assert.assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Euro6).isEmpty());
+            assertFalse(DocumentsPage.getSectionBody(ApplicationSection.NumberOfPermits).isEmpty());
+            assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Euro6).isEmpty());
         });
     }
 // Could improve tests to check matches answers given earlier.

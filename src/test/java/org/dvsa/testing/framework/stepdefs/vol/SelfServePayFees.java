@@ -5,9 +5,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SelfServePayFees extends BasePage {
     private World world;
@@ -18,7 +17,7 @@ public class SelfServePayFees extends BasePage {
 
         @When("^I pay fees on self serve")
         public void iPayFeesOnSelfServe() {
-        click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.payFee(null, "card");
     }
 

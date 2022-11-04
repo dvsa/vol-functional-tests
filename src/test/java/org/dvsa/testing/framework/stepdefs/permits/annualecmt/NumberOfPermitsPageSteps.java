@@ -10,9 +10,9 @@ import org.dvsa.testing.framework.pageObjects.enums.Tab;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NumberOfPermitsPageSteps extends BasePage implements En {
 
@@ -33,8 +33,8 @@ public class NumberOfPermitsPageSteps extends BasePage implements En {
             world.feeAndPaymentJourney.customerPaymentModule();
         });
         Then("^I am taken to the payment successful page$", () -> {
-            isPath("//fees/receipt/");
-            Assert.assertEquals(BasePage.getElementValueByText("//h1[@class='js-title']",SelectorType.XPATH),"Payment successful");
+            assertTrue(isPath("/fees/receipt/"));
+            assertEquals(BasePage.getElementValueByText("//h1[@class='js-title']",SelectorType.XPATH),"Payment successful");
         });
     }
 }

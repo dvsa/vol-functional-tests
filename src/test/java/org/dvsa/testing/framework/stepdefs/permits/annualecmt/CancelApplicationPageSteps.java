@@ -7,7 +7,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class CancelApplicationPageSteps extends BasePermitPage implements En {

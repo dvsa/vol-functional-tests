@@ -29,7 +29,7 @@ public class TMDetails extends BasePage {
         click("//*[@name='table[action]']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, admin);
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        world.UIJourney.clickContinue();
     }
 
     @Then("the optional wording should not be displayed on the page")
@@ -80,7 +80,7 @@ public class TMDetails extends BasePage {
 
     @When("the users attempts to save without entering any data")
     public void theUsersAttemptsToSaveWithoutEnteringAnyData() {
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("a validation message should be displayed")

@@ -29,11 +29,11 @@ public class CheckYourAnswersPageSteps implements En {
             String licence = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Licence);
             assertThat(licence,StringContains.containsString(world.applicationDetails.getLicenceNumber()));
             String permitType = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.PermitType);
-            Assert.assertEquals(permitType,"ECMT International Removal");
+            assertEquals(permitType,"ECMT International Removal");
             String RemovalsEligibility = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.RemovalsEligibility);
-            Assert.assertEquals(RemovalsEligibility, "I confirm that I will only use an ECMT international removal permit to move household goods or business possessions and that I will use specialised equipment and staff for removal operations.");
+            assertEquals(RemovalsEligibility, "I confirm that I will only use an ECMT international removal permit to move household goods or business possessions and that I will use specialised equipment and staff for removal operations.");
             String Cabotage = CheckYourAnswerPage.getAnswer(ECMTRemovalsSection.Cabotage);
-            Assert.assertEquals(Cabotage, "I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.");
+            assertEquals(Cabotage, "I confirm that I will not undertake cabotage journeys using an ECMT international removal permit.");
         });
         Then("^I am on the ECMT removals permits overview page with check your answers section marked as complete$", () -> OverviewPageJourney.checkStatus(OverviewSection.CheckYourAnswers, COMPLETED));
         And("^I click the ECMT Removals Check your answers link on the overview page again$", () -> OverviewPageJourney.clickOverviewSection(OverviewSection.CheckYourAnswers));

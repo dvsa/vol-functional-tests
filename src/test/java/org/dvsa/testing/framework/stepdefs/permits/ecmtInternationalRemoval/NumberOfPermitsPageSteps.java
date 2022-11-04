@@ -12,9 +12,9 @@ import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 
@@ -29,7 +29,7 @@ public class NumberOfPermitsPageSteps implements En {
 
         And("^the application reference on the ECMT removals number of permits page is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
+            assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
         And("^I enter number of permits more than the authorised vehicles and click save and continue$", () -> {
             NumberOfPermitsPage.exceedAuthorisedVehicle();

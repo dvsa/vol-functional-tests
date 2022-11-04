@@ -7,13 +7,13 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.hamcrest.core.StringContains;
-import org.junit.Assert;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FeePageSteps extends BasePage implements En {
 
@@ -24,7 +24,7 @@ public class FeePageSteps extends BasePage implements En {
         });
         When("^I submit and pay$", PermitFeePage::saveAndContinue);
         Then("^I am taken to CPMS payment page$", () -> {
-            Assert.assertThat(getURL().getHost(), StringContains.containsString("e-paycapita"));
+            assertThat(getURL().getHost(), StringContains.containsString("e-paycapita"));
         });
         Then("^the page heading and alert message on the fee page is displayed correctly$", () -> {
             assertEquals("Permit fee", PermitFeePage.getPageHeading());

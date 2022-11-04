@@ -7,7 +7,8 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ScanningSeparatorGeneration extends BasePage {
     private World world;
@@ -28,7 +29,6 @@ public class ScanningSeparatorGeneration extends BasePage {
 
     @Then("A scanning success message banner should be displayed")
     public void aScanningSuccessMessageBannerShouldBeDisplayed() {
-        Assert.assertTrue(isElementPresent("(//p[text()='The separator sheet has been generated'])", SelectorType.XPATH));
+        assertTrue(isElementPresent("(//p[text()='The separator sheet has been generated'])", SelectorType.XPATH));
     }
 }
-

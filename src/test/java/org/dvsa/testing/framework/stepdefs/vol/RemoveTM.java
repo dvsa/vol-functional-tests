@@ -13,7 +13,6 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -21,10 +20,8 @@ import java.time.format.DateTimeFormatter;
 
 import static activesupport.database.DBUnit.executeUpdateSQL;
 import static java.lang.Thread.sleep;
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.APIJourney.tmCount;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class RemoveTM extends BasePage{
 
@@ -93,7 +90,7 @@ public class RemoveTM extends BasePage{
     @And("user attempts to remove the last TM without selecting an option")
     public void userAttemptsToRemoveTheLastTMWithoutSelectingAnOption() {
         waitForTextToBePresent(alertHeaderValue);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("an error message should be displayed")
@@ -124,7 +121,7 @@ public class RemoveTM extends BasePage{
     @And("the removal date is changed to {int} hours into the future")
     public void theRemovalDateIsChangedToHoursIntoTheFuture(int arg0) throws SQLException, UnsupportedDatabaseDriverException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime futureDate = LocalDateTime.now().minusDays(2);
+        LocalDateTime futureDate = LocalDateTime.now().plusHours(arg0);
         String dateAndTime = dtf.format(futureDate);
         String sqlStatement = String.format(
                 "UPDATE `OLCS_RDS_OLCSDB`.`transport_manager_licence` SET `deleted_date` = '%s' WHERE (`licence_id` = '%s')",
@@ -142,6 +139,6 @@ public class RemoveTM extends BasePage{
         String licenceNo = world.applicationDetails.getLicenceNumber();
         sleep(10000);
         boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
-        Assert.assertTrue(letterExists);
+        assertTrue(letterExists);
     }
 }

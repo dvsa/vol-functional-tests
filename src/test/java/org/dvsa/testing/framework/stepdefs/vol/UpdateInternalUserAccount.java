@@ -6,7 +6,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UpdateInternalUserAccount extends BasePage {
     private World world;
@@ -27,7 +28,7 @@ public class UpdateInternalUserAccount extends BasePage {
     @Then("my new team should be visible")
     public void myNewTeamShouldBeVisible() {
         String name = world.UserAccountJourney.teamName;
-        Assert.assertTrue(isTextPresent(name));
+        assertTrue(isTextPresent(name));
     }
 
     @Given("I edit my personal details")
@@ -38,6 +39,6 @@ public class UpdateInternalUserAccount extends BasePage {
 
     @Then("my details should have updated")
     public void myDetailsShouldHaveUpdated() {
-        Assert.assertTrue(isTextPresent(world.DataGenerator.getOperatorFamilyName()));
+        assertTrue(isTextPresent(world.DataGenerator.getOperatorFamilyName()));
     }
 }

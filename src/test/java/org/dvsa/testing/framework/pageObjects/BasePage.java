@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
@@ -23,6 +22,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.time.Duration.ofSeconds;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
@@ -79,7 +79,7 @@ public abstract class BasePage extends DriverUtils {
         boolean hasError = false;
 
         String ERROR_MESSAGE_HEADING = "Please correct the following errors";
-        String ERROR_CLASS = ".error__text";
+        String ERROR_CLASS = ".govuk-error-message";
         if (isTextPresent(ERROR_MESSAGE_HEADING) || isElementPresent(ERROR_CLASS, SelectorType.CSS)) hasError = true;
 
         return hasError;
@@ -337,8 +337,10 @@ public abstract class BasePage extends DriverUtils {
 
     public static boolean isPath(@NotNull String path) {
         Pattern p = Pattern.compile(path);
-        Matcher m = p.matcher(getURL().getPath());
-
+        String url = getURL().getPath();
+        Matcher m = p.matcher(url);
+        LOGGER.info("path: " + path);
+        LOGGER.info("URL: " + url);
         return m.find();
     }
 
@@ -392,7 +394,7 @@ public abstract class BasePage extends DriverUtils {
 
         wait.until(driver ->
                 wait.until(ExpectedConditions.elementToBeClickable(
-                        by(selector,selectorType))));
+                        by(selector, selectorType))));
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByIndex(listValue);
     }
@@ -419,7 +421,9 @@ public abstract class BasePage extends DriverUtils {
     public static void waitForTitleToBePresent(@NotNull String selector) {
         waitForElementToBePresent(String.format("//h1[contains(text(),'%s')]", selector));
     }
-
+    public static void waitForTitleToBePresent(@NotNull String htmlTag, @NotNull String selector) {
+        waitForElementToBePresent(String.format("//%s[contains(text(),'%s')]", htmlTag, selector));
+    }
     public static void waitForElementToBePresent(@NotNull String selector) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
@@ -515,7 +519,7 @@ public abstract class BasePage extends DriverUtils {
         ExpectedCondition<Boolean> expect = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
         wait.until(WebDriver -> expect);
         try {
-            Assert.assertEquals("complete", javaScriptExecutor("return document.readyState").toString());
+            assertEquals("complete", javaScriptExecutor("return document.readyState").toString());
         } catch (Exception e) {
             LOGGER.info("Page timed out trying to load.");
         }
@@ -568,5 +572,10 @@ public abstract class BasePage extends DriverUtils {
     public static void untilNotInDOM(@NotNull String selector, int seconds) {
         new WebDriverWait(getDriver(), Duration.ofSeconds(seconds)).until(webDriver ->
                 (ExpectedConditions.presenceOfAllElementsLocatedBy(by(selector, SelectorType.CSS))));
+    }
+
+    public static String getSelectedTextFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
+        Select option = new Select(findElement(selector, selectorType));
+        return option.getFirstSelectedOption().getText();
     }
 }

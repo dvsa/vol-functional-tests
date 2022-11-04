@@ -4,7 +4,7 @@ import Injectors.World;
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NumberOfPermitsPageSteps implements En {
 

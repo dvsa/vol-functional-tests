@@ -7,10 +7,9 @@ import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourn
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CertificatesRequiredPageSteps extends BasePage implements En {
 
@@ -20,17 +19,16 @@ public class CertificatesRequiredPageSteps extends BasePage implements En {
         });
         And ("^the application reference number is displayed$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
-        });
-        And ("^the advisory texts on certificates required page are displayed", () -> {
-            assertEquals("If your permit application is successful, you are required to have the appropriate Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer you intend to use.", CertificatesRequiredPage.getAdvisoryText());
+            assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
         And ("^the correct text is displayed next to the checkbox$", () -> {
             assertTrue(CertificatesRequiredPage.isCheckboxTextPresent());
         });
         And ("^I am on the ecmt removals permit start date page$", () -> {
-            isPath("/application/\\d+/permit-start-date/");
+            assertTrue(isPath("/application/\\d+/permit-start-date/"));
         });
-
+        And("^on the certificates required page advisory texts are displayed$", () -> {
+            assertEquals("If your permit application is successful, you are required to have the appropriate Certificate of Compliance and Certificate of Roadworthiness for each vehicle and trailer you intend to use.", CertificatesRequiredPage.getAdvisoryText());
+        });
     }
 }

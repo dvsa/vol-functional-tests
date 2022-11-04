@@ -7,7 +7,6 @@ import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.FeeDetailsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
-import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -20,7 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class CommonSteps extends BasePermitJourney implements En {
 
@@ -38,14 +38,13 @@ public class CommonSteps extends BasePermitJourney implements En {
         });
         Then("^I should get an error message$", () -> {
              boolean hasError = BasePage.isErrorMessagePresent();
-             assertTrue("Error message was not displayed on the page", hasError);
+             assertTrue(hasError,"Error message was not displayed on the page");
         });
         When("^I save and return to overview$", BasePermitPage::clickReturnToOverview);
         When("^I sign on as an external user$", () -> {
             world.APIJourney.createAdminUser();
         });
         And("^all fees have been waived$", () -> {
-            LicenceDetailsPageJourney.clickFeesTab();
             FeeDetailsPageJourney.whileFeesPresentWaveFee();
         });
         And("^I am on the permits dashboard on external$", () -> {

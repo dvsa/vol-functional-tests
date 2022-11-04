@@ -7,8 +7,8 @@ import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PermitFeePageSteps extends BasePermitPage implements En {
     public PermitFeePageSteps(World world) {
@@ -20,7 +20,7 @@ public class PermitFeePageSteps extends BasePermitPage implements En {
         Then("^the page heading is displayed correctly on the fee page$", PermitFeePage::untilOnPage);
         Then("^the Fee-breakdown sub-heading can be seen below the fee summary table$", () -> {
             String subHeading = getText("//h2[contains(text(),'Fee breakdown')]", SelectorType.XPATH);
-            Assert.assertEquals("Fee breakdown", subHeading);
+            assertEquals("Fee breakdown", subHeading);
         });
     }
 }

@@ -3,16 +3,17 @@ package org.dvsa.testing.framework.pageObjects.external.pages.baseClasses;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class BasePermitPage extends BasePage {
 
     private static String BACK = "//a[contains(text(), 'Back')]";
-    protected static String INLINE_ERROR_TEXT = "//p[@class='error__text']";
+    protected static String INLINE_ERROR_TEXT = "//*[@class='govuk-error-message']";
     protected static String PAGE_HEADING = "//h1[contains(@class,'govuk-fieldset__heading') or contains(@class,'govuk-heading-xl')]";
     protected static String PAGE_SUBHEADING = "//h2[@class='govuk-heading-m']";
     protected static String PANEL_HEADING = "//h1[@class='govuk-panel__title']";
@@ -49,7 +50,7 @@ public class BasePermitPage extends BasePage {
     }
 
     public static String getErrorText() {
-        return getText(INLINE_ERROR_TEXT, SelectorType.XPATH);
+        return getText(INLINE_ERROR_TEXT, SelectorType.XPATH).replace("Error:","").trim();
     }
 
     public static String getCountry() {
@@ -58,7 +59,7 @@ public class BasePermitPage extends BasePage {
 
     public static void hasInternationalAuthorisationGovGuidanceLink() {
         boolean linkExists = isElementPresent("//a[@href='https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage']", SelectorType.XPATH);
-        Assert.assertTrue("Unable to find guidance notes link", linkExists);
+        assertTrue(linkExists,"Unable to find guidance notes link");
     }
 
     public static String getTableSectionValue(FeeSection section) {

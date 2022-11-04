@@ -7,7 +7,7 @@ import org.dvsa.testing.framework.Journeys.permits.pages.PermitUsagePageJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PermitsUsagePageSteps implements En {
     public PermitsUsagePageSteps(World world) {

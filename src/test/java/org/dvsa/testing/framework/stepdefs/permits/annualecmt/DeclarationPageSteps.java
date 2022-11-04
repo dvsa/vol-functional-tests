@@ -7,14 +7,14 @@ import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DeclarationPageSteps implements En {
 
     public DeclarationPageSteps(World world) {
-        Then("^I should see the validation error message for the declaration page$", () -> Assert.assertTrue(DeclarationPage.isErrorMessagePresent()));
+        Then("^I should see the validation error message for the declaration page$", () -> assertTrue(DeclarationPage.isErrorMessagePresent()));
         When("^I save and continue on the declaration page$", DeclarationPage::saveAndContinue);
         And("^I should see the declaration advisory texts$", DeclarationPage::isECMTAdvisoryTextPresent);
         When("^I accept and continue$", DeclarationPage::saveAndContinue);
@@ -25,5 +25,4 @@ public class DeclarationPageSteps implements En {
             OverviewPageJourney.checkStatus(OverviewSection.Declaration, PermitStatus.COMPLETED);
         });
     }
-
 }

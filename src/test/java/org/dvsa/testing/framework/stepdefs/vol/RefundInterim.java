@@ -11,9 +11,9 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RefundInterim extends BasePage {
     private final World world;
@@ -57,14 +57,14 @@ public class RefundInterim extends BasePage {
         waitForTextToBePresent("£68.00");
         clickByLinkText("Grant Interim Fee for application");
         waitForTextToBePresent("Fee details");
-        long kickoutTime = System.currentTimeMillis() + 30000;
+        long kickoutTime = System.currentTimeMillis() + 60000;
         do {
             refreshPageWithJavascript();
-        } while(!getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
+        } while(!getText("//*//dd//strong", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);
         if (System.currentTimeMillis() > kickoutTime) {
             throw new TimeoutException("Kickout time for expecting the interim fee to be refunded.");
         }
-        assertTrue(getText("//*//dd//span", SelectorType.XPATH).toLowerCase().contains("refunded"));
+        assertTrue(getText("//*//dd//strong", SelectorType.XPATH).toLowerCase().contains("refunded"));
         assertTrue(checkForPartialMatch("£68.00"));
     }
 

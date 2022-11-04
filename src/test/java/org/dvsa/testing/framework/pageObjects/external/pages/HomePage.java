@@ -8,7 +8,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.enums.Tab;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -18,12 +17,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HomePage extends BasePage {
 
-    private static String APPLY_FOR_LICENCE_BUTTON = "//*/a[contains(text(), 'Apply for a')]";
+    private static final String APPLY_FOR_LICENCE_BUTTON = "//*/a[contains(text(), 'Apply for a')]";
 
-    private static String TAB_TEMPLATE = "//*/div[@class='tab-list']//a[contains(text(), '%s')]";
+    private static final String TAB_TEMPLATE = "//*/div[@class='govuk-tabs']//a[contains(text(), '%s')]";
 
 
     public static void selectTab(Tab tab) {
@@ -49,12 +49,12 @@ public class HomePage extends BasePage {
 
     public static class PermitsTab {
 
-        private static String TABLE_ROW = "//tbody//tr";
-        private static String REFERENCE_NUMBER_TEMPLATE = "//td[@data-heading='Licence number']";
-        private static String REFERENCE_NUMBER = ".//td[@data-heading='Application reference']//span | .//td[@data-heading='Application reference']";
-        private static String NO_OF_PERMITS = ".//td[@data-heading='Number of permits']";
-        private static String TYPE = ".//td[@data-heading='Type']";
-        private static String STATUS = ".//td[@data-heading='Status']//span";
+        private static final String TABLE_ROW = "//tbody//tr";
+        private static final String REFERENCE_NUMBER_TEMPLATE = "//td[@data-heading='Licence number']";
+        private static final String REFERENCE_NUMBER = ".//td[@data-heading='Application reference']//span | .//td[@data-heading='Application reference']";
+        private static final String NO_OF_PERMITS = ".//td[@data-heading='Number of permits']";
+        private static final String TYPE = ".//td[@data-heading='Type']";
+        private static final String STATUS = ".//td[@data-heading='Status']//strong";
         public static String RESOURCE = "/permits";
 
         public static void untilOnPage() {
@@ -80,7 +80,11 @@ public class HomePage extends BasePage {
         }
 
         public static void selectFirstValidPermit() {
-            scrollAndClick(REFERENCE_NUMBER_TEMPLATE, SelectorType.XPATH);
+            long kickoutTime = System.currentTimeMillis() + 60000;
+            do {
+                refreshPageWithJavascript();
+            } while(!getText("//*//tr//th", SelectorType.XPATH).toLowerCase().contains("licence number") && System.currentTimeMillis() < kickoutTime);
+            waitAndClick(REFERENCE_NUMBER_TEMPLATE, SelectorType.XPATH);
         }
 
         public static void selectFirstOngoingApplication() {
@@ -121,8 +125,7 @@ public class HomePage extends BasePage {
                 found = isElementVisible(selector, interval);
                 getDriver().navigate().refresh();
             }
-
-            Assert.assertTrue(found);
+            assertTrue(found);
         }
 
         public enum Table {

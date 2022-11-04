@@ -9,7 +9,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaymentProcessing extends BasePage {
     private World world;
@@ -67,6 +67,6 @@ public class PaymentProcessing extends BasePage {
         world.internalNavigation.getAdminEditFee(getFeeNumber());
         waitForTextToBePresent("Payments and adjustments");
         refreshPageWithJavascript();
-        assertEquals(getText("//*[contains(@class,'status')]", SelectorType.XPATH), "PAID");
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), "PAID");
     }
 }

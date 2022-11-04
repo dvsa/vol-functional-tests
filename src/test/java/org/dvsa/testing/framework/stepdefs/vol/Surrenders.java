@@ -11,13 +11,10 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Surrenders extends BasePage {
     private final World world;
@@ -82,25 +79,26 @@ public class Surrenders extends BasePage {
             world.UIJourney.signManually();
             refreshPageWithJavascript();
         }
-        assertEquals(getText("//*[@class='overview__status green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
+        assertEquals(getText("//*[@class='govuk-tag govuk-tag--green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
 
     @Given("a caseworker views the surrender details")
     public void aCaseworkerViewsTheSurrenderDetails() {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitAndClick("menu-licence_surrender", SelectorType.ID);
     }
 
     @Then("any open cases should be displayed")
     public void anyOpenCasesShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent("open cases associated with this licence"));
-        Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
+        assertTrue(isTextPresent("open cases associated with this licence"));
+        assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
     }
 
     @And("any open bus registrations should be displayed")
     public void anyOpenBusRegistrationsShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent("active bus registrations associated with this licence."));
-        Assert.assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()),10));
+        assertTrue(isTextPresent("active bus registrations associated with this licence."));
+        assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()),10));
     }
 
     @And("tick boxes should be displayed")
@@ -117,17 +115,18 @@ public class Surrenders extends BasePage {
 
     @When("the caseworker checks the case and bus reg is visible in surrenders")
     public void theCaseworkerChecksTheCaseAndBusRegIsVisibleInSurrenders() {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitForTextToBePresent("Overview");
         if (isTextPresent("Surrender")) {
             clickByLinkText("Surrender");
             waitForTextToBePresent("Summary: Application to surrender an operator licence");
-            Assert.assertTrue(isTextPresent("open cases associated with this licence"));
-            Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 10));
-            Assert.assertTrue(isTextPresent("active bus registrations associated with this licence."));
-            Assert.assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()), 10));
+            assertTrue(isTextPresent("open cases associated with this licence"));
+            assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 10));
+            assertTrue(isTextPresent("active bus registrations associated with this licence."));
+            assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()), 10));
             WebElement surrenderButton = findElement("//*[@id='actions[surrender]']", SelectorType.XPATH);
-            Assert.assertTrue(surrenderButton.getAttribute("class").contains("disabled"));
+            assertTrue(surrenderButton.getAttribute("class").contains("disabled"));
         }
     }
 

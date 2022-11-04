@@ -10,7 +10,7 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OldVehicleDetailsJourney extends BasePage {
 
@@ -26,7 +26,6 @@ public class OldVehicleDetailsJourney extends BasePage {
     String firstVehicleCheckbox = "//tbody//input[@type='checkbox']";
     String VRMField = "//*[@name='data[vrm]']";
     String weightField = "//*[@name='data[platedWeight]']";
-    String submitButton = "//*[@name='form-actions[submit]']";
     String moreActionsButton = "//*[@id='more-actions__button__container']";
     String transferButton = "//*[@id='transfer']";
     String transferDropdown = "//*[@id='data[licence]']";
@@ -49,7 +48,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         waitForTitleToBePresent("Add vehicle");
         enterText(VRMField, SelectorType.XPATH, generatedVRM);
         enterText(weightField, SelectorType.XPATH, generatedWeight);
-        click(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("the vehicle should be appear")
@@ -63,7 +62,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         firstVRM = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         click(firstVehicleRemoveButton, SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
-        click(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("the vehicle no longer appears")
@@ -76,7 +75,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         firstVRM = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         click(firstVehicleInTable, SelectorType.XPATH);
         replaceText(weightField, SelectorType.XPATH, generatedWeight);
-        click(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("the vehicle should have changed")
@@ -94,7 +93,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         click(transferButton, SelectorType.XPATH);
         transferLicence = getText(firstLicenceInTransferDropdown, SelectorType.XPATH);
         selectValueFromDropDown(transferDropdown, SelectorType.XPATH, transferLicence);
-        click(transferSubmitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @And("the other licence contains that vehicle")

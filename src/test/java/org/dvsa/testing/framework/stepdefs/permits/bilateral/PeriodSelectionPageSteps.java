@@ -8,9 +8,9 @@ import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PeriodSelectionPageSteps extends BasePermitPage implements En {
     public PeriodSelectionPageSteps(World world) {
@@ -21,7 +21,7 @@ public class PeriodSelectionPageSteps extends BasePermitPage implements En {
             PeriodSelectionPageJourney.hasPageHeading();
 
            //Checking Country name displayed on the page is the one clicked on the overview page
-            Assert.assertEquals(PeriodSelectionPage.getCountry(), AnnualBilateralJourney.getCountry());
+            assertEquals(PeriodSelectionPage.getCountry(), AnnualBilateralJourney.getCountry());
 
             assertTrue(isElementPresent(String.format("//div[contains(text(),'%s')]", country), SelectorType.XPATH));
             if (country.equals("Turkey")) {

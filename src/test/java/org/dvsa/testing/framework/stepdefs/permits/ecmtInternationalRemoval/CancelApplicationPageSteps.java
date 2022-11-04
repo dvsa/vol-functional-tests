@@ -5,7 +5,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CancelApplicationPageSteps extends BasePage implements En {
 
@@ -16,5 +16,3 @@ public class CancelApplicationPageSteps extends BasePage implements En {
         When("^the ECMT International Removal cancel application button is selected without checkbox ticked$", CancellationPage::clickCancelButton);
     }
 }
-
-

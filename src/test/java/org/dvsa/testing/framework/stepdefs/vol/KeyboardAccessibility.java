@@ -7,11 +7,8 @@ import io.cucumber.java8.En;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import java.net.MalformedURLException;
-
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class KeyboardAccessibility extends BasePage implements En {
     private final World world;
@@ -82,7 +79,7 @@ public class KeyboardAccessibility extends BasePage implements En {
         world.UIJourney.skipToMainContentAndCheck();
         world.surrenderJourney.startSurrender();
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         world.UIJourney.skipToMainContentAndCheck();
         world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
@@ -94,10 +91,10 @@ public class KeyboardAccessibility extends BasePage implements En {
             world.surrenderJourney.addCommunityLicenceDetails();
         }
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Securely destroy");
         world.UIJourney.skipToMainContentAndCheck();
-        waitAndClick("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 }

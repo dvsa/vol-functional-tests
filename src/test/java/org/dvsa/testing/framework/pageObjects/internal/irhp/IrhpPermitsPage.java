@@ -9,16 +9,18 @@ public class IrhpPermitsPage extends BaseDetailsPage {
 
     public static class Model extends BaseModel {
 
+        private static String submitButton = "form-actions[submit]";
+
         public static void permitType(PermitType type) {
             selectValueFromDropDown("#permitType", SelectorType.CSS, type.toString());
         }
 
         public static void continueButton() {
-            scrollAndClick("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitAndClick(submitButton, SelectorType.ID);
         }
 
         public static void waitForContinueToBeClickable() {
-            waitForElementToBeClickable("//button[@id='form-actions[submit]']", SelectorType.XPATH);
+            waitForElementToBeClickable(submitButton, SelectorType.ID);
         }
     }
 

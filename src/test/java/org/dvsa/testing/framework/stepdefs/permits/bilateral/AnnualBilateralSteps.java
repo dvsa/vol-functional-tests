@@ -25,7 +25,7 @@ import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.junit.Assert.assertTrue;
+import static org.junit.assertTrue;
 
 public class AnnualBilateralSteps extends BasePage implements En {
     public AnnualBilateralSteps(World world) {
@@ -94,10 +94,10 @@ public class AnnualBilateralSteps extends BasePage implements En {
 
             // Verify status is pending
             // Changed to assert is VALID
-            Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
+            assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
 
             // Verify that Type is displayed as per the selection
-            Assert.assertTrue(NumberOfPermitsPageJourney.getLabel().contains(ValidPermitsPage.getType()));
+            assertTrue(NumberOfPermitsPageJourney.getLabel().contains(ValidPermitsPage.getType()));
 
             // Check permit number is in ascending order grouped by country
             Map<Country, List<String>> grouped = permits.stream().collect(
@@ -115,9 +115,9 @@ public class AnnualBilateralSteps extends BasePage implements En {
                                 .stream().map(win -> win.getIrhpPermitStockModel().getValidTo()).collect(Collectors.toList());
 
                 // Check Country order
-                Assert.assertTrue(permits.get(idx).getCountry().compareTo(permits.get(idx + 1).getCountry()) <= 0);
+                assertTrue(permits.get(idx).getCountry().compareTo(permits.get(idx + 1).getCountry()) <= 0);
                 // Check expiry date is in ascending order
-                Assert.assertTrue(
+                assertTrue(
                         permits.get(idx).getExpiryDate().isBefore(permits.get(idx + 1).getExpiryDate()) ||
                                 permits.get(idx).getExpiryDate().isEqual(permits.get(idx + 1).getExpiryDate())
                 );

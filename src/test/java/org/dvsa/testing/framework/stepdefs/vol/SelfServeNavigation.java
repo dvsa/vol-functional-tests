@@ -30,7 +30,7 @@ public class SelfServeNavigation extends BasePage {
     @And("i navigate to the manage users page")
     public void iNavigateToTheManageUsersPage() {
         waitAndClick("//*[contains(text(),'Manage users')]", SelectorType.XPATH);
-        Assert.assertEquals("Manage users", getText("h1", SelectorType.CSS));
+        assertEquals("Manage users", getText("h1", SelectorType.CSS));
     }
 
     @And("i navigate to the apply for a licence page")

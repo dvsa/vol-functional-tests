@@ -9,8 +9,9 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.junit.Assert;
 import org.openqa.selenium.support.Color;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BetaBannerCheck extends BasePage implements En {
 private final World world;
@@ -28,6 +29,6 @@ private final World world;
         public void bannerColourIsBlue() {
         String bannerColour = findElement("//*[@class='phase__tag']", SelectorType.XPATH).getCssValue("background-color");
         String hex = Color.fromString(bannerColour).asHex();
-        Assert.assertEquals("#005ea5", hex);
+        assertEquals("#005ea5", hex);
         }
     }

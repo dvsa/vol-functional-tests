@@ -35,7 +35,7 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToLogin(String username, String emailAddress) {
-        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL);
+        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL, "yes");
     }
 
     public void navigateToExternalSearch() {
@@ -81,7 +81,7 @@ public class SelfServeNavigation extends BasePage {
                 waitForTitleToBePresent("View and amend your licence");
                 break;
             case "application":
-                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.createApplication.getApplicationId());
+                overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.createApplication.getApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.createApplication.getApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {
@@ -91,7 +91,7 @@ public class SelfServeNavigation extends BasePage {
                 }
                 break;
             case "variation":
-                overviewStatus = String.format("//table//tr[td//*[contains(text(),'%s')]]//span[contains(@class,'overview__status')]", world.updateLicence.getVariationApplicationId());
+                overviewStatus = String.format("//table//tbody[tr//*[contains(text(),'%s')]]//strong[contains(@class,'govuk-tag')]", world.updateLicence.getVariationApplicationId());
                 applicationStatus = getText(overviewStatus, SelectorType.XPATH);
                 clickByLinkText(world.updateLicence.getVariationApplicationId());
                 if (applicationStatus.equals("NOT YET SUBMITTED")) {

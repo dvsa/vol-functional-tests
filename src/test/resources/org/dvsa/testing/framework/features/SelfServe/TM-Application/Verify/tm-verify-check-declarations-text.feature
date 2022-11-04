@@ -1,4 +1,3 @@
-@SS
 @SS-Verify-On
 @OLCS-20343
 @tm-application

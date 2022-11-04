@@ -4,11 +4,10 @@ import Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.assertEquals;
 
 public class GoodVarIncreaseVehicle extends BasePage {
     private final World world;
@@ -58,7 +57,7 @@ public class GoodVarIncreaseVehicle extends BasePage {
         clickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH,"All");
         waitForTextToBePresent("Grant Fee for application");
-        assertEquals(getText("//table//tr[td//text()[contains(., 'Variation Fee for application')]]//*[contains(@class,'status')]",SelectorType.XPATH),"PAID");
+        assertEquals(getText("//table//tbody[tr//*[contains(text(),'Variation Fee for application')]]//strong[contains(@class,'govuk-tag govuk-tag--green')]",SelectorType.XPATH),"PAID");
     }
 
     @And("a selfserve user creates a variation and adds an operating centre")

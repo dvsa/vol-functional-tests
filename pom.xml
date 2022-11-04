@@ -6,7 +6,7 @@
 
     <groupId>org.dvsa.testing.framework</groupId>
     <artifactId>vol-functional-tests</artifactId>
-    <version>1.6</version>
+    <version>1.8</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,27 +18,27 @@
 
         <axe-scanner-version>2.6</axe-scanner-version>
 
-        <cucumber-junit.version>7.3.4</cucumber-junit.version>
-        <cucumber-java.version>7.3.4</cucumber-java.version>
-        <pico-container-version>7.3.4</pico-container-version>
-        <junit-platform-suite.version>1.8.2</junit-platform-suite.version>
-        <junit-jupiter.version>5.8.2</junit-jupiter.version>
+        <cucumber-junit.version>7.9.0</cucumber-junit.version>
+        <cucumber-java.version>7.9.0</cucumber-java.version>
+        <pico-container-version>7.9.0</pico-container-version>
+        <junit-platform-suite.version>1.9.0</junit-platform-suite.version>
+        <junit-jupiter.version>5.9.0</junit-jupiter.version>
 
-        <allure-cucumber5-jvm.version>2.18.1</allure-cucumber5-jvm.version>
-        <allure-report.version>2.18.1</allure-report.version>
+        <allure-cucumber5-jvm.version>2.19.0</allure-cucumber5-jvm.version>
+        <allure-report.version>2.19.0</allure-report.version>
 
-        <slf4j.version>2.12.1</slf4j.version>
-        <slf4j-log4j12.version>2.12.1</slf4j-log4j12.version>
-        <commons-lang3.version>3.7</commons-lang3.version>
-        <assertj-core-version>3.9.1</assertj-core-version>
+        <slf4j.version>2.19.0</slf4j.version>
+        <slf4j-log4j12.version>2.19.0</slf4j-log4j12.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <assertj-core-version>3.23.1</assertj-core-version>
         <hamcrest-version>1.3</hamcrest-version>
 
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn.version>2.10.0</allure-mvn.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M6</maven-surefire-plugin.version>
-        <apache-commons.version>1.8</apache-commons.version>
-        <gson.version>20210307</gson.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <apache-commons.version>1.9.0</apache-commons.version>
+        <gson.version>20220924</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>1.8</java.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -109,13 +109,11 @@
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java8</artifactId>
             <version>${cucumber-java.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber-java.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -123,28 +121,34 @@
             <version>${cucumber-junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite</artifactId>
-            <version>${junit-platform-suite.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter</artifactId>-->
+<!--            <version>${junit-jupiter.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.platform</groupId>-->
+<!--            <artifactId>junit-platform-suite</artifactId>-->
+<!--            <version>${junit-platform-suite.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.jupiter</groupId>-->
+<!--            <artifactId>junit-jupiter-api</artifactId>-->
+<!--            <version>${junit-jupiter.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>active-support</artifactId>
             <version>${active-support.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
@@ -185,7 +189,7 @@
         <dependency>
             <groupId>org.zeroturnaround</groupId>
             <artifactId>zt-zip</artifactId>
-            <version>1.13</version>
+            <version>1.15</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -217,6 +221,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thedeanda</groupId>
+            <artifactId>lorem</artifactId>
+            <version>2.1</version>
         </dependency>
     </dependencies>
 

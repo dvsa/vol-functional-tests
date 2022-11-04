@@ -1,19 +1,21 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import Injectors.World;
-import io.cucumber.java8.En;;
+import io.cucumber.java8.En;
 import org.dvsa.testing.framework.pageObjects.internal.details.BaseDetailsPage;
 import org.dvsa.testing.framework.pageObjects.internal.details.enums.DetailsTab;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LicenceDetailsPageSteps implements En {
 
     public LicenceDetailsPageSteps(World world) {
         Then("^I should see the IRHP permits tab$", () -> {
-            Assert.assertTrue("The IRHP Permits tab is not displayed on the current page", BaseDetailsPage.Tab.hasTab(DetailsTab.IrhpPermits));
+            assertTrue(BaseDetailsPage.Tab.hasTab(DetailsTab.IrhpPermits),"The IRHP Permits tab is not displayed on the current page");
         });
         Then("^I should not see the IRHP permits tab$", () -> {
-            Assert.assertFalse("The IRHP Permits tab is displayed on the current page", BaseDetailsPage.Tab.hasTab(DetailsTab.IrhpPermits));
+            assertFalse(BaseDetailsPage.Tab.hasTab(DetailsTab.IrhpPermits),"The IRHP Permits tab is displayed on the current page");
         });
     }
 

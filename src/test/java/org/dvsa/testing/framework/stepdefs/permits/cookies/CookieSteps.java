@@ -13,8 +13,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.Set;
 
 import static org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage.*;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CookieSteps extends BasePage implements En {
 
@@ -22,10 +21,10 @@ public class CookieSteps extends BasePage implements En {
 
         WebDriver driver;
         And("^I logged into Self Serve site before accepting cookies$", () -> {
-            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
+            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL, "no");
         });
         And("^I am on the permit type page before accepting cookies$", () -> {
-            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
+            world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL, "no");
             HomePageJourney.beginPermitApplication();
         });
         And("^I should see the cookies list$", () -> {

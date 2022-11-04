@@ -23,9 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class PublicationsRelatedSteps extends BasePage {
@@ -33,7 +31,6 @@ public class PublicationsRelatedSteps extends BasePage {
     private final World world;
 
     private final String fiftyResultsPerPageLink = "//li/a[text()='50']";
-    private final String publicationDatesColumn = "//table/tbody/tr/td[5]";
     private final String publicationNumberColumn = "//table/tbody/tr[*]/td[2]";
     private final String radioButtonsColumn = "//*[@type='radio']";
 
@@ -112,6 +109,7 @@ public class PublicationsRelatedSteps extends BasePage {
                 waitForTextToBePresent("Publication was generated, a new publication was also created");
 
                 radioButtons = show50ResultsAndUpdateWebElementsList(radioButtonsColumn);
+                String publicationDatesColumn = "//table/tbody/tr/td[5]";
                 List<WebElement> publicationDates = findElements(publicationDatesColumn, SelectorType.XPATH);
 
                 publishedDate = publicationDates.get(i + 1).getText();
@@ -175,8 +173,8 @@ public class PublicationsRelatedSteps extends BasePage {
         String documentType = world.createApplication.getOperatorType().equals(OperatorType.GOODS.asString()) ? "A&D" : "N&P";
         String radioButton = String.format("//tr//td[contains(text(),'%s')]/../td[contains(text(),'%s')]/../td/label/input", trafficArea, documentType);
         String radioButtonValue = getAttribute(radioButton, SelectorType.XPATH, "value");
-        click(radioButton, SelectorType.XPATH);
-        click("generate", SelectorType.ID);
+        waitAndClick(radioButton, SelectorType.XPATH);
+        waitAndClick("generate", SelectorType.ID);
         waitForTextToBePresent("Publication was generated, a new publication was also created");
         click(fiftyResultsPerPageLink, SelectorType.XPATH);
         String matchingRadioButton = String.format("//tr/td/label/input[@value='%s']", radioButtonValue);
@@ -190,7 +188,7 @@ public class PublicationsRelatedSteps extends BasePage {
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         world.selfServeNavigation.navigateToVehicleOperatorDecisionsAndApplications();
         enterText("search", SelectorType.ID, licenceNumber);
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 120, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 240, "New publication wasn't present. Possibly the backend didn't process in time. Please check your search value.");
         waitForElementToBeClickable(String.format("//a[contains(text(),%s)]", licenceNumber), SelectorType.XPATH);
     };
 
@@ -209,7 +207,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
         switch(variationType){
             case "HGV":
-                String hgvOCIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) %s New licence authorisation will be %s %s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),correspondenceAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"));
+                String hgvOCIncreaseText = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) New licence authorisation will be %s %s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),hgvs,adaptiveVehicleTypeText.concat("(s)"));
                 String hgvExpectedText = correspondenceAddress.concat(hgvOCIncreaseText);
                 LOGGER.info("AP HGV Exp text:" + hgvExpectedText);
                 LOGGER.info("AP HGV Act text:" + publicationResult.getText());
@@ -224,7 +222,7 @@ public class PublicationsRelatedSteps extends BasePage {
                 break;
 
             case "HGV and LGV":
-                String hgvAndLgv = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s) %s%s%s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),correspondenceAddress,hgvIncreaseText,lgvIncreaseText);
+                String hgvAndLgv = String.format(" Increase at existing operating centre: %s New authorisation at this operating centre will be: %s %s, %s trailer(s)%s%s",operatingCentreAddress,hgvs,adaptiveVehicleTypeText.concat("(s)"),world.createApplication.getTotalOperatingCentreTrailerAuthority(),hgvIncreaseText,lgvIncreaseText);
                 String hgvAndLgvExpectedText = correspondenceAddress.concat(hgvAndLgv);
                 LOGGER.info("AP HGVAndLGV Exp text:" + hgvAndLgvExpectedText);
                 LOGGER.info("AP HGVAndLGV Act text:" + publicationResult.getText());

@@ -4,7 +4,9 @@ import Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ResetCredsSelfServe extends BasePage{
     private final World world;
@@ -20,7 +22,7 @@ public class ResetCredsSelfServe extends BasePage{
 
     @Then("I will be sent an email with my password")
     public void iWillBeSentAnEmailWithMyPassword() {
-        Assert.assertTrue(isTextPresent("Check your email"));
+        assertTrue(isTextPresent("Check your email"));
     }
 
     @And("I have forgotten my username and want it to be sent")
@@ -30,6 +32,6 @@ public class ResetCredsSelfServe extends BasePage{
 
     @Then("I will be sent an email with my username")
     public void iWillBeSentAnEmailWithMyUsername() {
-        Assert.assertEquals(world.configuration.getUsernameResetLink(), world.registerUser.getUserName());
+        assertEquals(world.configuration.getUsernameResetLink(), world.registerUser.getUserName());
     }
 }

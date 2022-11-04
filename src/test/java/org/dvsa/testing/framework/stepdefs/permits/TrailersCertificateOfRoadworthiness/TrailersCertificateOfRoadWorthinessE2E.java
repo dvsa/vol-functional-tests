@@ -17,8 +17,8 @@ import org.dvsa.testing.framework.pageObjects.external.pages.vehiclesAndTrailers
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TrailersCertificateOfRoadWorthinessE2E implements En {
     public TrailersCertificateOfRoadWorthinessE2E(World world) {

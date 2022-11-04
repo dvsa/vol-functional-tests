@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
-import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -9,15 +8,11 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DirectorJourney extends BasePage {
 
@@ -37,7 +32,6 @@ public class DirectorJourney extends BasePage {
     public String additionalInformation = "//*[@id='data[insolvencyDetails]']";
     public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
-    public String deleteDirectorConfirmation = "//button[@name='form-actions[submit]']";
     public String lastDirectorRemovedMessage = "Last director removed";
 
     public String internalDirectorTask = "//a[text()='Add director(s)']";
@@ -47,7 +41,7 @@ public class DirectorJourney extends BasePage {
 
     public String validationTitle = "There is a problem";
     public String listOfSummaryErrors = "//ol/li/a";
-    public String listOfInlineErrors = "//p[@class='error__text']";
+    public String listOfInlineErrors = "//*[@class='govuk-error-message']";
     public String titleValidation = "Select an option for: \"Title\"";
     public String firstNameValidation = "Enter first name";
     public String lastNameValidation = "Enter last name";
@@ -76,17 +70,18 @@ public class DirectorJourney extends BasePage {
             addDirectorDetails();
         }
         completeDirectorFinancialHistory("N");
+        completeLicenceHistory("N");
         completeConvictionsAndPenalties("N");
     }
 
     public void addDirectorDetails()  {
         personDetails();
-        clickByName("form-actions[saveAndContinue]");
+        UIJourney.clickSaveAndContinue();
     }
 
     public void addPersonDetails()  {
         personDetails();
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
     }
 
     private void personDetails() {
@@ -110,10 +105,15 @@ public class DirectorJourney extends BasePage {
         UIJourney.clickSaveAndContinue();
     }
 
+    public void completeLicenceHistory(String licenceHistoryAnswers) {
+        world.genericUtils.findSelectAllRadioButtonsByValue(licenceHistoryAnswers);
+        UIJourney.clickSaveAndContinue();
+    }
+
     public void removeDirector()  {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
-        clickByXPath(deleteDirectorConfirmation);
+        world.UIJourney.clickSubmit();
     }
 
     public boolean isDirectorPresentInDirectorTable(List<WebElement> directors, String director) {

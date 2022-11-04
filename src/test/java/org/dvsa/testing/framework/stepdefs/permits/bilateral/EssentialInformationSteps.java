@@ -6,9 +6,9 @@ import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.EssentialInformationPageJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.EssentialInformationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EssentialInformationSteps implements En {
     public EssentialInformationSteps(World world) {
@@ -18,7 +18,7 @@ public class EssentialInformationSteps implements En {
             EssentialInformationPage.untilOnPage();
 
             //checking the Country name displayed on the page is Turkey
-            Assert.assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
+            assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
 
             //checking the Page heading on the essential information page is correct
             EssentialInformationPageJourney.hasPageHeading();

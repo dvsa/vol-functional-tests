@@ -8,14 +8,14 @@ import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
-import org.junit.Assert;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.isIn;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OverviewPageSteps extends BasePage implements En {
 
@@ -32,7 +32,7 @@ public class OverviewPageSteps extends BasePage implements En {
 
     public OverviewPageSteps(World world) {
         Then("^I should be on the Annual ECMT overview page$", () -> {
-            isPath("/permits/application/\\d+");
+            assertTrue(isPath("/permits/application/\\d+"));
         });
         And("^I am on the application overview page$", () -> {
             EcmtApplicationJourney.beginApplication(world);
@@ -50,10 +50,7 @@ public class OverviewPageSteps extends BasePage implements En {
 
         Then("^the (check your answers|declaration) section should be disabled$", (String section) -> {
             OverviewSection sectionEnum = OverviewSection.toEnum(section);
-            Assert.assertFalse(
-                    sectionEnum.toString() + " should NOT be active but is",
-                    OverviewPage.isSectionActive(sectionEnum)
-            );
+            assertFalse(OverviewPage.isSectionActive(sectionEnum),sectionEnum.toString() + " should NOT be active but is");
 
             OverviewPageJourney.checkStatus(sectionEnum, PermitStatus.CANT_START_YET);
         });

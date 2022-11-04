@@ -5,11 +5,12 @@ import apiCalls.Utils.eupaBuilders.organisation.LicenceModel;
 import apiCalls.eupaActions.OrganisationAPI;
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
-import org.junit.Assert;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LicencePageSteps implements En {
 
@@ -18,16 +19,15 @@ public class LicencePageSteps implements En {
             List<LicenceModel> expectedLicences = OrganisationAPI.dashboard(world.userDetails.getOrganisationId()).getDashboard().getLicences();
 
             if (!(SelectALicencePage.numberOfLicences() > 1)){
-                Assert.assertTrue(SelectALicencePage.getLicenceNumberWithType().contains("Standard International"));
+                assertTrue(SelectALicencePage.getLicenceNumberWithType().contains("Standard International"));
             } else {
                 List<String> actualLicences = IntStream.rangeClosed(1, SelectALicencePage.numberOfLicences()).mapToObj(SelectALicencePage::getLicenceNumberWithType).collect(Collectors.toList());
                 expectedLicences.forEach((licence) -> {
                     boolean matchFound = actualLicences.stream().anyMatch(actualLicence -> actualLicence.contains(world.applicationDetails.getLicenceNumber()) && actualLicence.contains(licence.getLicenceType().getDescription()));
 
-                    Assert.assertTrue(matchFound);
+                    assertTrue(matchFound);
                 });
             }
         });
     }
-
 }

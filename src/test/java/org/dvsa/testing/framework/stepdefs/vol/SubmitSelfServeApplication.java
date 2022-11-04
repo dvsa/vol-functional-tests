@@ -4,10 +4,12 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
+import apiCalls.enums.OperatorType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -18,7 +20,6 @@ import scanner.AXEScanner;
 import scanner.ReportGenerator;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,50 +39,55 @@ public class SubmitSelfServeApplication extends BasePage {
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
         chooseLicenceType(licenceType);
-        String saveAndContinue = "//*[@id='form-actions[saveAndContinue]']";
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         //business details
         world.businessDetailsJourney.addBusinessDetails();
         if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
-            if (isTextPresent("You haven't added any Directors yet")) {
+            if (isElementPresent("add",SelectorType.ID)) {
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
             }
-            waitAndClick(saveAndContinue, SelectorType.XPATH);
+            UIJourney.clickSaveAndContinue();
         }
         //operating centre
         String authority = "2";
         String trailers = "4";
         if(licenceType.equals("Goods")) {
+            world.createApplication.setOperatorType(OperatorType.GOODS.name());
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, "0", trailers);
         }else{
+            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectByIndex("//*[@id='trafficArea']", SelectorType.XPATH, 1);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
 
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        clickById("form-actions[continue]");
+        world.UIJourney.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            clickByName("form-actions[send]");
+            world.UIJourney.clickSend();
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
         //vehicleDetails
         boolean add = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(add);
+        if(licenceType.equals("Public")) {
+            world.psvJourney.completeVehicleDeclarationsPage();
+            waitAndClick("overview-item__safety", SelectorType.ID);
+        }
         world.safetyComplianceJourney.addSafetyAndComplianceData();
         world.safetyInspectorJourney.addASafetyInspector();
         clickById("application[safetyConfirmation]");
-        waitAndClick(saveAndContinue, SelectorType.XPATH);
+        UIJourney.clickSaveAndContinue();
         //Financial History
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit();
         //Licence details
@@ -105,7 +111,7 @@ public class SubmitSelfServeApplication extends BasePage {
             world.globalMethods.signIn(intUsername, intPassword);
         } else {
             world.userRegistrationJourney.registerUserWithNoLicence();
-            world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL);
+            world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
         }
     }
 
@@ -121,7 +127,7 @@ public class SubmitSelfServeApplication extends BasePage {
                 } else {
                     clickByLinkText("Cancel application");
                 }
-                waitAndClick("form-actions[submit]", SelectorType.NAME);
+                world.UIJourney.clickSubmit();
             }
             waitForTitleToBePresent("Licences");
         }

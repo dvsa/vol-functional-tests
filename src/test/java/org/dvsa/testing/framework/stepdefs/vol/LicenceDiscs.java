@@ -4,9 +4,10 @@ import Injectors.World;
 import activesupport.database.exception.UnsupportedDatabaseDriverException;
 import io.cucumber.java.en.And;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.junit.Assert;
 
 import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LicenceDiscs extends BasePage{
     private final World world;
@@ -17,7 +18,7 @@ public class LicenceDiscs extends BasePage{
     public void theLicenceDiscsShouldBPresent() throws SQLException, UnsupportedDatabaseDriverException {
         int psvDiscNumber = Integer.parseInt(world.updateLicence.getStartNumber());
         for (int i = 0; i < 5; i++){
-            Assert.assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i)));
+            assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i)));
         }
     }
 }

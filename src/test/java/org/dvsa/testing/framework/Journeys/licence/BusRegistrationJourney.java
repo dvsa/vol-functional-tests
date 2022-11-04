@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.MissingRequiredArgument;
-import activesupport.aws.s3.S3;
 import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
@@ -14,7 +13,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
@@ -23,11 +21,9 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BusRegistrationJourney extends BasePage {
     private static AmazonS3 client = null;
@@ -64,7 +60,7 @@ public class BusRegistrationJourney extends BasePage {
 
         dates = world.globalMethods.date.getDateHashMap(0, month, 0);
         enterDateFieldsByPartialId("effectiveDate", dates);
-        click(nameAttribute("button", "form-actions[submit]"), SelectorType.CSS);
+        world.UIJourney.clickSubmit();
 
         long kickOutTime = System.currentTimeMillis() + 60000;
 
@@ -83,7 +79,7 @@ public class BusRegistrationJourney extends BasePage {
         click("menu-bus-registration-decisions-admin-cancel", SelectorType.ID);
         waitForTextToBePresent("Update status");
         enterText("fields[reason]", SelectorType.ID, "Mistake");
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
     }
 
     public void payFeesAndGrantNewBusReg() {
@@ -96,14 +92,14 @@ public class BusRegistrationJourney extends BasePage {
         } while (!isLinkPresent("Register service", 5) && System.currentTimeMillis() < kickOutTime);
         clickByLinkText("Register service");
         findSelectAllRadioButtonsByValue("Y");
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
         clickByLinkText("Service details");
         clickByLinkText("TA's");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
         click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result group-option\"]");
-        clickByName("form-actions[submit]");
+        world.UIJourney.clickSubmit();
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
@@ -131,14 +127,14 @@ public class BusRegistrationJourney extends BasePage {
     }
 
     public void viewEBSRInExternal() {
-        long kickOutTime = System.currentTimeMillis() + 120000;
+        long kickOutTime = System.currentTimeMillis() + 250000;
         do {
             // Refresh page
             refreshPageWithJavascript();
         } while (isTextPresent("processing") && System.currentTimeMillis() < kickOutTime);
 
         try {
-            Assert.assertTrue(isTextPresent("Successful"));
+            assertTrue(isTextPresent("Successful"));
         } catch (Exception e) {
             throw new NotFoundException("import EBSR is still displaying as 'processing' when kick out time was reached.");
         }
@@ -165,6 +161,6 @@ public class BusRegistrationJourney extends BasePage {
             ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
         }
-        waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 }

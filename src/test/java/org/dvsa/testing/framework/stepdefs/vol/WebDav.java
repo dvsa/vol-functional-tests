@@ -13,7 +13,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.io.File;
@@ -24,6 +23,7 @@ import java.nio.file.Paths;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.file.Files.checkFileContainsText;
 import static activesupport.file.Files.getDownloadedFile;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WebDav extends BasePage{
     private final World world;
@@ -40,7 +40,7 @@ public class WebDav extends BasePage{
         world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @And("i open the document in word for the first time")
@@ -58,7 +58,7 @@ public class WebDav extends BasePage{
     @Then("i should be prompted to login")
     public void iShouldBePromptedToLogin() {
         String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, env).toString(), "/");
-        Assert.assertTrue(this.autoIt.winExists(wordLoginWindow, ""));
+        assertTrue(this.autoIt.winExists(wordLoginWindow, ""));
     }
 
     @And("i make changes to the document with WebDav and save it")
@@ -76,14 +76,14 @@ public class WebDav extends BasePage{
 
     @Then("the document should contain the changes")
     public void theDocumentShouldContainTheChanges() throws IOException {
-        Assert.assertTrue(isTextPresent(templateName));
+        assertTrue(isTextPresent(templateName));
         clickByLinkText(templateName);
 
         String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.applicationDetails.getLicenceNumber(), templateName);
 
         File file = getDownloadedFile("downloadDirectory", templateRegex);
 
-        Assert.assertTrue(checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
+        assertTrue(checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
     }
 
     @And("upload a document")
@@ -96,6 +96,6 @@ public class WebDav extends BasePage{
         world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 }

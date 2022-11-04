@@ -32,9 +32,9 @@ public class CheckYourAnswersPageSteps extends BasePage implements En {
             cabotage = CheckYourAnswerPage.getAnswer(Cabotage);
             restrictedCountries = CheckYourAnswerPage.getAnswer(RestrictedCountries);
             assertThat(licence, StringContains.containsString(world.applicationDetails.getLicenceNumber()));
-            Assert.assertEquals("I confirm that I will only use my ECMT permits with vehicles that meet the minimum euro emissions standards allowed.",euro6);
-            Assert.assertEquals("I confirm that I will not undertake cabotage journeys using an ECMT permit.",cabotage);
-            Assert.assertEquals("No",restrictedCountries);
+            assertEquals("I confirm that I will only use my ECMT permits with vehicles that meet the minimum euro emissions standards allowed.",euro6);
+            assertEquals("I confirm that I will not undertake cabotage journeys using an ECMT permit.",cabotage);
+            assertEquals("No",restrictedCountries);
         });
         When("^I change the (.+)$", (String section) ->
             CheckYourAnswerPage.clickChangeAnswer(ApplicationSection.valueOf(section))

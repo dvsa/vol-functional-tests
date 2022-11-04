@@ -63,4 +63,6 @@ public class World {
 
     public TypeOfLicenceJourney typeOfLicence;
     public GeneralVariationJourney generalVariationJourney;
+    public TrailersJourney trailersJourney;
+    public SystemMessagesJourney systemMessagesJourney;
 }

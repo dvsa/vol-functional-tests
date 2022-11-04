@@ -10,12 +10,14 @@ import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Continuations extends BasePage{
     private final World world;
@@ -44,10 +46,11 @@ public class Continuations extends BasePage{
 
     @Then("the continuation should be approved and a snapshot generated on Internal")
     public void theContinuationShouldBeApprovedAndASnapshotGeneratedOnInternal() {
+        world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
-        Assert.assertTrue(isTextPresent("Digital continuation snapshot"));
+        assertTrue(isTextPresent("Digital continuation snapshot"));
     }
 
     @Then("the users of ss should display on the continuation review details page and on the snapshot")
@@ -67,14 +70,14 @@ public class Continuations extends BasePage{
         world.continuationJourney.clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         clickAllCheckboxes();
-        Assert.assertTrue(isTextPresent("User access"));
+        assertTrue(isTextPresent("User access"));
         userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
         userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
         userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
         for (int i = 0; i < userNamesElements.size(); i++){
-            Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
-            Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
-            Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
+            assertEquals(userNamesElements.get(i).getText(), userNames[i]);
+            assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
+            assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
         }
         findSelectAllRadioButtonsByValue("Y");
         click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
@@ -84,9 +87,9 @@ public class Continuations extends BasePage{
         world.continuationJourney.completeContinuationPayOrSubmit();
         world.continuationJourney.viewContinuationSnapshotOnInternal();
         for (int i = 0; i < userNamesElements.size(); i++){
-            Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
-            Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
-            Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
+            assertEquals(userNamesElements.get(i).getText(), userNames[i]);
+            assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
+            assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
         }
         closeTabAndFocusTab(0);
     }

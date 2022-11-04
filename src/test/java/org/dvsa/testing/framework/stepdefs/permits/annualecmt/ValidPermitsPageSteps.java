@@ -16,7 +16,6 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ValidPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +25,8 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import static java.lang.Thread.sleep;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidPermitsPageSteps extends BasePage implements En {
 
@@ -57,30 +58,30 @@ public class ValidPermitsPageSteps extends BasePage implements En {
 
         });
         Then("^the user is in the annual ECMT list page$",()  ->{
-            Assert.assertTrue(isPath("/permits/valid/\\d+"));
+            assertTrue(isPath("/permits/valid/\\d+"));
             String title = BasePage.getElementValueByText("h1.govuk-heading-l",SelectorType.CSS).trim();
-            Assert.assertEquals("Annual ECMT", title);
+            assertEquals("Annual ECMT", title);
         });
         And ("^I select return to permit dashboard hyperlink", ValidPermitsPage::returnToPermitDashboard);
         Then ("^the licence number is displayed above the page heading",  () ->{
             String expectedReference= world.applicationDetails.getLicenceNumber();
-            Assert.assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
+            assertEquals(expectedReference, BasePermitPage.getReferenceFromPage());
         });
         Then ("^the ECMT application licence number is displayed above the page heading",  () ->{
             String expectedReference = world.applicationDetails.getLicenceNumber();
             String actual = BasePermitPage.getElementValueByText("//span[@class='govuk-caption-xl']", SelectorType.XPATH);
-            Assert.assertEquals(expectedReference, actual);
+            assertEquals(expectedReference, actual);
         });
         Then("^the ECMT permit list page table should display all relevant fields$", () -> {
             String message = "Expected all permits to have a status of 'valid'";
             List<ValidAnnualECMTPermit> permits = ValidPermitsPage.annualECMTPermits();
-            Assert.assertTrue(message, permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID));
-            IntStream.range(0, permits.size() - 1).forEach((idx) -> Assert.assertTrue(
+            assertTrue(permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID),message);
+            IntStream.range(0, permits.size() - 1).forEach((idx) -> assertTrue(
                     permits.get(idx).getExpiryDate().isBefore(permits.get(idx + 1).getExpiryDate()) ||
                             permits.get(idx).getExpiryDate().isEqual(permits.get(idx + 1).getExpiryDate())
             ));
         });
-        When ("^the user is on self-serve permits dashboard", HomePageJourney::selectPermitTab);
+        Then("^the user is on self-serve permits dashboard$", HomePageJourney::selectPermitTab);
     }
 
     public static void untilAnyPermitStatusMatch(PermitStatus status) {

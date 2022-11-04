@@ -7,10 +7,9 @@ import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourn
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.PermitStartDatePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PermitStartDatePageSteps extends BasePage implements En {
 
@@ -20,7 +19,7 @@ public class PermitStartDatePageSteps extends BasePage implements En {
         });
         And ("^the reference number is displayed correctly$", () -> {
             String actualReference = BasePermitPage.getReferenceFromPage();
-            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
+            assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
         });
         And ("^the page heading on permit start date page should be correct$", ()-> {
             String heading = PermitStartDatePage.getPageHeading();
@@ -31,10 +30,10 @@ public class PermitStartDatePageSteps extends BasePage implements En {
         });
         Then ("^the error message is displayed in the permit start date page$", () -> {
             String errorText = PermitStartDatePage.getErrorText();
-            Assert.assertEquals("Enter a valid permit start date and include a day, month and year", errorText);
+            assertEquals("Enter a valid permit start date and include a day, month and year", errorText);
         });
         And ("^I am taken to the number of permits page$", () -> {
-            isPath("/permits/application/\\d+/number-of-permits/");
+            assertTrue(isPath("/permits/application/\\d+/number-of-permits/"));
         });
         When ("^I enter the valid date$", PermitStartDatePage::permitDate);
         When ("^I dont enter all the fields$", PermitStartDatePage::leaveDateBlank);
@@ -42,6 +41,9 @@ public class PermitStartDatePageSteps extends BasePage implements En {
         And ("^I enter a date ahead of 60 days$", PermitStartDatePage::dayAhead);
         And ("^I should get a valid error message$", () -> {
             assertTrue(PermitStartDatePage.checkDaysAheadErrorMessagePresent());
+        });
+        And("^the advisory texts on certificates required page are displayed$", () -> {
+            assertTrue(PermitStartDatePage.checkCertificateAdvisoryTextPresent());
         });
     }
 }

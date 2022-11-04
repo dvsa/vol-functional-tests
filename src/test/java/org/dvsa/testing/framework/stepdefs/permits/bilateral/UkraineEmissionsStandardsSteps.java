@@ -5,8 +5,8 @@ import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.EmissionStandardsPage;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.assertEquals;
+import static org.junit.assertTrue;
 
 public class UkraineEmissionsStandardsSteps implements En {
     public UkraineEmissionsStandardsSteps(World world) {

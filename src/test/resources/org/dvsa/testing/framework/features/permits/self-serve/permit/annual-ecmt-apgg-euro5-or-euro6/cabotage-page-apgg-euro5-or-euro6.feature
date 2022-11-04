@@ -7,7 +7,7 @@ Feature: Cabotage Page
 
   @OLCS-21119 @OLCS-28275
   Scenario: Doesn't declare not to undertake cabotage
-    Given I save and continue
+    Given I click save and continue
     And I should get an error message
     And I save and return to overview
     And I should get an error message

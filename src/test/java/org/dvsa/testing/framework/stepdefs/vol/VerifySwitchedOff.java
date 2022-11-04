@@ -2,15 +2,16 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
 import apiCalls.enums.UserType;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VerifySwitchedOff extends BasePage{
     private final World world;
@@ -19,6 +20,10 @@ public class VerifySwitchedOff extends BasePage{
         this.world = world;
     }
 
+    @Before
+    public void getScenarioName(Scenario scenario){
+        System.out.println("Testing Scenario:" + scenario.getName());
+    }
     @And("i have a {string} {string} partial application")
     public void iHaveAPartialApplication(String operatorType, String country) {
         world.createApplication.setOperatorType(operatorType);
@@ -52,7 +57,7 @@ public class VerifySwitchedOff extends BasePage{
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()));
-        click("//*[@id='form-actions[continue]']", SelectorType.XPATH);
+        world.UIJourney.clickContinue();
     }
 
     @When("the transport manager is the owner")
@@ -69,14 +74,14 @@ public class VerifySwitchedOff extends BasePage{
     public void iSubmitAndPayForTheApplication() {
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         clickById("submitAndPay");
-        waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
     }
 
     @Then("the print and sign page is displayed")
     public void thePrintAndSignPageIsDisplayed() {
-        Assert.assertTrue(isTextPresent("Transport Manager details approved"));
-        Assert.assertTrue(isTextPresent("Print, sign and return"));
+        assertTrue(isTextPresent("Transport Manager details approved"));
+        assertTrue(isTextPresent("Print, sign and return"));
     }
 }

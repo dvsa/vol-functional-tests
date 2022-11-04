@@ -7,10 +7,10 @@ import org.dvsa.testing.framework.Journeys.permits.pages.RestrictedCountriesPage
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.RestrictedCountriesPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RestrictedCountriesPageSteps extends BasePage implements En {
 
@@ -31,8 +31,7 @@ public class RestrictedCountriesPageSteps extends BasePage implements En {
         Then("^the page heading on Annual ECMT countries with limited countries page is Shown Correctly$", RestrictedCountriesPageJourney::hasPageHeading);
         Then("^the application reference number is shown correctly$", () -> {
             String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
-            Assert.assertThat(actualReferenceNumber, containsString(world.applicationDetails.getLicenceNumber()));
+            assertThat(actualReferenceNumber, containsString(world.applicationDetails.getLicenceNumber()));
         });
-
     }
 }

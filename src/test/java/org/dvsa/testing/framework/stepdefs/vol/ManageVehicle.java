@@ -5,32 +5,26 @@ import activesupport.http.RestUtils;
 import activesupport.system.Properties;
 import apiCalls.Utils.generic.Headers;
 import apiCalls.Utils.generic.Utils;
+import apiCalls.actions.AccessToken;
+import apiCalls.enums.UserType;
+import io.cucumber.java.After;
 import io.cucumber.java.en.*;
 import io.restassured.response.ValidatableResponse;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
-import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.json.JSONObject;
-import org.junit.After;
-import org.junit.Assert;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ManageVehicle extends BasePage {
     World world;
-
     private EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-
     public ManageVehicle(World world) {
         this.world = world;
     }
@@ -52,7 +46,7 @@ public class ManageVehicle extends BasePage {
 
     @Then("the add vehicle page should display licence number")
     public void theAddVehiclePageShouldDisplayLicenceNumber(){
-        Assert.assertEquals(world.applicationDetails.getLicenceNumber(), getText("licence", SelectorType.ID));
+        assertEquals(world.applicationDetails.getLicenceNumber(), getText("licence", SelectorType.ID));
     }
 
     @And("choose to add a {string} vehicle")
@@ -67,7 +61,7 @@ public class ManageVehicle extends BasePage {
 
     @And("{string} heading")
     public void heading(String heading){
-        Assert.assertEquals(heading, getText("h1", SelectorType.CSS));
+        assertEquals(heading, getText("h1", SelectorType.CSS));
     }
 
     @And("I search without entering a registration number")
@@ -103,7 +97,7 @@ public class ManageVehicle extends BasePage {
         List<WebElement> vehicleDetails =
                 findElements("//*[@class='govuk-table']//tbody[@class='govuk-table__body']//ancestor::tr[@class='govuk-table__row']//following-sibling::td", SelectorType.XPATH);
         for (WebElement element : vehicleDetails)
-            Assert.assertNotNull(element.getText());
+            assertNotNull(element.getText());
     }
 
     @Then("the following should be displayed:")
@@ -155,8 +149,7 @@ public class ManageVehicle extends BasePage {
     public void iTransferAVehicleAToASpecifiedLicence() {
         world.dvlaJourney.navigateToTransferVehiclePage();
         assertTrue(isTextPresent("Select the licence that you want to transfer your vehicles to"));
-        Select option = new Select(findElement("//select[@id='select-a-licence']", SelectorType.XPATH));
-        assertEquals("Select a licence", option.getFirstSelectedOption().getText());
+        assertEquals("Select a licence", getSelectedTextFromDropDown("//select[@id='select-a-licence']", SelectorType.XPATH));
         selectValueFromDropDownByIndex("select-a-licence", SelectorType.ID, 1);
         world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "N", "N");
         world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to transfer this vehicle to licence");
@@ -231,8 +224,8 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourney.navigateToReprintVehicleDiscPage();
         world.dvlaJourney.newDiscNumber = getText(
                 String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourney.VRM), SelectorType.XPATH);
-        Assert.assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
-        Assert.assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
+        assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
+        assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
     }
 
     @And("i search and the licence discs number should be updated")
@@ -241,8 +234,8 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourney.searchForExactVRM(world.dvlaJourney.VRM);
         world.dvlaJourney.newDiscNumber = getText(
                 String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourney.VRM), SelectorType.XPATH);
-        Assert.assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
-        Assert.assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
+        assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
+        assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
     }
 
     @And("all the licence discs number should be updated")
@@ -251,8 +244,8 @@ public class ManageVehicle extends BasePage {
         for (int i = 0; i < world.createApplication.getHgvVRMs().length; i++) {
             world.dvlaJourney.newDiscNumber = getText(
                     String.format("//tr[*//a[contains(text(),'%s')]]//td[4]", world.dvlaJourney.allVRMs.get(i)), SelectorType.XPATH);
-            Assert.assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
-            Assert.assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
+            assertNotEquals(world.dvlaJourney.newDiscNumber, world.dvlaJourney.previousDiscNumber);
+            assertFalse(isTextPresent(world.dvlaJourney.previousDiscNumber));
         }
     }
 
@@ -308,8 +301,8 @@ public class ManageVehicle extends BasePage {
         world.dvlaJourney.navigateToRemoveVehiclePage();
         enterText("vehicleSearch[search-value]", SelectorType.NAME, world.dvlaJourney.VRM);
         click("vehicleSearch[submit]", SelectorType.NAME);
-        Assert.assertFalse(isTextPresent(world.dvlaJourney.VRM));
-        Assert.assertTrue(isTextPresent("No vehicle can be found with that Vehicle Registration Mark"));
+        assertFalse(isTextPresent(world.dvlaJourney.VRM));
+        assertTrue(isTextPresent("No vehicle can be found with that Vehicle Registration Mark"));
     }
 
     @And("i remove all my vehicles")
@@ -348,7 +341,7 @@ public class ManageVehicle extends BasePage {
         }
         ValidatableResponse response;
         Headers apiHeaders = new Headers();
-        apiHeaders.headers.put("x-pid", Utils.config.getString("apiHeader"));
+        apiHeaders.headers.put("Authorization", "Bearer " + AccessToken.getToken(Utils.config.getString("adminUser"), Utils.config.getString("adminPassword"), UserType.INTERNAL.asString()));
 
         response = RestUtils.getWithQueryParams(String.format(URL.build(this.env, "licence/%s/vehicles/").toString(), world.createApplication.getLicenceId()), queryParams, world.createApplication.apiHeaders.getHeaders());
         List<Object> responseArray = response.extract().body().jsonPath().get("results.id.findAll()");

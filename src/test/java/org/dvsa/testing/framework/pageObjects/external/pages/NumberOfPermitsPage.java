@@ -44,7 +44,7 @@ public class NumberOfPermitsPage extends BasePermitPage {
     }
 
     public static boolean isFeeTextPresent() {
-        return isElementPresent("//div[@class='guidance-blue']", SelectorType.XPATH) &&
+        return isElementPresent("//div[@class='govuk-inset-text']", SelectorType.XPATH) &&
         isElementPresent("//strong[contains(text(),'£18')]", SelectorType.XPATH);
     }
 
@@ -62,19 +62,19 @@ public class NumberOfPermitsPage extends BasePermitPage {
     }
 
     public static boolean isShortTermECMTEmissionErrorTextPresent() {
-        return isElementPresent("//p[contains(text(),'Select one euro emission standard')]", SelectorType.XPATH);
+        return isElementPresent("//a[contains(text(),'Select one euro emission standard')]", SelectorType.XPATH);
     }
 
     public static boolean isEnterNumberOfPermitsErrorTextPresent() {
-        return isElementPresent("//p[contains(text(),'Enter the number of permits you require')]", SelectorType.XPATH);
+        return isElementPresent("//a[contains(text(),'Enter the number of permits you require')]", SelectorType.XPATH);
     }
 
     public static boolean isShortTermEnterNumberOfPermitsErrorTextPresent() {
-        return isElementPresent("//p[contains(text(),'Enter how many permits you need')]", SelectorType.XPATH);
+        return isElementPresent("//a[contains(text(),'Enter how many permits you need')]", SelectorType.XPATH);
     }
 
     public static boolean isMaximumNumberOfPermitsExceededErrorTextPresent() {
-        return isElementPresent("//p[contains(text(),'You have exceeded the maximum you can apply for')]", SelectorType.XPATH);
+        return isElementPresent("//a[contains(text(),'You have exceeded the maximum you can apply for')]", SelectorType.XPATH);
     }
 
     public static void enterEuro5OrEuro6permitsValue() {

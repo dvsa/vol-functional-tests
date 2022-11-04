@@ -22,17 +22,18 @@ public class VehicleDetailsJourney extends BasePage {
             String letter = String.valueOf(Str.randomLetter());
             waitAndEnterText("vrm", SelectorType.ID, String.format("P%sCUX",num));
             waitAndEnterText("plated_weight", SelectorType.ID, "5000");
-            waitAndClick("form-actions[submit]", SelectorType.ID);
+            world.UIJourney.clickSubmit();
             if (isElementPresent("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH))
             {
                 waitAndClick("//*[@id='licence-vehicle[confirm-add]']",SelectorType.XPATH);
-                waitAndClick("form-actions[submit]", SelectorType.ID);
+                world.UIJourney.clickSubmit();
             }
             waitForTitleToBePresent("Vehicle details");
+            UIJourney.clickSaveAndContinue();
         } else {
             refreshPage();
-            waitAndClick("//*[contains(text(),'No')]", SelectorType.XPATH);
+            waitAndClick("//label[contains(text(),'No')]", SelectorType.XPATH);
+            UIJourney.clickSaveAndReturn();
         }
-        waitAndClick("form-actions[saveAndContinue]", SelectorType.ID);
     }
 }

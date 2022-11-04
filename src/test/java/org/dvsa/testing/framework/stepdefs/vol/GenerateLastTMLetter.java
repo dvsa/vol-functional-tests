@@ -5,6 +5,8 @@ import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
 import activesupport.system.Properties;
 import apiCalls.enums.UserType;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -12,13 +14,18 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import java.util.HashMap;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GenerateLastTMLetter extends BasePage {
     private final World world;
 
     public GenerateLastTMLetter(World world) {
         this.world = world;
+    }
+
+    @Before
+    public void getScenarioName(Scenario scenario) {
+        System.out.println("Testing Scenario:" + scenario.getName());
     }
 
     @And("the last tm letter batch job has run")

@@ -14,29 +14,29 @@ import org.joda.time.LocalDate;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
-
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InterimLicence extends BasePage {
 
-    private static String VehicleErrorMessage = "The interim vehicle authority cannot exceed the total vehicle authority";
-    private static String HgvVehicleErrorMessage = "The interim Heavy goods vehicle authority cannot exceed the total Heavy goods vehicle authority";
-    private static String LgvVehicleErrorMessage = "The interim Light goods vehicle authority cannot exceed the total Light goods vehicle authority";
-    private static String errorMessageTitle = "There is a problem";
-    private static String valueIsRequiredErrorMessage = "Value is required";
-    private static String valueCannotBe0ErrorMessage = "A value greater than 0 must be entered";
-    private static String lgvAuthorityLabelText = "Light Goods Vehicle Authority";
-    private static String hgvAuthorityLabelText = "Heavy Goods Vehicle Authority";
-    private static String lgvAuthField = "//*[@id='interimAuthLgvVehicles']";
-    private static String hgvAuthField = "//*[@id='interimAuthHgvVehicles']";
-    private static String trailerAuthField = "//*[@id='interimAuthTrailers']";
-    private static String vehicleAuthLabelElement = "//label[text()='Vehicle Authority']";
-    private static String trailerAuthLabelElement = "//label[text()='Trailer Authority']";
-    private static String interimGrantModalHeading = "Are you sure you want to grant this interim?";
-    private static String interimGrantConfirmation = "The interim has been granted and a fee request letter has been generated";
-    private String interimOfferText = "Do you want to apply for a time limited interim authority?";
-    private String interimRadioYes = "//*[@id='interim[goodsApplicationInterim]']";
-    private World world;
+    private static final String VehicleErrorMessage = "The interim vehicle authority cannot exceed the total vehicle authority";
+    private static final String HgvVehicleErrorMessage = "The interim Heavy goods vehicle authority cannot exceed the total Heavy goods vehicle authority";
+    private static final String LgvVehicleErrorMessage = "The interim Light goods vehicle authority cannot exceed the total Light goods vehicle authority";
+    private static final String errorMessageTitle = "There is a problem";
+    private static final String valueIsRequiredErrorMessage = "Value is required";
+    private static final String valueCannotBe0ErrorMessage = "A value greater than 0 must be entered";
+    private static final String lgvAuthorityLabelText = "Light Goods Vehicle Authority";
+    private static final String hgvAuthorityLabelText = "Heavy Goods Vehicle Authority";
+    private static final String lgvAuthField = "//*[@id='interimAuthLgvVehicles']";
+    private static final String hgvAuthField = "//*[@id='interimAuthHgvVehicles']";
+    private static final String trailerAuthField = "//*[@id='interimAuthTrailers']";
+    private static final String vehicleAuthLabelElement = "//label[text()='Vehicle Authority']";
+    private static final String trailerAuthLabelElement = "//label[text()='Trailer Authority']";
+    private static final String interimGrantModalHeading = "Are you sure you want to grant this interim?";
+    private static final String interimGrantConfirmation = "The interim has been granted and a fee request letter has been generated";
+    private final String interimOfferText = "Do you want to apply for a time limited interim authority?";
+    private final String interimRadioYes = "//*[@id='interim[goodsApplicationInterim]']";
+    private final World world;
 
     public InterimLicence(World world) { this.world = world; }
 
@@ -135,7 +135,7 @@ public class InterimLicence extends BasePage {
         enterText("applicationInterimReason", SelectorType.ID, "Sample Text For Interim");
         click("//*[contains(text(),'Print, sign and return')]/../../input", SelectorType.XPATH);
         click("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
-        click("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+        world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
     }
@@ -168,7 +168,7 @@ public class InterimLicence extends BasePage {
     public void anInterimAuthorityValueIsRequiredErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(valueIsRequiredErrorMessage));
-        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", valueIsRequiredErrorMessage);
+        String inlineErrorMessage = String.format("//p[@class='govuk-error-message' and contains(text(),'%s')]", valueIsRequiredErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 
@@ -184,7 +184,7 @@ public class InterimLicence extends BasePage {
     public void anInterimLgvAuthValueExceedsApplicationLgvAuthorityValueErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(LgvVehicleErrorMessage));
-        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", LgvVehicleErrorMessage);
+        String inlineErrorMessage = String.format("//p[@class='govuk-error-message' and contains(text(),'%s')]", LgvVehicleErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 
@@ -199,7 +199,7 @@ public class InterimLicence extends BasePage {
     public void aZeroLgvAuthInterimErrorMessageShouldDisplay() {
         waitForTextToBePresent(errorMessageTitle);
         assertTrue(isTextPresent(valueCannotBe0ErrorMessage));
-        String inlineErrorMessage = String.format("//span[@class='govuk-error-message' and contains(text(),'%s')]", valueCannotBe0ErrorMessage);
+        String inlineErrorMessage = String.format("//p[@class='govuk-error-message' and contains(text(),'%s')]", valueCannotBe0ErrorMessage);
         assertTrue(isElementPresent(inlineErrorMessage, SelectorType.XPATH));
     }
 
@@ -262,7 +262,7 @@ public class InterimLicence extends BasePage {
         enterText("interimAuthLgvVehicles", SelectorType.ID, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()));
         click("grant", SelectorType.ID);
         waitForTextToBePresent(interimGrantModalHeading);
-        click("form-actions[submit]", SelectorType.ID);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent(interimGrantConfirmation);
     }
 

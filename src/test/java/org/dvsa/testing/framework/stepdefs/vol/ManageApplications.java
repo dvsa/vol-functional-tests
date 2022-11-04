@@ -5,6 +5,8 @@ import activesupport.aws.s3.S3;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.datatable.DataTable;
@@ -23,6 +25,10 @@ public class ManageApplications {
         this.world = world;
     }
 
+    @Before
+    public void getScenarioName(Scenario scenario){
+        System.out.println("Testing Scenario:" + scenario.getName());
+    }
     @Given("I have a {string} application with {int} vehicles and a vehicleAuthority of {int}")
     public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, int numberOfVehicles, int authority) {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());

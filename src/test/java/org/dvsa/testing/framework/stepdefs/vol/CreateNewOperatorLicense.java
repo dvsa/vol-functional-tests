@@ -7,7 +7,7 @@ import io.cucumber.java.en.Then;
 
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.assertTrue;
 
 
 public class CreateNewOperatorLicense extends BasePage {

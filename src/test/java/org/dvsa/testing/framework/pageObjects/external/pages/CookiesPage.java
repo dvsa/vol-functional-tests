@@ -13,10 +13,12 @@ public class CookiesPage extends BasePage {
 
 
     public static void selectAllCookies() {
-        untilElementIsPresent(COOKIES_BANNER, SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        scrollAndClick(ACCEPT_ALL_COOKIES_BUTTON, SelectorType.XPATH);
-        untilElementIsPresent(COOKIES_CONFIRMED, SelectorType.XPATH, 30, TimeUnit.SECONDS);
-        scrollAndClick(HIDE_BANNER, SelectorType.XPATH);
+        if (isElementPresent(ACCEPT_ALL_COOKIES_BUTTON, SelectorType.XPATH)) {
+            untilElementIsPresent(COOKIES_BANNER, SelectorType.XPATH, 30, TimeUnit.SECONDS);
+            scrollAndClick(ACCEPT_ALL_COOKIES_BUTTON, SelectorType.XPATH);
+            untilElementIsPresent(COOKIES_CONFIRMED, SelectorType.XPATH, 30, TimeUnit.SECONDS);
+            scrollAndClick(HIDE_BANNER, SelectorType.XPATH);
+        }
     }
 
     public static void goToCookiesDetailsPage() {

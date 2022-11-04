@@ -5,14 +5,14 @@ import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class DVLAJourney extends BasePage {
 
@@ -94,7 +94,7 @@ public class DVLAJourney extends BasePage {
     public void searchForExactVRM(String vrm)  {
         enterText("vehicleSearch[search-value]", SelectorType.NAME, vrm);
         click("vehicleSearch[submit]", SelectorType.NAME);
-        Assert.assertTrue(isTextPresent("vehicle found"));
+        assertTrue(isTextPresent("vehicle found"));
     }
 
     public void completeDVLAConfirmationPageAndCheckVRM(String title) {

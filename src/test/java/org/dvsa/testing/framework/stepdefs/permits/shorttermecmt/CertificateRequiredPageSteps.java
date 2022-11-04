@@ -4,7 +4,8 @@ import Injectors.World;
 import io.cucumber.java8.En;;
 import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class CertificateRequiredPageSteps implements En {
 

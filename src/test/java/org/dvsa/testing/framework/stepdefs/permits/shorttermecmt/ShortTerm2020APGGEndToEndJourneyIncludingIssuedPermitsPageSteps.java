@@ -14,9 +14,9 @@ import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRe
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
 import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
-import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps extends BasePage implements En {
     public ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps(World world)  {
@@ -35,7 +35,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
         });
 
         Then("^I am navigated back to the permits dashboard page with my application status shown as Not yet Submitted", () -> {
-            Assert.assertEquals(getElementValueByText("//span[@class='status grey']",SelectorType.XPATH),"NOT YET SUBMITTED");
+            assertEquals(getElementValueByText("//strong[@class='govuk-tag govuk-tag--grey']",SelectorType.XPATH),"NOT YET SUBMITTED");
             HomePage.PermitsTab.selectFirstOngoingApplication();
         });
 

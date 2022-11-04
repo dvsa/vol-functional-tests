@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SafetyAndCompliance extends BasePage {
 

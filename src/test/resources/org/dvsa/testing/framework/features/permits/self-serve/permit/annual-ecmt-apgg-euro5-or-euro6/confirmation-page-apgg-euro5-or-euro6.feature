@@ -3,7 +3,6 @@ Feature: Annual ECMT Application Confirmation Page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
 
   @OLCS-21130 @OLCS-25086 @olcs-27382 @olcs-27502 @olcs-27581
   Scenario: ECMT Application submitted page details are displayed correctly

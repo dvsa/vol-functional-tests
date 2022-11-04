@@ -9,8 +9,8 @@ Feature: Complete an application manually
     And i start a new "<Licence>" licence application
     When i submit and pay for the application
     Then the application should be submitted
+    And redirected to the dashboard
 
     Examples:
       | Licence |
       | Goods   |
-      | Public  |

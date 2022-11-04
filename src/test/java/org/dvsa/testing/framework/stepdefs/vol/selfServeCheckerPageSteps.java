@@ -6,7 +6,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class selfServeCheckerPageSteps extends BasePage{
     private final World world;
@@ -25,12 +26,12 @@ public class selfServeCheckerPageSteps extends BasePage{
 
     @Then("I should be on the dashboard")
     public void iShouldBeOnTheDashboard() {
-        Assert.assertTrue(isPath("/dashboard"));
+        assertTrue(isPath("/dashboard"));
     }
 
     @Then("I should be on the Self Serve login page")
     public void iShouldBeOnTheSelfServeLoginPage() {
         waitForElementToBeClickable("auth.login.username", SelectorType.ID);
-        Assert.assertTrue(isPath("auth/login/"));
+        assertTrue(isPath("auth/login/"));
     }
 }

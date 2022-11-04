@@ -47,11 +47,11 @@ public class HTMLSnapshotSteps extends BasePage implements En {
             assertEquals(DocumentsPage.getSectionBody(BilateralSection.NumberOfPermits), "3");
 
             //advisory text
-            Assert.assertEquals("By applying for this permit, you confirm that you:", getText("//div[@class='printable__section']/p[1]", SelectorType.XPATH));
-            Assert.assertEquals("will comply fully with the conditions of use under which the permit may be used", getText("//div[@class='printable__section']/ul/li[1]", SelectorType.XPATH));
-            Assert.assertEquals("will carry the permit for the entire outbound and return journey and present it to any competent authority or inspectors", getText("//div[@class='printable__section']/ul/li[2]", SelectorType.XPATH));
-            Assert.assertEquals("You also confirm that you understand that a permit is required for all countries you are travelling to and transiting through.", getText("//p[@class='govuk-body']", SelectorType.XPATH));
-            Assert.assertEquals("I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit or certificate.", getText("//p/strong", SelectorType.XPATH));
+            assertEquals("By applying for this permit, you confirm that you:", getText("//div[@class='printable__section']/p[1]", SelectorType.XPATH));
+            assertEquals("will comply fully with the conditions of use under which the permit may be used", getText("//div[@class='printable__section']/ul/li[1]", SelectorType.XPATH));
+            assertEquals("will carry the permit for the entire outbound and return journey and present it to any competent authority or inspectors", getText("//div[@class='printable__section']/ul/li[2]", SelectorType.XPATH));
+            assertEquals("You also confirm that you understand that a permit is required for all countries you are travelling to and transiting through.", getText("//p[@class='govuk-body']", SelectorType.XPATH));
+            assertEquals("I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit or certificate.", getText("//p/strong", SelectorType.XPATH));
 
             //verify the return address
             String address = DocumentsPage.getAddress();

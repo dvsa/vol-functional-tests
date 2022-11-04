@@ -16,9 +16,9 @@ import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ConfirmationPageSteps extends BasePage implements En {
 
@@ -56,7 +56,7 @@ public class ConfirmationPageSteps extends BasePage implements En {
         });
 
         Then("^there shouldn't be a view receipt link on the Annual ECMT submitted page$", () -> {
-            Assert.assertFalse(SubmittedPage.hasViewReceipt());
+            assertFalse(SubmittedPage.hasViewReceipt());
         });
     }
 }

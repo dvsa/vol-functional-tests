@@ -1,4 +1,5 @@
 @int_regression
+@Complaints-convictions
 @OLCS-24339
 
 Feature: Public enquiry added and published and deletion of case notes
@@ -22,17 +23,36 @@ Feature: Public enquiry added and published and deletion of case notes
 
   @cross-browser
   @Submission
-  Scenario: Add a submission
+  Scenario: UI - Add a submission
     When i add a submission
     Then the submission details should be displayed
 
-    #TODO: Need to do UI versions of these
-  Scenario: Creating a case with a complaint
+  @Create_Complaint
+  Scenario: UI - Creating a case with a complaint
+    And I navigate to a case
+    Then I raise a complaint
+    Then the complaint should be displayed
 
-  Scenario: Add a conviction to a case
+  @Condition_undertaking_case
+  Scenario: UI - Add a condition-undertaking to a case
+    And I complete the conditions & undertakings form
+    Then the condition & undertaking should be displayed
 
-  Scenario: Add a condition-undertaking to a case
+  @Add_Case_Note
+  Scenario: UI - Add a new case note
+    And I navigate to Notes
+    Then I add a Note
+    Then the note should be displayed
 
-  Scenario: Add a submission
+  @Add_conviction_to_case
+  Scenario: UI - Add a conviction to a case
+    And I navigate to a case
+    And I add conviction to the case
+    Then the conviction should be created
 
-  Scenario: Add a case note
+
+
+
+
+
+

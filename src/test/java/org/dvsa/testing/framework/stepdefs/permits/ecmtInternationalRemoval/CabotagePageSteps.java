@@ -7,9 +7,9 @@ import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourn
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CabotagePageSteps extends BasePage implements En {
     public CabotagePageSteps(World world) {
@@ -17,7 +17,7 @@ public class CabotagePageSteps extends BasePage implements En {
             EcmtInternationalRemovalJourney.completeUntilCabotagePage(world);
         });
         And ("^the ECMT International Removal application reference number should be displayed$", () -> {
-            Assert.assertEquals(BasePermitJourney.getFullReferenceNumber(), CabotagePage.getReferenceFromPage());
+            assertEquals(BasePermitJourney.getFullReferenceNumber(), CabotagePage.getReferenceFromPage());
         });
         Then("^the ECMT international removal cabotage heading should be correct$", () -> {
             String heading = CabotagePage.getPageHeading();
@@ -28,7 +28,7 @@ public class CabotagePageSteps extends BasePage implements En {
         });
         When("^save and continue  button is selected without selecting the checkbox$", BasePermitPage::saveAndContinue);
         Then("^I should be taken to certificates required page", () -> {
-            Assert.assertTrue(isPath("/permits/application/\\d+/st-certificates/"));
+            assertTrue(isPath("/permits/application/\\d+/st-certificates/"));
         });
     }
 }

@@ -15,7 +15,8 @@ import org.dvsa.testing.framework.pageObjects.enums.PeriodType;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
     public AnnualBilateralOverviewPageSteps(World world) {
@@ -24,7 +25,7 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
         });
         Then("^the status of answers questions for individual countries as complete$", () -> {
             String s1 = BasePage.getElementValueByText("//li[2]//ul[1]//li[1]//span[2]", SelectorType.XPATH);
-            Assert.assertEquals(s1, "COMPLETED");
+            assertEquals(s1, "COMPLETED");
         });
         And("^I click on Turkey country link on the Application overview page$", () -> {
             OverviewPage.clickCountrySection(Country.Turkey);
@@ -49,13 +50,13 @@ public class AnnualBilateralOverviewPageSteps extends BasePage implements En {
     public void completeMoroccoBilateralJourneyUntilDeclarationPage(PeriodType typeOfMoroccoJourney) {
         OverviewPage.clickCountrySection(Country.Morocco);
         EssentialInformationPage.untilOnPage();
-        Assert.assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
+        assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
         EssentialInformationPageJourney.completePage();
         PeriodSelectionPageJourney.hasMoroccoPageHeading();
-        Assert.assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
+        assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
         AnnualBilateralJourney.completePeriodTypePage(typeOfMoroccoJourney);
         NumberOfPermitsPage.untilOnPage();
-        Assert.assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
+        assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
         NumberOfPermitsPageJourney.hasPageHeading();
         BasePermitPage.saveAndContinue();
         NumberOfPermitsPageJourney.hasBilateralErrorMessage();

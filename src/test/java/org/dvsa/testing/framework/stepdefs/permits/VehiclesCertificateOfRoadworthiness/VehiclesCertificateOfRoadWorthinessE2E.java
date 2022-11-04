@@ -15,13 +15,11 @@ import org.dvsa.testing.framework.pageObjects.external.pages.DeclarationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
-import org.junit.Assert;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
 import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VehiclesCertificateOfRoadWorthinessE2E implements En {
     public VehiclesCertificateOfRoadWorthinessE2E(World world) {
@@ -47,7 +45,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete Certificate  of Compliance section and click save and continue$", () -> {
             CertificateOfComplianceNumberPage.untilOnPage();
             String heading = CertificateOfComplianceNumberPage.getPageHeading();
-            Assert.assertEquals("Enter the vehicle Certificate of Compliance number (optional)", heading);
+            assertEquals("Enter the vehicle Certificate of Compliance number (optional)", heading);
             BasePermitPageJourney.hasReferenceOnPage();
             CertificateOfComplianceNumberPage.enterComplianceNumber("BD51SMR");
             BasePermitPage.saveAndContinue();
@@ -55,7 +53,7 @@ public class VehiclesCertificateOfRoadWorthinessE2E implements En {
         Then("^I check content and complete vehicle make and model section and click save and continue$", () -> {
             MakeAndModelPage.untilOnPage();
             String heading = MakeAndModelPage.getPageHeading();
-            Assert.assertEquals(heading,"Enter the vehicle make and model");
+            assertEquals(heading,"Enter the vehicle make and model");
             BasePermitPageJourney.hasReferenceOnPage();
             MakeAndModelPage.enterMakeAndModel("BD51SMR");
             BasePermitPage.saveAndContinue();

@@ -10,7 +10,8 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.bilateralsOnly.BilateralJourneySteps;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extends BasePermitPage implements En {
     public BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps(World world) {
@@ -22,10 +23,10 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
             int count = NumberOfPermitsPageJourney.getFieldCount();
             String value = getText("//*[@id='main-content']//dl/div[3]/dd[1]", SelectorType.XPATH);
             if(count == 1) {
-               Assert.assertEquals("Yes\nI only need permits for cabotage", value);
+               assertEquals("Yes\nI only need permits for cabotage", value);
             }
             else {
-                Assert.assertEquals("Yes\nI need standard and cabotage permits", value);
+                assertEquals("Yes\nI need standard and cabotage permits", value);
             }
         });
 
@@ -39,10 +40,10 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
             String permitvalue = String.valueOf(NumberOfPermitsPageJourney.getPermitValue());
 
             if(count == 1) {
-                Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitvalue + " " + permitlabel + "s");
+                assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitvalue + " " + permitlabel + "s");
             }
             else {
-                Assert.assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitStandard + " " + permitstandardlabel + "s" + '\n' + permitCabotage + " " + permitcabotagelabel + "s");
+                assertEquals(BilateralJourneySteps.getPermitValueMultiple(), permitStandard + " " + permitstandardlabel + "s" + '\n' + permitCabotage + " " + permitcabotagelabel + "s");
             }
         });
     }

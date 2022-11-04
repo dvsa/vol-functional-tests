@@ -4,9 +4,10 @@ import Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import apiCalls.enums.TrafficArea;
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import java.util.HashMap;
 
 public class DataGenerator extends BasePage {
 
@@ -19,6 +20,12 @@ public class DataGenerator extends BasePage {
     private String operatorAddressLine2;
     private String operatorTown;
     private String operatorPostCode;
+    private String randomWord;
+
+    public String getRandomWord() {return randomWord;}
+    public void setRandomWord(String randomWord) {
+        this.randomWord = randomWord;
+    }
 
     public String getOperatorForeName() {
         return operatorForeName;
@@ -86,6 +93,7 @@ public class DataGenerator extends BasePage {
 
     public DataGenerator(World world) {
         FakerUtils faker = new FakerUtils();
+        Lorem lorem = LoremIpsum.getInstance();
         setOperatorForeName(faker.generateFirstName());
         setOperatorFamilyName(faker.generateLastName());
         setOperatorUser(String.format("%s%s%s",
@@ -99,6 +107,7 @@ public class DataGenerator extends BasePage {
         setOperatorAddressLine2(faker.generateAddress().get("addressLine2"));
         setOperatorTown(faker.generateAddress().get("town"));
         setOperatorPostCode(TrafficArea.getPostCode(TrafficArea.MIDLANDS));
+        setRandomWord(lorem.getWords(10, 20));
         this.world = world;
     }
 

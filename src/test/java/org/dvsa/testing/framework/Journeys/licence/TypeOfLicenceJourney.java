@@ -7,7 +7,7 @@ import apiCalls.enums.VehicleType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TypeOfLicenceJourney extends BasePage {
 
@@ -68,5 +68,4 @@ public class TypeOfLicenceJourney extends BasePage {
         assertTrue(isElementPresent(lgvOnly, SelectorType.XPATH));
         assertTrue(isElementPresent(mixedFleet, SelectorType.XPATH));
     }
-
 }

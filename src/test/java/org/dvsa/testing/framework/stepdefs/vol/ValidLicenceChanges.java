@@ -9,10 +9,12 @@ import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.util.HashMap;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidLicenceChanges extends BasePage {
     private final World world;
@@ -39,14 +41,14 @@ public class ValidLicenceChanges extends BasePage {
     public void iMakeChangesToTheBusinessDetailsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
         enterText("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH, tradingName);
-        click("//a[@class='add-another-trigger']", SelectorType.XPATH);
+        click("//a[@class='add-another-trigger govuk-link']", SelectorType.XPATH);
         enterText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH, tradingName2);
         replaceText("//*[@id='natureOfBusiness']", SelectorType.XPATH, natureOfBusiness);
         world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
         click("//*[@id='add']", SelectorType.XPATH);
         waitAndEnterText("//*[@id='name']", SelectorType.XPATH,companyName);
         enterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         click("//*[@id='allow-email[allowEmail]']", SelectorType.XPATH);
         UIJourney.clickSaveAndReturn();
     }
@@ -59,8 +61,8 @@ public class ValidLicenceChanges extends BasePage {
         world.UIJourney.checkValue("//*[@id='natureOfBusiness']",SelectorType.XPATH,natureOfBusiness);
         world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
         world.UIJourney.checkValue("//td[1]//input[@type='submit']",SelectorType.XPATH,companyName);
-        Assert.assertEquals(Browser.navigate().findElement(By.xpath("//td[2]")).getText(),companyNumber);
-        Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
+        assertEquals(Browser.navigate().findElement(By.xpath("//td[2]")).getText(),companyNumber);
+        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
     }
 
     @When("i make changes to the addresses page")
@@ -92,8 +94,8 @@ public class ValidLicenceChanges extends BasePage {
         world.UIJourney.checkValue("//*[@id='$phone_secondary']",SelectorType.XPATH,secondaryPhoneNumber);
         world.UIJourney.checkValue("//*[@id='email']",SelectorType.XPATH,email);
         world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "establishment_address");
-        Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='consultant[add-transport-consultant]']")).isSelected());
-        Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='written-permission-to-engage']")).isSelected());
+        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='consultant[add-transport-consultant]']")).isSelected());
+        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='written-permission-to-engage']")).isSelected());
         world.UIJourney.checkValue("//*[@id='consultant[transportConsultantName]']",SelectorType.XPATH,transportConsultantName);
         world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "consultantAddress");
         world.UIJourney.checkValue("//*[@id='tc_phone_primary']",SelectorType.XPATH,phoneNumber);
@@ -106,17 +108,20 @@ public class ValidLicenceChanges extends BasePage {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
         for (int i = 0; i < 3; i++) {
             if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
-                click("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
+                waitForTextToBePresent("Vehicle details");
+                waitAndClick("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you want to remove these records?");
-                click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+                world.UIJourney.clickSubmit();
                 waitForElementToBeClickable("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
             } else {
                 click("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you want to remove these vehicle(s)");
-                click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+                world.UIJourney.clickSubmit();
                 waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             }
         }
+        UIJourney.refreshPageWithJavascript();
+        waitForTextToBePresent("Tick the box");
         click("//*[@id='shareInfo[shareInfo]']", SelectorType.XPATH);
         UIJourney.clickSaveAndReturn();
     }
@@ -125,35 +130,38 @@ public class ValidLicenceChanges extends BasePage {
     public void theChangesToTheVehiclesPageAreMade() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
         if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
-            Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
+            assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
         } else {
-            Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size(),2);
+            assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size(),2);
         }
-        Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
+        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
     }
 
     @When("i make changes to the licence discs page")
     public void iMakeChangesToTheLicenceDiscsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
         for (int i = 0; i < 3; i++) {
-            click("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
+            waitForTextToBePresent("Licence discs");
+            waitAndClick("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you would like to void these discs?");
-            click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+            world.UIJourney.clickSubmit();
             waitForElementToBeClickable("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
         }
-        click("//*[@id='add']",SelectorType.XPATH);
+        UIJourney.refreshPageWithJavascript();
+        waitForTextToBePresent("Licence discs");
+        waitAndClick("//*[@id='add']",SelectorType.XPATH);
         waitForTextToBePresent("How many additional discs are required?");
         enterText("//*[@id='data[additionalDiscs]']", SelectorType.XPATH, "2");
-        click("//*[@id='form-actions[submit]']",SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @Then("the changes to the licence discs page are made")
     public void theChangesToTheLicenceDiscsPageAreMade() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
-        Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),4);
+        assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),4);
         click("//*[contains(text(),'More actions')]", SelectorType.XPATH);
         click("//*[@id='ceased-show-hide']",SelectorType.XPATH);
-        Assert.assertEquals(Browser.navigate().findElements(By.xpath("//tbody//tr")).size(),7);
+        assertEquals(Browser.navigate().findElements(By.xpath("//tbody//tr")).size(),7);
 
     }
 
@@ -169,7 +177,7 @@ public class ValidLicenceChanges extends BasePage {
         enterText("//*[@id='contactDetails[fao]']", SelectorType.XPATH, safetyInspector);
         clickByLinkText("Enter the address yourself");
         world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
-        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
         waitForTextToBePresent("Safety inspectors");
         UIJourney.clickSaveAndReturn();
     }
@@ -178,8 +186,8 @@ public class ValidLicenceChanges extends BasePage {
     public void theChangesToTheSafetyAndCompliancePageAreMade() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.SAFETY_AND_COMPLIANCE);
         world.UIJourney.checkValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH, "6");
-        Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());
-        Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[contains(@value,'tach_external')]")).isSelected());
+        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());
+        assertTrue(Browser.navigate().findElement(By.xpath("//*[contains(@value,'tach_external')]")).isSelected());
         world.UIJourney.checkValue("//*[@id='licence[tachographInsName]']", SelectorType.XPATH, externalAnalysisBureau);
         checkForFullMatch(safetyInspector);
     }

@@ -24,19 +24,21 @@ public class CreateApplications extends BasePage implements En {
             assertTrue(isTextPresent("Your application reference number is"));
         });
         When("^i pay for my application$", () -> {
-            waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
+            world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
             waitForTitleToBePresent("Application overview");
         });
         And("^i pay my second application with my saved card details$", () -> {
+            String app = String.valueOf(Integer.parseInt(world.createApplication.getApplicationId()) - 1);
             clickByLinkText("Home");
-            Browser.navigate().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().skip(1).findAny().ifPresent(WebElement::click);
+            getDriver().findElements(By.xpath("//*[@class='table__wrapper'][last()]//td")).stream().distinct().filter(x -> x.getText().contains(app)).findAny().ifPresent(WebElement::click);
+            waitForTitleToBePresent("Apply for a new licence");
             waitAndClick("//*[contains(text(),'Review and declarations')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
             waitForTextToBePresent("Would you like to use a stored card?");
             selectValueFromDropDownByIndex("storedCards[card]", SelectorType.NAME, 1);
-            waitAndClick("form-actions[pay]", SelectorType.NAME);
+            world.UIJourney.clickPay();
             waitAndEnterText("csc",  SelectorType.NAME,"265");
             world.feeAndPaymentJourney.enterCardHolderDetails();
             waitAndClick("_eventId_payment", SelectorType.NAME);

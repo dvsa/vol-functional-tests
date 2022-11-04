@@ -9,7 +9,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.CancellationConfirm
 import org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnnualBilateralCancelPageSteps extends BasePage implements En {
 

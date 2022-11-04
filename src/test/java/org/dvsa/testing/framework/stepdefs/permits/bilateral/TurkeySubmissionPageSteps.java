@@ -5,7 +5,7 @@ import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TurkeySubmissionPageSteps implements En {
 
@@ -26,6 +26,5 @@ public class TurkeySubmissionPageSteps implements En {
             SubmittedPage.openReceipt();
         });
         And("^I click 'go to permits' dashboard on the submitted page", SubmittedPage::goToPermitsDashboard);
-
     }
 }

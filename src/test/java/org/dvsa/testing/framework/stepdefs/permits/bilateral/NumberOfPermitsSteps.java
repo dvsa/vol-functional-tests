@@ -6,9 +6,9 @@ import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NumberOfPermitsSteps implements En {
     public NumberOfPermitsSteps(World world) {
@@ -19,7 +19,7 @@ public class NumberOfPermitsSteps implements En {
             NumberOfPermitsPage.untilOnPage();
 
             //checking the Country name displayed on the page is Ukraine
-            Assert.assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
+            assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
 
             //checking the Page heading on the Turkey number of permits page is correct
             NumberOfPermitsPageJourney.hasPageHeading();

@@ -83,7 +83,7 @@ public class Permit extends BasePage {
     public static void untilOnPage(long duration, ChronoUnit timeUnit) {
         untilUrlMatches("admin/permits/stocks/", duration, timeUnit);
         untilVisible("tbody tr", SelectorType.CSS, Duration.MEDIUM, TimeUnit.SECONDS);
-        Assert.assertTrue(isTitlePresent("Permits", 10));
+        assertTrue(isTitlePresent("Permits", 10));
     }
 
     public static void untilOnPage() {

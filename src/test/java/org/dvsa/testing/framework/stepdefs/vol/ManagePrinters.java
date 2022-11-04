@@ -5,11 +5,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
-import org.openqa.selenium.WebElement;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ManagePrinters extends BasePage  {
     private final World world;
@@ -29,7 +26,7 @@ public class ManagePrinters extends BasePage  {
 
     @Then("that printer should be added")
     public void thatPrinterShouldBeAdded() {
-        Assert.assertTrue(isTextPresent(world.printingAndScanningJourney.getUniqueId()));
+        assertTrue(isTextPresent(world.printingAndScanningJourney.getUniqueId()));
     }
 
     @Given("I edit a printer")
@@ -39,7 +36,7 @@ public class ManagePrinters extends BasePage  {
 
     @Then("that printer should have been edited")
     public void thatPrinterShouldHaveBeenEdited() {
-        Assert.assertTrue(isTextPresent(world.printingAndScanningJourney.getUniqueId()));
+        assertTrue(isTextPresent(world.printingAndScanningJourney.getUniqueId()));
     }
 
     @Given("I delete a printer")
@@ -49,6 +46,6 @@ public class ManagePrinters extends BasePage  {
 
     @Then("that printer should have been deleted")
     public void thatPrinterShouldHaveBeenDeleted() {
-        Assert.assertTrue(isTextPresent("The printer is removed"));
+        assertTrue(isTextPresent("The printer is removed"));
     }
 }

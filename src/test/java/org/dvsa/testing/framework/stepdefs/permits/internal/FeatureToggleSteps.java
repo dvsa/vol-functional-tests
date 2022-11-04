@@ -8,8 +8,9 @@ import org.dvsa.testing.framework.pageObjects.internal.NavigationBar;
 import org.dvsa.testing.framework.pageObjects.internal.admin.permits.FeatureTogglesPage;
 import org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums.FeatureToggleStatus;
 import org.dvsa.testing.framework.pageObjects.internal.admin.permits.enums.Features;
-import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class FeatureToggleSteps implements En {
     private World world;
@@ -38,7 +39,7 @@ public class FeatureToggleSteps implements En {
                 hasPermitToggle = false;
             }
 
-            Assert.assertFalse("Expected permit toggle to not be present but was", hasPermitToggle);
+            assertFalse(hasPermitToggle,"Expected permit toggle to not be present but was");
         });
         And("^feature toggle for permits has been enabled$", () -> {
             InternalBaseJourney.navigateToAdminFeatureTogglePage();

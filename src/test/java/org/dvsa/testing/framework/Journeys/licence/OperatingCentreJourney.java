@@ -27,7 +27,6 @@ public class OperatingCentreJourney extends BasePage {
     String confirmOffStreetParkingCheckbox = "//*[@id='permission']";
     String advertTitle = "//h3[text()='Newspaper advert']";
     String uploadAdvertLater = "//*[@value='adPlacedLater']";
-    String submitButton = "//*[@id='form-actions[submit]']";
 
     public String addOperatingCentre = "//*[@id='add']";
     public String totalAuthorisationField = "//input[@id='totAuthVehicles']";
@@ -98,7 +97,7 @@ public class OperatingCentreJourney extends BasePage {
             waitAndClick(editOperatingCentreTitle, SelectorType.XPATH);
             waitForElementToBePresent(advertTitle);
         }
-        waitAndClick(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     public void updateOperatingCentreTotalVehicleAuthority(String newHGVTotalAuthority, String newLGVTotalAuthority, String trailers) {
@@ -141,7 +140,7 @@ public class OperatingCentreJourney extends BasePage {
             click(uploadAdvertLater, SelectorType.XPATH);
         }
         click(confirmOffStreetParkingCheckbox, SelectorType.XPATH);
-        click(submitButton, SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     private boolean hasTotalHGVAuthorityIncreased(String newHGVTotalAuthority) {

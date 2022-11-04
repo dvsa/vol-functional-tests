@@ -3,7 +3,6 @@ Feature: Application details page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL self-serve site
     And I have completed an ECMT application
     And The application status on the self service dashboard goes to UNDER CONSIDERATION
     And I am viewing an application

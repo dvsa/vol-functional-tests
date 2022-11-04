@@ -8,15 +8,13 @@ import io.cucumber.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class WebDavAPIStep extends BasePage {
     private final World world;
     private ValidatableResponse response;
     private String userId;
-    private String pid;
-
     public WebDavAPIStep(World world) {
         this.world = world;
     }
@@ -30,7 +28,6 @@ public class WebDavAPIStep extends BasePage {
     public void iViewTheirUserDetails() {
         this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId, world.registerUser
                 .getUserName(), world.registerUser.getEmailAddress());
-        this.pid = response.extract().jsonPath().getString("pid");
     }
 
     @Then("the OS Type value should be null")
