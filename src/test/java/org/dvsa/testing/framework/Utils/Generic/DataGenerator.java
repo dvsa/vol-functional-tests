@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.Utils.Generic;
 
 import Injectors.World;
 import activesupport.faker.FakerUtils;
-import activesupport.mail.MailSlurp;
 import activesupport.number.Int;
 import apiCalls.enums.TrafficArea;
 import org.dvsa.testing.framework.pageObjects.BasePage;
