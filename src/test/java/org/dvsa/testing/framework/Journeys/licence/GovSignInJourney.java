@@ -35,9 +35,9 @@ public class GovSignInJourney extends BasePage {
         waitAndEnterText("email", SelectorType.ID, mailSlurp.inbox().getEmailAddress());
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         String emailID = String.valueOf(mailSlurp.inbox().getId());
-        assertTrue(mailSlurp.hasEmailBeenReceived(UUID.fromString(emailID), "Your security code for your GOV.UK account | Eich cod diogelwch ar gyfer eich cyfrif GOV.UK"));
-        assertNotNull(mailSlurp.RetrieveVerificationCode(UUID.fromString(emailID)));
-        String verificationCode = mailSlurp.RetrieveVerificationCode(UUID.fromString(emailID));
+        assertTrue(mailSlurp.hasEmailBeenReceived("Your security code for your GOV.UK account | Eich cod diogelwch ar gyfer eich cyfrif GOV.UK"));
+        assertNotNull(mailSlurp.RetrieveVerificationCode());
+        String verificationCode = mailSlurp.RetrieveVerificationCode();
         waitAndEnterText("code", SelectorType.ID, verificationCode);
 
     }
