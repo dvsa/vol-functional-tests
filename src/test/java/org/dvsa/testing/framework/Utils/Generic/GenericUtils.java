@@ -35,7 +35,7 @@ import java.util.*;
 
 public class GenericUtils extends BasePage {
 
-    private World world;
+    private final World world;
     private String registrationNumber;
     private static final String zipFilePath = "/src/test/resources/import EBSR.zip";
 
@@ -53,7 +53,7 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String xmlFile = "./src/test/resources/EBSR/EBSR.xml";
+            String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
             Document xmlDoc = xmlBuilder.parse(xmlFile);
@@ -143,7 +143,7 @@ public class GenericUtils extends BasePage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
+        ZipUtil.pack(new File("./src/test/resources/org/dvsa/testing/framework/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
         return String.format("target/EBSR/%s",fileName);
     }
 

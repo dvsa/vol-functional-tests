@@ -12,6 +12,7 @@ import org.dvsa.testing.framework.Journeys.licence.SelfServeNavigation;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
+import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 public class Initialisation extends BasePage implements En {
@@ -37,7 +38,7 @@ public class Initialisation extends BasePage implements En {
         world.DBUtils = new DBUtils(world);
         world.formattedStrings = new FormattedStrings(world);
         world.licenceCreation = new LicenceCreation(world);
-//        world.genericUtils = new GenericUtils(world);
+        world.genericUtils = new GenericUtils(world);
         world.APIJourney = new APIJourney(world);
         world.continuationJourney = new ContinuationJourney(world);
         world.busRegistrationJourney = new BusRegistrationJourney(world);

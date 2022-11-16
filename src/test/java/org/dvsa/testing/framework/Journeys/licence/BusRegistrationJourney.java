@@ -6,7 +6,6 @@ import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
-import com.amazonaws.services.s3.AmazonS3;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -26,8 +25,7 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BusRegistrationJourney extends BasePage {
-    private static AmazonS3 client = null;
-    private World world;
+    World world;
 
     public BusRegistrationJourney(World world) {
         this.world = world;
