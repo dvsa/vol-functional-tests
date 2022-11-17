@@ -81,11 +81,11 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <parallel>classes</parallel>
-                    <useUnlimitedThreads>true</useUnlimitedThreads>
+<!--                    <parallel>methods</parallel>-->
+<!--                    <useUnlimitedThreads>true</useUnlimitedThreads>-->
 <!--                    <threadCount>${threadCount}</threadCount>-->
-<!--                    <forkCount>${forks}</forkCount>-->
-<!--                    <reuseForks>false</reuseForks>-->
+                    <forkCount>${forks}</forkCount>
+                    <reuseForks>false</reuseForks>
 <!--                    <argLine>-Xmx${jvmMemory}m</argLine>-->
 <!--                    <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
                     <includes>
