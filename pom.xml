@@ -81,8 +81,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <parallel>methods</parallel>
-                    <threadCount>7</threadCount>
+                    <parallel>classes</parallel>
+                    <threadCount>3</threadCount>
                     <includes>
                         <include>RunCucumberTests.class</include>
                     </includes>
