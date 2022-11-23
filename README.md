@@ -14,28 +14,8 @@ The following technologies should be installed on your system.
 
 
 ## Executing
-``mvn clean verify -Denv= -Dbrowser= ``
 
-On Environments that do not support verify run the follwing command 
-
-``mvn clean install -Denv=da -Dbrowser=chrome -DdbUsername=olcsapi -DdbPassword ""  -Dcucumber.options="--tags @ss_regression --tags ~@gov-verify" ``
-
-  
-The environment and browser properties need to be set otherwise the test will not execute. If only environment and browser properties are set, the harness will
-create by default ``a GB goods standard national limited company licence``
-
-``@PSV-LAST-TM-TRIGGER`` test requires access to the Jenkins api and database, so for this test the following properties 
-``-DJENKINS_USERNAME= -DJENKINS_PASSWORD= -DdbUsername= -DdbPassword=`` need to be set
-
-## Executing 
-
-### Including tags
-``mvn clean verify {system props e.g. -Denv -Dbrowser} -Dcucumber.options="--tags @tag``
-
-### Excluding tags
-``mvn clean verify {system props e.g. -Denv -Dbrowser} -Dtag.name='(not @tag)' -Dcucumber.options="--tags @tag``
-
-``The following system property -Dtag.name accepts a single tag 'not @tag' or multiple tags '(not @tag and not @tag)'``
+``mvn clean test -Denv= -Dbrowser= -Dcucumber.filter.tags="@s" ``
 
 ## Reports
 To produce the reports run the following command in your terminal
