@@ -17,10 +17,11 @@ public class GovSignInJourney extends BasePage {
 
     private World world;
 
-    public GovSignInJourney(World world) {this.world = world;}
+    public GovSignInJourney(World world) {
+        this.world = world;
+    }
 
-    public void navigateToGovUkSignIn()
-    {
+    public void navigateToGovUkSignIn() {
         navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
     }
 
@@ -39,7 +40,7 @@ public class GovSignInJourney extends BasePage {
         waitAndEnterText("password", SelectorType.ID, signInPassword);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         String authCode = getTOTPCode(AUTH_KEY);
-        waitAndEnterText("code", SelectorType.ID,authCode);
+        waitAndEnterText("code", SelectorType.ID, authCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='select-device-choice']");
@@ -52,6 +53,7 @@ public class GovSignInJourney extends BasePage {
         cycletThroughSignInJourney();
         answerPersonalQuestions();
     }
+
     public void enterPassportDetails() {
         waitAndEnterText("passportNumber", SelectorType.ID, "321654987");
         waitAndEnterText("surname", SelectorType.ID, "Decerqueira");
@@ -67,9 +69,9 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterExpiryDate() {
-      enterText("expiryDate-day", SelectorType.ID, "01");
-      enterText("expiryDate-month", SelectorType.ID, "01");
-      enterText("expiryDate-year", SelectorType.ID, "2030");
+        enterText("expiryDate-day", SelectorType.ID, "01");
+        enterText("expiryDate-month", SelectorType.ID, "01");
+        enterText("expiryDate-year", SelectorType.ID, "2030");
     }
 
     public void cycletThroughSignInJourney() {
@@ -86,25 +88,30 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void answerPersonalQuestions() {
-        if(isTitlePresent("How much of your loan do you pay back every month?", 60)) {
+        if (isTitlePresent("How much of your loan do you pay back every month?", 2)) {
             answerPersonalLoan();
-        } else if (isTitlePresent("How much do you have left to pay on your mortgage?", 60)) {
+        } else if (isTitlePresent("How much do you have left to pay on your mortgage?", 2)) {
             answerMortgageQuestion();
         }
     }
 
     public void answerPersonalLoan() {
-        if(isElementPresent("Q00042-OVER550UPTO600", SelectorType.ID)) {
+        if (isElementPresent("Q00042-OVER550UPTO600", SelectorType.ID)) {
             clickByXPath("//*[@id='Q00042-OVER550UPTO600']");
-        } else if (isElementPresent("Q00042-OVER550UPTO600", SelectorType.ID));
-        clickByXPath("//*[@id='Q00042-NONEOFTHEABOVEDOESNOTAPPLY']");
+            waitAndClick("continue", SelectorType.ID);
+        } else
+            clickByXPath("//*[@id='Q00042-NONEOFTHEABOVEDOESNOTAPPLY']");
+        waitAndClick("continue", SelectorType.ID);
     }
 
     public void answerMortgageQuestion() {
         if (isElementPresent("Q00015-OVER35000UPTO60000", SelectorType.ID)) {
             clickByXPath("//*[@id='Q00015-OVER35000UPTO60000']");
+            waitAndClick("continue", SelectorType.ID);
+        } else {
+            clickByXPath("//*[@id='Q00015']");
+            waitAndClick("continue", SelectorType.ID);
         }
-
     }
-
 }
+
