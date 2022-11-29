@@ -18,6 +18,6 @@ public class GovSignIn extends BasePage {
 
     @And("I create an account")
     public void iCreateAnAccount() throws Exception {
-        world.govSignInJourney.createGovAccount();
+        world.govSignInJourney.signInGovAccount();
     }
 }
