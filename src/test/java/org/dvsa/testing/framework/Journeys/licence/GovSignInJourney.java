@@ -4,8 +4,10 @@ import Injectors.World;
 import activesupport.mail.MailSlurp;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
@@ -92,7 +94,14 @@ public class GovSignInJourney extends BasePage {
             answerPersonalLoan();
         } else if (isTitlePresent("How much do you have left to pay on your mortgage?", 2)) {
             answerMortgageQuestion();
+        } else if (isTitlePresent("How much is your monthly mortgage payment?", 2)) {
+            answerMonthlyPaymentQuestion();
         }
+    }
+
+    public void answerQuestionListValue() {
+        List<WebElement> question = findElements("//*[contains(@id,'Q000')]", SelectorType.XPATH);
+        System.out.println(question);
     }
 
     public void answerPersonalLoan() {
@@ -113,5 +122,10 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("continue", SelectorType.ID);
         }
     }
+    public void answerMonthlyPaymentQuestion() {
+      //  isElementPresent()
+
+    }
+
 }
 
