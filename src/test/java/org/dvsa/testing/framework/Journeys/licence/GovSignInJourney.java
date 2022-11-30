@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.mail.MailSlurp;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class GovSignInJourney extends BasePage {
         navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
     }
 
-    public void signInGovAccount() throws Exception {
+    public void signInGovAccount() {
         String signInUsername = world.configuration.config.getString("signInUsername");
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
@@ -53,7 +54,8 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("submitButton", SelectorType.ID);
         enterPassportDetails();
         cycletThroughSignInJourney();
-        answerPersonalQuestions();
+        cyclethroughquestions();
+     //   answerPersonalQuestions();
     }
 
     public void enterPassportDetails() {
@@ -89,15 +91,33 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("submitButton", SelectorType.ID);
     }
 
-    public void answerPersonalQuestions() {
-        if (isTitlePresent("How much of your loan do you pay back every month?", 2)) {
-            answerPersonalLoan();
-        } else if (isTitlePresent("How much do you have left to pay on your mortgage?", 2)) {
-            answerMortgageQuestion();
-        } else if (isTitlePresent("How much is your monthly mortgage payment?", 2)) {
-            answerMonthlyPaymentQuestion();
+    public void cyclethroughquestions() {
+        List<WebElement> elements = findElements("/html/body", SelectorType.XPATH);
+        outsideloop:
+        while (!isElementPresent(elements.toString(), SelectorType.XPATH))
+        for(int i=0; i<elements.size(); i++) {
+            if  (isElementPresent("Q00042-fieldset", SelectorType.ID)) {
+                answerPersonalLoan();
+                break;
+            }
+            if (isTitlePresent("You’ve successfully proved your identity", 5)) {
+                waitAndClick("continue", SelectorType.ID);
+                break outsideloop;
+            }
+            if (isElementPresent("Q00015-fieldset", SelectorType.ID)) {
+                answerMortgageQuestion();
+                break;
+            }
+            if (isElementPresent("Q00018-fieldset", SelectorType.ID)) {
+                answerMonthlyPaymentQuestion();
+                break;
+            }
+            if (isElementPresent("Q00048-fieldset", SelectorType.ID)){
+                answerBankingQuestion();
+                break;
+            }
+            }
         }
-    }
 
     public void answerQuestionListValue() {
         List<WebElement> question = findElements("//*[contains(@id,'Q000')]", SelectorType.XPATH);
@@ -123,9 +143,17 @@ public class GovSignInJourney extends BasePage {
         }
     }
     public void answerMonthlyPaymentQuestion() {
-      //  isElementPresent()
-
+        if (isElementPresent("Q00018-OVER500UPTO600", SelectorType.ID)) {
+            clickByXPath("//*[@id='Q00018-OVER500UPTO600']");
+            waitAndClick("continue", SelectorType.ID);
+        } else {
+            clickByXPath("//*[@id='Q00018-NONEOFTHEABOVEDOESNOTAPPLY]");
+            waitAndClick("continue", SelectorType.ID);
+        }
     }
 
+    public void answerBankingQuestion() {
+
+    }
 }
 
