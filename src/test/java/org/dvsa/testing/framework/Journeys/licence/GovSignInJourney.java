@@ -55,6 +55,7 @@ public class GovSignInJourney extends BasePage {
         enterPassportDetails();
         cycletThroughSignInJourney();
         cyclethroughquestions();
+        waitAndClick("submitButton", SelectorType.ID);
      //   answerPersonalQuestions();
     }
 
@@ -112,7 +113,11 @@ public class GovSignInJourney extends BasePage {
                 answerBankingQuestion();
                 break;
             }
-            if (isElementPresent("//input[@type='radio']", SelectorType.XPATH)){
+            if (isElementPresent("Q00020-021963", SelectorType.ID)) {
+                answerOtherPersonQuestion();
+                break;
+            }
+            if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)){
                 break outsideloop;
             }
             }
@@ -147,7 +152,23 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void answerBankingQuestion() {
-
+        if (isElementPresent("Q00048-LLOYDSTSBBANKPLC", SelectorType.ID)) {
+            clickByXPath("Q00048-LLOYDSTSBBANKPLC");
+            waitAndClick("continue", SelectorType.ID);
+        } else {
+            clickByXPath("//*[@id='Q00048-NONEOFTHEABOVEDOESNOTAPPLY]");
+            waitAndClick("continue", SelectorType.ID);
+        }
     }
-}
+
+    public void answerOtherPersonQuestion() {
+        if (isElementPresent("Q00020-101967", SelectorType.ID)) {
+            clickByXPath("//*[@id='Q00020-101967']");
+            waitAndClick("continue", SelectorType.ID);
+        } else {
+            clickByXPath("//*[@id='Q00020-NONEOFTHEABOVEDOESNOTAPPLY]");
+            waitAndClick("continue", SelectorType.ID);
+        }
+    }
+    }
 
