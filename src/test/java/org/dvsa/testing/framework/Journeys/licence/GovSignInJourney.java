@@ -146,7 +146,7 @@ public class GovSignInJourney extends BasePage {
             clickByXPath("//*[@id='Q00018-OVER500UPTO600']");
             waitAndClick("continue", SelectorType.ID);
         } else {
-            clickByXPath("//*[@id='Q00018-NONEOFTHEABOVEDOESNOTAPPLY]");
+            clickByXPath("//input[@value='NONE OF THE ABOVE / DOES NOT APPLY']");
             waitAndClick("continue", SelectorType.ID);
         }
     }
@@ -156,7 +156,7 @@ public class GovSignInJourney extends BasePage {
             clickByXPath("Q00048-LLOYDSTSBBANKPLC");
             waitAndClick("continue", SelectorType.ID);
         } else {
-            clickByXPath("//*[@id='Q00048-NONEOFTHEABOVEDOESNOTAPPLY]");
+            clickByXPath("//input[@value='NONE OF THE ABOVE / DOES NOT APPLY']");
             waitAndClick("continue", SelectorType.ID);
         }
     }
@@ -166,7 +166,7 @@ public class GovSignInJourney extends BasePage {
             clickByXPath("//*[@id='Q00020-101967']");
             waitAndClick("continue", SelectorType.ID);
         } else {
-            clickByXPath("//*[@id='Q00020-NONEOFTHEABOVEDOESNOTAPPLY]");
+            clickByXPath("//input[@value='NONE OF THE ABOVE / DOES NOT APPLY']");
             waitAndClick("continue", SelectorType.ID);
         }
     }
