@@ -92,17 +92,13 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void cyclethroughquestions() {
-        List<WebElement> elements = findElements("/html/body", SelectorType.XPATH);
+        List<WebElement> elements = findElements("//input[@type='radio']", SelectorType.XPATH);
         outsideloop:
         while (!isElementPresent(elements.toString(), SelectorType.XPATH))
         for(int i=0; i<elements.size(); i++) {
             if  (isElementPresent("Q00042-fieldset", SelectorType.ID)) {
                 answerPersonalLoan();
                 break;
-            }
-            if (isTitlePresent("You’ve successfully proved your identity", 5)) {
-                waitAndClick("continue", SelectorType.ID);
-                break outsideloop;
             }
             if (isElementPresent("Q00015-fieldset", SelectorType.ID)) {
                 answerMortgageQuestion();
@@ -116,13 +112,12 @@ public class GovSignInJourney extends BasePage {
                 answerBankingQuestion();
                 break;
             }
+            if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)) {
+                waitAndClick("continue", SelectorType.ID);
+                break outsideloop;
+            }
             }
         }
-
-    public void answerQuestionListValue() {
-        List<WebElement> question = findElements("//*[contains(@id,'Q000')]", SelectorType.XPATH);
-        System.out.println(question);
-    }
 
     public void answerPersonalLoan() {
         if (isElementPresent("Q00042-OVER550UPTO600", SelectorType.ID)) {
