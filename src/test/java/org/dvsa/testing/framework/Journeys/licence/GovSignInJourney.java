@@ -112,8 +112,7 @@ public class GovSignInJourney extends BasePage {
                 answerBankingQuestion();
                 break;
             }
-            if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)) {
-                waitAndClick("continue", SelectorType.ID);
+            if (isElementPresent("//input[@type='radio']", SelectorType.XPATH)){
                 break outsideloop;
             }
             }
