@@ -81,8 +81,19 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
-                    <parallel>classes</parallel>
-                    <threadCount>3</threadCount>
+                    <properties>
+                        <configurationParameters>
+                            junit.jupiter.execution.parallel.enabled=true
+                            junit.jupiter.execution.parallel.config.strategy=dynamic
+                            junit.jupiter.execution.parallel.mode.default=concurrent
+                            junit.jupiter.execution.parallel.mode.classes.default=concurrent
+                            cucumber.execution.parallel.enabled=true
+                            cucumber.execution.parallel.config.strategy=dynamic
+                            cucumber.execution.parallel.config.fixed.parallelism=4
+                            cucumber.execution.parallel.mode.default=concurrent
+                            cucumber.execution.parallel.mode.classes.default=concurrent
+                        </configurationParameters>
+                    </properties>
                     <includes>
                         <include>RunCucumberTests.class</include>
                     </includes>
@@ -145,6 +156,12 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>5.9.0</version>
             <scope>test</scope>
         </dependency>
 <!--        <dependency>-->
