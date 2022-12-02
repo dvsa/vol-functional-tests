@@ -54,9 +54,7 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("submitButton", SelectorType.ID);
         enterPassportDetails();
         cycletThroughSignInJourney();
-        cyclethroughquestions();
-        waitAndClick("submitButton", SelectorType.ID);
-     //   answerPersonalQuestions();
+        answerPersonalQuestions();
     }
 
     public void enterPassportDetails() {
@@ -92,64 +90,56 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("submitButton", SelectorType.ID);
     }
 
-    public void cyclethroughquestions() {
-        List<WebElement> elements = findElements("//input[@type='radio']", SelectorType.XPATH);
-        outsideloop:
-        while (!isElementPresent(elements.toString(), SelectorType.XPATH))
-        for(int i=0; i<elements.size(); i++) {
-            if  (isElementPresent("Q00042-fieldset", SelectorType.ID)) {
+    public void answerPersonalQuestions() {
+        int i;
+        for (i = 0; i < 5; i++) {
+            if (isTitlePresent("How much of your loan do you pay back every month?", 2)) {
                 answerPersonalLoan();
-                break;
-            }
-            if (isElementPresent("Q00015-fieldset", SelectorType.ID)) {
+            } else if (isTitlePresent("How much do you have left to pay on your mortgage?", 2)) {
                 answerMortgageQuestion();
-                break;
-            }
-            if (isElementPresent("Q00018-fieldset", SelectorType.ID)) {
+            } else if (isTitlePresent("How much is your monthly mortgage payment?", 2)) {
                 answerMonthlyPaymentQuestion();
-                break;
-            }
-            if (isElementPresent("Q00048-fieldset", SelectorType.ID)){
-                answerBankingQuestion();
-                break;
-            }
-            if (isElementPresent("Q00020-021963", SelectorType.ID)) {
+            } else if (isTitlePresent("How much do you have left to pay on your mortgage?", 2)) {
+                answerLeftToPayOnYourMortgageQuestion();
+            } else if (isTitlePresent("When was the other person on your mortgage born??", 2)) {
                 answerOtherPersonQuestion();
-                break;
-            }
-            if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)){
-                break outsideloop;
-            }
-            }
+            } else if(isTitlePresent("What is the name of your loan provider?", 2))
+                answerBankingQuestion();
         }
+    }
 
     public void answerPersonalLoan() {
-        if (isElementPresent("Q00042-OVER550UPTO600", SelectorType.ID)) {
-            clickByXPath("//*[@id='Q00042-OVER550UPTO600']");
-            waitAndClick("continue", SelectorType.ID);
-        } else
-            clickByXPath("//*[@id='Q00042-NONEOFTHEABOVEDOESNOTAPPLY']");
-        waitAndClick("continue", SelectorType.ID);
+        if (isTextPresent("UP TO £ 600")) {
+            clickById("Q00042");
+        } else if (isTextPresent("OVER £550 UP TO £600")) {
+            clickById("Q00042-OVER550UPTO600");
+        } else {
+            clickById("Q00042-NONEOFTHEABOVEDOESNOTAPPLY");
+        }
+        clickById("continue");
     }
 
     public void answerMortgageQuestion() {
-        if (isElementPresent("Q00015-OVER35000UPTO60000", SelectorType.ID)) {
-            clickByXPath("//*[@id='Q00015-OVER35000UPTO60000']");
-            waitAndClick("continue", SelectorType.ID);
+        if (isTextPresent("UP TO £ 60,000")) {
+            clickById("Q00015");
+        } else if (isTextPresent("OVER £35,000 UP TO £60,000")) {
+            clickById("Q00015-OVER35000UPTO60000");
         } else {
-            clickByXPath("//*[@id='Q00015']");
-            waitAndClick("continue", SelectorType.ID);
+            clickById("Q00015-NONEOFTHEABOVEDOESNOTAPPLY");
         }
+        clickById("continue");
     }
     public void answerMonthlyPaymentQuestion() {
-        if (isElementPresent("Q00018-OVER500UPTO600", SelectorType.ID)) {
-            clickByXPath("//*[@id='Q00018-OVER500UPTO600']");
-            waitAndClick("continue", SelectorType.ID);
+        if (isTextPresent("OVER £500 UP TO £600")) {
+            clickById("Q00018-OVER500UPTO600");
+        } else if (isTextPresent("UP TO £ 600")) {
+            clickById("Q00018");
         } else {
-            clickByXPath("//input[@value='NONE OF THE ABOVE / DOES NOT APPLY']");
-            waitAndClick("continue", SelectorType.ID);
+            clickById("Q00018-NONEOFTHEABOVEDOESNOTAPPLY");
         }
+        clickById("continue");
     }
+
 
     public void answerBankingQuestion() {
         if (isElementPresent("Q00048-LLOYDSTSBBANKPLC", SelectorType.ID)) {
@@ -170,5 +160,17 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("continue", SelectorType.ID);
         }
     }
+
+    public void answerLeftToPayOnYourMortgageQuestion() {
+        if (isTextPresent("OVER £35,000 UP TO £60,000")) {
+            clickById("Q00015-OVER35000UPTO60000");
+        } else if (isTextPresent("UP TO £ 60,000")) {
+            clickById("Q00015");
+        } else {
+            clickById("Q00015-NONEOFTHEABOVEDOESNOTAPPLY");
+        }
+        clickById("continue");
     }
+}
+
 

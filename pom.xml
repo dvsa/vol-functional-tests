@@ -202,6 +202,16 @@
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>active-support</artifactId>
             <version>${active-support.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-launcher</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
