@@ -46,7 +46,10 @@ public class GovSignInJourney extends BasePage {
         waitAndEnterText("code", SelectorType.ID, authCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        clickByXPath("//*[@id='select-device-choice']");
+        if (isTitlePresent("You have already proved your identity", 2)) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        } else if clickByXPath("//*[@id='select-device-choice']");
+
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='smartphone-choice-3']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -56,6 +59,7 @@ public class GovSignInJourney extends BasePage {
         cycletThroughSignInJourney();
         answerPersonalQuestions();
     }
+
 
     public void enterPassportDetails() {
         waitAndEnterText("passportNumber", SelectorType.ID, "321654987");
