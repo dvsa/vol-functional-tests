@@ -6,7 +6,8 @@ Scenario: Login to sign in
   When I can navigate to gov sign in
   Then I sign in to gov sign in to complete the process
   And I am taken back to VOL
-  And I pay fee for application
+  Then i complete the payment process
+  Then the application should be submitted
 
 
 

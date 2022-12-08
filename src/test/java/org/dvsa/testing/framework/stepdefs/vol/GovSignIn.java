@@ -26,11 +26,15 @@ public class GovSignIn extends BasePage {
     @And("I am taken back to VOL")
     public void iAmTakenBackToVOL() {
         Assert.assertTrue(isTextPresent("Returning you to the ‘Vehicle Operator Licence’ service"));
+        waitForTitleToBePresent("Review and declarations");
+        Assert.assertTrue(isTextPresent("Review and declarations"));
+
     }
 
-    @Then("4")
-    public void theReviewAndDeclarationPageShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent("Review and declarations"));
-        clickByLinkText("Pay and submit");
+    @Then("i complete the payment process")
+    public void iCompleteThePaymentProcess() {
+        clickById("submitAndPay");
+        clickById("form-actions[pay]");
+        world.feeAndPaymentJourney.customerPaymentModule();
     }
 }
