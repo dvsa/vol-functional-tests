@@ -4,7 +4,9 @@ import Injectors.World;
 import com.mailslurp.clients.ApiException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.junit.Assert;
 
 public class GovSignIn extends BasePage {
     private final World world;
@@ -16,8 +18,19 @@ public class GovSignIn extends BasePage {
         world.govSignInJourney.navigateToGovUkSignIn();
     }
 
-    @And("I create an account")
-    public void iCreateAnAccount() {
+    @And("I sign in to gov sign in to complete the process")
+    public void iSignInToGovSignInToCompleteTheProcess() {
         world.govSignInJourney.signInGovAccount();
+    }
+
+    @And("I am taken back to VOL")
+    public void iAmTakenBackToVOL() {
+        Assert.assertTrue(isTextPresent("Returning you to the ‘Vehicle Operator Licence’ service"));
+    }
+
+    @Then("4")
+    public void theReviewAndDeclarationPageShouldBeDisplayed() {
+        Assert.assertTrue(isTextPresent("Review and declarations"));
+        clickByLinkText("Pay and submit");
     }
 }
