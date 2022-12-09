@@ -12,3 +12,9 @@ Feature: Sign surrender
     When i sign with verify
     Then the post verify success page is displayed
     And the surrender status is "Surrender under consideration"
+    
+    Scenario: Sign with gov sign in - check that surrender has been created
+      When I can navigate to gov sign in
+      And I create an account
+      Then the post gov sign in page is displayed
+      And the surrender status is "Surrender under consideration"

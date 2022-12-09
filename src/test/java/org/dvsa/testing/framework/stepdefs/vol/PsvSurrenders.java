@@ -109,4 +109,9 @@ public class PsvSurrenders extends BasePage implements En {
         String heading = findElements("//h2[@class = 'govuk-heading-m']", SelectorType.XPATH).get(0).getText();
         Assert.assertTrue(heading.contains(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles())));
     }
+
+    @Then("the post gov sign in page is displayed")
+    public void thePostGovSignInPageIsDisplayed() {
+
+    }
 }
