@@ -1,19 +1,13 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
-import activesupport.mail.MailSlurp;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.HashMap;
-import java.util.List;
+import java.util.Random;
 
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 
 public class GovSignInJourney extends BasePage {
@@ -24,6 +18,10 @@ public class GovSignInJourney extends BasePage {
         this.world = world;
     }
 
+    Random random = new Random();
+
+    String registrationEmail = "terry.valtech+" + random.nextInt(900) + "@gmail.com";
+
     public void navigateToGovUkSignIn() {
         navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
     }
@@ -33,8 +31,7 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        clickByXPath("//*[@value='sign-in']");
-        waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("sign-in-link", SelectorType.ID);
@@ -46,8 +43,23 @@ public class GovSignInJourney extends BasePage {
         waitAndEnterText("code", SelectorType.ID, authCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        clickByXPath("//*[@id='select-device-choice']");
+        if (isTitlePresent("You have already proved your identity", 2)) {
+          waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
+         finishRegistrationProcess();
+    }
+
+    public void registerGovAccount() {
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickByXPath("//*[@id='havePhotoId']");
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        waitAndClick("sign-in-link", SelectorType.ID);
+        waitAndEnterText("email", SelectorType.ID, registrationEmail);
+        waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+        clickByLinkText("Sign in to a service");
+    }
+
+    public void finishRegistrationProcess() {
         clickByXPath("//*[@id='smartphone-choice-3']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='journey']");
@@ -56,6 +68,7 @@ public class GovSignInJourney extends BasePage {
         cycletThroughSignInJourney();
         answerPersonalQuestions();
     }
+
 
     public void enterPassportDetails() {
         waitAndEnterText("passportNumber", SelectorType.ID, "321654987");
@@ -103,8 +116,11 @@ public class GovSignInJourney extends BasePage {
                 answerLeftToPayOnYourMortgageQuestion();
             } else if (isTitlePresent("When was the other person on your mortgage born??", 2)) {
                 answerOtherPersonQuestion();
-            } else if(isTitlePresent("What is the name of your loan provider?", 2))
+            } else if (isTitlePresent("What is the name of your loan provider?", 2))
                 answerBankingQuestion();
+            if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)){
+                break;
+            }
         }
     }
 
