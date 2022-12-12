@@ -31,7 +31,8 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickById("chooseWayPyi");
+        clickByXPath("//*[@id='form-tracking']/button");
         clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("sign-in-link", SelectorType.ID);
@@ -46,7 +47,7 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("You have already proved your identity", 2)) {
           waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
-         finishRegistrationProcess();
+         goThroughVerificationSteps();
     }
 
     public void registerGovAccount() {
@@ -59,7 +60,7 @@ public class GovSignInJourney extends BasePage {
         clickByLinkText("Sign in to a service");
     }
 
-    public void finishRegistrationProcess() {
+    public void goThroughVerificationSteps() {
         clickByXPath("//*[@id='smartphone-choice-3']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='journey']");
