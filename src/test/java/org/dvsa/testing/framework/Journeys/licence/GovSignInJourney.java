@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
 import java.util.Random;
 
 import static activesupport.driver.Browser.navigate;
@@ -25,6 +26,7 @@ public class GovSignInJourney extends BasePage {
     public void navigateToGovUkSignIn() {
             navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
     }
+
 
     public void signInGovAccount() {
         String signInUsername = world.configuration.config.getString("signInUsername");
