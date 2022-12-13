@@ -22,6 +22,9 @@ public class Configuration {
     public String getTempPassword(String emailAddress) {
         return S3.getTempPassword(emailAddress, getBucketName());
     }
+
+   // @WIP public String getEmailCode() {return S3.getGovSignInCode(getBucketName()); }
+
     public String getPasswordResetLink() {
         return String.valueOf(S3.getPasswordResetLink());
     }
