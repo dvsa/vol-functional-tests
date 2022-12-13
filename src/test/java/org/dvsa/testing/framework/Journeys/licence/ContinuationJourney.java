@@ -112,7 +112,7 @@ public class ContinuationJourney extends BasePage {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             click("content[signatureOptions]", SelectorType.ID);
             click("sign", SelectorType.ID);
-            world.GovSignInJourney.navigateToGovUkSignIn();
+            Browser.basicAuthGovSignIn();
             world.GovSignInJourney.signInGovAccount();
 //            world.GovSignInJourney.goThroughVerificationSteps();
 //            world.GovSignInJourney.enterPassportDetails();
