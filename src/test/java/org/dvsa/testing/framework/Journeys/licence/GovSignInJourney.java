@@ -31,12 +31,12 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        clickById("chooseWayPyi");
-        clickByXPath("//*[@id='form-tracking']/button");
-        clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickByXPath("//*[@id='havePhotoId']");
+        clickByXPath("//*[@id='form-tracking']/button");
         waitAndClick("sign-in-link", SelectorType.ID);
-        waitAndEnterText("email", SelectorType.ID, signInUsername);
+        waitAndEnterText("email", SelectorType.ID, world.configuration.getEmailCode());
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         waitAndEnterText("password", SelectorType.ID, signInPassword);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
@@ -51,6 +51,9 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() {
+        clickById("create-account-link");
+        waitAndEnterText("email", SelectorType.ID, registrationEmail);
+        waitAndEnterText("code", SelectorType.ID, world.configuration.getEmailCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
