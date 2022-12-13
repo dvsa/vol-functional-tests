@@ -37,4 +37,9 @@ public class GovSignIn extends BasePage {
         clickById("form-actions[pay]");
         world.feeAndPaymentJourney.customerPaymentModule();
     }
+
+    @Then("I register a gov sign in account to complete the process")
+    public void iRegisterAGovSignInAccountToCompleteTheProcess() {
+        world.govSignInJourney.registerGovAccount();
+    }
 }
