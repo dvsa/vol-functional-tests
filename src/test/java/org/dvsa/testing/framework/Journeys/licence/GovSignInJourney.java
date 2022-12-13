@@ -20,7 +20,7 @@ public class GovSignInJourney extends BasePage {
 
     Random random = new Random();
 
-    String registrationEmail = "terry.valtech+" + random.nextInt(900) + "@gmail.com";
+    String registrationEmail = "terry.valtech+" + random.nextInt(900) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
         navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
@@ -32,8 +32,7 @@ public class GovSignInJourney extends BasePage {
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        clickByXPath("//*[@id='havePhotoId']");
-        clickByXPath("//*[@id='form-tracking']/button");
+        photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
         waitAndEnterText("email", SelectorType.ID, world.configuration.getEmailCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -51,8 +50,11 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() {
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        photoIDQuestion();
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndEnterText("code", SelectorType.ID, world.configuration.getEmailCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='havePhotoId']");
@@ -73,6 +75,10 @@ public class GovSignInJourney extends BasePage {
         answerPersonalQuestions();
     }
 
+    public void photoIDQuestion() {
+        clickByXPath("//*[@id='havePhotoId']");
+        clickByXPath("//*[@id='form-tracking']/button");
+    }
 
     public void enterPassportDetails() {
         waitAndEnterText("passportNumber", SelectorType.ID, "321654987");
