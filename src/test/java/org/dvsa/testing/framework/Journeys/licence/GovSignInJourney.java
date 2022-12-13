@@ -23,7 +23,7 @@ public class GovSignInJourney extends BasePage {
     String registrationEmail = "terry.valtech+" + random.nextInt(900) + "@gmail.com";
 
     public void navigateToGovUkSignIn() {
-        navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
+            navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
     }
 
     public void signInGovAccount() {
@@ -31,7 +31,8 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        clickById("chooseWayPyi");
+        //clickById("chooseWayPyi");
+        clickByXPath("//*[@type='Submit']");
         clickByXPath("//*[@id='form-tracking']/button");
         clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
