@@ -18,6 +18,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
+import java.util.Random;
+
+import static activesupport.qrReader.QRReader.getTOTPCode;
 
 
 public class ContinuationJourney extends BasePage {
@@ -29,14 +32,14 @@ public class ContinuationJourney extends BasePage {
         this.world = world;
     }
 
-    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month)  {
+    public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month) {
         waitAndClick("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         waitAndClick("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='generate-continuation-type']");
         selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, Integer.parseInt(month) - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
         waitAndClick("form-actions[generate]", SelectorType.ID);
-        waitAndEnterText("filters[licenceNo]",  SelectorType.ID, licenceNo);
+        waitAndEnterText("filters[licenceNo]", SelectorType.ID, licenceNo);
         waitAndClick("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
         waitAndClick("id[]", SelectorType.NAME);
@@ -45,8 +48,8 @@ public class ContinuationJourney extends BasePage {
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
-    public void continueLicenceWithVerifyAndPay()  {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(),world.registerUser.getEmailAddress());
+    public void continueLicenceWithVerifyAndPay() {
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         completeContinuationsReviewPage();
@@ -56,22 +59,22 @@ public class ContinuationJourney extends BasePage {
         completeContinuationPayOrSubmit();
     }
 
-    public void clickContinueLicenceOnSelfServe()  {
+    public void clickContinueLicenceOnSelfServe() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         refreshPageUntilElementAppears("//*[@class='info-box info-box--pink']", SelectorType.XPATH);
         click("//a[contains(text(),'Continue licence')]", SelectorType.XPATH);
     }
 
-    public void completeContinuationFinancesPage()  {
+    public void completeContinuationFinancesPage() {
         if (!(world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString()))) {
-            String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]","");
+            String necessaryIncome = Browser.navigate().findElement(By.xpath("//strong[contains(text(),'£')]")).getText().replaceAll("[£,]", "");
             enterText("averageBalance", SelectorType.ID, necessaryIncome);
             findSelectAllRadioButtonsByValue("N");
             click("submit", SelectorType.ID);
         }
     }
 
-    public void viewContinuationSnapshotOnInternal()  {
+    public void viewContinuationSnapshotOnInternal() {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
@@ -79,11 +82,11 @@ public class ContinuationJourney extends BasePage {
         Assert.assertTrue(isTextPresent("Digital continuation snapshot"));
         clickByLinkText("Digital continuation snapshot");
         waitForTabsToLoad(2, 60);
-        ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
+        ArrayList<String> tabs = new ArrayList<String>(getWindowHandles());
         switchToWindow(tabs.get(1));
     }
 
-    public void replaceContinuationAndReviewDates(LinkedHashMap<String, String> continuationDates, LinkedHashMap<String, String> reviewDates)  {
+    public void replaceContinuationAndReviewDates(LinkedHashMap<String, String> continuationDates, LinkedHashMap<String, String> reviewDates) {
         waitForTextToBePresent("Continuation date");
         enterDateFieldsByPartialId("details[continuationDate]", continuationDates);
         enterDateFieldsByPartialId("details[reviewDate]", reviewDates);
@@ -91,7 +94,7 @@ public class ContinuationJourney extends BasePage {
         world.UIJourney.clickSubmit();
     }
 
-    public void completeContinuationPayOrSubmit()  {
+    public void completeContinuationPayOrSubmit() {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             click("submitAndPay", SelectorType.ID);
             world.UIJourney.clickPay();
@@ -108,20 +111,12 @@ public class ContinuationJourney extends BasePage {
         click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
     }
 
-    public void completeContinuationsSignPage()  {
+    public void completeContinuationsSignPage() {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             click("content[signatureOptions]", SelectorType.ID);
             click("sign", SelectorType.ID);
             Browser.basicAuthGovSignIn();
-            world.GovSignInJourney.signInGovAccount();
-//            world.GovSignInJourney.goThroughVerificationSteps();
-//            world.GovSignInJourney.enterPassportDetails();
-//            world.GovSignInJourney.enterDOB();
-//            world.GovSignInJourney.enterExpiryDate();
-//            world.GovSignInJourney.cycletThroughSignInJourney();
-//            world.GovSignInJourney.answerOtherPersonQuestion();
-//            world.UIJourney.signWithVerify();
-            //waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+            world.govSignInJourney.signInGovAccount();
         } else {
             waitAndClick("//*[contains(text(),'Print, sign and return')]", SelectorType.XPATH);
         }
