@@ -31,6 +31,11 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
+        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
+            clickByLinkText("Continue");
+        } else {
+            clickById("chooseWayPyi");
+        }
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
@@ -50,7 +55,12 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() {
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
+            clickByXPath("//*[@id='form-tracking']/button");
+        } else {
+            clickById("chooseWayPyi");
+        }
+        waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
         photoIDQuestion();
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
