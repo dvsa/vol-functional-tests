@@ -33,7 +33,11 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        clickById("chooseWayPyi");
+        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
+            clickByXPath("//*[@id='form-tracking']/button");
+        } else {
+            clickById("chooseWayPyi");
+        }
         clickByXPath("//*[@id='form-tracking']/button");
         clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);

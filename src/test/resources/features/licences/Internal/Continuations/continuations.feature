@@ -37,6 +37,7 @@ Feature: Continuations journey through internal and self serve
       | public       | restricted             |
       | public       | special_restricted     |
 
+
   Scenario Outline: The conditions and undertaking page on a continuation displays the right text
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
