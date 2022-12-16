@@ -39,7 +39,7 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
-        waitAndEnterText("email", SelectorType.ID, world.configuration.getEmailCode());
+        waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         waitAndEnterText("password", SelectorType.ID, signInPassword);
@@ -65,7 +65,7 @@ public class GovSignInJourney extends BasePage {
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndEnterText("code", SelectorType.ID, world.configuration.getEmailCode());
+        waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
