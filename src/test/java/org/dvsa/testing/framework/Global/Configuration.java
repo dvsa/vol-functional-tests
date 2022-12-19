@@ -23,7 +23,7 @@ public class Configuration {
         return S3.getTempPassword(emailAddress, getBucketName());
     }
 
-    public String getEmailCode() {return S3.getGovSignInCode(getBucketName()); }
+   // @WIP public String getEmailCode() {return S3.getGovSignInCode(getBucketName()); }
 
     public String getPasswordResetLink() {
         return String.valueOf(S3.getPasswordResetLink());
