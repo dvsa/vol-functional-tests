@@ -84,18 +84,14 @@ public class SurrenderJourney extends BasePage {
 
     public void submitSurrender() {
         submitSurrenderUntilChoiceOfVerification();
-        if (navigate().getCurrentUrl().contains("qa")) {
-            waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-            world.govSignInJourney.navigateToGovUkSignIn();
-            world.govSignInJourney.signInGovAccount();
-            checkVerifyConfirmation();
-        } else {
-            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            world.UIJourney.signManually();
-        }
+        waitAndClick("//*[@id='sign']", SelectorType.XPATH);
+        world.govSignInJourney.navigateToGovUkSignIn();
+        world.govSignInJourney.signInGovAccount();
+        checkSignInConfirmation();
         refreshPageWithJavascript();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
+
     public void submitSurrenderUntilChoiceOfVerification()  {
         submitSurrenderUntilReviewPage();
         acknowledgeDestroyPage();
@@ -135,6 +131,15 @@ public class SurrenderJourney extends BasePage {
         //Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
         assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'Return to home')]", SelectorType.XPATH);
+    }
+
+    public void checkSignInConfirmation()  {
+        waitForTextToBePresent("What happens next");
+        Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
+        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
+        waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 
     public void acknowledgeDestroyPage()  {
