@@ -20,7 +20,7 @@ public class GovSignInJourney extends BasePage {
 
     Random random = new Random();
 
-    String registrationEmail = "terry.valtech+" + random.nextInt(900) + "@gmail.com";
+    String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
         navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
@@ -32,15 +32,15 @@ public class GovSignInJourney extends BasePage {
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
         if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
-            clickByXPath("//*[@id='form-tracking']/button");
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else {
             clickById("chooseWayPyi");
         }
-        clickByXPath("//*[@id='form-tracking']/button");
-        clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
         waitAndEnterText("email", SelectorType.ID, signInUsername);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         waitAndEnterText("password", SelectorType.ID, signInPassword);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
@@ -55,6 +55,19 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() {
+        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
+            clickByXPath("//*[@id='form-tracking']/button");
+        } else {
+            clickById("chooseWayPyi");
+        }
+        waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
+        photoIDQuestion();
+        clickById("create-account-link");
+        waitAndEnterText("email", SelectorType.ID, registrationEmail);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+/* @WIP
+        waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
+*/
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -74,6 +87,10 @@ public class GovSignInJourney extends BasePage {
         answerPersonalQuestions();
     }
 
+    public void photoIDQuestion() {
+        clickByXPath("//*[@id='havePhotoId']");
+        clickByXPath("//*[@id='form-tracking']/button");
+    }
 
     public void enterPassportDetails() {
         waitAndEnterText("passportNumber", SelectorType.ID, "321654987");
