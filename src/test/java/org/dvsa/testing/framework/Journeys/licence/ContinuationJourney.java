@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
+
 public class ContinuationJourney extends BasePage {
 
     private World world;
@@ -111,8 +112,16 @@ public class ContinuationJourney extends BasePage {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             click("content[signatureOptions]", SelectorType.ID);
             click("sign", SelectorType.ID);
-            world.UIJourney.signWithVerify();
-            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+            Browser.basicAuthGovSignIn();
+            world.GovSignInJourney.signInGovAccount();
+//            world.GovSignInJourney.goThroughVerificationSteps();
+//            world.GovSignInJourney.enterPassportDetails();
+//            world.GovSignInJourney.enterDOB();
+//            world.GovSignInJourney.enterExpiryDate();
+//            world.GovSignInJourney.cycletThroughSignInJourney();
+//            world.GovSignInJourney.answerOtherPersonQuestion();
+//            world.UIJourney.signWithVerify();
+            //waitForTextToBePresent("Declaration signed through GOV.UK Verify");
         } else {
             waitAndClick("//*[contains(text(),'Print, sign and return')]", SelectorType.XPATH);
         }

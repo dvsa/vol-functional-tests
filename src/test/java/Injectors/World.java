@@ -30,6 +30,7 @@ public class World {
 
     public APIJourney APIJourney;
     public UIJourney UIJourney;
+    public GovSignInJourney GovSignInJourney;
 
     public ForgottenCredsJourney forgottenCredsJourney;
     public BusRegistrationJourney busRegistrationJourney;
