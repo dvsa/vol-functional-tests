@@ -78,13 +78,14 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
-        if (isTitlePresent("Prove your identity with a GOV.UK account", 20 )) {
+        if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);        }
-        world.UIJourney.signWithVerify();
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        } else {
+            world.UIJourney.signWithVerify();
+        }
     }
-
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
         waitForTextToBePresent("What happens next?");
