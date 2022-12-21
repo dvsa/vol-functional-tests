@@ -89,8 +89,6 @@ public class GovSignInJourney extends BasePage {
     public void photoIDQuestion() {
         clickByXPath("//*[@id='havePhotoId']");
         clickByXPath("//*[@id='form-tracking']/button");
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-
     }
 
     public void enterPassportDetails() {
