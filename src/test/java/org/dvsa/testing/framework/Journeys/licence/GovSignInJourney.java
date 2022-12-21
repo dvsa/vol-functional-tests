@@ -36,7 +36,6 @@ public class GovSignInJourney extends BasePage {
         } else {
             clickById("chooseWayPyi");
         }
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
         waitAndEnterText("email", SelectorType.ID, signInUsername);
