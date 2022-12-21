@@ -115,7 +115,6 @@ public class ContinuationJourney extends BasePage {
             click("sign", SelectorType.ID);
             navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
             world.govSignInJourney.signInGovAccount();
-            waitForTextToBePresent("Returning you to the ‘Vehicle Operator Licence’ service");
         } else {
             waitAndClick("//*[contains(text(),'Print, sign and return')]", SelectorType.XPATH);
         }
