@@ -1,4 +1,6 @@
 @gov-sign-in
+@tm-application-gov
+
 Feature: TM signs through gov-sign-in
 
   Background:
