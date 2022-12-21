@@ -113,7 +113,7 @@ public class ContinuationJourney extends BasePage {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             click("content[signatureOptions]", SelectorType.ID);
             click("sign", SelectorType.ID);
-            navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/")
+            navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
             world.govSignInJourney.signInGovAccount();
             waitForTextToBePresent("Returning you to the ‘Vehicle Operator Licence’ service");
         } else {
