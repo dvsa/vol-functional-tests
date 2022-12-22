@@ -23,6 +23,9 @@ public class GovSignInJourney extends BasePage {
     String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
+        if(isTextPresent("Declaration information")) {
+            clickById("sign");
+        }
         navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
     }
 

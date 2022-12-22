@@ -115,7 +115,7 @@ public class PsvSurrenders extends BasePage implements En {
         waitForTextToBePresent("What happens next");
         Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
-        Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
         assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
