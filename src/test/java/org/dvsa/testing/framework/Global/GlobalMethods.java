@@ -27,7 +27,8 @@ public class GlobalMethods extends BasePage {
     private final String passwordField = nameAttribute("input", "password");
     private final String newPasswordField = nameAttribute("input", "newPassword");
     private final String confirmPasswordField = nameAttribute("input", "confirmPassword");
-    private final String submitButton = nameAttribute("input", "submit") + "[value=\"Sign in\"]";
+    private final String submitButton = "//*[@id='auth.login.button']";
+
 
 
     public GlobalMethods(World world) {
@@ -92,7 +93,7 @@ public class GlobalMethods extends BasePage {
     public void signIn(String userName, String password) {
         replaceText(emailField, SelectorType.CSS, userName);
         replaceText(passwordField, SelectorType.CSS, password);
-        click(submitButton, SelectorType.CSS);
+        click(submitButton, SelectorType.XPATH);
         untilNotInDOM(submitButton, 5);
     }
 
