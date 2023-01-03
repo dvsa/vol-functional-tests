@@ -40,7 +40,9 @@ Feature: TM signs through gov-sign-in
   Scenario: Operator rejects TM details and TM details are marked incomplete
     When i add new person as a transport manager and they fill out their details
     And i sign the declaration
-    Then i choose to sign with verify
+    Then I can navigate to gov sign in
+    When I sign in to gov sign in to complete the process
     When the operator rejects the transport managers details
     And the TM has got the reset link email
     And the TM should see the incomplete label and provide details link
+
