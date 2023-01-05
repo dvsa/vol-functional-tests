@@ -12,10 +12,6 @@ import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
-import org.openqa.selenium.HasAuthentication;
-import org.openqa.selenium.UsernameAndPassword;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -141,14 +137,14 @@ public class GenericUtils extends BasePage {
          */
         Path path = Paths.get("target/EBSR");
         try {
-            if (!Files.exists(path)) {
+            if(!Files.exists(path)) {
                 Files.createDirectory(path);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("target/EBSR/%s", fileName)));
-        return String.format("target/EBSR/%s", fileName);
+        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
+        return String.format("target/EBSR/%s",fileName);
     }
 
     public void executeJenkinsBatchJob(String command) throws Exception {
@@ -189,11 +185,11 @@ public class GenericUtils extends BasePage {
         return LocalDate.now().plusMonths(months).format(formatter);
     }
 
-    public String confirmationPanel(String locator, String cssValue) {
+    public String confirmationPanel(String locator, String cssValue)  {
         return Browser.navigate().findElement(By.xpath(locator)).getCssValue(cssValue);
     }
 
-    public void switchTab(int tab) {
+    public void switchTab(int tab)  {
         ArrayList<String> tabs = new ArrayList<>(Browser.navigate().getWindowHandles());
         Browser.navigate().switchTo().window(tabs.get(tab));
     }
@@ -202,9 +198,9 @@ public class GenericUtils extends BasePage {
         return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
-    public static int getRandomNumberInts(int min, int max) {
+    public static int getRandomNumberInts(int min, int max){
         Random random = new Random();
-        return random.ints(min, (max + 1)).findFirst().getAsInt();
+        return random.ints(min,(max+1)).findFirst().getAsInt();
     }
 
     public void writeToFile(String userId, String password, String fileName) throws Exception {
@@ -236,7 +232,7 @@ public class GenericUtils extends BasePage {
         return foundIt;
     }
 
-    public static Scanner scanText(String input, String delimeter) {
+    public static Scanner scanText(String input, String delimeter){
         Scanner scanner = new Scanner(input);
         scanner.useDelimiter(delimeter);
         return scanner;
@@ -247,7 +243,7 @@ public class GenericUtils extends BasePage {
     }
 
     public static String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))){
             String line = null;
             String prevLine = null;
             int lineCounter = 0;
@@ -257,7 +253,7 @@ public class GenericUtils extends BasePage {
                 lineCounter++;
             }
             br.close();
-            if (lineNumber == -1) {
+            if (lineNumber == -1){
                 return prevLine;
             } else {
                 return line;
@@ -270,9 +266,9 @@ public class GenericUtils extends BasePage {
     }
 
     public void writeLineToFile(String data, String fileLocation) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))) {
-            bw.append(data);
-            bw.newLine();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))){
+                bw.append(data);
+                bw.newLine();
         }
     }
 
@@ -285,5 +281,5 @@ public class GenericUtils extends BasePage {
                 return false;
         }
     }
-
 }
+
