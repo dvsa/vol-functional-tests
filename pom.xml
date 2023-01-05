@@ -18,13 +18,9 @@
 
         <axe-scanner-version>2.6</axe-scanner-version>
 
-        <cucumber-junit.version>7.9.0</cucumber-junit.version>
-        <cucumber-java.version>7.9.0</cucumber-java.version>
-        <pico-container-version>7.9.0</pico-container-version>
-        <junit-platform-suite.version>1.9.0</junit-platform-suite.version>
 
-        <allure-cucumber5-jvm.version>2.19.0</allure-cucumber5-jvm.version>
-        <allure-report.version>2.19.0</allure-report.version>
+        <allure-cucumber5-jvm.version>2.20.0</allure-cucumber5-jvm.version>
+        <allure-report.version>2.20.0</allure-report.version>
 
         <slf4j.version>2.19.0</slf4j.version>
         <slf4j-log4j12.version>2.19.0</slf4j-log4j12.version>
@@ -36,16 +32,13 @@
         <allure-mvn.version>2.10.0</allure-mvn.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0-M7</maven-failsafe-plugin.version>
         <apache-commons.version>1.9.0</apache-commons.version>
         <gson.version>20220924</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>1.8</java.version>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.source>${java.version}</maven.compiler.source>
-
-        <forks>3</forks>
-        <threadCount>3</threadCount>
-        <jvmMemory>5120</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -60,7 +53,7 @@
             <dependency>
                 <groupId>io.cucumber</groupId>
                 <artifactId>cucumber-bom</artifactId>
-                <version>7.9.0</version>
+                <version>7.10.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -78,41 +71,43 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.0.0-M7</version>
                 <configuration>
-                    <properties>
-                        <configurationParameters>
-                            junit.jupiter.execution.parallel.enabled=true
-                            junit.jupiter.execution.parallel.config.strategy=dynamic
-                            junit.jupiter.execution.parallel.mode.default=concurrent
-                            junit.jupiter.execution.parallel.mode.classes.default=concurrent
-                            cucumber.execution.parallel.enabled=true
-                            cucumber.execution.parallel.config.strategy=dynamic
-                            cucumber.execution.parallel.config.fixed.parallelism=4
-                            cucumber.execution.parallel.mode.default=concurrent
-                            cucumber.execution.parallel.mode.classes.default=concurrent
-                        </configurationParameters>
-                    </properties>
                     <includes>
-                        <include>RunCucumberTests.class</include>
+                        <include>**/**.java</include>
                     </includes>
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                        -Dcucumber.options="--plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"
-                    </argLine>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>${allure-mvn.version}</version>
-                <configuration>
-                    <reportingOutputDirectory>${project.basedir}/target/site/allure-report
-                    </reportingOutputDirectory>
-                    <reportVersion>${allure-report.version}</reportVersion>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <version>${maven-surefire-plugin.version}</version>-->
+<!--                <configuration>-->
+<!--                    <argLine>-->
+<!--                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"-->
+<!--                        -Dcucumber.options="&#45;&#45;plugin io.qameta.allure.cucumber5jvm.AllureCucumber5Jvm"-->
+<!--                    </argLine>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>io.qameta.allure</groupId>-->
+<!--                <artifactId>allure-maven</artifactId>-->
+<!--                <version>${allure-mvn.version}</version>-->
+<!--                <configuration>-->
+<!--                    <reportingOutputDirectory>${project.basedir}/target/site/allure-report-->
+<!--                    </reportingOutputDirectory>-->
+<!--                    <reportVersion>${allure-report.version}</reportVersion>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
@@ -140,7 +135,6 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java8</artifactId>
-            <version>${cucumber-java.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -158,22 +152,19 @@
             <artifactId>junit-platform-suite</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <version>5.9.0</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.junit.vintage</groupId>-->
-<!--            <artifactId>junit-vintage-engine</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>active-support</artifactId>
@@ -230,7 +221,6 @@
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-picocontainer</artifactId>
-            <version>${pico-container-version}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>
