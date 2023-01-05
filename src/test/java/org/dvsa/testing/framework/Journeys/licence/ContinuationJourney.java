@@ -112,8 +112,8 @@ public class ContinuationJourney extends BasePage {
     public void completeContinuationsSignPage()  {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             click("content[signatureOptions]", SelectorType.ID);
-            click("sign", SelectorType.ID);
-            navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
+            waitAndClick("sign", SelectorType.ID);
+            world.govSignInJourney.navigateToGovUkSignIn();
             world.govSignInJourney.signInGovAccount();
         } else {
             waitAndClick("//*[contains(text(),'Print, sign and return')]", SelectorType.XPATH);

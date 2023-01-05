@@ -28,7 +28,6 @@ public class GovSignInJourney extends BasePage {
         if(isTextPresent("Declaration information")) {
             clickById("sign");
         }
-        Browser.basicAuthGovSignIn();
         String userName = world.configuration.config.getString("basicAuthUserName");
         String passWord = world.configuration.config.getString("basicAuthPassword");
         navigate().get(String.format("https://%s:%s@signin.integration.account.gov.uk/",userName,passWord));
@@ -43,6 +42,10 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else {
             clickById("chooseWayPyi");
+        }
+        if(isTitlePresent("You’ve signed in to your GOV.UK account", 20)) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
@@ -81,6 +84,13 @@ public class GovSignInJourney extends BasePage {
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         clickByLinkText("Sign in to a service");
+    }
+
+    public void alreadySignedIn() {
+    waitForTitleToBePresent("You’ve signed in to your GOV.UK account");
+    waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+    waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+    signInGovAccount();
     }
 
     public void goThroughVerificationSteps() {
