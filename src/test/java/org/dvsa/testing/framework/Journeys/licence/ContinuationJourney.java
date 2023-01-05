@@ -94,7 +94,7 @@ public class ContinuationJourney extends BasePage {
 
     public void completeContinuationPayOrSubmit()  {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
-            click("submitAndPay", SelectorType.ID);
+           waitAndClick("submitAndPay", SelectorType.ID);
             world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {

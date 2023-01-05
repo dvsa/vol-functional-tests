@@ -1,10 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.util.Random;
 
+import static activesupport.driver.Browser.configuration;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
 
@@ -26,7 +28,10 @@ public class GovSignInJourney extends BasePage {
         if(isTextPresent("Declaration information")) {
             clickById("sign");
         }
-        navigate().get("https://integration-user:winter2021@signin.integration.account.gov.uk/");
+        Browser.basicAuthGovSignIn();
+        String userName = world.configuration.config.getString("basicAuthUserName");
+        String passWord = world.configuration.config.getString("basicAuthPassword");
+        navigate().get(String.format("https://%s:%s@signin.integration.account.gov.uk/",userName,passWord));
     }
 
     public void signInGovAccount() {
@@ -43,7 +48,6 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("sign-in-link", SelectorType.ID);
         waitAndEnterText("email", SelectorType.ID, signInUsername);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         waitAndEnterText("password", SelectorType.ID, signInPassword);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         String authCode = getTOTPCode(AUTH_KEY);
