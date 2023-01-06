@@ -104,6 +104,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void photoIDQuestion() {
+        waitForTitleToBePresent("You must have a photo ID to prove your identity with a GOV.UK account");
         clickByXPath("//*[@id='havePhotoId']");
         clickByXPath("//*[@id='form-tracking']/button");
     }
