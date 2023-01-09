@@ -1,6 +1,6 @@
 @INT
 @continuations
-@gov-verify
+@gov-sign-in
 
 Feature: Continuations journey through internal and self serve
 
@@ -47,12 +47,12 @@ Feature: Continuations journey through internal and self serve
       Examples:
         | operatorType | licenceType            |
         | goods        | standard_national      |
-#        | goods        | standard_international |
-#        | goods        | restricted             |
-#        | public       | standard_national      |
-#        | public       | standard_international |
-#        | public       | restricted             |
-#        | public       | special_restricted     |
+        | goods        | standard_international |
+        | goods        | restricted             |
+        | public       | standard_national      |
+        | public       | standard_international |
+        | public       | restricted             |
+        | public       | special_restricted     |
 
   @WIP
   Scenario Outline: The correct checks should display when reviewing a continuation and snapshot
