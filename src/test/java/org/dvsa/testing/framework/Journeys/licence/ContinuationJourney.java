@@ -126,7 +126,6 @@ public class ContinuationJourney extends BasePage {
                     (world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString()) || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large"))) {
                 waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
                 clickAllCheckboxes();
-                waitForElementToBePresent("#submit");
                 click("submit", SelectorType.ID);
             }
         }
