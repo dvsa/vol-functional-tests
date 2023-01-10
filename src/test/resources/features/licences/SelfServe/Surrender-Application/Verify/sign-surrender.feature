@@ -8,7 +8,6 @@ Feature: Sign surrender
     Given i have a valid "goods" "standard_international" licence
     And i choose to surrender my licence
 
-  @gov-sign-in
     Scenario: Sign with gov sign in - check that surrender has been created
       When I can navigate to gov sign in
       And I sign in to gov sign in to complete the process
