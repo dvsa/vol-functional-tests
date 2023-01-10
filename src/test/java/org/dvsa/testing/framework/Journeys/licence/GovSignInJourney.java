@@ -47,7 +47,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTextPresent("Declaration signed through GOV.UK Account")) {
+        if(isTitlePresent("Declaration signed through GOV.UK Account", 2)) {
             world.continuationJourney.completeContinuationPayOrSubmit();
         }
         photoIDQuestion();
