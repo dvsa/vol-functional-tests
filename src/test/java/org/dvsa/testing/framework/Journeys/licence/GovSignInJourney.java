@@ -43,9 +43,12 @@ public class GovSignInJourney extends BasePage {
         } else {
             clickById("chooseWayPyi");
         }
-        if(isTitlePresent("You’ve signed in to your GOV.UK account", 20)) {
+        if(isTitlePresent("You’ve signed in to your GOV.UK account", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTextPresent("Declaration signed through GOV.UK Account")) {
+            world.continuationJourney.completeContinuationPayOrSubmit();
         }
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
