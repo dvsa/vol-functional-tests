@@ -6,10 +6,7 @@ import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.licence.*;
-import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.PrintingAndScanningJourney;
-import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.PublicHolidayJourney;
-import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.TaskAllocation;
-import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.TaskAllocationRulesJourney;
+import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.InternalNavigation;
 import org.dvsa.testing.framework.Journeys.licence.SelfServeNavigation;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
@@ -76,6 +73,7 @@ public class Initialisation extends BasePage implements En {
         world.typeOfLicence = new TypeOfLicenceJourney(world);
         world.psvJourney = new PSVJourney(world);
         world.trailersJourney = new TrailersJourney(world);
+        world.systemMessagesJourney = new SystemMessagesJourney(world);
         world.govSignInJourney = new GovSignInJourney(world);
     }
 }
