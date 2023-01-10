@@ -37,8 +37,8 @@
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
 
         <forks>2</forks>
-        <featuresPerRunner>5</featuresPerRunner>
-        <jvmMemory>5144</jvmMemory>
+        <featuresPerRunner>6</featuresPerRunner>
+        <jvmMemory>4096</jvmMemory>
     </properties>
 
     <repositories>
@@ -76,7 +76,6 @@
                         <version>${aspectj.version}</version>
                     </dependency>
                 </dependencies>
-
             </plugin>
             <plugin>
                 <groupId>io.qameta.allure</groupId>
@@ -87,7 +86,6 @@
                     <reportVersion>${allure-report-version}</reportVersion>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>com.trivago.rta</groupId>
                 <artifactId>cucable-plugin</artifactId>
@@ -284,6 +282,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>${gson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thedeanda</groupId>
+            <artifactId>lorem</artifactId>
+            <version>2.1</version>
         </dependency>
     </dependencies>
 

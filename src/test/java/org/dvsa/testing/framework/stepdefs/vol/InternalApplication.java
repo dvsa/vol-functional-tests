@@ -30,7 +30,7 @@ public class InternalApplication extends BasePage implements En {
     private String expectedLGVOnlyUndertakingText = "All authorised vehicles shall not exceed 3,500 Kilograms (kg), including when combined with a trailer.";
     private String proposeToRevoke = "//button[text()='Propose to revoke']";
 
-    private String generatedLetterType = "GV blank letter to operator";
+    private String generatedLetterType = "GV - Blank letter to operator";
 
     public InternalApplication (World world) {this.world = world;}
 

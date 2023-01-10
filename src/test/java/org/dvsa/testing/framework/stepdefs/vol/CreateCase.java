@@ -9,8 +9,10 @@ import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 
-import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -135,49 +137,60 @@ public class CreateCase extends BasePage implements En {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.UIJourney.createCaseUI(page);
-    }
-
-    @And("I select a case to raise a complaint")
-    public void iSelectCaseToRaiseComplaint() {
-        world.UIJourney.createComplaint();
-    }
-
-    @Then("Details should fill in the complaint form")
-    public void detailsShouldFillInTheComplaintForm() {
-        world.UIJourney.completeTheComplaintForm();
-    }
-
-    @And("I save the form")
-    public void saveTheComplaintForm() {
-        world.UIJourney.saveForm();
-    }
-
-    @Then("Select a case to create new case for adding a condition-undertaking")
-    public void caseForAddingConditionUndertaking() {
-        world.UIJourney.createNewCase();
-    }
-
-    @And("I add new case details")
-    public void addNewCaseDetailsAndSaveTheForm() {
-        world.UIJourney.addNewCaseDetails();
-    }
+}
 
     @And("submit the Condition and Undertaking form")
     public void submitTheConditionAndUndertakingForm() {
-        world.UIJourney.completeConditionAndUndertaking();
+        world.convictionsAndPenaltiesJourney.completConditionUndertakings();
     }
 
-    @And("select a {string} to complete all forms by clicking add the button")
-    public void addNoteTypeCase(String NoteType){
-        world.UIJourney.addAllNoteTypeCase(NoteType);
+    @Then("the conviction should be created")
+    public void theConvictionShouldBeCreated() {
+        Assert.assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
     }
 
-    @Then("I search for the case before adding conviction")
-    public void iSearchForTheCaseBeforeAddingConviction(){ world.UIJourney.searchCaseForAddingConviction();}
-
-    @And("add conviction to the case")
-    public void addConviction(){
-        world.UIJourney.addConvictionToCase();
+    @And("I navigate to a case")
+    public void iNavigateToACase() {
+        world.internalNavigation.getCase();
     }
 
+    @And("I add conviction to the case")
+    public void iAddConvictionToTheCase() {
+        world.convictionsAndPenaltiesJourney.addConvictionToCase();
+
+    }
+    @And("I raise a complaint")
+    public void iRaiseAComplaint() {
+        world.convictionsAndPenaltiesJourney.addComplaint();
+    }
+    @Then("the complaint should be displayed")
+    public void theComplaintShouldBeDisplayed() {
+        String date = LocalDate.now().minusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        Assert.assertTrue(isTextPresent(date));
+    }
+
+    @And("I complete the conditions & undertakings form")
+    public void iCompleteTheConditionsUndertakingsForm() {
+        world.convictionsAndPenaltiesJourney.completConditionUndertakings();
+    }
+    @Then("the condition & undertaking should be displayed")
+    public void theConditionUndertakingShouldBeDisplayed() {
+        waitForTextToBePresent(world.convictionsAndPenaltiesJourney.getConvictionDescription());
+        Assert.assertTrue(isTextPresent("Condition / undertaking added successfully"));
+        Assert.assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
+    }
+    @And("I navigate to Notes")
+    public void iNavigateToNotes() {
+        world.internalNavigation.getCaseNote();
+    }
+
+    @Then("the note should be displayed")
+    public void theNoteShouldBeDisplayed() {
+        Assert.assertTrue(isTextPresent(String.valueOf(world.updateLicence.getCaseId())));
+    }
+
+    @Then("I add a Note")
+    public void iAddANote() {
+        world.convictionsAndPenaltiesJourney.addANote();
+    }
 }
