@@ -76,9 +76,14 @@ public class TmVerifyDifferentOperator extends BasePage{
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
-        world.UIJourney.signWithVerify();
+        if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        } else {
+            world.UIJourney.signWithVerify();
+        }
     }
-
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
         waitForTextToBePresent("What happens next?");

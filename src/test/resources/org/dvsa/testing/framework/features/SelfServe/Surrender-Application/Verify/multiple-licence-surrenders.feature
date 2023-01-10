@@ -1,7 +1,7 @@
 @multiple-surrenders
 @Surrender
 @ss_regression
-@gov-verify
+@gov-sign-in
 
 Feature: Multiple licence holder
 

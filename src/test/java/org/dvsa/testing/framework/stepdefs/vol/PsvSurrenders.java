@@ -107,4 +107,14 @@ public class PsvSurrenders extends BasePage {
         String heading = findElements("//h2[@class = 'govuk-heading-m']", SelectorType.XPATH).get(0).getText();
         assertTrue(heading.contains(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles())));
     }
+
+    @Then("the post gov sign in page is displayed")
+    public void thePostGovSignInPageIsDisplayed() {
+        waitForTextToBePresent("What happens next");
+        Assert.assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
+        Assert.assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
+        waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
+    }
 }

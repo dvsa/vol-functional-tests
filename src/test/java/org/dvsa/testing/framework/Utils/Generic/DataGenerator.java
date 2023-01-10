@@ -8,7 +8,6 @@ import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-
 public class DataGenerator extends BasePage {
 
     private World world;
