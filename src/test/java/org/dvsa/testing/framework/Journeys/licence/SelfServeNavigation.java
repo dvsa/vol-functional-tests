@@ -66,10 +66,6 @@ public class SelfServeNavigation extends BasePage {
         navigate().get(myURL);
     }
 
-    public void navigateToGovSignIn()  {
-        navigate().get("http://ssweb.dev.olcs.dev-dvsacloud.uk/");
-    }
-
     public void navigateToCreateAnAccount() {
         clickByLinkText("create an account");
     }
