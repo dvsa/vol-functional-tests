@@ -41,7 +41,7 @@ public class Snapshots extends BasePage {
         }
 
         clickByLinkText("Check your answers");
-        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(1));
+        WebDriverWait wait = new WebDriverWait(getDriver(), 1);
         wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 
         for (String windowHandle : getDriver().getWindowHandles()) {

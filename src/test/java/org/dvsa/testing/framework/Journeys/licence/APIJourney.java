@@ -68,7 +68,7 @@ public class APIJourney {
 
     public void submitApplication() {
         world.createApplication.submitApplication();
-        world.applicationDetails.getApplicationLicenceDetails(world.createApplication);
+        world.applicationDetails.getApplicationLicenceDetails();
     }
 
     public void createSpecialRestrictedApplication() {
