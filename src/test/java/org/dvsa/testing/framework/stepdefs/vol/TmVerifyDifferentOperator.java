@@ -59,9 +59,9 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         waitForElementToBePresent("//*[@class='govuk-panel govuk-panel--confirmation']");
         Assert.assertTrue(isTextPresent(text));
         if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) < 10) {
-            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("d MMM yyyy"))));
+            Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
         } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) >= 10) {
-            Assert.assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy"))));
+            Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
         }
     }
 
@@ -78,9 +78,14 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
-        world.UIJourney.signWithVerify();
+        if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        } else {
+            world.UIJourney.signWithVerify();
+        }
     }
-
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
         waitForTextToBePresent("What happens next?");

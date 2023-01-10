@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
+import static activesupport.driver.Browser.navigate;
+
 public class ContinuationJourney extends BasePage {
 
     private World world;
@@ -92,7 +94,7 @@ public class ContinuationJourney extends BasePage {
 
     public void completeContinuationPayOrSubmit()  {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
-            click("submitAndPay", SelectorType.ID);
+           waitAndClick("submitAndPay", SelectorType.ID);
             world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {
@@ -110,9 +112,9 @@ public class ContinuationJourney extends BasePage {
     public void completeContinuationsSignPage()  {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             click("content[signatureOptions]", SelectorType.ID);
-            click("sign", SelectorType.ID);
-            world.UIJourney.signWithVerify();
-            waitForTextToBePresent("Declaration signed through GOV.UK Verify");
+            waitAndClick("sign", SelectorType.ID);
+            world.govSignInJourney.navigateToGovUkSignIn();
+            world.govSignInJourney.signInGovAccount();
         } else {
             waitAndClick("//*[contains(text(),'Print, sign and return')]", SelectorType.XPATH);
         }

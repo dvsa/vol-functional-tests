@@ -9,10 +9,9 @@
     <version>1.7</version>
 
     <properties>
-        <active-support.version>1.6.6.1</active-support.version>
+        <active-support.version>1.6.6.4</active-support.version>
         <api-calls.version>1.1.11</api-calls.version>
         <uri-constructor.version>1.5.7</uri-constructor.version>
-
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.7.0</maven.compiler.version>
         <cucumber-java.version>4.4.0</cucumber-java.version>
@@ -39,7 +38,7 @@
 
         <forks>2</forks>
         <featuresPerRunner>6</featuresPerRunner>
-        <jvmMemory>7168</jvmMemory>
+        <jvmMemory>4096</jvmMemory>
     </properties>
 
     <repositories>
@@ -183,6 +182,16 @@
             <version>${cucumber-junit.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.14.0</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
@@ -191,6 +200,16 @@
             <groupId>org.dvsa.testing.lib</groupId>
             <artifactId>active-support</artifactId>
             <version>${active-support.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-launcher</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.dvsa.testing.lib</groupId>
