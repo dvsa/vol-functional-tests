@@ -38,7 +38,7 @@
 
         <forks>2</forks>
         <featuresPerRunner>5</featuresPerRunner>
-        <jvmMemory>6144</jvmMemory>
+        <jvmMemory>5144</jvmMemory>
     </properties>
 
     <repositories>
