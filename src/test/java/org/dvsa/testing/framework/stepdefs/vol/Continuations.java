@@ -111,6 +111,7 @@ public class Continuations extends BasePage implements En {
             }
         }
         world.continuationJourney.completeContinuationFinancesPage();
+
         world.continuationJourney.completeContinuationsSignPage();
         world.continuationJourney.completeContinuationPayOrSubmit();
         world.continuationJourney.viewContinuationSnapshotOnInternal();
