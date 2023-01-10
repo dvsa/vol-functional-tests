@@ -47,8 +47,8 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTitlePresent("Declaration - Vehicle Operator Licenceing", 2)) {
-            world.continuationJourney.completeContinuationPayOrSubmit();
+        if(isTitlePresent("Declaration - Vehicle Operator Licensing - GOV.UK", 2)) {
+            return;
         }
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
