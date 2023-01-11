@@ -119,6 +119,7 @@ public class Continuations extends BasePage implements En {
             waitForTextToBePresent("Conditions and undertakings");
             world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
         }
+        deleteCookies();
         closeTabAndFocusTab(0);
     }
 

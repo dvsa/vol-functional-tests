@@ -46,9 +46,7 @@ public class GovSignInJourney extends BasePage {
         if(isTitlePresent("You’ve signed in to your GOV.UK account", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            if(isTextPresent("Declarations")); {
-                world.continuationJourney.completeContinuationPayOrSubmit();
-            }
+            return;
         }
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
@@ -95,6 +93,7 @@ public class GovSignInJourney extends BasePage {
     waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
     signInGovAccount();
     }
+
 
     public void goThroughVerificationSteps() {
         clickByXPath("//*[@id='smartphone-choice-3']");
