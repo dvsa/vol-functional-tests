@@ -1,16 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.util.Random;
 
-import static activesupport.driver.Browser.configuration;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
-
-
 
 public class GovSignInJourney extends BasePage {
 
@@ -38,13 +34,12 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
+        if(isTitlePresent("Prove your identity with a GOV.UK account", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else {
             clickById("chooseWayPyi");
         }
-        if(isTitlePresent("You’ve signed in to your GOV.UK account", 20)) {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        if(isTitlePresent("You’ve signed in to your GOV.UK account", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
         photoIDQuestion();
@@ -227,5 +222,3 @@ public class GovSignInJourney extends BasePage {
         clickById("continue");
     }
 }
-
-

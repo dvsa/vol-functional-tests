@@ -60,7 +60,7 @@ public class DriverUtils {
     }
 
     public static WebElement findElement(@NotNull String selector, @NotNull SelectorType selectorType, long timeOutInSeconds) {
-        new WebDriverWait(getDriver(), timeOutInSeconds).until(
+        new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds)).until(
                 webDriver ->
                         ExpectedConditions.presenceOfElementLocated(by(selector, selectorType)));
         return findElement(selector, selectorType);
@@ -97,5 +97,4 @@ public class DriverUtils {
     public static String getTitle() {
         return getDriver().getTitle();
     }
-
 }

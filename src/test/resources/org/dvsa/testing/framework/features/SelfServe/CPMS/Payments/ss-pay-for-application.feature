@@ -15,7 +15,7 @@ Feature: Self Serve Apply for licence
     Examples:
       | operatorType | licenceType            |
       | goods        | standard_international |
-#      | public       | standard_national      |
+      | public       | standard_national      |
 
   @stored_cards
   Scenario Outline: Saved card payment

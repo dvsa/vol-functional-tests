@@ -47,14 +47,13 @@ public class GlobalMethods extends BasePage {
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
             if (cookies.equals("yes")) {
                 if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
                     waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
                 }
             }
         }
-
         DriverUtils.get(myURL);
         try {
             if (isElementPresent("declarationRead", SelectorType.ID)) {

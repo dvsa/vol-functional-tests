@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal.bilateral;
 
-import activesupport.driver.Browser;
-import io.cucumber.java8.En;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.external.enums.sections.BilateralSection;
@@ -11,51 +10,54 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class HTMLSnapshotSteps extends BasePage implements En {
+public class HTMLSnapshotSteps extends BasePage {
+    private final World world;
 
     public HTMLSnapshotSteps(World world) {
-        Then("^text for annual bilateral snapshot is displayed as expected$", () -> {
+        this.world = world;
+    }
 
-            ArrayList<String> tab = new ArrayList<String> (Browser.navigate().getWindowHandles());
-            Browser.navigate().switchTo().window(tab.get(tab.size() - 1));
+    @Then("text for annual bilateral snapshot is displayed as expected")
+    public void textForAnnualBilateralSnapshotIsDisplayed() {
 
-            DocumentsPage.untilOnPage();
+        ArrayList<String> tab = new ArrayList<String>(getDriver().getWindowHandles());
+        getDriver().switchTo().window(tab.get(tab.size() - 1));
 
-            // To verify HTML Snapshot page is displayed
-            DocumentsPage.untilOnPage();
+        DocumentsPage.untilOnPage();
 
-            // Verify the page heading is displayed correctly
-            String expectedHeading = String.format("%s %s", world.createApplication.getOrganisationName(), BasePermitJourney.getFullReferenceNumber());
-            assertEquals(expectedHeading, DocumentsPage.getSubHeading());
+        // To verify HTML Snapshot page is displayed
+        DocumentsPage.untilOnPage();
 
-            // Verify the licence number is displayed
-            assertTrue(DocumentsPage.getSectionBody(BilateralSection.Licence).contains(world.applicationDetails.getLicenceNumber()));
+        // Verify the page heading is displayed correctly
+        String expectedHeading = String.format("%s %s", world.createApplication.getOrganisationName(), BasePermitJourney.getFullReferenceNumber());
+        assertEquals(expectedHeading, DocumentsPage.getSubHeading());
 
-            // Countries selected
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.CountriesSelected), "Morocco");
+        // Verify the licence number is displayed
+        assertTrue(DocumentsPage.getSectionBody(BilateralSection.Licence).contains(world.applicationDetails.getLicenceNumber()));
 
-            // Questions answered for
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.QuestionsAnsweredFor), "Morocco");
+        // Countries selected
+        assertEquals(DocumentsPage.getSectionBody(BilateralSection.CountriesSelected), "Morocco");
 
-            // Permit type
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.PermitType), "Empty Entry single journey permit");
+        // Questions answered for
+        assertEquals(DocumentsPage.getSectionBody(BilateralSection.QuestionsAnsweredFor), "Morocco");
 
-            // Number of Permits
-            assertEquals(DocumentsPage.getSectionBody(BilateralSection.NumberOfPermits), "3");
+        // Permit type
+        assertEquals(DocumentsPage.getSectionBody(BilateralSection.PermitType), "Empty Entry single journey permit");
 
-            //advisory text
-            assertEquals("By applying for this permit, you confirm that you:", getText("//div[@class='printable__section']/p[1]", SelectorType.XPATH));
-            assertEquals("will comply fully with the conditions of use under which the permit may be used", getText("//div[@class='printable__section']/ul/li[1]", SelectorType.XPATH));
-            assertEquals("will carry the permit for the entire outbound and return journey and present it to any competent authority or inspectors", getText("//div[@class='printable__section']/ul/li[2]", SelectorType.XPATH));
-            assertEquals("You also confirm that you understand that a permit is required for all countries you are travelling to and transiting through.", getText("//p[@class='govuk-body']", SelectorType.XPATH));
-            assertEquals("I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit or certificate.", getText("//p/strong", SelectorType.XPATH));
+        // Number of Permits
+        assertEquals(DocumentsPage.getSectionBody(BilateralSection.NumberOfPermits), "3");
 
-            //verify the return address
-            String address = DocumentsPage.getAddress();
-            assertEquals("International Road Haulage Permit Office, Hillcrest House, 386 Harehills Lane, Leeds, LS9 6NF", address);
-        });
+        //advisory text
+        assertEquals("By applying for this permit, you confirm that you:", getText("//div[@class='printable__section']/p[1]", SelectorType.XPATH));
+        assertEquals("will comply fully with the conditions of use under which the permit may be used", getText("//div[@class='printable__section']/ul/li[1]", SelectorType.XPATH));
+        assertEquals("will carry the permit for the entire outbound and return journey and present it to any competent authority or inspectors", getText("//div[@class='printable__section']/ul/li[2]", SelectorType.XPATH));
+        assertEquals("You also confirm that you understand that a permit is required for all countries you are travelling to and transiting through.", getText("//p[@class='govuk-body']", SelectorType.XPATH));
+        assertEquals("I declare that the statements and information provided are true and that my application is correct. I understand that it is an offence to make a false declaration to obtain a permit or certificate.", getText("//p/strong", SelectorType.XPATH));
+
+        //verify the return address
+        String address = DocumentsPage.getAddress();
+        assertEquals("International Road Haulage Permit Office, Hillcrest House, 386 Harehills Lane, Leeds, LS9 6NF", address);
     }
 }

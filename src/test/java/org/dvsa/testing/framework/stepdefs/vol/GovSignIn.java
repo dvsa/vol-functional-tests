@@ -1,11 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GovSignIn extends BasePage {
     private final World world;
@@ -36,14 +37,14 @@ public class GovSignIn extends BasePage {
 
     @And("I am taken back to VOL Review and Declarations page")
     public void iAmTakenBackToVOLReviewAndDeclarationsPage() {
-        Assert.assertTrue(isTextPresent("Returning you to the ‘Vehicle Operator Licence’ service"));
+        assertTrue(isTextPresent("Returning you to the ‘Vehicle Operator Licence’ service"));
         waitForTitleToBePresent("Review and declarations");
-        Assert.assertTrue(isTextPresent("Review and declarations"));
+        assertTrue(isTextPresent("Review and declarations"));
     }
 
     @Then("the VOL {string} post signature page is displayed")
     public void theVOLAwaitingOperatorReviewPostSignaturePageIsDisplayed(String text) {
         waitForElementToBePresent("//*[@class='govuk-panel govuk-panel--confirmation']");
-        Assert.assertTrue(isTextPresent(text));
+        assertTrue(isTextPresent(text));
     }
 }

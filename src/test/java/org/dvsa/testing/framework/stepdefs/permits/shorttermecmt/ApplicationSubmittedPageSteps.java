@@ -2,22 +2,24 @@ package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
-import io.cucumber.java8.En;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ReceiptPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 
+public class ApplicationSubmittedPageSteps extends BasePage{
+    private final World world;
 
-public class ApplicationSubmittedPageSteps extends BasePage implements En {
+    public ApplicationSubmittedPageSteps(World world) {
+        this.world = world;
+    }
 
-    public ApplicationSubmittedPageSteps(World world)
-    {
-        Then("^I open the receipt and it should open in a new window$", () -> {
-            SubmittedPage.openReceipt();
-            String[] windows = Browser.navigate().getWindowHandles().toArray(new String[0]);
-            Browser.navigate().switchTo().window(windows[1]);
-            ReceiptPage.untilOnPage();
-            Browser.navigate().switchTo().window(windows[0]);
-        });
+    @Then("I open the receipt and it should open in a new window")
+    public void iOpenTheReceiptAndItShouldOpen() {
+        SubmittedPage.openReceipt();
+        String[] windows = getDriver().getWindowHandles().toArray(new String[0]);
+        getDriver().switchTo().window(windows[1]);
+        ReceiptPage.untilOnPage();
+        getDriver().switchTo().window(windows[0]);
     }
 }

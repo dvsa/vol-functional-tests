@@ -34,10 +34,10 @@ public class ApplicationVerifyJourney extends BasePage {
         world.UIJourney.signWithVerify();
     }
 
-    @Then("the application should be signed with verify")
+    @Then("the application should be digitally signed")
     public void theApplicationShouldBeSignedWithVerify() {
         waitForTitleToBePresent("Review and declarations");
-        assertTrue(isTextPresent("Declaration signed through GOV.UK Verify"));
-        assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy"))));
+        assertTrue(isTextPresent("Declaration signed through GOV.UK Account"));
+        assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
     }
 }
