@@ -40,7 +40,7 @@ public class GovSignInJourney extends BasePage {
 
         if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            clickById("chooseWayPyi");
+            clickByLinkText("Continue");
         }
         if(isTitlePresent("You’ve signed in to your GOV.UK account", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
