@@ -43,9 +43,11 @@ public class GovSignInJourney extends BasePage {
         } else {
             clickById("chooseWayPyi");
         }
-        if(isTitlePresent("You’ve signed in to your GOV.UK account", 20)) {
+        if (isTitlePresent("You've signed in to your GOV.UK account", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            world.continuationJourney.completeContinuationPayOrSubmit();
+            return;
         }
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
@@ -64,10 +66,15 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() {
-        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
-            clickByXPath("//*[@id='form-tracking']/button");
-        } else {
+        if(isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
+                (isTextPresent("Choose a way to prove your identity"))) {
             clickById("chooseWayPyi");
+            waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+        } else {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTitlePresent("You've signed in to your GOV.UK account", 1)) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
         waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
         photoIDQuestion();
@@ -104,7 +111,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void photoIDQuestion() {
-        waitForTitleToBePresent("You must have a photo ID to prove your identity with a GOV.UK account");
+        waitForTextToBePresent("Do you have one of these types of photo ID?");
         clickByXPath("//*[@id='havePhotoId']");
         clickByXPath("//*[@id='form-tracking']/button");
     }
