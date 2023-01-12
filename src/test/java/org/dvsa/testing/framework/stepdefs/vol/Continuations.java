@@ -70,6 +70,7 @@ public class Continuations extends BasePage implements En {
             userPermissions[i] = userPermissionElements.get(i).getText();
         }
         world.continuationJourney.clickContinueLicenceOnSelfServe();
+        waitForElementToBeClickable("submit", SelectorType.ID);
         click("submit", SelectorType.ID);
         clickAllCheckboxes();
         Assert.assertTrue(isTextPresent("User access"));
