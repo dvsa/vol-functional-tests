@@ -98,6 +98,7 @@ public class ContinuationJourney extends BasePage {
             world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {
+            waitForElementToBeClickable("submit", SelectorType.ID);
             click("submit", SelectorType.ID);
         }
         waitForTextToBePresent("Your licence has been continued");
