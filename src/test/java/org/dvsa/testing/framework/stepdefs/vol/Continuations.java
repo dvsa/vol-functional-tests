@@ -117,12 +117,12 @@ public class Continuations extends BasePage implements En {
         world.continuationJourney.completeContinuationFinancesPage();
 
         world.continuationJourney.completeContinuationsSignPage();
-        world.continuationJourney.completeContinuationPayOrSubmit();
-        if (isTextPresent("Your licence number is")) ;
-        {
-            world.continuationJourney.viewContinuationSnapshotOnInternal();
-        }  if (isTextPresent("Declarations "))
+        waitForTextToBePresent("Vehicle Operator Licensing");
+        if (isTitlePresent("Declaration - Vehicle Operator Licensing - GOV.UK", 3)) ; {
             world.continuationJourney.completeContinuationPayOrSubmit();
+        if (isTitlePresent("Success - Vehicle Operator Licensing - GOV.UK", 3));
+            world.continuationJourney.viewContinuationSnapshotOnInternal();
+        }
         if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
             waitForTextToBePresent("Conditions and undertakings");
             world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
