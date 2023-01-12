@@ -25,7 +25,9 @@ public class Continuations extends BasePage implements En {
     private Dates dates = new Dates(new LocalDateCalendar());
     private LinkedHashMap<String, String> continuationDate;
 
-    public Continuations (World world) {this.world=world;}
+    public Continuations(World world) {
+        this.world = world;
+    }
 
     @When("i change my continuation and review date on Internal")
     public void iChangeMyContinuationAndReviewDateOnInternal() {
@@ -62,7 +64,7 @@ public class Continuations extends BasePage implements En {
         String[] userNames = new String[userNamesElements.size()];
         String[] userEmails = new String[userEmailElements.size()];
         String[] userPermissions = new String[userPermissionElements.size()];
-        for (int i = 0; i < userNamesElements.size(); i++){
+        for (int i = 0; i < userNamesElements.size(); i++) {
             userNames[i] = userNamesElements.get(i).getText();
             userEmails[i] = userEmailElements.get(i).getText();
             userPermissions[i] = userPermissionElements.get(i).getText();
@@ -74,7 +76,7 @@ public class Continuations extends BasePage implements En {
         userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
         userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
         userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
-        for (int i = 0; i < userNamesElements.size(); i++){
+        for (int i = 0; i < userNamesElements.size(); i++) {
             Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
             Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
             Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
@@ -86,13 +88,14 @@ public class Continuations extends BasePage implements En {
         world.continuationJourney.completeContinuationsSignPage();
         world.continuationJourney.completeContinuationPayOrSubmit();
         world.continuationJourney.viewContinuationSnapshotOnInternal();
-        for (int i = 0; i < userNamesElements.size(); i++){
+        for (int i = 0; i < userNamesElements.size(); i++) {
             Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
             Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
             Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
         }
         closeTabAndFocusTab(0);
     }
+
     @Then("the continuation conditions and undertaking page and snapshot should display the right text")
     public void theContinuationConditionsAndUndertakingPageAndSnapshotShouldDisplayTheRightText() throws FileNotFoundException {
         world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
@@ -114,7 +117,11 @@ public class Continuations extends BasePage implements En {
 
         world.continuationJourney.completeContinuationsSignPage();
         world.continuationJourney.completeContinuationPayOrSubmit();
-        world.continuationJourney.viewContinuationSnapshotOnInternal();
+        if (isTitlePresent("Success - Vehicle Operator Licensing - GOV.UK", 2)) {
+            world.continuationJourney.viewContinuationSnapshotOnInternal();
+           } else {
+            world.continuationJourney.completeContinuationPayOrSubmit();
+        }
         if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
             waitForTextToBePresent("Conditions and undertakings");
             world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();

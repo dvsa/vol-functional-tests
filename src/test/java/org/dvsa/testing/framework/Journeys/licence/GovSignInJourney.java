@@ -38,15 +38,14 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            clickByLinkText("Continue");
+        if(isTitlePresent("Prove your identity with a GOV.UK account", 1)) {
+            waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         }
-        if(isTitlePresent("You’ve signed in to your GOV.UK account", 2)) {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            world.continuationJourney.completeContinuationPayOrSubmit();
-            return;
+            if (isTitlePresent("You’ve signed in to your GOV.UK account", 2)) {
+                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+                world.continuationJourney.completeContinuationPayOrSubmit();
+                return;
         }
         photoIDQuestion();
         waitAndClick("sign-in-link", SelectorType.ID);
