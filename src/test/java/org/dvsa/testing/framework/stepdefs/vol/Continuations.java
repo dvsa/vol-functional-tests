@@ -117,7 +117,7 @@ public class Continuations extends BasePage implements En {
         world.continuationJourney.completeContinuationFinancesPage();
 
             world.continuationJourney.completeContinuationsSignPage();
-            waitForTextToBePresent("Vehicle Operator Licensing");
+            waitForTextToBePresent("Sign out");
             world.continuationJourney.completeContinuationPayOrSubmit();
             world.continuationJourney.viewContinuationSnapshotOnInternal();
             if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
