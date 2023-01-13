@@ -116,32 +116,30 @@ public class Continuations extends BasePage implements En {
         }
         world.continuationJourney.completeContinuationFinancesPage();
 
-        world.continuationJourney.completeContinuationsSignPage();
-        waitForTextToBePresent("Vehicle Operator Licensing");
-        if (isTitlePresent("Declaration - Vehicle Operator Licensing - GOV.UK", 3)) ; {
+            world.continuationJourney.completeContinuationsSignPage();
+            waitForTextToBePresent("Vehicle Operator Licensing");
             world.continuationJourney.completeContinuationPayOrSubmit();
-        if (isTitlePresent("Success - Vehicle Operator Licensing - GOV.UK", 3));
             world.continuationJourney.viewContinuationSnapshotOnInternal();
+            if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
+                waitForTextToBePresent("Conditions and undertakings");
+                world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
+            }
+            closeTabAndFocusTab(0);
         }
-        if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
-            waitForTextToBePresent("Conditions and undertakings");
-            world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
+
+        @Then("the correct checks should display on the continuation review details page and continuation snapshot")
+        public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot () {
+            world.continuationJourney.clickContinueLicenceOnSelfServe();
+            click("submit", SelectorType.ID);
+            world.continuationJourney.checkContinuationReviewSections();
+            world.continuationJourney.completeContinuationsReviewPage();
+            world.continuationJourney.completeContinuationConditionsAndUndertakingsPage();
+            world.continuationJourney.completeContinuationFinancesPage();
+            world.continuationJourney.completeContinuationsSignPage();
+            world.continuationJourney.completeContinuationPayOrSubmit();
+            world.continuationJourney.viewContinuationSnapshotOnInternal();
+            world.continuationJourney.checkContinuationReviewSections();
+            closeTabAndFocusTab(0);
         }
-        closeTabAndFocusTab(0);
     }
 
-    @Then("the correct checks should display on the continuation review details page and continuation snapshot")
-    public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot() {
-        world.continuationJourney.clickContinueLicenceOnSelfServe();
-        click("submit", SelectorType.ID);
-        world.continuationJourney.checkContinuationReviewSections();
-        world.continuationJourney.completeContinuationsReviewPage();
-        world.continuationJourney.completeContinuationConditionsAndUndertakingsPage();
-        world.continuationJourney.completeContinuationFinancesPage();
-        world.continuationJourney.completeContinuationsSignPage();
-        world.continuationJourney.completeContinuationPayOrSubmit();
-        world.continuationJourney.viewContinuationSnapshotOnInternal();
-        world.continuationJourney.checkContinuationReviewSections();
-        closeTabAndFocusTab(0);
-    }
-}
