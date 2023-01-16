@@ -13,6 +13,7 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
@@ -117,7 +118,8 @@ public class Continuations extends BasePage implements En {
         world.continuationJourney.completeContinuationFinancesPage();
 
             world.continuationJourney.completeContinuationsSignPage();
-            waitForElementNotToBePresent("ccms-loader centre");
+            waitForElementNotToBePresent("#main-content > div > div > div");
+            waitForTextToBePresent("Sign out");
             world.continuationJourney.completeContinuationPayOrSubmit();
             world.continuationJourney.viewContinuationSnapshotOnInternal();
             if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
