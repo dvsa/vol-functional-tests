@@ -1,13 +1,13 @@
 @INT
 @OLCS-22990
 @regression
-@gov-verify
+@gov-sign-in
 
 Feature: View Surrender Menu and details on Internal
 
   Background:
     Given i have a valid "public" "standard_national" licence with an open case and bus reg
-    And i choose to surrender my licence with "verify"
+    And i choose to surrender my licence with "gov-sign-in"
 
   Scenario: Surrender details should be displayed appropriately on Internal verify
     And a caseworker views the surrender details

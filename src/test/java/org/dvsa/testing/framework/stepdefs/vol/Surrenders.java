@@ -73,8 +73,9 @@ public class Surrenders extends BasePage implements En {
         if (surrenderMethod.equalsIgnoreCase("verify")) {
             if (GenericUtils.isVerifySupportedPlatform(env.name())) {
                 waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-                world.UIJourney.signWithVerify();
-                world.surrenderJourney.checkVerifyConfirmation();
+                world.govSignInJourney.navigateToGovUkSignIn();
+                world.govSignInJourney.signInGovAccount();
+                world.surrenderJourney.checkSignInConfirmation();
             } else {
                 fail("Verify not supported on this platform");
             }
