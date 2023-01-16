@@ -117,8 +117,7 @@ public class Continuations extends BasePage implements En {
         world.continuationJourney.completeContinuationFinancesPage();
 
             world.continuationJourney.completeContinuationsSignPage();
-            waitForPageLoad();
-            waitForTextToBePresent("Sign out");
+            waitForElementNotToBePresent("ccms-loader centre");
             world.continuationJourney.completeContinuationPayOrSubmit();
             world.continuationJourney.viewContinuationSnapshotOnInternal();
             if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
