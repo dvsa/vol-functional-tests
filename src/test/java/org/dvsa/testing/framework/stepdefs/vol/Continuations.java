@@ -118,7 +118,7 @@ public class Continuations extends BasePage implements En {
         world.continuationJourney.completeContinuationFinancesPage();
 
             world.continuationJourney.completeContinuationsSignPage();
-            waitForElementNotToBePresent("#main-content > div > div > div");
+            waitForPageLoad();
             waitForTextToBePresent("Sign out");
             world.continuationJourney.completeContinuationPayOrSubmit();
             world.continuationJourney.viewContinuationSnapshotOnInternal();
