@@ -22,12 +22,6 @@ public class PsvSurrenders extends BasePage {
         world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
     }
 
-    @When("i sign with verify")
-    public void iSignWithVerify() {
-        waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-        world.UIJourney.signWithVerify();
-    }
-
     @Then("the post verify success page is displayed")
     public void thePostVerifySuccessPageIsDisplayed() {
         waitForTextToBePresent("What happens next");

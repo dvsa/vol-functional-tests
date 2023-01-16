@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ScanningSeparatorGeneration extends BasePage {
     private World world;
-
     public ScanningSeparatorGeneration(World world) {
         this.world = world;
     }

@@ -10,9 +10,10 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 public class LoginPageJourney extends BasePage {
     World world;
     String userId;
-
+    Initialisation initialisation;
     public LoginPageJourney(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @When("I attempt to login with a username {string} with special characters")

@@ -1,7 +1,7 @@
 @EBSR
 Feature: import EBSR for English, Welsh and Scottish Areas
 
-  @ss_regression @t
+  @ss_regression
   Scenario Outline: Short notice import EBSR in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice

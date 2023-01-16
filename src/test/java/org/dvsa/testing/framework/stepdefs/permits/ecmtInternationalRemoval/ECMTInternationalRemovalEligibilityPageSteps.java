@@ -3,16 +3,15 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
-import Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTInternationalRemovalOnly.RemovalsEligibilityPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.testng.Assert;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class ECMTInternationalRemovalEligibilityPageSteps {
     private final World world;
@@ -34,7 +33,7 @@ public class ECMTInternationalRemovalEligibilityPageSteps {
 
     @And("the text is shown next to the tick box")
     public void theTextIsShownNextToTickBox() {
-        Assert.assertTrue(RemovalsEligibilityPage.isCheckboxAdvisoryTextPresent());
+        assertTrue(RemovalsEligibilityPage.isCheckboxAdvisoryTextPresent());
     }
 
     @And("I save and continue without selecting the checkbox")

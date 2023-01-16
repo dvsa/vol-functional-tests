@@ -24,12 +24,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ManagerUsersPage extends BasePage{
     private final World world;
-
+    Initialisation initialisation;
     AXEScanner scanner = new AXEScanner();
     ReportGenerator reportGenerator = new ReportGenerator();
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
-    public ManagerUsersPage(World world) {this.world = world;}
+    public ManagerUsersPage(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @Given("i have an admin account to add users")
     public void iHaveAnAdminAccountToAddUsers() {

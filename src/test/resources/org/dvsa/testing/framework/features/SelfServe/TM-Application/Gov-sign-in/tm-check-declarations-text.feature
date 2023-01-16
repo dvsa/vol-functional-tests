@@ -1,4 +1,4 @@
-@SS-Verify-On
+@gov-sign-in-on
 @OLCS-20343
 @tm-application
 Feature: Countersigning declaration page for the operator (Verify switched on)

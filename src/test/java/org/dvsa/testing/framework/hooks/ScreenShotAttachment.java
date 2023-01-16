@@ -7,10 +7,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import activesupport.driver.Browser;
-import org.openqa.selenium.devtools.v105.media.Media;
 
-import javax.print.attribute.standard.MediaTray;
-import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,7 +31,7 @@ public class ScreenShotAttachment {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
             byte[] attachment = ((TakesScreenshot) Browser.navigate())
                     .getScreenshotAs(OutputType.BYTES);
-            scenarioStatus.attach(attachment, "jpeg", String.valueOf(screenshotStream));
+            scenarioStatus.attach(attachment, "png", screenshotStream.toString());
             screenshotStream.write(attachment);
             screenshotStream.close();
         }

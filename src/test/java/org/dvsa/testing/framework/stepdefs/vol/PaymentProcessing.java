@@ -12,7 +12,7 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaymentProcessing extends BasePage {
-    private World world;
+    private final World world;
     private String currentFeeCount;
     private String feeNumber;
 

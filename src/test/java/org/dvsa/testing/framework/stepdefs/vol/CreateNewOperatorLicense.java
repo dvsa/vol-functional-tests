@@ -11,9 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateNewOperatorLicense extends BasePage {
     private final World world;
-
+    Initialisation initialisation;
     public CreateNewOperatorLicense (World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @Given("an Operator with no licence")

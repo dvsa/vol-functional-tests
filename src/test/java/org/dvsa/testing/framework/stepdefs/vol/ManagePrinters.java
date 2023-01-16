@@ -10,8 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ManagePrinters extends BasePage  {
     private final World world;
-
-    public ManagePrinters(World world) {this.world = world;}
+    Initialisation initialisation;
+    public ManagePrinters(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @When("I am on the Printers page")
     public void iAmOnThePrintersPage() {

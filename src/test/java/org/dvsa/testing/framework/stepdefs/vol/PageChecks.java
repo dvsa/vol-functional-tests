@@ -33,5 +33,5 @@ public class PageChecks extends BasePage {
                 clickByLinkText("Docs & attachments");
             }
             assertTrue(checkForPartialMatch(documentType));
-        };
+        }
     }

@@ -252,7 +252,7 @@ public class SurrenderLogic extends BasePage {
     @And("the licence should not displayed in selfserve")
     public void theLicenceShouldNotDisplayedInSelfserve() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 30));
+        assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 3));
     }
 
     @And("the caseworker confirms the withdraw")

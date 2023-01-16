@@ -7,10 +7,12 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 
 
 public class PSVApplication extends BasePage {
-    private World world;
+    World world;
+    Initialisation initialisation;
 
     public PSVApplication(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @Given("I have applied for a {string} licence")

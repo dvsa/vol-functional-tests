@@ -19,10 +19,12 @@ import static apiCalls.enums.TrafficArea.trafficAreaList;
 
 public class ManageApplications {
     World world;
+    Initialisation initialisation;
     String fileName = "src/test/resources/";
 
     public ManageApplications(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @Before

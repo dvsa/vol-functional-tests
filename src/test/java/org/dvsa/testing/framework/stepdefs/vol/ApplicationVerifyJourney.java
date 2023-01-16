@@ -1,9 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+
+import io.cucumber.java.en.Given;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -15,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ApplicationVerifyJourney extends BasePage {
     World world;
-
     public ApplicationVerifyJourney(World world){
         this.world = world;
     }
@@ -35,7 +35,7 @@ public class ApplicationVerifyJourney extends BasePage {
     }
 
     @Then("the application should be digitally signed")
-    public void theApplicationShouldBeSignedWithVerify() {
+    public void theApplicationShouldBeDigitallySigned() {
         waitForTitleToBePresent("Review and declarations");
         assertTrue(isTextPresent("Declaration signed through GOV.UK Account"));
         assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));

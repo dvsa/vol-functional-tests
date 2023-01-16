@@ -1,6 +1,6 @@
 @SS-LAST-TM-TRIGGER
 @OLCS-19479
-@gov-verify
+@gov-sign-in
 
 Feature: Set and check criteria for triggering automatic letter
 

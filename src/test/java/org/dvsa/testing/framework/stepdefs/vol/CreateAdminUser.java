@@ -6,13 +6,17 @@ import apiCalls.enums.UserType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-public class CreateAdminUser extends BasePage {
+public class CreateAdminUser extends BasePage  {
 
-    private final World world;
-
-    public CreateAdminUser(World world) {this.world = world;}
+    World world;
+    Initialisation initialisation;
+    public CreateAdminUser(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @When("I create a new internal admin user")
     public void iCreateANewInternalAdminUser() {

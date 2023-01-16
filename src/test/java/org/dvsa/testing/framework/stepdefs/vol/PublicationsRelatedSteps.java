@@ -29,8 +29,8 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PublicationsRelatedSteps extends BasePage {
     private static final Logger LOGGER = LogManager.getLogger(PublicationsRelatedSteps.class);
     private final World world;
-
     private final String fiftyResultsPerPageLink = "//li/a[text()='50']";
+    private final String publicationDatesColumn = "//table/tbody/tr/td[5]";
     private final String publicationNumberColumn = "//table/tbody/tr[*]/td[2]";
     private final String radioButtonsColumn = "//*[@type='radio']";
 

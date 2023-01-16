@@ -26,12 +26,14 @@ import java.util.Objects;
 public class SubmitSelfServeApplication extends BasePage {
 
     World world;
+    Initialisation initialisation;
     static AXEScanner scanner = new AXEScanner();
     static ReportGenerator reportGenerator = new ReportGenerator();
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
     public SubmitSelfServeApplication(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @And("i start a new {string} licence application")

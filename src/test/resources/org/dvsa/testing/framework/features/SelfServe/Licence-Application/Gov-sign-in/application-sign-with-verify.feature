@@ -1,7 +1,7 @@
 @OLCS-7284
 @SS-Verify-On
 @ss_regression
-@gov-verify
+@gov-sign-in
 @smoketest
 
 Feature: Operator signs digitally

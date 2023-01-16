@@ -10,9 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SelfServePayFees extends BasePage {
     private World world;
-
+    Initialisation initialisation;
     public SelfServePayFees(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
         @When("^I pay fees on self serve")

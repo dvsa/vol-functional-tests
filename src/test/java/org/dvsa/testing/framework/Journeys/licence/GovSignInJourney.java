@@ -34,24 +34,31 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        if(isTitlePresent("Prove your identity with a GOV.UK account", 1)) {
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        } else {
+        if(isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
+                (isTextPresent("Choose a way to prove your identity"))) {
             clickById("chooseWayPyi");
-        }
-        if(isTitlePresent("You’ve signed in to your GOV.UK account", 2)) {
+            waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+        } else {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        photoIDQuestion();
-        waitAndClick("sign-in-link", SelectorType.ID);
-        waitAndEnterText("email", SelectorType.ID, signInUsername);
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndEnterText("password", SelectorType.ID, signInPassword);
-        waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
-        String authCode = getTOTPCode(AUTH_KEY);
-        waitAndEnterText("code", SelectorType.ID, authCode);
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        if(isTitlePresent("You’ve signed in to your GOV.UK account", 1)) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+        if(isTitlePresent("You must have a photo ID to prove your identity with a GOV.UK account", 1)) {
+            photoIDQuestion();
+        }
+        if(isTitlePresent("Create a GOV.UK account or sign in",1)) {
+            waitAndClick("sign-in-link", SelectorType.ID);
+            waitAndEnterText("email", SelectorType.ID, signInUsername);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndEnterText("password", SelectorType.ID, signInPassword);
+            waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
+            String authCode = getTOTPCode(AUTH_KEY);
+            waitAndEnterText("code", SelectorType.ID, authCode);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
         if (isTitlePresent("You have already proved your identity", 2)) {
           waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
@@ -99,7 +106,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void photoIDQuestion() {
-        waitForTitleToBePresent("You must have a photo ID to prove your identity with a GOV.UK account");
+        waitForTextToBePresent("Do you have one of these types of photo ID?");
         clickByXPath("//*[@id='havePhotoId']");
         clickByXPath("//*[@id='form-tracking']/button");
     }

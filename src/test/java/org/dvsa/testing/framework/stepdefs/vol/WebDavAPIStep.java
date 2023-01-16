@@ -13,10 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class WebDavAPIStep extends BasePage {
     private final World world;
+    Initialisation initialisation;
     private ValidatableResponse response;
     private String userId;
     public WebDavAPIStep(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @Given("i have registered a new {string} user")

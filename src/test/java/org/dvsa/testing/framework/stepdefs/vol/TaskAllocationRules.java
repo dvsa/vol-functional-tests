@@ -12,9 +12,13 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TaskAllocationRules extends BasePage {
-    private World world;
+    private final World world;
+    Initialisation initialisation;
 
-    public TaskAllocationRules(World world) {this.world = world;}
+    public TaskAllocationRules(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @Given("I am on the task allocation rules page")
     public void iAmOnTheTaskAllocationRulesPage() {

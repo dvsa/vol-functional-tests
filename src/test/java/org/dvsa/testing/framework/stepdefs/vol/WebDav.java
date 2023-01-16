@@ -27,12 +27,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WebDav extends BasePage{
     private final World world;
-
+    Initialisation initialisation;
     EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     private static final String templateName = "BUS_REG_CANCELLATION";
     AutoItX autoIt;
 
-    public WebDav (World world) {this.world = world;}
+    public WebDav(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
 
     @When("i update my operating system on internal to {string}")

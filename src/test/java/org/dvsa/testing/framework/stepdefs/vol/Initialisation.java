@@ -2,7 +2,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.actions.*;
-import io.cucumber.java8.En;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.licence.*;
@@ -15,10 +14,8 @@ import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-public class Initialisation extends BasePage implements En {
-
-    private World world;
-
+public class Initialisation extends BasePage {
+ private final World world;
     /***
      * World variable passed through to all classes regardless for instantiation purposes.
      * I.e. variable initialisations that requires other values from other classes.
@@ -55,7 +52,7 @@ public class Initialisation extends BasePage implements En {
         world.DataGenerator = new DataGenerator(world);
         world.forgottenCredsJourney = new ForgottenCredsJourney(world);
         world.businessDetailsJourney = new BusinessDetailsJourney(world);
-        world.operatingCentreJourney = new  OperatingCentreJourney(world);
+        world.operatingCentreJourney = new OperatingCentreJourney(world);
         world.safetyComplianceJourney = new SafetyComplianceJourney(world);
         world.safetyInspectorJourney = new SafetyInspectorJourney(world);
         world.transportManagerJourney = new TransportManagerJourney(world);

@@ -6,6 +6,7 @@ import activesupport.dates.LocalDateCalendar;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -16,16 +17,17 @@ import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class Continuations extends BasePage{
+public class Continuations extends BasePage {
     private final World world;
 
     private Dates dates = new Dates(new LocalDateCalendar());
     private LinkedHashMap<String, String> continuationDate;
 
-    public Continuations (World world) {this.world=world;}
+    public Continuations(World world) {
+        this.world = world;
+    }
 
     @When("i change my continuation and review date on Internal")
     public void iChangeMyContinuationAndReviewDateOnInternal() {

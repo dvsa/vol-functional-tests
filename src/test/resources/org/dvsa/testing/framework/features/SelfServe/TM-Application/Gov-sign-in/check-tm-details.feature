@@ -1,4 +1,4 @@
-@SS-TM-Verify
+@SS-TM-gov-sign-in
 @OLCS-21298
 @ss_regression
 Feature: TM/operator checks optional wording has been removed for TM details page

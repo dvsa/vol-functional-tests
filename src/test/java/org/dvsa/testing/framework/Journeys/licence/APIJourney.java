@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
 
 public class APIJourney {
 
-    private World world;
+    private final World world;
     public static int tmCount;
     Dates date = new Dates(LocalDate::new);
 

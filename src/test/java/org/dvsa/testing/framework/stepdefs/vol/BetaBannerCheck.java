@@ -1,10 +1,9 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
@@ -13,7 +12,7 @@ import org.openqa.selenium.support.Color;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class BetaBannerCheck extends BasePage implements En {
+public class BetaBannerCheck extends BasePage {
 private final World world;
 
     public BetaBannerCheck(World world) {this.world = world;}

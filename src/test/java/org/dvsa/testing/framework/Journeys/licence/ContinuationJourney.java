@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ContinuationJourney extends BasePage {
@@ -29,6 +30,7 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month)  {
+        refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         waitAndClick("menu-admin-dashboard/continuations", SelectorType.ID);
         waitForElementToBePresent("//*[@id='generate-continuation-type']");
@@ -38,7 +40,7 @@ public class ContinuationJourney extends BasePage {
         waitAndEnterText("filters[licenceNo]",  SelectorType.ID, licenceNo);
         waitAndClick("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
-        waitAndClick("id[]", SelectorType.NAME);
+        waitAndClick("checkall", SelectorType.NAME);
         waitAndClick("generate", SelectorType.ID);
         world.UIJourney.clickSubmit();
         waitForTextToBePresent("The selected licence(s) have been queued");
@@ -92,7 +94,7 @@ public class ContinuationJourney extends BasePage {
 
     public void completeContinuationPayOrSubmit()  {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
-           waitAndClick("submitAndPay", SelectorType.ID);
+            waitAndClick("submitAndPay", SelectorType.ID);
             world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {

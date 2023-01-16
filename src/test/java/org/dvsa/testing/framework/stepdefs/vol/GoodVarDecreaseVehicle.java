@@ -12,8 +12,11 @@ import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageW
 
 public class GoodVarDecreaseVehicle extends BasePage {
     private final World world;
-
-    public GoodVarDecreaseVehicle (World world) {this.world = world;}
+    Initialisation initialisation;
+    public GoodVarDecreaseVehicle (World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @When("A selfserve user decreases the vehicle authority count")
     public void aSelfserveUserDecreasesTheVehicleAuthorityCount() {

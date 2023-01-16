@@ -15,9 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VerifySwitchedOff extends BasePage{
     private final World world;
-
+    Initialisation initialisation;
     public VerifySwitchedOff(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @Before
