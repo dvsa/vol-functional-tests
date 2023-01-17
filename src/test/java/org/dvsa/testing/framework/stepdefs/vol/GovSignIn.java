@@ -59,15 +59,4 @@ public class GovSignIn extends BasePage {
         Assert.assertTrue(isTextPresent("Declaration signed through GOV.UK Account"));
         Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
     }
-
-    @Given("i have an application in progress")
-    public void iHaveAnApplicationInProgress() {
-        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.APIJourney.createApplication();
-        refreshPageWithJavascript();
-        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
-        world.selfServeNavigation.navigateThroughApplication();
-        world.UIJourney.signDeclaration();
-    }
 }
