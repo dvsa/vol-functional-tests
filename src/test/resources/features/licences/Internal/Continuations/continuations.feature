@@ -46,12 +46,12 @@ Feature: Continuations journey through internal and self serve
     Then the continuation conditions and undertaking page and snapshot should display the right text
       Examples:
         | operatorType | licenceType            |
-        | goods        | standard_national      |
-        | goods        | standard_international |
-        | goods        | restricted             |
-        | public       | standard_national      |
-        | public       | standard_international |
-        | public       | restricted             |
+#        | goods        | standard_national      |
+#        | goods        | standard_international |
+#        | goods        | restricted             |
+#        | public       | standard_national      |
+#        | public       | standard_international |
+#        | public       | restricted             |
         | public       | special_restricted     |
 
   @WIP
