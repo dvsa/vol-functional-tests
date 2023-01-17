@@ -64,7 +64,7 @@ public class Continuations extends BasePage implements En {
         String[] userNames = new String[userNamesElements.size()];
         String[] userEmails = new String[userEmailElements.size()];
         String[] userPermissions = new String[userPermissionElements.size()];
-        for (int i = 0; i < userNamesElements.size(); i++) {
+        for (int i = 0; i < userNamesElements.size(); i++){
             userNames[i] = userNamesElements.get(i).getText();
             userEmails[i] = userEmailElements.get(i).getText();
             userPermissions[i] = userPermissionElements.get(i).getText();
@@ -77,7 +77,7 @@ public class Continuations extends BasePage implements En {
         userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
         userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
         userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
-        for (int i = 0; i < userNamesElements.size(); i++) {
+        for (int i = 0; i < userNamesElements.size(); i++){
             Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
             Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
             Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
@@ -89,7 +89,7 @@ public class Continuations extends BasePage implements En {
         world.continuationJourney.completeContinuationsSignPage();
         world.continuationJourney.completeContinuationPayOrSubmit();
         world.continuationJourney.viewContinuationSnapshotOnInternal();
-        for (int i = 0; i < userNamesElements.size(); i++) {
+        for (int i = 0; i < userNamesElements.size(); i++){
             Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
             Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
             Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);

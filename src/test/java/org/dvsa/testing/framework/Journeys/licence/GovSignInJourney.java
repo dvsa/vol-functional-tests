@@ -92,7 +92,6 @@ public class GovSignInJourney extends BasePage {
     signInGovAccount();
     }
 
-
     public void goThroughVerificationSteps() {
         clickByXPath("//*[@id='smartphone-choice-3']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
