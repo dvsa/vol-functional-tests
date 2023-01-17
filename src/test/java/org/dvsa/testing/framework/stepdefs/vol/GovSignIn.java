@@ -1,11 +1,17 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import apiCalls.enums.OperatorType;
+import apiCalls.enums.UserType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.junit.Assert;
+
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 
 public class GovSignIn extends BasePage {
     private final World world;
@@ -45,5 +51,23 @@ public class GovSignIn extends BasePage {
     public void theVOLAwaitingOperatorReviewPostSignaturePageIsDisplayed(String text) {
         waitForElementToBePresent("//*[@class='govuk-panel govuk-panel--confirmation']");
         Assert.assertTrue(isTextPresent(text));
+    }
+
+    @Then("the application should be digitally signed")
+    public void theApplicationShouldBeDigitallySigned() {
+        waitForTitleToBePresent("Review and declarations");
+        Assert.assertTrue(isTextPresent("Declaration signed through GOV.UK Account"));
+        Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
+    }
+
+    @Given("i have an application in progress")
+    public void iHaveAnApplicationInProgress() {
+        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.createApplication();
+        refreshPageWithJavascript();
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
+        world.selfServeNavigation.navigateThroughApplication();
+        world.UIJourney.signDeclaration();
     }
 }
