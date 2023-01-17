@@ -438,7 +438,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitForElementNotToBePresent(@NotNull String selector) {
-        new WebDriverWait(driver, Duration.ofSeconds(30), Duration.ofSeconds(40)).until(ExpectedConditions.invisibilityOfElementLocated(By.id(selector)));
+        new WebDriverWait(driver, Duration.ofSeconds(30), Duration.ofSeconds(40)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(selector)));
     }
 
     public static void waitAndEnterText(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String textValue) {
