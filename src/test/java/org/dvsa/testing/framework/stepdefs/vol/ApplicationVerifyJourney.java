@@ -38,6 +38,7 @@ public class ApplicationVerifyJourney extends BasePage {
     public void theApplicationShouldBeSignedWithVerify() {
         waitForTitleToBePresent("Review and declarations");
         assertTrue(isTextPresent("Declaration signed through GOV.UK Verify"));
-        assertTrue(isTextPresent(String.format("Signed by Veena Pavlov on %s", getCurrentDate("dd MMM yyyy"))));
+        assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
+
     }
 }

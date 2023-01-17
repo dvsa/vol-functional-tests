@@ -1,6 +1,6 @@
 @SS-LAST-TM-TRIGGER
 @OLCS-19479
-@gov-verify
+@gov-sign-in
 
 Feature: Set and check criteria for triggering automatic letter
 
@@ -17,6 +17,7 @@ Feature: Set and check criteria for triggering automatic letter
   Scenario: TM verifies variational not as operator
     When i add an existing person as a transport manager who is not the operator on "variation"
     And i sign the declaration
-    And i choose to sign with verify
+    When I can navigate to gov sign in
+    Then I sign in to gov sign in to complete the process
     And the operator countersigns digitally
     Then the 'Review and declarations' post signature page is displayed
