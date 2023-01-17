@@ -114,8 +114,7 @@ public class Continuations extends BasePage implements En {
                 click("submit", SelectorType.ID);
             }
         }
-        world.continuationJourney.completeContinuationFinancesPage();
-
+            world.continuationJourney.completeContinuationFinancesPage();
             world.continuationJourney.completeContinuationsSignPage();
             waitForTextToBePresent("Sign out");
             world.continuationJourney.completeContinuationPayOrSubmit();
