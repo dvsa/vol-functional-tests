@@ -40,7 +40,7 @@ public class ContinuationJourney extends BasePage {
         waitAndEnterText("filters[licenceNo]",  SelectorType.ID, licenceNo);
         waitAndClick("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
-        waitAndClick("checkall", SelectorType.NAME);
+        waitAndClick("checkall", SelectorType.ID);
         waitAndClick("generate", SelectorType.ID);
         world.UIJourney.clickSubmit();
         waitForTextToBePresent("The selected licence(s) have been queued");
