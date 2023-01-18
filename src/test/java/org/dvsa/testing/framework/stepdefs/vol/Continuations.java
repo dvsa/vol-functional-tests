@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
+import apiCalls.enums.LicenceType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class Continuations extends BasePage {
     private final World world;
 
-    private Dates dates = new Dates(new LocalDateCalendar());
+    private final Dates dates = new Dates(new LocalDateCalendar());
     private LinkedHashMap<String, String> continuationDate;
 
     public Continuations(World world) {
@@ -101,11 +102,11 @@ public class Continuations extends BasePage {
         world.continuationJourney.clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         world.continuationJourney.completeContinuationsReviewPage();
-        if (!world.createApplication.getLicenceType().equals("special_restricted")) {
+        if (!world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             if (world.licenceCreation.isPSVLicence() &&
-                    (world.createApplication.getLicenceType().equals("restricted") || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large"))) {
+                    (world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString())) || !world.createApplication.getPsvVehicleSize().equals("psvvs_medium_large")) {
                 waitForTextToBePresent("You must review and comply with any conditions and undertakings.");
-                if (world.createApplication.getLicenceType().equals("restricted")) {
+                if (world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString())) {
                     world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
                 }
                 clickAllCheckboxes();
@@ -116,7 +117,7 @@ public class Continuations extends BasePage {
         world.continuationJourney.completeContinuationsSignPage();
         world.continuationJourney.completeContinuationPayOrSubmit();
         world.continuationJourney.viewContinuationSnapshotOnInternal();
-        if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals("restricted")) {
+        if (world.licenceCreation.isPSVLicence() && world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString())) {
             waitForTextToBePresent("Conditions and undertakings");
             world.continuationJourney.checkPSVRestrictedConditionsAndUndertakingsText();
         }
