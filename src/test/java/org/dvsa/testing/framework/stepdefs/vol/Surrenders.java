@@ -70,7 +70,7 @@ public class Surrenders extends BasePage implements En {
     public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) {
         world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        if (surrenderMethod.equalsIgnoreCase("verify")) {
+        if (surrenderMethod.equalsIgnoreCase("gov-sign-in")) {
             if (GenericUtils.isVerifySupportedPlatform(env.name())) {
                 waitAndClick("//*[@id='sign']", SelectorType.XPATH);
                 world.govSignInJourney.navigateToGovUkSignIn();
