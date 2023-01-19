@@ -13,7 +13,6 @@ Feature:Add, Edit and reassign tasks on the internal application
     Then I edit a task
     Then the User has edited a task
 
-
   Scenario: User wishes to add a task
     Then I add a new task
     Then the User has added a task

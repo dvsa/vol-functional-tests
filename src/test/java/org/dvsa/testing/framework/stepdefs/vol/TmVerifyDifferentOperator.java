@@ -232,6 +232,5 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         waitForTextToBePresent("List of Transport Managers");
         Assert.assertTrue(isTextPresent(world.registerUser.getForeName()+" "+world.registerUser.getFamilyName()));
         Assert.assertTrue(isTextPresent(world.registerUser.getEmailAddress()));
-
     }
 }
