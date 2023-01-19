@@ -56,7 +56,7 @@ public class PaymentProcessing extends BasePage {
     public void iAddANewFee(String arg0) {
         String amount = "100";
         selectValueFromDropDown("status", SelectorType.ID, "Current");
-        String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']/h2", SelectorType.XPATH);
+        String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']", SelectorType.XPATH);
         setCurrentFeeCount(world.genericUtils.stripAlphaCharacters(feeCountBeforeAddingNewFee));
         assertEquals("current", findElement("status", SelectorType.ID, 30).getAttribute("value"));
         world.feeAndPaymentJourney.createAdminFee(amount, arg0);
