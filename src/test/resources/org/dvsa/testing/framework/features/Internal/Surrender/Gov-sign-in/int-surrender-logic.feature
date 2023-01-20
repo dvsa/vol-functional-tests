@@ -1,7 +1,6 @@
 @OLCS-22913
 @Surrender-int
 @int_regression
-@gov-verify
 
 Feature: Logic for Surrender menu item
 

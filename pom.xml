@@ -228,7 +228,7 @@
                         -Dcucumber.options="--plugin io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
                     </argLine>
                     <forkCount>1</forkCount>
-                    <threadCount>2</threadCount>
+                    <threadCountMethods>2</threadCountMethods>
                     <reuseForks>false</reuseForks>
                     <parallel>methods</parallel>
                 </configuration>

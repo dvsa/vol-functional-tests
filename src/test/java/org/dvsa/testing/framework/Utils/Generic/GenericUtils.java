@@ -272,7 +272,7 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public static boolean isVerifySupportedPlatform(String env) {
+    public static boolean isGovSignInSupportedPlatform(String env) {
         switch (env) {
             case "QUALITY_ASSURANCE":
             case "PRODUCTION":

@@ -66,10 +66,11 @@ public class Surrenders extends BasePage {
     public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) {
         world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        if (surrenderMethod.equalsIgnoreCase("verify")) {
-            if (GenericUtils.isVerifySupportedPlatform(env.name())) {
+        if (surrenderMethod.equalsIgnoreCase("gov-sign-in")) {
+            if (GenericUtils.isGovSignInSupportedPlatform(env.name())) {
                 waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-                world.UIJourney.signWithVerify();
+                world.govSignInJourney.navigateToGovUkSignIn();
+                world.govSignInJourney.signInGovAccount();
                 world.surrenderJourney.checkVerifyConfirmation();
             } else {
                 fail("Verify not supported on this platform");
