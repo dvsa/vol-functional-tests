@@ -10,7 +10,6 @@ Feature: Countersigning declaration page for the operator (Verify switched on)
   Scenario: Check declaration text for NI
     Then the correct information is displayed on the declaration page
 
-
   Scenario: Check that verify button is not displayed when Print and sign is selected as an option
     And the user chooses to print and sign
     Then the declaration text and verify button are not displayed
