@@ -18,7 +18,7 @@ public class PermitFeePage extends BasePermitPage {
     }
 
     public static void submitAndPay() {
-        waitAndClick("//input[@id='Submit[SubmitButton]']", SelectorType.XPATH);
+        waitAndClick("//button[@id='Submit[SubmitButton]']", SelectorType.XPATH);
     }
 
     public static void tableCheck() {
