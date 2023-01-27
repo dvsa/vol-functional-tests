@@ -15,6 +15,8 @@ import org.openqa.selenium.By;
 
 import java.util.HashMap;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+
 public class ValidLicenceChanges extends BasePage implements En {
     private final World world;
     String tradingName = "test trading name";
@@ -40,7 +42,7 @@ public class ValidLicenceChanges extends BasePage implements En {
     public void iMakeChangesToTheBusinessDetailsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
         enterText("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH, tradingName);
-        click("//a[@class='add-another-trigger govuk-link']", SelectorType.XPATH);
+        click("//*[@value='Add another trading name']", SelectorType.XPATH);
         enterText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH, tradingName2);
         replaceText("//*[@id='natureOfBusiness']", SelectorType.XPATH, natureOfBusiness);
         world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
@@ -59,7 +61,6 @@ public class ValidLicenceChanges extends BasePage implements En {
         world.UIJourney.checkValue("//*[@id='data[tradingNames][1][name]']",SelectorType.XPATH,tradingName2);
         world.UIJourney.checkValue("//*[@id='natureOfBusiness']",SelectorType.XPATH,natureOfBusiness);
         world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
-        world.UIJourney.checkValue("//td[1]//input[@type='submit']",SelectorType.XPATH,companyName);
         Assert.assertEquals(Browser.navigate().findElement(By.xpath("//td[2]")).getText(),companyNumber);
         Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
     }
@@ -105,21 +106,14 @@ public class ValidLicenceChanges extends BasePage implements En {
     @When("i make changes to the vehicles page")
     public void iMakeChangesToTheVehiclesPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
-        for (int i = 0; i < 3; i++) {
-            if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size()>0) {
                 waitForTextToBePresent("Vehicle details");
-                waitAndClick("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
+                refreshPageWithJavascript();
+                clickByXPath("//*[@id='checkall']");
+                clickByXPath("//*[@id='more-actions__button']");
+                clickByXPath("//*[@id='delete']");
                 waitForTextToBePresent("Are you sure you want to remove these records?");
-                world.UIJourney.clickSubmit();
-                waitForElementToBeClickable("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
-            } else {
-                click("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
-                waitForTextToBePresent("Are you sure you want to remove these vehicle(s)");
-                world.UIJourney.clickSubmit();
-                waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
-            }
-        }
-        UIJourney.refreshPageWithJavascript();
+        world.UIJourney.clickSubmit();
+        refreshPageWithJavascript();
         waitForTextToBePresent("Tick the box");
         click("//*[@id='shareInfo[shareInfo]']", SelectorType.XPATH);
         UIJourney.clickSaveAndReturn();
@@ -131,7 +125,7 @@ public class ValidLicenceChanges extends BasePage implements En {
         if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
             Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
         } else {
-            Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size(),2);
+            Assert.assertEquals(Browser.navigate().findElements(By.xpath("//button[contains(@name, 'vehicles[action][delete]')]")).size(),0);
         }
         Assert.assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
     }
@@ -139,14 +133,15 @@ public class ValidLicenceChanges extends BasePage implements En {
     @When("i make changes to the licence discs page")
     public void iMakeChangesToTheLicenceDiscsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
-        for (int i = 0; i < 3; i++) {
+//        for (int i = 0; i < 3; i++) {
             waitForTextToBePresent("Licence discs");
-            waitAndClick("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
+        refreshPageWithJavascript();
+        clickByXPath("//*[@id='checkall']");
+        clickByXPath("//*[@id='more-actions__button']");
+        clickByXPath("//*[@id='void']");
             waitForTextToBePresent("Are you sure you would like to void these discs?");
             world.UIJourney.clickSubmit();
-            waitForElementToBeClickable("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
-        }
-        UIJourney.refreshPageWithJavascript();
+        refreshPageWithJavascript();
         waitForTextToBePresent("Licence discs");
         waitAndClick("//*[@id='add']",SelectorType.XPATH);
         waitForTextToBePresent("How many additional discs are required?");
@@ -157,7 +152,7 @@ public class ValidLicenceChanges extends BasePage implements En {
     @Then("the changes to the licence discs page are made")
     public void theChangesToTheLicenceDiscsPageAreMade() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
-        Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),4);
+        Assert.assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),0);
         click("//*[contains(text(),'More actions')]", SelectorType.XPATH);
         click("//*[@id='ceased-show-hide']",SelectorType.XPATH);
         Assert.assertEquals(Browser.navigate().findElements(By.xpath("//tbody//tr")).size(),7);

@@ -35,7 +35,7 @@ public class DirectorJourney extends BasePage {
     public String firstNameField = "//input[@name='data[forename]']";
     public String lastNameField = "//input[@name='data[familyName]']";
     public String additionalInformation = "//*[@id='data[insolvencyDetails]']";
-    public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
+    public String deleteDirectorButtons = "//button[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
     public String lastDirectorRemovedMessage = "Last director removed";
 

@@ -171,7 +171,7 @@ public class OperatingCentreVariation extends BasePage {
         scanner.scan(false);
         world.UIJourney.changeLicenceForVariation();
         scanner.scan(false);
-        String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
+        String operatingCentreEditLink = String.format("//*[contains(text(),'%s')]", world.createApplication.getOperatingCentreAddressLine1());
         click(operatingCentreEditLink, SelectorType.XPATH);
         waitForTitleToBePresent("Edit operating centre");
         scanner.scan(false);

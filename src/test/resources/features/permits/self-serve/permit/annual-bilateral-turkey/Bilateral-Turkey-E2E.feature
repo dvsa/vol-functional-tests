@@ -1,4 +1,5 @@
-@bilateral_turkey @eupa_regression
+@bilateral_turkey
+#@eupa_regression
 Feature: Bilaterals Turkey end to end happy path journey including validations
 
   Background:
@@ -41,8 +42,9 @@ Feature: Bilaterals Turkey end to end happy path journey including validations
     Then The content and information on valid permits is correct
     When I select return to permits dashboard hyperlink
     Then I am navigated back to permits dashboard page
+    #The above scenario need to fix as part of API call
 
-  @olcs-27606 @OLCS-28230
+  @olcs-27606 @OLCS-28230 @eupa_regression
   Scenario: Verify that Bilaterals Turkey (after selecting No on third country) page end to end happy path journey is correct and application is submitted successfully
     When I click on Turkey country link on the Application overview page
     Then I am navigated to Turkey essential information page with correct information and content

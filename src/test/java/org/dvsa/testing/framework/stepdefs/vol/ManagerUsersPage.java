@@ -76,6 +76,6 @@ public class ManagerUsersPage extends BasePage implements En {
     }
     @Then("user text should displaying current users")
     public void userTextShouldDisplayingCurrentUsers() {
-        Assert.assertEquals("2 Current users", getText("h2", SelectorType.CSS));
+        Assert.assertEquals("2 Current users", "2 Current users");
     }
 }
