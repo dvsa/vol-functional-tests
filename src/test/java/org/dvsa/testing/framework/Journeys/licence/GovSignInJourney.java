@@ -34,9 +34,9 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void signInGovAccount() {
+        String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
         String signInUsername = world.configuration.config.getString("signInUsername");
         String signInPassword = world.configuration.config.getString("signInPassword");
-        String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
         if(isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
                 (isTextPresent("Choose a way to prove your identity"))) {
@@ -70,6 +70,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() {
+        String signInPassword = world.configuration.config.getString("signInPassword");
         if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
         } else {
@@ -82,19 +83,20 @@ public class GovSignInJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        clickByXPath("//*[@id='havePhotoId']");
+        waitAndEnterText("password", SelectorType.ID, signInPassword);
+        waitAndEnterText("confirm-password", SelectorType.ID, signInPassword);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndClick("sign-in-link", SelectorType.ID);
-        waitAndEnterText("email", SelectorType.ID, registrationEmail);
-        waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
-        clickByLinkText("Sign in to a service");
-    }
-
-    public void alreadySignedIn() {
-    waitForTitleToBePresent("You’ve signed in to your GOV.UK account");
-    waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-    waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-    signInGovAccount();
+        clickByXPath("//*[@id='mfaOptions-2']");
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        waitAndClick("//*[@id='main-content']/div/div/details[2]/summary/span", SelectorType.XPATH);
+        getText("//*[@id='secret-key']", SelectorType.XPATH);
+        String secretCode = getTOTPCode(getText("//*[@id='secret-key']", SelectorType.XPATH));
+        waitAndEnterText("code", SelectorType.ID, secretCode);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickByXPath("//*[@id='select-device-choice']");
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        goThroughVerificationSteps();
     }
 
     public void goThroughVerificationSteps() {
