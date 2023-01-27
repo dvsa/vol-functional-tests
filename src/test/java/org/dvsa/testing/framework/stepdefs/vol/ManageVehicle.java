@@ -357,7 +357,7 @@ public class ManageVehicle extends BasePage {
         isTextPresent("");
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.VEHICLES);
         for (int i = 0; i < numberOfVehicles; i++) {
-            waitAndClick("//input[@value='Remove']", SelectorType.XPATH);
+            waitAndClick("//button[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
             world.UIJourney.clickSubmit();
             waitForElementToBeClickable("//input[@value='Remove']", SelectorType.XPATH);
