@@ -1,7 +1,9 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import activesupport.driver.BrowserStack;
 import io.cucumber.java.After;
+import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import org.dvsa.testing.framework.Report.Config.Environments;
@@ -12,6 +14,11 @@ public class TestRunConfiguration {
     @After
     public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);
+    }
+
+    @AfterAll
+    public static void tearDown(){
+        Browser.navigate().quit();
     }
 
     @Before
