@@ -81,7 +81,6 @@ public class GovSignInJourney extends BasePage {
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitForElementToBePresent("code");
         waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndEnterText("password", SelectorType.ID, signInPassword);
