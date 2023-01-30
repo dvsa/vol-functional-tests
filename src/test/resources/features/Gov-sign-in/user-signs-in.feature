@@ -1,4 +1,5 @@
 @gov-sign-in
+@register-gov
 Feature: Gov sign in
 
   Background:
@@ -11,7 +12,7 @@ Feature: Gov sign in
   Then i complete the payment process
   Then the application should be submitted
 
- @register-gov
+
 Scenario: Register a GOV sign in account
   When I can navigate to gov sign in
   Then I register a gov sign in account to complete the process
