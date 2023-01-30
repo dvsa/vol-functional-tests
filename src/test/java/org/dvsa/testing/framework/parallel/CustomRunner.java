@@ -9,6 +9,10 @@ import java.util.function.Predicate;
 public class CustomRunner implements ParallelExecutionConfiguration, ParallelExecutionConfigurationStrategy  {
     private static final int FIXED_PARALLELISM = 4;
 
+    static {
+        System.out.println("THREADS: " + FIXED_PARALLELISM);
+    }
+
 
     @Override
     public ParallelExecutionConfiguration createConfiguration(final ConfigurationParameters configurationParameters) {
