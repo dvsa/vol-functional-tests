@@ -224,4 +224,11 @@ public class TmVerifyDifferentOperator extends BasePage{
         return Paths.get(Objects.requireNonNull(getClass().getClassLoader()
                 .getResource(declarationText)).toURI());
     }
+
+    @Then("the user is displayed in the Transport Manager list")
+    public void theUserIsDisplayedInTheTransportManagerList() {
+        waitForTextToBePresent("List of Transport Managers");
+        assertTrue(isTextPresent(world.registerUser.getForeName()+" "+world.registerUser.getFamilyName()));
+        assertTrue(isTextPresent(world.registerUser.getEmailAddress()));
+    }
 }

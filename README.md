@@ -15,7 +15,7 @@ The following technologies should be installed on your system.
 
 ## Executing
 
-``mvn clean test -Denv= -Dbrowser= -Dcucumber.filter.tags="@s" ``
+``mvn clean test -Denv= -Dbrowser= -Dcucumber.filter.tags="@xx" ``
 
 ## Reports
 To produce the reports run the following command in your terminal

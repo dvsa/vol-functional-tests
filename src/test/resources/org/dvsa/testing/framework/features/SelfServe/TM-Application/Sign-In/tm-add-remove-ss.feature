@@ -17,7 +17,7 @@ Feature: Set and check criteria for triggering automatic letter
   Scenario: TM verifies variational not as operator
     When i add an existing person as a transport manager who is not the operator on "variation"
     And i sign the declaration
-    Then I can navigate to gov sign in
-    And I sign in to gov sign in to complete the process
+    When I can navigate to gov sign in
+    Then I sign in to gov sign in to complete the process
     And the operator countersigns digitally
     Then the 'Review and declarations' post signature page is displayed

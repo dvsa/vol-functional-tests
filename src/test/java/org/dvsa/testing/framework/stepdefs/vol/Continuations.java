@@ -87,6 +87,8 @@ public class Continuations extends BasePage {
         world.continuationJourney.completeContinuationConditionsAndUndertakingsPage();
         world.continuationJourney.completeContinuationFinancesPage();
         world.continuationJourney.completeContinuationsSignPage();
+        untilElementIsNotPresent("//*[@class='ccms-loader centre']", SelectorType.XPATH);
+        waitForTextToBePresent("Sign out");
         world.continuationJourney.completeContinuationPayOrSubmit();
         world.continuationJourney.viewContinuationSnapshotOnInternal();
         for (int i = 0; i < userNamesElements.size(); i++){

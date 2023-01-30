@@ -7,8 +7,7 @@ Feature: View Surrender Menu and details on Internal
 
   Background:
     Given i have a valid "public" "standard_national" licence with an open case and bus reg
-    And i choose to surrender my licence with "gov-sign-in"
-
+    And my application to surrender is under consideration
 
   Scenario: Surrender details should be displayed appropriately on Internal verify
     And a caseworker views the surrender details

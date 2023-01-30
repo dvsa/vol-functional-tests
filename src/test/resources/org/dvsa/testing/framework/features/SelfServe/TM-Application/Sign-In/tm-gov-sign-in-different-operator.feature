@@ -19,7 +19,7 @@ Feature: TM signs through gov-sign-in
     And i sign the declaration
     Then I can navigate to gov sign in
     And I sign in to gov sign in to complete the process
-    Then the VOL 'Review and declarations' post signature page is displayed
+    Then the user is displayed in the Transport Manager list
 
   Scenario: Operator co-signs through gov sign in
     When i add an existing person as a transport manager who is not the operator on "application"
