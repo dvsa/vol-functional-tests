@@ -311,6 +311,10 @@ public abstract class BasePage extends DriverUtils {
         untilElementIsPresent(selector, SelectorType.CSS, duration, timeUnit);
     }
 
+    public static void waitForElementNotToBePresent(@NotNull String selector) {
+        new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofSeconds(20)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(selector)));
+    }
+
     public static boolean tryUntilElementIsPresent(@NotNull String selector, SelectorType selectorType, long duration, TimeUnit timeUnit) {
         try {
             untilElementIsPresent(selector, selectorType, duration, timeUnit);

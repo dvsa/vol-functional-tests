@@ -1,6 +1,7 @@
 @OLCS-22913
 @Surrender-int
 @int_regression
+@gov-sign-in
 
 Feature: Logic for Surrender menu item
 
