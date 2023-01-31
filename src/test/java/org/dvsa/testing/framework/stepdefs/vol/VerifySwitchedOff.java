@@ -1,26 +1,24 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class VerifySwitchedOff extends BasePage implements En {
+public class VerifySwitchedOff extends BasePage{
     private final World world;
-
+    Initialisation initialisation;
     public VerifySwitchedOff(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @Before
@@ -84,7 +82,7 @@ public class VerifySwitchedOff extends BasePage implements En {
 
     @Then("the print and sign page is displayed")
     public void thePrintAndSignPageIsDisplayed() {
-        Assert.assertTrue(isTextPresent("Transport Manager details approved"));
-        Assert.assertTrue(isTextPresent("Print, sign and return"));
+        assertTrue(isTextPresent("Transport Manager details approved"));
+        assertTrue(isTextPresent("Print, sign and return"));
     }
 }

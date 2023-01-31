@@ -1,12 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
@@ -20,19 +20,20 @@ import scanner.AXEScanner;
 import scanner.ReportGenerator;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 
 public class SubmitSelfServeApplication extends BasePage {
 
     World world;
+    Initialisation initialisation;
     static AXEScanner scanner = new AXEScanner();
     static ReportGenerator reportGenerator = new ReportGenerator();
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
     public SubmitSelfServeApplication(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @And("i start a new {string} licence application")

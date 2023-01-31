@@ -1,18 +1,24 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import org.dvsa.testing.framework.Injectors.World;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TaskAllocationRules extends BasePage {
-    private World world;
+    private final World world;
+    Initialisation initialisation;
 
-    public TaskAllocationRules(World world) {this.world = world;}
+    public TaskAllocationRules(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @Given("I am on the task allocation rules page")
     public void iAmOnTheTaskAllocationRulesPage() {
@@ -27,7 +33,7 @@ public class TaskAllocationRules extends BasePage {
 
     @Then("that rule should have been deleted")
     public void thatRuleShouldHaveBeenDeleted() {
-        Assert.assertTrue(isElementPresent("//p[text()='Task allocation rule(s) deleted']", SelectorType.XPATH));
+        assertTrue(isElementPresent("//p[text()='Task allocation rule(s) deleted']", SelectorType.XPATH));
     }
 
     @Given("I edit an allocated rule")
@@ -38,11 +44,11 @@ public class TaskAllocationRules extends BasePage {
     @Then("that rule should have been edited")
     public void thatRuleShouldHaveBeenEdited() {
         if (isElementPresent("//th[text()='Assign operator tasks starting with these letters']", SelectorType.XPATH)) {
-            Assert.assertTrue(isElementPresent("//p[text()='Alpha split updated']", SelectorType.XPATH));
-            Assert.assertTrue(isTextPresent(world.taskAllocationRulesJourney.getAbbreviation()));
+            assertTrue(isElementPresent("//p[text()='Alpha split updated']", SelectorType.XPATH));
+            assertTrue(isTextPresent(world.taskAllocationRulesJourney.getAbbreviation()));
         } else {
             String name = world.taskAllocationRulesJourney.getOwnerName();
-            Assert.assertTrue(isTextPresent(world.taskAllocationRulesJourney.getOwnerName()));
+            assertTrue(isTextPresent(world.taskAllocationRulesJourney.getOwnerName()));
         }
     }
 
@@ -53,6 +59,6 @@ public class TaskAllocationRules extends BasePage {
 
     @Then("the rule should have been added")
     public void theRuleShouldHaveBeenAdded() {
-        Assert.assertTrue(isTextPresent(world.taskAllocationRulesJourney.getOwnerName()));
+        assertTrue(isTextPresent(world.taskAllocationRulesJourney.getOwnerName()));
     }
 }

@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.*;
 import org.openqa.selenium.InvalidArgumentException;
 

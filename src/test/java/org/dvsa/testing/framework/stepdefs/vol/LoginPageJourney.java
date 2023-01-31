@@ -1,18 +1,19 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 public class LoginPageJourney extends BasePage {
     World world;
     String userId;
-
+    Initialisation initialisation;
     public LoginPageJourney(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @When("I attempt to login with a username {string} with special characters")

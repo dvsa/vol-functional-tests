@@ -1,31 +1,34 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import apiCalls.enums.LicenceType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
 import java.io.FileNotFoundException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class Continuations extends BasePage implements En {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class Continuations extends BasePage {
     private final World world;
 
     private final Dates dates = new Dates(new LocalDateCalendar());
     private LinkedHashMap<String, String> continuationDate;
 
-    public Continuations (World world) {this.world=world;}
+    public Continuations(World world) {
+        this.world = world;
+    }
 
     @When("i change my continuation and review date on Internal")
     public void iChangeMyContinuationAndReviewDateOnInternal() {
@@ -50,7 +53,7 @@ public class Continuations extends BasePage implements En {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
-        Assert.assertTrue(isTextPresent("Digital continuation snapshot"));
+        assertTrue(isTextPresent("Digital continuation snapshot"));
     }
 
     @Then("the users of ss should display on the continuation review details page and on the snapshot")
@@ -70,28 +73,28 @@ public class Continuations extends BasePage implements En {
         world.continuationJourney.clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         clickAllCheckboxes();
-        Assert.assertTrue(isTextPresent("User access"));
+        assertTrue(isTextPresent("User access"));
         userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
         userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
         userPermissionElements = findElements("//tbody//td[@data-heading='Permission']", SelectorType.XPATH);
         for (int i = 0; i < userNamesElements.size(); i++){
-            Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
-            Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
-            Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
+            assertEquals(userNamesElements.get(i).getText(), userNames[i]);
+            assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
+            assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
         }
         findSelectAllRadioButtonsByValue("Y");
         click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
         world.continuationJourney.completeContinuationConditionsAndUndertakingsPage();
         world.continuationJourney.completeContinuationFinancesPage();
         world.continuationJourney.completeContinuationsSignPage();
-        waitForElementNotToBePresent("//*[@class='ccms-loader centre']");
+        untilElementIsNotPresent("//*[@class='ccms-loader centre']", SelectorType.XPATH);
         waitForTextToBePresent("Sign out");
         world.continuationJourney.completeContinuationPayOrSubmit();
         world.continuationJourney.viewContinuationSnapshotOnInternal();
         for (int i = 0; i < userNamesElements.size(); i++){
-            Assert.assertEquals(userNamesElements.get(i).getText(), userNames[i]);
-            Assert.assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
-            Assert.assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
+            assertEquals(userNamesElements.get(i).getText(), userNames[i]);
+            assertEquals(userEmailElements.get(i).getText(), userEmails[i]);
+            assertEquals(userPermissionElements.get(i).getText(), userPermissions[i]);
         }
         closeTabAndFocusTab(0);
     }

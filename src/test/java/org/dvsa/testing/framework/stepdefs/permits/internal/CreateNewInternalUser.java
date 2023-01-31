@@ -1,15 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
-import Injectors.World;
-import activesupport.faker.FakerUtils;
-import activesupport.number.Int;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.junit.Assert;
 
-public class CreateNewInternalUser extends BasePage implements En {
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class CreateNewInternalUser extends BasePage{
     private  World world;
 
     public CreateNewInternalUser (World world) { this.world=world; }
@@ -29,6 +27,6 @@ public class CreateNewInternalUser extends BasePage implements En {
     public void userShouldBeCreated()
     {
         world.internalSearchJourney.searchUser();
-        Assert.assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
+        assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
     }
 }

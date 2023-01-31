@@ -1,10 +1,9 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -12,25 +11,23 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class InternalApplication extends BasePage implements En {
+public class InternalApplication extends BasePage{
     private final World world;
 
-    private String HGVOnlyAuthorisation = "//dt[contains(text(),'Total Heavy goods vehicle authorisation')]/../dd";
-    private String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
-    private String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
-    private String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
-    private String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
-    private String editUndertakingLink = "//tbody/tr//input[contains(@name,'table[action][edit]')]";
-    private String undertakingDescription = "//textarea[@name='fields[notes]']";
-    private String expectedLGVOnlyUndertakingText = "All authorised vehicles shall not exceed 3,500 Kilograms (kg), including when combined with a trailer.";
-    private String proposeToRevoke = "//button[text()='Propose to revoke']";
+    private final String HGVOnlyAuthorisation = "//dt[contains(text(),'Total Heavy goods vehicle authorisation')]/../dd";
+    private final String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
+    private final String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
+    private final String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
+    private final String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
+    private final String editUndertakingLink = "//tbody/tr//input[contains(@name,'table[action][edit]')]";
+    private final String undertakingDescription = "//textarea[@name='fields[notes]']";
+    private final String expectedLGVOnlyUndertakingText = "All authorised vehicles shall not exceed 3,500 Kilograms (kg), including when combined with a trailer.";
+    private final String proposeToRevoke = "//button[text()='Propose to revoke']";
 
-    private String generatedLetterType = "GV - Blank letter to operator";
+    private final String generatedLetterType = "GV - Blank letter to operator";
 
     public InternalApplication (World world) {this.world = world;}
 
@@ -52,7 +49,7 @@ public class InternalApplication extends BasePage implements En {
         int tableColumns;
         waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
         world.feeAndPaymentJourney.selectFee();
-        String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
+        String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value");
         world.feeAndPaymentJourney.payFee(fee, "cash");
         waitForTextToBePresent("The payment was made successfully");
         long kickoutTime = System.currentTimeMillis() + 15000;

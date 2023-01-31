@@ -1,20 +1,22 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserRoles;
 import apiCalls.enums.UserType;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
-import io.restassured.response.ValidatableResponse;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-public class CreateAdminUser extends BasePage implements En {
+public class CreateAdminUser extends BasePage  {
 
-    private final World world;
-
-    public CreateAdminUser(World world) {this.world = world;}
+    World world;
+    Initialisation initialisation;
+    public CreateAdminUser(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @When("I create a new internal admin user")
     public void iCreateANewInternalAdminUser() {

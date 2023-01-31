@@ -1,22 +1,18 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
-import activesupport.IllegalBrowserException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
-import org.junit.Assert;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TransportManagerJourney extends BasePage {
 
@@ -212,12 +208,12 @@ public class TransportManagerJourney extends BasePage {
 
     public void assertTMDetailsWithOperator() {
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'With operator')]", SelectorType.XPATH));
-        Assert.assertTrue(isLinkPresent("View details", 10));
+        assertTrue(isLinkPresent("View details", 10));
     }
 
     public void assertTMDetailsIncomplete() {
-        Assert.assertTrue(isElementPresent("//strong[contains(text(),'Incomplete')]", SelectorType.XPATH));
-        Assert.assertTrue(isLinkPresent("Provide details", 10));
+        assertTrue(isElementPresent("//strong[contains(text(),'Incomplete')]", SelectorType.XPATH));
+        assertTrue(isLinkPresent("Provide details", 10));
     }
 
     public void submitTMApplicationAndSignWithVerify(){

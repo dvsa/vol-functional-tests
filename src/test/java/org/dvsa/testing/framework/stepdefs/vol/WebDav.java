@@ -1,21 +1,18 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import activesupport.IllegalBrowserException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import autoitx4java.AutoItX;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.commons.lang.StringUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.io.File;
@@ -26,15 +23,19 @@ import java.nio.file.Paths;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.file.Files.checkFileContainsText;
 import static activesupport.file.Files.getDownloadedFile;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class WebDav extends BasePage implements En {
+public class WebDav extends BasePage{
     private final World world;
-
+    Initialisation initialisation;
     EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     private static final String templateName = "BUS_REG_CANCELLATION";
     AutoItX autoIt;
 
-    public WebDav (World world) {this.world = world;}
+    public WebDav(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
 
     @When("i update my operating system on internal to {string}")
@@ -60,7 +61,7 @@ public class WebDav extends BasePage implements En {
     @Then("i should be prompted to login")
     public void iShouldBePromptedToLogin() {
         String wordLoginWindow = StringUtils.removeEnd(URL.build(ApplicationType.INTERNAL, env).toString(), "/");
-        Assert.assertTrue(this.autoIt.winExists(wordLoginWindow, ""));
+        assertTrue(this.autoIt.winExists(wordLoginWindow, ""));
     }
 
     @And("i make changes to the document with WebDav and save it")
@@ -78,14 +79,14 @@ public class WebDav extends BasePage implements En {
 
     @Then("the document should contain the changes")
     public void theDocumentShouldContainTheChanges() throws IOException {
-        Assert.assertTrue(isTextPresent(templateName));
+        assertTrue(isTextPresent(templateName));
         clickByLinkText(templateName);
 
         String templateRegex = String.format("(?:[\\d]){20}_%s_%s\\.rtf", world.applicationDetails.getLicenceNumber(), templateName);
 
         File file = getDownloadedFile("downloadDirectory", templateRegex);
 
-        Assert.assertTrue(checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
+        assertTrue(checkFileContainsText(file.getAbsolutePath(), "WebDav Change!"));
     }
 
     @And("upload a document")

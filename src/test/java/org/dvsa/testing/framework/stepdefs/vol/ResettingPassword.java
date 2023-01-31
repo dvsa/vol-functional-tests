@@ -1,18 +1,23 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.string.Str;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-public class ResettingPassword extends BasePage implements En {
-    private final World world;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    public ResettingPassword (World world) {this.world = world;}
+public class ResettingPassword extends BasePage {
+    private final World world;
+    Initialisation initialisation;
+
+    public ResettingPassword(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @And("i reset my password")
     public void iResetMyPassword() {
@@ -27,7 +32,7 @@ public class ResettingPassword extends BasePage implements En {
 
     @Then("i will receive a message to say my password has changed")
     public void iWillReceiveAMessageToSayMyPasswordHasChanged() {
-        isTextPresent("We've sent you an email. Follow the link in the email to reset your password");
+        assertTrue(isTextPresent("We've sent you an email. Follow the link in the email to reset your password"));
     }
 
     @Given("i try resetting my password")
@@ -39,7 +44,7 @@ public class ResettingPassword extends BasePage implements En {
 
     @Then("i will receive an error that username invalid")
     public void iWillReceiveAnErrorThatUsernameInvalid() {
-        isTextPresent("Failed to reset your password");
+       assertTrue(isTextPresent("Failed to reset your password"));
     }
 
     @And("i then try reset my password")

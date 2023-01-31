@@ -1,16 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
-import activesupport.driver.Browser;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.util.Random;
 
-import static activesupport.driver.Browser.configuration;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
-
-
 
 public class GovSignInJourney extends BasePage {
 
@@ -110,7 +106,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void photoIDQuestion() {
-        waitForTitleToBePresent("You must have a photo ID to prove your identity with a GOV.UK account");
+        waitForTextToBePresent("Do you have one of these types of photo ID?");
         clickByXPath("//*[@id='havePhotoId']");
         clickByXPath("//*[@id='form-tracking']/button");
     }
@@ -233,5 +229,3 @@ public class GovSignInJourney extends BasePage {
         clickById("continue");
     }
 }
-
-

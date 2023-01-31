@@ -5,7 +5,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PermitUsagePageJourney extends BasePermitJourney {
 
@@ -23,5 +23,4 @@ public class PermitUsagePageJourney extends BasePermitJourney {
         PermitUsagePage.journeyType(permitTypeChoice);
         PermitUsagePage.saveAndContinue();
     }
-
 }

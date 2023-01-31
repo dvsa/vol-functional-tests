@@ -1,22 +1,21 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.hamcrest.Matchers;
-import org.junit.Assert;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CreateCase extends BasePage implements En {
+public class CreateCase extends BasePage {
     private final World world;
     private ValidatableResponse response;
 
@@ -146,7 +145,7 @@ public class CreateCase extends BasePage implements En {
 
     @Then("the conviction should be created")
     public void theConvictionShouldBeCreated() {
-        Assert.assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
+        assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
     }
 
     @And("I navigate to a case")
@@ -166,7 +165,7 @@ public class CreateCase extends BasePage implements En {
     @Then("the complaint should be displayed")
     public void theComplaintShouldBeDisplayed() {
         String date = LocalDate.now().minusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        Assert.assertTrue(isTextPresent(date));
+        assertTrue(isTextPresent(date));
     }
 
     @And("I complete the conditions & undertakings form")
@@ -176,8 +175,8 @@ public class CreateCase extends BasePage implements En {
     @Then("the condition & undertaking should be displayed")
     public void theConditionUndertakingShouldBeDisplayed() {
         waitForTextToBePresent(world.convictionsAndPenaltiesJourney.getConvictionDescription());
-        Assert.assertTrue(isTextPresent("Condition / undertaking added successfully"));
-        Assert.assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
+        assertTrue(isTextPresent("Condition / undertaking added successfully"));
+        assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
     }
     @And("I navigate to Notes")
     public void iNavigateToNotes() {
@@ -186,7 +185,7 @@ public class CreateCase extends BasePage implements En {
 
     @Then("the note should be displayed")
     public void theNoteShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent(String.valueOf(world.updateLicence.getCaseId())));
+        assertTrue(isTextPresent(String.valueOf(world.updateLicence.getCaseId())));
     }
 
     @Then("I add a Note")

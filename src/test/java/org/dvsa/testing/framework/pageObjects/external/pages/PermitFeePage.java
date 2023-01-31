@@ -5,11 +5,12 @@ import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.junit.Assert;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PermitFeePage extends BasePermitPage {
 
@@ -30,7 +31,7 @@ public class PermitFeePage extends BasePermitPage {
                 "1 permit for Euro 5 minimum emission standard", "£10", "£10 (non-refundable)"};
 
         for (int i = 0; i <= tableHeadings.length - 1; i++) {
-            Assert.assertEquals(tableValues[i], getTableSectionValue(tableHeadings[i]));
+            assertEquals(tableValues[i], getTableSectionValue(tableHeadings[i]));
         }
     }
 

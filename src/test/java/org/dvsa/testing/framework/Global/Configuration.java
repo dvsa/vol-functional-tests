@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Global;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.system.Properties;
 import com.typesafe.config.Config;

@@ -1,17 +1,17 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ScanningSeparatorGeneration extends BasePage {
     private World world;
-
     public ScanningSeparatorGeneration(World world) {
         this.world = world;
     }
@@ -28,7 +28,6 @@ public class ScanningSeparatorGeneration extends BasePage {
 
     @Then("A scanning success message banner should be displayed")
     public void aScanningSuccessMessageBannerShouldBeDisplayed() {
-        Assert.assertTrue(isElementPresent("(//p[text()='The separator sheet has been generated'])", SelectorType.XPATH));
+        assertTrue(isElementPresent("(//p[text()='The separator sheet has been generated'])", SelectorType.XPATH));
     }
 }
-

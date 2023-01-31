@@ -1,12 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import apiCalls.enums.OperatorType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.commons.lang.WordUtils;
 import org.dvsa.testing.framework.Utils.Generic.ParseUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -24,15 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-public class PublicationsRelatedSteps extends BasePage implements En {
+public class PublicationsRelatedSteps extends BasePage {
     private static final Logger LOGGER = LogManager.getLogger(PublicationsRelatedSteps.class);
     private final World world;
-
     private final String fiftyResultsPerPageLink = "//li/a[text()='50']";
     private final String publicationDatesColumn = "//table/tbody/tr/td[5]";
     private final String publicationNumberColumn = "//table/tbody/tr[*]/td[2]";
@@ -113,6 +109,7 @@ public class PublicationsRelatedSteps extends BasePage implements En {
                 waitForTextToBePresent("Publication was generated, a new publication was also created");
 
                 radioButtons = show50ResultsAndUpdateWebElementsList(radioButtonsColumn);
+                String publicationDatesColumn = "//table/tbody/tr/td[5]";
                 List<WebElement> publicationDates = findElements(publicationDatesColumn, SelectorType.XPATH);
 
                 publishedDate = publicationDates.get(i + 1).getText();

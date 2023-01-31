@@ -1,14 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.datatable.DataTable;
 import org.openqa.selenium.InvalidArgumentException;
 
@@ -19,10 +19,12 @@ import static apiCalls.enums.TrafficArea.trafficAreaList;
 
 public class ManageApplications {
     World world;
+    Initialisation initialisation;
     String fileName = "src/test/resources/";
 
     public ManageApplications(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @Before

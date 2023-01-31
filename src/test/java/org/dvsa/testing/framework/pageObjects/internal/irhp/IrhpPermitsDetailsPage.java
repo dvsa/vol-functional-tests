@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects.internal.irhp;
 
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.pageObjects.PermitApplication;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitStatus;
@@ -65,11 +66,10 @@ public class IrhpPermitsDetailsPage extends BaseDetailsPage {
         long maxSecondsWait = unit.toSeconds(duration);
 
         while (maxSecondsWait >= 0 && !isElementVisible(selector, 1)) {
-            getDriver().navigate().refresh();
+            Browser.navigate().navigate().refresh();
             maxSecondsWait--;
         }
 
         return isElementPresent(selector, SelectorType.XPATH);
     }
-
 }

@@ -1,24 +1,21 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import apiCalls.enums.UserRoles;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class RefundInterim extends BasePage implements En {
+public class RefundInterim extends BasePage {
     private final World world;
 
     public RefundInterim (World world) {this.world = world;}

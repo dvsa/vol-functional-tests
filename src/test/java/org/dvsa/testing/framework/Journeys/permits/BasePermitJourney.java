@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Journeys.permits;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;

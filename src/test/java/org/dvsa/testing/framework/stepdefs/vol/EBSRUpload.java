@@ -1,21 +1,17 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class EBSRUpload extends BasePage implements En {
+public class EBSRUpload extends BasePage {
     private final World world;
 
     public EBSRUpload(World world) {
@@ -65,7 +61,7 @@ public class EBSRUpload extends BasePage implements En {
 
     @Then("the bus registration should be granted")
     public void theBusRegistrationShouldBeGranted() {
-        Assert.assertTrue(isTextPresent("Registered"));
+        assertTrue(isTextPresent("Registered"));
     }
 
     @And("the traffic areas should be displayed on the service details page")
@@ -73,7 +69,7 @@ public class EBSRUpload extends BasePage implements En {
         clickByLinkText("Service details");
         clickByLinkText("TA's");
         String trafficArea = findElement("//*[@id=\"bus-reg-ta\"]/ul/li[1]/dd", SelectorType.XPATH, 10).getText();
-        Assert.assertNotNull(trafficArea);
+        assertNotNull(trafficArea);
     }
 
     @And("Documents are generated")

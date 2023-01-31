@@ -1,18 +1,16 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
-import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import apiCalls.enums.*;
-import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.joda.time.LocalDate;
 
 public class APIJourney {
 
-    private World world;
+    private final World world;
     public static int tmCount;
     Dates date = new Dates(LocalDate::new);
 
@@ -70,7 +68,7 @@ public class APIJourney {
 
     public void submitApplication() {
         world.createApplication.submitApplication();
-        world.applicationDetails.getApplicationLicenceDetails(world.createApplication);
+        world.applicationDetails.getApplicationLicenceDetails();
     }
 
     public void createSpecialRestrictedApplication() {

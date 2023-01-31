@@ -1,20 +1,18 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.database.exception.UnsupportedDatabaseDriverException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import apiCalls.enums.UserType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -22,12 +20,10 @@ import java.time.format.DateTimeFormatter;
 
 import static activesupport.database.DBUnit.executeUpdateSQL;
 import static java.lang.Thread.sleep;
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.APIJourney.tmCount;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RemoveTM extends BasePage implements En {
+public class RemoveTM extends BasePage{
 
     private static String oldAlertValue = "You are removing your last Transport Manager. If you haven't yet made an application to appoint a replacement, " +
             "you must contact us on 0300 123 9000 or at notifications@vehicle-operator-licensing.service.gov.uk";
@@ -143,6 +139,6 @@ public class RemoveTM extends BasePage implements En {
         String licenceNo = world.applicationDetails.getLicenceNumber();
         sleep(10000);
         boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
-        Assert.assertTrue(letterExists);
+        assertTrue(letterExists);
     }
 }

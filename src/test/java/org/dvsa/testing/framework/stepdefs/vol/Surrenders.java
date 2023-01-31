@@ -1,26 +1,22 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
-import static junit.framework.Assert.fail;
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class Surrenders extends BasePage implements En {
+public class Surrenders extends BasePage {
     private final World world;
 
     public Surrenders(World world) {this.world = world;}
@@ -96,14 +92,14 @@ public class Surrenders extends BasePage implements En {
 
     @Then("any open cases should be displayed")
     public void anyOpenCasesShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent("open cases associated with this licence"));
-        Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
+        assertTrue(isTextPresent("open cases associated with this licence"));
+        assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
     }
 
     @And("any open bus registrations should be displayed")
     public void anyOpenBusRegistrationsShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent("active bus registrations associated with this licence."));
-        Assert.assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()),10));
+        assertTrue(isTextPresent("active bus registrations associated with this licence."));
+        assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()),10));
     }
 
     @And("tick boxes should be displayed")
@@ -126,12 +122,12 @@ public class Surrenders extends BasePage implements En {
         if (isTextPresent("Surrender")) {
             clickByLinkText("Surrender");
             waitForTextToBePresent("Summary: Application to surrender an operator licence");
-            Assert.assertTrue(isTextPresent("open cases associated with this licence"));
-            Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 10));
-            Assert.assertTrue(isTextPresent("active bus registrations associated with this licence."));
-            Assert.assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()), 10));
+            assertTrue(isTextPresent("open cases associated with this licence"));
+            assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 10));
+            assertTrue(isTextPresent("active bus registrations associated with this licence."));
+            assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()), 10));
             WebElement surrenderButton = findElement("//*[@id='actions[surrender]']", SelectorType.XPATH);
-            Assert.assertTrue(surrenderButton.getAttribute("class").contains("disabled"));
+            assertTrue(surrenderButton.getAttribute("class").contains("disabled"));
         }
     }
 

@@ -1,9 +1,9 @@
 package org.dvsa.testing.framework.pageObjects.internal.admin.permits;
 
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Permit extends BasePage {
 
@@ -20,13 +22,13 @@ public class Permit extends BasePage {
         Calendar cal = Calendar.getInstance();
         clickAdd();
         untilElementIsPresent("//h2[@id='modal-title']",SelectorType.XPATH,Duration.LONG, TimeUnit.SECONDS);
-        Select permitType = new Select(getDriver().findElement(By.xpath("//select[@id='irhpPermitType']")));
+        Select permitType = new Select(Browser.navigate().findElement(By.xpath("//select[@id='irhpPermitType']")));
         waitAndClick("//select[@id='irhpPermitType']", SelectorType.XPATH);
         permitType.selectByIndex(1);
-        Select appPath = new Select(getDriver().findElement(By.xpath("//select[@id='applicationPathGroup']")));
+        Select appPath = new Select(Browser.navigate().findElement(By.xpath("//select[@id='applicationPathGroup']")));
         waitAndClick("//select[@id='applicationPathGroup']", SelectorType.XPATH);
         appPath.selectByVisibleText("ECMT Annual APGG Euro 5 or Euro 6");
-        Select businessProcess = new Select(getDriver().findElement(By.xpath("//select[@id='businessProcess']")));
+        Select businessProcess = new Select(Browser.navigate().findElement(By.xpath("//select[@id='businessProcess']")));
         waitAndClick("//select[@id='businessProcess']", SelectorType.XPATH);
         businessProcess.selectByValue("app_business_process_apgg");
         String startDay = String.valueOf((cal.get(Calendar.DATE)));
@@ -77,17 +79,15 @@ public class Permit extends BasePage {
             From,
             To
         }
-
     }
 
     public static void untilOnPage(long duration, ChronoUnit timeUnit) {
         untilUrlMatches("admin/permits/stocks/", duration, timeUnit);
         untilVisible("tbody tr", SelectorType.CSS, Duration.MEDIUM, TimeUnit.SECONDS);
-        Assert.assertTrue(isTitlePresent("Permits", 10));
+        assertTrue(isTitlePresent("Permits", 10));
     }
 
     public static void untilOnPage() {
         untilOnPage(Duration.LONG, ChronoUnit.SECONDS);
     }
-
 }

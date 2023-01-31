@@ -1,14 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.When;
-import cucumber.api.java.en.Then;
-import org.apache.commons.lang3.StringUtils;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Journeys.licence.DirectorJourney;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
-import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
@@ -16,7 +14,7 @@ import org.openqa.selenium.WebElement;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DirectorVariation extends BasePage {

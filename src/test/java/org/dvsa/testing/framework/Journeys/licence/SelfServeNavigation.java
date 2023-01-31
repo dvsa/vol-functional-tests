@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
-import activesupport.IllegalBrowserException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import com.sun.istack.NotNull;
@@ -18,12 +17,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
-import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class SelfServeNavigation extends BasePage {
 
@@ -41,7 +38,7 @@ public class SelfServeNavigation extends BasePage {
     public void navigateToExternalSearch() {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         }
         get(this.url.concat("search/"));
     }

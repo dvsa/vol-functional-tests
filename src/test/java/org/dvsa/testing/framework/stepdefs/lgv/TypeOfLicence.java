@@ -1,10 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java.en.Given;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Given;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
@@ -12,13 +12,13 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import apiCalls.enums.*;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TypeOfLicence extends BasePage {
     World world;
@@ -82,16 +82,16 @@ public class TypeOfLicence extends BasePage {
 
     @When("each section on the application overview page has the correct status for the {string} licence")
     public void changeLicenceTypeOverviewSectionsStatus(String newType) {
-        Assert.assertTrue(isTextPresent("Apply for a new licence"));
+        assertTrue(isTextPresent("Apply for a new licence"));
         List<WebElement> applicationOverviewStatusElements = findElements("//ol[@class='overview__list']/li", SelectorType.XPATH);
 
         if (newType.equals("lgv_only_fleet")) {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                Assert.assertEquals(world.typeOfLicence.expectedLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                assertEquals(world.typeOfLicence.expectedLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
             }
         } else {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                Assert.assertEquals(world.typeOfLicence.expectedStandardNationalOrMixedFleetStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                assertEquals(world.typeOfLicence.expectedStandardNationalOrMixedFleetStatusArray[i], applicationOverviewStatusElements.get(i).getText());
             }
         }
     }
@@ -143,12 +143,11 @@ public class TypeOfLicence extends BasePage {
 
     @When("each section on the application overview page should have the complete status with no data deleted")
     public void eachSectionOnTheApplicationOverviewPageShouldHaveTheCompleteStatusWithNoDataDeleted() {
-        Assert.assertTrue(isTextPresent("Apply for a new licence"));
+        assertTrue(isTextPresent("Apply for a new licence"));
         List<WebElement> applicationOverviewStatusElements = findElements("//ol[@class='overview__list']/li", SelectorType.XPATH);
         for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-            Assert.assertTrue(applicationOverviewStatusElements.get(i).getText().contains("COMPLETE"));
+            assertTrue(applicationOverviewStatusElements.get(i).getText().contains("COMPLETE"));
         }
-
     }
 
     @When("a caseworker goes to apply for a goods standard_international licence")

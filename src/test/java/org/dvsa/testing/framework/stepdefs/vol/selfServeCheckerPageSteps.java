@@ -1,15 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
-public class selfServeCheckerPageSteps extends BasePage implements En {
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class selfServeCheckerPageSteps extends BasePage{
     private final World world;
 
     public selfServeCheckerPageSteps(World world) {this.world=world;}
@@ -26,12 +26,12 @@ public class selfServeCheckerPageSteps extends BasePage implements En {
 
     @Then("I should be on the dashboard")
     public void iShouldBeOnTheDashboard() {
-        Assert.assertTrue(isPath("/dashboard"));
+        assertTrue(isPath("/dashboard"));
     }
 
     @Then("I should be on the Self Serve login page")
     public void iShouldBeOnTheSelfServeLoginPage() {
         waitForElementToBeClickable("auth.login.username", SelectorType.ID);
-        Assert.assertTrue(isPath("auth/login/"));
+        assertTrue(isPath("auth/login/"));
     }
 }

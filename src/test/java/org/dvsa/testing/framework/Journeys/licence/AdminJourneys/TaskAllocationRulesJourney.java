@@ -1,13 +1,9 @@
 package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.openqa.selenium.support.ui.Select;
-
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
 
 public class TaskAllocationRulesJourney extends BasePage {
     private final World world;
