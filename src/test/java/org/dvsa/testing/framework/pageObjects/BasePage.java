@@ -155,10 +155,9 @@ public abstract class BasePage extends DriverUtils {
 
     public void selectRandomRadioBtnFromDataTable() {
         List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
-        int rows_count = rows_table.size();
         outsideloop:
-        for (int row = 0; row < rows_count; row++) {
-            List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
+        for (WebElement webElement : rows_table) {
+            List<WebElement> Columns_row = webElement.findElements(By.tagName("td"));
             int columns_count = Columns_row.size();
             for (int column = 0; column < columns_count; ) {
                 List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
