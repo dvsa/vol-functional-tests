@@ -76,7 +76,6 @@ public class GovSignInJourney extends BasePage {
         } else {
             clickById("chooseWayPyi");
         }
-        waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
         photoIDQuestion();
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
