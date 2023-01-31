@@ -37,6 +37,8 @@
         <gson.version>20220924</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>1.8</java.version>
+
+        <jvmMemory>5120</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -229,8 +231,9 @@
                     </argLine>
 <!--                    <forkCount>1</forkCount>-->
 <!--                    <threadCount>3</threadCount>-->
-                    <reuseForks>true</reuseForks>
+                    <reuseForks>false</reuseForks>
                     <parallel>suitesAndMethods</parallel>
+                    <argLine>-Xmx${jvmMemory}m</argLine>
                 </configuration>
                 <dependencies>
                     <dependency>
