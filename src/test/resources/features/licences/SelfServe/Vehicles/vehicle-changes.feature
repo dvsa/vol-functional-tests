@@ -1,4 +1,5 @@
 @OLD_JOURNEY
+@ss_regression
 Feature: Vehicle management on a licence
 
   Background: Generate a licence and navigate to vehicle page
