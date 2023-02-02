@@ -23,7 +23,7 @@ public class ResettingPassword extends BasePage {
     public void iResetMyPassword() {
         clickByLinkText("Sign out");
         world.UIJourney.resettingExternalPassword();
-        enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
+        enterText(nameAttribute("input", "username"), SelectorType.CSS, SubmitSelfServeApplication.selfServeUser);
         isTextPresent("Failed");
         click(nameAttribute("input","submit"), SelectorType.CSS);
         while (isTextPresent("Failed")) {click(nameAttribute("input","submit"), SelectorType.CSS);

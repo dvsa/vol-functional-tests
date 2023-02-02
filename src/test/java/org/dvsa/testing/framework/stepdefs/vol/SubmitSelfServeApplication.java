@@ -31,6 +31,8 @@ public class SubmitSelfServeApplication extends BasePage {
     static ReportGenerator reportGenerator = new ReportGenerator();
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
+    public static String selfServeUser;
+
     public SubmitSelfServeApplication(World world) {
         this.world = world;
         this.initialisation = new Initialisation(world);
@@ -100,25 +102,25 @@ public class SubmitSelfServeApplication extends BasePage {
 
     @Given("i have a self serve account")
     public void iHaveASelfServeAccount() {
-        String intUsername = world.configuration.config.getString("intUsername");
-        String secretKey = world.configuration.config.getString("secretKey");
         String region = world.configuration.config.getString("region");
 
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             SecretsManager secretsManager = new SecretsManager();
             secretsManager.setRegion(region);
-            String intPassword = secretsManager.getSecretValue(secretKey);
+            String intEnvPassword = secretsManager.getSecretValue("intEnvPassword");
+            String intEnvUser = secretsManager.getSecretValue("intEnvUser");
             String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
             DriverUtils.get(myURL);
-            world.globalMethods.signIn(intUsername, intPassword);
+            world.globalMethods.signIn(intEnvUser, intEnvPassword);
         } else {
             world.userRegistrationJourney.registerUserWithNoLicence();
             world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
+            selfServeUser = world.DataGenerator.getOperatorUser();
         }
     }
 
-    @And("i have no existing accounts")
-    public void iHaveNoExistingAccounts() throws IllegalBrowserException, IOException {
+    @And("i have no existing applications")
+    public void iHaveNoExistingApplications() throws IllegalBrowserException, IOException {
         if (isElementPresent("//tbody/tr/td/a", SelectorType.XPATH)) {
             List<WebElement> applications = findElements("//tbody/tr/td/a", SelectorType.XPATH);
             for (WebElement element : applications) {
@@ -142,10 +144,6 @@ public class SubmitSelfServeApplication extends BasePage {
             reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
             reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
         }
-    }
-
-    public static void generateAccessibilityReport() {
-        reportGenerator.createReport(scanner);
     }
 
     private void chooseLicenceType(String licenceType) {

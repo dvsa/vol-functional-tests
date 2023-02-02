@@ -60,9 +60,12 @@ public class GovSignIn extends BasePage {
         assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
     }
 
-    @Given("i have an application in progress")
-    public void iHaveAnApplicationInProgress() {
-        world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+    @Given("i have a {string} application in progress")
+    public void iHaveAnApplicationInProgress(String operatorType) {
+        if(operatorType.equals("Goods")){
+            operatorType = OperatorType.GOODS.name();
+        }else operatorType = OperatorType.PUBLIC.name();
+        world.createApplication.setOperatorType(operatorType);
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourney.createApplication();
         refreshPageWithJavascript();
