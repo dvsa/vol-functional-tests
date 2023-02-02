@@ -3,7 +3,7 @@
 Feature: resetting password with valid/invalid user
 
   Scenario: reset password for valid user
-    Given i have a valid "goods" "standard_national" licence
+    Given I create a new external user
     And i reset my password
     Then i will receive a message to say my password has changed
 
@@ -12,6 +12,6 @@ Feature: resetting password with valid/invalid user
     Then i will receive an error that username invalid
 
   Scenario: try reset password for inactive user
-    Given i have a valid "goods" "standard_national" licence
+    Given I create a new external user
     And i then try reset my password
     Then i will receive an error for inactive account
