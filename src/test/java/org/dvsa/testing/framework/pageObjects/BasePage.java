@@ -131,45 +131,24 @@ public abstract class BasePage extends DriverUtils {
 
     public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
         List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='pagination right-aligned']"));
-        int pagination_count = pagination.size() + 1;
-        outsideloop:
-        while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT))
-            for (int i = 0; i <= pagination_count; i++) {
-                isElementNotPresent(linkTextArgument, SelectorType.LINKTEXT);
-                scrollAndClick("Next", SelectorType.LINKTEXT);
+        int pagination_count = pagination.size();
+
+        while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
+            for (int i = 0; i < pagination_count; i++) {
                 if (isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
-                    break outsideloop;
+                    break;
                 }
-            }
-    }
-
-    public static String selectRandomValueFromDropDown(String idArgument) {
-        Select select = new Select(getDriver().findElement(By.id(idArgument)));
-        Random random = new Random();
-        List<WebElement> dropdown = select.getOptions();
-        int size = dropdown.size();
-        int randomNo = random.nextInt(size);
-        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]", idArgument, randomNo), SelectorType.XPATH).getText();
-        selectValueFromDropDown(idArgument, SelectorType.ID, ownerName);
-        return ownerName;
-    }
-
-    public void selectRandomRadioBtnFromDataTable() {
-        List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
-        int rows_count = rows_table.size();
-        outsideloop:
-        for (int row = 0; row < rows_count; row++) {
-            List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
-            int columns_count = Columns_row.size();
-            for (int column = 0; column < columns_count; ) {
-                List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
-                Random random = new Random();
-                int size = options.size();
-                int index = random.nextInt(size);
-                options.get(index).click();
-                break outsideloop;
+                scrollAndClick("Next", SelectorType.LINKTEXT);
             }
         }
+    }
+
+    public static String selectRandomValueFromDropDown(String id) {
+        Select select = new Select(getDriver().findElement(By.id(id)));
+        List<WebElement> options = select.getOptions();
+        WebElement randomOption = options.get(new Random().nextInt(options.size()));
+        select.selectByVisibleText(randomOption.getText());
+        return randomOption.getText();
     }
 
     protected static boolean isLinkPresent(String locator, int duration) {
