@@ -50,9 +50,3 @@ Feature: Public enquiry added and published and deletion of case notes
     And I add conviction to the case
     Then the conviction should be created
 
-
-
-
-
-
-

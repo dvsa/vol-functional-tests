@@ -1,4 +1,4 @@
-@DVLA @VOL-147
+@DVLA @VOL-147 @ss_regression
 Feature: Search and add a vehicle
 
   Scenario Outline: Add a vehicle to a licence
@@ -32,4 +32,3 @@ Feature: Search and add a vehicle
     When I navigate to manage vehicle page on a licence
     And I search without entering a registration number
     Then An error message should be displayed
-

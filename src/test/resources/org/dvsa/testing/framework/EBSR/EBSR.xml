@@ -4398,7 +4398,7 @@
 <OperatorShortName>Stagecoach</OperatorShortName>
 <OperatorNameOnLicence>Greater Manchester Buses South Ltd</OperatorNameOnLicence>
 <TradingName>Stagecoach Manchester</TradingName>
-<LicenceNumber>PG2065950</LicenceNumber>
+<LicenceNumber>PB2066370</LicenceNumber>
 <LicenceClassification>standardNational</LicenceClassification>
 <EnquiryTelephoneNumber>
 <TelNationalNumber>0161 228 7811</TelNationalNumber>
@@ -4498,7 +4498,7 @@
 </Line>
 </Lines>
 <OperatingPeriod>
-<StartDate>2023-03-29</StartDate>
+<StartDate>2023-03-16</StartDate>
 </OperatingPeriod>
 <OperatingProfile>
 <RegularDayType>
@@ -10007,8 +10007,8 @@
 <SubmissionDate>2016-10-24</SubmissionDate>
 <VosaRegistrationNumber>
 <TanCode>PC</TanCode>
-<LicenceNumber>PG2065950</LicenceNumber>
-<RegistrationNumber>1819</RegistrationNumber>
+<LicenceNumber>PB2066370</LicenceNumber>
+<RegistrationNumber>1825</RegistrationNumber>
 </VosaRegistrationNumber>
 <ApplicationClassification>new</ApplicationClassification>
 <VariationNumber>0</VariationNumber>
@@ -10020,7 +10020,7 @@
 </SubmissionAuthor>
 <TrafficAreas>
 <TrafficArea>
-<TrafficAreaName>Welsh</TrafficAreaName>
+<TrafficAreaName>WestMidlands</TrafficAreaName>
 </TrafficArea>
 </TrafficAreas>
 <CirculatedAuthorities>
