@@ -66,6 +66,7 @@ public class IRHPPermitsPageSteps extends BasePage implements En {
         LicenceDetailsPageJourney.clickIRHPTab();
         LicenceDetailsPageJourney.clickFeesTab();
         FeesDetailsPage.outstanding();
+        FeesDetailsPage.checkAllBox();
         FeesDetailsPage.pay();
         BaseModel.untilModalIsPresent(Duration.CENTURY, TimeUnit.SECONDS);
         IrhpPermitsApplyPage.selectCardPayment();
