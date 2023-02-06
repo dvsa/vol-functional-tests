@@ -22,6 +22,10 @@ public class FeesDetailsPage extends BaseDetailsPage {
         scrollAndClick("//th[last()]", XPATH);
     }
 
+    public static void checkAllBox(){
+        waitAndClick("//*[@id='checkall']", SelectorType.XPATH);
+    }
+
     public static void select1stFee() {
         String firstFee= "//tbody/tr/td/a";
         untilElementIsPresent(firstFee, XPATH, Duration.CENTURY, TimeUnit.SECONDS);
