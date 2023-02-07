@@ -30,7 +30,7 @@ public class Configuration {
 */
 
     public String getPasswordResetLink() {
-        return String.valueOf(S3.getPasswordResetLink());
+        return String.valueOf(S3.getPasswordResetLink(world.registerUser.getEmailAddress()));
     }
 
     public String getUsernameResetLink() {
