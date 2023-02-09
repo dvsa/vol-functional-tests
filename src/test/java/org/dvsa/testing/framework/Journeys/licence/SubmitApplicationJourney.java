@@ -1,41 +1,61 @@
-package org.dvsa.testing.framework.stepdefs.vol;
+package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
-import activesupport.driver.Browser;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import apiCalls.enums.OperatorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.WebElement;
-import scanner.AXEScanner;
-import scanner.ReportGenerator;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
-public class SubmitSelfServeApplication extends BasePage {
+public class SubmitApplicationJourney extends BasePage {
 
-    World world;
-    static AXEScanner scanner = new AXEScanner();
-    static ReportGenerator reportGenerator = new ReportGenerator();
-    private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
+    private World world;
 
+    public SubmitApplicationJourney(World world) { this.world = world; }
 
-    public SubmitSelfServeApplication(World world) {
-        this.world = world;
+    public void iHaveASelfServeAccount() {
+        String intUsername = world.configuration.config.getString("intUsername");
+        String secretKey = world.configuration.config.getString("secretKey");
+        String region = world.configuration.config.getString("region");
+
+        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
+            SecretsManager secretsManager = new SecretsManager();
+            secretsManager.setRegion(region);
+            String intPassword = secretsManager.getSecretValue(secretKey);
+            String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
+            DriverUtils.get(myURL);
+            world.globalMethods.signIn(intUsername, intPassword);
+        } else {
+            world.userRegistrationJourney.registerUserWithNoLicence();
+            world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
+        }
     }
 
+    public void iHaveNoExistingAccounts() throws IllegalBrowserException, IOException {
+        if (isElementPresent("//tbody/tr/td/a", SelectorType.XPATH)) {
+            List<WebElement> applications = findElements("//tbody/tr/td/a", SelectorType.XPATH);
+            for (WebElement element : applications) {
+                element.click();
+                if (isTitlePresent("Application overview", 60)) {
+                    clickByLinkText("Withdraw application");
 
-    @And("i start a new {string} licence application")
+                } else {
+                    clickByLinkText("Cancel application");
+                }
+                world.UIJourney.clickSubmit();
+            }
+            waitForTitleToBePresent("Licences");
+        }
+    }
+
     public void iStartANewLicenceApplication(String licenceType){
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
@@ -53,10 +73,10 @@ public class SubmitSelfServeApplication extends BasePage {
         String authority = "2";
         String trailers = "4";
         if(licenceType.equals("Goods")) {
-         //   world.createApplication.setOperatorType(OperatorType.GOODS.name());
+      //      world.createApplication.setOperatorType(OperatorType.GOODS.name());
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, "0", trailers);
         }else{
-        //    world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+       //     world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
@@ -97,54 +117,12 @@ public class SubmitSelfServeApplication extends BasePage {
         world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit();
     }
 
-    @Given("i have a self serve account")
-    public void iHaveASelfServeAccount() {
-        String intUsername = world.configuration.config.getString("intUsername");
-        String secretKey = world.configuration.config.getString("secretKey");
-        String region = world.configuration.config.getString("region");
-
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            SecretsManager secretsManager = new SecretsManager();
-            secretsManager.setRegion(region);
-            String intPassword = secretsManager.getSecretValue(secretKey);
-            String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
-            DriverUtils.get(myURL);
-            world.globalMethods.signIn(intUsername, intPassword);
-        } else {
-            world.userRegistrationJourney.registerUserWithNoLicence();
-            world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
-        }
-    }
-
-    @And("i have no existing accounts")
-    public void iHaveNoExistingAccounts() throws IllegalBrowserException, IOException {
-        if (isElementPresent("//tbody/tr/td/a", SelectorType.XPATH)) {
-            List<WebElement> applications = findElements("//tbody/tr/td/a", SelectorType.XPATH);
-            for (WebElement element : applications) {
-                element.click();
-                if (isTitlePresent("Application overview", 60)) {
-                    clickByLinkText("Withdraw application");
-
-                } else {
-                    clickByLinkText("Cancel application");
-                }
-                world.UIJourney.clickSubmit();
-            }
-            waitForTitleToBePresent("Licences");
-        }
-    }
-
-    public static void accessibilityScanner() throws IllegalBrowserException, IOException {
-        scanner.scan(false);
-        if (scanner.getTotalViolationsCount() != 0) {
-            LOGGER.info("ERROR: Violation found");
-            reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
-            reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
-        }
-    }
-
-    public static void generateAccessibilityReport() {
-        reportGenerator.createReport(scanner);
+    public void iSubmitAndPayForTheApplication() {
+        waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+        clickById("submitAndPay");
+        world.UIJourney.clickPay();
+        world.feeAndPaymentJourney.customerPaymentModule();
+        waitForTitleToBePresent("Application overview");
     }
 
     private void chooseLicenceType(String licenceType) {
@@ -157,11 +135,4 @@ public class SubmitSelfServeApplication extends BasePage {
         waitAndClick("//*[contains(text(),'Limited Company')]", SelectorType.XPATH);
     }
 
-    @Given("I have submitted a {string} application via the UI")
-    public void iHaveSubmittedAApplicationViaTheUI(String licenceType) throws IllegalBrowserException, IOException {
-        world.submitApplicationJourney.iHaveASelfServeAccount();
-/*        world.submitApplicationJourney.iHaveNoExistingAccounts();
-        world.submitApplicationJourney.iStartANewLicenceApplication(licenceType);
-        world.submitApplicationJourney.iSubmitAndPayForTheApplication();*/
-    }
 }

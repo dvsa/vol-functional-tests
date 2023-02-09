@@ -75,5 +75,6 @@ public class Initialisation extends BasePage implements En {
         world.trailersJourney = new TrailersJourney(world);
         world.systemMessagesJourney = new SystemMessagesJourney(world);
         world.govSignInJourney = new GovSignInJourney(world);
+        world.submitApplicationJourney = new SubmitApplicationJourney(world);
     }
 }
