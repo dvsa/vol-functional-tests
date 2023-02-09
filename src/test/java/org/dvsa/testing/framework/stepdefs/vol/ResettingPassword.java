@@ -53,5 +53,9 @@ public class ResettingPassword extends BasePage implements En {
     @And("I receive the reset password link via email")
     public void iReceiveTheResetPasswordLinkViaEmail() {
         world.configuration.getPasswordResetLink();
+        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, "test101@");
+        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, "test101@");
+        click(nameAttribute("input","submit"), SelectorType.CSS);
+
     }
 }
