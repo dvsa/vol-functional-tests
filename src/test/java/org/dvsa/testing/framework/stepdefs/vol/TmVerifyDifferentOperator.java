@@ -78,7 +78,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
         clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
-        if (isTitlePresent("Prove your identity with a GOV.UK One Login", 20)) {
+        if (isTitlePresent("Prove your identity with GOV.UK One Login", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
