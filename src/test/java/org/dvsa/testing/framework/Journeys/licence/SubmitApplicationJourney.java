@@ -14,6 +14,7 @@ public class SubmitApplicationJourney extends BasePage {
 
     private final World world;
     private String applicationNumber;
+    private String licence;
 
     public SubmitApplicationJourney(World world) { this.world = world; }
 
@@ -35,6 +36,7 @@ public class SubmitApplicationJourney extends BasePage {
     }
 
     public void startANewLicenceApplication(String licenceType){
+        setLicence(licenceType);
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
         chooseLicenceType(licenceType);
@@ -121,5 +123,13 @@ public class SubmitApplicationJourney extends BasePage {
 
     public void setApplicationNumber(String applicationNumber) {
         this.applicationNumber = applicationNumber;
+    }
+
+    public String getLicence() {
+        return licence;
+    }
+
+    public void setLicence(String licence) {
+        this.licence = licence;
     }
 }

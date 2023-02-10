@@ -82,6 +82,9 @@ public class FeeAndPaymentJourney extends BasePage {
                         world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                         clickPayAndConfirm(paymentMethod);
                     }
+                    if(isElementPresent("form-actions[pay]", SelectorType.ID)){
+                        waitAndClick("form-actions[pay]", SelectorType.ID);
+                    }
                 }
                 customerPaymentModule();
                 break;
