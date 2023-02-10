@@ -38,21 +38,21 @@ public class GovSignInJourney extends BasePage {
         String signInPassword = world.configuration.config.getString("signInPassword");
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
-        if(isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
+        if(isTitlePresent("Prove your identity with GOV.UK One Login", 1) &&
                 (isTextPresent("Choose a way to prove your identity"))) {
             clickById("chooseWayPyi");
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         } else {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTitlePresent("You’ve signed in to your GOV.UK account", 1)) {
+        if(isTitlePresent("You’ve signed in to your GOV.UK One Login", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTitlePresent("You must have a photo ID to prove your identity with a GOV.UK account", 1)) {
+        if(isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
             photoIDQuestion();
         }
-        if(isTitlePresent("Create a GOV.UK account or sign in",1)) {
+        if(isTitlePresent("Create a GOV.UK One Login or sign in",1)) {
             waitAndClick("sign-in-link", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -70,7 +70,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() {
-        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
+        if(isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
         } else {
             clickById("chooseWayPyi");
@@ -93,7 +93,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void alreadySignedIn() {
-    waitForTitleToBePresent("You’ve signed in to your GOV.UK account");
+    waitForTitleToBePresent("You’ve signed in to your GOV.UK One Login");
     waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
     waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
     signInGovAccount();
@@ -110,7 +110,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void photoIDQuestion() {
-        waitForTitleToBePresent("You must have a photo ID to prove your identity with a GOV.UK account");
+        waitForTitleToBePresent("You must have a photo ID to prove your identity with GOV.UK One Login");
         clickByXPath("//*[@id='havePhotoId']");
         clickByXPath("//*[@id='form-tracking']/button");
     }

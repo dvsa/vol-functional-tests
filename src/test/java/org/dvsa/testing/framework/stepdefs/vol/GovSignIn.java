@@ -56,7 +56,7 @@ public class GovSignIn extends BasePage {
     @Then("the application should be digitally signed")
     public void theApplicationShouldBeDigitallySigned() {
         waitForTitleToBePresent("Review and declarations");
-        Assert.assertTrue(isTextPresent("Declaration signed through GOV.UK Account"));
+        Assert.assertTrue(isTextPresent("Declaration signed through GOV.UK One Login"));
         Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
     }
 }
