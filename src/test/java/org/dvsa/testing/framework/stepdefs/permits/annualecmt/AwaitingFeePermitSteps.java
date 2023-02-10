@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -24,7 +25,7 @@ public class AwaitingFeePermitSteps extends BasePage {
         this.world = world;
     }
     @And("I am viewing an application that's awaiting fees")
-    public void iAMViewingAnApplicationThatIsAwaitingFees() throws InterruptedException {
+    public void iAMViewingAnApplicationThatIsAwaitingFees() throws InterruptedException, HttpException {
         EcmtApplicationJourney.completeEcmtApplication(world);
         IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
         sleep(3000);

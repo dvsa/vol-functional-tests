@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -23,7 +24,7 @@ public class SelfServePayFees extends BasePage {
     }
 
         @And("an internal user has granted my application")
-        public void anInternalUserHasGrantedMyApplication() {
+        public void anInternalUserHasGrantedMyApplication() throws HttpException {
             world.grantApplication.grant();
             world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
         }

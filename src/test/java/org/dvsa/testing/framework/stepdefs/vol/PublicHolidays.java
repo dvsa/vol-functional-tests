@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -20,7 +21,7 @@ public class PublicHolidays extends BasePage {
     public PublicHolidays(World world) {this.world = world;}
 
     @When("I am on the public holidays page")
-    public void iAmOnThePublicHolidaysPage() {
+    public void iAmOnThePublicHolidaysPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.PUBLIC_HOLIDAYS);
     }

@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -71,7 +72,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage {
         HomePage.PermitsTab.selectFirstOngoingApplication();
     }
     @Then("I have an annual ECMT application in awaiting fee status")
-    public void iHaveAnAnnualECMTApplicationInAwaitingFeeStatus() throws InterruptedException {
+    public void iHaveAnAnnualECMTApplicationInAwaitingFeeStatus() throws InterruptedException, HttpException {
         EcmtApplicationJourney.completeEcmtApplication(world);
         IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
         sleep(5000);

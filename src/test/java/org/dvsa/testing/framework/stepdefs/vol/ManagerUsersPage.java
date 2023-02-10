@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
@@ -35,7 +36,7 @@ public class ManagerUsersPage extends BasePage{
     }
 
     @Given("i have an admin account to add users")
-    public void iHaveAnAdminAccountToAddUsers() {
+    public void iHaveAnAdminAccountToAddUsers() throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
 

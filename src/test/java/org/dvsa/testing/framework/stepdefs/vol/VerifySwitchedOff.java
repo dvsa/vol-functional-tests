@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
 import io.cucumber.java.Scenario;
@@ -26,7 +27,7 @@ public class VerifySwitchedOff extends BasePage{
         System.out.println("Testing Scenario:" + scenario.getName());
     }
     @And("i have a {string} {string} partial application")
-    public void iHaveAPartialApplication(String operatorType, String country) {
+    public void iHaveAPartialApplication(String operatorType, String country) throws HttpException {
         world.createApplication.setOperatorType(operatorType);
         if (country.equals("NI")) {
             world.APIJourney.nIAddressBuilder();
@@ -73,11 +74,7 @@ public class VerifySwitchedOff extends BasePage{
 
     @When("i submit and pay for the application")
     public void iSubmitAndPayForTheApplication() {
-        waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        clickById("submitAndPay");
-        world.UIJourney.clickPay();
-        world.feeAndPaymentJourney.customerPaymentModule();
-        waitForTitleToBePresent("Application overview");
+        world.submitApplicationJourney.submitAndPayForApplication();
     }
 
     @Then("the print and sign page is displayed")

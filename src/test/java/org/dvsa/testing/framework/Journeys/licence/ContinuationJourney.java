@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.file.TestResourceReader;
@@ -72,7 +73,7 @@ public class ContinuationJourney extends BasePage {
         }
     }
 
-    public void viewContinuationSnapshotOnInternal()  {
+    public void viewContinuationSnapshotOnInternal() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");

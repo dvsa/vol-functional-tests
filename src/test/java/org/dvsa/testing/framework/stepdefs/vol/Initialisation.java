@@ -72,5 +72,7 @@ public class Initialisation extends BasePage {
         world.trailersJourney = new TrailersJourney(world);
         world.systemMessagesJourney = new SystemMessagesJourney(world);
         world.govSignInJourney = new GovSignInJourney(world);
+        world.submitApplicationJourney = new SubmitApplicationJourney(world);
+        world.grantApplicationJourney = new GrantApplicationJourney();
     }
 }

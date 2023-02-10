@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import apiCalls.enums.OperatorType;
@@ -162,7 +163,7 @@ public class PublicationsRelatedSteps extends BasePage {
     }
 
     @Then("the corresponding publication is generated and published")
-    public void theCorrespondingPublicationIsGeneratedAndPublished() {
+    public void theCorrespondingPublicationIsGeneratedAndPublished() throws HttpException {
         if (world.updateLicence.getInternalUserId() == null) {world.APIJourney.createAdminUser();}
 
         if (isElementNotPresent(world.internalNavigation.adminDropdown,SelectorType.XPATH)) {world.internalNavigation.logInAsAdmin();}
@@ -269,7 +270,7 @@ public class PublicationsRelatedSteps extends BasePage {
 
 
     @And("i navigate to the application publications page")
-    public void iNavigateToTheApplicationPublicationsPage() {
+    public void iNavigateToTheApplicationPublicationsPage() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Processing");
         waitForTextToBePresent("Processing");
@@ -372,7 +373,7 @@ public class PublicationsRelatedSteps extends BasePage {
     }
 
     @Then("^the out of objection date is present on the application (\\d+) days after the publication date$")
-    public void theOutOfObjectionDateIsPresentOnTheApplication(Integer arg0) {
+    public void theOutOfObjectionDateIsPresentOnTheApplication(Integer arg0) throws HttpException {
         world.internalNavigation.logInAndNavigateToApplicationProcessingPage(true);
         clickByLinkText("Publications");
         String publicationDate = getText("//td[@data-heading='Publication date']", SelectorType.XPATH);

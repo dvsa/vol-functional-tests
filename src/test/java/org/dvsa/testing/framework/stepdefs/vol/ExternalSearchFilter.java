@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
@@ -29,31 +30,31 @@ public class ExternalSearchFilter extends BasePage {
     }
 
     @Then("the Organisation Type filter should be displayed")
-    public void theOrganisationTypeFilterShouldBeDisplayed() {
+    public void theOrganisationTypeFilterShouldBeDisplayed() throws HttpException {
         String opName = getText(String.format("//*[@id='filter[orgTypeDesc]']/option[2]"), SelectorType.XPATH);
         assertEquals(world.updateLicence.getBusinessTypeDetails().toUpperCase(),opName.toUpperCase());
     }
 
     @Then("the Licence Type filter should be displayed")
-    public void theLicenceTypeFilterShouldBeDisplayed() {
+    public void theLicenceTypeFilterShouldBeDisplayed() throws HttpException {
         String opName = getText(String.format("//*[@id='filter[orgTypeDesc]']/option[2]"), SelectorType.XPATH);
         assertEquals(world.updateLicence.getBusinessTypeDetails().toUpperCase(),opName.toUpperCase());
     }
 
     @Then("the Licence Status filter should be displayed")
-    public void theLicenceStatusFilterShouldBeDisplayed() {
+    public void theLicenceStatusFilterShouldBeDisplayed() throws HttpException {
         String licStatus = getText(String.format("//*[@id='filter[licStatusDesc]']/option[2]"), SelectorType.XPATH);
         assertEquals(world.updateLicence.getLicenceStatusDetails(),licStatus);
     }
 
     @Then("the Traffic Area filter should be displayed")
-    public void theTrafficAreaFilterShouldBeDisplayed() {
+    public void theTrafficAreaFilterShouldBeDisplayed() throws HttpException {
         String traffArea = getText(String.format("//*[@id='filter[licenceTrafficArea]']/option[2]"), SelectorType.XPATH);
         assertEquals(world.updateLicence.getLicenceTrafficArea(),traffArea);
     }
 
     @Then("the Goods or PSV filter should be displayed")
-    public void theGoodsOrPSVFilterShouldBeDisplayed() {
+    public void theGoodsOrPSVFilterShouldBeDisplayed() throws HttpException {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         String opType = getText(String.format("//*[@id='filter[goodsOrPsvDesc]']/option[2]"), SelectorType.XPATH);
         assertEquals(world.updateLicence.getOperatorTypeDetails(), opType);

@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -52,7 +53,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
     }
 
     @When("I'm  viewing my saved Short term ECMT APGG application in internal and Granting Permit")
-    public void iMViewingMySavedShortTermECMT() {
+    public void iMViewingMySavedShortTermECMT() throws HttpException {
         IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
     }
 

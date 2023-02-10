@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.jenkins.Jenkins;
 import activesupport.jenkins.JenkinsParameterKey;
@@ -42,7 +43,7 @@ public class GenerateLastTMLetter extends BasePage {
     }
 
     @Given("i have a valid {string} {string} licence")
-    public void iHaveAValidLicence(String operatorType, String licenceType) {
+    public void iHaveAValidLicence(String operatorType, String licenceType) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicence(operatorType, licenceType);
     }
@@ -53,7 +54,7 @@ public class GenerateLastTMLetter extends BasePage {
     }
 
     @And("the licence status is {string}")
-    public void theLicenceStatusIs(String arg0) {
+    public void theLicenceStatusIs(String arg0) throws HttpException {
         world.updateLicence.updateLicenceStatus(arg0);
     }
 }

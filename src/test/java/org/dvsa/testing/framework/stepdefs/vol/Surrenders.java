@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
 import io.cucumber.java.en.And;
@@ -57,7 +58,7 @@ public class Surrenders extends BasePage {
     }
 
     @Given("i have a valid {string} {string} licence with an open case and bus reg")
-    public void iHaveAValidLicenceWithAnOpenCaseAndBusReg(String operatorType, String licenceType) {
+    public void iHaveAValidLicenceWithAnOpenCaseAndBusReg(String operatorType, String licenceType) throws HttpException {
         world.busRegistrationJourney.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
     }
 
@@ -84,7 +85,7 @@ public class Surrenders extends BasePage {
     }
 
     @Given("a caseworker views the surrender details")
-    public void aCaseworkerViewsTheSurrenderDetails() {
+    public void aCaseworkerViewsTheSurrenderDetails() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitAndClick("menu-licence_surrender", SelectorType.ID);
@@ -115,7 +116,7 @@ public class Surrenders extends BasePage {
     }
 
     @When("the caseworker checks the case and bus reg is visible in surrenders")
-    public void theCaseworkerChecksTheCaseAndBusRegIsVisibleInSurrenders() {
+    public void theCaseworkerChecksTheCaseAndBusRegIsVisibleInSurrenders() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitForTextToBePresent("Overview");

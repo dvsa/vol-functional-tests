@@ -60,12 +60,11 @@ public class World {
     public TaskAllocation taskAllocation;
     public PrintingAndScanningJourney printingAndScanningJourney;
     public PSVJourney psvJourney;
-
     public GovSignInJourney govSignInJourney;
-
-
     public TypeOfLicenceJourney typeOfLicence;
     public GeneralVariationJourney generalVariationJourney;
     public TrailersJourney trailersJourney;
     public SystemMessagesJourney systemMessagesJourney;
+    public SubmitApplicationJourney submitApplicationJourney;
+    public GrantApplicationJourney grantApplicationJourney;
 }

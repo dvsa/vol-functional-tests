@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.common;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
 import io.cucumber.java.en.And;
@@ -61,7 +62,7 @@ public class CommonSteps extends BasePermitJourney {
     }
 
     @When("I sign on as an external user")
-    public void iSignOnAsAnExternalUser() {
+    public void iSignOnAsAnExternalUser() throws HttpException {
         world.APIJourney.createAdminUser();
     }
 

@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.LicenceType;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -107,7 +108,7 @@ public class SurrenderJourney extends BasePage {
             addCommunityLicenceDetails();
         }
     }
-    public void caseworkManageSurrender() {
+    public void caseworkManageSurrender() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");

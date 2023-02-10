@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.Given;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.en.When;
@@ -20,7 +21,7 @@ public class ElectronicBusRegistration {
     }
 
     @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
-    public void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) {
+    public void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
         world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);
     }
 

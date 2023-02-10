@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 
 import io.cucumber.java.en.And;
@@ -21,7 +22,7 @@ public class TaskAllocationRules extends BasePage {
     }
 
     @Given("I am on the task allocation rules page")
-    public void iAmOnTheTaskAllocationRulesPage() {
+    public void iAmOnTheTaskAllocationRulesPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.TASK_ALLOCATION_RULES);
     }

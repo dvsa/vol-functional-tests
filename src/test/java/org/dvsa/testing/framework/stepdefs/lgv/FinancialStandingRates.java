@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.number.Int;
 import io.cucumber.java.en.Then;
@@ -61,7 +62,7 @@ public class FinancialStandingRates extends BasePage {
     }
 
     @When("i am on the financial standing rates page")
-    public void iAmOnTheFinancialStandingRatesPage() {
+    public void iAmOnTheFinancialStandingRatesPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.FINANCIAL_STANDING_RATES);
     }

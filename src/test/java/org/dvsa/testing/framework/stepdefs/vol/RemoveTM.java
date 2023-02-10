@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.database.exception.UnsupportedDatabaseDriverException;
@@ -36,7 +37,7 @@ public class RemoveTM extends BasePage{
     public RemoveTM (World world) {this.world = world;}
 
     @Given("i have an application with a transport manager")
-    public void iHaveAnApplicationWithATransportManager() {
+    public void iHaveAnApplicationWithATransportManager() throws HttpException {
         if (world.createApplication.getOperatorType() == null) {
             world.createApplication.setOperatorType("public");
         }
@@ -46,13 +47,13 @@ public class RemoveTM extends BasePage{
     }
 
     @Given("the licence has been granted")
-    public void theLicenceHasBeenGranted() {
+    public void theLicenceHasBeenGranted() throws HttpException {
         world.grantApplication.grantLicence();
         world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
     }
 
     @When("the internal user goes to remove the last transport manager")
-    public void theInternalUserGoesToRemoveTheLastTransportManager() {
+    public void theInternalUserGoesToRemoveTheLastTransportManager() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.TMJourney.promptRemovalOfInternalTransportManager();
     }
@@ -103,17 +104,17 @@ public class RemoveTM extends BasePage{
     }
 
     @When("i create a variation")
-    public void iCreateAVariation() {
+    public void iCreateAVariation() throws HttpException {
         world.updateLicence.createVariation();
     }
 
     @And("i update the licence type")
-    public void iUpdateTheLicenceType() {
+    public void iUpdateTheLicenceType() throws HttpException {
         world.updateLicence.updateLicenceType();
     }
 
     @When("the transport manager has been removed by an internal user")
-    public void theTransportManagerHasBeenRemovedByAnInternalUser() {
+    public void theTransportManagerHasBeenRemovedByAnInternalUser() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.TMJourney.removeInternalTransportManager();
     }

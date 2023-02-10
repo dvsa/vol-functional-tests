@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.And;
@@ -41,7 +42,7 @@ public class DirectorVariation extends BasePage {
     }
 
     @And("^a non urgent task is created in internal$")
-    public void aNonUrgentTaskIsCreatedInInternal() {
+    public void aNonUrgentTaskIsCreatedInInternal() throws HttpException {
         world.internalNavigation.logIntoInternalAndClickOnTask(directorJourney.internalDirectorTask);
         directorJourney.assertTaskCheckBoxUnselected();
     }
@@ -53,7 +54,7 @@ public class DirectorVariation extends BasePage {
     }
 
     @And("^an urgent task is created in internal$")
-    public void anUrgentTaskIsCreatedInInternal() {
+    public void anUrgentTaskIsCreatedInInternal() throws HttpException {
         world.internalNavigation.logIntoInternalAndClickOnTask(directorJourney.internalDirectorTask);
         directorJourney.assertTaskCheckBoxSelected();
     }
@@ -70,7 +71,7 @@ public class DirectorVariation extends BasePage {
     }
 
     @Then("^a snapshot should be created in internal$")
-    public void aSnapshotShouldBeCreatedInInternal() {
+    public void aSnapshotShouldBeCreatedInInternal() throws HttpException {
         world.internalNavigation.logInAndNavigateToApplicationDocsTable(false);
         directorJourney.assertDirectorChangeInTable();
     }
@@ -102,13 +103,13 @@ public class DirectorVariation extends BasePage {
     }
 
     @Then("^a task should not be created in internal$")
-    public void aTaskShouldNotBeCreatedInInternal() {
+    public void aTaskShouldNotBeCreatedInInternal() throws HttpException {
         world.internalNavigation.logInAndNavigateToApplicationProcessingPage(false);
         directorJourney.assertLastDirectorTaskNotCreated();
     }
 
     @Then("^the last director deleted task is created in internal$")
-    public void aLastDirectorDeletedTaskIsCreatedInInternal() {
+    public void aLastDirectorDeletedTaskIsCreatedInInternal() throws HttpException {
         world.internalNavigation.logInAndNavigateToApplicationProcessingPage(false);
         directorJourney.assertLastDirectorTaskCreated();
     }

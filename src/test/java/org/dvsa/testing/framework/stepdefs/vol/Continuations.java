@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
@@ -31,14 +32,14 @@ public class Continuations extends BasePage {
     }
 
     @When("i change my continuation and review date on Internal")
-    public void iChangeMyContinuationAndReviewDateOnInternal() {
+    public void iChangeMyContinuationAndReviewDateOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         continuationDate = dates.getDateHashMap(10, 0, 0);
         world.continuationJourney.replaceContinuationAndReviewDates(continuationDate, continuationDate);
     }
 
     @And("i generate a continuation")
-    public void iGenerateAContinuation() {
+    public void iGenerateAContinuation() throws HttpException {
         world.continuationJourney.generateContinuationOnInternal(world.applicationDetails.getLicenceNumber(), world.updateLicence.getLicenceTrafficArea(), continuationDate.get("month"));
     }
 
@@ -48,7 +49,7 @@ public class Continuations extends BasePage {
     }
 
     @Then("the continuation should be approved and a snapshot generated on Internal")
-    public void theContinuationShouldBeApprovedAndASnapshotGeneratedOnInternal() {
+    public void theContinuationShouldBeApprovedAndASnapshotGeneratedOnInternal() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
@@ -57,7 +58,7 @@ public class Continuations extends BasePage {
     }
 
     @Then("the users of ss should display on the continuation review details page and on the snapshot")
-    public void theUsersOfSsShouldDisplayOnTheContinuationReviewDetailsPageAndOnTheSnapshot() {
+    public void theUsersOfSsShouldDisplayOnTheContinuationReviewDetailsPageAndOnTheSnapshot() throws HttpException {
         world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         List<WebElement> userNamesElements = findElements("//tbody//td[@data-heading='Name']", SelectorType.XPATH);
         List<WebElement> userEmailElements = findElements("//tbody//td[@data-heading='Email address']", SelectorType.XPATH);
@@ -99,7 +100,7 @@ public class Continuations extends BasePage {
         closeTabAndFocusTab(0);
     }
     @Then("the continuation conditions and undertaking page and snapshot should display the right text")
-    public void theContinuationConditionsAndUndertakingPageAndSnapshotShouldDisplayTheRightText() throws FileNotFoundException {
+    public void theContinuationConditionsAndUndertakingPageAndSnapshotShouldDisplayTheRightText() throws FileNotFoundException, HttpException {
         world.selfServeNavigation.navigateToNavBarPage(SelfServeNavBar.MANAGE_USERS);
         world.continuationJourney.clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
@@ -127,7 +128,7 @@ public class Continuations extends BasePage {
     }
 
     @Then("the correct checks should display on the continuation review details page and continuation snapshot")
-    public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot() {
+    public void theCorrectChecksShouldDisplayOnTheContinuationReviewDetailsPageAndContinuationSnapshot() throws HttpException {
         world.continuationJourney.clickContinueLicenceOnSelfServe();
         click("submit", SelectorType.ID);
         world.continuationJourney.checkContinuationReviewSections();

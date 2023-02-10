@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 
 import io.cucumber.java.en.And;
@@ -19,7 +20,7 @@ public class SystemMessages extends BasePage {
     }
 
     @Given("I am on the System Messages page")
-    public void iAmOnTheSystemMessagesPage() {
+    public void iAmOnTheSystemMessagesPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.SYSTEM_MESSAGES);
     }

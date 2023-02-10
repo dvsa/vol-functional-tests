@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
@@ -187,13 +188,13 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("my application to surrender is under consideration")
-    public void myApplicationToSurrenderIsUnderConsideration() {
+    public void myApplicationToSurrenderIsUnderConsideration() throws HttpException {
         world.updateLicence.printLicenceDiscs();
         world.surrenderJourney.submitSurrender();
     }
 
     @When("the caseworker approves the surrender")
-    public void theCaseWorkerApprovesTheSurrender() {
+    public void theCaseWorkerApprovesTheSurrender() throws HttpException {
         world.surrenderJourney.caseworkManageSurrender();
         // Refresh page
         refreshPageWithJavascript();
@@ -216,7 +217,7 @@ public class SurrenderLogic extends BasePage {
     }
 
     @When("the caseworker attempts to withdraw the surrender")
-    public void theCaseworkerAttemptsToWithdrawTheSurrender() {
+    public void theCaseworkerAttemptsToWithdrawTheSurrender() throws HttpException {
         world.surrenderJourney.caseworkManageSurrender();
         waitForElementToBeClickable("actions[surrender]", SelectorType.ID);
         refreshPageWithJavascript();

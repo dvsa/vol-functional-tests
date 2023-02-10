@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -24,14 +25,14 @@ public class CreateCase extends BasePage {
     }
 
     @Then("I should be able to view the case details")
-    public void iShouldBeAbleToViewTheCaseDetails() {
+    public void iShouldBeAbleToViewTheCaseDetails() throws HttpException {
         response = world.updateLicence.getCaseDetails("cases", world.updateLicence.getCaseId());
         assertThat(response.body("description", Matchers.equalTo("Sent through the API"),
                 "caseType.id", Matchers.equalTo("case_t_lic")));
     }
 
     @When("I create a new case")
-    public void iCreateANewCase() {
+    public void iCreateANewCase() throws HttpException {
         world.updateLicence.createCase();
     }
 
@@ -53,7 +54,7 @@ public class CreateCase extends BasePage {
     }
 
     @And("I add notes")
-    public void iAddNotes() {
+    public void iAddNotes() throws HttpException {
         world.updateLicence.createCaseNote();
     }
 
@@ -78,61 +79,61 @@ public class CreateCase extends BasePage {
     }
 
     @Then("Complaint should be created")
-    public void complaintShouldBeCreated() {
+    public void complaintShouldBeCreated() throws HttpException {
         response = world.updateLicence.getCaseDetails("complaint", world.updateLicence.getComplaintId());
         assertThat(response.body("driverFamilyName", Matchers.equalTo(world.updateLicence.getDriverFamilyName()),
                 "complaintType.id", Matchers.equalTo("ct_cov")));
     }
 
     @When("I add a complaint details")
-    public void iAddAComplaintDetails() {
+    public void iAddAComplaintDetails() throws HttpException {
         world.updateLicence.addComplaint();
     }
 
     @When("I add conviction details")
-    public void iAddConvictionDetails() {
+    public void iAddConvictionDetails() throws HttpException {
         world.updateLicence.addConviction();
     }
 
     @Then("Conviction should be created")
-    public void convictionShouldBeCreated() {
+    public void convictionShouldBeCreated() throws HttpException {
         response = world.updateLicence.getCaseDetails("conviction", world.updateLicence.getConvictionId());
         assertThat(response.body("birthDate", Matchers.equalTo("1999-06-10"),
                 "convictionCategory.id", Matchers.equalTo("conv_c_cat_1065")));
     }
 
     @When("I add condition undertaking details")
-    public void iAddConditionUndertakingDetails() {
+    public void iAddConditionUndertakingDetails() throws HttpException {
         world.updateLicence.addConditionsUndertakings();
     }
 
     @Then("the condition undertaking should be created")
-    public void theConditionUndertakingShouldBeCreated() {
+    public void theConditionUndertakingShouldBeCreated() throws HttpException {
         response = world.updateLicence.getCaseDetails("condition-undertaking", world.updateLicence.getConditionUndertaking());
         assertThat(response.body("conditionCategory.id", Matchers.equalTo("cu_cat_fin"),
                 "licence.id.toString()", Matchers.hasToString(world.createApplication.getLicenceId())));
     }
 
     @When("I add submission details")
-    public void iAddSubmissionDetails() {
+    public void iAddSubmissionDetails() throws HttpException {
         world.updateLicence.createSubmission();
     }
 
     @Then("the submission should be created")
-    public void theSubmissionShouldBeCreated() {
+    public void theSubmissionShouldBeCreated() throws HttpException {
         response = world.updateLicence.getCaseDetails("submission", world.updateLicence.getSubmissionsId());
         assertThat(response.body("submissionType.id", Matchers.equalTo("submission_type_o_env"),
                 "submissionType.description", Matchers.equalTo("ENV")));
     }
 
     @Then("case notes should be created")
-    public void caseNotesShouldBeCreated() {
+    public void caseNotesShouldBeCreated() throws HttpException {
         response = world.updateLicence.getCaseDetails("processing/note", world.updateLicence.getCaseNoteId());
         assertThat(response.body("comment", Matchers.equalTo("case note submitted through the API")));
     }
 
     @And("i add a case in internal on the {string} page")
-    public void iAddACaseInInternalOnThePage(String page) {
+    public void iAddACaseInInternalOnThePage(String page) throws HttpException {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.UIJourney.createCaseUI(page);

@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserRoles;
 import apiCalls.enums.UserType;
@@ -19,28 +20,28 @@ public class CreateAdminUser extends BasePage  {
     }
 
     @When("I create a new internal admin user")
-    public void iCreateANewInternalAdminUser() {
+    public void iCreateANewInternalAdminUser() throws HttpException {
         world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
     @When("I create a new system admin user")
-    public void iCreateANewSystemAdminUser() {
+    public void iCreateANewSystemAdminUser() throws HttpException {
         world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
     @Given("I create a new external user")
-    public void iCreateANewExternalUser() {
+    public void iCreateANewExternalUser() throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
 
     @Given("I create a new NI external user")
-    public void iCreateANewNIExternalUser() {
+    public void iCreateANewNIExternalUser() throws HttpException {
         world.createApplication.setNiFlag("Y");
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
 
     @Then("^I should be able to login with my new credentials$")
-    public void iShouldBeAbleToLoginWithMyNewCredentials(){
+    public void iShouldBeAbleToLoginWithMyNewCredentials() throws HttpException {
         world.internalNavigation.logInAsAdmin();
     }
 }

@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.permits;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitType;
@@ -30,7 +31,7 @@ public class IRHPPageJourney extends BasePermitJourney {
         IrhpPermitsPage.Model.untilModalIsGone();
     }
 
-    public static void logInToInternalAndIRHPGrantApplication(World world) {
+    public static void logInToInternalAndIRHPGrantApplication(World world) throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         String browser = String.valueOf(getURL());
         get(browser+"irhp-application/");

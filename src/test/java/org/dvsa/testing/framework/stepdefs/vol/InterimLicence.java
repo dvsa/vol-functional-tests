@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import io.cucumber.java.en.And;
@@ -141,7 +142,7 @@ public class InterimLicence extends BasePage {
     }
 
     @When("i view the application interim on internal")
-    public void iViewTheApplicationInterimOnInternal() {
+    public void iViewTheApplicationInterimOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Interim details");
         waitForTextToBePresent("Interim requested");
@@ -252,7 +253,7 @@ public class InterimLicence extends BasePage {
     }
 
     @And("the lgv mixed interim is granted on internal")
-    public void theLgvMixedInterimIsGrantedOnInternal() {
+    public void theLgvMixedInterimIsGrantedOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Interim details");
         waitForTextToBePresent("Interim requested");

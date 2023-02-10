@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -87,7 +88,7 @@ public class PsvSurrenders extends BasePage {
     }
 
     @And("discs have been added to my licence")
-    public void discsHaveBeenAddedToMyLicence() {
+    public void discsHaveBeenAddedToMyLicence() throws HttpException {
         world.updateLicence.printLicenceDiscs();
     }
 

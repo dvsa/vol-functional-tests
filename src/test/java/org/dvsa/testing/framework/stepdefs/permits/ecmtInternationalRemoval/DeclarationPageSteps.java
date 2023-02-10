@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -62,7 +63,7 @@ public class DeclarationPageSteps extends BasePage {
     }
 
     @Then("I'm viewing my saved ECMT International application in internal")
-    public void iAmViewingMySavedECMTInternationalApplication() {
+    public void iAmViewingMySavedECMTInternationalApplication() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("IRHP Permits");
         clickByLinkText(world.applicationDetails.getLicenceNumber());

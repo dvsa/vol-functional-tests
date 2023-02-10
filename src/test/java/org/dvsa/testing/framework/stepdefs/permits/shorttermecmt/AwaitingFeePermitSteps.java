@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import org.dvsa.testing.framework.Journeys.permits.ShortTermECMTJourney;
@@ -23,7 +24,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage {
     }
 
     @And("I have a short term application in awaiting fee status")
-    public void iHaveAShortTermApplicationInAwaitingFee() {
+    public void iHaveAShortTermApplicationInAwaitingFee() throws HttpException {
         ShortTermECMTJourney.completeShortTermECMTApplication(world);
         IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

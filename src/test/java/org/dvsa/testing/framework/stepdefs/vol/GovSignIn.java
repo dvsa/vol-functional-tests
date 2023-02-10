@@ -5,6 +5,7 @@ import apiCalls.enums.UserType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -61,7 +62,7 @@ public class GovSignIn extends BasePage {
     }
 
     @Given("i have a {string} application in progress")
-    public void iHaveAnApplicationInProgress(String operatorType) {
+    public void iHaveAnApplicationInProgress(String operatorType) throws HttpException {
         if(operatorType.equals("Goods")){
             operatorType = OperatorType.GOODS.name();
         }else operatorType = OperatorType.PUBLIC.name();

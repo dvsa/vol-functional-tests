@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -129,7 +130,7 @@ public class TypeOfLicence extends BasePage {
     }
 
     @Then("the caseworker can review the {string} LGV Only choice on internal")
-    public void theCaseworkerCanReviewTheLGVOnlyChoiceOnInternal(String choice) {
+    public void theCaseworkerCanReviewTheLGVOnlyChoiceOnInternal(String choice) throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
         world.typeOfLicence.isLGVChoiceTextAndRadioButtonsPresent();
 
@@ -151,7 +152,7 @@ public class TypeOfLicence extends BasePage {
     }
 
     @When("a caseworker goes to apply for a goods standard_international licence")
-    public void aCaseworkerGoesToApplyForAGoodsStandard_internationalLicence() {
+    public void aCaseworkerGoesToApplyForAGoodsStandard_internationalLicence() throws HttpException {
         String organisationId = world.userDetails.getOrganisationId().substring(1, world.userDetails.getOrganisationId().length() - 1);
         String internalOrganisationUrl = String.format("%soperator/%s/licences/", URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), organisationId);
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);

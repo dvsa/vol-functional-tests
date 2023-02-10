@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.string.Str;
@@ -101,7 +102,7 @@ public class BusRegistrationJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) {
+    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws HttpException {
         if (licenceType.equals("standard_international")) {
             world.createApplication.setLicenceType("standard_international");
         } else {

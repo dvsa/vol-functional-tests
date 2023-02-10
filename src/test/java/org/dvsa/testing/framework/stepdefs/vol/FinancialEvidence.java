@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.*;
 import io.cucumber.java.en.And;
@@ -38,7 +39,7 @@ public class FinancialEvidence extends BasePage {
     }
 
     @Given("i have a {string} {string} licence with a hgv authorisation of {string} in traffic area {string}")
-    public void iHaveALicenceWithAHgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority, String trafficArea) {
+    public void iHaveALicenceWithAHgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority, String trafficArea) throws HttpException {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
@@ -47,7 +48,7 @@ public class FinancialEvidence extends BasePage {
     }
 
     @Given("i have a {string} {string} licence with a hgv authorisation of {string} lgv authorisation of {string} in traffic area {string}")
-    public void iHaveALicenceWithAHgvAuthorisationOfLgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority, String lgvAuthority, String trafficArea) {
+    public void iHaveALicenceWithAHgvAuthorisationOfLgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority, String lgvAuthority, String trafficArea) throws HttpException {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         world.createApplication.setTotalOperatingCentreLgvAuthority(Integer.parseInt(lgvAuthority.replaceAll(" ", "")));
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
@@ -56,7 +57,7 @@ public class FinancialEvidence extends BasePage {
     }
 
     @Given("i have a {string} {string} licence with a hgv authorisation of {string} in the North West Of England")
-    public void iHaveALicenceWithAHgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority) {
+    public void iHaveALicenceWithAHgvAuthorisationOfAndInTrafficArea(String operatorType, String licenceType, String hgvAuthority) throws HttpException {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvAuthority.replaceAll(" ", "")));
         TrafficArea ta = trafficAreaList()[1];
         world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
@@ -64,14 +65,14 @@ public class FinancialEvidence extends BasePage {
     }
 
     @And("I have a valid {string} lgv only licence in traffic area {string}")
-    public void iHaveAValidLgvOnlyLicenceFinancialEvidence(String NIFlag, String trafficArea) {
+    public void iHaveAValidLgvOnlyLicenceFinancialEvidence(String NIFlag, String trafficArea) throws HttpException {
         TrafficArea ta = trafficAreaList()[Integer.parseInt(trafficArea.replaceAll(" ", ""))];
         world.licenceCreation.createLGVOnlyLicenceWithTrafficArea(NIFlag, ta);
         this.licences.put(world.createApplication.getLicenceId(), new String[] {"goods", "standard_international", "lgv" , null, String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority()), null, null});
     }
 
     @Then("the financial evidence value should be as expected for {string} hgvs and {string} lgvs")
-    public void theFinancialEvidenceValueShouldBeAsExpected(String newHGVTotalAuthority, String newLGVTotalAuthority) {
+    public void theFinancialEvidenceValueShouldBeAsExpected(String newHGVTotalAuthority, String newLGVTotalAuthority) throws HttpException {
         if (this.licences.get(world.createApplication.getLicenceId()) != null) {
             this.licences.get(world.createApplication.getLicenceId())[3] = newHGVTotalAuthority;
             if (world.licenceCreation.isAGoodsInternationalLicence()) {
@@ -88,7 +89,7 @@ public class FinancialEvidence extends BasePage {
     }
 
     @And("the same financial evidence value is displayed on internal")
-    public void theSameFinancialEvidenceValueIsDisplayedOnInternal() {
+    public void theSameFinancialEvidenceValueIsDisplayedOnInternal() throws HttpException {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getVariationFinancialEvidencePage();
@@ -100,7 +101,7 @@ public class FinancialEvidence extends BasePage {
         return Integer.parseInt(valueInPounds.replaceAll("[^\\d.]", ""));
     }
 
-    public int calculateExpectedFinancialEvidenceValue(HashMap<String, String[]> licences) {
+    public int calculateExpectedFinancialEvidenceValue(HashMap<String, String[]> licences) throws HttpException {
         List<String[]> numberOfVehiclesAndRatesPerClassificationOfVehicle = new LinkedList<>();
         refreshFinancialStandingRateValues();
         licences.values().forEach(values -> {
@@ -150,7 +151,7 @@ public class FinancialEvidence extends BasePage {
         return allAdditionalRates + highestFirstRateOverEntireFleet - overlappingAdditionalRate;
     }
 
-    private void refreshFinancialStandingRateValues() {
+    private void refreshFinancialStandingRateValues() throws HttpException {
         String allFinancialStandingRatesJson = world.internalDetails.getFinancialStandingRates().extract().body().asString();
         JSONObject financialStandingRateJsonObject = new JSONObject(allFinancialStandingRatesJson);
         JSONArray financialStandingRateData = financialStandingRateJsonObject.getJSONArray("results");
@@ -213,7 +214,7 @@ public class FinancialEvidence extends BasePage {
     }
 
     @Then("the valid financial standing rate values should be present")
-    public void theValidFinancialStandingRateValuesShouldBePresent() {
+    public void theValidFinancialStandingRateValuesShouldBePresent() throws HttpException {
         refreshFinancialStandingRateValues();
         String genericVehicleTableString = "//caption[text()='%s licence type']/../tbody/tr/th[contains(text(),'%s')]/..";
 

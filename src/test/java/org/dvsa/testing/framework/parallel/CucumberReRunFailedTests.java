@@ -21,7 +21,7 @@ public class CucumberReRunFailedTests {
 
         LauncherDiscoveryRequest request = request()
                 .selectors(
-                        selectDirectory("org/dvsa/testing/framework/features")
+                        selectDirectory("src/test/resources/org/dvsa/testing/framework/features")
                 )
                 .build();
 

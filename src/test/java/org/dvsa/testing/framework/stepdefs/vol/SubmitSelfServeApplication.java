@@ -38,103 +38,20 @@ public class SubmitSelfServeApplication extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-    @And("i start a new {string} licence application")
+    @And("i submit and pay for a {string} licence application")
     public void iStartANewLicenceApplication(String licenceType){
-        waitForTitleToBePresent("Licences");
-        waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
-        chooseLicenceType(licenceType);
-        UIJourney.clickSaveAndContinue();
-        //business details
-        world.businessDetailsJourney.addBusinessDetails();
-        if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
-            if (isElementPresent("add",SelectorType.ID)) {
-                world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
-            }
-            UIJourney.clickSaveAndContinue();
-        }
-        //operating centre
-        String authority = "2";
-        String trailers = "4";
-        if(licenceType.equals("Goods")) {
-            world.createApplication.setOperatorType(OperatorType.GOODS.name());
-            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, "0", trailers);
-        }else{
-            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
-            world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
-        }
-        world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
-        waitAndSelectByIndex("//*[@id='trafficArea']", SelectorType.XPATH, 1);
-        UIJourney.clickSaveAndContinue();
-
-        waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
-        UIJourney.clickSaveAndContinue();
-
-        //transport manager
-        clickById("add");
-        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        world.UIJourney.clickContinue();
-
-        //transport manager details
-        if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            world.UIJourney.clickSend();
-        } else {
-            world.transportManagerJourney.submitTMApplicationPrintAndSign();
-        }
-        //vehicleDetails
-        boolean add = licenceType.equals("Goods");
-        world.vehicleDetailsJourney.addAVehicle(add);
-        if(licenceType.equals("Public")) {
-            world.psvJourney.completeVehicleDeclarationsPage();
-            waitAndClick("overview-item__safety", SelectorType.ID);
-        }
-        world.safetyComplianceJourney.addSafetyAndComplianceData();
-        world.safetyInspectorJourney.addASafetyInspector();
-        clickById("application[safetyConfirmation]");
-        UIJourney.clickSaveAndContinue();
-        //Financial History
-        world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit();
-        //Licence details
-        world.licenceDetailsJourney.answerNoToAllQuestionsAndSubmit();
-        //Convictions
-        world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit();
+       world.submitApplicationJourney.startANewLicenceApplication(licenceType);
+       world.submitApplicationJourney.submitAndPayForApplication();
     }
 
     @Given("i have a self serve account")
     public void iHaveASelfServeAccount() {
-        String region = world.configuration.config.getString("region");
-
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            SecretsManager secretsManager = new SecretsManager();
-            secretsManager.setRegion(region);
-            String intEnvPassword = secretsManager.getSecretValue("intEnvPassword");
-            String intEnvUser = secretsManager.getSecretValue("intEnvUser");
-            String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
-            DriverUtils.get(myURL);
-            world.globalMethods.signIn(intEnvUser, intEnvPassword);
-        } else {
-            world.userRegistrationJourney.registerUserWithNoLicence();
-            world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL, "yes");
-            selfServeUser = world.DataGenerator.getOperatorUser();
-        }
+      world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
     }
 
     @And("i have no existing applications")
-    public void iHaveNoExistingApplications() throws IllegalBrowserException, IOException {
-        if (isElementPresent("//tbody/tr/td/a", SelectorType.XPATH)) {
-            List<WebElement> applications = findElements("//tbody/tr/td/a", SelectorType.XPATH);
-            for (WebElement element : applications) {
-                element.click();
-                if (isTitlePresent("Application overview", 60)) {
-                    clickByLinkText("Withdraw application");
-
-                } else {
-                    clickByLinkText("Cancel application");
-                }
-                world.UIJourney.clickSubmit();
-            }
-            waitForTitleToBePresent("Licences");
-        }
+    public void iHaveNoExistingApplications() {
+        world.submitApplicationJourney.cancelAndWithdrawExistingApplications();
     }
 
     public static void accessibilityScanner() throws IllegalBrowserException, IOException {

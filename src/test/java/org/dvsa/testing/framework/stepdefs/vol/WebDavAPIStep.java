@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
 import io.cucumber.java.en.Given;
@@ -22,12 +23,12 @@ public class WebDavAPIStep extends BasePage {
     }
 
     @Given("i have registered a new {string} user")
-    public void iHaveRegisteredANewUser(String userRole) {
+    public void iHaveRegisteredANewUser(String userRole) throws HttpException {
         this.userId = world.updateLicence.createInternalUser(userRole, UserType.INTERNAL.asString());
     }
 
     @When("i view their user details")
-    public void iViewTheirUserDetails() {
+    public void iViewTheirUserDetails() throws HttpException {
         this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId, world.registerUser
                 .getUserName(), world.registerUser.getEmailAddress());
     }
@@ -38,12 +39,12 @@ public class WebDavAPIStep extends BasePage {
     }
 
     @When("they attempt to update their OS version to {string}")
-    public void theyAttemptToUpdateTheirOSVersionTo(String osVersion) {
+    public void theyAttemptToUpdateTheirOSVersionTo(String osVersion) throws HttpException {
         this.response = world.updateLicence.updateInternalUserDetails(this.userId, osVersion);
     }
 
     @When("i attempt to update their OS version to {string}")
-    public void iAttemptToUpdateTheirOSVersionTo(String osVersion) {
+    public void iAttemptToUpdateTheirOSVersionTo(String osVersion) throws HttpException {
         this.response = world.updateLicence.updateInternalUserDetails(this.userId, osVersion);
     }
 
@@ -53,7 +54,7 @@ public class WebDavAPIStep extends BasePage {
     }
 
     @Then("their new OS Type should be {string}")
-    public void theirNewOSTypeShouldBe(String expectedOSVersion) {
+    public void theirNewOSTypeShouldBe(String expectedOSVersion) throws HttpException {
         this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId, world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         assertEquals(response.extract().body().jsonPath().get("osType.id"), expectedOSVersion);
     }

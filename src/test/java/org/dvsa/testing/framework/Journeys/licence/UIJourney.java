@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
@@ -285,7 +286,7 @@ public class UIJourney extends BasePage {
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 
-    public void addNewOperatingCentre() {
+    public void addNewOperatingCentre() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         click("//*[@id='add']", SelectorType.XPATH);
         searchAndSelectAddress("postcodeInput1", "FK10 1AA", 1);

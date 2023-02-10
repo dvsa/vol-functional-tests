@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.bilateral;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenByCountryModel;
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenWindowModel;
@@ -110,7 +111,7 @@ public class AnnualBilateralSteps extends BasePage {
     }
 
     @Then("the table of annual bilateral permits is as expected")
-    public void theTableOfAnnualBilateralPermitsIsAsExpected() {
+    public void theTableOfAnnualBilateralPermitsIsAsExpected() throws HttpException {
         OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();
         String message = "Expected all permits to have a status of 'Pending' but one or more DIDN'T!!!";
         List<ValidAnnualBilateralPermit> permits = ValidPermitsPage.annualBilateralPermits();

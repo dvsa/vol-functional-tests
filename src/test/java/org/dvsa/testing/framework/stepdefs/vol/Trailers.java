@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -33,7 +34,7 @@ public class Trailers extends BasePage {
     }
 
     @Given("on internal I add a valid trailer number {string} and longer semi trailer is set to {string} on the licence")
-    public void addATrailerToInternal(String trailerNumber, String isLongerSemiTrailer) {
+    public void addATrailerToInternal(String trailerNumber, String isLongerSemiTrailer) throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence(trailerNumber);
@@ -64,7 +65,7 @@ public class Trailers extends BasePage {
     }
 
     @When("on internal I add a trailer with no trailer number")
-    public void trailerWithNoNumberOnInteral() {
+    public void trailerWithNoNumberOnInteral() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.isLongerSemiTrailer("Yes");
@@ -80,7 +81,7 @@ public class Trailers extends BasePage {
     }
 
     @When("on internal I add a trailer with the longer semi trailer option unanswered")
-    public void trailerWithNoLongerSemiTrailerOnInternal() {
+    public void trailerWithNoLongerSemiTrailerOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence("GHTU775");

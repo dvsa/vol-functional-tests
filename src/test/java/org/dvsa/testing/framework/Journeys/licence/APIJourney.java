@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
@@ -18,7 +19,7 @@ public class APIJourney {
         this.world = world;
     }
 
-    public void createAdminUser() throws MissingRequiredArgument {
+    public void createAdminUser() throws MissingRequiredArgument, HttpException {
         world.updateLicence.createInternalUser(UserRoles.SYSTEM_ADMIN.asString(), UserType.INTERNAL.asString());
     }
 
@@ -29,7 +30,7 @@ public class APIJourney {
         world.createApplication.setNiFlag("Y");
     }
 
-    public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) {
+    public void generateAndGrantPsvApplicationPerTrafficArea(String trafficArea, String enforcementArea) throws HttpException {
         world.createApplication.setTrafficArea(TrafficArea.valueOf(trafficArea.toUpperCase()));
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(enforcementArea.toUpperCase()));
         world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
@@ -41,7 +42,7 @@ public class APIJourney {
         world.updateLicence.getLicenceTrafficArea();
     }
 
-    public void createApplication() {
+    public void createApplication() throws HttpException {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -66,12 +67,12 @@ public class APIJourney {
         world.createApplication.applicationReviewAndDeclare();
     }
 
-    public void submitApplication() {
+    public void submitApplication() throws HttpException {
         world.createApplication.submitApplication();
         world.applicationDetails.getApplicationLicenceDetails();
     }
 
-    public void createSpecialRestrictedApplication() {
+    public void createSpecialRestrictedApplication() throws HttpException {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -80,12 +81,12 @@ public class APIJourney {
         world.createApplication.submitTaxiPhv();
     }
 
-    public void createSpecialRestrictedLicence() {
+    public void createSpecialRestrictedLicence() throws HttpException {
         world.APIJourney.createSpecialRestrictedApplication();
         world.APIJourney.submitApplication();
     }
 
-    public void createPartialApplication() {
+    public void createPartialApplication() throws HttpException {
         world.createApplication.startApplication();
         world.createApplication.addBusinessType();
         world.createApplication.addBusinessDetails();
@@ -96,7 +97,7 @@ public class APIJourney {
         world.createApplication.addFinancialEvidence();
     }
 
-    public void registerAndGetUserDetails(String userType) {
+    public void registerAndGetUserDetails(String userType) throws HttpException {
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         world.registerUser.registerUser();
         //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
@@ -104,7 +105,7 @@ public class APIJourney {
         world.userDetails.getUserDetails(userType, world.registerUser.getUserId(), world.registerUser.getUserName(), world.configuration.config.getString("internalNewPassword"));
     }
 
-    public void grantLicenceAndPayFees() {
+    public void grantLicenceAndPayFees() throws HttpException {
         world.grantApplication.setDateState(date.getFormattedDate(0, 0, 0, "yyyy-MM-dd"));
         world.grantApplication.grantLicence();
         if (world.licenceCreation.isGoodsLicence()) {

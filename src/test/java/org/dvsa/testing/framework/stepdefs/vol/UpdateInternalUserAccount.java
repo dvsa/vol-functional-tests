@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,7 +16,7 @@ public class UpdateInternalUserAccount extends BasePage {
     public UpdateInternalUserAccount(World world) {this.world = world;}
 
     @When("I am on the Your Account page")
-    public void iAmOnTheYourAccountPage() {
+    public void iAmOnTheYourAccountPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.YOUR_ACCOUNT);
     }

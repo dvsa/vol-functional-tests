@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.internal;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -22,7 +23,7 @@ public class FeatureToggleSteps {
     }
 
     @When("I log in as an internal user with admin privileges")
-    public void iLogInAsAnInternalUserWithAdminPrivileges() {
+    public void iLogInAsAnInternalUserWithAdminPrivileges() throws HttpException {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
     }
@@ -34,7 +35,7 @@ public class FeatureToggleSteps {
     }
 
     @When("I log in as an internal user with normal privileges")
-    public void iLogInAsAnInternalUserWithNormalPrivileges() {
+    public void iLogInAsAnInternalUserWithNormalPrivileges() throws HttpException {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         // Need to add ways of creating users with normal privileges.

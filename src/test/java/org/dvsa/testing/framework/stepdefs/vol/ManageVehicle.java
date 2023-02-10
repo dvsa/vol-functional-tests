@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import apiCalls.enums.UserRoles;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.http.RestUtils;
 import activesupport.system.Properties;
@@ -165,7 +166,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("I reprint a vehicle disc")
-    public void iReprintAVehicleDisc() {
+    public void iReprintAVehicleDisc() throws HttpException {
         world.dvlaJourney.navigateToReprintVehicleDiscPage();
         world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "Y", "N");
         world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
@@ -173,7 +174,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("i search for and reprint a vehicle disc")
-    public void iSearchForAndReprintAVehicleDisc() {
+    public void iSearchForAndReprintAVehicleDisc() throws HttpException {
         world.dvlaJourney.navigateToReprintVehicleDiscPage();
         world.dvlaJourney.completeDVLAPageAndStoreValue("Y", "Y", "Y");
         world.dvlaJourney.completeDVLAConfirmationPageAndCheckVRM("Are you sure you want to reprint the disc for this vehicle");
@@ -181,7 +182,7 @@ public class ManageVehicle extends BasePage {
     }
 
     @When("I reprint all my discs")
-    public void iReprintAllMyDiscs() {
+    public void iReprintAllMyDiscs() throws HttpException {
         world.dvlaJourney.navigateToReprintVehicleDiscPage();
         world.dvlaJourney.completeDVLAPageAndStoreAllValues("Y", "Y");
         world.dvlaJourney.completeDVLAConfirmationPageAndCheckAllVRMs("Are you sure you want to reprint discs for these vehicles");

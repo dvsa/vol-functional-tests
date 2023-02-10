@@ -4,6 +4,7 @@ import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenByCountryModel
 import apiCalls.Utils.eupaBuilders.internal.irhp.permit.stock.OpenWindowModel;
 import apiCalls.eupaActions.internal.IrhpPermitWindowAPI;
 import io.cucumber.java.en.And;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.external.ValidPermit.ValidAnnualBilateralPermit;
@@ -24,7 +25,7 @@ public class ValidPermitsPageSteps {
     }
 
     @And("The content and information on valid permits is correct")
-    public void theContentAndInfoOnValidPermits() {
+    public void theContentAndInfoOnValidPermits() throws HttpException {
 
         // the table of annual bilateral permits is as expected
         OpenByCountryModel stock = IrhpPermitWindowAPI.openByCountry();

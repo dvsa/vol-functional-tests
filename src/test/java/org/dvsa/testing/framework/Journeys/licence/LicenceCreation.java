@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.*;
 import org.openqa.selenium.InvalidArgumentException;
@@ -14,7 +15,7 @@ public class LicenceCreation {
         this.world = world;
     }
 
-    public void createApplication(String operatorType, String licenceType) {
+    public void createApplication(String operatorType, String licenceType) throws HttpException {
         world.createApplication.setOperatorType(operatorType);
         world.createApplication.setLicenceType(licenceType);
         if (licenceType.equals(LicenceType.SPECIAL_RESTRICTED.name().toLowerCase(Locale.ROOT))) {
@@ -24,7 +25,7 @@ public class LicenceCreation {
         }
     }
 
-    public void createApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
+    public void createApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         if(licenceType.equals("special_restricted") && Integer.parseInt(vehicles) > 2){
             throw new InvalidArgumentException("Special restricted licences can not have more than 2 vehicles on them.");
         }
@@ -33,44 +34,44 @@ public class LicenceCreation {
         createApplication(operatorType, licenceType);
     }
 
-    public void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
+    public void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) throws HttpException {
         world.createApplication.setTrafficArea(trafficArea);
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
         createApplication(operatorType, licenceType);
     }
 
-    public void createSubmittedApplication(String operatorType, String licenceType) {
+    public void createSubmittedApplication(String operatorType, String licenceType) throws HttpException {
         createApplication(operatorType, licenceType);
         world.APIJourney.submitApplication();
     }
 
-    public void createSubmittedApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
+    public void createSubmittedApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         createApplicationWithVehicles(operatorType, licenceType, vehicles);
         world.APIJourney.submitApplication();
     }
 
-    public void createLicence(String operatorType, String licenceType) {
+    public void createLicence(String operatorType, String licenceType) throws HttpException {
         createSubmittedApplication(operatorType, licenceType);
         world.APIJourney.grantLicenceAndPayFees();
     }
 
-    public void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
+    public void createLicenceWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         createSubmittedApplicationWithVehicles(operatorType, licenceType, vehicles);
         world.APIJourney.grantLicenceAndPayFees();
     }
 
-    public void createLicenceWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) {
+    public void createLicenceWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) throws HttpException {
         world.createApplication.setTrafficArea(trafficArea);
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
         createLicence(operatorType, licenceType);
     }
 
-    public void createNILicence(String operatorType, String licenceType) {
+    public void createNILicence(String operatorType, String licenceType) throws HttpException {
         world.createApplication.setNiFlag("Y");
         createLicence(operatorType, licenceType);
     }
 
-    public void createLGVOnlyApplication(String NIFlag) {
+    public void createLGVOnlyApplication(String NIFlag) throws HttpException {
         world.createApplication.setNiFlag(NIFlag.equals("NI") ? "Y" : "N");
         world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         world.createApplication.setTotalOperatingCentreLgvAuthority(5);
@@ -79,17 +80,17 @@ public class LicenceCreation {
         world.licenceCreation.createApplication("goods", "standard_international");
     }
 
-    public void createSubmittedLGVOnlyApplication(String NIFlag) {
+    public void createSubmittedLGVOnlyApplication(String NIFlag) throws HttpException {
         createLGVOnlyApplication(NIFlag);
         world.APIJourney.submitApplication();
     }
 
-    public void createLGVOnlyLicence(String NIFlag) {
+    public void createLGVOnlyLicence(String NIFlag) throws HttpException {
         createSubmittedLGVOnlyApplication(NIFlag);
         world.APIJourney.grantLicenceAndPayFees();
     }
 
-    public void createLGVOnlyLicenceWithTrafficArea(String NIFlag, TrafficArea trafficArea) {
+    public void createLGVOnlyLicenceWithTrafficArea(String NIFlag, TrafficArea trafficArea) throws HttpException {
         world.createApplication.setTrafficArea(trafficArea);
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
         createLGVOnlyLicence(NIFlag);
@@ -119,5 +120,4 @@ public class LicenceCreation {
     public boolean isLGVOnlyLicence() {
         return world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString());
     }
-
 }

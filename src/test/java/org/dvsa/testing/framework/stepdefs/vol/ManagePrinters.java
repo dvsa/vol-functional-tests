@@ -1,4 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,7 +18,7 @@ public class ManagePrinters extends BasePage  {
     }
 
     @When("I am on the Printers page")
-    public void iAmOnThePrintersPage() {
+    public void iAmOnThePrintersPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.PRINTING);
     }

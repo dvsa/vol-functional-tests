@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
 import io.cucumber.java.en.Given;
@@ -16,7 +17,7 @@ public class PSVApplication extends BasePage {
     }
 
     @Given("I have applied for a {string} licence")
-    public void iHaveAppliedForALicence(String operator, String licenceType) {
+    public void iHaveAppliedForALicence(String operator, String licenceType) throws HttpException {
         world.createApplication.setOperatorType(operator);
         world.createApplication.setLicenceType(licenceType);
         if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
@@ -30,7 +31,7 @@ public class PSVApplication extends BasePage {
     }
 
     @Given("I have a {string} {string} application which is under consideration")
-    public void iHaveAApplicationWhichIsUnderConsideration(String vehicleType, String typeOfLicence) {
+    public void iHaveAApplicationWhichIsUnderConsideration(String vehicleType, String typeOfLicence) throws HttpException {
         world.createApplication.setIsInterim("Y");
         world.createApplication.setOperatorType(vehicleType);
         world.createApplication.setLicenceType(typeOfLicence);
