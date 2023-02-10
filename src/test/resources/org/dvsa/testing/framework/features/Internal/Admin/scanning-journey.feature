@@ -1,3 +1,5 @@
+@int_regression
+@scanning_journey
 Feature: Generate scanning separator sheets as an internal user
 
   Background:
