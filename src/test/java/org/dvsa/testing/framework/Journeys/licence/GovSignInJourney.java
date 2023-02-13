@@ -45,10 +45,10 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTitlePresent("You must have a photo ID to prove your identity with a GOV.UK account", 1)) {
+        if(isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
             photoIDQuestion();
         }
-        if(isTitlePresent("Create a GOV.UK account or sign in",1)) {
+        if(isTitlePresent("Create a GOV.UK One Login or sign in",1)) {
             waitAndClick("sign-in-link", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
