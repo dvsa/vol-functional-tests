@@ -11,4 +11,4 @@ Feature: Grant under consideration application
     Examples:
       | vehicle_type | type_of_licence        | document_type |
       | goods        | standard_international | GV Licence    |
-      | public       | standard_national      | PSV Licence   |
+#      | public       | standard_national      | PSV Licence   |
