@@ -217,9 +217,11 @@
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
                     </properties>
-                    <reuseForks>true</reuseForks>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
+                    <forkCount>3</forkCount>
+                    <reuseForks>false</reuseForks>
                     <parallel>methods</parallel>
-                    <threadCount>3</threadCount>
+                    <threadCount>5</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>

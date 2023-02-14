@@ -31,7 +31,7 @@ public class ScreenShotAttachment {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
             byte[] attachment = ((TakesScreenshot) Browser.navigate())
                     .getScreenshotAs(OutputType.BYTES);
-            scenarioStatus.attach(attachment, "png", screenshotStream.toString());
+            scenarioStatus.attach(attachment, "png", String.valueOf(screenshotStream));
             screenshotStream.write(attachment);
             screenshotStream.close();
         }

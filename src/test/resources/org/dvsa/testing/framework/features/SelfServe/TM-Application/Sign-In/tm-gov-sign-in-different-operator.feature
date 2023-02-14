@@ -1,5 +1,6 @@
 @gov-sign-in
-@tm-application-gov
+@tm-application
+@ss_regression
 
 Feature: TM signs through gov-sign-in
 

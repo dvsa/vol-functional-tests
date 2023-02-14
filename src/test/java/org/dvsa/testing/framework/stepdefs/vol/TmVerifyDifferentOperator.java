@@ -81,7 +81,7 @@ public class TmVerifyDifferentOperator extends BasePage{
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else {
-            world.UIJourney.signWithVerify();
+            world.govSignInJourney.signInGovAccount();
         }
     }
     @And("the operator countersigns by print and sign")
