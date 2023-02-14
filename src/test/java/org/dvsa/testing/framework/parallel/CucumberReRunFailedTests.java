@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.parallel;
 
+import activesupport.driver.Browser;
 import org.junit.platform.engine.discovery.DiscoverySelectors;
 import org.junit.platform.engine.discovery.UniqueIdSelector;
 import org.junit.platform.launcher.Launcher;
@@ -49,5 +50,6 @@ public class CucumberReRunFailedTests {
         TestExecutionSummary rerunSummary = listener.getSummary();
         // Do something with rerunSummary
         rerunSummary.getTestsFailedCount();
+        Browser.navigate().quit();
     }
 }
