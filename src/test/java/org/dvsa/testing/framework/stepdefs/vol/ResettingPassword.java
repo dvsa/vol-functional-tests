@@ -8,10 +8,15 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java8.En;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 import org.junit.Assert;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class ResettingPassword extends BasePage implements En {
     private final World world;
+
 
     public ResettingPassword (World world) {this.world = world;}
 
@@ -49,13 +54,17 @@ public class ResettingPassword extends BasePage implements En {
         Assert.assertTrue(isTextPresent("It looks like your account isn't active"));
     }
 
-
     @And("I receive the reset password link via email")
-    public void iReceiveTheResetPasswordLinkViaEmail() {
-        world.configuration.getPasswordResetLink();
-        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, "test101@");
-        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, "test101@");
+    public void iReceiveTheResetPasswordLinkViaEmail() throws Exception {
+        String passWord = world.configuration.config.getString("adminPassword");
+        world.genericUtils.getResetPasswordLink();
+        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
+        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
         click(nameAttribute("input","submit"), SelectorType.CSS);
-
+        Assert.assertTrue(isTextPresent("Your password was reset successfully"));
+        waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
+        waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
+        clickById("auth.login.button");
+        Assert.assertTrue(isTextPresent(world.registerUser.getForeName()));
     }
 }
