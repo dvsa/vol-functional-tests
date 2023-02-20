@@ -1,4 +1,4 @@
-@EXTERNAL @shortterm_apgg_euro5_or_euro6 @eupa_regression
+@EXTERNAL @shortterm_apgg_euro5_or_euro6
 Feature: Short term ECMT APGG Euro 5 or Euro 6 Candidate permit page
 
   Background:

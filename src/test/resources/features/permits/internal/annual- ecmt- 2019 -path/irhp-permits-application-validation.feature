@@ -1,4 +1,4 @@
-@INTERNAL @internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+@INTERNAL @internal_annual_ecmt_apgg_euro5_or_euro6
 
 Feature: Internal ECMT permits application validation page
 
