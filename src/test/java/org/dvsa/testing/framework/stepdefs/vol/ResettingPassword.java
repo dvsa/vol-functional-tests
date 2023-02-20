@@ -17,7 +17,6 @@ import org.w3c.dom.Element;
 public class ResettingPassword extends BasePage implements En {
     private final World world;
 
-
     public ResettingPassword (World world) {this.world = world;}
 
     @And("i reset my password")
@@ -42,29 +41,10 @@ public class ResettingPassword extends BasePage implements En {
         Assert.assertTrue(isTextPresent("Failed to reset your password"));
     }
 
-    @And("i then try reset my password")
-    public void iThenTryResetMyPassword() {
-        world.UIJourney.resettingExternalPassword();
-        waitAndEnterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
-        click(nameAttribute("input","submit"), SelectorType.CSS);
-    }
-
-    @Then("i will receive an error for inactive account")
-    public void iWillReceiveAnErrorForInactiveAccount() {
-        Assert.assertTrue(isTextPresent("It looks like your account isn't active"));
-    }
-
     @And("I receive the reset password link via email")
     public void iReceiveTheResetPasswordLinkViaEmail() throws Exception {
-        String passWord = world.configuration.config.getString("adminPassword");
         world.genericUtils.getResetPasswordLink();
-        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
-        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
-        click(nameAttribute("input","submit"), SelectorType.CSS);
-        Assert.assertTrue(isTextPresent("Your password was reset successfully"));
-        waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
-        waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
-        clickById("auth.login.button");
+        world.UIJourney.resetSelfServePassword();
         Assert.assertTrue(isTextPresent(world.registerUser.getForeName()));
     }
 }

@@ -513,6 +513,17 @@ public class UIJourney extends BasePage {
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
 
+    public void resetSelfServePassword() {
+        String passWord = world.configuration.config.getString("adminPassword");
+        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
+        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
+        click(nameAttribute("input","submit"), SelectorType.CSS);
+        Assert.assertTrue(isTextPresent("Your password was reset successfully"));
+        waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
+        waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
+        clickById("auth.login.button");
+    }
+
     public static void clickSaveAndContinue() {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
