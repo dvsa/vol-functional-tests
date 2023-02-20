@@ -24,7 +24,6 @@ public class ForgottenCredsJourney extends BasePage {
         waitAndEnterText("auth.forgot-password.username", SelectorType.ID, world.registerUser.getUserName());
         waitAndClick("auth.forgot-password.button", SelectorType.ID);
         waitForPageLoad();
-     //   System.out.println(world.configuration.getPasswordResetLink());
     }
 
     public void forgottenUsername()
