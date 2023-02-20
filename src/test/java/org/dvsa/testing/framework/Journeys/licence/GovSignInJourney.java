@@ -92,13 +92,6 @@ public class GovSignInJourney extends BasePage {
         clickByLinkText("Sign in to a service");
     }
 
-    public void alreadySignedIn() {
-    waitForTitleToBePresent("You’ve signed in to your GOV.UK account");
-    waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-    waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-    signInGovAccount();
-    }
-
     public void goThroughVerificationSteps() {
         clickByXPath("//*[@id='smartphone-choice-3']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
