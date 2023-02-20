@@ -68,6 +68,5 @@ public class World {
     public TrailersJourney trailersJourney;
     public SystemMessagesJourney systemMessagesJourney;
 
-    public SubmitApplicationJourney submitApplicationJourney;
 
 }

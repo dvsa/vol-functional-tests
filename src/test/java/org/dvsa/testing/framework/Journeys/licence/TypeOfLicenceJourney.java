@@ -64,13 +64,6 @@ public class TypeOfLicenceJourney extends BasePage {
             clickByXPath(world.typeOfLicence.northernIreland);
     }
 
-    public void chooseGoodsOrPsv(String vehicleWhere) {
-        if (vehicleWhere.equals("goods"))
-            clickByXPath(world.typeOfLicence.goodsLicence);
-        else
-            clickByXPath(world.typeOfLicence.psvLicence);
-    }
-
     public void isLGVChoiceTextAndRadioButtonsPresent() {
         assertTrue(isTextPresent("Will you only be operating Light goods vehicles on this licence?"));
         assertTrue(isTextPresent("These are vehicles of over 2,500 Kilograms (kg) and up to and including 3,500 Kilograms (kg), including when combined with a trailer."));
