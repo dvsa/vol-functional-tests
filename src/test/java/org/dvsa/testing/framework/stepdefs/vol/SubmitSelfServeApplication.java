@@ -157,11 +157,4 @@ public class SubmitSelfServeApplication extends BasePage {
         waitAndClick("//*[contains(text(),'Limited Company')]", SelectorType.XPATH);
     }
 
-    @Given("I have submitted a {string} application via the UI")
-    public void iHaveSubmittedAApplicationViaTheUI(String licenceType) throws IllegalBrowserException, IOException {
-        world.submitApplicationJourney.iHaveASelfServeAccount();
-/*        world.submitApplicationJourney.iHaveNoExistingAccounts();
-        world.submitApplicationJourney.iStartANewLicenceApplication(licenceType);
-        world.submitApplicationJourney.iSubmitAndPayForTheApplication();*/
-    }
 }
