@@ -28,11 +28,6 @@ public class Configuration {
         return String.valueOf(S3.getSignInCode());
     }
 
-
-    public String getPasswordResetLink() {
-        return String.valueOf(S3.getPasswordResetLink());
-    }
-
     public String getUsernameResetLink() {
         return String.valueOf(S3.getUsernameInfoLink(world.registerUser.getEmailAddress()));
     }
