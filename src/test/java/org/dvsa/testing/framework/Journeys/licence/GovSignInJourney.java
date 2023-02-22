@@ -120,9 +120,9 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterDOB() {
-        enterText("dateOfBirth-day", SelectorType.NAME, "23");
-        enterText("dateOfBirth-month", SelectorType.NAME, "08");
-        enterText("dateOfBirth-year", SelectorType.NAME, "1959");
+        enterText("dateOfBirth-day", SelectorType.NAME, "08");
+        enterText("dateOfBirth-month", SelectorType.NAME, "07");
+        enterText("dateOfBirth-year", SelectorType.NAME, "1965");
     }
 
     public void enterExpiryDate() {
