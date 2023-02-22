@@ -23,11 +23,11 @@ public class CookieSteps extends BasePage {
 
     @And("I logged into Self Serve site before accepting cookies")
     public void iLoggedIntoSelfServeSiteBeforeAcceptingCookies() {
-        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL,"yes");
+        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
     }
     @And("I am on the permit type page before accepting cookies")
     public void iAmOnThePermitTypePageBeforeAcceptingCookies() {
-        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL,"yes");
+        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
         HomePageJourney.beginPermitApplication();
     }
     @And("I should see the cookies list")

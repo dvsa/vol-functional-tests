@@ -1,4 +1,3 @@
-@SS
 @ss_regression
 @SS-GOODS-VAR-OC-INCREASE-VEHICLE
 @OLCS-21133

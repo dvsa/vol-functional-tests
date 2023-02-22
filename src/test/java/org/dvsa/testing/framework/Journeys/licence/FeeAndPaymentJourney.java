@@ -26,6 +26,7 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void payFee(String amount, @NotNull String paymentMethod)  {
+        waitForTextToBePresent("Pay fee");
         String payment = paymentMethod.toLowerCase().trim();
         waitForElementToBePresent("//label[contains(text(),'Fee amount')]");
         if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
@@ -122,10 +123,10 @@ public class FeeAndPaymentJourney extends BasePage {
     public void customerPaymentModule()  {
         Config config = world.configuration.config;
         waitForTextToBePresent("Card Number*");
-        enterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, config.getString("cardNumber"));
-        enterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, config.getString("cardExpiryMonth"));
-        enterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, config.getString("cardExpiryYear"));
-        enterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
+        waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, config.getString("cardNumber"));
+        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, config.getString("cardExpiryMonth"));
+        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, config.getString("cardExpiryYear"));
+        waitAndEnterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
         if (isElementPresent("scp_cardPage_storedCard_payment_input", SelectorType.ID)) {
             click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
         }

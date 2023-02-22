@@ -42,17 +42,12 @@ public class GlobalMethods extends BasePage {
         this.loginPassword = password;
     }
 
-    public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType, String cookies) {
+    public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-            if (cookies.equals("yes")) {
-                if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-                    waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
-                }
-            }
         }
         DriverUtils.get(myURL);
         try {

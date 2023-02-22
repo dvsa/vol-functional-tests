@@ -9,18 +9,7 @@ import io.cucumber.java.Scenario;
 import org.dvsa.testing.framework.Report.Config.Environments;
 import org.dvsa.testing.framework.hooks.ScreenShotAttachment;
 
-
 public class TestRunConfiguration {
-    @After
-    public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
-        ScreenShotAttachment.attach(scenario);
-    }
-
-    @AfterAll
-    public static void tearDown(){
-        Browser.navigate().quit();
-    }
-
     @Before
     public void setUp() throws Exception {
         Environments environments = new Environments();
@@ -30,5 +19,14 @@ public class TestRunConfiguration {
                 .contains("hub-cloud.browserstack.com"))){
             BrowserStack.startLocal();
         }
+    }
+    @After
+    public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
+        ScreenShotAttachment.attach(scenario);
+    }
+
+    @AfterAll
+    public static void tearDown() throws Exception {
+        Browser.closeBrowser();
     }
 }

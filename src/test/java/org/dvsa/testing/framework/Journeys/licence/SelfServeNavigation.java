@@ -32,13 +32,13 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToLogin(String username, String emailAddress) {
-        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL, "yes");
+        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL);
     }
 
     public void navigateToExternalSearch() {
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
-            navigate().manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
         get(this.url.concat("search/"));
     }

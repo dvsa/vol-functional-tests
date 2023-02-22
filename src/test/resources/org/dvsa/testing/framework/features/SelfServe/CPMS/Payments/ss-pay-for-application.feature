@@ -1,7 +1,6 @@
 @SS
 @ss-pay-app
 @ss_regression
-@smoketest
 Feature: Self Serve Apply for licence
 
   @CPMS_tests
@@ -17,7 +16,7 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
-  @stored_cards
+  @stored_cards @smoketest
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_west |
@@ -32,7 +31,7 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
-  @cross-browser @NI_application
+  @cross-browser @NI_application @smoketest
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |

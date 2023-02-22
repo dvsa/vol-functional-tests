@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
-        <active-support.version>1.6.6.5</active-support.version>
+        <active-support.version>1.6.7junit</active-support.version>
         <api-calls.version>2.0.0</api-calls.version>
         <uri-constructor.version>2.0.0</uri-constructor.version>
 
@@ -217,11 +217,11 @@
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
                     </properties>
-                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
-<!--                    <forkCount>3</forkCount>-->
-                    <reuseForks>false</reuseForks>
-                    <parallel>methods</parallel>
-                    <threadCount>1</threadCount>
+<!--                    <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
+<!--                    <forkCount>1</forkCount>-->
+                    <reuseForks>true</reuseForks>
+                    <parallel>suites</parallel>
+                    <threadCount>2</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
