@@ -39,7 +39,7 @@ public class InternalSearch extends BasePage {
         world.internalSearchJourney.searchAndViewCase();
     }
     @When("i search for my psv disc and click on my licence and discs")
-    public void iSearchForMyPsvDiscAndClickOnMyLicenceAndDiscs() throws SQLException, UnsupportedDatabaseDriverException, HttpException {
+    public void iSearchForMyPsvDiscAndClickOnMyLicenceAndDiscs() throws HttpException {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalSearchJourney.searchAndViewPSVDisc();
