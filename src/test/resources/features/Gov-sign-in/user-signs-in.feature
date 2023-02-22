@@ -1,4 +1,5 @@
 @gov-sign-in
+@user-sign-in
 Feature: Gov sign in
 
   Background:
