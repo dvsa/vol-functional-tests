@@ -13,6 +13,7 @@ Feature: Partner user external search by Address, Business name, Licence Number 
     Then search results page should display operator names containing our business name
     And I am able to view the applicants licence number
 
+    @search-lorry-by-licence
   Scenario: Licence number partner external search for lorry and bus operators
     When I search for a lorry and bus operator by "licence"
     Then search results page should only display our licence number
