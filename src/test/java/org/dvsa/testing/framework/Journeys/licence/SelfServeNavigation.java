@@ -195,9 +195,11 @@ public class SelfServeNavigation extends BasePage {
         get(this.url.concat(String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())));
     }
 
-    public void navigateToBusRegExternal() {
-        String id = url.substring(url.lastIndexOf("/") + 1);
-        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-registered-local-bus-services/details/" + id).toString();
-        navigate().get(myURL);
+    public static void navigateToBusRegExternal() {
+        java.net.URL url = getURL();
+        String[] urlParts = url.getPath().split("/");
+        String id = urlParts[urlParts.length - 3];
+        String newUrl = "https://ssweb.qa.olcs.dev-dvsacloud.uk/search/find-registered-local-bus-services/details/" + id + "/";
+        navigate().get(newUrl);
     }
 }
