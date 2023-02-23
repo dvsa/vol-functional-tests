@@ -167,4 +167,21 @@ public class BusRegistrationJourney extends BasePage {
         }
         world.UIJourney.clickSubmit();
     }
+
+    public void internalSiteEditBusReg() {
+        enterText("serviceNo", SelectorType.ID, "4");
+        enterText("startPoint", SelectorType.ID, Str.randomWord(2));
+        enterText("finishPoint", SelectorType.ID, Str.randomWord(1));
+        enterText("via", SelectorType.ID, Str.randomWord(3));
+        click("//*[@class='chosen-choices']", SelectorType.XPATH);
+        findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
+        HashMap<String, String> dates;
+        dates = world.globalMethods.date.getDateHashMap(0, 0, -1);
+        enterDateFieldsByPartialId("receivedDate", dates);
+        dates = world.globalMethods.date.getDateHashMap(0, 0, 1);
+        enterDateFieldsByPartialId("effectiveDate", dates);
+        dates = world.globalMethods.date.getDateHashMap(0,0,2);
+        enterDateFieldsByPartialId("endDate", dates);
+        world.UIJourney.clickSubmit();
+    }
 }
