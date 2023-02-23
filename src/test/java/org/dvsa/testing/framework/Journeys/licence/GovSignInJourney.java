@@ -88,6 +88,7 @@ public class GovSignInJourney extends BasePage {
         clickByXPath("//*[@id='mfaOptions-2']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//*[@id='main-content']/div/div/details[2]/summary/span", SelectorType.XPATH);
+        // ^^ Find alternative selector in the future if possible 
         getText("//*[@id='secret-key']", SelectorType.XPATH);
         String secretCode = getTOTPCode(getText("//*[@id='secret-key']", SelectorType.XPATH));
         waitAndEnterText("code", SelectorType.ID, secretCode);

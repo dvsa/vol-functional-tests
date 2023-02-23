@@ -19,3 +19,16 @@ proxyHost=
 proxyPort=
 browserStackKey=
 binaryPath=
+passportNumber=
+surname=
+firstName=
+dateOfBirth-day=
+dateOfBirth-month=
+dateOfBirth-year=
+expiryDate-day=
+expiryDate-month=
+expiryDate-year=
+addressYearFrom=
+addressResults=
+addressSearch=
+
