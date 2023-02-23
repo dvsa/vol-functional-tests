@@ -109,6 +109,5 @@ public class EBSRUpload extends BasePage implements En {
     public void theEditedBusRegistrationDetailsShouldBeSaved() {
         world.selfServeNavigation.navigateToBusRegExternal();
         Assert.assertTrue(isTextPresent("1234"));
-
     }
 }
