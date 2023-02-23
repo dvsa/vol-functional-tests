@@ -194,4 +194,10 @@ public class SelfServeNavigation extends BasePage {
     public void getVariationFinancialEvidencePage() {
         get(this.url.concat(String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())));
     }
+
+    public void navigateToBusRegExternal() {
+        String id = url.substring(url.lastIndexOf("/") + 1);
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-registered-local-bus-services/details/" + id).toString();
+        navigate().get(myURL);
+    }
 }
