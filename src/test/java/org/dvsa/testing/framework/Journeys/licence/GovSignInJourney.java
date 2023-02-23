@@ -135,11 +135,11 @@ public class GovSignInJourney extends BasePage {
     }
     public void cycletThroughSignInJourney() {
         waitAndClick("submitButton", SelectorType.ID);
-        waitAndEnterText("addressSearch", SelectorType.ID, "BA25AA");
+        waitAndEnterText("addressSearch", SelectorType.ID, config.getString("addressSearch"));
         waitAndClick("continue", SelectorType.ID);
-        selectValueFromDropDown("addressResults", SelectorType.ID, "8 HADLEY ROAD, BATH, BA2 5AA");
+        selectValueFromDropDown("addressResults", SelectorType.ID, config.getString("addressResults"));
         waitAndClick("continue", SelectorType.ID);
-        waitAndEnterText("addressYearFrom", SelectorType.ID, "2000");
+        waitAndEnterText("addressYearFrom", SelectorType.ID, config.getString("addressYearFrom"));
         waitAndClick("continue", SelectorType.ID);
         clickByXPath("//*[@id='main-content']/div/div/form/button");
         waitAndClick("continue", SelectorType.ID);
