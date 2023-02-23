@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import com.typesafe.config.Config;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.util.Random;
@@ -18,6 +19,8 @@ public class GovSignInJourney extends BasePage {
     }
 
     Random random = new Random();
+
+    Config config = world.configuration.config;
 
     String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
 
@@ -112,25 +115,24 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterPassportDetails() {
-        waitAndEnterText("passportNumber", SelectorType.ID, "321654987");
-        waitAndEnterText("surname", SelectorType.ID, "Decerqueira");
-        waitAndEnterText("firstName", SelectorType.ID, "Kenneth");
+        waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, config.getString("passportNumber"));
+        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, config.getString("surname"));
+        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, config.getString("firstName"));
         enterDOB();
         enterExpiryDate();
     }
 
     public void enterDOB() {
-        enterText("dateOfBirth-day", SelectorType.NAME, "08");
-        enterText("dateOfBirth-month", SelectorType.NAME, "07");
-        enterText("dateOfBirth-year", SelectorType.NAME, "1965");
+        enterText("dateOfBirth-day", SelectorType.NAME, config.getString("dateOfBirth-day"));
+        enterText("dateOfBirth-month", SelectorType.NAME, config.getString("dateOfBirth-month"));
+        enterText("dateOfBirth-year", SelectorType.NAME, config.getString("dateOfBirth-year"));
     }
 
     public void enterExpiryDate() {
-        enterText("expiryDate-day", SelectorType.ID, "01");
-        enterText("expiryDate-month", SelectorType.ID, "01");
-        enterText("expiryDate-year", SelectorType.ID, "2030");
+        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, config.getString("expiryDate-day"));
+        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, config.getString("expiryDate-month"));
+        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, config.getString("expiryDate-year"));
     }
-
     public void cycletThroughSignInJourney() {
         waitAndClick("submitButton", SelectorType.ID);
         waitAndEnterText("addressSearch", SelectorType.ID, "BA25AA");
