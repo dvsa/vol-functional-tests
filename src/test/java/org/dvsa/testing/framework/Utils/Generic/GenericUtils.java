@@ -3,9 +3,6 @@ package org.dvsa.testing.framework.Utils.Generic;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
-import activesupport.jenkins.Jenkins;
-import activesupport.jenkins.JenkinsParameterKey;
-import activesupport.system.Properties;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
@@ -145,14 +142,6 @@ public class GenericUtils extends BasePage {
         }
         ZipUtil.pack(new File("./src/test/resources/org/dvsa/testing/framework/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
         return String.format("target/EBSR/%s",fileName);
-    }
-
-    public void executeJenkinsBatchJob(String command) throws Exception {
-        HashMap<String, String> jenkinsParams = new HashMap<>();
-        jenkinsParams.put(JenkinsParameterKey.NODE.toString(), String.format("api&&%s&&olcs", Properties.get("env", true)));
-        jenkinsParams.put(JenkinsParameterKey.JOB.toString(), command);
-
-        Jenkins.trigger(Jenkins.Job.BATCH_PROCESS_QUEUE, jenkinsParams);
     }
 
     public String stripNonAlphanumericCharacters(String value) {
