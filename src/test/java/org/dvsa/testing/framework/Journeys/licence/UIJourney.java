@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
@@ -9,7 +10,6 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
-import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.enums.SelfServeSection;
