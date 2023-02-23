@@ -20,8 +20,6 @@ public class GovSignInJourney extends BasePage {
 
     Random random = new Random();
 
-    Config config = world.configuration.config;
-
     String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
@@ -88,7 +86,7 @@ public class GovSignInJourney extends BasePage {
         clickByXPath("//*[@id='mfaOptions-2']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//*[@id='main-content']/div/div/details[2]/summary/span", SelectorType.XPATH);
-        // ^^ Find alternative selector in the future if possible 
+        // ^^ Find alternative selector in the future if possible
         getText("//*[@id='secret-key']", SelectorType.XPATH);
         String secretCode = getTOTPCode(getText("//*[@id='secret-key']", SelectorType.XPATH));
         waitAndEnterText("code", SelectorType.ID, secretCode);
@@ -116,6 +114,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterPassportDetails() {
+        Config config = world.configuration.config;
         waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, config.getString("passportNumber"));
         waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, config.getString("surname"));
         waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, config.getString("firstName"));
@@ -124,17 +123,20 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterDOB() {
+        Config config = world.configuration.config;
         enterText("dateOfBirth-day", SelectorType.NAME, config.getString("dateOfBirth-day"));
         enterText("dateOfBirth-month", SelectorType.NAME, config.getString("dateOfBirth-month"));
         enterText("dateOfBirth-year", SelectorType.NAME, config.getString("dateOfBirth-year"));
     }
 
     public void enterExpiryDate() {
+        Config config = world.configuration.config;
         enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, config.getString("expiryDate-day"));
         enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, config.getString("expiryDate-month"));
         enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, config.getString("expiryDate-year"));
     }
     public void cycletThroughSignInJourney() {
+        Config config = world.configuration.config;
         waitAndClick("submitButton", SelectorType.ID);
         waitAndEnterText("addressSearch", SelectorType.ID, config.getString("addressSearch"));
         waitAndClick("continue", SelectorType.ID);
