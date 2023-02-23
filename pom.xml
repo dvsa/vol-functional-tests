@@ -218,10 +218,10 @@
                         </configurationParameters>
                     </properties>
 <!--                    <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
-<!--                    <forkCount>1</forkCount>-->
-                    <reuseForks>true</reuseForks>
+                    <forkCount>3</forkCount>
+                    <reuseForks>false</reuseForks>
                     <parallel>suites</parallel>
-                    <threadCount>2</threadCount>
+                    <threadCount>5</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
