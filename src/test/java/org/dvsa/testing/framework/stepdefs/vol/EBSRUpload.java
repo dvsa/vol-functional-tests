@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import Injectors.World;
+import activesupport.driver.Browser;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -10,6 +11,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.junit.Assert;
 import org.openqa.selenium.NotFoundException;
 
+import static activesupport.driver.Browser.navigate;
 import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.Assert.assertEquals;
@@ -72,7 +74,7 @@ public class EBSRUpload extends BasePage implements En {
     public void theTrafficAreasShouldBeDisplayedOnTheServiceDetailsPage() {
         clickByLinkText("Service details");
         clickByLinkText("TA's");
-        String trafficArea = findElement("//*[@id=\"bus-reg-ta\"]/ul/li[1]/dd", SelectorType.XPATH, 10).getText();
+        String trafficArea = findElement("//*[@id=\"trafficAreas_chosen\"]/ul/li[1]/span", SelectorType.XPATH, 10).getText();
         Assert.assertNotNull(trafficArea);
     }
 
@@ -95,5 +97,17 @@ public class EBSRUpload extends BasePage implements En {
         } catch (Exception e) {
             throw new NotFoundException("Files not generated.");
         }
+    }
+
+    @Then("all Service Details fields should be editable")
+    public void allServiceDetailsFieldsShouldBeEditable() {
+        clickByLinkText("Service details");
+        world.busRegistrationJourney.internalSiteEditBusReg();
+    }
+
+    @And("the edited Bus Registration details should be saved")
+    public void theEditedBusRegistrationDetailsShouldBeSaved() {
+        world.selfServeNavigation.navigateToBusRegExternal();
+        Assert.assertTrue(isTextPresent("1234"));
     }
 }

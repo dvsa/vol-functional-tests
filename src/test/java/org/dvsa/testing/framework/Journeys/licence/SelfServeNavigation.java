@@ -27,7 +27,7 @@ import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication
 
 public class SelfServeNavigation extends BasePage {
 
-    public World world;
+    private World world;
     private String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
     public SelfServeNavigation(World world) {
@@ -193,5 +193,13 @@ public class SelfServeNavigation extends BasePage {
 
     public void getVariationFinancialEvidencePage() {
         get(this.url.concat(String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())));
+    }
+
+    public void navigateToBusRegExternal() {
+        java.net.URL url = getURL();
+        String[] urlParts = url.getPath().split("/");
+        String id = urlParts[urlParts.length - 3];
+        String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "search/find-registered-local-bus-services/details/" + id).toString();
+        navigate().get(myURL);
     }
 }
