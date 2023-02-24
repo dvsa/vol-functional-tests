@@ -124,16 +124,16 @@ public class GovSignInJourney extends BasePage {
 
     public void enterDOB() {
         Config config = world.configuration.config;
-        enterText("dateOfBirth-day", SelectorType.NAME, config.getString("dateOfBirth-day"));
-        enterText("dateOfBirth-month", SelectorType.NAME, config.getString("dateOfBirth-month"));
-        enterText("dateOfBirth-year", SelectorType.NAME, config.getString("dateOfBirth-year"));
+        enterText("dateOfBirth-day", SelectorType.NAME, config.getString("dateOfBirthDay"));
+        enterText("dateOfBirth-month", SelectorType.NAME, config.getString("dateOfBirthMonth"));
+        enterText("dateOfBirth-year", SelectorType.NAME, config.getString("dateOfBirthYear"));
     }
 
     public void enterExpiryDate() {
         Config config = world.configuration.config;
-        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, config.getString("expiryDate-day"));
-        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, config.getString("expiryDate-month"));
-        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, config.getString("expiryDate-year"));
+        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, config.getString("expiryDateDay"));
+        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, config.getString("expiryDateMonth"));
+        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, config.getString("expiryDateYear"));
     }
     public void cycletThroughSignInJourney() {
         Config config = world.configuration.config;
