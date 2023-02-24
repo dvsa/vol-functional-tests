@@ -126,15 +126,15 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterDOB() {
-        enterText("dateOfBirth-day", SelectorType.NAME, "23");
-        enterText("dateOfBirth-month", SelectorType.NAME, "08");
-        enterText("dateOfBirth-year", SelectorType.NAME, "1959");
+        enterText("dateOfBirthDay", SelectorType.NAME, "23");
+        enterText("dateOfBirthMonth", SelectorType.NAME, "08");
+        enterText("dateOfBirthYear", SelectorType.NAME, "1959");
     }
 
     public void enterExpiryDate() {
-        enterText("expiryDate-day", SelectorType.ID, "01");
-        enterText("expiryDate-month", SelectorType.ID, "01");
-        enterText("expiryDate-year", SelectorType.ID, "2030");
+        enterText("expiryDateDay", SelectorType.ID, "01");
+        enterText("expiryDateMonth", SelectorType.ID, "01");
+        enterText("expiryDateYear", SelectorType.ID, "2030");
     }
 
     public void cycletThroughSignInJourney() {
