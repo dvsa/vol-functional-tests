@@ -195,7 +195,7 @@ public class SelfServeNavigation extends BasePage {
         get(this.url.concat(String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())));
     }
 
-    public static void navigateToBusRegExternal() {
+    public void navigateToBusRegExternal() {
         java.net.URL url = getURL();
         String[] urlParts = url.getPath().split("/");
         String id = urlParts[urlParts.length - 3];
