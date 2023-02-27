@@ -4,6 +4,7 @@ import Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.aws.s3.SecretsManager;
 import activesupport.driver.Browser;
+import apiCalls.enums.OperatorType;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import org.apache.logging.log4j.LogManager;
@@ -19,6 +20,7 @@ import scanner.AXEScanner;
 import scanner.ReportGenerator;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,11 +31,9 @@ public class SubmitSelfServeApplication extends BasePage {
     static ReportGenerator reportGenerator = new ReportGenerator();
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
-
     public SubmitSelfServeApplication(World world) {
         this.world = world;
     }
-
 
     @And("i start a new {string} licence application")
     public void iStartANewLicenceApplication(String licenceType){
@@ -53,10 +53,10 @@ public class SubmitSelfServeApplication extends BasePage {
         String authority = "2";
         String trailers = "4";
         if(licenceType.equals("Goods")) {
-         //   world.createApplication.setOperatorType(OperatorType.GOODS.name());
+            world.createApplication.setOperatorType(OperatorType.GOODS.name());
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority, "0", trailers);
         }else{
-        //    world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
+            world.createApplication.setOperatorType(OperatorType.PUBLIC.name());
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
@@ -155,13 +155,5 @@ public class SubmitSelfServeApplication extends BasePage {
         waitAndClick("//*[contains(text(),'Save')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Business type')]", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Limited Company')]", SelectorType.XPATH);
-    }
-
-    @Given("I have submitted a {string} application via the UI")
-    public void iHaveSubmittedAApplicationViaTheUI(String licenceType) throws IllegalBrowserException, IOException {
-        world.submitApplicationJourney.iHaveASelfServeAccount();
-/*        world.submitApplicationJourney.iHaveNoExistingAccounts();
-        world.submitApplicationJourney.iStartANewLicenceApplication(licenceType);
-        world.submitApplicationJourney.iSubmitAndPayForTheApplication();*/
     }
 }
