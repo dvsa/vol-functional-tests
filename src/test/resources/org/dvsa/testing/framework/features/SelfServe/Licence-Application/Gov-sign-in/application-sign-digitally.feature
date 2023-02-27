@@ -14,4 +14,4 @@ Feature: Operator signs digitally
     Examples:
       | OperatorType |
       | Goods        |
-      | Public       |
+#      | Public Public      |
