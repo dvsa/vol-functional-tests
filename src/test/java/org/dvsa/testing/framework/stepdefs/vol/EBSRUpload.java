@@ -92,4 +92,16 @@ public class EBSRUpload extends BasePage {
             throw new NotFoundException("Files not generated.");
         }
     }
+
+    @Then("all Service Details fields should be editable")
+    public void allServiceDetailsFieldsShouldBeEditable() {
+        clickByLinkText("Service details");
+        world.busRegistrationJourney.internalSiteEditBusReg();
+    }
+
+    @And("the edited Bus Registration details should be saved")
+    public void theEditedBusRegistrationDetailsShouldBeSaved() {
+        world.selfServeNavigation.navigateToBusRegExternal();
+        assertTrue(isTextPresent("1234"));
+    }
 }
