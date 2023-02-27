@@ -67,6 +67,4 @@ public class World {
     public GeneralVariationJourney generalVariationJourney;
     public TrailersJourney trailersJourney;
     public SystemMessagesJourney systemMessagesJourney;
-
-
 }
