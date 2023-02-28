@@ -123,16 +123,7 @@ public abstract class BasePage extends DriverUtils {
         selectItem.selectByVisibleText(listValue);
     }
 
-    protected static void selectValueFromDropDownByIndex(@NotNull String selector, @NotNull SelectorType selectorType, int listValue) {
-        final Wait<WebDriver> wait = new FluentWait<>(getDriver())
-                .withTimeout(ofSeconds(TIME_OUT_SECONDS))
-                .pollingEvery(ofSeconds(POLLING_SECONDS))
-                .ignoring(NoSuchElementException.class)
-                .ignoring(StaleElementReferenceException.class);
-
-        wait.until(WebDriver ->
-                wait.until(ExpectedConditions.elementToBeClickable
-                        (getDriver().findElement(By.xpath(selector)))));
+    protected static void selectValueFromDropDownByIndex(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull int listValue) {
         Select selectItem = new Select(findElement(selector, selectorType));
         selectItem.selectByIndex(listValue);
     }

@@ -34,7 +34,7 @@ public class ContinuationJourney extends BasePage {
         refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         waitAndClick("menu-admin-dashboard/continuations", SelectorType.ID);
-//        waitForElementToBePresent("//*[@id='form-actions[generate]']");
+        waitForElementToBePresent("//*[@id='form-actions[generate]']");
         selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, Integer.parseInt(month) - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
         waitAndClick("form-actions[generate]", SelectorType.ID);
