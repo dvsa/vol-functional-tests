@@ -1,4 +1,4 @@
-@annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+@annual_ecmt_apgg_euro5_or_euro6
 Feature: Awaiting fee permit page
 
   Background:

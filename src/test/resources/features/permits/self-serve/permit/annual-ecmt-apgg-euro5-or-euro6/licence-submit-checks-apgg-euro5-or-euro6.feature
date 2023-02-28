@@ -1,7 +1,6 @@
-@eupa_regression
 Feature: Licence checks on submit
 
-  @EXTERNAL @OLCS-22701 @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+  @EXTERNAL @OLCS-22701 @annual_ecmt_apgg_euro5_or_euro6
   Scenario Outline: Able to apply for an ECMT permit with allowed licence type on that are valid on external and without ECMT permit applications already
     Given I have a "goods" "<type>" licence
     And I have completed an ECMT application
@@ -13,7 +12,7 @@ Feature: Licence checks on submit
       | standard_national      |
       | restricted             |
 
-  @INTERNAL @OLCS-22701 @internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+  @INTERNAL @OLCS-22701 @internal_annual_ecmt_apgg_euro5_or_euro6
   Scenario Outline: Able to apply for an ECMT permit with allowed licence type on that are valid on internal and without ECMT permit applications already
     Given I have a "goods" "<type>" licence
     And i create an admin and url search for my licence

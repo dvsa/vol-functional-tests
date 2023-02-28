@@ -1,4 +1,4 @@
-@ecmt_removal @eupa_regression
+@ecmt_removal @eupa_regression @smoketest
 Feature: ECMT International Removal submission page
 
   Background:
