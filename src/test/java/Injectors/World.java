@@ -63,7 +63,6 @@ public class World {
 
     public GovSignInJourney govSignInJourney;
 
-
     public TypeOfLicenceJourney typeOfLicence;
     public GeneralVariationJourney generalVariationJourney;
     public TrailersJourney trailersJourney;

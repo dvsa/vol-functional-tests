@@ -12,18 +12,28 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.enums.SelfServeSection;
-import org.dvsa.testing.framework.hooks.VFTLifeCycle;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
@@ -501,6 +511,17 @@ public class UIJourney extends BasePage {
         refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
+    }
+
+    public void resetSelfServePassword() {
+        String passWord = world.configuration.config.getString("adminPassword");
+        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
+        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
+        click(nameAttribute("input","submit"), SelectorType.CSS);
+        Assert.assertTrue(isTextPresent("Your password was reset successfully"));
+        waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
+        waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
+        clickById("auth.login.button");
     }
 
     public static void clickSaveAndContinue() {

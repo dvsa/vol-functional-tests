@@ -14,3 +14,11 @@ Feature: Complete an application manually
     Examples:
       | Licence |
       | Goods   |
+
+    @int_regression
+    Scenario Outline: Submit application
+      Given I have submitted a "<Licence>" application via the UI
+
+      Examples:
+        | Licence |
+        | Goods   |

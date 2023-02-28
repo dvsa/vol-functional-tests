@@ -34,9 +34,9 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void signInGovAccount() {
+        String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
         String signInUsername = world.configuration.config.getString("signInUsername");
         String signInPassword = world.configuration.config.getString("signInPassword");
-        String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
 
         if(isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
                 (isTextPresent("Choose a way to prove your identity"))) {
@@ -49,7 +49,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTitlePresent("You must have a photo ID to prove your identity with a GOV.UK account", 1)) {
+        if(isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
             photoIDQuestion();
         }
         if(isTitlePresent("Create a GOV.UK account or sign in",1)) {
@@ -70,7 +70,8 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void registerGovAccount() {
-        if(isTitlePresent("Prove your identity with a GOV.UK account", 2)) {
+        String signInPassword = world.configuration.config.getString("signInPassword");
+        if(isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
         } else {
             clickById("chooseWayPyi");
@@ -80,9 +81,17 @@ public class GovSignInJourney extends BasePage {
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-/* @WIP
         waitAndEnterText("code", SelectorType.ID, world.configuration.getGovCode());
-*/
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        waitAndEnterText("password", SelectorType.ID, signInPassword);
+        waitAndEnterText("confirm-password", SelectorType.ID, signInPassword);
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickByXPath("//*[@id='mfaOptions-2']");
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        waitAndClick("//*[@id='main-content']/div/div/details[2]/summary/span", SelectorType.XPATH);
+        getText("//*[@id='secret-key']", SelectorType.XPATH);
+        String secretCode = getTOTPCode(getText("//*[@id='secret-key']", SelectorType.XPATH));
+        waitAndEnterText("code", SelectorType.ID, secretCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -90,13 +99,6 @@ public class GovSignInJourney extends BasePage {
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         clickByLinkText("Sign in to a service");
-    }
-
-    public void alreadySignedIn() {
-    waitForTitleToBePresent("You’ve signed in to your GOV.UK account");
-    waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-    waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-    signInGovAccount();
     }
 
     public void goThroughVerificationSteps() {
@@ -124,15 +126,15 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterDOB() {
-        enterText("dateOfBirth-day", SelectorType.NAME, "23");
-        enterText("dateOfBirth-month", SelectorType.NAME, "08");
-        enterText("dateOfBirth-year", SelectorType.NAME, "1959");
+        enterText("dateOfBirthDay", SelectorType.NAME, "23");
+        enterText("dateOfBirthMonth", SelectorType.NAME, "08");
+        enterText("dateOfBirthYear", SelectorType.NAME, "1959");
     }
 
     public void enterExpiryDate() {
-        enterText("expiryDate-day", SelectorType.ID, "01");
-        enterText("expiryDate-month", SelectorType.ID, "01");
-        enterText("expiryDate-year", SelectorType.ID, "2030");
+        enterText("expiryDateDay", SelectorType.ID, "01");
+        enterText("expiryDateMonth", SelectorType.ID, "01");
+        enterText("expiryDateYear", SelectorType.ID, "2030");
     }
 
     public void cycletThroughSignInJourney() {

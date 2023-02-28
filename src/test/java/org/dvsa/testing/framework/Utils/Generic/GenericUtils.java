@@ -11,7 +11,11 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.jetbrains.annotations.NotNull;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -105,6 +109,24 @@ public class GenericUtils extends BasePage {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getResetPasswordLink() {
+        String htmlContent = world.configuration.getPasswordResetLink();
+        String sanatisedHTML = htmlContent.replace("3D", "")
+                .replace("co=", "co")
+                .replaceAll("(nfirmationId=[^&]+)=", "$1");
+        org.jsoup.nodes.Document doc = Jsoup.parse(sanatisedHTML);
+        Elements links = doc.select("a[href]");
+        for (Element link : links) {
+            if (link.attr("abs:href").contains("ssweb")) {
+                String resetPasswordLink = link.attr("abs:href");
+                WebDriver driver = Browser.navigate();
+                driver.get(resetPasswordLink);
+                return resetPasswordLink;
+            }
+        }
+        throw new RuntimeException("Reset password link not found in HTML content.");
     }
 
     public static String getDates(String state, int months) {
@@ -272,6 +294,7 @@ public class GenericUtils extends BasePage {
         }
     }
 
+
     public static boolean isGovSignInSupportedPlatform(String env) {
         switch (env) {
             case "QUALITY_ASSURANCE":
@@ -281,5 +304,6 @@ public class GenericUtils extends BasePage {
                 return false;
         }
     }
+
 }
 
