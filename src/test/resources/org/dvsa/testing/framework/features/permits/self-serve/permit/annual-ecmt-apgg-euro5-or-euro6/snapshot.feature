@@ -3,7 +3,7 @@ Feature:  HTML snapshot
   Background:
     Given I have a "goods" "standard_international" licence
 
-  @INTERNAL @OLCS-20958 @ECMT @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+  @INTERNAL @OLCS-20958 @ECMT @annual_ecmt_apgg_euro5_or_euro6
   Scenario: Doc is generated from ECMT permit application submitted externally
     And I have completed an ECMT application
     And i create an admin and url search for my licence

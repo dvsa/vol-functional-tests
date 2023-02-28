@@ -1,4 +1,4 @@
-@internal_annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+@internal_annual_ecmt_apgg_euro5_or_euro6
 Feature: Internal Case Worker submits an ECMT Permit application
 
   Background:

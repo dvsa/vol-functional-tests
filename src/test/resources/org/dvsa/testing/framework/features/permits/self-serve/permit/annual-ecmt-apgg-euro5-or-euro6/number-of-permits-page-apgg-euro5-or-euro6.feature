@@ -1,4 +1,4 @@
-@EXTERNAL @ECMT @annual_ecmt_apgg_euro5_or_euro6 @eupa_regression
+@EXTERNAL @ECMT @annual_ecmt_apgg_euro5_or_euro6
 Feature: Number of permits required page
 
   Background:
