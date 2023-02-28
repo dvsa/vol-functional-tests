@@ -20,7 +20,7 @@ Feature: Manage users page should comply to the WCAG 2.1 AA accessibility standa
 
   Scenario: Check column name
     When i add a user
-    Then remove button column should be named 'Action'
+    Then remove button column should be named 'Remove'
 
   Scenario: Check current users text and number
     When i add a user
