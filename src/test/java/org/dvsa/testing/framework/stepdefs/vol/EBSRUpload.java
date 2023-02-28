@@ -68,7 +68,7 @@ public class EBSRUpload extends BasePage {
     public void theTrafficAreasShouldBeDisplayedOnTheServiceDetailsPage() {
         clickByLinkText("Service details");
         clickByLinkText("TA's");
-        String trafficArea = findElement("//*[@id=\"bus-reg-ta\"]/ul/li[1]/dd", SelectorType.XPATH, 10).getText();
+        String trafficArea = findElement("//*[@id='bus-reg-ta']", SelectorType.XPATH, 10).getText();
         assertNotNull(trafficArea);
     }
 
