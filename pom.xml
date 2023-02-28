@@ -218,9 +218,9 @@
                         </configurationParameters>
                     </properties>
                     <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                     <parallel>suites</parallel>
-                    <threadCount>2</threadCount>
+                    <threadCount>1</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
