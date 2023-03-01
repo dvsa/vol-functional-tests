@@ -1,12 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
+import com.typesafe.config.Config;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.util.Random;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
-import static apiCalls.Utils.generic.Utils.config;
 
 
 public class GovSignInJourney extends BasePage {
@@ -112,6 +112,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterPassportDetails() {
+        Config config = world.configuration.config;
         waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, config.getString("passportNumber"));
         waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, config.getString("surname"));
         waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, config.getString("firstName"));
@@ -120,12 +121,14 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterDOB() {
+        Config config = world.configuration.config;
         enterText("dateOfBirth-day", SelectorType.NAME, config.getString("dateOfBirthDay"));
         enterText("dateOfBirth-month", SelectorType.NAME, config.getString("dateOfBirthMonth"));
         enterText("dateOfBirth-year", SelectorType.NAME, config.getString("dateOfBirthYear"));
     }
 
     public void enterExpiryDate() {
+        Config config = world.configuration.config;
         enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, config.getString("expiryDateDay"));
         enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, config.getString("expiryDateMonth"));
         enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, config.getString("expiryDateYear"));
