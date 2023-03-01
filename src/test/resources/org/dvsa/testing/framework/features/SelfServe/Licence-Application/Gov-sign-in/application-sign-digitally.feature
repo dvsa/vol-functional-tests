@@ -12,6 +12,6 @@ Feature: Operator signs digitally
     Then the application should be digitally signed
 
     Examples:
-      | OperatorType |
-      | Goods        |
-#      | Public Public      |
+      | OperatorType  |
+      | Goods         |
+      | Public Public |

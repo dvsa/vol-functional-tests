@@ -27,6 +27,6 @@ public class TestRunConfiguration {
 
     @AfterAll
     public static void tearDown() throws Exception {
-        Browser.navigate().quit();
+        Browser.closeBrowser();
     }
 }
