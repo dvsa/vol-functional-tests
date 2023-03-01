@@ -4,8 +4,6 @@ import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import static activesupport.driver.Browser.navigate;
