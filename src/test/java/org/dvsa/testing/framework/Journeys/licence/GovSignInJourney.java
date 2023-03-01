@@ -3,9 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-
 import java.util.Random;
-
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
 import static apiCalls.Utils.generic.Utils.config;
