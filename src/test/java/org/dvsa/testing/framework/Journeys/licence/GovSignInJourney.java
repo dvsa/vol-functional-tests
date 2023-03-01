@@ -1,15 +1,16 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import Injectors.World;
-import activesupport.driver.Browser;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
-import static activesupport.driver.Browser.configuration;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
-
+import static apiCalls.Utils.generic.Utils.config;
 
 
 public class GovSignInJourney extends BasePage {
@@ -22,7 +23,7 @@ public class GovSignInJourney extends BasePage {
 
     Random random = new Random();
 
-    String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
+    String registrationEmail = "DVSA.Tester+" + random.nextInt(9000) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
         if(isTextPresent("Declaration information")) {
@@ -93,12 +94,10 @@ public class GovSignInJourney extends BasePage {
         String secretCode = getTOTPCode(getText("//*[@id='secret-key']", SelectorType.XPATH));
         waitAndEnterText("code", SelectorType.ID, secretCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        clickByXPath("//*[@id='havePhotoId']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndClick("sign-in-link", SelectorType.ID);
-        waitAndEnterText("email", SelectorType.ID, registrationEmail);
-        waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
-        clickByLinkText("Sign in to a service");
+        clickByXPath("//*[@id='select-device-choice']");
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        goThroughVerificationSteps();
     }
 
     public void goThroughVerificationSteps() {
@@ -117,23 +116,23 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterPassportDetails() {
-        waitAndEnterText("passportNumber", SelectorType.ID, "321654987");
-        waitAndEnterText("surname", SelectorType.ID, "Decerqueira");
-        waitAndEnterText("firstName", SelectorType.ID, "Kenneth");
+        waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, config.getString("passportNumber"));
+        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, config.getString("surname"));
+        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, config.getString("firstName"));
         enterDOB();
         enterExpiryDate();
     }
 
     public void enterDOB() {
-        enterText("dateOfBirthDay", SelectorType.NAME, "23");
-        enterText("dateOfBirthMonth", SelectorType.NAME, "08");
-        enterText("dateOfBirthYear", SelectorType.NAME, "1959");
+        enterText("dateOfBirth-day", SelectorType.NAME, config.getString("dateOfBirthDay"));
+        enterText("dateOfBirth-month", SelectorType.NAME, config.getString("dateOfBirthMonth"));
+        enterText("dateOfBirth-year", SelectorType.NAME, config.getString("dateOfBirthYear"));
     }
 
     public void enterExpiryDate() {
-        enterText("expiryDateDay", SelectorType.ID, "01");
-        enterText("expiryDateMonth", SelectorType.ID, "01");
-        enterText("expiryDateYear", SelectorType.ID, "2030");
+        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, config.getString("expiryDateDay"));
+        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, config.getString("expiryDateMonth"));
+        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, config.getString("expiryDateYear"));
     }
 
     public void cycletThroughSignInJourney() {
@@ -151,15 +150,13 @@ public class GovSignInJourney extends BasePage {
 
     public void answerPersonalQuestions() {
         int i;
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i < 4; i++) {
             if (isTitlePresent("How much of your loan do you pay back every month?", 2)) {
                 answerPersonalLoan();
             } else if (isTitlePresent("How much do you have left to pay on your mortgage?", 2)) {
                 answerMortgageQuestion();
             } else if (isTitlePresent("How much is your monthly mortgage payment?", 2)) {
                 answerMonthlyPaymentQuestion();
-            } else if (isTitlePresent("How much do you have left to pay on your mortgage?", 2)) {
-                answerLeftToPayOnYourMortgageQuestion();
             } else if (isTitlePresent("When was the other person on your mortgage born??", 2)) {
                 answerOtherPersonQuestion();
             } else if (isTitlePresent("What is the name of your loan provider?", 2))
@@ -223,16 +220,6 @@ public class GovSignInJourney extends BasePage {
         }
     }
 
-    public void answerLeftToPayOnYourMortgageQuestion() {
-        if (isTextPresent("OVER £35,000 UP TO £60,000")) {
-            clickById("Q00015-OVER35000UPTO60000");
-        } else if (isTextPresent("UP TO £ 60,000")) {
-            clickById("Q00015");
-        } else {
-            clickById("Q00015-NONEOFTHEABOVEDOESNOTAPPLY");
-        }
-        clickById("continue");
-    }
 }
 
 
