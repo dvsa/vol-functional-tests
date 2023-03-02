@@ -38,6 +38,7 @@ public class GovSignIn extends BasePage {
     @Then("I register a gov sign in account to complete the process")
     public void iRegisterAGovSignInAccountToCompleteTheProcess() {
         world.govSignInJourney.registerGovAccount();
+        Assert.assertTrue(isTextPresent("You’ve successfully proved your identity. You can now continue to the service you want to use."));
     }
 
     @And("I am taken back to VOL Review and Declarations page")
