@@ -11,7 +11,7 @@ import org.dvsa.testing.framework.hooks.ScreenShotAttachment;
 
 public class TestRunConfiguration {
     @Before
-    public void setUp() throws Exception {
+    public void setUp(Scenario scenario) throws Exception {
         Environments environments = new Environments();
         environments.createResultsFolder();
         environments.generateXML();
@@ -19,7 +19,10 @@ public class TestRunConfiguration {
                 .contains("hub-cloud.browserstack.com"))){
             BrowserStack.startLocal();
         }
+
+        System.out.println("Testing Scenario:" + scenario.getName());
     }
+
     @After
     public void generateScreenShotForFailedScenario(Scenario scenario) throws Exception {
         ScreenShotAttachment.attach(scenario);

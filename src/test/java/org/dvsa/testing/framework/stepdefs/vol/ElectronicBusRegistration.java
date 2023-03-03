@@ -15,11 +15,6 @@ public class ElectronicBusRegistration {
         this.world = world;
     }
 
-    @Before
-    public void getScenarioName(Scenario scenario) {
-        System.out.println("Testing Scenario:" + scenario.getName());
-    }
-
     @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
     public void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
         world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);

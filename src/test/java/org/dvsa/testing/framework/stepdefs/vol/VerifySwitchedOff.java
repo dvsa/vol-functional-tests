@@ -22,10 +22,6 @@ public class VerifySwitchedOff extends BasePage{
         this.initialisation = new Initialisation(world);
     }
 
-    @Before
-    public void getScenarioName(Scenario scenario){
-        System.out.println("Testing Scenario:" + scenario.getName());
-    }
     @And("i have a {string} {string} partial application")
     public void iHaveAPartialApplication(String operatorType, String country) throws HttpException {
         world.createApplication.setOperatorType(operatorType);

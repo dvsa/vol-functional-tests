@@ -1,5 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import apiCalls.enums.OperatorType;
+import io.cucumber.java.en.And;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
@@ -11,12 +13,14 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.datatable.DataTable;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
 import java.util.Locale;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class ManageApplications {
     World world;
@@ -28,10 +32,6 @@ public class ManageApplications {
         this.initialisation = new Initialisation(world);
     }
 
-    @Before
-    public void getScenarioName(Scenario scenario){
-        System.out.println("Testing Scenario:" + scenario.getName());
-    }
     @Given("I have a {string} application with {int} vehicles and a vehicleAuthority of {int}")
     public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, int numberOfVehicles, int authority) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
@@ -202,5 +202,30 @@ public class ManageApplications {
     public void iHaveAValidLgvOnlyLicence(String NIFlag) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLGVOnlyLicence(NIFlag);
+    }
+
+    @Given("i have a valid {string} {string} licence")
+    public void iHaveAValidLicence(String operatorType, String licenceType) throws HttpException {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.licenceCreation.createLicence(operatorType, licenceType);
+    }
+
+    @Given("i have a {string} application in progress")
+    public void iHaveAnApplicationInProgress(String operatorType) throws HttpException {
+        if(operatorType.equals("Goods")){
+            operatorType = OperatorType.GOODS.name();
+        }else operatorType = OperatorType.PUBLIC.name();
+        world.createApplication.setOperatorType(operatorType);
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.createApplication();
+        refreshPageWithJavascript();
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
+        world.selfServeNavigation.navigateThroughApplication();
+        world.UIJourney.signDeclaration();
+    }
+
+    @And("the licence status is {string}")
+    public void theLicenceStatusIs(String arg0) throws HttpException {
+        world.updateLicence.updateLicenceStatus(arg0);
     }
 }
