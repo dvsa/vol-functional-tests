@@ -22,7 +22,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
@@ -500,6 +505,17 @@ public class UIJourney extends BasePage {
         refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
+    }
+
+    public void resetSelfServePassword() {
+        String passWord = world.configuration.config.getString("adminPassword");
+        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
+        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
+        click(nameAttribute("input","submit"), SelectorType.CSS);
+        assertTrue(isTextPresent("Your password was reset successfully"));
+        waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
+        waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
+        clickById("auth.login.button");
     }
 
     public static void clickSaveAndContinue() {

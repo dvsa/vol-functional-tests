@@ -42,11 +42,11 @@ public class TaskAllocationRulesJourney extends BasePage {
     public void editTaskAllocationRule() {
         waitForTitleToBePresent("Task allocation rules");
         waitAndClick("50", SelectorType.LINKTEXT);
-        selectRandomRadioBtnFromDataTable();
+        selectRandomCheckBoxOrRadioBtn("checkbox");
         waitAndClick("edit", SelectorType.ID);
         if (isTextPresent(alphaSplit)) {
             generateAbbreviation();
-            selectRandomRadioBtnFromDataTable();
+            selectRandomCheckBoxOrRadioBtn("checkbox");
             //refreshPageWithJavascript();
             waitAndClick("editAlphasplit", SelectorType.ID);
             waitForTextToBePresent("Edit alpha split");

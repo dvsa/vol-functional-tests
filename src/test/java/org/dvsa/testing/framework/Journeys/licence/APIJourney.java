@@ -98,7 +98,6 @@ public class APIJourney {
     }
 
     public void registerAndGetUserDetails(String userType) throws HttpException {
-        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         world.registerUser.registerUser();
         //For cognito we need to do an initial login to get the token back, otherwise the api will return a password challenge
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

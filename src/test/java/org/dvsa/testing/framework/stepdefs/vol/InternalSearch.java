@@ -2,14 +2,12 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
-import activesupport.database.exception.UnsupportedDatabaseDriverException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import java.sql.SQLException;
 
 public class InternalSearch extends BasePage {
     private final World world;
