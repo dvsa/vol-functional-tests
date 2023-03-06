@@ -20,14 +20,10 @@ Feature: ECMT International Removals Certificates required  Page
     When I save and return to overview
     Then the error message is displayed in the permit start date page
     When I dont enter all the fields
-    And  I click save and continue
     Then the error message is displayed in the permit start date page
     When I enter invalid date
-    And  I click save and continue
     Then the error message is displayed in the permit start date page
     When I enter a date ahead of 60 days
-    And  I click save and continue
     Then I should get a valid error message
     When I enter the valid date
-    And  I click save and continue
     Then I am taken to the number of permits page

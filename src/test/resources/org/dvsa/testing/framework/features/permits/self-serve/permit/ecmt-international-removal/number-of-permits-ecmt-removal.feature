@@ -9,7 +9,6 @@ Feature: ECMT International Number of permits Page
     Then the page heading on the ECMT removals number of permits page is displayed correctly
     And  the application reference on the ECMT removals number of permits page is displayed correctly
     And the advisory text on the ECMT removals number of permits page is displayed correctly
-    And  I click save and continue
     Then I should get the number of permits page error message
     And I save and return to overview
     Then I should get the number of permits page error message
