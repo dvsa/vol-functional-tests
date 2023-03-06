@@ -36,7 +36,7 @@ public class ResettingPassword extends BasePage {
     }
 
     @Then("i will receive an error that username invalid")
-    public void iWillReceiveAnErrorThatUsernameInvalid() {
+    public void iWillReceiveAnErrorThatUsernameInvalid(){
         assertTrue(isTextPresent("Failed to reset your password"));
     }
 
