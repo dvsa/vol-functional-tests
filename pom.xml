@@ -223,7 +223,7 @@
                         </configurationParameters>
                     </properties>
 <!--                    <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
-<!--                    <forkCount>1</forkCount>-->
+                    <forkCount>1</forkCount>
                     <reuseForks>false</reuseForks>
                     <parallel>suites</parallel>
                     <threadCount>1</threadCount>
