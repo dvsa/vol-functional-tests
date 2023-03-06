@@ -3,7 +3,6 @@ Feature:  ECMT APGG Euro5 or Euro 6 with cross trade Permit application is grant
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on the VOL internal site
     And i create an admin and url search for my licence
     And I am viewing a licences IRHP section
 
