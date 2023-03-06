@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.string.Str;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -30,7 +31,7 @@ public class ResettingPassword extends BasePage {
     @Given("i try resetting my password")
     public void iTryResettingMyPassword() {
         world.UIJourney.resettingExternalPassword();
-        enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName());
+        enterText(nameAttribute("input", "username"), SelectorType.CSS, world.registerUser.getUserName().concat(Str.randomWord(4)));
         click(nameAttribute("input","submit"), SelectorType.CSS);
     }
 

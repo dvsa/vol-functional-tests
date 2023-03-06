@@ -228,4 +228,28 @@ public class ManageApplications {
     public void theLicenceStatusIs(String arg0) throws HttpException {
         world.updateLicence.updateLicenceStatus(arg0);
     }
+
+    @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
+    public void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
+        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);
+    }
+
+    @Given("i have an interim {string} {string} application")
+    public void iHaveAnInterimApplication(String operatorType, String licenceType) throws Exception {
+        if (operatorType.equals("public")){
+            throw new Exception("PSV licences cannot have interim applications.");
+        }
+        world.createApplication.setOperatorType(operatorType);
+        world.createApplication.setLicenceType(licenceType);
+        world.createApplication.setIsInterim("Y");
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
+            world.APIJourney.createSpecialRestrictedLicence();
+        }
+        else if (world.createApplication.getApplicationId() == null) {
+            world.APIJourney.createApplication();
+            world.APIJourney.submitApplication();
+        }
+    }
+
 }

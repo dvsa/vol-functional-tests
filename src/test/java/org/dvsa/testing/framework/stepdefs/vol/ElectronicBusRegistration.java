@@ -15,11 +15,6 @@ public class ElectronicBusRegistration {
         this.world = world;
     }
 
-    @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
-    public void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
-        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);
-    }
-
     @When("I upload an ebsr file with {string} days notice")
     public void iUploadAnEbsrFileWithDaysNotice(String days) {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove

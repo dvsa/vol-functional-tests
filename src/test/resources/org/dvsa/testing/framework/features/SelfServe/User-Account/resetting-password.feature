@@ -1,9 +1,10 @@
 @ss_regression
 @SS-PASSWORD-RESET
 Feature: resetting password with valid/invalid user
+Background:
+  Given I create a new external user
 
   Scenario: Reset password for valid user
-    Given I create a new external user
     And i reset my password
     And I receive the reset password link via email
 
