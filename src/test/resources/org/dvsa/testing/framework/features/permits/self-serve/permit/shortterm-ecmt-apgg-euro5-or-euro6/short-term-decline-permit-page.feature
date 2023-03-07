@@ -1,4 +1,4 @@
-@EXTERNAL @shortterm_apgg_euro5_or_euro6 @eupa_regression
+@EXTERNAL @shortterm_apgg_euro5_or_euro6
 Feature: Short term APGG decline page permit page
 
   Background:

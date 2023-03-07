@@ -66,7 +66,7 @@ public class NumberOfPermitsPage extends BasePermitPage {
     }
 
     public static boolean isEnterNumberOfPermitsErrorTextPresent() {
-        return isElementPresent("//a[contains(text(),'Enter the number of permits you require')]", SelectorType.XPATH);
+        return isElementPresent("//*[contains(text(),'How many permits do you require for this licence?')]", SelectorType.XPATH);
     }
 
     public static boolean isShortTermEnterNumberOfPermitsErrorTextPresent() {

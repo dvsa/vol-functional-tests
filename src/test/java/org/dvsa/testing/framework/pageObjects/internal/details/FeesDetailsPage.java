@@ -15,7 +15,11 @@ public class FeesDetailsPage extends BaseDetailsPage {
     private static final String NTH_FEE = "//button[@id='pay']";
 
     public static void pay() {
-        scrollAndClick("//*[text()='Pay']", XPATH);
+        scrollAndClick("//*[@id='pay']", XPATH);
+    }
+
+    public static void checkAll(){
+        clickById("checkall");
     }
 
     public static void outstanding() {

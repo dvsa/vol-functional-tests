@@ -1,4 +1,4 @@
-@EXTERNAL @ecmt_removal @eupa_regression
+@EXTERNAL @ecmt_removal
 Feature: ECMT International Cabotage Page
 
   Background:
