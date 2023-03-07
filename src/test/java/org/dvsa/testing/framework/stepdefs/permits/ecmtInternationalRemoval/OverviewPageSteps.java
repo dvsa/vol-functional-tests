@@ -5,13 +5,14 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class OverviewPageSteps {
+public class OverviewPageSteps extends BasePage {
     private final World world;
     public OverviewPageSteps(World world) {
         this.world = world;
@@ -30,6 +31,7 @@ public class OverviewPageSteps {
 
     @And("the licence number is displayed correctly")
     public void theLicenceNumberIsDisplayedCorrectly() {
+        waitForTitleToBePresent("ECMT International Removal ");
         String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
         assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
     }

@@ -20,10 +20,16 @@ import org.openqa.selenium.WebDriver;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SubmissionPageSteps extends BasePermitPage{
-    private final World world;
+    World world;
+    private String username;
+    private String userEmailAddress;
+    private String applicationDetails;
 
     public SubmissionPageSteps(World world) {
         this.world = world;
+        setUserEmailAddress(world.registerUser.getEmailAddress());
+        setUsername(world.registerUser.getUserName());
+        setApplicationDetails(world.applicationDetails.getLicenceNumber());
     }
 
     @And("I am on the ECMT International removal submission page")
@@ -80,9 +86,9 @@ public class SubmissionPageSteps extends BasePermitPage{
 
     @And("I'm on the ECMT international submitted page for my active application")
     public void iMOnTheECMTInternationalSubmittedPageForMyActiveApplication() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToLogin(getUsername(), getUserEmailAddress());
         HomePageJourney.selectPermitTab();
-        clickByLinkText(world.applicationDetails.getLicenceNumber());
+        clickByLinkText(getApplicationDetails());
         OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         DeclarationPageJourney.completeDeclaration();
     }
@@ -104,5 +110,29 @@ public class SubmissionPageSteps extends BasePermitPage{
         assertTrue(referenceNumber.contains("Your reference number"));
         String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
         assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUserEmailAddress() {
+        return userEmailAddress;
+    }
+
+    public void setUserEmailAddress(String userEmailAddress) {
+        this.userEmailAddress = userEmailAddress;
+    }
+
+    public String getApplicationDetails() {
+        return applicationDetails;
+    }
+
+    public void setApplicationDetails(String applicationDetails) {
+        this.applicationDetails = applicationDetails;
     }
 }
