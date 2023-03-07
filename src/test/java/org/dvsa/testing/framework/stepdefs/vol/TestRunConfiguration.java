@@ -29,7 +29,7 @@ public class TestRunConfiguration {
     }
 
     @AfterAll
-    public static void tearDown(){
-        Browser.navigate().quit();
+    public static void tearDown() throws Exception {
+        Browser.closeBrowser();
     }
 }

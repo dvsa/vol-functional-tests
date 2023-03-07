@@ -342,28 +342,4 @@ public class ManageVehicle extends BasePage {
             Thread.sleep(2000);
         }
     }
-
-//    @After
-//    public void removeVehicleOnLicence() {
-//        AccessToken accessToken = new AccessToken();
-//        String header = accessToken.getToken(Utils.config.getString("adminUser"), Utils.config.getString("adminPassword"), UserRoles.INTERNAL.asString());
-//
-//        JSONObject json = new JSONObject();
-//        Map<String, String> queryParams = new HashMap<>();
-//        {
-//            queryParams.put("includeActive", "1");
-//            queryParams.put("page", "1");
-//            queryParams.put("limit", "100");
-//            queryParams.put("sort", "vehicle");
-//            queryParams.put("order", "DESC");
-//        }
-//        ValidatableResponse response;
-//        Headers apiHeaders = new Headers();
-//        apiHeaders.headers.put("Authorization", "Bearer " + header);
-//
-//        response = RestUtils.getWithQueryParams(String.format(URL.build(this.env, "licence/%s/vehicles/").toString(), world.createApplication.getLicenceId()), queryParams, world.createApplication.apiHeaders.getHeaders());
-//        List<Object> responseArray = response.extract().body().jsonPath().get("results.id.findAll()");
-//        json.put("ids", responseArray);
-//        RestUtils.delete(json.toString(), URL.build(this.env, "licence-vehicle/").toString(), apiHeaders.headers);
-//    }
 }
