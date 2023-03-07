@@ -11,6 +11,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 
 import static org.dvsa.testing.framework.pageObjects.external.pages.CancellationPage.clickCancelCheckbox;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class AnnualBilateralCancelPageSteps extends BasePage {
 

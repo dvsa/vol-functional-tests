@@ -48,6 +48,6 @@ public class ValidPermitPageSteps {
         List<ValidECMTInternationalPermit> permits = ValidPermitsPage.ECMTInternationalRemovalPermits();
         assertTrue(permits.stream().allMatch(permit -> permit.getStatus() == PermitStatus.VALID),message);
         IntStream.range(0, permits.size() - 1).forEach((idx) -> assertTrue(
-                permits.get(idx).getExpiryDate().isEqual(permits.get(idx).getStartDate().plusDays(364))));
+                permits.get(idx).getExpiryDate().isEqual(permits.get(idx).getStartDate().plusDays(365))));
     }
 }
