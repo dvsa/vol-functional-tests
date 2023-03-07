@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.hooks;
 
-import com.google.common.net.MediaType;
 import io.cucumber.java.Scenario;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
