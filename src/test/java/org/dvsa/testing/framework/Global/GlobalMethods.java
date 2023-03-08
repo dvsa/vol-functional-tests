@@ -68,13 +68,14 @@ public class GlobalMethods extends BasePage {
         try {
             signIn(username, password);
             if (isTextPresent("Please check your username and password")) {
-                signIn(username, newPassword);
+                signIn(username, getLoginPassword());
             }
         } finally {
             if (isTextPresent("Your password must:")) {
                 waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
                 waitAndEnterText(confirmPasswordField, SelectorType.CSS, newPassword);
                 click(nameAttribute("input", "submit"), SelectorType.CSS);
+                setLoginPassword(newPassword);
                 untilNotInDOM(submitButton, 1);
             }
         }

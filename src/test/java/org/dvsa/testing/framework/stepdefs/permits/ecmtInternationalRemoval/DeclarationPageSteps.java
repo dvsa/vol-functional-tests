@@ -20,13 +20,13 @@ import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
 
 public class DeclarationPageSteps extends BasePage {
-    private final World world;
+     World world;
 
     public DeclarationPageSteps(World world) {
         this.world = world;
     }
 
-    @When("I am on  the ECMT Removal Declaration page")
+    @When("I am on the ECMT Removal Declaration page")
     public void iAmOnTheECMTRemovalDeclaration() {
         world.ecmtInternationalRemovalJourney.completeUntilDeclarationPage();
     }
@@ -59,7 +59,7 @@ public class DeclarationPageSteps extends BasePage {
 
     @Then("I am directed to the ECMT removals permit fee page")
     public void iAmDirectedToTheECMTRemovals() {
-        PermitFeePage.untilOnPage();
+        world.permitFeePage.untilOnPage();
     }
 
     @Then("I'm viewing my saved ECMT International application in internal")

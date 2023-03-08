@@ -26,7 +26,7 @@ public class FeePageSteps extends BasePermitPage {
 
     @When("I am on the permit fee page for annual bilateral application with correct information and content")
     public void iAmOnThePermitFeePageForAnnualBilateralApplication() {
-        PermitFeePage.untilOnPage();
+        world.permitFeePage.untilOnPage();
 
         // Checking Fee Summary section contents are displayed correctly
         assertTrue(true,BasePermitPage.getElementValueByText("//h2[contains(text(),'Fee summary')]", SelectorType.XPATH));

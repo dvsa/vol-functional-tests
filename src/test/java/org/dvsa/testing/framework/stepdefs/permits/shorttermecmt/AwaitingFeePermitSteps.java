@@ -86,7 +86,7 @@ public class AwaitingFeePermitSteps extends BasePermitPage {
 
     @And("I click the view permit restriction link")
     public void iClickTheViewPermitRestrictionLink() {
-        PermitFeePage.clickPermitRestrictionLink();
+        world.permitFeePage.clickPermitRestrictionLink();
     }
 
     @And("the user is taken to the allocated candidate permit view page")

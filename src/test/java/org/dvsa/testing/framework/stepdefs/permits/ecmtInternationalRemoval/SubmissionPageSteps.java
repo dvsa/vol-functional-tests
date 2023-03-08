@@ -3,18 +3,16 @@ package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import org.dvsa.testing.framework.Journeys.permits.EcmtInternationalRemovalJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
-import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
+import org.dvsa.testing.framework.stepdefs.vol.Initialisation;
 import org.openqa.selenium.WebDriver;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,12 +31,12 @@ public class SubmissionPageSteps extends BasePermitPage{
 
     @Then("the page heading on the submission page is displayed correctly")
     public void thePageHeadingOnTheSubmissionPageIsDisplayedCorrectly() {
-        SubmissionPageSteps.assertHeadingPresentInSubmissionPanel();
+        world.basePermitJourney.assertHeadingPresentInSubmissionPanel();
     }
 
     @And("the application reference number is displayed correctly")
     public void theApplicationReferenceNumberIsDisplayedCorrectly() {
-        SubmissionPageSteps.assertReferenceNumberPresentInPanelBody(world);
+        world.basePermitJourney.assertReferenceNumberPresentInPanelBody();
     }
 
     @And("the texts on the submission page are displayed correctly")
@@ -93,16 +91,5 @@ public class SubmissionPageSteps extends BasePermitPage{
         HomePage.PermitsTab.selectFirstOngoingApplication();
         OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         DeclarationPageJourney.completeDeclaration();
-    }
-
-    public static void assertHeadingPresentInSubmissionPanel() {
-        assertEquals(BasePage.getElementValueByText("//h1[@class='govuk-panel__title']", SelectorType.XPATH),"Application submitted");
-    }
-
-    public static void assertReferenceNumberPresentInPanelBody(World world) {
-        String referenceNumber = BasePage.getElementValueByText("//div[@class='govuk-panel__body']", SelectorType.XPATH);
-        assertTrue(referenceNumber.contains("Your reference number"));
-        String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
-        assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
     }
 }

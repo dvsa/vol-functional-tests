@@ -3,7 +3,7 @@ Feature: ECMT International Declaration Page
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I am on  the ECMT Removal Declaration page
+    And I am on the ECMT Removal Declaration page
 
   @EXTERNAL @OLCS-24980 @olcs-28201
   Scenario: Declaration page functionality works as expected
