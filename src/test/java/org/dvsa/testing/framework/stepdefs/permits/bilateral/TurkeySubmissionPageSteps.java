@@ -20,10 +20,10 @@ public class TurkeySubmissionPageSteps  {
         SubmittedPage.untilOnPage();
 
         // the page heading on the submission page is displayed correctly
-        SubmissionPageSteps.assertHeadingPresentInSubmissionPanel();
+        world.basePermitJourney.assertHeadingPresentInSubmissionPanel();
 
         // the application reference number is displayed correctly;
-        SubmissionPageSteps.assertReferenceNumberPresentInPanelBody(world);
+        world.basePermitJourney.assertReferenceNumberPresentInPanelBody();
 
         // the texts on the submission page are displayed correctly
         assertTrue(SubmittedPage.isBilateralAdvisoryTextPresent());

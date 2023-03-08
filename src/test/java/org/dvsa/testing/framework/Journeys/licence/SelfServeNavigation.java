@@ -24,8 +24,8 @@ import static activesupport.driver.Browser.navigate;
 
 public class SelfServeNavigation extends BasePage {
 
-    private World world;
-    private String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+    private final World world;
+    private final String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
     public SelfServeNavigation(World world) {
         this.world = world;
@@ -40,7 +40,7 @@ public class SelfServeNavigation extends BasePage {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
-        get(this.url.concat("search/"));
+        get(url.concat("search/"));
     }
 
     public void navigateToFindLorryAndBusOperatorsSearch()  {

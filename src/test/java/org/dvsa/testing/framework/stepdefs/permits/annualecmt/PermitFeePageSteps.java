@@ -18,6 +18,10 @@ public class PermitFeePageSteps extends BasePermitPage {
         this.world = world;
     }
 
+    World world;
+    public PermitFeePageSteps(World world){
+        this.world = world;
+    }
     @And("I select the submit and pay link from overview page")
     public void iSelectTheSubmitAndPayLinkFromOverviewPage() {
         OverviewPageJourney.clickOverviewSection(OverviewSection.SubmitAndPay);

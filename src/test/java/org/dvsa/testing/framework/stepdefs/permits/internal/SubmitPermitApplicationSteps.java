@@ -29,10 +29,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SubmitPermitApplicationSteps extends BasePage{
     World world;
-    Initialisation initialisation;
     public SubmitPermitApplicationSteps(World world) {
         this.world = world;
-        this.initialisation = new Initialisation(world);
     }
     @Given("I am on the VOL internal site")
     public void iamOnTheVolInternalSite() {
