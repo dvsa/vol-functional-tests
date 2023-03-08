@@ -500,7 +500,10 @@ public abstract class BasePage extends DriverUtils {
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(java.util.NoSuchElementException.class);
-        ExpectedCondition<Boolean> expect = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        ExpectedCondition<Boolean> expect = driver -> {
+            assert driver != null;
+            return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        };
         wait.until(WebDriver -> expect);
         try {
             assertEquals("complete", javaScriptExecutor("return document.readyState").toString());

@@ -2,7 +2,7 @@
 Feature: Annual ECMT APGG Euro 5 or Euro 6 stock creation
 
   Background:
-    Given I am on the VOL internal site
+    Given i have an admin account to add users
 
  @OLCS-28353  @OLCS-28261
   Scenario: Admin internal caseworker creates ECMT APGG Euro 5 or Euro 6 stock successfully
