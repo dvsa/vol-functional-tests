@@ -21,9 +21,15 @@ import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
 
 public class DeclarationPageSteps extends BasePage {
     private final World world;
+    private String username;
+    private String userEmailAddress;
+    private String applicationDetails;
 
     public DeclarationPageSteps(World world) {
         this.world = world;
+        setUserEmailAddress(world.registerUser.getEmailAddress());
+        setUsername(world.registerUser.getUserName());
+        setApplicationDetails(world.applicationDetails.getLicenceNumber());
     }
 
     @When("I am on  the ECMT Removal Declaration page")
@@ -71,7 +77,7 @@ public class DeclarationPageSteps extends BasePage {
 
     @Then("I am continuing on the on-going ECMT removal application")
     public void iAmContinuingOnTheOngoingECMT() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        world.selfServeNavigation.navigateToLogin(getUsername(), getUserEmailAddress());
         HomePageJourney.selectPermitTab();
         HomePage.PermitsTab.selectFirstOngoingApplication();
     }
@@ -85,5 +91,29 @@ public class DeclarationPageSteps extends BasePage {
     public void iSelectTheBackToHomeLink() {
         FeesDetailsPage.untilOnFeePage();
         FeesDetailsPage.clickBackToHome();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUserEmailAddress() {
+        return userEmailAddress;
+    }
+
+    public void setUserEmailAddress(String userEmailAddress) {
+        this.userEmailAddress = userEmailAddress;
+    }
+
+    public String getApplicationDetails() {
+        return applicationDetails;
+    }
+
+    public void setApplicationDetails(String applicationDetails) {
+        this.applicationDetails = applicationDetails;
     }
 }

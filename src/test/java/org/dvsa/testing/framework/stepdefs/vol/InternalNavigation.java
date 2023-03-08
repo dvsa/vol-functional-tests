@@ -10,11 +10,9 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 public class InternalNavigation extends BasePage {
 
     public World world;
-    Initialisation initialisation;
 
     public InternalNavigation(World world) {
         this.world = world;
-        initialisation = new Initialisation(world);
     }
 
     @When("i navigate to the {string} safety and compliance page on internal")

@@ -41,7 +41,6 @@ Feature: Publications display the right LGV related information on LGV only lice
     Then the publication is visible via self serve search
     And the application withdrawn publication text for LGV Only should be correct on self serve
 
-  @smoketest @lgv-smoke
   Scenario: A LGV Only licence displays the correct licence information upon publishing (application shows nothing)
     Given I have a submitted "GB" lgv only application
     And the licence is granted

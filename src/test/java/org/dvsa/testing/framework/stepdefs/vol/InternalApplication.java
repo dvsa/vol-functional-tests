@@ -96,6 +96,7 @@ public class InternalApplication extends BasePage{
             assertTrue(isTextPresent("The document has been saved, printed and sent by post"));
         }
         String generatedLetterType = "GV - Blank letter to operator";
+        waitForTextToBePresent("Docs & attachments");
         assertEquals(generatedLetterType, getElementValueByText("//tbody/tr/td[@data-heading='Description']/a[1]",SelectorType.XPATH));
     }
 
