@@ -31,7 +31,6 @@ public class OverviewPageSteps extends BasePage {
 
     @And("the licence number is displayed correctly")
     public void theLicenceNumberIsDisplayedCorrectly() {
-        waitForTitleToBePresent("ECMT International Removal ");
         String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
         assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
     }
