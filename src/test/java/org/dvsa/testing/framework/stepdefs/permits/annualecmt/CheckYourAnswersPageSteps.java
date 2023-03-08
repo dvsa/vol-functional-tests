@@ -4,7 +4,6 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.enums.RestrictedCountry;
 import org.dvsa.testing.framework.pageObjects.external.enums.sections.ApplicationSection;
@@ -32,7 +31,7 @@ public class CheckYourAnswersPageSteps extends BasePage{
 
     @And("I have completed all steps prior to check your answers page")
     public void iHaveCompletedAllStepsPriorToCheck() {
-        EcmtApplicationJourney.completeUntilCheckYourAnswersPage();
+        world.ecmtApplicationJourney.completeUntilCheckYourAnswersPage();
     }
 
     @Then("the information I inserted during the application is displayed")

@@ -39,8 +39,8 @@ public class ValidPermitsPageSteps extends BasePage {
 
     @And("have valid permits")
     public void haveValidPermits() throws InterruptedException, HttpException {
-        EcmtApplicationJourney.completeEcmtApplication(world);
-        IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
+        world.ecmtApplicationJourney.completeEcmtApplication();
+        world.irhpPageJourney.logInToInternalAndIRHPGrantApplication();
         sleep(5000);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.selectPermitTab();

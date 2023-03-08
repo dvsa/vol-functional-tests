@@ -28,7 +28,7 @@ public class CheckYourAnswersPageSteps {
 
     @When("I am on ECMT Removal check your answers page")
     public void iAmOnTheECMTRemovalCheckYourAnswersPage() {
-        EcmtInternationalRemovalJourney.completeUntilCheckYourAnswersPage(world);
+        world.ecmtInternationalRemovalJourney.completeUntilCheckYourAnswersPage();
     }
 
     @And("the ECMT Removals check your answers page has reference number")

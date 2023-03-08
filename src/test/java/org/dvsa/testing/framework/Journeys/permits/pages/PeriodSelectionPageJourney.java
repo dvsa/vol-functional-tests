@@ -1,11 +1,16 @@
 package org.dvsa.testing.framework.Journeys.permits.pages;
 
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.PeriodSelectionPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PeriodSelectionPageJourney extends BasePermitJourney {
+
+    public PeriodSelectionPageJourney(World world){
+        super(world);
+    }
 
     public static void hasPageHeading() {
         String heading = PeriodSelectionPage.getPageHeading();

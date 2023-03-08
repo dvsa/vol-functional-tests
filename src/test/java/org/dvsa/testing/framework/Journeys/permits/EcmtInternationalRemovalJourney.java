@@ -8,53 +8,56 @@ import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
-
 public class EcmtInternationalRemovalJourney extends BasePermitJourney {
 
-    public static void beginApplication(World world) {
-        clickToPermitTypePage(world);
-        BasePermitJourney.permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL);
-        BasePermitJourney.licencePage(world);
+    World world;
+    public EcmtInternationalRemovalJourney(World world){
+        super(world);
+        this.world = world;
+    }
+    public void beginApplication() {
+        clickToPermitTypePage();
+        world.basePermitJourney.permitType(PermitType.ECMT_INTERNATIONAL_REMOVAL);
+        world.basePermitJourney.licencePage();
     }
 
-    public static void completeUntilRemovalEligibilityPage(World world) {
-        beginApplication(world);
+    public void completeUntilRemovalEligibilityPage() {
+        beginApplication();
         OverviewPageJourney.clickOverviewSection(OverviewSection.RemovalsEligibility);
     }
 
-    public static void completeUntilCabotagePage(World world) {
-        completeUntilRemovalEligibilityPage(world);
+    public void completeUntilCabotagePage() {
+        completeUntilRemovalEligibilityPage();
         RemovalsEligibilityPageJourney.completePage();
     }
 
-    public static void completeUntilCertificatesRequiredPage(World world) {
-        completeUntilCabotagePage(world);
+    public void completeUntilCertificatesRequiredPage() {
+        completeUntilCabotagePage();
         CabotagePageJourney.completePage();
     }
 
-    public static void completeUntilPermitStartDatePage(World world) {
-        completeUntilCertificatesRequiredPage(world);
+    public void completeUntilPermitStartDatePage() {
+        completeUntilCertificatesRequiredPage();
         CertificatesRequiredPageJourney.completePage();
     }
 
-    public static void completeUntilNumberOfPermitsPage(World world) {
-        completeUntilPermitStartDatePage(world);
+    public void completeUntilNumberOfPermitsPage() {
+        completeUntilPermitStartDatePage();
         PermitStartDatePageJourney.completePage();
     }
 
-    public static void completeUntilCheckYourAnswersPage(World world) {
-        completeUntilNumberOfPermitsPage(world);
+    public void completeUntilCheckYourAnswersPage() {
+        completeUntilNumberOfPermitsPage();
         NumberOfPermitsPageJourney.completePage();
     }
 
-    public static void completeUntilDeclarationPage(World world) {
-        completeUntilCheckYourAnswersPage(world);
+    public void completeUntilDeclarationPage() {
+        completeUntilCheckYourAnswersPage();
         CheckYourAnswersPageJourney.completePage();
     }
 
-    public static void completeAndSubmitApplication(World world) {
-        completeUntilDeclarationPage(world);
+    public void completeAndSubmitApplication() {
+        completeUntilDeclarationPage();
         DeclarationPageJourney.completeDeclaration();
         PermitFeePage.saveAndContinue();
         world.feeAndPaymentJourney.customerPaymentModule();

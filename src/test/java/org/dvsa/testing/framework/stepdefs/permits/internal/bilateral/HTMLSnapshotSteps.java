@@ -31,7 +31,7 @@ public class HTMLSnapshotSteps extends BasePage {
         DocumentsPage.untilOnPage();
 
         // Verify the page heading is displayed correctly
-        String expectedHeading = String.format("%s %s", world.createApplication.getOrganisationName(), BasePermitJourney.getFullReferenceNumber());
+        String expectedHeading = String.format("%s %s", world.createApplication.getOrganisationName(), world.basePermitJourney.getFullReferenceNumber());
         assertEquals(expectedHeading, DocumentsPage.getSubHeading());
 
         // Verify the licence number is displayed

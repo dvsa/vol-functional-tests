@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 
 public class HomePageJourney extends BasePermitJourney {
 
+
     public static void selectPermitTab() {
         HomePage.selectTab(Tab.PERMITS);
     }

@@ -20,12 +20,12 @@ public class OverviewPageSteps extends BasePage {
 
     @And("I am on the ECMT International Removal overview page")
     public void iAmOnTheECMTInternationalRemovalPage() {
-        EcmtInternationalRemovalJourney.beginApplication(world);
+        world.ecmtInternationalRemovalJourney.beginApplication();
     }
 
     @And("I click cancel application link on the International removal overview page")
     public void iClickCancelApplicationLinkOnTheInternational() {
-        BasePermitJourney.setFullReferenceNumber(BasePermitPage.getReferenceFromPage());
+        world.basePermitJourney.setFullReferenceNumber(BasePermitPage.getReferenceFromPage());
         OverviewPage.clickCancelApplication();
     }
 

@@ -23,7 +23,7 @@ public class ECMTRemovalInternalApplicationSteps{
     @And("the case worker apply for an ECMT Removal application")
     public void theCaseWorkerApplyForAnECMT() {
         LicenceDetailsPageJourney.clickIRHPTab();
-        IRHPPageJourney.completeModal(PermitType.ECMT_INTERNATIONAL_REMOVAL);
+        world.irhpPageJourney.completeModal(PermitType.ECMT_INTERNATIONAL_REMOVAL);
 
         //Fill application
         removalsEligibility();
@@ -49,6 +49,6 @@ public class ECMTRemovalInternalApplicationSteps{
 
     @And("the application goes to valid status")
     public void theApplicationGoesToValid() {
-        CommonSteps.waitUntilPermitHasStatus(world);
+        world.basePermitJourney.waitUntilPermitHasStatus();
     }
 }

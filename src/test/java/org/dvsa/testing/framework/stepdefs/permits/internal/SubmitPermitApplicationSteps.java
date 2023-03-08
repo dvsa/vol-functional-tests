@@ -235,7 +235,7 @@ public class SubmitPermitApplicationSteps extends BasePage{
 
         //apply application
         untilOnPage();
-        IRHPPageJourney.completeModal(ECMTType);
+        world.irhpPageJourney.completeModal(ECMTType);
         int numberOfPermits = Int.random(1, 5);
 
         //Fill application

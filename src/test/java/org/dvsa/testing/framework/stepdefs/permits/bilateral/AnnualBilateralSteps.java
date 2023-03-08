@@ -45,33 +45,33 @@ public class AnnualBilateralSteps extends BasePage {
 
     @Given("I have a valid annual bilateral norway standard and cabotage permit")
     public void iHaveAValidAnnualBilateralNorwayStandardAndCabotagePermit() {
-        AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(world, PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, false);
-        AnnualBilateralJourney.completePayFees(world);
+        world.annualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, false);
+        world.annualBilateralJourney.completePayFees();
         SubmittedPageJourney.goToPermitsDashboard();
-        CommonSteps.waitUntilPermitHasStatus(world);
+        world.basePermitJourney.waitUntilPermitHasStatus();
     }
 
     @Given("I have (a valid |applied for an )annual bilateral norway standard no cabotage permit")
-    public void IHaveAValidAppliedForAnAnnualBilateralNorwayStandardNoCabotagePermit(String notValid) {
-        AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(world, PeriodType.BilateralsStandardPermitsNoCabotage, Country.Norway, null);
-        AnnualBilateralJourney.completePayFees(world);
+    public void IHaveAValidAppliedForAnAnnualBilateralNorwayStandardNoCabotagePermit() {
+        world.annualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(PeriodType.BilateralsStandardPermitsNoCabotage, Country.Norway, null);
+        world.annualBilateralJourney.completePayFees();
         SubmittedPageJourney.goToPermitsDashboard();
-        CommonSteps.waitUntilPermitHasStatus(world);
+        world.basePermitJourney.waitUntilPermitHasStatus();
     }
 
     @Given("I have selected Turkey and I am on the Bilateral application overview page")
     public void iHaveSelectedTurkeyAndIAmOnTheBilateralApplicationOverviewPage() {
-        AnnualBilateralJourney.startBilateralCountryJourneyAndSelectCountry(world, "Turkey");
+        world.annualBilateralJourney.startBilateralCountryJourneyAndSelectCountry("Turkey");
     }
 
     @Given("I have selected Morocco and I am on the Bilateral application overview page")
     public void iHaveSelectedMoroccoAndIAmOnTheBilateralApplicationOverviewPage() {
-        AnnualBilateralJourney.startBilateralCountryJourneyAndSelectCountry(world, "Morocco");
+        world.annualBilateralJourney.startBilateralCountryJourneyAndSelectCountry("Morocco");
     }
 
     @Given("I have selected Ukraine and I am on the Bilateral application overview page")
     public void iHaveSelectedUkraineAndIAmOnTheBilateralApplicationOverviewPage() {
-        AnnualBilateralJourney.startBilateralCountryJourneyAndSelectCountry(world, "Ukraine");
+        world.annualBilateralJourney.startBilateralCountryJourneyAndSelectCountry("Ukraine");
     }
 
     @Given("I accept declaration and submit the application")
@@ -86,8 +86,8 @@ public class AnnualBilateralSteps extends BasePage {
         DeclarationPage.saveAndContinue();
         DeclarationPageJourney.hasErrorText();
         DeclarationPageJourney.completeDeclaration();
-        PermitFeePage.untilOnPage();
-        PermitFeePage.submitAndPay();
+        world.permitFeePage.untilOnPage();
+        world.permitFeePage.submitAndPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         SubmittedPage.untilOnPage();
     }

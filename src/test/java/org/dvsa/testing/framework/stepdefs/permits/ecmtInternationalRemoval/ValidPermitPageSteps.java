@@ -27,9 +27,9 @@ public class ValidPermitPageSteps {
     @And("I have a valid ECMT removal permit")
     public void iHaveAValidECMTRemoval() {
         refreshPageWithJavascript();
-        EcmtInternationalRemovalJourney.completeAndSubmitApplication(world);
+        world.ecmtInternationalRemovalJourney.completeAndSubmitApplication();
         SubmittedPage.goToPermitsDashboard();
-        CommonSteps.waitUntilPermitHasStatus(world);
+        world.basePermitJourney.waitUntilPermitHasStatus();
     }
 
     @And("I am viewing my issued ECMT removal permit on selfserve")

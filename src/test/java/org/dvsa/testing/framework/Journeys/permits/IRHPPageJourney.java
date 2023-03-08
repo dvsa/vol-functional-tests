@@ -13,13 +13,11 @@ import java.util.concurrent.TimeUnit;
 
 public class IRHPPageJourney extends BasePermitJourney {
 
-    private static World world;
-
-    IRHPPageJourney(World world) {
-        IRHPPageJourney.world = world;
+    public IRHPPageJourney(World world) {
+        super(world);
     }
 
-    public static void completeModal(PermitType permitType) {
+    public void completeModal(PermitType permitType) {
         IrhpPermitsApplyPage.applyForPermit();
         IrhpPermitsPage.Model.untilModalIsPresent(Duration.LONG, TimeUnit.SECONDS);
         IrhpPermitsPage.Model.permitType(permitType);
@@ -31,7 +29,7 @@ public class IRHPPageJourney extends BasePermitJourney {
         IrhpPermitsPage.Model.untilModalIsGone();
     }
 
-    public static void logInToInternalAndIRHPGrantApplication(World world) throws HttpException {
+    public void logInToInternalAndIRHPGrantApplication() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         String browser = String.valueOf(getURL());
         get(browser+"irhp-application/");

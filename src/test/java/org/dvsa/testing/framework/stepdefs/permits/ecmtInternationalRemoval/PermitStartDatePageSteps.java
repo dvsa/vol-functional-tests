@@ -23,13 +23,13 @@ public class PermitStartDatePageSteps extends BasePage {
 
     @And("I am on the ECMT removals permit start page")
     public void iAmOnTheECMTRemovalsPermitStartPage() {
-        EcmtInternationalRemovalJourney.completeUntilPermitStartDatePage(world);
+        world.ecmtInternationalRemovalJourney.completeUntilPermitStartDatePage();
     }
 
     @And("the reference number is displayed correctly")
     public void theReferenceNumberIsDisplayedCorrectly() {
         String actualReference = BasePermitPage.getReferenceFromPage();
-        assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
+        assertEquals(world.basePermitJourney.getFullReferenceNumber(), actualReference);
     }
 
     @And("the page heading on permit start date page should be correct")

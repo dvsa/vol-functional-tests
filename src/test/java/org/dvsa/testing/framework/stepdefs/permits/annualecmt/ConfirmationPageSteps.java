@@ -30,7 +30,7 @@ public class ConfirmationPageSteps extends BasePage {
 
     @Then("I am on the Annual ECMT application submitted page")
     public void iAmOnTheAnnualECMTApplicationSubmittedPage() {
-        EcmtApplicationJourney.completeEcmtApplicationConfirmation(world);
+        world.ecmtApplicationJourney.completeEcmtApplicationConfirmation();
     }
     @Then("the reference number on the annual ECMT submitted page  is as expected")
     public void theReferenceNumberOnTheAnnualECMT() {
@@ -45,8 +45,8 @@ public class ConfirmationPageSteps extends BasePage {
     }
     @Then("I have an ongoing Annual ECMT with all fees paid")
     public void iHaveAnOngoingAnnualECMTWithAllFeesPaid() {
-        EcmtApplicationJourney.beginApplication(world);
-        EcmtApplicationJourney.completeUntilCheckYourAnswersPage();
+        world.ecmtApplicationJourney.beginApplication();
+        world.ecmtApplicationJourney.completeUntilCheckYourAnswersPage();
         get(URL.build(ApplicationType.EXTERNAL, Properties.get("env", true), "fees/").toString());
 
         HomePageJourney.payAllOutstandingFees();

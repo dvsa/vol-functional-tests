@@ -20,7 +20,7 @@ public class CancelApplicationPageSteps extends BasePermitPage {
 
     @Given("I am on the cancel application page")
     public void iAmOnTheCancelApplicationPage() {
-        EcmtApplicationJourney.beginApplication(world);
+        world.ecmtApplicationJourney.beginApplication();
         OverviewPage.clickCancelApplication();
     }
 

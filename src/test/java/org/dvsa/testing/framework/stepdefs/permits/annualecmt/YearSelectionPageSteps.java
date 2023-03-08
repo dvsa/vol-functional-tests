@@ -3,7 +3,6 @@ package org.dvsa.testing.framework.stepdefs.permits.annualecmt;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitTypePage;
@@ -20,7 +19,7 @@ public class YearSelectionPageSteps extends BasePage {
 
     @And("I am on the Year Selection Page")
     public void iAmOnTHeYearSelectionPage() {
-        EcmtApplicationJourney.beginApplicationToYearSelectionPage(world);
+        world.ecmtApplicationJourney.beginApplicationToYearSelectionPage();
     }
 
     @And("the user is navigated to the permit type page")
@@ -31,7 +30,7 @@ public class YearSelectionPageSteps extends BasePage {
 
     @And("the page heading on Annual Ecmt Year selection page is displayed correctly")
     public void thePageHeadingOnAnnualECMTYearSelectionPage() {
-        if (YearSelectionPage.isYearChoicePresent()) {
+        if (world.yearSelectionPage.isYearChoicePresent()) {
             assertEquals(YearSelectionPage.getPageHeading(), "Select which year you want permits for");
         } else {
             assertEquals(YearSelectionPage.getPageHeading(), "Permits requested will be valid for 2021");
@@ -47,8 +46,8 @@ public class YearSelectionPageSteps extends BasePage {
 
     @When("I confirm  the year selection")
     public void iConfirmTheYearSelection() {
-        if (YearSelectionPage.isYearChoicePresent()) {
-            YearSelectionPage.selectECMTValidityPeriod();
+        if (world.yearSelectionPage.isYearChoicePresent()) {
+            world.yearSelectionPage.selectECMTValidityPeriod();
         } else {
             BasePermitPage.saveAndContinue();
         }

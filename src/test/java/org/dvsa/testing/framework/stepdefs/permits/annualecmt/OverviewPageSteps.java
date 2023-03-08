@@ -42,7 +42,7 @@ public class OverviewPageSteps extends BasePage {
 
     @And("I am on the application overview page")
     public void iAmOnTheApplicationOverviewPage() {
-        EcmtApplicationJourney.beginApplication(world);
+        world.ecmtApplicationJourney.beginApplication();
     }
 
     @Then("only the expected status labels are displayed")
@@ -74,7 +74,7 @@ public class OverviewPageSteps extends BasePage {
 
     @When("I fill all steps preceding steps to declaration")
     public void iFillAllStepsPrecedingSteps() {
-        EcmtApplicationJourney.completeUntilCheckYourAnswersPage();
+        world.ecmtApplicationJourney.completeUntilCheckYourAnswersPage();
         ECMTPermitApplicationSteps.saveAndContinue();
     }
 

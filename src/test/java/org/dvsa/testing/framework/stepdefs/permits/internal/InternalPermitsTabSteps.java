@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.permits.internal;
 
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.enums.Duration;
@@ -17,9 +18,14 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class InternalPermitsTabSteps {
+    World world;
+
+    public InternalPermitsTabSteps(World world){
+        this.world = world;
+    }
     @When("I'm viewing the permits tab")
     public void iMViewingThePPermitsTab() {
-        String referenceNumber = BasePermitJourney.getFullReferenceNumber();
+        String referenceNumber = world.basePermitJourney.getFullReferenceNumber();
         LicenceDetailsPageJourney.clickIRHPTab();
 
         IrhpPermitsDetailsPage.untilOnPage();

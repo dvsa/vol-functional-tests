@@ -70,5 +70,4 @@ public class BasePermitPage extends BasePage {
         String selector = String.format("./td[@data-heading='%s']", rowHeading);
         return row.findElement(By.xpath(selector)).getText();
     }
-
 }

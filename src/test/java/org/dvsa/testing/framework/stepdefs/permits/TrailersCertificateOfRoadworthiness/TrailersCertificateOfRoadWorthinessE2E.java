@@ -17,7 +17,6 @@ import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePer
 import org.dvsa.testing.framework.pageObjects.external.pages.vehiclesAndTrailersCertificateOfRoadworthiness.*;
 
 import static org.dvsa.testing.framework.stepdefs.permits.annualecmt.ValidPermitsPageSteps.untilAnyPermitStatusMatch;
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TrailersCertificateOfRoadWorthinessE2E {
@@ -29,14 +28,13 @@ public class TrailersCertificateOfRoadWorthinessE2E {
 
     @And("I select Certificate of Roadworthiness for trailers on the select permit page")
     public void iSelectCertificateOfRoadWorthiness() {
-        clickToPermitTypePage(world);
-        BasePermitJourney.permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_TRAILERS);
+        world.basePermitJourney.clickToPermitTypePage();
+        world.basePermitJourney.permitType(PermitType.CERTIFICATE_OF_ROADWORTHINESS_FOR_TRAILERS);
     }
 
     @Then("I select any licence number for Certificate of Roadworthiness for trailers")
     public void iSelectAnyLicenceNumberForCertificateOfRoadWorthiness() {
-        BasePermitJourney.licencePage(world);
-
+        world.basePermitJourney.licencePage();
     }
 
     @Then("I check content and complete Registration number section for  Certificate of Roadworthiness for trailers and click save and continue")

@@ -21,11 +21,11 @@ public class CabotagePageSteps extends BasePage {
 
     @And("I am on the ECMT International cabotage Page")
     public void iAmOnTheECMTInternationLCabotagePage() {
-        EcmtInternationalRemovalJourney.completeUntilCabotagePage(world);
+        world.ecmtInternationalRemovalJourney.completeUntilCabotagePage();
     }
     @And("the ECMT International Removal application reference number should be displayed")
     public void theECMTInternationalRemovalApplicationReferenceNumber() {
-        assertEquals(BasePermitJourney.getFullReferenceNumber(), CabotagePage.getReferenceFromPage());
+        assertEquals(world.basePermitJourney.getFullReferenceNumber(), CabotagePage.getReferenceFromPage());
     }
     @Then("the ECMT international removal cabotage heading should be correct")
     public void theECMTInternationalRemovalCabotageHeading() {

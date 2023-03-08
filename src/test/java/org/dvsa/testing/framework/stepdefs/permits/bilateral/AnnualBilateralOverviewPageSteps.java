@@ -4,6 +4,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.AnnualBilateralJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.EssentialInformationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
@@ -22,6 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AnnualBilateralOverviewPageSteps extends BasePage  {
 
+    World world;
+    public AnnualBilateralOverviewPageSteps(World world){
+        this.world = world;
+    }
     @Then("the status of Morocco under answers questions for individual countries section is marked as Completed")
     public void theStatusOfMoroccoUnderAnswersQuestionsForIndividualCountriesSectionIsMarkedAsCompleted() {
         OverviewPageJourney.checkBilateralStatus(OverviewSection.Countries, PermitStatus.COMPLETED);
@@ -70,7 +75,7 @@ public class AnnualBilateralOverviewPageSteps extends BasePage  {
         EssentialInformationPageJourney.completePage();
         PeriodSelectionPageJourney.hasMoroccoPageHeading();
         assertEquals(BasePermitPage.getCountry(), AnnualBilateralJourney.getCountry());
-        AnnualBilateralJourney.completePeriodTypePage(typeOfMoroccoJourney);
+        world.annualBilateralJourney.completePeriodTypePage(typeOfMoroccoJourney);
         NumberOfPermitsPage.untilOnPage();
         assertEquals(getElementValueByText("//div[contains(text(),'Morocco')]",SelectorType.XPATH), AnnualBilateralJourney.getCountry());
         NumberOfPermitsPageJourney.hasPageHeading();

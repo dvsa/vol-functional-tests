@@ -13,7 +13,10 @@ import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePer
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PeriodSelectionPageSteps extends BasePermitPage {
+
+    World world;
     public PeriodSelectionPageSteps(World world) {
+        this.world = world;
     }
 
     @Then("I am on the Bilateral {string} Period Selection page with correct information and content")
@@ -28,9 +31,9 @@ public class PeriodSelectionPageSteps extends BasePermitPage {
 
         assertTrue(isElementPresent(String.format("//div[contains(text(),'%s')]", country), SelectorType.XPATH));
         if (country.equals("Turkey")) {
-            AnnualBilateralJourney.setPeriodType(PeriodType.BilateralsTurkey);
+            world.annualBilateralJourney.setPeriodType(PeriodType.BilateralsTurkey);
         } else if (country.equals("Ukraine")) {
-            AnnualBilateralJourney.setPeriodType(PeriodType.BilateralsUkraine);
+            world.annualBilateralJourney.setPeriodType(PeriodType.BilateralsUkraine);
         }
     }
 

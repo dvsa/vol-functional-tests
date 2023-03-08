@@ -26,7 +26,7 @@ public class Euro6Steps extends BasePage {
 
     @And("I am on the euro emission standard page")
     public void iAMOnTheEuroEmissionStandardPage() {
-        EcmtApplicationJourney.completeUntilNumberOfPermitsPage(world);
+        world.ecmtApplicationJourney.completeUntilNumberOfPermitsPage();
         NumberOfPermitsPageJourney.completeECMTPage();
     }
 

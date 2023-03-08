@@ -47,7 +47,7 @@ public class AnnualEcmtPermitsHtmlDoc extends BasePage{
         // Verify Cabotage
         assertFalse(DocumentsPage.getSectionBody(ApplicationSection.Cabotage).isEmpty());
         // Verify restricted countries
-        assertEquals(BasePermitJourney.getCountriesWithLimitedPermitsChoice(),
+        assertEquals(world.basePermitJourney.getCountriesWithLimitedPermitsChoice(),
                 (Str.find("(?i)(yes|no)", DocumentsPage.getSectionBody(ApplicationSection.RestrictedCountries)).get()).trim().equalsIgnoreCase("yes")
         );
         //TODO hasRestrictedCountries is defaulting to false because it is a null boolean. Needs changing.

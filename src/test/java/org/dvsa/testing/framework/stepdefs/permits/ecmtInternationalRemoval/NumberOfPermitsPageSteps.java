@@ -27,7 +27,7 @@ public class NumberOfPermitsPageSteps {
 
     @When("I am on the ECMT Removal number of permits page")
     public void iAmOnTheECMTRemovalNumberOfPermitsPage() {
-        EcmtInternationalRemovalJourney.completeUntilNumberOfPermitsPage(world);
+        world.ecmtInternationalRemovalJourney.completeUntilNumberOfPermitsPage();
     }
     @And("the page heading on the ECMT removals number of permits page is displayed correctly")
     public void thePageHeadingOnTheECMTRemovalsNumberOfPermitsPage() {
@@ -42,7 +42,7 @@ public class NumberOfPermitsPageSteps {
     @And("the application reference on the ECMT removals number of permits page is displayed correctly")
     public void theApplicationReferenceOnTheECMTRemovalsNumberOfPermitsPageIsDisplayedCorrectly() {
         String actualReference = BasePermitPage.getReferenceFromPage();
-        assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
+        assertEquals(world.basePermitJourney.getFullReferenceNumber(), actualReference);
     }
 
     @And("I enter number of permits more than the authorised vehicles and click save and continue")

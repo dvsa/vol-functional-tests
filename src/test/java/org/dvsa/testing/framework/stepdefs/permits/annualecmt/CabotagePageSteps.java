@@ -16,7 +16,7 @@ public class CabotagePageSteps extends BasePage {
 
     @And("I am on the cabotage Page")
     public void iAmOnTheCabotagePage() {
-        EcmtApplicationJourney.completeUntilCabotagePage(world);
+        world.ecmtApplicationJourney.completeUntilCabotagePage();
     }
 
     @When("I declare not to undertake cabotage")

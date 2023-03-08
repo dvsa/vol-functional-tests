@@ -19,13 +19,13 @@ public class CertificatesRequiredPageSteps extends BasePage {
 
     @And("I am on the ECMT Removals certificates required page")
     public void iAmOnTheECMTRemovalsCertificatesRequiredPAge() {
-        EcmtInternationalRemovalJourney.completeUntilCertificatesRequiredPage(world);
+        world.ecmtInternationalRemovalJourney.completeUntilCertificatesRequiredPage();
     }
 
     @And("the application reference number is displayed")
     public void theApplicationReferenceNumberIsDisplayed() {
         String actualReference = BasePermitPage.getReferenceFromPage();
-        assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
+        assertEquals(world.basePermitJourney.getFullReferenceNumber(), actualReference);
     }
 
     @And("the correct text is displayed next to the checkbox")

@@ -26,8 +26,8 @@ public class AwaitingFeePermitSteps extends BasePage {
     }
     @And("I am viewing an application that's awaiting fees")
     public void iAMViewingAnApplicationThatIsAwaitingFees() throws InterruptedException, HttpException {
-        EcmtApplicationJourney.completeEcmtApplication(world);
-        IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
+        world.ecmtApplicationJourney.completeEcmtApplication();
+        world.irhpPageJourney.logInToInternalAndIRHPGrantApplication();
         sleep(3000);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.selectPermitTab();

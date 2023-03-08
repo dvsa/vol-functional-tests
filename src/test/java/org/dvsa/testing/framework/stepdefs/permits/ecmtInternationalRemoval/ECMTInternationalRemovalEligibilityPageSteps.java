@@ -22,7 +22,7 @@ public class ECMTInternationalRemovalEligibilityPageSteps {
 
     @When("I am on the ECMT International Removal Eligibity page")
     public void iAmOnTheECMTInternationalRemoval() {
-        EcmtInternationalRemovalJourney.completeUntilRemovalEligibilityPage(world);
+        world.ecmtInternationalRemovalJourney.completeUntilRemovalEligibilityPage();
     }
 
     @And("the text is shown below the page heading")
@@ -54,7 +54,7 @@ public class ECMTInternationalRemovalEligibilityPageSteps {
     @And("the Application Number is shown correctly on ECMT International Eligibility page")
     public void theApplicationNumberIsShownCorrectly() {
         String actualReference = BasePermitPage.getReferenceFromPage();
-        assertEquals(BasePermitJourney.getFullReferenceNumber(), actualReference);
+        assertEquals(world.basePermitJourney.getFullReferenceNumber(), actualReference);
     }
 
     @And("the page heading is shown as per updated AC")

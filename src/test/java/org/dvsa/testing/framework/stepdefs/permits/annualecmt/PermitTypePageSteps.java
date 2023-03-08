@@ -5,7 +5,6 @@ import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitTypePage;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PermitTypePageSteps {
@@ -17,7 +16,7 @@ public class PermitTypePageSteps {
 
     @And("I am on the permit type page")
     public void iAmOnThePermitTypePage() {
-        clickToPermitTypePage(world);
+        world.basePermitJourney.clickToPermitTypePage();
     }
 
     @Then("continue button is selected without confirming the permit type")

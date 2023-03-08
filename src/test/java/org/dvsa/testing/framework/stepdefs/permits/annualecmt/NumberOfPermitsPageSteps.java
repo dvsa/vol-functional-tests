@@ -25,7 +25,7 @@ public class NumberOfPermitsPageSteps extends BasePage {
 
     @And("I am on the number of permits page")
     public void iAmOnTheNumberOfPermitsPage() {
-        EcmtApplicationJourney.completeUntilNumberOfPermitsPage(world);
+        world.ecmtApplicationJourney.completeUntilNumberOfPermitsPage();
     }
 
     @And("the page heading on the ECMT number of permits page is displayed correctly")

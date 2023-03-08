@@ -21,20 +21,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SubmissionPageSteps extends BasePermitPage{
     World world;
-    private String username;
-    private String userEmailAddress;
-    private String applicationDetails;
 
     public SubmissionPageSteps(World world) {
         this.world = world;
-        setUserEmailAddress(world.registerUser.getEmailAddress());
-        setUsername(world.registerUser.getUserName());
-        setApplicationDetails(world.applicationDetails.getLicenceNumber());
     }
 
     @And("I am on the ECMT International removal submission page")
     public void iAmOnTheECMTInternationalRemovalSubmissionPage() {
-        EcmtInternationalRemovalJourney.completeAndSubmitApplication(world);
+        world.ecmtInternationalRemovalJourney.completeAndSubmitApplication();
     }
 
     @Then("the page heading on the submission page is displayed correctly")
@@ -70,13 +64,13 @@ public class SubmissionPageSteps extends BasePermitPage{
 
     @And("I have partial ECMT international removal application")
     public void iHavePartialECMTInternationalRemovalApplication() {
-        EcmtInternationalRemovalJourney.completeUntilDeclarationPage(world);
+        world.ecmtInternationalRemovalJourney.completeUntilDeclarationPage();
     }
 
     @And("the application is under issued permits table with status as valid")
     public void theApplicationIsUnderIssuedPermitsTableWithStatusAsValid() {
         refreshPage();
-        CommonSteps.waitUntilPermitHasStatus(world);
+        world.basePermitJourney.waitUntilPermitHasStatus();
     }
 
     @And("I navigate to permit dashboard page")
@@ -86,9 +80,9 @@ public class SubmissionPageSteps extends BasePermitPage{
 
     @And("I'm on the ECMT international submitted page for my active application")
     public void iMOnTheECMTInternationalSubmittedPageForMyActiveApplication() {
-        world.selfServeNavigation.navigateToLogin(getUsername(), getUserEmailAddress());
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.selectPermitTab();
-        clickByLinkText(getApplicationDetails());
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
         OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         DeclarationPageJourney.completeDeclaration();
     }
@@ -110,29 +104,5 @@ public class SubmissionPageSteps extends BasePermitPage{
         assertTrue(referenceNumber.contains("Your reference number"));
         String actualReferenceNumber = BasePage.getElementValueByText("//div/strong", SelectorType.XPATH);
         assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUserEmailAddress() {
-        return userEmailAddress;
-    }
-
-    public void setUserEmailAddress(String userEmailAddress) {
-        this.userEmailAddress = userEmailAddress;
-    }
-
-    public String getApplicationDetails() {
-        return applicationDetails;
-    }
-
-    public void setApplicationDetails(String applicationDetails) {
-        this.applicationDetails = applicationDetails;
     }
 }

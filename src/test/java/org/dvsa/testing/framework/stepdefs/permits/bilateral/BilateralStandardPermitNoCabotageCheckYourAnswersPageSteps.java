@@ -19,7 +19,7 @@ public class BilateralStandardPermitNoCabotageCheckYourAnswersPageSteps {
 
     @Then("I am on the Bilateral Standard permits no Cabotage check your answers page")
     public void iAmOnTheBilateralStandardPermitsNoCabotageCheckYourAnswers() {
-        AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(world, PeriodType.BilateralsStandardPermitsNoCabotage, Country.Norway, null);
+        world.annualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(PeriodType.BilateralsStandardPermitsNoCabotage, Country.Norway, null);
     }
 
     @Then("I see three sections displayed on the table correctly")

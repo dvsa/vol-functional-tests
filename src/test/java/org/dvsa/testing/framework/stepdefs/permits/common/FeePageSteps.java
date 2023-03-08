@@ -25,7 +25,7 @@ public class FeePageSteps extends BasePage {
 
     @And("I am on the fee page")
     public void iAmOnTheFeePage() {
-        EcmtApplicationJourney.completeApplicationUntilFeePage(world);
+        world.ecmtApplicationJourney.completeApplicationUntilFeePage();
     }
 
     @When("I submit and pay")
@@ -41,13 +41,13 @@ public class FeePageSteps extends BasePage {
     @Then("the page heading and alert message on the fee page is displayed correctly")
     public void thePageHeadingAndAlertMessageOnTheFeePage() {
         assertEquals("Permit fee", PermitFeePage.getPageHeading());
-        assertTrue(PermitFeePage.isAlertMessagePresent());
-        assertEquals("Fee summary", PermitFeePage.getSubHeading());
+        assertTrue(world.permitFeePage.isAlertMessagePresent());
+        assertEquals("Fee summary", world.permitFeePage.getSubHeading());
     }
 
     @Then("the table contents matches as per AC")
     public void theTableContentsMatchesAsPerAC() {
-        PermitFeePage.tableCheck();
+        world.permitFeePage.tableCheck();
         String expectedDateTime = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
         String actualDate = PermitFeePage.getTableSectionValue(FeeSection.ApplicationDate);
         assertEquals(expectedDateTime, actualDate);

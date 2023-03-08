@@ -25,8 +25,8 @@ public class AwaitingFeePermitSteps extends BasePermitPage {
 
     @And("I have a short term application in awaiting fee status")
     public void iHaveAShortTermApplicationInAwaitingFee() throws HttpException {
-        ShortTermECMTJourney.completeShortTermECMTApplication(world);
-        IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
+        world.shortTermECMTJourney.completeShortTermECMTApplication();
+        world.irhpPageJourney.logInToInternalAndIRHPGrantApplication();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.selectPermitTab();
         HomePage.PermitsTab.selectFirstOngoingApplication();

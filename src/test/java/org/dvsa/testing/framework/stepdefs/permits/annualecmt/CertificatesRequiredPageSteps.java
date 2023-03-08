@@ -9,7 +9,6 @@ import org.dvsa.testing.framework.Journeys.permits.pages.RestrictedCountriesPage
 import org.dvsa.testing.framework.pageObjects.external.pages.CertificatesRequiredPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
-import static org.dvsa.testing.framework.pageObjects.external.pages.CookiesPage.selectAllCookies;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CertificatesRequiredPageSteps {
@@ -22,7 +21,7 @@ public class CertificatesRequiredPageSteps {
 
     @And("I am on the Ecmt Certificates required Page")
     public void iAmOnTheECMTCertificates() {
-        EcmtApplicationJourney.completeUntilCertificatesRequiredPage(world);
+        world.ecmtApplicationJourney.completeUntilCertificatesRequiredPage();
     }
 
     @And("The application reference is displayed on the page")

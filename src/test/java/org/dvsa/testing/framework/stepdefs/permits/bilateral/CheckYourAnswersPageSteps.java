@@ -40,7 +40,7 @@ public class CheckYourAnswersPageSteps extends BasePage  {
 
     @Then("Period type displayed on the check your answers page is the one I selected on the Period selection page")
     public void periodTypeDisplayedOnTheCheckYourAnswersPageIsTheOneISelected() {
-        assertEquals(BilateralJourneySteps.getPeriodText(), AnnualBilateralJourney.getPeriodType());
+        assertEquals(BilateralJourneySteps.getPeriodText(), world.annualBilateralJourney.getPeriodType());
     }
 
     @Then("Journey type displayed on the check your answers page is the one I selected on the Permits usage")

@@ -6,10 +6,14 @@ import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.TransportManagerJourney;
+import org.dvsa.testing.framework.Journeys.permits.*;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 
 
@@ -69,4 +73,14 @@ public class World {
     public SystemMessagesJourney systemMessagesJourney;
     public SubmitApplicationJourney submitApplicationJourney;
     public GrantApplicationJourney grantApplicationJourney;
+
+    public EcmtInternationalRemovalJourney ecmtInternationalRemovalJourney;
+    public EcmtApplicationJourney ecmtApplicationJourney;
+    public IRHPPageJourney irhpPageJourney;
+    public BasePermitJourney basePermitJourney;
+    public AnnualBilateralJourney annualBilateralJourney;
+    public ShortTermECMTJourney shortTermECMTJourney;
+    public CountriesWithLimitedPermitsPage countriesWithLimitedPermitsPage;
+    public YearSelectionPage yearSelectionPage;
+    public PermitFeePage permitFeePage;
 }

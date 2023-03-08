@@ -54,7 +54,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
 
     @When("I'm  viewing my saved Short term ECMT APGG application in internal and Granting Permit")
     public void iMViewingMySavedShortTermECMT() throws HttpException {
-        IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
+        world.irhpPageJourney.logInToInternalAndIRHPGrantApplication();
     }
 
     @When("I login back to the External to view the application in status of awaiting fee")
@@ -90,7 +90,7 @@ public class ShortTerm2020APGGEndToEndJourneyIncludingIssuedPermitsPageSteps ext
 
     @And("I select short term ecmt permit on the select permit page")
     public void iSelectShortTermECMTPermit() {
-        CommonSteps.clickToPermitTypePage(world);
-        BasePermitJourney.permitType(PermitType.SHORT_TERM_ECMT);
+        world.basePermitJourney.clickToPermitTypePage();
+        world.basePermitJourney.permitType(PermitType.SHORT_TERM_ECMT);
     }
 }

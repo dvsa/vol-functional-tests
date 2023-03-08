@@ -23,7 +23,7 @@ public class RestrictedCountriesPageSteps extends BasePage {
 
     @And("I am on the restricted countries page")
     public void iAmOnTheRestrictedCountriesPage() {
-        EcmtApplicationJourney.completeUntilRestrictedCountriesPage(world);
+        world.ecmtApplicationJourney.completeUntilRestrictedCountriesPage();
     }
 
     @Given("I (do |don't )?plan on delivering to a restricted country")

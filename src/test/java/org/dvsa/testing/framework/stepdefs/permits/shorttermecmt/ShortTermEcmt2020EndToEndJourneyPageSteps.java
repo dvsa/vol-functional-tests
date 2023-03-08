@@ -24,12 +24,12 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage {
 
     @Then("I select year on the select year page")
     public void iSelectYearOnTheSelectPage() {
-        YearSelectionPage.selectShortTermValidityPeriod();
+        world.yearSelectionPage.selectShortTermValidityPeriod();
     }
 
     @Then("I select any licence number for short term permit")
     public void iSelectAnyLicenceNumber() {
-        BasePermitJourney.licencePage(world);
+        world.basePermitJourney.licencePage();
     }
 
     @Then("I complete the Check if you need ECMT permits section and click save and continue")
@@ -47,7 +47,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage {
 
     @Then("I complete Countries with limited permits section and click save and continue")
     public void iCompleteCountriesWithLimitedPermits() {
-        CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
+        world.countriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
         BasePermitPage.saveAndContinue();
     }
 
@@ -75,7 +75,7 @@ public class ShortTermEcmt2020EndToEndJourneyPageSteps extends BasePage {
 
     @Then("I click on Submit and Pay button on the Permit fee page and complete the payment")
     public void iClickOnSubmitAndPayButtonOnThePermit() {
-        PermitFeePage.submitAndPay();
+        world.permitFeePage.submitAndPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         SubmittedPage.untilOnPage();
     }

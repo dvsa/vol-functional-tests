@@ -32,17 +32,17 @@ public class BilateralStandardAndCabotagePermitFeePageSteps extends BasePage {
 
     @And("I'm on the annual bilateral standard and cabotage permit fee page")
     public void iMOnTheAnnualBilateralStandardAndCabotagePermitFeePage() {
-        AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(world, PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, false);
+        world.annualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, false);
     }
 
     @And("I'm on the annual bilateral standard and cabotage permit fee page with Cabotage selected on Cabotage page")
     public void iMOnTheAnnualBilateralStandardAndCabotagePermitFeePageWithCabotageSelected() {
-        AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(world, PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, true);
+        world.annualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, true);
     }
 
     @And("I'm on the annual bilateral standard permit no cabotage fee page")
     public void iMOnTheAnnualBilateralStandardPermitNoCabotageFeePage() {
-        AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(world, PeriodType.BilateralsStandardPermitsNoCabotage, Country.Norway, null);
+        world.annualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(PeriodType.BilateralsStandardPermitsNoCabotage, Country.Norway, null);
     }
 
     @Then("the application details on the bilateral standard and cabotage fee page are displayed correctly in fee page table")

@@ -8,21 +8,15 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
-import org.dvsa.testing.framework.Journeys.permits.EcmtApplicationJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.FeeDetailsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourney;
-import org.dvsa.testing.framework.enums.Duration;
-import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SelectALicencePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -30,6 +24,7 @@ public class CommonSteps extends BasePermitJourney {
     private final World world;
 
     public CommonSteps(World world) {
+        super(world);
         this.world = world;
     }
 
@@ -42,7 +37,7 @@ public class CommonSteps extends BasePermitJourney {
 
     @And("I am on the Annual ECMT licence selection page")
     public void iAmOnTheAnnualECMTLicence() {
-        EcmtApplicationJourney.beginApplicationToLicenceSelectionPage(world);
+        world.ecmtApplicationJourney.beginApplicationToLicenceSelectionPage();
     }
 
     @Then("I will get an error message on the licence page")
@@ -75,17 +70,5 @@ public class CommonSteps extends BasePermitJourney {
     @And("I am on the permits dashboard on external")
     public void iAmOnThePermitsDashboardOnExternal() {
         HomePageJourney.selectPermitTab();
-    }
-
-    public static void clickToPermitTypePage(@NotNull World world) {
-        HomePageJourney.beginPermitApplication();
-    }
-
-    public static void waitUntilPermitHasStatus(World world) {
-        HomePage.PermitsTab.untilPermitHasStatus(
-                world.applicationDetails.getLicenceNumber(),
-                PermitStatus.VALID,
-                Duration.LONG,
-                TimeUnit.MINUTES);
     }
 }

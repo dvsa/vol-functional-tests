@@ -54,7 +54,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage {
     }
     @And("I have completed an ECMT application")
     public void iHaveCompletedAnECMTApplication() {
-        EcmtApplicationJourney.completeEcmtApplication(world);
+        world.ecmtApplicationJourney.completeEcmtApplication();
     }
     @When("I withdraw without confirming")
     public void iWithdrawWithoutConfirming() {
@@ -64,7 +64,7 @@ public class ECMTPermitApplicationSteps extends BasePermitPage {
     }
     @When("I have a partial completed ECMT application")
     public void iHaveAPartialCompletedECMTApplication() {
-        EcmtApplicationJourney.beginApplication(world);
+        world.ecmtApplicationJourney.beginApplication();
         BasePermitPage.back();
     }
     @When("I view the application from ongoing permit application table")
@@ -73,8 +73,8 @@ public class ECMTPermitApplicationSteps extends BasePermitPage {
     }
     @Then("I have an annual ECMT application in awaiting fee status")
     public void iHaveAnAnnualECMTApplicationInAwaitingFeeStatus() throws InterruptedException, HttpException {
-        EcmtApplicationJourney.completeEcmtApplication(world);
-        IRHPPageJourney.logInToInternalAndIRHPGrantApplication(world);
+        world.ecmtApplicationJourney.completeEcmtApplication();
+        world.irhpPageJourney.logInToInternalAndIRHPGrantApplication();
         sleep(5000);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         HomePageJourney.selectPermitTab();
@@ -89,8 +89,8 @@ public class ECMTPermitApplicationSteps extends BasePermitPage {
     @When("I try applying with a licence that has an existing annual ECMT application")
     public void iTryApplyingWithALicenceThatHasAnExistingAnnualECMTApplication() {
         HomePageJourney.beginPermitApplication();
-        BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
-        YearSelectionPage.selectECMTValidityPeriod();
-        BasePermitJourney.licencePage(world);
+        world.basePermitJourney.permitType(PermitType.ECMT_ANNUAL);
+        world.yearSelectionPage.selectECMTValidityPeriod();
+        world.basePermitJourney.licencePage();
     }
 }

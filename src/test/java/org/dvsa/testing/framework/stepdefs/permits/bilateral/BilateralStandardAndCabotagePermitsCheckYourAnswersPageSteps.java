@@ -22,7 +22,7 @@ public class BilateralStandardAndCabotagePermitsCheckYourAnswersPageSteps extend
 
     @Then("I am on the Bilateral Standard and Cabotage permits check your answers page")
     public void iAmOnTheBilateralStandardAndCabotage() {
-        AnnualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(world, PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, true);
+        world.annualBilateralJourney.startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(PeriodType.BilateralsStandardAndCabotagePermits, Country.Norway, true);
     }
 
     @Then("Value of do you need to carry out cabotage, will always be as per the value selected on the cabotage pag")
