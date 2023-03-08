@@ -59,7 +59,7 @@ public class DeclarationPageSteps extends BasePage {
 
     @Then("I am directed to the ECMT removals permit fee page")
     public void iAmDirectedToTheECMTRemovals() {
-        PermitFeePage.untilOnPage();
+        world.permitFeePage.untilOnPage();
     }
 
     @Then("I'm viewing my saved ECMT International application in internal")
