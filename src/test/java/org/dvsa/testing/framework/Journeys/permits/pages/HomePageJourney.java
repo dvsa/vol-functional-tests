@@ -5,11 +5,13 @@ import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.enums.Tab;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 
+
 public class HomePageJourney extends BasePermitJourney {
 
-    public HomePageJourney(World world){
+    public HomePageJourney(World world) {
         super(world);
     }
+
 
     public static void selectPermitTab() {
         HomePage.selectTab(Tab.PERMITS);

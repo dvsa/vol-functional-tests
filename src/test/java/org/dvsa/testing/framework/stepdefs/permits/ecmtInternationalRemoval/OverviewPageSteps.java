@@ -33,7 +33,6 @@ public class OverviewPageSteps extends BasePage {
 
     @And("the licence number is displayed correctly")
     public void theLicenceNumberIsDisplayedCorrectly() {
-        waitForElementToBeClickable(world.applicationDetails.getLicenceNumber(), SelectorType.PARTIALLINKTEXT);
         String actualReferenceNumber = BasePermitPage.getReferenceFromPage();
         assertTrue(actualReferenceNumber.contains(world.applicationDetails.getLicenceNumber()));
     }
