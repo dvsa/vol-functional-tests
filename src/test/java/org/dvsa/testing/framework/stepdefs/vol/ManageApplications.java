@@ -53,6 +53,10 @@ public class ManageApplications {
         world.licenceCreation.createSubmittedApplication(operatorType, licenceType);
     }
 
+    @Given("i have a valid {string} {string} licence with an open case and bus reg")
+    public void iHaveAValidLicenceWithAnOpenCaseAndBusReg(String operatorType, String licenceType) throws HttpException {
+        world.busRegistrationJourney.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
+    }
     @Given("I have all {string} {string} Traffic Areas applications with an external TM")
     public void iHaveAppliedForTMApplication(String operatorType, String licenceType) throws Exception {
         String password;

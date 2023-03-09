@@ -9,7 +9,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Journeys.permits.pages.LicenceDetailsPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.NumberOfPermitsPageJourney;
-import org.dvsa.testing.framework.Journeys.permits.IRHPPageJourney;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -17,7 +16,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
 import org.dvsa.testing.framework.pageObjects.internal.details.FeesDetailsPage;
 import org.dvsa.testing.framework.pageObjects.internal.irhp.IrhpPermitsApplyPage;
-import org.dvsa.testing.framework.stepdefs.vol.Initialisation;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 

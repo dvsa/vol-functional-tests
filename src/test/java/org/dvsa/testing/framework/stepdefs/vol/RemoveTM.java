@@ -24,17 +24,21 @@ import static java.lang.Thread.sleep;
 import static org.dvsa.testing.framework.Journeys.licence.APIJourney.tmCount;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RemoveTM extends BasePage{
+public class RemoveTM extends BasePage {
 
     private static String oldAlertValue = "You are removing your last Transport Manager. If you haven't yet made an application to appoint a replacement, " +
             "you must contact us on 0300 123 9000 or at notifications@vehicle-operator-licensing.service.gov.uk";
-    private static String newAlertValue = "You are about to remove the last transport manager for this licence. Do you want to send a letter about this to the operator to all known addresses?\n" +
+    private static String newAlertValue = "You are about to remove the last transport manager for this licence. Do you want to send a letter about this to the operator?\n" +
             "If yes, this will be automatically issued tomorrow.";
     public static String alertHeaderValue = "Are you sure you want to remove this Transport Manager?";
     private static String applicationVariationTMAlertContent = "This action is permanent and cannot be undone.";
-    private World world;
+    private final World world;
+    Initialisation initialisation;
 
-    public RemoveTM (World world) {this.world = world;}
+    public RemoveTM(World world) {
+        this.world = world;
+        initialisation = new Initialisation(world);
+    }
 
     @Given("i have an application with a transport manager")
     public void iHaveAnApplicationWithATransportManager() throws HttpException {

@@ -14,9 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SystemMessages extends BasePage {
     private final World world;
+    Initialisation initialisation;
 
     public SystemMessages(World world) {
         this.world = world;
+        initialisation = new Initialisation(world);
     }
 
     @Given("I am on the System Messages page")

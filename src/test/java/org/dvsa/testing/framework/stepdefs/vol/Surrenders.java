@@ -56,13 +56,6 @@ public class Surrenders extends BasePage {
         String communityLicenceDocumentStatus = getText("//dt[contains(text(),'Licence document and all certified copies')]//..//dd", SelectorType.XPATH);
         assertEquals("stolen", communityLicenceDocumentStatus);
     }
-
-    @Given("i have a valid {string} {string} licence with an open case and bus reg")
-    public void iHaveAValidLicenceWithAnOpenCaseAndBusReg(String operatorType, String licenceType) throws HttpException {
-        world.busRegistrationJourney.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
-    }
-
-
     @And("i choose to surrender my licence with {string}")
     public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) {
         world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();

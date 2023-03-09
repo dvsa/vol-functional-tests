@@ -9,7 +9,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateNewInternalUser extends BasePage{
-    private  World world;
+    private final World world;
 
     public CreateNewInternalUser (World world) { this.world=world; }
 
