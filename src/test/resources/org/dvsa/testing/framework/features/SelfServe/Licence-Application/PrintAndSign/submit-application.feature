@@ -1,6 +1,5 @@
-@prod_smokeTest
+@prod_smoke
 @ss_regression
-@Accessibility
 Feature: Complete an application manually
 
   Scenario Outline: Submit an application
