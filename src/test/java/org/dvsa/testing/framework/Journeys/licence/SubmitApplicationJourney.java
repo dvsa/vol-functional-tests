@@ -60,7 +60,7 @@ public class SubmitApplicationJourney extends BasePage {
             world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(authority,"0","0");
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
-        waitAndSelectByIndex("//*[@id='trafficArea']", SelectorType.XPATH, 1);
+        waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH,"Wales");
         UIJourney.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
