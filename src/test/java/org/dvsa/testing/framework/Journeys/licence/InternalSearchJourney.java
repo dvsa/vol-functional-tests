@@ -55,7 +55,6 @@ public class InternalSearchJourney extends BasePage {
             SearchNavBar.search(searchType, searchString);
         } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
         waitForElementToBeClickable(String.format("//*[contains(text(),'%s')]", linkText), SelectorType.XPATH);
-        waitForTextToBePresent("1 Psv Disc");
-        clickByLinkText(linkText);
+        waitAndClick(linkText, SelectorType.PARTIALLINKTEXT);
     }
 }
