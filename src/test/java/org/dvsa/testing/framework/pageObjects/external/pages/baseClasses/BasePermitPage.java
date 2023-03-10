@@ -3,11 +3,12 @@ package org.dvsa.testing.framework.pageObjects.external.pages.baseClasses;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.FeeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BasePermitPage extends BasePage {
 
@@ -58,7 +59,7 @@ public class BasePermitPage extends BasePage {
 
     public static void hasInternationalAuthorisationGovGuidanceLink() {
         boolean linkExists = isElementPresent("//a[@href='https://www.gov.uk/guidance/international-authorisations-and-permits-for-road-haulage']", SelectorType.XPATH);
-        Assert.assertTrue("Unable to find guidance notes link", linkExists);
+        assertTrue(linkExists,"Unable to find guidance notes link");
     }
 
     public static String getTableSectionValue(FeeSection section) {
@@ -69,5 +70,4 @@ public class BasePermitPage extends BasePage {
         String selector = String.format("./td[@data-heading='%s']", rowHeading);
         return row.findElement(By.xpath(selector)).getText();
     }
-
 }

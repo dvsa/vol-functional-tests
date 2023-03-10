@@ -1,11 +1,8 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
-import activesupport.jenkins.Jenkins;
-import activesupport.jenkins.JenkinsParameterKey;
-import activesupport.system.Properties;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
@@ -39,7 +36,7 @@ import java.util.*;
 
 public class GenericUtils extends BasePage {
 
-    private World world;
+    private final World world;
     private String registrationNumber;
     private static final String zipFilePath = "/src/test/resources/import EBSR.zip";
 
@@ -57,7 +54,7 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String xmlFile = "./src/test/resources/EBSR/EBSR.xml";
+            String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
             Document xmlDoc = xmlBuilder.parse(xmlFile);
@@ -165,16 +162,8 @@ public class GenericUtils extends BasePage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
+        ZipUtil.pack(new File("./src/test/resources/org/dvsa/testing/framework/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
         return String.format("target/EBSR/%s",fileName);
-    }
-
-    public void executeJenkinsBatchJob(String command) throws Exception {
-        HashMap<String, String> jenkinsParams = new HashMap<>();
-        jenkinsParams.put(JenkinsParameterKey.NODE.toString(), String.format("api&&%s&&olcs", Properties.get("env", true)));
-        jenkinsParams.put(JenkinsParameterKey.JOB.toString(), command);
-
-        Jenkins.trigger(Jenkins.Job.BATCH_PROCESS_QUEUE, jenkinsParams);
     }
 
     public String stripNonAlphanumericCharacters(String value) {

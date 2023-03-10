@@ -1,20 +1,22 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
-public class GoodVarDecreaseVehicle extends BasePage implements En {
+public class GoodVarDecreaseVehicle extends BasePage {
     private final World world;
-
-    public GoodVarDecreaseVehicle (World world) {this.world = world;}
+    Initialisation initialisation;
+    public GoodVarDecreaseVehicle (World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @When("A selfserve user decreases the vehicle authority count")
     public void aSelfserveUserDecreasesTheVehicleAuthorityCount() {

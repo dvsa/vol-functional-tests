@@ -1,24 +1,21 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import activesupport.IllegalBrowserException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import java.net.MalformedURLException;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static junit.framework.TestCase.assertTrue;
-
-public class KeyboardAccessibility extends BasePage implements En {
+public class KeyboardAccessibility extends BasePage {
     private final World world;
-
-    public KeyboardAccessibility (World world) {this.world = world;}
-
+    Initialisation initialisation;
+    public KeyboardAccessibility (World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
     @When("i navigate to self serve application main pages i can skip to main content")
     public void iNavigateToSelfServeApplicationMainPagesICanSkipToMainContent() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());

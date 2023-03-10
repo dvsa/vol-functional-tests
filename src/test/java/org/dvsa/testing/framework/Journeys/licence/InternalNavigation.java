@@ -1,8 +1,8 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
-import apiCalls.enums.VehicleType;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -25,22 +25,22 @@ public class InternalNavigation extends BasePage {
     }
 
     public void navigateToLogin(String username, String emailAddress) {
-        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.INTERNAL, "yes");
+        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.INTERNAL);
     }
 
-    public void logInAsAdmin() {
+    public void logInAsAdmin() throws HttpException {
         if (world.updateLicence.getInternalUserId() == null) {
             world.APIJourney.createAdminUser();
         }
         navigateToLogin(world.updateLicence.getInternalUserLogin(), world.updateLicence.getInternalUserEmailAddress());
     }
 
-    public void logInAndNavigateToApplicationDocsTable(boolean variation) {
+    public void logInAndNavigateToApplicationDocsTable(boolean variation) throws HttpException {
         loginAndGetApplication(variation);
         clickByLinkText("Docs");
     }
 
-    public void logInAndNavigateToApplicationProcessingPage(boolean variation) {
+    public void logInAndNavigateToApplicationProcessingPage(boolean variation) throws HttpException {
         loginAndGetApplication(variation);
         waitForTextToBePresent("Processing");
         clickByLinkText("Processing");
@@ -82,7 +82,7 @@ public class InternalNavigation extends BasePage {
             clickByLinkText("Operating centres and authorisation");
     }
 
-    public void loginAndGetApplication(boolean variation) {
+    public void loginAndGetApplication(boolean variation) throws HttpException {
         if (world.updateLicence.getInternalUserId() == null)
             world.APIJourney.createAdminUser();
         logInAsAdmin();
@@ -129,13 +129,13 @@ public class InternalNavigation extends BasePage {
         get(this.url.concat(String.format("variation/%s/financial-evidence", world.updateLicence.getVariationApplicationId())));
     }
 
-    public void logIntoInternalAndClickOnTask(String taskLinkText) {
+    public void logIntoInternalAndClickOnTask(String taskLinkText) throws HttpException {
         logInAndNavigateToApplicationProcessingPage(false);
         clickByXPath(taskLinkText);
         waitForElementToBePresent(taskTitle);
     }
 
-    public void navigateToPage(String type, SelfServeSection page) {
+    public void navigateToPage(String type, SelfServeSection page) throws HttpException {
         if (isElementNotPresent(world.internalNavigation.adminDropdown, SelectorType.XPATH)) {
             if (world.updateLicence.getInternalUserId() == null) {
                 world.APIJourney.createAdminUser();

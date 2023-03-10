@@ -1,36 +1,39 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import apiCalls.enums.OperatorType;
+import io.cucumber.java.en.And;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
-import cucumber.api.Scenario;
-import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.datatable.DataTable;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
 import java.util.Locale;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
 public class ManageApplications {
     World world;
+    Initialisation initialisation;
     String fileName = "src/test/resources/";
 
     public ManageApplications(World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
-    @Before
-    public void getScenarioName(Scenario scenario){
-        System.out.println("Testing Scenario:" + scenario.getName());
-    }
     @Given("I have a {string} application with {int} vehicles and a vehicleAuthority of {int}")
-    public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, int numberOfVehicles, int authority) {
+    public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, int numberOfVehicles, int authority) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfAddedHgvVehicles(numberOfVehicles);
         world.createApplication.setTotalOperatingCentreHgvAuthority(numberOfVehicles);
@@ -39,17 +42,21 @@ public class ManageApplications {
     }
 
     @Given("I have a {string} {string} application")
-    public void iHaveAnStringStringApplication(String operatorType, String licenceType) {
+    public void iHaveAnStringStringApplication(String operatorType, String licenceType) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createApplication(operatorType, licenceType);
     }
 
     @Given("I have a submitted {string} {string} application")
-    public void iHaveASubmittedApplication(String operatorType, String licenceType) {
+    public void iHaveASubmittedApplication(String operatorType, String licenceType) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createSubmittedApplication(operatorType, licenceType);
     }
 
+    @Given("i have a valid {string} {string} licence with an open case and bus reg")
+    public void iHaveAValidLicenceWithAnOpenCaseAndBusReg(String operatorType, String licenceType) throws HttpException {
+        world.busRegistrationJourney.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
+    }
     @Given("I have all {string} {string} Traffic Areas applications with an external TM")
     public void iHaveAppliedForTMApplication(String operatorType, String licenceType) throws Exception {
         String password;
@@ -73,7 +80,7 @@ public class ManageApplications {
     }
 
     @Given("I have {string} {string} {string} licences")
-    public void iHaveNumberLicences(String noOfLicences, String operatorType, String licenceType) {
+    public void iHaveNumberLicences(String noOfLicences, String operatorType, String licenceType) throws HttpException {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
@@ -84,7 +91,7 @@ public class ManageApplications {
     }
 
     @Given("I have all {string} {string} traffic area licences")
-    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) {
+    public void iHaveAllTrafficAreaForLicences(String operatorType, String licenceType) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.createApplication.setNoOfAddedHgvVehicles(3);
         for (TrafficArea ta : trafficAreaList()) {
@@ -94,31 +101,31 @@ public class ManageApplications {
     }
 
     @Given("I have a {string} {string} application with {string} vehicles")
-    public void iHaveAnApplicationWithVehicles(String operatorType, String licenceType, String vehicles) {
+    public void iHaveAnApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createApplicationWithVehicles(operatorType, licenceType, vehicles);
     }
 
     @Given("I have a {string} {string} licence")
-    public void iHaveLicence(String operatorType, String licenceType) {
+    public void iHaveLicence(String operatorType, String licenceType) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicence(operatorType, licenceType);
     }
 
     @Given("I have a {string} {string} licence with {string} vehicle authorisation")
-    public void iHaveLicenceWithVehicles(String operatorType, String licenceType, String vehicles) {
+    public void iHaveLicenceWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLicenceWithVehicles(operatorType, licenceType, vehicles);
     }
 
     @Given("I have a {string} {string} NI licence")
-    public void iHaveNILicence(String operatorType, String licenceType) {
+    public void iHaveNILicence(String operatorType, String licenceType) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createNILicence(operatorType, licenceType);
     }
 
     @Given("I have {string} {string} {string} licences with {string} vehicles and a vehicleAuthority of {string}")
-    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) {
+    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String vehicles, String vehicleAuth) throws HttpException {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
@@ -133,7 +140,7 @@ public class ManageApplications {
     }
 
     @Given("i have a {string} {string} {string} application in traffic area")
-    public void iHaveAnApplicationInTrafficArea(String operatorType, String licenceType, String Region, DataTable trafficAreaTable) {
+    public void iHaveAnApplicationInTrafficArea(String operatorType, String licenceType, String Region, DataTable trafficAreaTable) throws HttpException {
         if (Region.equals("NI".toUpperCase())) {
             Region = "Y";
         } else {
@@ -150,7 +157,7 @@ public class ManageApplications {
 
     //TODO will need changing when lgv authority and hgv authority is split.
     @Given("I have {string} {string} {string} licences with {string} HGVs and {string} LGVs with a vehicleAuthorities of {string} and {string}")
-    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String hgvs, String lgvs, String hgvAuth, String lgvAuth) {
+    public void iHaveLicencesWithVehiclesAndAVehicleAuthorityOf(String noOfLicences, String operatorType, String licenceType, String hgvs, String lgvs, String hgvAuth, String lgvAuth) throws HttpException {
         if (Integer.parseInt(noOfLicences) > 9) {
             throw new InvalidArgumentException("You cannot have more than 9 licences because there are only 9 traffic areas.");
         }
@@ -167,7 +174,7 @@ public class ManageApplications {
     }
 
     @Given("I have a {string} {string} licence with {int} operating centres")
-    public void iHaveALicenceWithOperatingCentres(String operatorType, String licenceType, int numberOfOperatingCentres) {
+    public void iHaveALicenceWithOperatingCentres(String operatorType, String licenceType, int numberOfOperatingCentres) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createApplication(operatorType, licenceType);
         for (int i = 1; i < numberOfOperatingCentres; i++)
@@ -177,27 +184,76 @@ public class ManageApplications {
     }
 
     @Given("I have a {string} lgv only application")
-    public void iHaveALgvOnlyApplication(String NIFlag) {
+    public void iHaveALgvOnlyApplication(String NIFlag) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLGVOnlyApplication(NIFlag);
     }
 
     @Given("I have a submitted {string} lgv only application")
-    public void iHaveASubmittedLgvOnlyApplication(String NIFlag) {
+    public void iHaveASubmittedLgvOnlyApplication(String NIFlag) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createSubmittedLGVOnlyApplication(NIFlag);
     }
 
     @Given("I have a submitted {string} lgv only application with interim")
-    public void iHaveASubmittedLgvOnlyApplicationWithInterim(String NIFlag) {
+    public void iHaveASubmittedLgvOnlyApplicationWithInterim(String NIFlag) throws HttpException {
         world.createApplication.setIsInterim("Y");
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createSubmittedLGVOnlyApplication(NIFlag);
     }
 
     @Given("I have a valid {string} lgv only licence")
-    public void iHaveAValidLgvOnlyLicence(String NIFlag) {
+    public void iHaveAValidLgvOnlyLicence(String NIFlag) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.licenceCreation.createLGVOnlyLicence(NIFlag);
     }
+
+    @Given("i have a valid {string} {string} licence")
+    public void iHaveAValidLicence(String operatorType, String licenceType) throws HttpException {
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.licenceCreation.createLicence(operatorType, licenceType);
+    }
+
+    @Given("i have a {string} application in progress")
+    public void iHaveAnApplicationInProgress(String operatorType) throws HttpException {
+        if(operatorType.equals("Goods")){
+            operatorType = OperatorType.GOODS.name();
+        }else operatorType = OperatorType.PUBLIC.name();
+        world.createApplication.setOperatorType(operatorType);
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.createApplication();
+        refreshPageWithJavascript();
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
+        world.selfServeNavigation.navigateThroughApplication();
+        world.UIJourney.signDeclaration();
+    }
+
+    @And("the licence status is {string}")
+    public void theLicenceStatusIs(String arg0) throws HttpException {
+        world.updateLicence.updateLicenceStatus(arg0);
+    }
+
+    @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
+    public void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
+        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);
+    }
+
+    @Given("i have an interim {string} {string} application")
+    public void iHaveAnInterimApplication(String operatorType, String licenceType) throws Exception {
+        if (operatorType.equals("public")){
+            throw new Exception("PSV licences cannot have interim applications.");
+        }
+        world.createApplication.setOperatorType(operatorType);
+        world.createApplication.setLicenceType(licenceType);
+        world.createApplication.setIsInterim("Y");
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
+            world.APIJourney.createSpecialRestrictedLicence();
+        }
+        else if (world.createApplication.getApplicationId() == null) {
+            world.APIJourney.createApplication();
+            world.APIJourney.submitApplication();
+        }
+    }
+
 }

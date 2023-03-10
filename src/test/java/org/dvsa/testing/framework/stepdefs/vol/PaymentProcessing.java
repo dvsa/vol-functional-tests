@@ -1,18 +1,18 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaymentProcessing extends BasePage {
-    private World world;
+    private final World world;
     private String currentFeeCount;
     private String feeNumber;
 
@@ -56,7 +56,7 @@ public class PaymentProcessing extends BasePage {
     public void iAddANewFee(String arg0) {
         String amount = "100";
         selectValueFromDropDown("status", SelectorType.ID, "Current");
-        String feeCountBeforeAddingNewFee = getElementValueByText("//div[@class='table__header']/h2", SelectorType.XPATH);
+        String feeCountBeforeAddingNewFee = getElementValueByText("//*[@class='govuk-table__caption govuk-table__caption--m']", SelectorType.XPATH);
         setCurrentFeeCount(world.genericUtils.stripAlphaCharacters(feeCountBeforeAddingNewFee));
         assertEquals("current", findElement("status", SelectorType.ID, 30).getAttribute("value"));
         world.feeAndPaymentJourney.createAdminFee(amount, arg0);

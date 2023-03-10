@@ -1,11 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.IllegalBrowserException;
-import apiCalls.enums.VehicleType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -14,7 +14,7 @@ import scanner.AXEScanner;
 import java.io.IOException;
 
 import static java.lang.Thread.sleep;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class OperatingCentreVariation extends BasePage {
     World world;
@@ -42,7 +42,7 @@ public class OperatingCentreVariation extends BasePage {
     }
 
     @And("i create and submit and grant an operating centre variation with {string} hgvs and {string} lgvs")
-    public void iCreateAndSubmitAndGrantAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) {
+    public void iCreateAndSubmitAndGrantAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) throws HttpException {
         world.operatingCentreJourney.submitOperatingCentreVehicleAuthorisationVariationApplication(numberOfHGVs, numberOfLGVs);
         world.internalNavigation.navigateToPage("variation", SelfServeSection.VIEW);
         world.UIJourney.caseWorkerCompleteOverview();
@@ -143,7 +143,7 @@ public class OperatingCentreVariation extends BasePage {
     }
 
     @When("i create a lgv authorisation increase variation with {string} on internal")
-    public void iCreateALgvAuthorisationIncreaseVariationWithOnInternal(String feeRequired) {
+    public void iCreateALgvAuthorisationIncreaseVariationWithOnInternal(String feeRequired) throws HttpException {
         boolean variationFeeRequired = feeRequired.equals("Fee Required");
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.UIJourney.createVariationInInternal(variationFeeRequired);
@@ -198,7 +198,7 @@ public class OperatingCentreVariation extends BasePage {
     }
 
     @And("I create and save an lgv authorisation variation on internal with {int} more LGVs")
-    public void iCreateAndSaveAnLgvAuthorisationVariationOnInternal(int additionalAuthority) {
+    public void iCreateAndSaveAnLgvAuthorisationVariationOnInternal(int additionalAuthority) throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.UIJourney.createVariationInInternal(false);
         String newAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreLgvAuthority() + additionalAuthority);

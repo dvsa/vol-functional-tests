@@ -1,18 +1,15 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.faker.FakerUtils;
-import apiCalls.actions.CreateApplication;
 import apiCalls.enums.OperatorType;
-import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.io.IOException;
 import java.util.HashMap;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class OperatingCentreJourney extends BasePage {

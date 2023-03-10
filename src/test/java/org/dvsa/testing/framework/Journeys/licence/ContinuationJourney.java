@@ -1,7 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
-import activesupport.IllegalBrowserException;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.file.TestResourceReader;
 import activesupport.system.Properties;
@@ -11,7 +11,6 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
@@ -19,7 +18,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
-import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ContinuationJourney extends BasePage {
 
@@ -31,9 +31,10 @@ public class ContinuationJourney extends BasePage {
     }
 
     public void generateContinuationOnInternal(String licenceNo, String licenceTrafficArea, String month)  {
+        refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Admin')]", SelectorType.XPATH);
         waitAndClick("menu-admin-dashboard/continuations", SelectorType.ID);
-        waitForElementToBePresent("//*[@id='generate-continuation-type']");
+        waitForElementToBePresent("//*[@id='form-actions[generate]']");
         selectValueFromDropDownByIndex("details[date][month]", SelectorType.NAME, Integer.parseInt(month) - 1); // Minus one in the month because of indexing.
         selectValueFromDropDown("generate-continuation-trafficArea", SelectorType.ID, licenceTrafficArea);
         waitAndClick("form-actions[generate]", SelectorType.ID);
@@ -72,12 +73,12 @@ public class ContinuationJourney extends BasePage {
         }
     }
 
-    public void viewContinuationSnapshotOnInternal()  {
+    public void viewContinuationSnapshotOnInternal() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
         refreshPageUntilElementAppears("//*[contains(text(), 'Digital continuation snapshot')]", SelectorType.XPATH);
-        Assert.assertTrue(isTextPresent("Digital continuation snapshot"));
+        assertTrue(isTextPresent("Digital continuation snapshot"));
         clickByLinkText("Digital continuation snapshot");
         waitForTabsToLoad(2, 60);
         ArrayList<String> tabs = new ArrayList<String> (getWindowHandles());
@@ -94,7 +95,7 @@ public class ContinuationJourney extends BasePage {
 
     public void completeContinuationPayOrSubmit()  {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
-           waitAndClick("submitAndPay", SelectorType.ID);
+            waitAndClick("submitAndPay", SelectorType.ID);
             world.UIJourney.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {
@@ -133,35 +134,35 @@ public class ContinuationJourney extends BasePage {
 
     public void checkPSVRestrictedConditionsAndUndertakingsText() throws FileNotFoundException {
         Config testFile = new TestResourceReader("testResources/PSV/PSVRestrictedConditionsAndUndertakings.properties").getFile();
-        Assert.assertTrue(isTextPresent(testFile.getString("conditionsOne")));
-        Assert.assertTrue(isTextPresent(testFile.getString("conditionsTwo")));
-        Assert.assertTrue(isTextPresent(testFile.getString("conditionsThree")));
-        Assert.assertTrue(isTextPresent(testFile.getString("undertakingsOne")));
-        Assert.assertTrue(isTextPresent(testFile.getString("undertakingsTwo")));
+        assertTrue(isTextPresent(testFile.getString("conditionsOne")));
+        assertTrue(isTextPresent(testFile.getString("conditionsTwo")));
+        assertTrue(isTextPresent(testFile.getString("conditionsThree")));
+        assertTrue(isTextPresent(testFile.getString("undertakingsOne")));
+        assertTrue(isTextPresent(testFile.getString("undertakingsTwo")));
     }
 
     public void checkContinuationReviewSections() {
-        Assert.assertTrue(isTextPresent("Type of licence"));
-        Assert.assertTrue(isTextPresent("Business type"));
-        Assert.assertTrue(isTextPresent("Business details"));
-        Assert.assertTrue(isTextPresent("Addresses"));
-        Assert.assertTrue(isTextPresent("Directors"));
+        assertTrue(isTextPresent("Type of licence"));
+        assertTrue(isTextPresent("Business type"));
+        assertTrue(isTextPresent("Business details"));
+        assertTrue(isTextPresent("Addresses"));
+        assertTrue(isTextPresent("Directors"));
         if (!world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())){
-            Assert.assertTrue(isTextPresent("Operating centres and authorisation"));
-            Assert.assertTrue(isTextPresent("Safety and compliance"));
+            assertTrue(isTextPresent("Operating centres and authorisation"));
+            assertTrue(isTextPresent("Safety and compliance"));
             if (!world.createApplication.getLicenceType().equals(LicenceType.RESTRICTED.asString())) {
-                Assert.assertTrue(isTextPresent("Transport managers"));
+                assertTrue(isTextPresent("Transport managers"));
             }
         }
         if (world.licenceCreation.isGoodsLicence()) {
             // 'Vehicle' targeting is fine on snapshot.
             if (isTextPresent("Print this page")) {
-                Assert.assertTrue(isTextPresent("Vehicles"));
+                assertTrue(isTextPresent("Vehicles"));
             } else {
                 // Selenium is struggling to target Vehicle title on Self Serve.
-                Assert.assertTrue(isElementPresent("vehiclesCheckbox", SelectorType.ID));
+                assertTrue(isElementPresent("vehiclesCheckbox", SelectorType.ID));
             }
         }
-        Assert.assertTrue(isTextPresent("User access"));
+        assertTrue(isTextPresent("User access"));
     }
 }

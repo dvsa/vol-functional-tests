@@ -1,23 +1,28 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SystemMessages extends BasePage {
     private final World world;
+    Initialisation initialisation;
 
     public SystemMessages(World world) {
         this.world = world;
+        initialisation = new Initialisation(world);
     }
 
     @Given("I am on the System Messages page")
-    public void iAmOnTheSystemMessagesPage() {
+    public void iAmOnTheSystemMessagesPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.SYSTEM_MESSAGES);
     }
@@ -35,6 +40,6 @@ public class SystemMessages extends BasePage {
     @Then("The message should be displayed on the external screen")
     public void theMessageShouldBeDisplayedOnTheExternalScreen() {
         world.selfServeNavigation.navigateToLoginPage();
-        Assert.assertTrue(isTextPresent(world.DataGenerator.getRandomWord()));
+        assertTrue(isTextPresent(world.DataGenerator.getRandomWord()));
     }
 }

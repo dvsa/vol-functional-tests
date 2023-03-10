@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
-import activesupport.IllegalBrowserException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import com.sun.istack.NotNull;
@@ -18,24 +17,22 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
-import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class SelfServeNavigation extends BasePage {
 
-    private World world;
-    private String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
+    private final World world;
+    private final String url = URL.build(ApplicationType.EXTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
 
     public SelfServeNavigation(World world) {
         this.world = world;
     }
 
     public void navigateToLogin(String username, String emailAddress) {
-        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL, "yes");
+        world.globalMethods.navigateToLoginWithoutCookies(username, emailAddress, ApplicationType.EXTERNAL);
     }
 
     public void navigateToExternalSearch() {
@@ -43,7 +40,7 @@ public class SelfServeNavigation extends BasePage {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
-        get(this.url.concat("search/"));
+        get(url.concat("search/"));
     }
 
     public void navigateToFindLorryAndBusOperatorsSearch()  {

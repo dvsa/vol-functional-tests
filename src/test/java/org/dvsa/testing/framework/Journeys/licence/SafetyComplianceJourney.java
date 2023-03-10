@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.OperatorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;

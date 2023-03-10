@@ -1,11 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -15,29 +15,29 @@ import org.joda.time.LocalDate;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+public class InterimLicence extends BasePage {
 
-public class InterimLicence extends BasePage implements En {
-
-    private static String VehicleErrorMessage = "The interim vehicle authority cannot exceed the total vehicle authority";
-    private static String HgvVehicleErrorMessage = "The interim Heavy goods vehicle authority cannot exceed the total Heavy goods vehicle authority";
-    private static String LgvVehicleErrorMessage = "The interim Light goods vehicle authority cannot exceed the total Light goods vehicle authority";
-    private static String errorMessageTitle = "There is a problem";
-    private static String valueIsRequiredErrorMessage = "Value is required";
-    private static String valueCannotBe0ErrorMessage = "A value greater than 0 must be entered";
-    private static String lgvAuthorityLabelText = "Light Goods Vehicle Authority";
-    private static String hgvAuthorityLabelText = "Heavy Goods Vehicle Authority";
-    private static String lgvAuthField = "//*[@id='interimAuthLgvVehicles']";
-    private static String hgvAuthField = "//*[@id='interimAuthHgvVehicles']";
-    private static String trailerAuthField = "//*[@id='interimAuthTrailers']";
-    private static String vehicleAuthLabelElement = "//label[text()='Vehicle Authority']";
-    private static String trailerAuthLabelElement = "//label[text()='Trailer Authority']";
-    private static String interimGrantModalHeading = "Are you sure you want to grant this interim?";
-    private static String interimGrantConfirmation = "The interim has been granted and a fee request letter has been generated";
-    private String interimOfferText = "Do you want to apply for a time limited interim authority?";
-    private String interimRadioYes = "//*[@id='interim[goodsApplicationInterim]']";
-    private World world;
+    private static final String VehicleErrorMessage = "The interim vehicle authority cannot exceed the total vehicle authority";
+    private static final String HgvVehicleErrorMessage = "The interim Heavy goods vehicle authority cannot exceed the total Heavy goods vehicle authority";
+    private static final String LgvVehicleErrorMessage = "The interim Light goods vehicle authority cannot exceed the total Light goods vehicle authority";
+    private static final String errorMessageTitle = "There is a problem";
+    private static final String valueIsRequiredErrorMessage = "Value is required";
+    private static final String valueCannotBe0ErrorMessage = "A value greater than 0 must be entered";
+    private static final String lgvAuthorityLabelText = "Light Goods Vehicle Authority";
+    private static final String hgvAuthorityLabelText = "Heavy Goods Vehicle Authority";
+    private static final String lgvAuthField = "//*[@id='interimAuthLgvVehicles']";
+    private static final String hgvAuthField = "//*[@id='interimAuthHgvVehicles']";
+    private static final String trailerAuthField = "//*[@id='interimAuthTrailers']";
+    private static final String vehicleAuthLabelElement = "//label[text()='Vehicle Authority']";
+    private static final String trailerAuthLabelElement = "//label[text()='Trailer Authority']";
+    private static final String interimGrantModalHeading = "Are you sure you want to grant this interim?";
+    private static final String interimGrantConfirmation = "The interim has been granted and a fee request letter has been generated";
+    private final String interimOfferText = "Do you want to apply for a time limited interim authority?";
+    private final String interimRadioYes = "//*[@id='interim[goodsApplicationInterim]']";
+    private final World world;
 
     public InterimLicence(World world) { this.world = world; }
 
@@ -142,7 +142,7 @@ public class InterimLicence extends BasePage implements En {
     }
 
     @When("i view the application interim on internal")
-    public void iViewTheApplicationInterimOnInternal() {
+    public void iViewTheApplicationInterimOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Interim details");
         waitForTextToBePresent("Interim requested");
@@ -253,7 +253,7 @@ public class InterimLicence extends BasePage implements En {
     }
 
     @And("the lgv mixed interim is granted on internal")
-    public void theLgvMixedInterimIsGrantedOnInternal() {
+    public void theLgvMixedInterimIsGrantedOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
         clickByLinkText("Interim details");
         waitForTextToBePresent("Interim requested");

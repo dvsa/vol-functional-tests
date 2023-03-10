@@ -1,16 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.*;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class Trailers extends BasePage {
     public World world;
@@ -30,7 +34,7 @@ public class Trailers extends BasePage {
     }
 
     @Given("on internal I add a valid trailer number {string} and longer semi trailer is set to {string} on the licence")
-    public void addATrailerToInternal(String trailerNumber, String isLongerSemiTrailer) {
+    public void addATrailerToInternal(String trailerNumber, String isLongerSemiTrailer) throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence(trailerNumber);
@@ -41,7 +45,7 @@ public class Trailers extends BasePage {
     @When("the trailer {string} and type {string} is successfully added to the trailer table")
     public void trailerAddedCheck(String trailerNumber, String isLongerSemiTrailer) {
         assertTrue(isElementPresent("//tbody/tr/td/input[@value='" + trailerNumber + "']", SelectorType.XPATH));
-        Assert.assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Longer semi-trailer']",SelectorType.XPATH), isLongerSemiTrailer);
+        assertEquals(getElementValueByText("//tbody/tr/td[@data-heading='Longer semi-trailer']",SelectorType.XPATH), isLongerSemiTrailer);
         UIJourney.clickSaveAndReturn();
     }
 
@@ -61,7 +65,7 @@ public class Trailers extends BasePage {
     }
 
     @When("on internal I add a trailer with no trailer number")
-    public void trailerWithNoNumberOnInteral() {
+    public void trailerWithNoNumberOnInteral() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.isLongerSemiTrailer("Yes");
@@ -77,7 +81,7 @@ public class Trailers extends BasePage {
     }
 
     @When("on internal I add a trailer with the longer semi trailer option unanswered")
-    public void trailerWithNoLongerSemiTrailerOnInternal() {
+    public void trailerWithNoLongerSemiTrailerOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.TRAILERS);
         click(addTrailerButton, SelectorType.XPATH);
         world.trailersJourney.addTrailerToLicence("GHTU775");
@@ -88,14 +92,13 @@ public class Trailers extends BasePage {
     public void trailerNumberMandatoryErrorAppears() {
         isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
         waitForTextToBePresent("There is a problem");
-        Assert.assertTrue(isElementPresent("//a[contains(text(),'Enter a value for the field: \"Trailer number\"')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//a[contains(text(),'Enter a value for the field: \"Trailer number\"')]", SelectorType.XPATH));
     }
 
     @Then("the is longer semi trailer mandatory error message appears")
     public void longerSemiTrailerMandatoryErrorAppears() {
         isElementPresent("//div[@class=\"validation-summary\"]", SelectorType.XPATH);
         waitForTextToBePresent("There is a problem");
-        Assert.assertTrue(isElementPresent("//a[contains(text(),'Select yes if this trailer is a longer semi-trailer')]", SelectorType.XPATH));
+        assertTrue(isElementPresent("//a[contains(text(),'Select yes if this trailer is a longer semi-trailer')]", SelectorType.XPATH));
     }
-
 }

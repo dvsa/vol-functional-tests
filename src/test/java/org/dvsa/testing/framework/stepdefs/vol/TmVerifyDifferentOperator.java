@@ -1,15 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 
 import java.io.IOException;
@@ -21,14 +19,16 @@ import java.util.Objects;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TmVerifyDifferentOperator extends BasePage implements En {
+public class TmVerifyDifferentOperator extends BasePage{
     private final World world;
+    Initialisation initialisation;
 
     public TmVerifyDifferentOperator(World world) {
         this.world = world;
+        initialisation = new Initialisation(world);
     }
 
     @And("I am the operator and not the transport manager")
@@ -57,11 +57,11 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     @Then("the {string} post signature page is displayed")
     public void thePostSignaturePageIsDisplayed(String text) {
         waitForElementToBePresent("//*[@class='govuk-panel govuk-panel--confirmation']");
-        Assert.assertTrue(isTextPresent(text));
+        assertTrue(isTextPresent(text));
         if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) < 10) {
-            Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
+            assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
         } else if (Integer.parseInt(getCurrentDate("dd/MMM/yyyy").split("/")[0]) >= 10) {
-            Assert.assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
+            assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));
         }
     }
 
@@ -83,7 +83,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else {
-            world.UIJourney.signWithVerify();
+            world.govSignInJourney.signInGovAccount();
         }
     }
     @And("the operator countersigns by print and sign")
@@ -180,7 +180,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
 
     @Then("a transport manager has been created banner is displayed")
     public void aTransportManagerHasBeenCreatedBannerIsDisplayed() {
-        Assert.assertTrue(findElement("//p[@role]", SelectorType.XPATH, 10).getText().contains("The transport manager's user account has been created and a link sent to them"));
+        assertTrue(findElement("//p[@role]", SelectorType.XPATH, 10).getText().contains("The transport manager's user account has been created and a link sent to them"));
     }
 
     @Then("the download TM{int} for should not be displayed on the details page")
@@ -230,7 +230,7 @@ public class TmVerifyDifferentOperator extends BasePage implements En {
     @Then("the user is displayed in the Transport Manager list")
     public void theUserIsDisplayedInTheTransportManagerList() {
         waitForTextToBePresent("List of Transport Managers");
-        Assert.assertTrue(isTextPresent(world.registerUser.getForeName()+" "+world.registerUser.getFamilyName()));
-        Assert.assertTrue(isTextPresent(world.registerUser.getEmailAddress()));
+        assertTrue(isTextPresent(world.registerUser.getForeName()+" "+world.registerUser.getFamilyName()));
+        assertTrue(isTextPresent(world.registerUser.getEmailAddress()));
     }
 }

@@ -1,7 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
-import activesupport.IllegalBrowserException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -9,15 +8,11 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class DirectorJourney extends BasePage {
 

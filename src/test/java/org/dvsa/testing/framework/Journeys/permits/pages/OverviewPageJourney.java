@@ -1,15 +1,19 @@
 package org.dvsa.testing.framework.Journeys.permits.pages;
 
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.enums.PermitStatus;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
 import org.dvsa.testing.framework.pageObjects.external.pages.OverviewPage;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OverviewPageJourney extends BasePermitJourney {
 
+    public OverviewPageJourney(World world){
+        super(world);
+    }
     public static void clickOverviewSection(OverviewSection section) {
         OverviewPage.untilOnPage();
         OverviewPage.clickOverviewSection(section);
@@ -34,5 +38,4 @@ public class OverviewPageJourney extends BasePermitJourney {
         PermitStatus sectionStatus = OverviewPage.getBilateralStatusOfSection(section);
         assertTrue(sectionStatus.toString().trim().toLowerCase().contains(status.toString().trim().toLowerCase()));
     }
-
 }

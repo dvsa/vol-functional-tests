@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Global;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.dates.LocalDateCalendar;
 import activesupport.driver.Browser;
@@ -12,9 +12,8 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
-import java.nio.charset.StandardCharsets;
 import java.time.Duration;
-import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
 
@@ -43,19 +42,13 @@ public class GlobalMethods extends BasePage {
         this.loginPassword = password;
     }
 
-    public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType, String cookies) {
+    public void navigateToLoginWithoutCookies(String username, String emailAddress, ApplicationType applicationType) {
         String newPassword = world.configuration.config.getString("internalNewPassword");
         String myURL = URL.build(applicationType, world.configuration.env, "auth/login").toString();
         if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-            if (cookies.equals("yes")) {
-                if (isElementPresent("//*[contains(text(),'Accept')]", SelectorType.XPATH)) {
-                    waitAndClick("//*[contains(text(),'Accept')]", SelectorType.XPATH);
-                }
-            }
         }
-
         DriverUtils.get(myURL);
         try {
             if (isElementPresent("declarationRead", SelectorType.ID)) {

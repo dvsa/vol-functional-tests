@@ -97,5 +97,4 @@ public class DriverUtils {
     public static String getTitle() {
         return getDriver().getTitle();
     }
-
 }

@@ -1,13 +1,10 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
-import activesupport.database.exception.UnsupportedDatabaseDriverException;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
-
-import java.sql.SQLException;
 
 public class InternalSearchJourney extends BasePage {
 
@@ -36,15 +33,6 @@ public class InternalSearchJourney extends BasePage {
         } while (!isTextPresent(world.DataGenerator.getOperatorUserEmail()) && System.currentTimeMillis() < kickOut);
     }
 
-    public void searchLicense() {
-        long kickOut = System.currentTimeMillis() + 120000;
-        do {
-            SearchNavBar.search(SearchType.Licence, world.applicationDetails.getLicenceNumber());
-        } while (!isTextPresent(world.applicationDetails.getLicenceNumber()));
-        clickByLinkText(String.valueOf(world.applicationDetails.getLicenceNumber()));
-    }
-
-
     public void searchAndViewCase()  {
         String caseId = String.valueOf(world.updateLicence.getCaseId());
         internalSearchUntilTextPresent(SearchType.Case, caseId, caseId);
@@ -67,6 +55,6 @@ public class InternalSearchJourney extends BasePage {
             SearchNavBar.search(searchType, searchString);
         } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
         waitForElementToBeClickable(String.format("//*[contains(text(),'%s')]", linkText), SelectorType.XPATH);
-        clickByLinkText(linkText);
+        waitAndClick(linkText, SelectorType.PARTIALLINKTEXT);
     }
 }

@@ -1,20 +1,19 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.database.exception.UnsupportedDatabaseDriverException;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import apiCalls.enums.UserType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -22,25 +21,27 @@ import java.time.format.DateTimeFormatter;
 
 import static activesupport.database.DBUnit.executeUpdateSQL;
 import static java.lang.Thread.sleep;
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.APIJourney.tmCount;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class RemoveTM extends BasePage implements En {
+public class RemoveTM extends BasePage {
 
     private static String oldAlertValue = "You are removing your last Transport Manager. If you haven't yet made an application to appoint a replacement, " +
             "you must contact us on 0300 123 9000 or at notifications@vehicle-operator-licensing.service.gov.uk";
-    private static String newAlertValue = "You are about to remove the last transport manager for this licence. Do you want to send a letter about this to the operator to all known addresses?\n" +
+    private static String newAlertValue = "You are about to remove the last transport manager for this licence. Do you want to send a letter about this to the operator?\n" +
             "If yes, this will be automatically issued tomorrow.";
     public static String alertHeaderValue = "Are you sure you want to remove this Transport Manager?";
     private static String applicationVariationTMAlertContent = "This action is permanent and cannot be undone.";
-    private World world;
+    private final World world;
+    Initialisation initialisation;
 
-    public RemoveTM (World world) {this.world = world;}
+    public RemoveTM(World world) {
+        this.world = world;
+        initialisation = new Initialisation(world);
+    }
 
     @Given("i have an application with a transport manager")
-    public void iHaveAnApplicationWithATransportManager() {
+    public void iHaveAnApplicationWithATransportManager() throws HttpException {
         if (world.createApplication.getOperatorType() == null) {
             world.createApplication.setOperatorType("public");
         }
@@ -50,13 +51,13 @@ public class RemoveTM extends BasePage implements En {
     }
 
     @Given("the licence has been granted")
-    public void theLicenceHasBeenGranted() {
+    public void theLicenceHasBeenGranted() throws HttpException {
         world.grantApplication.grantLicence();
         world.grantApplication.payGrantFees(world.createApplication.getNiFlag());
     }
 
     @When("the internal user goes to remove the last transport manager")
-    public void theInternalUserGoesToRemoveTheLastTransportManager() {
+    public void theInternalUserGoesToRemoveTheLastTransportManager() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.TMJourney.promptRemovalOfInternalTransportManager();
     }
@@ -107,17 +108,17 @@ public class RemoveTM extends BasePage implements En {
     }
 
     @When("i create a variation")
-    public void iCreateAVariation() {
+    public void iCreateAVariation() throws HttpException {
         world.updateLicence.createVariation();
     }
 
     @And("i update the licence type")
-    public void iUpdateTheLicenceType() {
+    public void iUpdateTheLicenceType() throws HttpException {
         world.updateLicence.updateLicenceType();
     }
 
     @When("the transport manager has been removed by an internal user")
-    public void theTransportManagerHasBeenRemovedByAnInternalUser() {
+    public void theTransportManagerHasBeenRemovedByAnInternalUser() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         world.TMJourney.removeInternalTransportManager();
     }
@@ -143,6 +144,6 @@ public class RemoveTM extends BasePage implements En {
         String licenceNo = world.applicationDetails.getLicenceNumber();
         sleep(10000);
         boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
-        Assert.assertTrue(letterExists);
+        assertTrue(letterExists);
     }
 }

@@ -1,20 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import static org.junit.Assert.assertTrue;
 
 
 import org.openqa.selenium.WebElement;
 
-public class ExternalSearch extends BasePage implements En {
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class ExternalSearch extends BasePage {
     private final World world;
 
     public ExternalSearch(World world) {this.world = world;}
@@ -72,32 +72,32 @@ public class ExternalSearch extends BasePage implements En {
         world.createApplication.getOperatingCentrePostCode()
         );
         world.selfServeNavigation.clickSearchWhileCheckingTextPresent(clippedCorrespondenceAddress, 240, "KickOut reached. Correspondence and operating centre address external search failed.");
-            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", clippedCorrespondenceAddress), SelectorType.XPATH);
+            WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", clippedCorrespondenceAddress), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
-            tableRow = findElement(String.format("//tr[td[contains(text(),'%s')]]", clippedOperatingCentreAddress), SelectorType.XPATH);
+            tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", clippedOperatingCentreAddress), SelectorType.XPATH);
             assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
         }
 
         @Then("search results page should display operator names containing our business name")
     public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName() {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 240, "KickOut reached. Operator name external search failed.");
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");
     }
 
-    @And("I am able to view the applications license number")
-    public void iAmAbleToViewTheApplicationsLicenseNumber() {
+    @And("I am able to view the applicants licence number")
+    public void iAmAbleToViewTheApplicantsLicenceNumber() {
         WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getOrganisationName()), SelectorType.XPATH);
         assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
     }
 
     @Then("search results page should only display our licence number")
     public void searchResultsPageShouldOnlyDisplayOurLicenceNumber() {
-        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 240, "KickOut reached. Licence number external search failed.");
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 300, "KickOut reached. Licence number external search failed.");
     }
 
-    @And("I am able to view the license number")
-    public void iAmAbleToViewTheLicenseNumber() {
+    @And("I am able to view the licence number")
+    public void iAmAbleToViewTheLicenceNumber() {
         WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getOrganisationName()), SelectorType.XPATH);
         assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
     }

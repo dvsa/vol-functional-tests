@@ -1,11 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -17,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TMDetails extends BasePage implements En {
+public class TMDetails extends BasePage {
     private final World world;
 
     public TMDetails (World world) {this.world = world;}

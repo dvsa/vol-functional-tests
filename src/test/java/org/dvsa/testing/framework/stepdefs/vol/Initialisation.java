@@ -1,24 +1,26 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.actions.*;
-import cucumber.api.java8.En;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.InternalNavigation;
 import org.dvsa.testing.framework.Journeys.licence.SelfServeNavigation;
+import org.dvsa.testing.framework.Journeys.permits.*;
 import org.dvsa.testing.framework.Utils.Generic.DBUtils;
 import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
+import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 
-public class Initialisation extends BasePage implements En {
-
-    private World world;
-
+public class Initialisation extends BasePage {
+ private final World world;
     /***
      * World variable passed through to all classes regardless for instantiation purposes.
      * I.e. variable initialisations that requires other values from other classes.
@@ -55,7 +57,7 @@ public class Initialisation extends BasePage implements En {
         world.DataGenerator = new DataGenerator(world);
         world.forgottenCredsJourney = new ForgottenCredsJourney(world);
         world.businessDetailsJourney = new BusinessDetailsJourney(world);
-        world.operatingCentreJourney = new  OperatingCentreJourney(world);
+        world.operatingCentreJourney = new OperatingCentreJourney(world);
         world.safetyComplianceJourney = new SafetyComplianceJourney(world);
         world.safetyInspectorJourney = new SafetyInspectorJourney(world);
         world.transportManagerJourney = new TransportManagerJourney(world);
@@ -75,5 +77,16 @@ public class Initialisation extends BasePage implements En {
         world.trailersJourney = new TrailersJourney(world);
         world.systemMessagesJourney = new SystemMessagesJourney(world);
         world.govSignInJourney = new GovSignInJourney(world);
+        world.submitApplicationJourney = new SubmitApplicationJourney(world);
+        world.grantApplicationJourney = new GrantApplicationJourney();
+        world.ecmtInternationalRemovalJourney = new EcmtInternationalRemovalJourney(world);
+        world.ecmtApplicationJourney = new EcmtApplicationJourney(world);
+        world.irhpPageJourney = new IRHPPageJourney(world);
+        world.basePermitJourney = new BasePermitJourney(world);
+        world.annualBilateralJourney = new AnnualBilateralJourney(world);
+        world.shortTermECMTJourney = new ShortTermECMTJourney(world);
+        world.countriesWithLimitedPermitsPage = new CountriesWithLimitedPermitsPage(world);
+        world.yearSelectionPage = new YearSelectionPage(world);
+        world.permitFeePage = new PermitFeePage(world);
     }
 }

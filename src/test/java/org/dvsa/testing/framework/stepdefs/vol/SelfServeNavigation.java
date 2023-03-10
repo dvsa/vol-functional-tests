@@ -1,14 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.When;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.Assert;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SelfServeNavigation extends BasePage {
 
@@ -30,7 +30,7 @@ public class SelfServeNavigation extends BasePage {
     @And("i navigate to the manage users page")
     public void iNavigateToTheManageUsersPage() {
         waitAndClick("//*[contains(text(),'Manage users')]", SelectorType.XPATH);
-        Assert.assertEquals("Manage users", getText("h1", SelectorType.CSS));
+        assertEquals("Manage users", getText("h1", SelectorType.CSS));
     }
 
     @And("i navigate to the apply for a licence page")

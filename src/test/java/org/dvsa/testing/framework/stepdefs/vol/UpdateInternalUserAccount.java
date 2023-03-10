@@ -1,12 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
-import org.junit.Assert;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UpdateInternalUserAccount extends BasePage {
     private World world;
@@ -14,7 +16,7 @@ public class UpdateInternalUserAccount extends BasePage {
     public UpdateInternalUserAccount(World world) {this.world = world;}
 
     @When("I am on the Your Account page")
-    public void iAmOnTheYourAccountPage() {
+    public void iAmOnTheYourAccountPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.YOUR_ACCOUNT);
     }
@@ -27,7 +29,7 @@ public class UpdateInternalUserAccount extends BasePage {
     @Then("my new team should be visible")
     public void myNewTeamShouldBeVisible() {
         String name = world.UserAccountJourney.teamName;
-        Assert.assertTrue(isTextPresent(name));
+        assertTrue(isTextPresent(name));
     }
 
     @Given("I edit my personal details")
@@ -38,6 +40,6 @@ public class UpdateInternalUserAccount extends BasePage {
 
     @Then("my details should have updated")
     public void myDetailsShouldHaveUpdated() {
-        Assert.assertTrue(isTextPresent(world.DataGenerator.getOperatorFamilyName()));
+        assertTrue(isTextPresent(world.DataGenerator.getOperatorFamilyName()));
     }
 }

@@ -1,11 +1,13 @@
 package org.dvsa.testing.framework.Journeys.licence;
-import Injectors.World;
+
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.util.Random;
+
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
-import static apiCalls.Utils.generic.Utils.config;
+
 
 
 public class GovSignInJourney extends BasePage {
@@ -18,7 +20,7 @@ public class GovSignInJourney extends BasePage {
 
     Random random = new Random();
 
-    String registrationEmail = "DVSA.Tester+" + random.nextInt(9000) + "@dev-dvsacloud.uk";
+    String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
         if(isTextPresent("Declaration information")) {
@@ -41,7 +43,7 @@ public class GovSignInJourney extends BasePage {
         } else {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTitlePresent("You’ve signed in to your GOV.UK account", 1)) {
+        if(isTitlePresent("You’ve signed in to GOV.UK One Login", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
@@ -106,28 +108,29 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void photoIDQuestion() {
+        waitForTextToBePresent("Do you have one of these types of photo ID?");
         clickByXPath("//*[@id='havePhotoId']");
         clickByXPath("//*[@id='form-tracking']/button");
     }
 
     public void enterPassportDetails() {
-        waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, config.getString("passportNumber"));
-        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, config.getString("surname"));
-        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, config.getString("firstName"));
+        waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, world.configuration.config.getString("passportNumber"));
+        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, world.configuration.config.getString("surname"));
+        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, world.configuration.config.getString("firstName"));
         enterDOB();
         enterExpiryDate();
     }
 
     public void enterDOB() {
-        enterText("dateOfBirth-day", SelectorType.NAME, config.getString("dateOfBirthDay"));
-        enterText("dateOfBirth-month", SelectorType.NAME, config.getString("dateOfBirthMonth"));
-        enterText("dateOfBirth-year", SelectorType.NAME, config.getString("dateOfBirthYear"));
+        enterText("dateOfBirth-day", SelectorType.NAME, world.configuration.config.getString("dateOfBirthDay"));
+        enterText("dateOfBirth-month", SelectorType.NAME, world.configuration.config.getString("dateOfBirthMonth"));
+        enterText("dateOfBirth-year", SelectorType.NAME, world.configuration.config.getString("dateOfBirthYear"));
     }
 
     public void enterExpiryDate() {
-        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, config.getString("expiryDateDay"));
-        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, config.getString("expiryDateMonth"));
-        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, config.getString("expiryDateYear"));
+        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, world.configuration.config.getString("expiryDateDay"));
+        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, world.configuration.config.getString("expiryDateMonth"));
+        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, world.configuration.config.getString("expiryDateYear"));
     }
 
     public void cycletThroughSignInJourney() {
@@ -216,5 +219,3 @@ public class GovSignInJourney extends BasePage {
     }
 
 }
-
-

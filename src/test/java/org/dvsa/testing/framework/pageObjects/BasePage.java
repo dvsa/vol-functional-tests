@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects;
 
+import activesupport.driver.Browser;
 import com.google.common.base.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,7 +8,6 @@ import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
@@ -22,13 +22,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static activesupport.driver.Parallel.ChromeSetUp.driver;
 import static java.time.Duration.ofSeconds;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 5;
-    private static final int TIME_OUT_SECONDS = 300;
+    private static final int TIME_OUT_SECONDS = 500;
     private static final int POLLING_SECONDS = 5;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
@@ -291,7 +291,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void waitForElementNotToBePresent(@NotNull String selector) {
-        new WebDriverWait(driver, Duration.ofSeconds(15), Duration.ofSeconds(20)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(selector)));
+        new WebDriverWait(Browser.navigate(), Duration.ofSeconds(15), Duration.ofSeconds(20)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(selector)));
     }
 
     public static boolean tryUntilElementIsPresent(@NotNull String selector, SelectorType selectorType, long duration, TimeUnit timeUnit) {
@@ -500,10 +500,13 @@ public abstract class BasePage extends DriverUtils {
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(java.util.NoSuchElementException.class);
-        ExpectedCondition<Boolean> expect = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        ExpectedCondition<Boolean> expect = driver -> {
+            assert driver != null;
+            return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        };
         wait.until(WebDriver -> expect);
         try {
-            Assert.assertEquals("complete", javaScriptExecutor("return document.readyState").toString());
+            assertEquals("complete", javaScriptExecutor("return document.readyState").toString());
         } catch (Exception e) {
             LOGGER.info("Page timed out trying to load.");
         }

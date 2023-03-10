@@ -1,13 +1,18 @@
 package org.dvsa.testing.framework.Journeys.permits.pages;
 
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitUsagePage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PermitUsagePageJourney extends BasePermitJourney {
+
+    public PermitUsagePageJourney(World world){
+        super(world);
+    }
 
     public static void hasPageHeading() {
         String heading = PermitUsagePage.getPageHeading();
@@ -23,5 +28,4 @@ public class PermitUsagePageJourney extends BasePermitJourney {
         PermitUsagePage.journeyType(permitTypeChoice);
         PermitUsagePage.saveAndContinue();
     }
-
 }

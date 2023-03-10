@@ -1,13 +1,17 @@
 package org.dvsa.testing.framework.Journeys.permits.pages;
 
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SubmittedPageJourney extends BasePermitJourney {
 
+    public SubmittedPageJourney(World world){
+        super(world);
+    }
     public static void hasPageHeading() {
         assertEquals("Application submitted", SubmittedPage.getPanelHeading());
     }

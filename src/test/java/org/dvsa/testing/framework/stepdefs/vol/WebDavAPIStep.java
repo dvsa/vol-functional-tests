@@ -1,35 +1,36 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class WebDavAPIStep extends BasePage implements En {
+public class WebDavAPIStep extends BasePage {
     private final World world;
+    Initialisation initialisation;
     private ValidatableResponse response;
     private String userId;
-    private String pid;
-
-    public WebDavAPIStep(World world) {this.world = world;}
+    public WebDavAPIStep(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @Given("i have registered a new {string} user")
-    public void iHaveRegisteredANewUser(String userRole) {
+    public void iHaveRegisteredANewUser(String userRole) throws HttpException {
         this.userId = world.updateLicence.createInternalUser(userRole, UserType.INTERNAL.asString());
     }
 
     @When("i view their user details")
-    public void iViewTheirUserDetails() {
+    public void iViewTheirUserDetails() throws HttpException {
         this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId, world.registerUser
                 .getUserName(), world.registerUser.getEmailAddress());
-        this.pid = response.extract().jsonPath().getString("pid");
     }
 
     @Then("the OS Type value should be null")
@@ -38,23 +39,23 @@ public class WebDavAPIStep extends BasePage implements En {
     }
 
     @When("they attempt to update their OS version to {string}")
-    public void theyAttemptToUpdateTheirOSVersionTo(String osVersion) {
+    public void theyAttemptToUpdateTheirOSVersionTo(String osVersion) throws HttpException {
         this.response = world.updateLicence.updateInternalUserDetails(this.userId, osVersion);
     }
 
     @When("i attempt to update their OS version to {string}")
-    public void iAttemptToUpdateTheirOSVersionTo(String osVersion) {
+    public void iAttemptToUpdateTheirOSVersionTo(String osVersion) throws HttpException {
         this.response = world.updateLicence.updateInternalUserDetails(this.userId, osVersion);
     }
 
     @Then("their OS Type value should be displaying {string}")
     public void theirOSTypeValueShouldBeDisplaying(String expectedOSVersion) {
-        assertEquals(response.extract().body().jsonPath().get("osType.id"),expectedOSVersion);
+        assertEquals(response.extract().body().jsonPath().get("osType.id"), expectedOSVersion);
     }
 
     @Then("their new OS Type should be {string}")
-    public void theirNewOSTypeShouldBe(String expectedOSVersion) {
-        this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId,world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        assertEquals(response.extract().body().jsonPath().get("osType.id"),expectedOSVersion);
+    public void theirNewOSTypeShouldBe(String expectedOSVersion) throws HttpException {
+        this.response = world.userDetails.getUserDetails(UserType.INTERNAL.asString(), userId, world.registerUser.getUserName(), world.registerUser.getEmailAddress());
+        assertEquals(response.extract().body().jsonPath().get("osType.id"), expectedOSVersion);
     }
 }

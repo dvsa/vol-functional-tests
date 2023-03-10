@@ -1,19 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.permits.shorttermecmt;
 
-import Injectors.World;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.external.pages.EmissionStandardsPage;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class EuroEmissionStandardPageSteps implements En {
+public class EuroEmissionStandardPageSteps {
 
-    public EuroEmissionStandardPageSteps (World world) {
-        Then("I should get the emissions page error message", () -> {
-            String errorText = EmissionStandardsPage.getErrorText();
-            assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
-        });
-
-        When("^I confirm the emissions standards checkbox", EmissionStandardsPage::confirmCheckbox);
+    @Then("I should get the emissions  page error message")
+    public void iShouldGetTheEmissionsPageError() {
+        String errorText = EmissionStandardsPage.getErrorText();
+        assertEquals("Tick to confirm your vehicles will meet the minimum Euro emission standards that the permit allows.", errorText);
+    }
+    @When("I confirm the emissions standards checkbox")
+    public void iConfirmTheEmissionsStandardsCheckbox() {
+        EmissionStandardsPage.confirmCheckbox();
     }
 }
