@@ -20,7 +20,7 @@
 
 
         <allure-cucumber7-jvm.version>2.20.1</allure-cucumber7-jvm.version>
-        <allure-report.version>2.20.0</allure-report.version>
+        <allure-report.version>2.21.0</allure-report.version>
 
         <slf4j.version>2.19.0</slf4j.version>
         <slf4j-log4j12.version>2.19.0</slf4j-log4j12.version>
