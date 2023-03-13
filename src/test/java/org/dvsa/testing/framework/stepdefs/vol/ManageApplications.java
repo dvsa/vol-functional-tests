@@ -256,4 +256,14 @@ public class ManageApplications {
         }
     }
 
+    @Given("i have an application with a transport manager")
+    public void iHaveAnApplicationWithATransportManager() throws HttpException {
+        if (world.createApplication.getOperatorType() == null) {
+            world.createApplication.setOperatorType("public");
+        }
+        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
+        world.APIJourney.createApplication();
+        world.APIJourney.submitApplication();
+    }
+
 }
