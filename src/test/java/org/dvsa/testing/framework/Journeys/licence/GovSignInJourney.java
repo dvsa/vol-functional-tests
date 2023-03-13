@@ -51,7 +51,7 @@ public class GovSignInJourney extends BasePage {
             photoIDQuestion();
         }
         if(isTitlePresent("Create a GOV.UK One Login or sign in",1)) {
-            waitAndClick("sign-in-link", SelectorType.ID);
+            waitAndClick("sign-in-button", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndEnterText("password", SelectorType.ID, signInPassword);
