@@ -51,7 +51,7 @@ public class GrantApplication extends BasePage {
         UIJourney.clickSaveAndReturn();
         clickByLinkText("Operating centres");
         waitForTextToBePresent("Operating centres");
-        selectValueFromDropDown("dataTrafficArea[enforcementArea]", SelectorType.ID, "East");
+        selectValueFromDropDown("trafficArea", SelectorType.ID, "East of England");
         UIJourney.clickSaveAndReturn();
         clickByLinkText("Review and declarations");
         waitAndClick("declarations[declarationConfirmation]", SelectorType.ID);
