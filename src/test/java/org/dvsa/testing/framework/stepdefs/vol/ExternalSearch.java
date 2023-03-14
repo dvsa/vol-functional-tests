@@ -12,6 +12,8 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 
 import org.openqa.selenium.WebElement;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExternalSearch extends BasePage {
@@ -40,23 +42,26 @@ public class ExternalSearch extends BasePage {
 
     @When("I search for a lorry and bus operator by {string}")
     public void iSearchForALorryAndBusOperatorBy(String arg0) {
-            findSelectAllRadioButtonsByValue(arg0);
+        String intBusinessName = world.configuration.config.getString("intBusinessName");
+        findSelectAllRadioButtonsByValue(arg0);
         switch (arg0) {
-                case "address":
+            case "address":
                     enterText("search", SelectorType.NAME, world.createApplication.getPostCodeByTrafficArea());
-                    break;
-                case "business":
+                break;
+            case "business":
+                if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp")))
+                    enterText("search", SelectorType.NAME, intBusinessName);
+                 else
                     enterText("search", SelectorType.NAME, world.createApplication.getOrganisationName());
-                    break;
-                case "licence":
-                    enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
-                    break;
-                case "person":
-                    enterText("search", SelectorType.NAME, String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()));
-                    break;
-            }
+                break;
+            case "licence":
+                enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
+                break;
+            case "person":
+                enterText("search", SelectorType.NAME, String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()));
+                break;
+        }
     }
-
     @Then("search results page addresses should only display address belonging to our post code")
     public void searchResultsPageAddressesShouldOnlyDisplayAddressBelongingToOurPostCode() {
         String clippedCorrespondenceAddress = String.format("%s, %s, %s, %s",
@@ -81,9 +86,17 @@ public class ExternalSearch extends BasePage {
         }
 
         @Then("search results page should display operator names containing our business name")
-    public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName() {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");
-    }
+        public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName() {
+            String intBusinessName = world.configuration.config.getString("intBusinessName");
+            if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
+                world.selfServeNavigation.clickSearchWhileCheckingTextPresent(intBusinessName, 300, "KickOut reached. Operator name external search failed.");
+                assertTrue(isTextPresent(intBusinessName));
+            }
+            else if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "da")) || (Objects.equals(world.configuration.env.toString(), "reg"))) {
+                world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");
+            }
+        }
+
 
     @And("I am able to view the applicants licence number")
     public void iAmAbleToViewTheApplicantsLicenceNumber() {
@@ -111,4 +124,5 @@ public class ExternalSearch extends BasePage {
         assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
         assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
     }
+
 }
