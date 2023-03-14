@@ -124,5 +124,4 @@ public class ExternalSearch extends BasePage {
         assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
         assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
     }
-
 }
