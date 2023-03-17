@@ -1,19 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import io.cucumber.datatable.DataTable;
-import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-
-
 import org.openqa.selenium.WebElement;
 
-import java.util.Map;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
