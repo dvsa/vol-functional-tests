@@ -6,6 +6,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
+
+import java.util.Objects;
 
 public class InternalNavigation extends BasePage {
 
@@ -27,8 +32,16 @@ public class InternalNavigation extends BasePage {
 
     @And("i have logged in to internal")
     public void iHaveLoggedIntoInternal() throws HttpException {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
+        String intSystemAdmin = world.configuration.config.getString("intSystemAdmin");
+        String intEnvPassword = world.configuration.config.getString("intEnvPassword");
+        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
+            String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
+            DriverUtils.get(myURL);
+            world.globalMethods.signIn(intSystemAdmin, intEnvPassword);
+        } else {
+            world.APIJourney.createAdminUser();
+            world.internalNavigation.logInAsAdmin();
+        }
     }
 
     @When("i am on the internal application overview page")
