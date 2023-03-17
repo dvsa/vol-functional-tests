@@ -1,16 +1,16 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.openqa.selenium.WebElement;
 
-import java.util.Objects;
+
+import org.openqa.selenium.WebElement;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,7 +38,26 @@ public class ExternalSearch extends BasePage {
         world.selfServeNavigation.navigateToFindLorryAndBusOperatorsSearch();
     }
 
-        @Then("search results page addresses should only display address belonging to our post code")
+    @When("I search for a lorry and bus operator by {string}")
+    public void iSearchForALorryAndBusOperatorBy(String arg0) {
+            findSelectAllRadioButtonsByValue(arg0);
+        switch (arg0) {
+                case "address":
+                    enterText("search", SelectorType.NAME, world.createApplication.getPostCodeByTrafficArea());
+                    break;
+                case "business":
+                    enterText("search", SelectorType.NAME, world.createApplication.getOrganisationName());
+                    break;
+                case "licence":
+                    enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
+                    break;
+                case "person":
+                    enterText("search", SelectorType.NAME, String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()));
+                    break;
+            }
+    }
+
+    @Then("search results page addresses should only display address belonging to our post code")
     public void searchResultsPageAddressesShouldOnlyDisplayAddressBelongingToOurPostCode() {
         String clippedCorrespondenceAddress = String.format("%s, %s, %s, %s",
         world.createApplication.getCorrespondenceAddressLine3(),
@@ -61,21 +80,20 @@ public class ExternalSearch extends BasePage {
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
         }
 
-        @Then("search results page should display operator names containing our {string}")
-        public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName(String businessName) {
-            if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-                world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 300, "KickOut reached. Operator name external search failed.");
-                assertTrue(isTextPresent(businessName));
-            }
-            else if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "da")) || (Objects.equals(world.configuration.env.toString(), "reg"))) {
-                world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");
-            }
-        }
+        @Then("search results page should display operator names containing our business name")
+    public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName() {
+            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");
+    }
 
     @And("I am able to view the applicants licence number")
     public void iAmAbleToViewTheApplicantsLicenceNumber() {
         WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", world.createApplication.getOrganisationName()), SelectorType.XPATH);
         assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
+    }
+
+    @Then("search results page should only display our licence number")
+    public void searchResultsPageShouldOnlyDisplayOurLicenceNumber() {
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 300, "KickOut reached. Licence number external search failed.");
     }
 
     @And("I am able to view the licence number")
@@ -92,50 +110,5 @@ public class ExternalSearch extends BasePage {
         WebElement tableRow = findElement(String.format("//tr[td[contains(text(),\"%s\")]]", operatorName), SelectorType.XPATH);
         assertTrue(tableRow.getText().contains(world.createApplication.getOrganisationName()));
         assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
-    }
-
-    @When("I search for a lorry and bus operator by {string} with licence number {string}, business name {string}, person {string} and address {string}")
-    public void iSearchForALorryAndBusOperatorBy(String searchType, String licenceNumber, String businessName, String person, String address) {
-        String addressToSearch;
-        String businessNameToSearch;
-        String licenceNumberToSearch;
-        String personToSearch;
-
-        if (Objects.equals(world.configuration.env.toString(), "int")) {
-            addressToSearch = address;
-            businessNameToSearch = businessName;
-            licenceNumberToSearch = licenceNumber;
-            personToSearch = person;
-        } else {
-            addressToSearch = world.createApplication.getPostCodeByTrafficArea();
-            businessNameToSearch = world.createApplication.getOrganisationName();
-            licenceNumberToSearch = world.applicationDetails.getLicenceNumber();
-            personToSearch = String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName());
-        }
-
-        switch (searchType) {
-            case "address":
-                enterText("search", SelectorType.NAME, addressToSearch);
-                break;
-            case "business":
-                enterText("search", SelectorType.NAME, businessNameToSearch);
-                break;
-            case "licence":
-                enterText("search", SelectorType.NAME, licenceNumberToSearch);
-                break;
-            case "person":
-                enterText("search", SelectorType.NAME, personToSearch);
-        }
-    }
-
-
-    @Then("search results page should only display our {string}")
-    public void searchResultsPageShouldOnlyDisplayOurLicenceNumber(String licenceNumber) {
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 300, "KickOut reached. Operator name external search failed.");
-            assertTrue(isTextPresent(licenceNumber));
-        } else {
-            world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 300, "KickOut reached. Licence number external search failed.");
-        }
     }
 }
