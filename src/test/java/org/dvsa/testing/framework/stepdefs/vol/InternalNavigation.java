@@ -27,7 +27,6 @@ public class InternalNavigation extends BasePage {
 
     @And("i have logged in to internal")
     public void iHaveLoggedIntoInternal() throws HttpException {
-        world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
     }
 
