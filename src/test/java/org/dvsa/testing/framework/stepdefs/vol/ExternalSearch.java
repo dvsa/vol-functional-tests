@@ -61,12 +61,11 @@ public class ExternalSearch extends BasePage {
             assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
         }
 
-        @Then("search results page should display operator names containing our business name")
-        public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName() {
-            String intBusinessName = world.configuration.config.getString("intBusinessName");
+        @Then("search results page should display operator names containing our {string}")
+        public void searchResultsPageShouldDisplayOperatorNamesContainingOurBusinessName(String businessName) {
             if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-                world.selfServeNavigation.clickSearchWhileCheckingTextPresent(intBusinessName, 300, "KickOut reached. Operator name external search failed.");
-                assertTrue(isTextPresent(intBusinessName));
+                world.selfServeNavigation.clickSearchWhileCheckingTextPresent(businessName, 300, "KickOut reached. Operator name external search failed.");
+                assertTrue(isTextPresent(businessName));
             }
             else if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "da")) || (Objects.equals(world.configuration.env.toString(), "reg"))) {
                 world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.createApplication.getOrganisationName(), 300, "KickOut reached. Operator name external search failed.");

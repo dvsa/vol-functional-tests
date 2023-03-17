@@ -13,7 +13,7 @@ Feature: External user search by Address, Business name, Licence Number and Pers
   @smoketest
   Scenario: Business name external search for lorry and bus operators
     When I search for a lorry and bus operator by "business" with licence number "<licenceNumber>", business name "<businessName>", person "<person>" and address "<address>"
-    Then search results page should display operator names containing our business name
+    Then search results page should display operator names containing our "<businessName>"
     And I am able to view the applicants licence number
 
   Scenario: Licence number external search for lorry and bus operators

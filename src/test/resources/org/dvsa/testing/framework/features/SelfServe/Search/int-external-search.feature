@@ -16,3 +16,4 @@ Feature: External user search by Address, Business name, Licence Number and Pers
       | licence    |                            | OK0230736     |               |                                 |
       | person     |                            |               | JOHN RYAN     |                                 |
       | address    |                            |               |               | EC1A 1BB                        |
+
