@@ -96,46 +96,45 @@ public class ExternalSearch extends BasePage {
 
     @When("I search for a lorry and bus operator by {string} with licence number {string}, business name {string}, person {string} and address {string}")
     public void iSearchForALorryAndBusOperatorBy(String searchType, String licenceNumber, String businessName, String person, String address) {
-        findSelectAllRadioButtonsByValue(searchType);
+        String addressToSearch;
+        String businessNameToSearch;
+        String licenceNumberToSearch;
+        String personToSearch;
+
         if (Objects.equals(world.configuration.env.toString(), "int")) {
-            switch (searchType) {
-                case "address":
-                    enterText("search", SelectorType.NAME, address);
-                    break;
-                case "business":
-                    enterText("search", SelectorType.NAME, businessName);
-                    break;
-                case "licence":
-                    enterText("search", SelectorType.NAME, licenceNumber);
-                    break;
-                case "person":
-                    enterText("search", SelectorType.NAME, person);
-                    break;
-            }
+            addressToSearch = address;
+            businessNameToSearch = businessName;
+            licenceNumberToSearch = licenceNumber;
+            personToSearch = person;
         } else {
-            switch (searchType) {
-                case "address":
-                    enterText("search", SelectorType.NAME, world.createApplication.getPostCodeByTrafficArea());
-                    break;
-                case "business":
-                    enterText("search", SelectorType.NAME, world.createApplication.getOrganisationName());
-                    break;
-                case "licence":
-                    enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
-                    break;
-                case "person":
-                    enterText("search", SelectorType.NAME, String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName()));
-                    break;
-            }
+            addressToSearch = world.createApplication.getPostCodeByTrafficArea();
+            businessNameToSearch = world.createApplication.getOrganisationName();
+            licenceNumberToSearch = world.applicationDetails.getLicenceNumber();
+            personToSearch = String.format("%s %s", world.createApplication.getDirectorForeName(), world.createApplication.getDirectorFamilyName());
+        }
+
+        switch (searchType) {
+            case "address":
+                enterText("search", SelectorType.NAME, addressToSearch);
+                break;
+            case "business":
+                enterText("search", SelectorType.NAME, businessNameToSearch);
+                break;
+            case "licence":
+                enterText("search", SelectorType.NAME, licenceNumberToSearch);
+                break;
+            case "person":
+                enterText("search", SelectorType.NAME, personToSearch);
         }
     }
+
 
     @Then("search results page should only display our {string}")
     public void searchResultsPageShouldOnlyDisplayOurLicenceNumber(String licenceNumber) {
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             world.selfServeNavigation.clickSearchWhileCheckingTextPresent(licenceNumber, 300, "KickOut reached. Operator name external search failed.");
             assertTrue(isTextPresent(licenceNumber));
-        } else if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "da")) || (Objects.equals(world.configuration.env.toString(), "reg"))) {
+        } else {
             world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 300, "KickOut reached. Licence number external search failed.");
         }
     }
