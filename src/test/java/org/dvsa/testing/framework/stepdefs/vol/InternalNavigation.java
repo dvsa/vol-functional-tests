@@ -33,18 +33,7 @@ public class InternalNavigation extends BasePage {
 
     @And("i have logged in to internal")
     public void iHaveLoggedIntoInternal() throws HttpException {
-        String intSystemAdmin = world.configuration.config.getString("intSystemAdmin");
-        String intEnvPassword = world.configuration.config.getString("intEnvPassword");
-        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
-            String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
-            DriverUtils.get(myURL);
-            if (isElementPresent("declarationRead", SelectorType.ID)) {
-                waitAndClick("declarationRead", SelectorType.ID);
-            }
-            world.globalMethods.signIn(intSystemAdmin, intEnvPassword);
-        } else {
-            world.internalNavigation.logInAsAdmin();
-        }
+        world.internalNavigation.loginIntoInternal();
     }
 
     @When("i am on the internal application overview page")

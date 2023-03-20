@@ -5,12 +5,15 @@ import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 
 public class InternalNavigation extends BasePage {
@@ -72,6 +75,20 @@ public class InternalNavigation extends BasePage {
                 break;
             default:
                 waitForTitleToBePresent(option.toString());
+        }
+    }
+    public void loginIntoInternal() throws HttpException {
+        String intSystemAdmin = world.configuration.config.getString("intSystemAdmin");
+        String intEnvPassword = world.configuration.config.getString("intEnvPassword");
+        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
+            String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
+            DriverUtils.get(myURL);
+            if (isElementPresent("declarationRead", SelectorType.ID)) {
+                waitAndClick("declarationRead", SelectorType.ID);
+            }
+            world.globalMethods.signIn(intSystemAdmin, intEnvPassword);
+        } else {
+            world.internalNavigation.logInAsAdmin();
         }
     }
 

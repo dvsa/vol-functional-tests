@@ -4,20 +4,12 @@
 @CPMS_tests
 Feature: Apply for a goods licence
 
-  @goods_r
-  Scenario: Apply for a goods restricted licence
-    Given I have a submitted "goods" "restricted" application
+  Scenario Outline: Apply for a goods licence
+    Given I have a submitted "<operator>" "<licenceType>" application
     When I grant licence
     Then the licence should be granted
-
-  @goods_si
-  Scenario: Apply for a goods standard international licence
-    Given I have a submitted "goods" "standard_international" application
-    When I grant licence
-    Then the licence should be granted
-
-  @goods_sn
-  Scenario: Apply for a goods standard national licence
-    Given I have a submitted "goods" "standard_national" application
-    When I grant licence
-    Then the licence should be granted
+    Examples:
+      | operator | licenceType            |
+      | goods    | restricted             |
+      | goods    | standard_international |
+      | goods    | standard_national      |

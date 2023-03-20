@@ -266,4 +266,8 @@ public class ManageApplications {
         world.APIJourney.submitApplication();
     }
 
+    @And("the application status should be {string}")
+    public void theApplicationStatusShouldBe(String arg0) {
+        world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
+    }
 }

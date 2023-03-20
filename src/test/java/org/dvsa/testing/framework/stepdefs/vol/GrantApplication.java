@@ -12,6 +12,8 @@ import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.openqa.selenium.WebElement;
 
 
+import java.util.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,10 +40,23 @@ public class GrantApplication extends BasePage {
 
     @Then("the licence should be granted by a caseworker")
     public void theApplicationShouldBeGranted() throws HttpException {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
-        world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, world.submitApplicationJourney.getApplicationNumber(), world.submitApplicationJourney.getApplicationNumber());
-        overrideOppositionAndDates();
+        String env = world.configuration.env.toString();
+        if (!env.equals("int")) {
+            world.APIJourney.createAdminUser();
+            world.internalNavigation.logInAsAdmin();
+            world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, world.submitApplicationJourney.getApplicationNumber(), world.submitApplicationJourney.getApplicationNumber());
+            overrideOppositionAndDates();
+        }else{
+            String[] licenceNumber = getText("h2", SelectorType.CSS).split("/");
+            world.internalNavigation.loginIntoInternal();
+            world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, licenceNumber[0], licenceNumber[0]);
+            overrideOppositionAndDates();
+
+//            clickByLinkText("Withdraw application");
+//            waitForTextToBePresent("Withdraw application");
+//            waitAndClick("form-actions[submit]", SelectorType.ID);
+//            assertTrue(isTextPresent("Application withdrawn"));
+        }
     }
 
     private void overrideOppositionAndDates() {
@@ -51,7 +66,7 @@ public class GrantApplication extends BasePage {
         UIJourney.clickSaveAndReturn();
         clickByLinkText("Operating centres");
         waitForTextToBePresent("Operating centres");
-        selectValueFromDropDown("trafficArea", SelectorType.ID, "East of England");
+        selectValueFromDropDown("trafficArea", SelectorType.ID, "Wales");
         selectValueFromDropDown("dataTrafficArea[enforcementArea]", SelectorType.ID, "Wales");
         UIJourney.clickSaveAndReturn();
         clickByLinkText("Review and declarations");
@@ -63,9 +78,6 @@ public class GrantApplication extends BasePage {
         waitAndClick("form-actions[continue-to-grant]", SelectorType.ID);
         waitAndClick("//*[@value='N']", SelectorType.XPATH);
         waitAndClick("form-actions[grant]", SelectorType.ID);
-        if (world.submitApplicationJourney.getLicence().equals("Goods")) {
-            payGrantFees();
-        }
         assertEquals("GRANTED", findElement("//*[@class='govuk-tag govuk-tag--green']", SelectorType.XPATH).getText());
     }
 
