@@ -5,7 +5,7 @@
 Feature: Admin paying fees
 
   Background:
-    Given i have an admin account to add users
+    Given i have an internal admin user
 
   Scenario: Process GB payment by cash and card
     And i have logged in to internal

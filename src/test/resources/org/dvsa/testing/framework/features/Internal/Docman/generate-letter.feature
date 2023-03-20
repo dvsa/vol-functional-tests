@@ -9,7 +9,7 @@ Feature: Generate letter pop up should contain letter details
     And i url search for my licence
 
   @smoketest
- Scenario Outline: Check generate letter pop up and email/print letter
+  Scenario Outline: Check generate letter pop up and email/print letter
     When i generate a letter
     And The pop up should contain letter details
     Then The letter is sent by "<sendOption>"

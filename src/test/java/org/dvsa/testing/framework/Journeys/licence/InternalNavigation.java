@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class InternalNavigation extends BasePage {
 
-    private World world;
+    private final World world;
     private String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
     public String adminDropdown = "//li[@class='admin__title']";
     public String taskTitle = "//h2[text()='Edit task']";
