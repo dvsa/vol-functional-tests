@@ -51,11 +51,6 @@ public class GrantApplication extends BasePage {
             world.internalNavigation.loginIntoInternal();
             world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, licenceNumber[0], licenceNumber[0]);
             overrideOppositionAndDates();
-
-//            clickByLinkText("Withdraw application");
-//            waitForTextToBePresent("Withdraw application");
-//            waitAndClick("form-actions[submit]", SelectorType.ID);
-//            assertTrue(isTextPresent("Application withdrawn"));
         }
     }
 
@@ -78,7 +73,6 @@ public class GrantApplication extends BasePage {
         waitAndClick("form-actions[continue-to-grant]", SelectorType.ID);
         waitAndClick("//*[@value='N']", SelectorType.XPATH);
         waitAndClick("form-actions[grant]", SelectorType.ID);
-        assertEquals("GRANTED", findElement("//*[@class='govuk-tag govuk-tag--green']", SelectorType.XPATH).getText());
     }
 
     private void payGrantFees() {

@@ -13,13 +13,13 @@
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
         <active-support.version>2.0.0</active-support.version>
-        <api-calls.version>2.0.1</api-calls.version>
+        <api-calls.version>2.0.0</api-calls.version>
         <uri-constructor.version>2.0.0</uri-constructor.version>
 
         <axe-scanner-version>2.6</axe-scanner-version>
 
 
-        <allure-cucumber7-jvm.version>2.20.1</allure-cucumber7-jvm.version>
+        <allure-cucumber7-jvm.version>2.21.0</allure-cucumber7-jvm.version>
         <allure-report.version>2.21.0</allure-report.version>
 
         <slf4j.version>2.20.0</slf4j.version>
