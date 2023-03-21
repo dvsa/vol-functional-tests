@@ -21,6 +21,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import static activesupport.driver.Browser.navigate;
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
 public class SelfServeNavigation extends BasePage {
 
@@ -74,7 +75,11 @@ public class SelfServeNavigation extends BasePage {
         String overviewStatus;
         switch (type.toLowerCase()) {
             case "licence":
-                clickByLinkText(world.applicationDetails.getLicenceNumber());
+                if(world.configuration.env.toString().equals("int")){
+                    clickByLinkText(existingLicenceNumber);
+                }else {
+                    clickByLinkText(world.applicationDetails.getLicenceNumber());
+                }
                 waitForTitleToBePresent("View and amend your licence");
                 break;
             case "application":

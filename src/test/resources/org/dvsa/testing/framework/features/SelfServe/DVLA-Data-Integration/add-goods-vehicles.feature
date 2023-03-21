@@ -1,6 +1,7 @@
 @DVLA @VOL-147 @ss_regression
 Feature: Search and add a vehicle
 
+  @smoketest
   Scenario Outline: Add a vehicle to a licence
     Given I have "1" "<Operator>" "standard_national" licences with "2" vehicles and a vehicleAuthority of "13"
     When I navigate to manage vehicle page on a licence
@@ -32,3 +33,11 @@ Feature: Search and add a vehicle
     When I navigate to manage vehicle page on a licence
     And I search without entering a registration number
     Then An error message should be displayed
+
+  @INT-SMOKE
+  Scenario: Add a vehicle to a licence on INT
+    Given I have an existing licence "OF1033195"
+    When I navigate to manage vehicle page on a licence
+    And the vehicle "S679ASX" does not exist on the licence
+    And choose to add a "S679ASX" vehicle
+    Then the "S679ASX" should be displayed on the page
