@@ -1,23 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import apiCalls.enums.UserRoles;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
-import activesupport.http.RestUtils;
 import activesupport.system.Properties;
-import apiCalls.Utils.generic.Headers;
-import apiCalls.Utils.generic.Utils;
-import apiCalls.actions.AccessToken;
-import apiCalls.enums.UserType;
-import io.cucumber.java.After;
 import io.cucumber.java.en.*;
-import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.lib.url.api.URL;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.json.JSONObject;
 import org.openqa.selenium.WebElement;
 
 import java.util.*;
@@ -301,8 +291,7 @@ public class ManageVehicle extends BasePage {
     @And("i search and the vehicle should no longer be present")
     public void iSearchAndTheVehicleShouldNoLongerBePresent() {
         world.dvlaJourney.navigateToRemoveVehiclePage();
-        enterText("vehicleSearch[search-value]", SelectorType.NAME, world.dvlaJourney.VRM);
-        click("vehicleSearch[submit]", SelectorType.NAME);
+        searchForVRMToRemove(null);
         assertFalse(isTextPresent(world.dvlaJourney.VRM));
         assertTrue(isTextPresent("No vehicle can be found with that Vehicle Registration Mark"));
     }
@@ -327,7 +316,7 @@ public class ManageVehicle extends BasePage {
 
     @Then("the {string} should be displayed on the page")
     public void theShouldBeDisplayedOnThePage(String vrm) {
-        isTextPresent(String.format("Vehicle %s has been added", vrm));
+        assertTrue(isTextPresent(String.format("Vehicle %s has been added", vrm)));
     }
 
     @Then("i remove the {int} extra vehicles")
@@ -341,5 +330,29 @@ public class ManageVehicle extends BasePage {
             waitForElementToBeClickable("//input[@value='Remove']", SelectorType.XPATH);
             Thread.sleep(2000);
         }
+    }
+    @And("the vehicle {string} does not exist on the licence")
+    public void theVehicleDoesNotExistOnTheLicence(String vrm) {
+        world.dvlaJourney.navigateToRemoveVehiclePage();
+        searchForVRMToRemove(vrm);
+        if(isTextPresent(vrm)){
+            waitAndClick("//*[@type='checkbox']",SelectorType.XPATH);
+            waitAndClick("formActions[action]",SelectorType.NAME);
+            waitAndClick("//*[contains(text(), 'Yes')]", SelectorType.XPATH);
+            waitAndClick("next",SelectorType.ID);
+        }else {
+            clickByLinkText("manage your vehicles");
+        }
+    }
+
+    private void searchForVRMToRemove(String vrm) {
+        String vehicleRegistrationMark;
+        if(vrm == null) {
+            vehicleRegistrationMark = world.dvlaJourney.VRM;
+        } else{
+            vehicleRegistrationMark = vrm;
+        }
+        enterText("vehicleSearch[search-value]", SelectorType.NAME, vehicleRegistrationMark);
+        click("vehicleSearch[submit]", SelectorType.NAME);
     }
 }
