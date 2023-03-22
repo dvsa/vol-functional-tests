@@ -35,6 +35,7 @@ public class InternalNavigation extends BasePage {
     public void iHaveLoggedIntoInternal() throws HttpException {
         String intSystemAdmin = world.configuration.config.getString("intSystemAdmin");
         String intEnvPassword = world.configuration.config.getString("intEnvPassword");
+
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
             DriverUtils.get(myURL);
@@ -60,5 +61,11 @@ public class InternalNavigation extends BasePage {
     @When("I navigate to the undertakings page on internal")
     public void iNavigateToTheUndertakingsPageOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.CONDITIONS_AND_UNDERTAKINGS);
+    }
+
+    @When("I am on a licence Overview page")
+    public void iAmOnALicenceOverviewPage() {
+        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "licence/318365/").toString();
+        DriverUtils.get(myURL);
     }
 }

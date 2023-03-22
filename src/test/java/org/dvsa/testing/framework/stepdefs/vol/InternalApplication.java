@@ -249,4 +249,9 @@ public class InternalApplication extends BasePage{
     public void anUndertakingShouldNotBeGeneratedOnInternal() {
         assertEquals(0, size("//tbody/tr", SelectorType.XPATH));
     }
+
+    @Then("the document is listed on the page")
+    public void theDocumentIsListedOnThePage() {
+        assertTrue(isTextPresent("GV - Goods Vehicle"));
+    }
 }
