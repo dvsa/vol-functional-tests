@@ -250,8 +250,14 @@ public class InternalApplication extends BasePage{
         assertEquals(0, size("//tbody/tr", SelectorType.XPATH));
     }
 
+    @And("i filter by This application only")
+    public void iFilterByThisApplicationOnly() {
+        selectValueFromDropDown("showDocs", SelectorType.NAME, "This application only");
+    }
+
     @Then("the document is listed on the page")
     public void theDocumentIsListedOnThePage() {
-        assertTrue(isTextPresent("GV - Goods Vehicle"));
+        assertTrue(isTextPresent("GV - Blank letter to operator"));
+        waitForTextToBePresent("1 Docs & attachments");
     }
 }
