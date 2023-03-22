@@ -50,4 +50,10 @@ public class InternalNavigation extends BasePage {
     public void iNavigateToTheUndertakingsPageOnInternal() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.CONDITIONS_AND_UNDERTAKINGS);
     }
+
+    @When("I am on a licence Overview page")
+    public void iAmOnALicenceOverviewPage() {
+        String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "licence/318365/").toString();
+        DriverUtils.get(myURL);
+    }
 }
