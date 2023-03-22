@@ -23,12 +23,12 @@ import java.util.Locale;
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ManageApplications extends BasePage {
     World world;
     Initialisation initialisation;
     String fileName = "src/test/resources/";
+    public static String existingLicenceNumber;
 
     public ManageApplications(World world) {
         this.world = world;
@@ -60,6 +60,7 @@ public class ManageApplications extends BasePage {
     public void iHaveAValidLicenceWithAnOpenCaseAndBusReg(String operatorType, String licenceType) throws HttpException {
         world.busRegistrationJourney.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
     }
+
     @Given("I have all {string} {string} Traffic Areas applications with an external TM")
     public void iHaveAppliedForTMApplication(String operatorType, String licenceType) throws Exception {
         String password;
@@ -136,7 +137,7 @@ public class ManageApplications extends BasePage {
         world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(vehicleAuth));
         world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicleAuth));
-        for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
+        for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
             TrafficArea ta = trafficAreaList()[i];
             world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         }
@@ -170,7 +171,7 @@ public class ManageApplications extends BasePage {
         world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(hgvs));
         world.createApplication.setTotalOperatingCentreLgvAuthority(Integer.parseInt(lgvs));
 
-        for (int i = 0; i < Integer.parseInt(noOfLicences); i ++) {
+        for (int i = 0; i < Integer.parseInt(noOfLicences); i++) {
             TrafficArea ta = trafficAreaList()[i];
             world.licenceCreation.createLicenceWithTrafficArea(operatorType, licenceType, ta);
         }
@@ -219,9 +220,9 @@ public class ManageApplications extends BasePage {
 
     @Given("i have a {string} application in progress")
     public void iHaveAnApplicationInProgress(String operatorType) throws HttpException {
-        if(operatorType.equals("Goods")){
+        if (operatorType.equals("Goods")) {
             operatorType = OperatorType.GOODS.name();
-        }else operatorType = OperatorType.PUBLIC.name();
+        } else operatorType = OperatorType.PUBLIC.name();
         world.createApplication.setOperatorType(operatorType);
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
         world.APIJourney.createApplication();
@@ -243,17 +244,16 @@ public class ManageApplications extends BasePage {
 
     @Given("i have an interim {string} {string} application")
     public void iHaveAnInterimApplication(String operatorType, String licenceType) throws Exception {
-        if (operatorType.equals("public")){
+        if (operatorType.equals("public")) {
             throw new Exception("PSV licences cannot have interim applications.");
         }
         world.createApplication.setOperatorType(operatorType);
         world.createApplication.setLicenceType(licenceType);
         world.createApplication.setIsInterim("Y");
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
+        if (licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)) {
             world.APIJourney.createSpecialRestrictedLicence();
-        }
-        else if (world.createApplication.getApplicationId() == null) {
+        } else if (world.createApplication.getApplicationId() == null) {
             world.APIJourney.createApplication();
             world.APIJourney.submitApplication();
         }
@@ -273,11 +273,17 @@ public class ManageApplications extends BasePage {
     public void theApplicationStatusShouldBe(String status) throws InterruptedException {
         waitForTextToBePresent(status);
         String internalStatus = getText("//*[@class='govuk-tag govuk-tag--orange']", SelectorType.XPATH);
-        assertEquals(status.toUpperCase(),internalStatus);
+        assertEquals(status.toUpperCase(), internalStatus);
+        withDrawApplication();
+    }
+    @Given("I have an existing licence {string}")
+    public void iHaveAnExistingLicence(String licenceNumber) {
+        world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
+        existingLicenceNumber = licenceNumber;
+        clickByLinkText(existingLicenceNumber);
     }
 
-    @After
-    public void withDrawApplication(){
+    public void withDrawApplication() {
         clickByLinkText("Not taken up");
         waitForTextToBePresent("Not taken up");
         waitAndClick("form-actions[submit]", SelectorType.ID);
