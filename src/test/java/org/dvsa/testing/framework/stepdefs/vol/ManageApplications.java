@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import apiCalls.enums.OperatorType;
+import io.cucumber.java.After;
 import io.cucumber.java.en.And;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
@@ -8,12 +9,12 @@ import activesupport.aws.s3.S3;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
-import io.cucumber.java.Scenario;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.datatable.DataTable;
 import org.dvsa.testing.framework.enums.SelfServeSection;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
@@ -21,8 +22,10 @@ import java.util.Locale;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ManageApplications {
+public class ManageApplications extends BasePage {
     World world;
     Initialisation initialisation;
     String fileName = "src/test/resources/";
@@ -266,4 +269,17 @@ public class ManageApplications {
         world.APIJourney.submitApplication();
     }
 
+    @And("the application status should be {string}")
+    public void theApplicationStatusShouldBe(String status) throws InterruptedException {
+        waitForTextToBePresent(status);
+        String internalStatus = getText("//*[@class='govuk-tag govuk-tag--orange']", SelectorType.XPATH);
+        assertEquals(status.toUpperCase(),internalStatus);
+    }
+
+    @After
+    public void withDrawApplication(){
+        clickByLinkText("Not taken up");
+        waitForTextToBePresent("Not taken up");
+        waitAndClick("form-actions[submit]", SelectorType.ID);
+    }
 }
