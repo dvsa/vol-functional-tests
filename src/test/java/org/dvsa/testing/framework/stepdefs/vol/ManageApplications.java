@@ -18,6 +18,7 @@ import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
@@ -235,7 +236,11 @@ public class ManageApplications {
 
     @Given("I have a psv application with traffic area {string} and enforcement area {string} which has been granted")
     public void iHaveAPsvApplicationWithTrafficAreaAndEnforcementAreaWhichHasBeenGranted(String trafficArea, String enforcementArea) throws HttpException {
-        world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);
+        if(Objects.equals(world.configuration.env.toString(), "int")) {
+            world.UIJourney.selectACurrentLicence("psv");
+        } else {
+            world.APIJourney.generateAndGrantPsvApplicationPerTrafficArea(trafficArea, enforcementArea);
+        }
     }
 
     @Given("i have an interim {string} {string} application")

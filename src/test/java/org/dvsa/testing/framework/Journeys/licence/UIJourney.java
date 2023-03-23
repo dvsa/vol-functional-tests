@@ -1,8 +1,5 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.hc.core5.http.HttpException;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
 import activesupport.driver.Browser;
@@ -10,8 +7,11 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.HttpException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -21,14 +21,26 @@ import org.joda.time.LocalDate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.IOException;
-import java.util.*;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
+import static activesupport.driver.Parallel.ChromeSetUp.driver;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+
+
 
 
 public class UIJourney extends BasePage {
@@ -571,4 +583,20 @@ public class UIJourney extends BasePage {
         waitForElementToBePresent("//p[@role='alert']");
         waitAndClick("//*[contains(text(),'Close')]",SelectorType.XPATH);
     }
+
+    public void selectACurrentLicence(String licenceType) {
+        String licencePrefix = "";
+        if (licenceType.equalsIgnoreCase("psv")) {
+            licencePrefix = "P";
+        } else if (licenceType.equalsIgnoreCase("goods")) {
+            licencePrefix = "O";
+        } else {
+            throw new IllegalArgumentException("Invalid licence type");
+        }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement licenceLink = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//tbody/tr/td/a[starts-with(normalize-space(),'" + licencePrefix + "')]")));
+        licenceLink.click();
+    }
+
+
 }

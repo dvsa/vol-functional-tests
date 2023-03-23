@@ -21,6 +21,7 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -139,13 +140,29 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
-    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
+    public void uploadAndSubmitEBSR(String state, int interval, String licenceNumber) throws MissingRequiredArgument {
         refreshPageWithJavascript();
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-        String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
-        world.genericUtils.modifyXML(state, interval);
-        String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
+        String zipFilePath;
+        String intZipFilePath = "";
+        if (Objects.equals(world.configuration.env.toString(), "int")) {
+            String intEsbrFileName = licenceNumber.concat("ESBR.zip");
+            world.genericUtils.modifyXML(state, interval);
+            intZipFilePath = GenericUtils.createZipFolder(intEsbrFileName);
+            zipFilePath = "";
+        } else if (Objects.equals(world.configuration.env.toString(), "qa")) {
+            String qaEsbrFileName = licenceNumber.concat("EBSR.zip");
+            world.genericUtils.modifyXML(state, interval);
+            zipFilePath = GenericUtils.createZipFolder(qaEsbrFileName);
+        } else {
+            throw new MissingRequiredArgument("Environment is not set correctly.");
+        }
+        uploadFileAndSubmit(zipFilePath, intZipFilePath);
+    }
 
+
+
+    private void uploadFileAndSubmit(String zipFilePath, String intZipFilePath) {
         clickByLinkText("Bus");
         waitAndClick("//*[contains(text(),'EBSR')]", SelectorType.XPATH);
         click(nameAttribute("button", "action"), SelectorType.CSS);
@@ -153,30 +170,37 @@ public class BusRegistrationJourney extends BasePage {
         String jScript = "document.getElementById('fields[files][file]').style.left = 0";
         javaScriptExecutor(jScript);
 
+        if (Objects.equals(world.configuration.env.toString(), "int")) {
+            zipFilePath = intZipFilePath;
+        }
+
         if (System.getProperty("platform") == null) {
-            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, System.getProperty("user.dir").concat("/"+zipFilePath));
+            enterText("//*[@id='fields[files][file]']", SelectorType.XPATH, System.getProperty("user.dir").concat("/" + zipFilePath));
+            world.UIJourney.clickSubmit();
         } else {
             WebElement addFile = getDriver().findElement(By.xpath("//*[@id='fields[files][file]']"));
-            ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
-            addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(System.getProperty("user.dir").concat("/" + zipFilePath));
+            world.UIJourney.clickSubmit();
         }
-        world.UIJourney.clickSubmit();
     }
 
-    public void internalSiteEditBusReg() {
-        enterText("serviceNo", SelectorType.ID, "4");
-        enterText("startPoint", SelectorType.ID, Str.randomWord(2));
-        enterText("finishPoint", SelectorType.ID, Str.randomWord(1));
-        enterText("via", SelectorType.ID, Str.randomWord(3));
-        click("//*[@class='chosen-choices']", SelectorType.XPATH);
-        findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
-        HashMap<String, String> dates;
-        dates = world.globalMethods.date.getDateHashMap(0, 0, -1);
-        enterDateFieldsByPartialId("receivedDate", dates);
-        dates = world.globalMethods.date.getDateHashMap(0, 0, 1);
-        enterDateFieldsByPartialId("effectiveDate", dates);
-        dates = world.globalMethods.date.getDateHashMap(0,0,2);
-        enterDateFieldsByPartialId("endDate", dates);
-        world.UIJourney.clickSubmit();
+
+        public void internalSiteEditBusReg () {
+            enterText("serviceNo", SelectorType.ID, "4");
+            enterText("startPoint", SelectorType.ID, Str.randomWord(2));
+            enterText("finishPoint", SelectorType.ID, Str.randomWord(1));
+            enterText("via", SelectorType.ID, Str.randomWord(3));
+            click("//*[@class='chosen-choices']", SelectorType.XPATH);
+            findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
+            HashMap<String, String> dates;
+            dates = world.globalMethods.date.getDateHashMap(0, 0, -1);
+            enterDateFieldsByPartialId("receivedDate", dates);
+            dates = world.globalMethods.date.getDateHashMap(0, 0, 1);
+            enterDateFieldsByPartialId("effectiveDate", dates);
+            dates = world.globalMethods.date.getDateHashMap(0, 0, 2);
+            enterDateFieldsByPartialId("endDate", dates);
+            world.UIJourney.clickSubmit();
+        }
     }
-}
+
