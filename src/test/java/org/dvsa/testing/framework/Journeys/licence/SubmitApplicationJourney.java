@@ -25,15 +25,13 @@ public class SubmitApplicationJourney extends BasePage {
                 element.click();
                 if (isTitlePresent("Application overview", 60)) {
                     clickByLinkText("Withdraw application");
+
                 } else {
-                    if (isElementPresent("Cancel Application", SelectorType.PARTIALLINKTEXT)) {
-                        clickByLinkText("Cancel application");
-                    } else {
-                        world.UIJourney.clickSubmit();
-                    }
-                    waitForTitleToBePresent("Licences");
+                    clickByLinkText("Cancel application");
                 }
+                world.UIJourney.clickSubmit();
             }
+            waitForTitleToBePresent("Licences");
         }
     }
 
