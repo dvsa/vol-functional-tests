@@ -105,9 +105,6 @@ public class GenericUtils extends BasePage {
                         }
 
                     }
-                    if("RegistrationNumber".equals(node.getNodeName())){
-                        node.setTextContent(RegistrationNumber);
-                    }
                 }
             }
             // write the content on console
