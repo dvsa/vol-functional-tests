@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.NotFoundException;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EBSRUpload extends BasePage {
@@ -74,7 +75,13 @@ public class EBSRUpload extends BasePage {
 
     @And("Documents are generated")
     public void documentsAreGenerated() {
-        waitAndClick(String.format("//*[contains(text(),'%s')]", world.applicationDetails.getLicenceNumber()), SelectorType.XPATH);
+        String licenceNumber;
+        if(world.configuration.env.toString().equals("int")){
+            licenceNumber = existingLicenceNumber;
+        }else{
+            licenceNumber = world.applicationDetails.getLicenceNumber();
+        }
+        waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
         waitForTextToBePresent("Your file was processed successfully");
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
