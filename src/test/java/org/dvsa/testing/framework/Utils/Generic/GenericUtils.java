@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
+import activesupport.number.Int;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
@@ -33,6 +34,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
+
 
 public class GenericUtils extends BasePage {
 
@@ -54,6 +57,7 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
+            String RegistrationNumber = String.valueOf(Int.random(0,9999));
             String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -69,7 +73,11 @@ public class GenericUtils extends BasePage {
                         node.setTextContent(getDates(dateState, months));
                     }
                     if ("LicenceNumber".equals(node.getNodeName())) {
-                        node.setTextContent(world.applicationDetails.getLicenceNumber());
+                        if (world.configuration.env.toString().equals("int")) {
+                            node.setTextContent(existingLicenceNumber);
+                        } else {
+                            node.setTextContent(world.applicationDetails.getLicenceNumber());
+                        }
                     }
                     if ("RegistrationNumber".equals(node.getNodeName())) {
                         String getContent = node.getTextContent();
@@ -78,7 +86,13 @@ public class GenericUtils extends BasePage {
                         node.setTextContent(getRegistrationNumber());
                     }
                     if ("TrafficAreaName".equals(node.getNodeName())) {
-                        switch (world.updateLicence.getTrafficAreaName()) {
+                        String trafficAreaName;
+                        if(world.configuration.env.toString().equals("int")){
+                            trafficAreaName = "East";
+                        }else{
+                            trafficAreaName = world.updateLicence.getTrafficAreaName();
+                        }
+                        switch (trafficAreaName) {
                             case "Wales":
                                 node.setTextContent("Welsh");
                                 break;
@@ -156,14 +170,14 @@ public class GenericUtils extends BasePage {
          */
         Path path = Paths.get("target/EBSR");
         try {
-            if(!Files.exists(path)) {
+            if (!Files.exists(path)) {
                 Files.createDirectory(path);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ZipUtil.pack(new File("./src/test/resources/org/dvsa/testing/framework/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
-        return String.format("target/EBSR/%s",fileName);
+        ZipUtil.pack(new File("./src/test/resources/org/dvsa/testing/framework/EBSR"), new File(String.format("target/EBSR/%s", fileName)));
+        return String.format("target/EBSR/%s", fileName);
     }
 
     public String stripNonAlphanumericCharacters(String value) {
@@ -196,11 +210,11 @@ public class GenericUtils extends BasePage {
         return LocalDate.now().plusMonths(months).format(formatter);
     }
 
-    public String confirmationPanel(String locator, String cssValue)  {
+    public String confirmationPanel(String locator, String cssValue) {
         return Browser.navigate().findElement(By.xpath(locator)).getCssValue(cssValue);
     }
 
-    public void switchTab(int tab)  {
+    public void switchTab(int tab) {
         ArrayList<String> tabs = new ArrayList<>(Browser.navigate().getWindowHandles());
         Browser.navigate().switchTo().window(tabs.get(tab));
     }
@@ -209,9 +223,9 @@ public class GenericUtils extends BasePage {
         return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
-    public static int getRandomNumberInts(int min, int max){
+    public static int getRandomNumberInts(int min, int max) {
         Random random = new Random();
-        return random.ints(min,(max+1)).findFirst().getAsInt();
+        return random.ints(min, (max + 1)).findFirst().getAsInt();
     }
 
     public void writeToFile(String userId, String password, String fileName) throws Exception {
@@ -243,7 +257,7 @@ public class GenericUtils extends BasePage {
         return foundIt;
     }
 
-    public static Scanner scanText(String input, String delimeter){
+    public static Scanner scanText(String input, String delimeter) {
         Scanner scanner = new Scanner(input);
         scanner.useDelimiter(delimeter);
         return scanner;
@@ -254,7 +268,7 @@ public class GenericUtils extends BasePage {
     }
 
     public static String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))){
+        try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
             String line = null;
             String prevLine = null;
             int lineCounter = 0;
@@ -264,7 +278,7 @@ public class GenericUtils extends BasePage {
                 lineCounter++;
             }
             br.close();
-            if (lineNumber == -1){
+            if (lineNumber == -1) {
                 return prevLine;
             } else {
                 return line;
@@ -277,9 +291,9 @@ public class GenericUtils extends BasePage {
     }
 
     public void writeLineToFile(String data, String fileLocation) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))){
-                bw.append(data);
-                bw.newLine();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))) {
+            bw.append(data);
+            bw.newLine();
         }
     }
 

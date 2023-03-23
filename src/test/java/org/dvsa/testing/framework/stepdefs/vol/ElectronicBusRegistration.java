@@ -1,12 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import io.cucumber.java.en.Given;
-import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
-import io.cucumber.java.Scenario;
 import io.cucumber.java.en.When;
-import io.cucumber.java.Before;
-
 
 public class ElectronicBusRegistration {
     World world;

@@ -23,6 +23,7 @@ import org.openqa.selenium.remote.RemoteWebElement;
 import java.util.HashMap;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BusRegistrationJourney extends BasePage {
@@ -141,8 +142,13 @@ public class BusRegistrationJourney extends BasePage {
 
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
         refreshPageWithJavascript();
+        String ebsrFileName = null;
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-        String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
+        if(world.configuration.env.toString().equals("int")){
+            ebsrFileName = existingLicenceNumber.concat("EBSR.zip");
+        }else {
+             ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
+        }
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
 
