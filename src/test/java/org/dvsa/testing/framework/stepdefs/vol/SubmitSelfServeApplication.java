@@ -41,7 +41,7 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     @And("i have no existing applications")
-    public void iHaveNoExistingApplications() {
+    public void iHaveNoExistingApplications() throws InterruptedException {
         world.submitApplicationJourney.cancelAndWithdrawExistingApplications();
     }
 

@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
@@ -22,13 +23,14 @@ public class SubmitApplicationJourney extends BasePage {
         this.world = world;
     }
 
-    public void cancelAndWithdrawExistingApplications() {
+    public void cancelAndWithdrawExistingApplications() throws InterruptedException {
         List<WebElement> applications;
         if (isElementPresent("//*/div[5]/table", SelectorType.XPATH)) {
             applications = findElements("//*/div[5]/table/tbody/tr/td/a", SelectorType.XPATH);
             assert applications != null;
             for (int i = 0; i < applications.size(); i++) {
                 applications = findElements("//*/div[5]/table/tbody/tr/td/a", SelectorType.XPATH);
+                TimeUnit.SECONDS.sleep(2);
                 applications.get(i).click();
                 refreshPageWithJavascript();
                 if (isTitlePresent("Application overview", 2)) {
