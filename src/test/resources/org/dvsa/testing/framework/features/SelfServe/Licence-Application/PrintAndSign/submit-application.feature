@@ -1,5 +1,4 @@
 @INT-SMOKE
-@ss_regression
 @sub-app
 Feature: Complete an application manually
 

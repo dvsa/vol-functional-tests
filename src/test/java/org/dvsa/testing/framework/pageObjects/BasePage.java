@@ -130,7 +130,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
-        List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='pagination right-aligned']"));
+        List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='govuk-pagination__list']"));
         int pagination_count = pagination.size();
 
         while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
