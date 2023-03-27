@@ -19,8 +19,8 @@ public class SubmitApplicationJourney extends BasePage {
     public SubmitApplicationJourney(World world) { this.world = world; }
 
     public void cancelAndWithdrawExistingApplications() {
-        if (isElementPresent("//tbody/tr/td/a", SelectorType.XPATH)) {
-            List<WebElement> applications = findElements("//tbody/tr/td/a", SelectorType.XPATH);
+        if (isElementPresent("//*/div[5]/table", SelectorType.XPATH)) {
+            List<WebElement> applications = findElements("//*/div[5]/table/tbody/tr/td/a", SelectorType.XPATH);
             for (WebElement element : applications) {
                 element.click();
                 if (isTitlePresent("Application overview", 60)) {
