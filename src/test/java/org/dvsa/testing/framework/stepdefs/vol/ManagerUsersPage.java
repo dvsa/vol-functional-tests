@@ -15,7 +15,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;
 import scanner.ReportGenerator;

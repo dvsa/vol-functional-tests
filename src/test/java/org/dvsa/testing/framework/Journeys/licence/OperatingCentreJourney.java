@@ -10,12 +10,11 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication.accessibilityScanner;
 
 public class OperatingCentreJourney extends BasePage {
 
     World world;
-    private FakerUtils faker = new FakerUtils();
+    private final FakerUtils faker = new FakerUtils();
 
     String editOperatingCentreTitle = "//h1[contains(text(),'Edit operating centre')]";
     String enterAddressManually = "Enter the address yourself";
@@ -123,11 +122,6 @@ public class OperatingCentreJourney extends BasePage {
     public void addNewOperatingCentre(String vehicles, String trailers) {
         waitForElementToBePresent(addOperatingCentre);
         click(addOperatingCentre, SelectorType.XPATH);
-        try {
-            accessibilityScanner();
-        } catch (IllegalBrowserException | IOException e) {
-            e.printStackTrace();
-        }
         HashMap<String, String> newOperatingCentreAddress = faker.generateAddress();
         clickByLinkText(enterAddressManually);
         world.UIJourney.addNewAddressDetails(newOperatingCentreAddress, world.createApplication.getPostCodeByTrafficArea(), "address");

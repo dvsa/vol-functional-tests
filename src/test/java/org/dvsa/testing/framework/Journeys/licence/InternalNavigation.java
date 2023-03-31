@@ -77,6 +77,7 @@ public class InternalNavigation extends BasePage {
                 waitForTitleToBePresent(option.toString());
         }
     }
+
     public void loginIntoInternal() throws HttpException {
         String intSystemAdmin = world.configuration.config.getString("intSystemAdmin");
         String intEnvPassword = world.configuration.config.getString("intEnvPassword");
@@ -85,8 +86,8 @@ public class InternalNavigation extends BasePage {
             DriverUtils.get(myURL);
             if (isElementPresent("declarationRead", SelectorType.ID)) {
                 waitAndClick("declarationRead", SelectorType.ID);
+                world.globalMethods.signIn(intSystemAdmin, intEnvPassword);
             }
-            world.globalMethods.signIn(intSystemAdmin, intEnvPassword);
         } else {
             world.internalNavigation.logInAsAdmin();
         }

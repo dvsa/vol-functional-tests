@@ -1,10 +1,16 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import activesupport.driver.Browser;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 import java.util.Arrays;
@@ -12,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
 
 public class SubmitApplicationJourney extends BasePage {
 
@@ -19,43 +26,53 @@ public class SubmitApplicationJourney extends BasePage {
     private String applicationNumber;
     private String licence;
 
+    List<WebElement> applications;
+
     public SubmitApplicationJourney(World world) {
         this.world = world;
     }
 
-    public void cancelAndWithdrawExistingApplications() throws InterruptedException {
-        List<WebElement> applications;
-        List<WebElement> applicationsForNew;
-
-        if (isElementPresent("//*/div[5]/table", SelectorType.XPATH) || isElementPresent("//*/div[7]/table", SelectorType.XPATH)) {
+    public void cancelAndWithdrawExistingApplications() {
+        if (isElementPresent("//*/div[5]/table", SelectorType.XPATH)) {
             applications = findElements("//*/div[5]/table/tbody/tr/td/a", SelectorType.XPATH);
-            applicationsForNew = findElements("//*/div[7]/table/tbody/tr/td/a", SelectorType.XPATH);
             assert applications != null;
-            assert applicationsForNew != null;
-            for (int i = 0; i < applications.size(); i++) {
-                applications.get(i).click();
-                if (isTitlePresent("Apply for a new licence",3)) {
-                    clickByLinkText("Cancel application");
-                } else {
-                    clickByLinkText("Withdraw application");
-                }
-                world.UIJourney.clickSubmit();
-                refreshPageWithJavascript();
-                applications = findElements("//*/div[5]/table/tbody/tr/td/a", SelectorType.XPATH);
-                for (int j = 0; j < applicationsForNew.size(); j++) {
-                    applicationsForNew.get(j).click();
-                    if (isTitlePresent("Apply for a new licence",3)) {
-                        clickByLinkText("Cancel application");
-                    } else {
-                        clickByLinkText("Withdraw application");
+            int attempts = 0;
+            while (attempts < 100) {
+                for (WebElement apps : applications) {
+                    applications = findElements("//*/div[5]/table/tbody/tr/td/a", SelectorType.XPATH);
+                    try {
+                        if (isTextPresent("Not Yet Submitted")) {
+                            apps.click();
+                            waitAndClick("Cancel application", SelectorType.LINKTEXT);
+                            world.UIJourney.clickSubmit();
+                        }
+                        if (isTextPresent("Under Consideration")) {
+                            apps.click();
+                            waitAndClick("Withdraw application", SelectorType.LINKTEXT);
+                            world.UIJourney.clickSubmit();
+                        }
+                        if (isTextPresent("Awaiting grant fee")) {
+                            apps.click();
+                            String[] licenceNumber = getText("//*[@class='page-header__subtitle page-header__h3']", SelectorType.XPATH).split("/");
+                            world.internalNavigation.loginIntoInternal();
+                            world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, licenceNumber[0].trim(), licenceNumber[0].trim());
+                            withDrawApplication();
+                            String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
+                            DriverUtils.get(myURL);
+                            refreshPageWithJavascript();
+                        }
+                    } catch (StaleElementReferenceException | HttpException e) {
+                        e.fillInStackTrace();
                     }
-                    world.UIJourney.clickSubmit();
-                    refreshPageWithJavascript();
-                    applicationsForNew = findElements("//*/div[7]/table/tbody/tr/td/a", SelectorType.XPATH);
+                    attempts++;
                 }
+                if (applications.size() == 0) {
+                    break;
+                }
+                waitForTitleToBePresent("Licences");
+                refreshPageWithJavascript();
             }
         }
-        waitForTitleToBePresent("Licences");
     }
 
     public void startANewLicenceApplication(String licenceType) {
@@ -92,7 +109,7 @@ public class SubmitApplicationJourney extends BasePage {
 
         //transport manager
         clickById("add");
-        selectValueFromDropDown("data[registeredUser]",SelectorType.ID,"Test Account");
+        selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
         world.UIJourney.clickContinue();
 
         //transport manager details
