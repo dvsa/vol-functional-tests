@@ -79,7 +79,6 @@ public class SubmitApplicationJourney extends BasePage {
         setLicence(licenceType);
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
-
         chooseLicenceType(licenceType);
         UIJourney.clickSaveAndContinue();
         //business details
