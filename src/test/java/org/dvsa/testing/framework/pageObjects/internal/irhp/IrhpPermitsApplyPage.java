@@ -260,7 +260,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         isElementPresent("//a[@id='menu-irhp-application-decisions-withdraw']",SelectorType.XPATH);
     }
     public static void permitsFeePage(){
-        untilElementWithText(ChronoUnit.SECONDS, Duration.CENTURY);
+        untilElementWithText(ChronoUnit.SECONDS);
     }
     public static void permitsSelectFeeTab(){
         waitAndClick("//a[@id='menu-licence_irhp_applications-fees']",SelectorType.XPATH);

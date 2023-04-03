@@ -96,17 +96,17 @@ public class DirectorJourney extends BasePage {
 
 
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
-        world.genericUtils.findSelectAllRadioButtonsByValue(financialHistoryAnswers);
+        findSelectAllRadioButtonsByValue(financialHistoryAnswers);
         UIJourney.clickSaveAndContinue();
     }
 
     public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
-        world.genericUtils.findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
+        findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
         UIJourney.clickSaveAndContinue();
     }
 
     public void completeLicenceHistory(String licenceHistoryAnswers) {
-        world.genericUtils.findSelectAllRadioButtonsByValue(licenceHistoryAnswers);
+        findSelectAllRadioButtonsByValue(licenceHistoryAnswers);
         UIJourney.clickSaveAndContinue();
     }
 

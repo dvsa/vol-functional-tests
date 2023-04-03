@@ -49,7 +49,7 @@ public class GrantApplication extends BasePage {
         }else{
             String[] licenceNumber = getText("h2", SelectorType.CSS).split("/");
             world.internalNavigation.loginIntoInternal();
-            world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, licenceNumber[0], licenceNumber[0]);
+            world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Licence, licenceNumber[0].trim(), licenceNumber[0].trim());
             overrideOppositionAndDates();
         }
     }
