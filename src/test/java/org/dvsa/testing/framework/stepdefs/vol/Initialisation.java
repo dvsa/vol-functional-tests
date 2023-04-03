@@ -88,5 +88,6 @@ public class Initialisation extends BasePage {
         world.countriesWithLimitedPermitsPage = new CountriesWithLimitedPermitsPage(world);
         world.yearSelectionPage = new YearSelectionPage(world);
         world.permitFeePage = new PermitFeePage(world);
+        world.govSignIn = new GovSignIn(world);
     }
 }

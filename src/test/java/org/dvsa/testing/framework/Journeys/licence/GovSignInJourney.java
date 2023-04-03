@@ -23,13 +23,17 @@ public class GovSignInJourney extends BasePage {
     String registrationEmail = "DVSA.Tester+" + random.nextInt(900) + "@dev-dvsacloud.uk";
 
     public void navigateToGovUkSignIn() {
-        if(isTextPresent("Declaration information")) {
-            clickById("sign");
+        if (world.configuration.env.toString().equals("int")) {
+            clickByXPath("//*[@id='declarationsAndUndertakings[signatureOptions]']");
+            clickByXPath("//*[@id='sign']");
         }
-        String userName = world.configuration.config.getString("basicAuthUserName");
-        String passWord = world.configuration.config.getString("basicAuthPassword");
-        navigate().get(String.format("https://%s:%s@signin.integration.account.gov.uk/",userName,passWord));
-    }
+            if (isTextPresent("Declaration information")) {
+                clickById("sign");
+            }
+            String userName = world.configuration.config.getString("basicAuthUserName");
+            String passWord = world.configuration.config.getString("basicAuthPassword");
+            navigate().get(String.format("https://%s:%s@signin.integration.account.gov.uk/", userName, passWord));
+        }
 
     public void signInGovAccount() {
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");

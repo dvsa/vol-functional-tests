@@ -19,9 +19,15 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     @And("i submit and pay for a {string} licence application")
-    public void iStartANewLicenceApplication(String licenceType){
+    public void iStartANewLicenceApplication(String licenceType) {
         world.submitApplicationJourney.startANewLicenceApplication(licenceType);
-        world.submitApplicationJourney.submitAndPayForApplication();
+        if (world.configuration.env.toString().equals("int")) {
+            world.govSignInJourney.navigateToGovUkSignIn();
+            world.govSignInJourney.signInGovAccount();
+            world.govSignIn.iCompleteThePaymentProcess();
+        } else {
+            world.submitApplicationJourney.submitAndPayForApplication();
+        }
     }
 
     @Given("i have a self serve account")

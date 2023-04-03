@@ -15,6 +15,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECM
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
+import org.dvsa.testing.framework.stepdefs.vol.GovSignIn;
 
 
 public class World {
@@ -41,6 +42,7 @@ public class World {
     public BusRegistrationJourney busRegistrationJourney;
     public ContinuationJourney continuationJourney;
     public DirectorJourney directorJourney;
+    public GovSignIn govSignIn;
     public DVLAJourney dvlaJourney;
     public FeeAndPaymentJourney feeAndPaymentJourney;
     public InternalSearchJourney internalSearchJourney;
