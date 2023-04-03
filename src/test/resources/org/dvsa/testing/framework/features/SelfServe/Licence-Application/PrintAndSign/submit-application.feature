@@ -9,7 +9,8 @@ Feature: Complete an application manually
     Then the licence should be granted by a caseworker
     And the application status should be "Awaiting grant fee"
 
-
     Examples:
       | Licence |
       | Goods   |
+
+
