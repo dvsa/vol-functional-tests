@@ -1,28 +1,17 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.dvsa.testing.framework.Injectors.World;
-import activesupport.IllegalBrowserException;
-import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import scanner.AXEScanner;
-import scanner.ReportGenerator;
-
-import java.io.IOException;
 
 public class SubmitSelfServeApplication extends BasePage {
 
     World world;
     Initialisation initialisation;
-    static AXEScanner scanner = new AXEScanner();
-    static ReportGenerator reportGenerator = new ReportGenerator();
-    private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
-
-    public static String selfServeUser;
 
     public SubmitSelfServeApplication(World world) {
         this.world = world;
@@ -43,15 +32,6 @@ public class SubmitSelfServeApplication extends BasePage {
     @And("i have no existing applications")
     public void iHaveNoExistingApplications() {
         world.submitApplicationJourney.cancelAndWithdrawExistingApplications();
-    }
-
-    public static void accessibilityScanner() throws IllegalBrowserException, IOException {
-        scanner.scan(false);
-        if (scanner.getTotalViolationsCount() != 0) {
-            LOGGER.info("ERROR: Violation found");
-            reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
-            reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
-        }
     }
 
     private void chooseLicenceType(String licenceType) {

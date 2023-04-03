@@ -29,7 +29,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 5;
     private static final int TIME_OUT_SECONDS = 500;
-    private static final int POLLING_SECONDS = 5;
+    private static final int POLLING_SECONDS = 10;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     protected static String getAttribute(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String attribute) {
@@ -56,10 +56,10 @@ public abstract class BasePage extends DriverUtils {
         return webElement.findElement(By.xpath(selector)).getText();
     }
 
-    protected static void untilElementWithText(ChronoUnit unit, long duration) {
+    protected static void untilElementWithText(ChronoUnit unit) {
         new FluentWait<>(getDriver())
                 .ignoreAll(Arrays.asList(NoSuchElementException.class, StaleElementReferenceException.class))
-                .withTimeout(Duration.of(duration, unit))
+                .withTimeout(Duration.of(org.dvsa.testing.framework.enums.Duration.CENTURY, unit))
                 .pollingEvery(Duration.of(500, ChronoUnit.MILLIS))
                 .until(driver -> driver.findElement(by("//h1[@class='govuk-heading-xl']", SelectorType.XPATH)).getText().equalsIgnoreCase("Permit fee"));
     }
@@ -130,7 +130,7 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
-        List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='pagination right-aligned']"));
+        List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='govuk-pagination__list']"));
         int pagination_count = pagination.size();
 
         while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
@@ -394,8 +394,7 @@ public abstract class BasePage extends DriverUtils {
 
         wait.until(driver ->
                 wait.until(ExpectedConditions.elementToBeClickable(
-                        by(selector, selectorType))));
-        findElement(selector, selectorType).click();
+                        by(selector, selectorType)))).click();
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
@@ -429,8 +428,7 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(StaleElementReferenceException.class);
 
         wait.until((Function<WebDriver, WebElement>) driver ->
-                wait.until(elementToBeClickable(by(selector, selectorType))));
-        findElement(selector, selectorType).sendKeys(textValue);
+                wait.until(elementToBeClickable(by(selector, selectorType)))).sendKeys(textValue);
     }
 
     public static boolean isFieldEnabled(String field, SelectorType selectorType) {

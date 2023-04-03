@@ -283,7 +283,7 @@ public class ManageApplications extends BasePage {
         clickByLinkText(existingLicenceNumber);
     }
 
-    public void withDrawApplication() {
+    public static void withDrawApplication() {
         clickByLinkText("Not taken up");
         waitForTextToBePresent("Not taken up");
         waitAndClick("form-actions[submit]", SelectorType.ID);

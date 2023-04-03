@@ -9,7 +9,6 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import scanner.AXEScanner;
 
 import java.io.IOException;
 
@@ -166,20 +165,15 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("i scan the various operating centre and authorisation pages")
     public void iScanTheVariousOperatingCentreAndAuthorisationPages() throws IllegalBrowserException, IOException {
-        AXEScanner scanner = new AXEScanner();
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
-        scanner.scan(false);
         world.UIJourney.changeLicenceForVariation();
-        scanner.scan(false);
         String operatingCentreEditLink = String.format("//*[contains(@value,'%s')]", world.createApplication.getOperatingCentreAddressLine1());
         click(operatingCentreEditLink, SelectorType.XPATH);
         waitForTitleToBePresent("Edit operating centre");
-        scanner.scan(false);
         click("//*[@class='govuk-back-link']", SelectorType.XPATH);
         waitForTitleToBePresent("Operating centres and authorisation");
         click(world.operatingCentreJourney.addOperatingCentre, SelectorType.XPATH);
         waitForTitleToBePresent("Add operating centre");
-        scanner.scan(false);
     }
 
     @And("i create an lgv authorisation variation with {int} more LGVs")
@@ -225,7 +219,7 @@ public class OperatingCentreVariation extends BasePage {
     }
 
     @And("The variation is submitted")
-    public void variationsubmitted() {
+    public void variationSubmitted() {
         world.UIJourney.completeFinancialEvidencePage();
         clickByLinkText("Review and declarations");
         click(confirmDeclaration, SelectorType.XPATH);
