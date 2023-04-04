@@ -16,6 +16,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECM
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 import org.dvsa.testing.framework.stepdefs.vol.GovSignIn;
+import org.dvsa.testing.framework.stepdefs.vol.TOPSReports;
 
 
 public class World {
@@ -85,4 +86,6 @@ public class World {
     public CountriesWithLimitedPermitsPage countriesWithLimitedPermitsPage;
     public YearSelectionPage yearSelectionPage;
     public PermitFeePage permitFeePage;
+    public TOPSJourney topsJourney;
+    public TOPSReports topsReports;
 }
