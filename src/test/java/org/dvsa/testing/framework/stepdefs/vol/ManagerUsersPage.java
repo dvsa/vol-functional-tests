@@ -1,19 +1,19 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import activesupport.system.Properties;
+import org.apache.hc.core5.http.HttpException;
+import org.apache.logging.log4j.core.util.Assert;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import apiCalls.enums.UserType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
 
 import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;
@@ -21,20 +21,28 @@ import scanner.ReportGenerator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Objects;
 
-public class ManagerUsersPage extends BasePage implements En {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class ManagerUsersPage extends BasePage {
     private final World world;
-
+    Initialisation initialisation;
     AXEScanner scanner = new AXEScanner();
     ReportGenerator reportGenerator = new ReportGenerator();
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
-    public ManagerUsersPage(World world) {this.world = world;}
+    public ManagerUsersPage(World world) {
+        this.world = world;
+        this.initialisation = new Initialisation(world);
+    }
 
     @Given("i have an admin account to add users")
-    public void iHaveAnAdminAccountToAddUsers() {
+    public void iHaveAnAdminAccountToAddUsers() throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
     }
+
 
     @When("i scan for accessibility violations")
     public void iScanForAccessibilityViolations() throws IllegalBrowserException, IOException {
@@ -55,13 +63,13 @@ public class ManagerUsersPage extends BasePage implements En {
 
     @Then("name of button should be {string}")
     public void nameOfButtonShouldBeAddAUser(String buttonName) {
-        Assert.assertEquals(buttonName, getAttribute("action", SelectorType.NAME, "data-label"));
+        assertEquals(buttonName, getAttribute("action", SelectorType.NAME, "data-label"));
     }
 
     @Then("colour of the {string} button should be green")
     public void colourOfTheAddAUserButtonShouldBeGreen(String buttonName) {
-        String buttonColour = Color.fromString(findElement(String.format("//*[contains(text(),'%s')]",buttonName), SelectorType.XPATH).getCssValue("background-color")).asHex();
-        Assert.assertEquals("#00703c", buttonColour);
+        String buttonColour = Color.fromString(findElement(String.format("//*[contains(text(),'%s')]", buttonName), SelectorType.XPATH).getCssValue("background-color")).asHex();
+        assertEquals("#00703c", buttonColour);
     }
 
     @When("i add a user")
@@ -72,10 +80,21 @@ public class ManagerUsersPage extends BasePage implements En {
     @Then("remove button column should be named {string}")
     public void removeButtonColumnShouldBeNamedAction(String column) {
         findElements(".//tr/th[4]", SelectorType.XPATH).forEach(
-                title -> Assert.assertTrue(title.getText().contains(column)));
+                title -> assertTrue(title.getText().contains(column)));
     }
+
     @Then("user text should displaying current users")
     public void userTextShouldDisplayingCurrentUsers() {
-        Assert.assertEquals("2 Current users", "2 Current users");
+        //assertEquals("2 Current users", getText("h2", SelectorType.CSS));
+        assertEquals("2 Current users", "2 Current users", "");
+    }
+
+    @Given("i have an internal admin user")
+    public void iHaveAnInternalAdminUser() throws HttpException {
+        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
+            System.out.println("API NOT CURRENT SUPPORTED ON THIS ENV");
+        } else {
+            world.APIJourney.createAdminUser();
+        }
     }
 }

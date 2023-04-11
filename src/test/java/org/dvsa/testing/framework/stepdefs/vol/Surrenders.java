@@ -1,26 +1,23 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
-import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 
-import static junit.framework.Assert.fail;
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class Surrenders extends BasePage implements En {
+public class Surrenders extends BasePage {
     private final World world;
 
     public Surrenders(World world) {this.world = world;}
@@ -59,21 +56,15 @@ public class Surrenders extends BasePage implements En {
         String communityLicenceDocumentStatus = getText("//dt[contains(text(),'Licence document and all certified copies')]//..//dd", SelectorType.XPATH);
         assertEquals("stolen", communityLicenceDocumentStatus);
     }
-
-    @Given("i have a valid {string} {string} licence with an open case and bus reg")
-    public void iHaveAValidLicenceWithAnOpenCaseAndBusReg(String operatorType, String licenceType) {
-        world.busRegistrationJourney.createLicenceWithOpenCaseAndBusReg(operatorType, licenceType);
-    }
-
-
     @And("i choose to surrender my licence with {string}")
     public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) {
         world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        if (surrenderMethod.equalsIgnoreCase("verify")) {
-            if (GenericUtils.isVerifySupportedPlatform(env.name())) {
+        if (surrenderMethod.equalsIgnoreCase("gov-sign-in")) {
+            if (GenericUtils.isGovSignInSupportedPlatform(env.name())) {
                 waitAndClick("//*[@id='sign']", SelectorType.XPATH);
-                world.UIJourney.signWithVerify();
+                world.govSignInJourney.navigateToGovUkSignIn();
+                world.govSignInJourney.signInGovAccount();
                 world.surrenderJourney.checkVerifyConfirmation();
             } else {
                 fail("Verify not supported on this platform");
@@ -87,7 +78,7 @@ public class Surrenders extends BasePage implements En {
     }
 
     @Given("a caseworker views the surrender details")
-    public void aCaseworkerViewsTheSurrenderDetails() {
+    public void aCaseworkerViewsTheSurrenderDetails() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitAndClick("menu-licence_surrender", SelectorType.ID);
@@ -95,14 +86,14 @@ public class Surrenders extends BasePage implements En {
 
     @Then("any open cases should be displayed")
     public void anyOpenCasesShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent("open cases associated with this licence"));
-        Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
+        assertTrue(isTextPresent("open cases associated with this licence"));
+        assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()),10));
     }
 
     @And("any open bus registrations should be displayed")
     public void anyOpenBusRegistrationsShouldBeDisplayed() {
-        Assert.assertTrue(isTextPresent("active bus registrations associated with this licence."));
-        Assert.assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()),10));
+        assertTrue(isTextPresent("active bus registrations associated with this licence."));
+        assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()),10));
     }
 
     @And("tick boxes should be displayed")
@@ -118,19 +109,19 @@ public class Surrenders extends BasePage implements En {
     }
 
     @When("the caseworker checks the case and bus reg is visible in surrenders")
-    public void theCaseworkerChecksTheCaseAndBusRegIsVisibleInSurrenders() {
+    public void theCaseworkerChecksTheCaseAndBusRegIsVisibleInSurrenders() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         waitForTextToBePresent("Overview");
         if (isTextPresent("Surrender")) {
             clickByLinkText("Surrender");
             waitForTextToBePresent("Summary: Application to surrender an operator licence");
-            Assert.assertTrue(isTextPresent("open cases associated with this licence"));
-            Assert.assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 10));
-            Assert.assertTrue(isTextPresent("active bus registrations associated with this licence."));
-            Assert.assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()), 10));
+            assertTrue(isTextPresent("open cases associated with this licence"));
+            assertTrue(isLinkPresent(String.valueOf(world.updateLicence.getCaseId()), 10));
+            assertTrue(isTextPresent("active bus registrations associated with this licence."));
+            assertTrue(isLinkPresent(String.valueOf(world.applicationDetails.getLicenceNumber()), 10));
             WebElement surrenderButton = findElement("//*[@id='actions[surrender]']", SelectorType.XPATH);
-            Assert.assertTrue(surrenderButton.getAttribute("class").contains("disabled"));
+            assertTrue(surrenderButton.getAttribute("class").contains("disabled"));
         }
     }
 

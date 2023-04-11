@@ -1,6 +1,8 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.dates.Dates;
 import activesupport.driver.Browser;
@@ -8,17 +10,14 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import autoitx4java.AutoItX;
-import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.enums.SelfServeSection;
-import org.dvsa.testing.framework.hooks.VFTLifeCycle;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -27,9 +26,9 @@ import java.util.*;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.returnNthNumberSequenceInString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class UIJourney extends BasePage {
@@ -261,7 +260,7 @@ public class UIJourney extends BasePage {
     public void checkLicenceStatus(String arg0) {
         waitForElementToBeClickable("menu-admin-dashboard/admin-your-account/details", SelectorType.ID);
         waitForTextToBePresent("Licence status");
-        Assert.assertEquals(arg0.toUpperCase(), getElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH));
+        assertEquals(arg0.toUpperCase(), getElementValueByText("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH));
     }
 
     public void closeCase() {
@@ -287,7 +286,7 @@ public class UIJourney extends BasePage {
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 
-    public void addNewOperatingCentre() {
+    public void addNewOperatingCentre() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
         click("//*[@id='add']", SelectorType.XPATH);
         searchAndSelectAddress("postcodeInput1", "FK10 1AA", 1);
@@ -501,6 +500,17 @@ public class UIJourney extends BasePage {
         refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
+    }
+
+    public void resetSelfServePassword() {
+        String passWord = world.configuration.config.getString("adminPassword");
+        waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
+        waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
+        click(nameAttribute("input","submit"), SelectorType.CSS);
+        assertTrue(isTextPresent("Your password was reset successfully"));
+        waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
+        waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
+        clickById("auth.login.button");
     }
 
     public static void clickSaveAndContinue() {

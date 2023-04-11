@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.pageObjects;
 
+import activesupport.driver.Browser;
 import com.google.common.base.Function;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,7 +8,6 @@ import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.conditions.ElementCondition;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.Actions;
@@ -22,14 +22,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static activesupport.driver.Parallel.ChromeSetUp.driver;
 import static java.time.Duration.ofSeconds;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 5;
-    private static final int TIME_OUT_SECONDS = 300;
-    private static final int POLLING_SECONDS = 5;
+    private static final int TIME_OUT_SECONDS = 500;
+    private static final int POLLING_SECONDS = 10;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     protected static String getAttribute(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String attribute) {
@@ -56,10 +56,10 @@ public abstract class BasePage extends DriverUtils {
         return webElement.findElement(By.xpath(selector)).getText();
     }
 
-    protected static void untilElementWithText(ChronoUnit unit, long duration) {
+    protected static void untilElementWithText(ChronoUnit unit) {
         new FluentWait<>(getDriver())
                 .ignoreAll(Arrays.asList(NoSuchElementException.class, StaleElementReferenceException.class))
-                .withTimeout(Duration.of(duration, unit))
+                .withTimeout(Duration.of(org.dvsa.testing.framework.enums.Duration.CENTURY, unit))
                 .pollingEvery(Duration.of(500, ChronoUnit.MILLIS))
                 .until(driver -> driver.findElement(by("//h1[@class='govuk-heading-xl']", SelectorType.XPATH)).getText().equalsIgnoreCase("Permit fee"));
     }
@@ -130,46 +130,25 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
-        List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='pagination right-aligned']"));
-        int pagination_count = pagination.size() + 1;
-        outsideloop:
-        while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT))
-            for (int i = 0; i <= pagination_count; i++) {
-                isElementNotPresent(linkTextArgument, SelectorType.LINKTEXT);
-                scrollAndClick("Next", SelectorType.LINKTEXT);
+        List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='govuk-pagination__list']"));
+        int pagination_count = pagination.size();
+
+        while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
+            for (int i = 0; i < pagination_count; i++) {
                 if (isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
-                    break outsideloop;
+                    break;
                 }
-            }
-    }
-
-    public static String selectRandomValueFromDropDown(String idArgument) {
-        Select select = new Select(getDriver().findElement(By.id(idArgument)));
-        Random random = new Random();
-        List<WebElement> dropdown = select.getOptions();
-        int size = dropdown.size();
-        int randomNo = random.nextInt(size);
-        String ownerName = findElement(String.format("//*[@id='%s']/option[%s]", idArgument, randomNo), SelectorType.XPATH).getText();
-        selectValueFromDropDown(idArgument, SelectorType.ID, ownerName);
-        return ownerName;
-    }
-
-    public void selectRandomRadioBtnFromDataTable() {
-        List<WebElement> rows_table = getDriver().findElements(By.tagName("tr"));
-        int rows_count = rows_table.size();
-        outsideloop:
-        for (int row = 0; row < rows_count; row++) {
-            List<WebElement> Columns_row = rows_table.get(row).findElements(By.tagName("td"));
-            int columns_count = Columns_row.size();
-            for (int column = 0; column < columns_count; ) {
-                List<WebElement> options = findElements(String.format("//tbody//td[%s]", columns_count), SelectorType.XPATH);
-                Random random = new Random();
-                int size = options.size();
-                int index = random.nextInt(size);
-                options.get(index).click();
-                break outsideloop;
+                scrollAndClick("Next", SelectorType.LINKTEXT);
             }
         }
+    }
+
+    public static String selectRandomValueFromDropDown(String id) {
+        Select select = new Select(getDriver().findElement(By.id(id)));
+        List<WebElement> options = select.getOptions();
+        WebElement randomOption = options.get(new Random().nextInt(options.size()));
+        select.selectByVisibleText(randomOption.getText());
+        return randomOption.getText();
     }
 
     protected static boolean isLinkPresent(String locator, int duration) {
@@ -311,6 +290,10 @@ public abstract class BasePage extends DriverUtils {
         untilElementIsPresent(selector, SelectorType.CSS, duration, timeUnit);
     }
 
+    public static void waitForElementNotToBePresent(@NotNull String selector) {
+        new WebDriverWait(Browser.navigate(), Duration.ofSeconds(15), Duration.ofSeconds(20)).until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(selector)));
+    }
+
     public static boolean tryUntilElementIsPresent(@NotNull String selector, SelectorType selectorType, long duration, TimeUnit timeUnit) {
         try {
             untilElementIsPresent(selector, selectorType, duration, timeUnit);
@@ -411,8 +394,7 @@ public abstract class BasePage extends DriverUtils {
 
         wait.until(driver ->
                 wait.until(ExpectedConditions.elementToBeClickable(
-                        by(selector, selectorType))));
-        findElement(selector, selectorType).click();
+                        by(selector, selectorType)))).click();
     }
 
     public static void waitForTextToBePresent(@NotNull String selector) {
@@ -446,8 +428,7 @@ public abstract class BasePage extends DriverUtils {
                 .ignoring(StaleElementReferenceException.class);
 
         wait.until((Function<WebDriver, WebElement>) driver ->
-                wait.until(elementToBeClickable(by(selector, selectorType))));
-        findElement(selector, selectorType).sendKeys(textValue);
+                wait.until(elementToBeClickable(by(selector, selectorType)))).sendKeys(textValue);
     }
 
     public static boolean isFieldEnabled(String field, SelectorType selectorType) {
@@ -517,10 +498,13 @@ public abstract class BasePage extends DriverUtils {
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
                 .pollingEvery(ofSeconds(POLLING_SECONDS))
                 .ignoring(java.util.NoSuchElementException.class);
-        ExpectedCondition<Boolean> expect = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        ExpectedCondition<Boolean> expect = driver -> {
+            assert driver != null;
+            return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        };
         wait.until(WebDriver -> expect);
         try {
-            Assert.assertEquals("complete", javaScriptExecutor("return document.readyState").toString());
+            assertEquals("complete", javaScriptExecutor("return document.readyState").toString());
         } catch (Exception e) {
             LOGGER.info("Page timed out trying to load.");
         }

@@ -1,20 +1,18 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
-import activesupport.aws.s3.S3;
 import activesupport.string.Str;
 import apiCalls.enums.EnforcementArea;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
-import com.amazonaws.services.s3.AmazonS3;
 import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
@@ -23,15 +21,13 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BusRegistrationJourney extends BasePage {
-    private static AmazonS3 client = null;
-    private World world;
+    World world;
 
     public BusRegistrationJourney(World world) {
         this.world = world;
@@ -107,7 +103,7 @@ public class BusRegistrationJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Grant')]", SelectorType.XPATH);
     }
 
-    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) {
+    public void createLicenceWithOpenCaseAndBusReg(String operatorType, String licenceType) throws HttpException {
         if (licenceType.equals("standard_international")) {
             world.createApplication.setLicenceType("standard_international");
         } else {
@@ -138,7 +134,7 @@ public class BusRegistrationJourney extends BasePage {
         } while (isTextPresent("processing") && System.currentTimeMillis() < kickOutTime);
 
         try {
-            Assert.assertTrue(isTextPresent("Successful"));
+            assertTrue(isTextPresent("Successful"));
         } catch (Exception e) {
             throw new NotFoundException("import EBSR is still displaying as 'processing' when kick out time was reached.");
         }
@@ -146,8 +142,13 @@ public class BusRegistrationJourney extends BasePage {
 
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
         refreshPageWithJavascript();
+        String ebsrFileName = null;
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
-        String ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
+        if(world.configuration.env.toString().equals("int")){
+            ebsrFileName = existingLicenceNumber.concat("EBSR.zip");
+        }else {
+             ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
+        }
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
 
@@ -165,6 +166,23 @@ public class BusRegistrationJourney extends BasePage {
             ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
         }
+        world.UIJourney.clickSubmit();
+    }
+
+    public void internalSiteEditBusReg() {
+        enterText("serviceNo", SelectorType.ID, "4");
+        enterText("startPoint", SelectorType.ID, Str.randomWord(2));
+        enterText("finishPoint", SelectorType.ID, Str.randomWord(1));
+        enterText("via", SelectorType.ID, Str.randomWord(3));
+        click("//*[@class='chosen-choices']", SelectorType.XPATH);
+        findElements("//*[@class='active-result']", SelectorType.XPATH).stream().findFirst().get().click();
+        HashMap<String, String> dates;
+        dates = world.globalMethods.date.getDateHashMap(0, 0, -1);
+        enterDateFieldsByPartialId("receivedDate", dates);
+        dates = world.globalMethods.date.getDateHashMap(0, 0, 1);
+        enterDateFieldsByPartialId("effectiveDate", dates);
+        dates = world.globalMethods.date.getDateHashMap(0,0,2);
+        enterDateFieldsByPartialId("endDate", dates);
         world.UIJourney.clickSubmit();
     }
 }

@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.hooks;
 
-import cucumber.api.Scenario;
+import io.cucumber.java.Scenario;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
@@ -30,7 +30,7 @@ public class ScreenShotAttachment {
             FileOutputStream screenshotStream = new FileOutputStream(screenshot);
             byte[] attachment = ((TakesScreenshot) Browser.navigate())
                     .getScreenshotAs(OutputType.BYTES);
-            scenarioStatus.embed(attachment, String.valueOf(screenshotStream));
+            scenarioStatus.attach(attachment, "png", String.valueOf(screenshotStream));
             screenshotStream.write(attachment);
             screenshotStream.close();
         }

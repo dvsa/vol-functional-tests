@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Journeys.permits;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.pages.*;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.Country;
@@ -11,40 +11,41 @@ import org.dvsa.testing.framework.pageObjects.external.enums.JourneyType;
 import org.dvsa.testing.framework.pageObjects.external.pages.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 
-import static org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps.clickToPermitTypePage;
 
 public class AnnualBilateralJourney extends BasePermitJourney {
 
     private static PeriodType periodType;
 
-    protected AnnualBilateralJourney() { }
+    public AnnualBilateralJourney(World world) {
+        super(world);
+    }
 
-    public static void setPeriodType(PeriodType periodType) {
+    public void setPeriodType(PeriodType periodType) {
         AnnualBilateralJourney.periodType = periodType;
     }
 
-    public static PeriodType getPeriodType() {
+    public PeriodType getPeriodType() {
         return periodType;
     }
 
-    public static void completePeriodTypePage(PeriodType bilateralPeriodType) {
-        AnnualBilateralJourney.setPeriodType(bilateralPeriodType);
+    public void completePeriodTypePage(PeriodType bilateralPeriodType) {
+        world.annualBilateralJourney.setPeriodType(bilateralPeriodType);
         PeriodSelectionPage.chooseBilateralPeriodType(bilateralPeriodType);
         PeriodSelectionPage.saveAndContinue();
     }
 
-    public static void startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(World world, PeriodType bilateralType, Country country, Boolean cabotageChoice) {
-        startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(world, bilateralType, country, cabotageChoice);
+    public  void startBilateralJourneyTypeAndSelectCabotageUntilPermitFeePage(PeriodType bilateralType, Country country, Boolean cabotageChoice) {
+        startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(bilateralType, country, cabotageChoice);
         BasePermitPage.waitAndClick("//input[@id='submitbutton']", SelectorType.XPATH);
         OverviewPageJourney.clickOverviewSection(OverviewSection.BilateralDeclaration);
         DeclarationPageJourney.completeDeclaration();
     }
 
-    public static void startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(World world, PeriodType bilateralType, Country country, Boolean cabotageChoice) {
-        startBilateralCountryJourneyAndSelectCountry(world, country.toString());
+    public void startBilateralJourneyTypeAndSelectCabotageUntilCheckYourAnswersPage(PeriodType bilateralType, Country country, Boolean cabotageChoice) {
+        startBilateralCountryJourneyAndSelectCountry(country.toString());
         OverviewPage.clickCountrySection(country);
         EssentialInformationPageJourney.completePage();
-        AnnualBilateralJourney.completePeriodTypePage(bilateralType);
+        world.annualBilateralJourney.completePeriodTypePage(bilateralType);
         PermitUsagePageJourney.completePermitTypePage(JourneyType.MultipleJourneys);
         if (bilateralType != PeriodType.BilateralsStandardPermitsNoCabotage) {
             completeCabotage(cabotageChoice);
@@ -52,15 +53,15 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         NumberOfPermitsPageJourney.completePage();
     }
 
-    public static void startBilateralCountryJourneyAndSelectCountry(World world, String country) {
-        clickToPermitTypePage(world);
-        BasePermitJourney.permitType(PermitType.ANNUAL_BILATERAL);
-        BasePermitJourney.licencePage(world);
+    public void startBilateralCountryJourneyAndSelectCountry(String country) {
+        clickToPermitTypePage();
+        world.basePermitJourney.permitType(PermitType.ANNUAL_BILATERAL);
+        world.basePermitJourney.licencePage();
         CountrySelectionPage.selectCountry(country);
         OverviewPage.untilOnPage();
     }
 
-    public static void completeCabotage(boolean cabotageChoice) {
+    public void completeCabotage(boolean cabotageChoice) {
         if (cabotageChoice) {
             CabotagePage.clickNoToCabotage();
         } else {
@@ -70,10 +71,9 @@ public class AnnualBilateralJourney extends BasePermitJourney {
         CabotagePage.saveAndContinue();
     }
 
-    public static void completePayFees(World world) {
-        PermitFeePage.untilOnPage();
-        PermitFeePage.submitAndPay();
+    public void completePayFees() {
+        world.permitFeePage.untilOnPage();
+        world.permitFeePage.submitAndPay();
         world.feeAndPaymentJourney.customerPaymentModule();
     }
-
 }

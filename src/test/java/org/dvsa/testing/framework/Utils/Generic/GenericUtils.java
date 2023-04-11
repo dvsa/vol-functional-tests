@@ -1,17 +1,19 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
-import Injectors.World;
+import activesupport.number.Int;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
 import activesupport.driver.Browser;
-import activesupport.jenkins.Jenkins;
-import activesupport.jenkins.JenkinsParameterKey;
-import activesupport.system.Properties;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.jetbrains.annotations.NotNull;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -32,10 +34,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
+
 
 public class GenericUtils extends BasePage {
 
-    private World world;
+    private final World world;
     private String registrationNumber;
     private static final String zipFilePath = "/src/test/resources/import EBSR.zip";
 
@@ -53,7 +57,8 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String xmlFile = "./src/test/resources/EBSR/EBSR.xml";
+            String RegistrationNumber = String.valueOf(Int.random(0,9999));
+            String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
             Document xmlDoc = xmlBuilder.parse(xmlFile);
@@ -68,7 +73,11 @@ public class GenericUtils extends BasePage {
                         node.setTextContent(getDates(dateState, months));
                     }
                     if ("LicenceNumber".equals(node.getNodeName())) {
-                        node.setTextContent(world.applicationDetails.getLicenceNumber());
+                        if (world.configuration.env.toString().equals("int")) {
+                            node.setTextContent(existingLicenceNumber);
+                        } else {
+                            node.setTextContent(world.applicationDetails.getLicenceNumber());
+                        }
                     }
                     if ("RegistrationNumber".equals(node.getNodeName())) {
                         String getContent = node.getTextContent();
@@ -77,7 +86,13 @@ public class GenericUtils extends BasePage {
                         node.setTextContent(getRegistrationNumber());
                     }
                     if ("TrafficAreaName".equals(node.getNodeName())) {
-                        switch (world.updateLicence.getTrafficAreaName()) {
+                        String trafficAreaName;
+                        if(world.configuration.env.toString().equals("int")){
+                            trafficAreaName = "East";
+                        }else{
+                            trafficAreaName = world.updateLicence.getTrafficAreaName();
+                        }
+                        switch (trafficAreaName) {
                             case "Wales":
                                 node.setTextContent("Welsh");
                                 break;
@@ -105,6 +120,24 @@ public class GenericUtils extends BasePage {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String getResetPasswordLink() {
+        String htmlContent = world.configuration.getPasswordResetLink();
+        String sanatisedHTML = htmlContent.replace("3D", "")
+                .replace("co=", "co")
+                .replaceAll("(nfirmationId=[^&]+)=", "$1");
+        org.jsoup.nodes.Document doc = Jsoup.parse(sanatisedHTML);
+        Elements links = doc.select("a[href]");
+        for (Element link : links) {
+            if (link.attr("abs:href").contains("ssweb")) {
+                String resetPasswordLink = link.attr("abs:href");
+                WebDriver driver = Browser.navigate();
+                driver.get(resetPasswordLink);
+                return resetPasswordLink;
+            }
+        }
+        throw new RuntimeException("Reset password link not found in HTML content.");
     }
 
     public static String getDates(String state, int months) {
@@ -137,22 +170,14 @@ public class GenericUtils extends BasePage {
          */
         Path path = Paths.get("target/EBSR");
         try {
-            if(!Files.exists(path)) {
+            if (!Files.exists(path)) {
                 Files.createDirectory(path);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ZipUtil.pack(new File("./src/test/resources/EBSR"), new File(String.format("target/EBSR/%s",fileName)));
-        return String.format("target/EBSR/%s",fileName);
-    }
-
-    public void executeJenkinsBatchJob(String command) throws Exception {
-        HashMap<String, String> jenkinsParams = new HashMap<>();
-        jenkinsParams.put(JenkinsParameterKey.NODE.toString(), String.format("api&&%s&&olcs", Properties.get("env", true)));
-        jenkinsParams.put(JenkinsParameterKey.JOB.toString(), command);
-
-        Jenkins.trigger(Jenkins.Job.BATCH_PROCESS_QUEUE, jenkinsParams);
+        ZipUtil.pack(new File("./src/test/resources/org/dvsa/testing/framework/EBSR"), new File(String.format("target/EBSR/%s", fileName)));
+        return String.format("target/EBSR/%s", fileName);
     }
 
     public String stripNonAlphanumericCharacters(String value) {
@@ -185,11 +210,11 @@ public class GenericUtils extends BasePage {
         return LocalDate.now().plusMonths(months).format(formatter);
     }
 
-    public String confirmationPanel(String locator, String cssValue)  {
+    public String confirmationPanel(String locator, String cssValue) {
         return Browser.navigate().findElement(By.xpath(locator)).getCssValue(cssValue);
     }
 
-    public void switchTab(int tab)  {
+    public void switchTab(int tab) {
         ArrayList<String> tabs = new ArrayList<>(Browser.navigate().getWindowHandles());
         Browser.navigate().switchTo().window(tabs.get(tab));
     }
@@ -198,9 +223,9 @@ public class GenericUtils extends BasePage {
         return new String(Files.readAllBytes(Paths.get(fileName)));
     }
 
-    public static int getRandomNumberInts(int min, int max){
+    public static int getRandomNumberInts(int min, int max) {
         Random random = new Random();
-        return random.ints(min,(max+1)).findFirst().getAsInt();
+        return random.ints(min, (max + 1)).findFirst().getAsInt();
     }
 
     public void writeToFile(String userId, String password, String fileName) throws Exception {
@@ -232,7 +257,7 @@ public class GenericUtils extends BasePage {
         return foundIt;
     }
 
-    public static Scanner scanText(String input, String delimeter){
+    public static Scanner scanText(String input, String delimeter) {
         Scanner scanner = new Scanner(input);
         scanner.useDelimiter(delimeter);
         return scanner;
@@ -243,7 +268,7 @@ public class GenericUtils extends BasePage {
     }
 
     public static String readLineFromFile(String fileLocation, int lineNumber) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))){
+        try (BufferedReader br = new BufferedReader(new FileReader(fileLocation))) {
             String line = null;
             String prevLine = null;
             int lineCounter = 0;
@@ -253,7 +278,7 @@ public class GenericUtils extends BasePage {
                 lineCounter++;
             }
             br.close();
-            if (lineNumber == -1){
+            if (lineNumber == -1) {
                 return prevLine;
             } else {
                 return line;
@@ -266,13 +291,14 @@ public class GenericUtils extends BasePage {
     }
 
     public void writeLineToFile(String data, String fileLocation) throws IOException {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))){
-                bw.append(data);
-                bw.newLine();
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(fileLocation, true))) {
+            bw.append(data);
+            bw.newLine();
         }
     }
 
-    public static boolean isVerifySupportedPlatform(String env) {
+
+    public static boolean isGovSignInSupportedPlatform(String env) {
         switch (env) {
             case "QUALITY_ASSURANCE":
             case "PRODUCTION":
@@ -281,5 +307,6 @@ public class GenericUtils extends BasePage {
                 return false;
         }
     }
+
 }
 

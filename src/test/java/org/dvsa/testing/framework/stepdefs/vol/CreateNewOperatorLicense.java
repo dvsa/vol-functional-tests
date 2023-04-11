@@ -1,21 +1,20 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-public class CreateNewOperatorLicense extends BasePage implements En {
+public class CreateNewOperatorLicense extends BasePage {
     private final World world;
-
+    Initialisation initialisation;
     public CreateNewOperatorLicense (World world) {
         this.world = world;
+        this.initialisation = new Initialisation(world);
     }
 
     @Given("an Operator with no licence")

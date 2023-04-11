@@ -1,9 +1,8 @@
 package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 
 public class PrintingAndScanningJourney extends BasePage {
     private final World world;
@@ -54,7 +53,7 @@ public class PrintingAndScanningJourney extends BasePage {
 
     public void editPrinter() {
         generatePostCodeAndUniqueId();
-        selectRandomRadioBtnFromDataTable();
+        selectRandomCheckBoxOrRadioBtn("checkbox");
         waitAndClick("edit", SelectorType.ID);
         waitForTextToBePresent("Edit printer");
         replaceText("printer-details[printerName]", SelectorType.ID, uniqueId);
@@ -68,7 +67,7 @@ public class PrintingAndScanningJourney extends BasePage {
     public void deletePrinter() {
         long kickOut = System.currentTimeMillis() + 120000;
         do {
-            selectRandomRadioBtnFromDataTable();
+            selectRandomCheckBoxOrRadioBtn("checkbox");
             waitAndClick("delete", SelectorType.ID);
         } while (!isTextPresent("Remove printer") && System.currentTimeMillis() < kickOut);
 

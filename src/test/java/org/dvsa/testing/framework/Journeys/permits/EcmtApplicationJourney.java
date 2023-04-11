@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Journeys.permits;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.pages.*;
 import org.dvsa.testing.framework.enums.PermitType;
 import org.dvsa.testing.framework.pageObjects.enums.OverviewSection;
@@ -9,77 +9,78 @@ import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECM
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.dvsa.testing.framework.stepdefs.permits.annualecmt.ECMTPermitApplicationSteps;
-import org.dvsa.testing.framework.stepdefs.permits.common.CommonSteps;
 
 
 public class EcmtApplicationJourney extends BasePermitJourney {
 
-    protected EcmtApplicationJourney() { }
+    public EcmtApplicationJourney(World world) {
+        super(world);
+    }
 
-    public static void completeEcmtApplication(World world) {
-        completeEcmtApplicationConfirmation(world);
+    public void completeEcmtApplication() {
+        completeEcmtApplicationConfirmation();
         SubmittedPage.untilPageLoad();
         SubmittedPage.goToPermitsDashboard();
     }
 
-    public static void completeEcmtApplicationConfirmation(World world) {
-        completeApplicationUntilFeePage(world);
+    public void completeEcmtApplicationConfirmation() {
+        completeApplicationUntilFeePage();
         PermitFeePage.saveAndContinue();
         world.feeAndPaymentJourney.customerPaymentModule();
     }
 
-    public static void completeApplicationUntilFeePage(World world){
-        beginApplication(world);
-        EcmtApplicationJourney.completeUntilCheckYourAnswersPage();
+    public void completeApplicationUntilFeePage(){
+        beginApplication();
+        completeUntilCheckYourAnswersPage();
         ECMTPermitApplicationSteps.saveAndContinue();
         DeclarationPageJourney.completeDeclaration();
     }
 
-    public static void completeUntilCheckYourAnswersPage() {
+    public void completeUntilCheckYourAnswersPage() {
         OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
         CheckIfYouNeedECMTPermitsPageJourney.completePage();
         CabotagePageJourney.completePage();
         CertificatesRequiredPageJourney.completePage();
-        CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
+        world.countriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
         NumberOfPermitsPageJourney.completeECMTPage();
         EmissionStandardsPageJourney.completePage();
-        BasePermitJourney.setFullReferenceNumber(BasePermitPage.getReferenceFromPage());
+        world.basePermitJourney.setFullReferenceNumber(BasePermitPage.getReferenceFromPage());
     }
 
-    public static void completeUntilNumberOfPermitsPage(World world) {
-        completeUntilRestrictedCountriesPage(world);
-        CountriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
+    public void completeUntilNumberOfPermitsPage() {
+        completeUntilRestrictedCountriesPage();
+        world.countriesWithLimitedPermitsPage.chooseNoCountriesWithLimitedPermits();
     }
 
-    public static void completeUntilRestrictedCountriesPage(World world){
-        completeUntilCertificatesRequiredPage(world);
+    public void completeUntilRestrictedCountriesPage(){
+        completeUntilCertificatesRequiredPage();
         CertificatesRequiredPageJourney.completePage();
     }
 
-    public static void completeUntilCertificatesRequiredPage(World world){
-        completeUntilCabotagePage(world);
+    public void completeUntilCertificatesRequiredPage(){
+        completeUntilCabotagePage();
         CabotagePageJourney.completePage();
     }
 
-    public static void completeUntilCabotagePage(World world) {
-        beginApplication(world);
+    public void completeUntilCabotagePage() {
+        beginApplication();
         OverviewPageJourney.clickOverviewSection(OverviewSection.CheckIfYouNeedPermits);
         CheckIfYouNeedECMTPermitsPageJourney.completePage();
     }
 
-    public static void beginApplication(World world) {
-        beginApplicationToLicenceSelectionPage(world);
-        BasePermitJourney.licencePage(world);
+    public void beginApplication() {
+        beginApplicationToLicenceSelectionPage();
+        world.basePermitJourney.licencePage();
         OverviewPage.untilOnPage();
     }
 
-    public static void beginApplicationToLicenceSelectionPage(World world) {
-        beginApplicationToYearSelectionPage(world);
-        YearSelectionPage.selectECMTValidityPeriod();
+    public void beginApplicationToLicenceSelectionPage() {
+        beginApplicationToYearSelectionPage();
+        world.yearSelectionPage.selectECMTValidityPeriod();
     }
 
-    public static void beginApplicationToYearSelectionPage(World world) {
-        CommonSteps.clickToPermitTypePage(world);
-        BasePermitJourney.permitType(PermitType.ECMT_ANNUAL);
+    public void beginApplicationToYearSelectionPage() {
+        world.basePermitJourney.clickToPermitTypePage();
+        world.basePermitJourney.permitType(PermitType.ECMT_ANNUAL);
     }
 }

@@ -1,6 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence.AdminJourneys;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -66,10 +66,10 @@ public class TaskAllocation extends BasePage {
         HashMap<String, String> currentDate = world.publicHolidayJourney.date.getDateHashMap(0, 0, 1);
         enterDateFieldsByPartialId("details[actionDate]", currentDate);
         selectValueFromDropDown("category", SelectorType.ID, "Licensing");
-        waitForElementToBeClickable("subCategory", SelectorType.ID);
-        selectValueFromDropDown("subCategory", SelectorType.ID, "General Task");
         enterText("details[description]", SelectorType.ID, description);
         selectSystemTeam();
+        waitForElementToBeClickable("subCategory", SelectorType.ID);
+        selectValueFromDropDown("subCategory", SelectorType.ID, "General Task");
         waitAndClick("submit", SelectorType.ID);
         waitForTextToBePresent("Task(s) successfully created");
         waitAndClick("date", SelectorType.ID);

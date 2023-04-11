@@ -1,16 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class SurrenderStartPage extends BasePage implements En {
+public class SurrenderStartPage extends BasePage {
     private final World world;
 
     public SurrenderStartPage(World world) {this.world=world;}

@@ -1,59 +1,40 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import apiCalls.enums.UserRoles;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class RefundInterim extends BasePage implements En {
+public class RefundInterim extends BasePage {
     private final World world;
 
     public RefundInterim (World world) {this.world = world;}
 
-    @Given("i have an interim {string} {string} application")
-    public void iHaveAnInterimApplication(String operatorType, String licenceType) throws Exception {
-        if (operatorType.equals("public")){
-            throw new Exception("PSV licences cannot have interim applications.");
-        }
-        world.createApplication.setOperatorType(operatorType);
-        world.createApplication.setLicenceType(licenceType);
-        world.createApplication.setIsInterim("Y");
-        world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        if(licenceType.equals("special_restricted") && (world.createApplication.getApplicationId() == null)){
-            world.APIJourney.createSpecialRestrictedLicence();
-        }
-        else if (world.createApplication.getApplicationId() == null) {
-            world.APIJourney.createApplication();
-            world.APIJourney.submitApplication();
-        }
-    }
 
     @When("the interim fee has been paid")
-    public void theInterimFeeHasBeenPaid() {
+    public void theInterimFeeHasBeenPaid() throws HttpException {
         world.grantApplication.getOutstandingFees();
         world.grantApplication.payOutstandingFees();
     }
 
     @And("the application has been refused")
-    public void theApplicationHasBeenRefused() {
+    public void theApplicationHasBeenRefused() throws HttpException {
         world.grantApplication.refuse(world.createApplication.getApplicationId());
     }
 
     @Then("the interim fee should be refunded")
-    public void theInterimFeeShouldBeRefunded() {
+    public void theInterimFeeShouldBeRefunded() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Fees");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "All");
@@ -72,23 +53,23 @@ public class RefundInterim extends BasePage implements En {
     }
 
     @And("the application has been withdrawn")
-    public void theApplicationHasBeenWithdrawn() {
+    public void theApplicationHasBeenWithdrawn() throws HttpException {
         world.grantApplication.withdraw(world.createApplication.getApplicationId());
 
     }
 
     @And("the licence is granted")
-    public void theLicenceIsGranted() {
+    public void theLicenceIsGranted() throws HttpException {
         world.APIJourney.grantLicenceAndPayFees();
     }
 
     @And("the interim is granted")
-    public void theInterimIsGranted() {
+    public void theInterimIsGranted() throws HttpException {
         world.updateLicence.grantInterimApplication(world.createApplication.getApplicationId());
     }
 
     @Then("the interim fee should not be refunded")
-    public void theInterimFeeShouldNotBeRefunded() {
+    public void theInterimFeeShouldNotBeRefunded() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Fees");
         do {
@@ -105,17 +86,17 @@ public class RefundInterim extends BasePage implements En {
     }
 
     @And("the variation application has been refused")
-    public void theVariationApplicationHasBeenRefused() {
+    public void theVariationApplicationHasBeenRefused() throws HttpException {
         world.grantApplication.refuse(world.updateLicence.getVariationApplicationId());
     }
 
     @And("the variation application has been withdrawn")
-    public void theVariationApplicationHasBeenWithdrawn() {
+    public void theVariationApplicationHasBeenWithdrawn() throws HttpException {
         world.grantApplication.withdraw(world.updateLicence.getVariationApplicationId());
     }
 
     @And("the variation interim is granted")
-    public void theVariationInterimIsGranted() {
+    public void theVariationInterimIsGranted() throws HttpException {
         world.updateLicence.grantInterimApplication(world.updateLicence.getVariationApplicationId());
     }
 }

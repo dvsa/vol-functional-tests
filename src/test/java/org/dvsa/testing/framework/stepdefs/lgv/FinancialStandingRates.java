@@ -1,11 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.lgv;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.number.Int;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.objects.FinancialStandingRate;
-import org.dvsa.testing.framework.hooks.VFTLifeCycle;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.apache.logging.log4j.LogManager;
@@ -63,7 +62,7 @@ public class FinancialStandingRates extends BasePage {
     }
 
     @When("i am on the financial standing rates page")
-    public void iAmOnTheFinancialStandingRatesPage() {
+    public void iAmOnTheFinancialStandingRatesPage() throws HttpException {
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.adminNavigation(AdminOption.FINANCIAL_STANDING_RATES);
     }

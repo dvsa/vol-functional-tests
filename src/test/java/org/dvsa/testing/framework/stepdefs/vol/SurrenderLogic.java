@@ -1,14 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -18,12 +18,10 @@ import org.openqa.selenium.InvalidArgumentException;
 import java.util.HashMap;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class SurrenderLogic extends BasePage implements En {
+public class SurrenderLogic extends BasePage {
     private final World world;
     private final FakerUtils faker = new FakerUtils();
     private final HashMap<String, String> address = faker.generateAddress();
@@ -190,13 +188,13 @@ public class SurrenderLogic extends BasePage implements En {
     }
 
     @And("my application to surrender is under consideration")
-    public void myApplicationToSurrenderIsUnderConsideration() {
+    public void myApplicationToSurrenderIsUnderConsideration() throws HttpException {
         world.updateLicence.printLicenceDiscs();
         world.surrenderJourney.submitSurrender();
     }
 
     @When("the caseworker approves the surrender")
-    public void theCaseWorkerApprovesTheSurrender() {
+    public void theCaseWorkerApprovesTheSurrender() throws HttpException {
         world.surrenderJourney.caseworkManageSurrender();
         // Refresh page
         refreshPageWithJavascript();
@@ -219,7 +217,7 @@ public class SurrenderLogic extends BasePage implements En {
     }
 
     @When("the caseworker attempts to withdraw the surrender")
-    public void theCaseworkerAttemptsToWithdrawTheSurrender() {
+    public void theCaseworkerAttemptsToWithdrawTheSurrender() throws HttpException {
         world.surrenderJourney.caseworkManageSurrender();
         waitForElementToBeClickable("actions[surrender]", SelectorType.ID);
         refreshPageWithJavascript();
@@ -255,7 +253,7 @@ public class SurrenderLogic extends BasePage implements En {
     @And("the licence should not displayed in selfserve")
     public void theLicenceShouldNotDisplayedInSelfserve() {
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 30));
+        assertFalse(isLinkPresent(world.applicationDetails.getLicenceNumber(), 3));
     }
 
     @And("the caseworker confirms the withdraw")

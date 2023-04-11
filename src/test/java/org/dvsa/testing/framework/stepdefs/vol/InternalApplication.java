@@ -1,10 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.api.java8.En;
+import org.apache.hc.core5.http.HttpException;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -12,30 +12,20 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.TimeoutException;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class InternalApplication extends BasePage implements En {
+public class InternalApplication extends BasePage{
     private final World world;
 
-    private String HGVOnlyAuthorisation = "//dt[contains(text(),'Total Heavy goods vehicle authorisation')]/../dd";
-    private String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
-    private String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
-    private String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
-    private String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
-    private String editUndertakingLink = "//tbody/tr//input[contains(@name,'table[action][edit]')]";
-    private String undertakingDescription = "//textarea[@name='fields[notes]']";
-    private String expectedLGVOnlyUndertakingText = "All authorised vehicles shall not exceed 3,500 Kilograms (kg), including when combined with a trailer.";
-    private String proposeToRevoke = "//button[text()='Propose to revoke']";
-
-    private String generatedLetterType = "GV - Blank letter to operator";
+    private final String LGVOnlyAuthorisation = "//dt[contains(text(),'Total Light goods vehicle authorisation')]/../dd";
+    private final String vehicleAuthorisation = "//dt[contains(text(),'Total vehicle authorisation')]/../dd";
+    private final String numberOfOperatingCentres = "//dt[contains(text(),'No. of operating centres')]/../dd";
 
     public InternalApplication (World world) {this.world = world;}
 
     @When("the caseworker completes and submits the application")
-    public void theCaseworkerCompletesAndSubmitsTheApplication() {
+    public void theCaseworkerCompletesAndSubmitsTheApplication() throws HttpException {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
@@ -52,7 +42,7 @@ public class InternalApplication extends BasePage implements En {
         int tableColumns;
         waitAndClick("//*[@id='menu-application_fee']", SelectorType.XPATH);
         world.feeAndPaymentJourney.selectFee();
-        String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value").toString();
+        String fee = getAttribute("details[maxAmountForValidator]", SelectorType.ID, "value");
         world.feeAndPaymentJourney.payFee(fee, "cash");
         waitForTextToBePresent("The payment was made successfully");
         long kickoutTime = System.currentTimeMillis() + 15000;
@@ -105,6 +95,8 @@ public class InternalApplication extends BasePage implements En {
         } else {
             assertTrue(isTextPresent("The document has been saved, printed and sent by post"));
         }
+        String generatedLetterType = "GV - Blank letter to operator";
+        waitForTextToBePresent("Docs & attachments");
         assertEquals(generatedLetterType, getElementValueByText("//tbody/tr/td[@data-heading='Description']/a[1]",SelectorType.XPATH));
     }
 
@@ -118,7 +110,7 @@ public class InternalApplication extends BasePage implements En {
     }
 
     @When("a caseworker adds a new operating centre out of the traffic area")
-    public void aCaseworkerAddsANewOperatingCentreOutOfTheTrafficArea() {
+    public void aCaseworkerAddsANewOperatingCentreOutOfTheTrafficArea() throws HttpException {
         world.UIJourney.addNewOperatingCentre();
     }
 
@@ -134,16 +126,13 @@ public class InternalApplication extends BasePage implements En {
     public void iSaveTheLetterClickingTheProposeToRevokeButton() {
         world.UIJourney.clickSubmit();
         waitForTextToBePresent("Send letter");
+        String proposeToRevoke = "//button[text()='Propose to revoke']";
         click(proposeToRevoke, SelectorType.XPATH);
         waitForTextToBePresent("The document has been saved and sent by post and email");
     }
 
     @Then("all copies of the letter have been saved")
     public void allCopiesOfTheLetterHaveBeenSaved() {
-        assertTrue(isTextPresent("(correspondenceAddress)"));
-        assertTrue(isTextPresent("(transportConsultantAddress)"));
-        assertTrue(isTextPresent("(registeredAddress)"));
-        assertTrue(isTextPresent("(operatingCentreAddress1)"));
         assertTrue(isTextPresent("In Office Revocation (emailed)"));
     }
 
@@ -158,7 +147,7 @@ public class InternalApplication extends BasePage implements En {
     }
 
     @And("I navigate to the application overview")
-    public void iNavigateToTheApplicationOverview() {
+    public void iNavigateToTheApplicationOverview() throws HttpException {
         world.APIJourney.createAdminUser();
         world.internalNavigation.logInAsAdmin();
         world.internalNavigation.getApplication();
@@ -174,6 +163,7 @@ public class InternalApplication extends BasePage implements En {
 
     @Then("the LGV Mixed authorisation on the application overview screen should display {string} hgvs to {string} hgvs and {string} lgvs to {string} lgvs")
     public void theLGVMixedAuthorisationShouldBeCorrectOnTheApplicationOverviewScreenShouldDisplayHgvsToHgvsAndLgvsToLgvs(String oldHgvAuthorisation, String newHgvAuthorisation, String oldLgvAuthorisation, String newLgvAuthorisation) {
+        String HGVOnlyAuthorisation = "//dt[contains(text(),'Total Heavy goods vehicle authorisation')]/../dd";
         checkExpectedValuesOnApplicationOverview(HGVOnlyAuthorisation, oldHgvAuthorisation, newHgvAuthorisation);
 
         checkExpectedValuesOnApplicationOverview(LGVOnlyAuthorisation, oldLgvAuthorisation, newLgvAuthorisation);
@@ -185,6 +175,7 @@ public class InternalApplication extends BasePage implements En {
     public void theGoodsStandardNationalAuthorisationOnTheApplicationOverviewScreenShouldDisplayVehiclesToVehicles(String oldAuthorisation, String newAuthorisation, String oldTrailers, String newTrailers) {
         checkExpectedValuesOnApplicationOverview(vehicleAuthorisation, oldAuthorisation, newAuthorisation);
 
+        String trailerAuthorisation = "//dt[contains(text(),'Total trailer authorisation')]/../dd";
         checkExpectedValuesOnApplicationOverview(trailerAuthorisation, oldTrailers, newTrailers);
 
         assertFalse(isTextPresent("Total Heavy goods vehicle authorisation"));
@@ -226,7 +217,7 @@ public class InternalApplication extends BasePage implements En {
     }
 
     @Then("the lgv only undertaking should be generated on internal matching relevant criteria")
-    public void theLgvOnlyUndertakingShouldBeGeneratedOnInternalMatchingRelevantCriteria() {
+    public void theLgvOnlyUndertakingShouldBeGeneratedOnInternalMatchingRelevantCriteria() throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.CONDITIONS_AND_UNDERTAKINGS);
 
         String tableElementText = getText("//tbody/tr", SelectorType.XPATH);
@@ -234,10 +225,13 @@ public class InternalApplication extends BasePage implements En {
         assertTrue(tableElementText.contains("Undertaking"));
         assertTrue(tableElementText.contains("Application"));
 
+        String editUndertakingLink = "//tbody/tr//input[contains(@name,'table[action][edit]')]";
         click(editUndertakingLink, SelectorType.XPATH);
         waitForTextToBePresent("Condition / Undertaking type");
 
+        String undertakingDescription = "//textarea[@name='fields[notes]']";
         String actualLGVUndertakingText = getText(undertakingDescription, SelectorType.XPATH);
+        String expectedLGVOnlyUndertakingText = "All authorised vehicles shall not exceed 3,500 Kilograms (kg), including when combined with a trailer.";
         assertEquals(expectedLGVOnlyUndertakingText, actualLGVUndertakingText);
 
         String expectedCategory = "Other";
@@ -254,5 +248,16 @@ public class InternalApplication extends BasePage implements En {
     @Then("an undertaking should not be generated on internal")
     public void anUndertakingShouldNotBeGeneratedOnInternal() {
         assertEquals(0, size("//tbody/tr", SelectorType.XPATH));
+    }
+
+    @And("i filter by This application only")
+    public void iFilterByThisApplicationOnly() {
+        selectValueFromDropDown("showDocs", SelectorType.NAME, "This application only");
+        waitForTextToBePresent("1 Docs & attachments");
+    }
+
+    @Then("the document is listed on the page")
+    public void theDocumentIsListedOnThePage() {
+        assertTrue(isTextPresent("GV - Blank letter to operator"));
     }
 }

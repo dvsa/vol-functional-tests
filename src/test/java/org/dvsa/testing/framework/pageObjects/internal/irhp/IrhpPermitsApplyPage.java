@@ -1,10 +1,9 @@
 package org.dvsa.testing.framework.pageObjects.internal.irhp;
 
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.string.Str;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.Duration;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.BaseModel;
@@ -261,7 +260,7 @@ public class IrhpPermitsApplyPage extends BaseDetailsPage {
         isElementPresent("//a[@id='menu-irhp-application-decisions-withdraw']",SelectorType.XPATH);
     }
     public static void permitsFeePage(){
-        untilElementWithText(ChronoUnit.SECONDS, Duration.CENTURY);
+        untilElementWithText(ChronoUnit.SECONDS);
     }
     public static void permitsSelectFeeTab(){
         waitAndClick("//a[@id='menu-licence_irhp_applications-fees']",SelectorType.XPATH);

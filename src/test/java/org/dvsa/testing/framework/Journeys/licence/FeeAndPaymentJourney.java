@@ -1,15 +1,15 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import Injectors.World;
+import org.dvsa.testing.framework.Injectors.World;
 import com.typesafe.config.Config;
-import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class FeeAndPaymentJourney extends BasePage {
 
@@ -26,6 +26,7 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void payFee(String amount, @NotNull String paymentMethod)  {
+        waitForTextToBePresent("Pay fee");
         String payment = paymentMethod.toLowerCase().trim();
         waitForElementToBePresent("//label[contains(text(),'Fee amount')]");
         if (payment.equals("cash") || payment.equals("cheque") || payment.equals("postal")) {
@@ -82,6 +83,9 @@ public class FeeAndPaymentJourney extends BasePage {
                         world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                         clickPayAndConfirm(paymentMethod);
                     }
+                    if(isElementPresent("form-actions[pay]", SelectorType.ID)){
+                        waitAndClick("form-actions[pay]", SelectorType.ID);
+                    }
                 }
                 customerPaymentModule();
                 break;
@@ -119,10 +123,10 @@ public class FeeAndPaymentJourney extends BasePage {
     public void customerPaymentModule()  {
         Config config = world.configuration.config;
         waitForTextToBePresent("Card Number*");
-        enterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, config.getString("cardNumber"));
-        enterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, config.getString("cardExpiryMonth"));
-        enterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, config.getString("cardExpiryYear"));
-        enterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
+        waitAndEnterText("//*[@id='scp_cardPage_cardNumber_input']", SelectorType.XPATH, config.getString("cardNumber"));
+        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input']", SelectorType.XPATH, config.getString("cardExpiryMonth"));
+        waitAndEnterText("//*[@id='scp_cardPage_expiryDate_input2']", SelectorType.XPATH, config.getString("cardExpiryYear"));
+        waitAndEnterText("//*[@id='scp_cardPage_csc_input']", SelectorType.XPATH, "123");
         if (isElementPresent("scp_cardPage_storedCard_payment_input", SelectorType.ID)) {
             click("scp_cardPage_storedCard_payment_input", SelectorType.ID);
         }

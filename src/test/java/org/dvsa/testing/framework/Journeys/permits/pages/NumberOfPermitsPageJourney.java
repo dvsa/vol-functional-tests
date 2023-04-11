@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.permits.pages;
 
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.BasePermitJourney;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage;
@@ -9,10 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.dvsa.testing.framework.pageObjects.external.pages.NumberOfPermitsPage.getBilateralErrorMessage;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class NumberOfPermitsPageJourney extends BasePermitJourney {
 
+    public NumberOfPermitsPageJourney(World world){
+        super(world);
+    }
     public static int fieldCount;
     public static int numberOfPermits;
     public static String cabotageValue;

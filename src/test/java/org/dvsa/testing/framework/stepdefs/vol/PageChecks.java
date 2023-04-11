@@ -1,9 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import Injectors.World;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Then;
-import cucumber.api.java8.En;
+import org.dvsa.testing.framework.Injectors.World;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -11,7 +10,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class PageChecks extends BasePage implements En {
+public class PageChecks extends BasePage {
     private final World world;
 
     public PageChecks (World world) {this.world=world;}
@@ -34,5 +33,5 @@ public class PageChecks extends BasePage implements En {
                 clickByLinkText("Docs & attachments");
             }
             assertTrue(checkForPartialMatch(documentType));
-        };
+        }
     }
