@@ -58,4 +58,9 @@ public class InternalSearchJourney extends BasePage {
         } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
         waitAndClick(linkText, SelectorType.PARTIALLINKTEXT);
     }
+
+    public void searchForLicenceByName() {
+        String companyName = "Company Name";
+        SearchNavBar.search(SearchType.Licence, companyName);
+    }
 }

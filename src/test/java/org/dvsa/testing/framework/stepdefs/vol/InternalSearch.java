@@ -1,12 +1,19 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import dev.failsafe.internal.util.Assert;
+import io.cucumber.java.en.Then;
 import org.apache.hc.core5.http.HttpException;
+import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.junit.platform.commons.util.StringUtils;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class InternalSearch extends BasePage {
@@ -67,5 +74,26 @@ public class InternalSearch extends BasePage {
     @And("i url search for my application")
     public void iUrlSearchForMyApplication() {
         world.internalNavigation.getApplication();
+    }
+
+    @When("i search for a company and click Create operator")
+    public void iSearchForACompanyAndClickCreateOperator() {
+        world.internalSearchJourney.searchForLicenceByName();
+        waitForTextToBePresent("Search results");
+        clickByLinkText("Create operator");
+    }
+
+    @And("i enter and search for a Company number")
+    public void iEnterAndSearchForACompanyNumber() {
+        String companyNumber = "12345678";
+        waitForTextToBePresent("Business details");
+        enterText("operator-details[companyNumber][company_number]", SelectorType.ID, companyNumber);
+        clickById("operator-details[companyNumber][submit_lookup_company]");
+    }
+
+    @Then("the operator details should be populated")
+    public void theOperatorDetailsShouldBePopulated() {
+        assertNotNull(getText("operator-details[name]", SelectorType.ID));
+        assertNotNull(getText("registeredAddress[addressLine1]", SelectorType.ID));
     }
 }
