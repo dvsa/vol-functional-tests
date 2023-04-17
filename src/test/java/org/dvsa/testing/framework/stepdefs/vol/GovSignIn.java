@@ -32,6 +32,7 @@ public class GovSignIn extends BasePage {
 
     @Then("i complete the payment process")
     public void iCompleteThePaymentProcess() {
+        waitForTitleToBePresent("Review and declarations");
         clickById("submitAndPay");
         clickById("form-actions[pay]");
         world.feeAndPaymentJourney.customerPaymentModule();
