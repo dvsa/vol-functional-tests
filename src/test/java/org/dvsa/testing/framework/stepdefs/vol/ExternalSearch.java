@@ -8,7 +8,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.jetbrains.annotations.Nullable;
 import org.openqa.selenium.WebElement;
 
 import java.util.Objects;
