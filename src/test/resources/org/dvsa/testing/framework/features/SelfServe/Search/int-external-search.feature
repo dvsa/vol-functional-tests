@@ -16,7 +16,8 @@ Feature: External user search by Address, Business name, Licence Number and Pers
       | address    |                           |               |           | EC1A 1BB            |
 
   Scenario: Partner user external search
-    When i login as a partner user
+    When i have a self serve account
+    And i login as a partner user
     And i navigate to partner vehicle search
     And i search for a vehicle
     Then the expected licence results should be shown
