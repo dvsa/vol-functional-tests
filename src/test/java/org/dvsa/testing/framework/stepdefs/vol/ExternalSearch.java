@@ -152,7 +152,7 @@ public class ExternalSearch extends BasePage {
     @And("i search for a vehicle")
     public void iSearchForAVehicle() {
         waitForTitleToBePresent("Find vehicles");
-        enterText("search", SelectorType.ID, "ABC123");
+        enterText("search", SelectorType.ID, world.configuration.config.getString("testLicenceVrm"));
         clickById("submit");
     }
 
