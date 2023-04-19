@@ -151,8 +151,9 @@ public class ExternalSearch extends BasePage {
 
     @And("i search for a vehicle")
     public void iSearchForAVehicle() {
+        String searchVrm = world.configuration.config.getString("testLicenceVrm");
         waitForTitleToBePresent("Find vehicles");
-        enterText("search", SelectorType.ID, world.configuration.config.getString("testLicenceVrm"));
+        enterText("search", SelectorType.ID,searchVrm);
         clickById("submit");
     }
 
