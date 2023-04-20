@@ -1,7 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import activesupport.driver.Browser;
-import activesupport.driver.BrowserStack;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
@@ -15,11 +13,6 @@ public class TestRunConfiguration {
         Environments environments = new Environments();
         environments.createResultsFolder();
         environments.generateXML();
-        if(System.getProperty("gridURL") != null && (System.getProperty("gridURL")
-                .contains("hub-cloud.browserstack.com"))){
-            BrowserStack.startLocal();
-        }
-
         System.out.println("Testing Scenario:" + scenario.getName());
     }
 
@@ -30,6 +23,6 @@ public class TestRunConfiguration {
 
     @AfterAll
     public static void tearDown() throws Exception {
-        Browser.closeBrowser();
+//        Browser.closeBrowser();
     }
 }
