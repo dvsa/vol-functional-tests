@@ -62,6 +62,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
             String authCode = getTOTPCode(AUTH_KEY);
             waitAndEnterText("code", SelectorType.ID, authCode);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
@@ -78,8 +79,6 @@ public class GovSignInJourney extends BasePage {
         } else {
             clickById("chooseWayPyi");
         }
-//        waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
-//        photoIDQuestion();
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
