@@ -78,8 +78,8 @@ public class GovSignInJourney extends BasePage {
         } else {
             clickById("chooseWayPyi");
         }
-        waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
-        photoIDQuestion();
+//        waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
+//        photoIDQuestion();
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -91,11 +91,11 @@ public class GovSignInJourney extends BasePage {
         clickByXPath("//*[@id='mfaOptions-2']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//*[@id='main-content']/div/div/details[2]/summary/span", SelectorType.XPATH);
-        getText("//*[@id='secret-key']", SelectorType.XPATH);
-        String secretCode = getTOTPCode(getText("//*[@id='secret-key']", SelectorType.XPATH));
+        String key = getText("secret-key", SelectorType.ID).replace("Secret key:", "").trim();
+        String secretCode = getTOTPCode(key);
         waitAndEnterText("code", SelectorType.ID, secretCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickById("submitButton");
         clickByXPath("//*[@id='select-device-choice']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         goThroughVerificationSteps();
