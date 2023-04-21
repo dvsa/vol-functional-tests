@@ -62,7 +62,7 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
             String authCode = getTOTPCode(AUTH_KEY);
             waitAndEnterText("code", SelectorType.ID, authCode);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
         if (isTitlePresent("You have already proved your identity", 2)) {
