@@ -35,7 +35,7 @@
         <maven-failsafe-plugin.version>3.0.0-M8</maven-failsafe-plugin.version>
         <apache-commons.version>1.10.0</apache-commons.version>
         <jsoup.version>1.15.4</jsoup.version>
-        <gson.version>20220924</gson.version>
+        <gson.version>20230227</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>1.8</java.version>
 
