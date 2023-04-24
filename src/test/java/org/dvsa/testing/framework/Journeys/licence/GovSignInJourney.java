@@ -63,16 +63,19 @@ public class GovSignInJourney extends BasePage {
             String authCode = getTOTPCode(AUTH_KEY);
             waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            if (isTitlePresent("Start proving your identity with GOV.UK One Login", 1)) {
-                waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
-            }
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
+
+        if (isTitlePresent("Start proving your identity with GOV.UK One Login", 2)) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+
         if (isTitlePresent("You have already proved your identity", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
             goThroughVerificationSteps();
     }
+
 
     public void registerGovAccount() {
         String signInPassword = world.configuration.config.getString("signInPassword");
