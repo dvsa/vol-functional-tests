@@ -6,6 +6,8 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+
 public class InternalSearchJourney extends BasePage {
 
     private World world;
@@ -54,7 +56,11 @@ public class InternalSearchJourney extends BasePage {
         do {
             SearchNavBar.search(searchType, searchString);
         } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
-        waitForElementToBeClickable(String.format("//*[contains(text(),'%s')]", linkText), SelectorType.XPATH);
         waitAndClick(linkText, SelectorType.PARTIALLINKTEXT);
+    }
+
+    public void searchForLicenceByName() {
+        String companyName = "Company Name";
+        SearchNavBar.search(SearchType.Licence, companyName);
     }
 }

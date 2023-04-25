@@ -9,6 +9,7 @@ import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
@@ -31,6 +32,7 @@ public class GovSignIn extends BasePage {
 
     @Then("i complete the payment process")
     public void iCompleteThePaymentProcess() {
+        waitForTitleToBePresent("Review and declarations");
         clickById("submitAndPay");
         clickById("form-actions[pay]");
         world.feeAndPaymentJourney.customerPaymentModule();

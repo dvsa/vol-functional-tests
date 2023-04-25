@@ -1,5 +1,6 @@
 @INT
 @int_regression
+@grant_under_consideration
 Feature: Grant under consideration application
 
   Scenario Outline:  Grant a licence
