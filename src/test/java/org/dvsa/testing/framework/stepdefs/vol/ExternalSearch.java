@@ -8,7 +8,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.jetbrains.annotations.Nullable;
 import org.openqa.selenium.WebElement;
 
 import java.util.Objects;
@@ -16,6 +15,7 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExternalSearch extends BasePage {
+
     private final World world;
 
     public ExternalSearch(World world) {
@@ -26,14 +26,20 @@ public class ExternalSearch extends BasePage {
     public void iLoginAsAPartnerUser() {
         String user = world.configuration.config.getString("partnerUser");
         String password = world.configuration.config.getString("partnerUserPassword");
+        String intUser = world.configuration.config.getString("intPartnerUser");
+        String intPassword = world.configuration.config.getString("intEnvPassword");
+
         if (getDriver().getCurrentUrl().contains("dashboard")) {
             clickByLinkText("Sign out");
         }
         String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);
         waitForTextToBePresent("Password");
-        world.globalMethods.signIn(user, password);
-        waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);
+        if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
+            world.globalMethods.signIn(intUser, intPassword);
+        } else
+        {world.globalMethods.signIn(user, password);
+        waitAndClick("Lorry and bus operators", SelectorType.PARTIALLINKTEXT);}
     }
 
     @And("I am on the external search page")
@@ -141,5 +147,23 @@ public class ExternalSearch extends BasePage {
         } else {
             world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 300, "KickOut reached. Licence number external search failed.");
         }
+    }
+
+    @And("i search for a vehicle")
+    public void iSearchForAVehicle() {
+        String searchVrm = world.configuration.config.getString("testLicenceVrm");
+        waitForTitleToBePresent("Find vehicles");
+        enterText("search", SelectorType.ID,searchVrm);
+        clickById("submit");
+    }
+
+    @And("i navigate to partner vehicle search")
+    public void iNavigateToPartnerVehicleSearch() {
+        waitAndClick("menu-search-vehicle-external", SelectorType.ID);
+    }
+
+    @Then("the expected licence results should be shown")
+    public void theExpectedLicenceResultsShouldBeShown() {
+        assertTrue(isTextPresent("TEST USER (SELF SERVICE) (12345)"));
     }
 }
