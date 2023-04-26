@@ -13,7 +13,7 @@
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
         <active-support.version>2.0.1</active-support.version>
-        <api-calls.version>2.0.0</api-calls.version>
+        <api-calls.version>2.0.1</api-calls.version>
         <uri-constructor.version>2.0.1</uri-constructor.version>
 
         <axe-scanner-version>2.6</axe-scanner-version>
