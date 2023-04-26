@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Before;
@@ -23,6 +24,6 @@ public class TestRunConfiguration {
 
     @AfterAll
     public static void tearDown() throws Exception {
-//        Browser.closeBrowser();
+        Browser.closeBrowser();
     }
 }
