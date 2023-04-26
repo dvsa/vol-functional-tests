@@ -3,11 +3,11 @@ package org.dvsa.testing.framework.Journeys.licence;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
 import java.util.Random;
 
 import static activesupport.driver.Browser.navigate;
 import static activesupport.qrReader.QRReader.getTOTPCode;
-
 
 
 public class GovSignInJourney extends BasePage {
@@ -27,34 +27,34 @@ public class GovSignInJourney extends BasePage {
             clickByXPath("//*[@id='declarationsAndUndertakings[signatureOptions]']");
             clickByXPath("//*[@id='sign']");
         }
-            if (isTextPresent("Declaration information")) {
-                clickById("sign");
-            }
-            String userName = world.configuration.config.getString("basicAuthUserName");
-            String passWord = world.configuration.config.getString("basicAuthPassword");
-            navigate().get(String.format("https://%s:%s@signin.integration.account.gov.uk/", userName, passWord));
+        if (isTextPresent("Declaration information")) {
+            clickById("sign");
         }
+        String userName = world.configuration.config.getString("basicAuthUserName");
+        String passWord = world.configuration.config.getString("basicAuthPassword");
+        navigate().get(String.format("https://%s:%s@signin.integration.account.gov.uk/", userName, passWord));
+    }
 
     public void signInGovAccount() {
         String AUTH_KEY = world.configuration.config.getString("AUTH_KEY");
         String signInUsername = world.configuration.config.getString("signInUsername");
         String signInPassword = world.configuration.config.getString("signInPassword");
 
-        if(isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
+        if (isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
                 (isTextPresent("Choose a way to prove your identity"))) {
             clickById("chooseWayPyi");
             waitAndClick("//button[@type='Submit']", SelectorType.XPATH);
         } else {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTitlePresent("You’ve signed in to GOV.UK One Login", 1)) {
+        if (isTitlePresent("You’ve signed in to GOV.UK One Login", 1)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
-        if(isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
+        if (isTitlePresent("You must have a photo ID to prove your identity with GOV.UK One Login", 1)) {
             photoIDQuestion();
         }
-        if(isTitlePresent("Create a GOV.UK One Login or sign in",1)) {
+        if (isTitlePresent("Create a GOV.UK One Login or sign in", 1)) {
             waitAndClick("sign-in-button", SelectorType.ID);
             waitAndEnterText("email", SelectorType.ID, signInUsername);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -63,23 +63,27 @@ public class GovSignInJourney extends BasePage {
             String authCode = getTOTPCode(AUTH_KEY);
             waitAndEnterText("code", SelectorType.ID, authCode);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
+
+        if (isTitlePresent("Start proving your identity with GOV.UK One Login", 2)) {
+            waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
+        }
+        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+
         if (isTitlePresent("You have already proved your identity", 2)) {
-          waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
-         goThroughVerificationSteps();
+            goThroughVerificationSteps();
     }
+
 
     public void registerGovAccount() {
         String signInPassword = world.configuration.config.getString("signInPassword");
-        if(isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
+        if (isTitlePresent("Prove your identity with GOV.UK One Login", 2)) {
             clickByXPath("//*[@id='form-tracking']/button");
         } else {
             clickById("chooseWayPyi");
         }
-        waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
-        photoIDQuestion();
         clickById("create-account-link");
         waitAndEnterText("email", SelectorType.ID, registrationEmail);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
@@ -91,11 +95,11 @@ public class GovSignInJourney extends BasePage {
         clickByXPath("//*[@id='mfaOptions-2']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         waitAndClick("//*[@id='main-content']/div/div/details[2]/summary/span", SelectorType.XPATH);
-        getText("//*[@id='secret-key']", SelectorType.XPATH);
-        String secretCode = getTOTPCode(getText("//*[@id='secret-key']", SelectorType.XPATH));
+        String key = getText("secret-key", SelectorType.ID).replace("Secret key:", "").trim();
+        String secretCode = getTOTPCode(key);
         waitAndEnterText("code", SelectorType.ID, secretCode);
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        clickById("submitButton");
         clickByXPath("//*[@id='select-device-choice']");
         waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         goThroughVerificationSteps();
@@ -163,7 +167,7 @@ public class GovSignInJourney extends BasePage {
                 answerOtherPersonQuestion();
             } else if (isTitlePresent("What is the name of your loan provider?", 2))
                 answerBankingQuestion();
-            if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)){
+            if (isElementNotPresent("//input[@type='radio']", SelectorType.XPATH)) {
                 break;
             }
         }
@@ -190,6 +194,7 @@ public class GovSignInJourney extends BasePage {
         }
         clickById("continue");
     }
+
     public void answerMonthlyPaymentQuestion() {
         if (isTextPresent("OVER £500 UP TO £600")) {
             clickById("Q00018-OVER500UPTO600");

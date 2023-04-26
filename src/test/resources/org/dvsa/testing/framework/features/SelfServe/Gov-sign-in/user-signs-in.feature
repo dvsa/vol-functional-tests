@@ -2,7 +2,7 @@
 Feature: Gov sign in
 
   Background:
-    Given i have an application in progress
+    Given i have a "Goods" application in progress
 
   Scenario: Login to sign in
   When I can navigate to gov sign in
