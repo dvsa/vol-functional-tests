@@ -1,5 +1,8 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import apiCalls.enums.UserRoles;
+import apiCalls.enums.UserType;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -13,6 +16,8 @@ import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existin
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EBSRUpload extends BasePage {
+
+
     private final World world;
 
     public EBSRUpload(World world) {
@@ -76,9 +81,9 @@ public class EBSRUpload extends BasePage {
     @And("Documents are generated")
     public void documentsAreGenerated() {
         String licenceNumber;
-        if(world.configuration.env.toString().equals("int")){
+        if (world.configuration.env.toString().equals("int")) {
             licenceNumber = existingLicenceNumber;
-        }else{
+        } else {
             licenceNumber = world.applicationDetails.getLicenceNumber();
         }
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
@@ -99,6 +104,17 @@ public class EBSRUpload extends BasePage {
             throw new NotFoundException("Files not generated.");
         }
     }
+
+
+   @Then ("search a application to grant the licence in internal")
+   public void storelicencenumber() throws HttpException {
+       world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
+       world.internalNavigation.logInAsAdmin();
+       enterText("//*[@class='search__input']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
+       click("//*[@class='search__button']", SelectorType.XPATH);
+      // clickByXPath(world.applicationDetails.getLicenceNumber());
+   }
+
 
     @Then("all Service Details fields should be editable")
     public void allServiceDetailsFieldsShouldBeEditable() {
