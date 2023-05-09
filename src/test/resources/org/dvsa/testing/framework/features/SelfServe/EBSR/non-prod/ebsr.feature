@@ -8,8 +8,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
     Then search a application to grant the licence in internal
-#    When I grant licence
-#    Then the licence should be granted
+    And caseworker will grant the application
     Examples:
       | Area       | Days |
       | north_east | 41   |
