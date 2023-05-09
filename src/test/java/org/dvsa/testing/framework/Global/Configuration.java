@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Global;
 
+import activesupport.mailhog.Mailhog;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
 import activesupport.system.Properties;
@@ -9,7 +10,8 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 public class Configuration {
     public EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
     public Config config = new activesupport.config.Configuration(env.toString()).getConfig();
-    private World world;
+    public Mailhog mailhog = new Mailhog();
+    private final World world;
 
     public Configuration(World world) {
         this.world = world;
@@ -23,6 +25,9 @@ public class Configuration {
         return S3.getTempPassword(emailAddress, getBucketName());
     }
 
+    public String getTempPasswordFromMailhog(String emailSubject){
+        return mailhog.retrievePassword(emailSubject);
+    }
 
     public String getGovCode(){
         return String.valueOf(S3.getSignInCode());

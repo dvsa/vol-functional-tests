@@ -25,7 +25,7 @@ public class UserRegistrationJourney extends BasePage {
     }
 
     public void navigateAndLogIntoSelfServiceWithExistingUser() {
-        String intEnvUsername = world.configuration.config.getString("intSubmitAppUserName");
+        String intEnvUsername = world.configuration.config.getString("intEnvUsername");
         String intEnvPassword = world.configuration.config.getString("intEnvPassword");
 
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
