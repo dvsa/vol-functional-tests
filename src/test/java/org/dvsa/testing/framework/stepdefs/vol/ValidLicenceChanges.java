@@ -113,9 +113,10 @@ public class ValidLicenceChanges extends BasePage {
                 world.UIJourney.clickSubmit();
                 waitForElementToBeClickable("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
             } else {
-                click("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
-                waitForTextToBePresent("Are you sure you want to remove these vehicle(s)");
+                waitAndClick("//button[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
+                waitForTextToBePresent("Are you sure you want to remove these records?");
                 world.UIJourney.clickSubmit();
+                UIJourney.refreshPageWithJavascript();
                 waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             }
         }
@@ -131,7 +132,7 @@ public class ValidLicenceChanges extends BasePage {
         if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
             assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
         } else {
-            assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'vehicles[action][delete]')]")).size(),2);
+            assertEquals(Browser.navigate().findElements(By.xpath("//button[contains(@name, 'vehicles[action][delete]')]")).size(),2);
         }
         assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());
     }
@@ -140,11 +141,12 @@ public class ValidLicenceChanges extends BasePage {
     public void iMakeChangesToTheLicenceDiscsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
         for (int i = 0; i < 3; i++) {
+            UIJourney.refreshPageWithJavascript();
             waitForTextToBePresent("Licence discs");
-            waitAndClick("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
+            waitAndClick("//button[contains(@name,'table[action][void]')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you would like to void these discs?");
             world.UIJourney.clickSubmit();
-            waitForElementToBeClickable("//input[contains(@name,'table[action][void]')]", SelectorType.XPATH);
+            waitForElementToBeClickable("//button[contains(@name,'table[action][void]')]", SelectorType.XPATH);
         }
         UIJourney.refreshPageWithJavascript();
         waitForTextToBePresent("Licence discs");
@@ -157,7 +159,7 @@ public class ValidLicenceChanges extends BasePage {
     @Then("the changes to the licence discs page are made")
     public void theChangesToTheLicenceDiscsPageAreMade() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
-        assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),4);
+        assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),0);
         click("//*[contains(text(),'More actions')]", SelectorType.XPATH);
         click("//*[@id='ceased-show-hide']",SelectorType.XPATH);
         assertEquals(Browser.navigate().findElements(By.xpath("//tbody//tr")).size(),7);
