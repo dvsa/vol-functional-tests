@@ -208,7 +208,7 @@ public class SurrenderLogic extends BasePage {
 
     @And("the surrender menu should be hidden in internal")
     public void theSurrenderMenuShouldBeHiddenInInternal() {
-        assertFalse(isElementPresent("//*[contains(@id,'menu-licence_surrender", SelectorType.XPATH));
+        assertFalse(isElementPresent("//*[@id='menu-licence_surrender']", SelectorType.XPATH));
     }
 
     @And("the {string} page should display")
