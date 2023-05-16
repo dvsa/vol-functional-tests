@@ -11,7 +11,6 @@ Feature: Gov sign in
   Then i complete the payment process
   Then the application should be submitted
 
-
   @gov-reg
 Scenario: Register a GOV sign in account
   When I can navigate to gov sign in
