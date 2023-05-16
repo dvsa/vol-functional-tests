@@ -101,8 +101,6 @@ public class ExternalSearch extends BasePage {
         assertTrue(tableRow.getText().contains(world.applicationDetails.getLicenceNumber()));
     }
 
-
-    @When("I search for a lorry and bus operator by {string} with licence number {string}, business name {string}, person {string} and address {string}")
     @When("I search for a lorry and bus operator by {string},{string},{string},{string},{string}")
     public void iSearchForALorryAndBusOperatorBy(String searchType, String licenceNumber, String businessName, String person, String address) {
         findSelectAllRadioButtonsByValue(searchType);
@@ -138,7 +136,6 @@ public class ExternalSearch extends BasePage {
         }
     }
 
-    @Then("search results page should only display our licence number")
     @Then("search results page should only display our {string}")
     public void searchResultsPageShouldOnlyDisplayOurLicenceNumber(String licenceNumber) {
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
