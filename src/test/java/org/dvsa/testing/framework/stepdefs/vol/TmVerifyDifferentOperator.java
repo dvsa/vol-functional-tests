@@ -68,6 +68,7 @@ public class TmVerifyDifferentOperator extends BasePage{
     public void theOperatorCountersignsDigitally() {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
+        world.configuration.getTmAppLink();
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         if (Browser.navigate().findElements(By.partialLinkText(world.createApplication.getApplicationId())).size() != 0) {
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);

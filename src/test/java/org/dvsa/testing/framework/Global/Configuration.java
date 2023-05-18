@@ -38,6 +38,10 @@ public class Configuration {
         return String.valueOf(S3.getPasswordResetLink(world.registerUser.getEmailAddress()));
     }
 
+    public String getTmAppLink() {
+        return String.valueOf(S3.getTmAppLink(world.registerUser.getEmailAddress()));
+    }
+
     public String getUsernameResetLink() {
         return String.valueOf(S3.getUsernameInfoLink(world.registerUser.getEmailAddress()));
     }
