@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.NotFoundException;
@@ -106,35 +107,47 @@ public class EBSRUpload extends BasePage {
     }
 
 
-   @Then ("search a application to grant the licence in internal")
+   @Then ("login to an internal application to look for an EBSR licence")
    public void storelicencenumber() throws HttpException {
        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
        world.internalNavigation.logInAsAdmin();
+       //selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH,"Bus Registration");
        enterText("//*[@class='search__input']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
        click("//*[@class='search__button']", SelectorType.XPATH);
        waitAndClick("//*[@id='main']//..//nav[1]/ul/li[3]/a", SelectorType.XPATH);
        click("//*[@id='main']//..//td[1]/a", SelectorType.XPATH);
    }
 
-   @And("caseworker will grant the application")
+   @And("complete the Register Service section")
    public void caseworkerWillGrantTheApplication(){
         waitAndClick("//*[@id='menu-licence_bus']", SelectorType.XPATH);
-
+        UIJourney.refreshPageWithJavascript();
         waitAndClick("//*[@id=\"main\"]/div[1]/div/div[2]/div/form/div[2]/table/tbody/tr/td[1]/a", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Register service')]", SelectorType.XPATH);
-        waitForTextToBePresent("Timetable acceptable");
-        click("//*[@value='Y']", SelectorType.XPATH);
-
-
-//        clickById("//*[@id='6453982c056e0']");
-//        clickById("//*[@id='6453982c05784']");
-//       clickById("//*[@id='6453982c05cbf']");
-//       clickById("//*[@id='6453982c05d43']");
-//       clickById("//*[@id='6453982c05dc2']");
-//        saveTheForm();
-//        clickById("menu-licence_bus_fees");
-
+        waitAndClick("/html/body//..//fieldset[2]/fieldset[1]/div/div[2]/input", SelectorType.XPATH);
+       waitAndClick("/html/body//..//fieldset[2]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+       waitAndClick("/html/body//..//fieldset[3]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+       waitAndClick("/html/body//..//fieldset[4]/fieldset[1]/div/div[2]/input", SelectorType.XPATH);
+       waitAndClick("/html/body//..//fieldset[4]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+       waitAndClick("/html/body//..//fieldset[4]/fieldset[3]/div/div[2]/input", SelectorType.XPATH);
+       click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
    }
+
+   @Then("pay the fee to grant the application")
+   public void payTheFeeToGrantTheApplication(){
+       waitAndClick("//*[contains(text(),'Fees')]", SelectorType.XPATH);
+       click("//*[@name='id[]']",SelectorType.XPATH);
+       click("//*[@id='pay']", SelectorType.XPATH);
+       enterText("//*[@id='details[received]']", SelectorType.XPATH, "60");
+       enterText("//*[@id='details[payer]']", SelectorType.XPATH,"abc");
+       enterText("//*[@id='details[slipNo]']", SelectorType.XPATH, "12345");
+       click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+   }
+
+   @And("grants the EBSR application")
+   public void grantsTheEBSRApplication(){
+        waitAndClick("//*[@id='menu-bus-registration-decisions-grant']", SelectorType.XPATH);
+    }
 
 
     @Then("all Service Details fields should be editable")
@@ -149,7 +162,4 @@ public class EBSRUpload extends BasePage {
         assertTrue(isTextPresent("1234"));
     }
 
-    public void saveTheForm(){
-        click("//*[@id='form-actions[save]']", SelectorType.XPATH);
-    }
 }

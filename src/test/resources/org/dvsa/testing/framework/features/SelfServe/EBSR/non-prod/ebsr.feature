@@ -7,8 +7,10 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     When I upload an ebsr file with "<Days>" days notice
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
-    Then search a application to grant the licence in internal
-    And caseworker will grant the application
+    Then login to an internal application to look for an EBSR licence
+    And complete the Register Service section
+    Then pay the fee to grant the application
+    And grants the EBSR application
     Examples:
       | Area       | Days |
       | north_east | 41   |
