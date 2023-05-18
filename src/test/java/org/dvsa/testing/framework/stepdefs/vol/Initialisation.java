@@ -4,6 +4,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
+import org.dvsa.testing.framework.Journeys.TransXchange.TransJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.InternalNavigation;
@@ -89,5 +90,6 @@ public class Initialisation extends BasePage {
         world.yearSelectionPage = new YearSelectionPage(world);
         world.permitFeePage = new PermitFeePage(world);
         world.govSignIn = new GovSignIn(world);
+        world.TransXchangeJourney = new TransJourney(world);
     }
 }
