@@ -1,0 +1,11 @@
+<catalog>
+    <book id="bk101">
+        <author>Bala Sajja</author>
+        <title>Testing</title>
+        <genre>Computer</genre>
+        <price>44.95</price>
+        <publish_date>2019-10-01</publish_date>
+        <description>An in-depth look at creating APIs
+            with Junit.</description>
+    </book>
+</catalog>
