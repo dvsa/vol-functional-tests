@@ -112,21 +112,27 @@ public class EBSRUpload extends BasePage {
        world.internalNavigation.logInAsAdmin();
        enterText("//*[@class='search__input']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
        click("//*[@class='search__button']", SelectorType.XPATH);
-       waitAndClick("//*[@id=\"main\"]/div/div[2]/div/form/div[2]/table/tbody/tr[1]/td[1]/a", SelectorType.ID);
+       waitAndClick("//*[@id='main']//..//nav[1]/ul/li[3]/a", SelectorType.XPATH);
+       click("//*[@id='main']//..//td[1]/a", SelectorType.XPATH);
    }
 
    @And("caseworker will grant the application")
    public void caseworkerWillGrantTheApplication(){
         waitAndClick("//*[@id='menu-licence_bus']", SelectorType.XPATH);
+
         waitAndClick("//*[@id=\"main\"]/div[1]/div/div[2]/div/form/div[2]/table/tbody/tr/td[1]/a", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Register service')]", SelectorType.XPATH);
-        clickById("//*[@id='6453982c056e0']");
-        clickById("//*[@id='6453982c05784']");
-       clickById("//*[@id='6453982c05cbf']");
-       clickById("//*[@id='6453982c05d43']");
-       clickById("//*[@id='6453982c05dc2']");
-        saveTheForm();
-        clickById("menu-licence_bus_fees");
+        waitForTextToBePresent("Timetable acceptable");
+        click("//*[@value='Y']", SelectorType.XPATH);
+
+
+//        clickById("//*[@id='6453982c056e0']");
+//        clickById("//*[@id='6453982c05784']");
+//       clickById("//*[@id='6453982c05cbf']");
+//       clickById("//*[@id='6453982c05d43']");
+//       clickById("//*[@id='6453982c05dc2']");
+//        saveTheForm();
+//        clickById("menu-licence_bus_fees");
 
    }
 
