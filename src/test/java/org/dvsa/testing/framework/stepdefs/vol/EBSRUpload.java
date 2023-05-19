@@ -107,45 +107,44 @@ public class EBSRUpload extends BasePage {
     }
 
 
-   @Then ("login to an internal application to look for an EBSR licence")
-   public void storelicencenumber() throws HttpException {
-       world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
-       world.internalNavigation.logInAsAdmin();
-       //selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH,"Bus Registration");
-       enterText("//*[@class='search__input']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
-       click("//*[@class='search__button']", SelectorType.XPATH);
-       waitAndClick("//*[@id='main']//..//nav[1]/ul/li[3]/a", SelectorType.XPATH);
-       click("//*[@id='main']//..//td[1]/a", SelectorType.XPATH);
-   }
+    @Then("login to an internal application to look for an EBSR licence")
+    public void storelicencenumber() throws HttpException {
+        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
+        world.internalNavigation.logInAsAdmin();
+        //selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH,"Bus Registration");
+        enterText("//*[@class='search__input']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
+        click("//*[@class='search__button']", SelectorType.XPATH);
+        waitAndClick("//*[@id='main']//..//nav[1]/ul/li[3]/a", SelectorType.XPATH);
+        click("//*[@id='main']//..//td[1]/a", SelectorType.XPATH);
+    }
 
-   @And("complete the Register Service section")
-   public void caseworkerWillGrantTheApplication(){
+    @And("complete the Register Service section")
+    public void caseworkerWillGrantTheApplication() {
         waitAndClick("//*[@id='menu-licence_bus']", SelectorType.XPATH);
         UIJourney.refreshPageWithJavascript();
         waitAndClick("//*[@id=\"main\"]/div[1]/div/div[2]/div/form/div[2]/table/tbody/tr/td[1]/a", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Register service')]", SelectorType.XPATH);
         waitAndClick("/html/body//..//fieldset[2]/fieldset[1]/div/div[2]/input", SelectorType.XPATH);
-       waitAndClick("/html/body//..//fieldset[2]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
-       waitAndClick("/html/body//..//fieldset[3]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
-       waitAndClick("/html/body//..//fieldset[4]/fieldset[1]/div/div[2]/input", SelectorType.XPATH);
-       waitAndClick("/html/body//..//fieldset[4]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
-       waitAndClick("/html/body//..//fieldset[4]/fieldset[3]/div/div[2]/input", SelectorType.XPATH);
-       click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
-   }
+        waitAndClick("/html/body//..//fieldset[2]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+        waitAndClick("/html/body//..//fieldset[3]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+        waitAndClick("/html/body//..//fieldset[4]/fieldset[1]/div/div[2]/input", SelectorType.XPATH);
+        waitAndClick("/html/body//..//fieldset[4]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
 
-   @Then("pay the fee to grant the application")
-   public void payTheFeeToGrantTheApplication(){
-       waitAndClick("//*[contains(text(),'Fees')]", SelectorType.XPATH);
-       click("//*[@name='id[]']",SelectorType.XPATH);
-       click("//*[@id='pay']", SelectorType.XPATH);
-       enterText("//*[@id='details[received]']", SelectorType.XPATH, "60");
-       enterText("//*[@id='details[payer]']", SelectorType.XPATH,"abc");
-       enterText("//*[@id='details[slipNo]']", SelectorType.XPATH, "12345");
-       click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
-   }
+    @Then("pay the fee to grant the application")
+    public void payTheFeeToGrantTheApplication() {
+        waitAndClick("//*[contains(text(),'Fees')]", SelectorType.XPATH);
+        click("//*[@name='id[]']", SelectorType.XPATH);
+        click("//*[@id='pay']", SelectorType.XPATH);
+        enterText("//*[@id='details[received]']", SelectorType.XPATH, "60");
+        enterText("//*[@id='details[payer]']", SelectorType.XPATH, "abc");
+        enterText("//*[@id='details[slipNo]']", SelectorType.XPATH, "12345");
+        click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+    }
 
-   @And("grants the EBSR application")
-   public void grantsTheEBSRApplication(){
+    @And("grants the EBSR application")
+    public void grantsTheEBSRApplication() {
         waitAndClick("//*[@id='menu-bus-registration-decisions-grant']", SelectorType.XPATH);
     }
 
