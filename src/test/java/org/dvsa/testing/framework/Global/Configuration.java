@@ -39,7 +39,7 @@ public class Configuration {
     }
 
     public String getTmAppLink() {
-        return String.valueOf(S3.getTmAppLink(world.registerUser.getEmailAddress()));
+        return S3.getTmAppLink(world.registerUser.getEmailAddress());
     }
 
     public String getUsernameResetLink() {

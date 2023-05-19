@@ -122,22 +122,24 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public String getResetPasswordLink() {
-        String htmlContent = world.configuration.getPasswordResetLink();
-        String sanatisedHTML = htmlContent.replace("3D", "")
-                .replace("co=", "co")
-                .replaceAll("(nfirmationId=[^&]+)=", "$1");
+    public String getResetPasswordLink(String content) {
+        String x = "";
+        String sanatisedHTML = content.replace("=", "")
+                .replace("3D", "");
+           //     .replaceAll("(nfirmationId=[^&]+)=", "$1");
         org.jsoup.nodes.Document doc = Jsoup.parse(sanatisedHTML);
         Elements links = doc.select("a[href]");
         for (Element link : links) {
-            if (link.attr("abs:href").contains("ssweb")) {
-                String resetPasswordLink = link.attr("abs:href");
-                WebDriver driver = Browser.navigate();
-                driver.get(resetPasswordLink);
-                return resetPasswordLink;
+            x = link.attr("abs:href");
+            System.out.println(x);
+//            if (link.attr("abs:href").contains("ssweb")) {
+//                String resetPasswordLink = link.attr("abs:href");
+//                WebDriver driver = Browser.navigate();
+//                driver.get(resetPasswordLink);
+//                return resetPasswordLink;
             }
-        }
-        throw new RuntimeException("Reset password link not found in HTML content.");
+        return x;
+     //   throw new RuntimeException("Reset password link not found in HTML content.");
     }
 
     public static String getDates(String state, int months) {
