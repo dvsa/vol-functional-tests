@@ -54,6 +54,10 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     When I upload an ebsr file with "42" days notice
     Then A short notice flag should not be displayed in selfserve
     And Documents are generated
+    Then login to an internal application to look for an EBSR licence
+    And complete the Register Service section
+    Then pay the fee to grant the application
+    And grants the EBSR application
 
   @smoketest
   Scenario: import EBSR for curtailed and suspended licence in self-serve smoke test

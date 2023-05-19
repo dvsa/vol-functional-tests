@@ -1,9 +1,13 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import apiCalls.enums.UserRoles;
+import apiCalls.enums.UserType;
+import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.NotFoundException;
@@ -13,6 +17,8 @@ import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existin
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EBSRUpload extends BasePage {
+
+
     private final World world;
 
     public EBSRUpload(World world) {
@@ -76,9 +82,9 @@ public class EBSRUpload extends BasePage {
     @And("Documents are generated")
     public void documentsAreGenerated() {
         String licenceNumber;
-        if(world.configuration.env.toString().equals("int")){
+        if (world.configuration.env.toString().equals("int")) {
             licenceNumber = existingLicenceNumber;
-        }else{
+        } else {
             licenceNumber = world.applicationDetails.getLicenceNumber();
         }
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
@@ -100,6 +106,49 @@ public class EBSRUpload extends BasePage {
         }
     }
 
+
+    @Then("login to an internal application to look for an EBSR licence")
+    public void storelicencenumber() throws HttpException {
+        world.updateLicence.createInternalUser(UserRoles.INTERNAL_ADMIN.asString(), UserType.INTERNAL.asString());
+        world.internalNavigation.logInAsAdmin();
+        //selectValueFromDropDown("//*[@id='search-select']", SelectorType.XPATH,"Bus Registration");
+        enterText("//*[@class='search__input']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
+        click("//*[@class='search__button']", SelectorType.XPATH);
+        waitAndClick("//*[@id='main']//..//nav[1]/ul/li[3]/a", SelectorType.XPATH);
+        click("//*[@id='main']//..//td[1]/a", SelectorType.XPATH);
+    }
+
+    @And("complete the Register Service section")
+    public void caseworkerWillGrantTheApplication() {
+        waitAndClick("//*[@id='menu-licence_bus']", SelectorType.XPATH);
+        UIJourney.refreshPageWithJavascript();
+        waitAndClick("//*[@id=\"main\"]/div[1]/div/div[2]/div/form/div[2]/table/tbody/tr/td[1]/a", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Register service')]", SelectorType.XPATH);
+        waitAndClick("/html/body//..//fieldset[2]/fieldset[1]/div/div[2]/input", SelectorType.XPATH);
+        waitAndClick("/html/body//..//fieldset[2]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+        waitAndClick("/html/body//..//fieldset[3]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+        waitAndClick("/html/body//..//fieldset[4]/fieldset[1]/div/div[2]/input", SelectorType.XPATH);
+        waitAndClick("/html/body//..//fieldset[4]/fieldset[2]/div/div[2]/input", SelectorType.XPATH);
+        click("//*[@id='form-actions[submit]']", SelectorType.XPATH);
+    }
+
+    @Then("pay the fee to grant the application")
+    public void payTheFeeToGrantTheApplication() {
+        waitAndClick("//*[contains(text(),'Fees')]", SelectorType.XPATH);
+        click("//*[@name='id[]']", SelectorType.XPATH);
+        click("//*[@id='pay']", SelectorType.XPATH);
+        enterText("//*[@id='details[received]']", SelectorType.XPATH, "60");
+        enterText("//*[@id='details[payer]']", SelectorType.XPATH, "abc");
+        enterText("//*[@id='details[slipNo]']", SelectorType.XPATH, "12345");
+        click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+    }
+
+    @And("grants the EBSR application")
+    public void grantsTheEBSRApplication() {
+        waitAndClick("//*[@id='menu-bus-registration-decisions-grant']", SelectorType.XPATH);
+    }
+
+
     @Then("all Service Details fields should be editable")
     public void allServiceDetailsFieldsShouldBeEditable() {
         clickByLinkText("Service details");
@@ -111,4 +160,5 @@ public class EBSRUpload extends BasePage {
         world.selfServeNavigation.navigateToBusRegExternal();
         assertTrue(isTextPresent("1234"));
     }
+
 }
