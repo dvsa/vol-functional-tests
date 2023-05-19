@@ -250,7 +250,7 @@
                     </includes>
                     <forkCount>2</forkCount>
                     <reuseForks>false</reuseForks>
-                    <parallel>methods</parallel>
+                    <parallel>suites</parallel>
                     <threadCount>2</threadCount>
                 </configuration>
             </plugin>
