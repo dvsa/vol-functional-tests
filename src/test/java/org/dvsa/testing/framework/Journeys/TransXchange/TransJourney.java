@@ -57,9 +57,10 @@ public class TransJourney extends BasePage {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/ValidPdfRequest.xml");
         String gettoken = world.TransXchangeJourney.getAuthToken();
+        int responseCode= connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
-        System.out.println("before:"+ connection.getResponseCode());
+
         //connection.disconnect();
 
         connection.setRequestMethod("POST");
@@ -77,7 +78,6 @@ public class TransJourney extends BasePage {
         //connection.setDoInput(false);
     
         FileInputStream fileInputStream = new FileInputStream(xmlFile);
-        System.out.println("fileInputStream:"+fileInputStream);
 
         // Get the output stream of the connection
         OutputStream outputStream = connection.getOutputStream();
@@ -97,13 +97,13 @@ public class TransJourney extends BasePage {
         // Check the response code
       //  int responseCode= connection.getResponseCode();
     
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            // Request successful
-            System.out.println("XML file sent successfully.");
-        } else {
-            // Request failed
-            System.out.println("Failed to send XML file. Response Code: " + responseCode);
-        }
+//        if (responseCode == HttpURLConnection.HTTP_OK) {
+//            // Request successful
+//            System.out.println("XML file sent successfully.");
+//        } else {
+//            // Request failed
+//            System.out.println("Failed to send XML file. Response Code: " + responseCode);
+//        }
 
     }
 
@@ -111,6 +111,7 @@ public class TransJourney extends BasePage {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InValidPdfRequest.xml");
         String gettoken = world.TransXchangeJourney.getAuthToken();
+        int responseCode= connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
         //connection.disconnect();
@@ -130,9 +131,7 @@ public class TransJourney extends BasePage {
         //connection.setDoInput(false);
 
         FileInputStream fileInputStream = new FileInputStream(xmlFile);
-        System.out.println("fileInputStream:"+fileInputStream);
-
-        // Get the output stream of the connection
+       // Get the output stream of the connection
         OutputStream outputStream = connection.getOutputStream();
 
         // Write the XML file contents to the output stream
@@ -150,19 +149,20 @@ public class TransJourney extends BasePage {
         // Check the response code
         //  int responseCode= connection.getResponseCode();
 
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            // Request successful
-            System.out.println("XML file sent successfully.");
-        } else {
-            // Request failed
-            System.out.println("Failed to send XML file. Response Code: " + responseCode);
-        }
+//        if (responseCode == HttpURLConnection.HTTP_OK) {
+//            // Request successful
+//            System.out.println("XML file sent successfully.");
+//        } else {
+//            // Request failed
+//            System.out.println("Failed to send XML file. Response Code: " + responseCode);
+//        }
 
     }
 
     public void sendUnauthorisedRequest(String apiUrl, String xml) throws Exception {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InValidPdfRequest.xml");
+        int responseCode= connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
         //connection.disconnect();
@@ -201,22 +201,16 @@ public class TransJourney extends BasePage {
         // Check the response code
         //  int responseCode= connection.getResponseCode();
 
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            // Request successful
-            System.out.println("XML file sent successfully.");
-        } else {
-            // Request failed
-            System.out.println("Failed to send XML file. Response Code: " + responseCode);
-        }
+
 
     }
 
     public void sendUnsecuredRequest(String apiUrl, String xml) throws Exception {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InValidPdfRequest.xml");
+        int responseCode= connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
-        System.out.println("before ");
         connection.setRequestMethod("POST");
         connection.setRequestProperty("X-Correlation-Id", "abc123");
         connection.setRequestProperty("Content-Type", "text/plain");
@@ -243,20 +237,14 @@ public class TransJourney extends BasePage {
             outputStream.write(buffer, 0, bytesRead);
         }
 
-       // outputStream.flush();
-        //outputStream.close();
-        //fileInputStream.close();
-        System.out.println("after " + connection.getResponseCode());
-        // Check the response code
-        //  int responseCode= connection.getResponseCode();
 //
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            // Request successful
-            System.out.println("XML file sent successfully.");
-        } else {
-            // Request failed
-            System.out.println("Failed to send XML file. Response Code: " + responseCode);
-        }
+//        if (responseCode == HttpURLConnection.HTTP_OK) {
+//            // Request successful
+//            System.out.println("XML file sent successfully.");
+//        } else {
+//            // Request failed
+//            System.out.println("Failed to send XML file. Response Code: " + responseCode);
+//        }
 
     }
 }
