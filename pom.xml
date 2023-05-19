@@ -251,7 +251,7 @@
                     <forkCount>2</forkCount>
                     <reuseForks>false</reuseForks>
                     <parallel>methods</parallel>
-                    <threadCount>2</threadCount>
+                    <threadCount>1</threadCount>
                 </configuration>
             </plugin>
             <plugin>
