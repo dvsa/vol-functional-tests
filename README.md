@@ -12,6 +12,11 @@ The following technologies should be installed on your system.
 * Cucumber
 * Maven
 
+## Additional build notes
+You need access to the `org.dvsa.testing.lib` repository in order to build the project.  To access this, you need:
+- access to the VPN
+- login credentials(?) which are found (somewhere?)
+
 
 ## Executing
 
@@ -36,6 +41,8 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 `JDK not installed: keytool -importcert -file <path of extracted cert> -alias nvd-nist-gov -keystore $(/usr/libexec/java_home)/lib/security/cacerts`
 
 ## Refactoring todos
+
+### General
 - Rename stepdefs/PSVApplication.java to application.java
 - CreateOverview - can be moved in to util
 - Before step for EBSR pre-processing to update xml
@@ -44,5 +51,5 @@ If maven report issues with the nvd.nist.gov certificate you can follow the step
 - Look at Google accessibility for method to check that tab skipped to main content for skipToMainContentAndCheck function. Maybe look at using Axe.
 
 
-##EUPA refactor
+### EUPA refactor
 - Add documentation on the changes and how to modify things.
