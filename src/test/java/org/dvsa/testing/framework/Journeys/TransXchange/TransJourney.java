@@ -53,11 +53,11 @@ public class TransJourney extends BasePage {
 
     }
 
-    public void sendValidXmlRequest(String apiUrl, String xml) throws Exception {
+    public void sendValidXmlRequest() throws Exception {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/ValidPdfRequest.xml");
         String gettoken = world.TransXchangeJourney.getAuthToken();
-        int responseCode= connection.getResponseCode();
+        int responseCode = connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
 
@@ -107,11 +107,11 @@ public class TransJourney extends BasePage {
 
     }
 
-    public void sendInValidXmlRequest(String apiUrl, String xml) throws Exception {
+    public void sendInvalidXmlRequest() throws Exception {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml");
         String gettoken = world.TransXchangeJourney.getAuthToken();
-        int responseCode= connection.getResponseCode();
+        int responseCode = connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
         //connection.disconnect();
@@ -158,10 +158,10 @@ public class TransJourney extends BasePage {
 
     }
 
-    public void sendUnauthorisedRequest(String apiUrl, String xml) throws Exception {
+    public void sendUnauthorisedRequest() throws Exception {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml");
-        int responseCode= connection.getResponseCode();
+        int responseCode = connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
         //connection.disconnect();

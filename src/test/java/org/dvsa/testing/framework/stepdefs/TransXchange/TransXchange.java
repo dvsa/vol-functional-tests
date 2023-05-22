@@ -62,20 +62,20 @@ public class TransXchange  extends BasePage {
         world.TransXchangeJourney.getAuthToken();
     }
 
-    @When("I send a POST request to end point {string} with the valid XML{string}")
-    public void iSendAPOSTRequestToEndPointURLWithTheValidXMLXml(String URL, String XML) throws Exception {
-        world.TransXchangeJourney.sendValidXmlRequest(URL, XML);
+    @When("I send a POST request to the API gateway with valid XML")
+    public void iSendAPOSTRequestToTheApiGatewayWithValidXml() throws Exception {
+        world.TransXchangeJourney.sendValidXmlRequest();
     }
 
     @Then("the response status code should be {int}")
     public void theResponseStatusCodeShouldBe(int statusCode) throws Exception {
 
-        assertEquals(200, responseCode);
+        assertEquals(200, statusCode);
     }
 
-    @When("I send a POST Invalid request to end point {string} with the valid XML{string}")
-    public void iSendAPOSTInvalidRequestToEndPointURLWithTheValidXMLXml(String URL, String XML) throws Exception {
-        world.TransXchangeJourney.sendInValidXmlRequest(URL, XML);
+    @When("I send a POST request to the API gateway with invalid XML")
+    public void iSendAPOSTRequestToTheApiGatewayWithTheInvalidXml() throws Exception {
+        world.TransXchangeJourney.sendInvalidXmlRequest();
     }
 
     @Then("the bad request response status code should be {int}")
@@ -90,9 +90,9 @@ public class TransXchange  extends BasePage {
     }
 
 
-    @When("I send a unauthorised POST request to end point {string} with the any XML{string}")
-    public void iSendAUnauthorisedPOSTRequestToEndPointURLWithTheAnyXMLXml(String URL, String XML) throws Exception {
-        world.TransXchangeJourney.sendUnauthorisedRequest(URL, XML);
+    @When("I send an unauthorised POST request to the API gateway with any XML")
+    public void iSendAnUnauthorisedPOSTRequestToTheApiGatewayWithAnyXml() throws Exception {
+        world.TransXchangeJourney.sendUnauthorisedRequest();
     }
 
     @Then("the unauthorised response status code should be {int}")
@@ -101,8 +101,8 @@ public class TransXchange  extends BasePage {
         assertEquals(401, responseCode);
     }
 
-    @When("I send a unsecured POST request to end point {string} with the any XML{string}")
-    public void iSendAUnsecuredPOSTRequestToEndPointURLWithTheAnyXMLXml(String URL, String XML) throws Exception {
+    @When("I send an unsecured POST request to the API gateway with any XML")
+    public void iSendAnUnsecuredPOSTRequestToTheApiGatewayWithAnyXml(String URL, String XML) throws Exception {
         world.TransXchangeJourney.sendUnsecuredRequest(URL, XML);
     }
 
