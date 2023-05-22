@@ -78,12 +78,6 @@ public class TransXchange  extends BasePage {
         world.TransXchangeJourney.sendInvalidXmlRequest();
     }
 
-    @Then("the bad request response status code should be {int}")
-    public void theBadRequestResponseStatusCodeShouldBe(int statusCode) throws Exception {
-
-        assertEquals(400, statusCode);
-    }
-
     @Given("I do not generate an OAuth token")
     public void iDoNotGenerateAnOAuthToken() {
         //No implementation
@@ -93,12 +87,6 @@ public class TransXchange  extends BasePage {
     @When("I send an unauthorised POST request to the API gateway with any XML")
     public void iSendAnUnauthorisedPOSTRequestToTheApiGatewayWithAnyXml() throws Exception {
         world.TransXchangeJourney.sendUnauthorisedRequest();
-    }
-
-    @Then("the unauthorised response status code should be {int}")
-    public void theUnauthorisedResponseStatusCodeShouldBe(int statusCode) throws Exception {
-
-        assertEquals(401, responseCode);
     }
 
     @When("I send an unsecured POST request to the API gateway with any XML")
