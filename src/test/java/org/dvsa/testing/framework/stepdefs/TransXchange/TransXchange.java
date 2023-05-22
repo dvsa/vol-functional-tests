@@ -81,7 +81,7 @@ public class TransXchange  extends BasePage {
     @Then("the bad request response status code should be {int}")
     public void theBadRequestResponseStatusCodeShouldBe(int statusCode) throws Exception {
 
-        assertEquals(400, responseCode);
+        assertEquals(400, statusCode);
     }
 
     @Given("I do not generate an OAuth token")

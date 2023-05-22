@@ -109,7 +109,7 @@ public class TransJourney extends BasePage {
 
     public void sendInValidXmlRequest(String apiUrl, String xml) throws Exception {
 
-        File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InValidPdfRequest.xml");
+        File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml");
         String gettoken = world.TransXchangeJourney.getAuthToken();
         int responseCode= connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
@@ -128,7 +128,6 @@ public class TransJourney extends BasePage {
         connection.setRequestProperty("Content-Length","1844");
 
         connection.setDoOutput(true);
-        //connection.setDoInput(false);
 
         FileInputStream fileInputStream = new FileInputStream(xmlFile);
         // Get the output stream of the connection
@@ -161,7 +160,7 @@ public class TransJourney extends BasePage {
 
     public void sendUnauthorisedRequest(String apiUrl, String xml) throws Exception {
 
-        File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InValidPdfRequest.xml");
+        File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml");
         int responseCode= connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
@@ -207,7 +206,7 @@ public class TransJourney extends BasePage {
 
     public void sendUnsecuredRequest(String apiUrl, String xml) throws Exception {
 
-        File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InValidPdfRequest.xml");
+        File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml");
         int responseCode= connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
