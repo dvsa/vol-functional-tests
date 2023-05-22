@@ -61,18 +61,9 @@ public class TransJourney extends BasePage {
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
 
-        //connection.disconnect();
-
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("X-Correlation-Id", "abc123");
         connection.setRequestProperty("Authorization",gettoken);
-        connection.setRequestProperty("Content-Type", "text/plain");
-        connection.setRequestProperty("Accept","*/*");
-        connection.setRequestProperty("Cache-Control","no-cache");
-        connection.setRequestProperty("Host","12r2b5w66k.execute-api.eu-west-1.amazonaws.com");
-        connection.setRequestProperty("Accept-Encoding","gzip, deflate, br");
-        connection.setRequestProperty("Connection","keep-alive");
-        connection.setRequestProperty("Content-Length","1844");
+        connection.setRequestMethod("POST");
+        configureConnection();
 
         connection.setDoOutput(true);
         //connection.setDoInput(false);
@@ -107,6 +98,8 @@ public class TransJourney extends BasePage {
 
     }
 
+
+
     public void sendInvalidXmlRequest() throws Exception {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml");
@@ -114,7 +107,6 @@ public class TransJourney extends BasePage {
         int responseCode = connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
-        //connection.disconnect();
 
         connection.setRequestMethod("POST");
         connection.setRequestProperty("X-Correlation-Id", "abc123");
@@ -164,17 +156,9 @@ public class TransJourney extends BasePage {
         int responseCode = connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
-        //connection.disconnect();
 
         connection.setRequestMethod("POST");
-        connection.setRequestProperty("X-Correlation-Id", "abc123");
-        connection.setRequestProperty("Content-Type", "text/plain");
-        connection.setRequestProperty("Accept","*/*");
-        connection.setRequestProperty("Cache-Control","no-cache");
-        connection.setRequestProperty("Host","12r2b5w66k.execute-api.eu-west-1.amazonaws.com");
-        connection.setRequestProperty("Accept-Encoding","gzip, deflate, br");
-        connection.setRequestProperty("Connection","keep-alive");
-        connection.setRequestProperty("Content-Length","1844");
+        configureConnection();
 
         connection.setDoOutput(true);
         //connection.setDoInput(false);
@@ -207,18 +191,11 @@ public class TransJourney extends BasePage {
     public void sendUnsecuredRequest(String apiUrl, String xml) throws Exception {
 
         File xmlFile = new File("./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml");
-        int responseCode= connection.getResponseCode();
+        int responseCode = connection.getResponseCode();
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
-        connection.setRequestProperty("X-Correlation-Id", "abc123");
-        connection.setRequestProperty("Content-Type", "text/plain");
-        connection.setRequestProperty("Accept","*/*");
-        connection.setRequestProperty("Cache-Control","no-cache");
-        connection.setRequestProperty("Host","12r2b5w66k.execute-api.eu-west-1.amazonaws.com");
-        connection.setRequestProperty("Accept-Encoding","gzip, deflate, br");
-        connection.setRequestProperty("Connection","keep-alive");
-        connection.setRequestProperty("Content-Length","1844");
+        configureConnection();
 
         connection.setDoOutput(true);
         connection.setDoInput(false);
@@ -245,5 +222,19 @@ public class TransJourney extends BasePage {
 //            System.out.println("Failed to send XML file. Response Code: " + responseCode);
 //        }
 
+    }
+
+    /**
+     * Adds common connection configuration
+     */
+    private void configureConnection() {
+        connection.setRequestProperty("X-Correlation-Id", "abc123");
+        connection.setRequestProperty("Content-Type", "text/plain");
+        connection.setRequestProperty("Accept","*/*");
+        connection.setRequestProperty("Cache-Control","no-cache");
+        connection.setRequestProperty("Host","12r2b5w66k.execute-api.eu-west-1.amazonaws.com");
+        connection.setRequestProperty("Accept-Encoding","gzip, deflate, br");
+        connection.setRequestProperty("Connection","keep-alive");
+        connection.setRequestProperty("Content-Length","1844");
     }
 }
