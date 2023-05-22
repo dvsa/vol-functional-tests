@@ -16,6 +16,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECM
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
+import org.dvsa.testing.framework.stepdefs.vol.ExternalSearch;
 import org.dvsa.testing.framework.stepdefs.vol.GovSignIn;
 
 
@@ -87,4 +88,6 @@ public class World {
     public YearSelectionPage yearSelectionPage;
     public PermitFeePage permitFeePage;
     public TransJourney TransXchangeJourney;
+    public ExternalSearch externalSearch;
+
 }

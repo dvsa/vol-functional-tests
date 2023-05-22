@@ -12,9 +12,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
-        <active-support.version>2.0.0</active-support.version>
+        <active-support.version>2.0.1</active-support.version>
         <api-calls.version>2.0.1</api-calls.version>
-        <uri-constructor.version>2.0.0</uri-constructor.version>
+        <uri-constructor.version>2.0.1</uri-constructor.version>
 
         <axe-scanner-version>2.6</axe-scanner-version>
 
@@ -35,7 +35,7 @@
         <maven-failsafe-plugin.version>3.0.0-M8</maven-failsafe-plugin.version>
         <apache-commons.version>1.10.0</apache-commons.version>
         <jsoup.version>1.15.4</jsoup.version>
-        <gson.version>20220924</gson.version>
+        <gson.version>20230227</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>1.8</java.version>
 
