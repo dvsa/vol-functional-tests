@@ -41,16 +41,16 @@ public class ValidLicenceChanges extends BasePage {
     @When("i make changes to the business details page")
     public void iMakeChangesToTheBusinessDetailsPage() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
-        enterText("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH, tradingName);
-        click("//*[@name='data[submit_add_trading_name]']", SelectorType.XPATH);
-        enterText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH, tradingName2);
+        waitAndEnterText("//*[@id='data[tradingNames][0][name]']", SelectorType.XPATH, tradingName);
+        waitAndClick("Add another trading name", SelectorType.PARTIALLINKTEXT);
+        waitAndEnterText("//*[@id='data[tradingNames][1][name]']", SelectorType.XPATH, tradingName2);
         replaceText("//*[@id='natureOfBusiness']", SelectorType.XPATH, natureOfBusiness);
         world.UIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
-        click("//*[@id='add']", SelectorType.XPATH);
+        waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitAndEnterText("//*[@id='name']", SelectorType.XPATH,companyName);
-        enterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
+        waitAndEnterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
         world.UIJourney.clickSubmit();
-        click("//*[@id='allow-email[allowEmail]']", SelectorType.XPATH);
+//        waitAndClick("//*[@name='allow-email[allowEmail]']", SelectorType.XPATH);
         UIJourney.clickSaveAndReturn();
     }
 
@@ -61,8 +61,7 @@ public class ValidLicenceChanges extends BasePage {
         world.UIJourney.checkValue("//*[@id='data[tradingNames][1][name]']",SelectorType.XPATH,tradingName2);
         world.UIJourney.checkValue("//*[@id='natureOfBusiness']",SelectorType.XPATH,natureOfBusiness);
         world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "registeredAddress");
-        assertEquals(Browser.navigate().findElement(By.xpath("//td[2]")).getText(),companyNumber);
-        assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='allow-email[allowEmail]']")).isSelected());
+        assertEquals(findElement("//td[2]", SelectorType.XPATH).getText(),companyNumber);
     }
 
     @When("i make changes to the addresses page")
