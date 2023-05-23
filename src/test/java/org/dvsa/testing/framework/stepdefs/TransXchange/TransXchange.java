@@ -15,7 +15,7 @@ import java.net.URL;
 import static org.junit.Assert.assertEquals;
 
 
-public class TransXchange  extends BasePage {
+public class TransXchange extends BasePage {
     private final World world;
     private String token;
     private URL url;
@@ -38,18 +38,17 @@ public class TransXchange  extends BasePage {
 
     @When("I send a POST request to the API gateway with valid XML")
     public void iSendAPOSTRequestToTheApiGatewayWithValidXml() throws Exception {
-        world.TransXchangeJourney.sendValidXmlRequest();
+        this.responseCode = world.TransXchangeJourney.sendValidXmlRequest();
     }
 
     @Then("the response status code should be {int}")
     public void theResponseStatusCodeShouldBe(int statusCode) throws Exception {
-
-        assertEquals(200, statusCode);
+        assertEquals(statusCode, responseCode);
     }
 
     @When("I send a POST request to the API gateway with invalid XML")
     public void iSendAPOSTRequestToTheApiGatewayWithTheInvalidXml() throws Exception {
-        world.TransXchangeJourney.sendInvalidXmlRequest();
+        this.responseCode = world.TransXchangeJourney.sendInvalidXmlRequest();
     }
 
     @Given("I do not generate an OAuth token")
@@ -59,16 +58,17 @@ public class TransXchange  extends BasePage {
 
     @When("I send an unauthorised POST request to the API gateway with any XML")
     public void iSendAnUnauthorisedPOSTRequestToTheApiGatewayWithAnyXml() throws Exception {
-        world.TransXchangeJourney.sendUnauthorisedRequest();
+        this.responseCode = world.TransXchangeJourney.sendUnauthorisedRequest();
     }
 
     @When("I send an unsecured POST request to the API gateway with any XML")
-    public void iSendAnUnsecuredPOSTRequestToTheApiGatewayWithAnyXml(String URL, String XML) throws Exception {
-        world.TransXchangeJourney.sendUnsecuredRequest(URL, XML);
+    public void iSendAnUnsecuredPOSTRequestToTheApiGatewayWithAnyXml() throws Exception {
+        world.TransXchangeJourney.sendUnsecuredRequest();
     }
 
     @Then("the connection is REFUSED.")
+    // TODO, fix this test once the others are done
     public void theConnectionIsREFUSED() {
-        assertEquals("REFUSED", responseCode);
+        assertEquals(403, responseCode);
     }
 }
