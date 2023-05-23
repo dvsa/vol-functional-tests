@@ -10,17 +10,12 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.w3c.dom.Document;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.io.File;
 
 
 public class TransJourney extends BasePage {
@@ -109,15 +104,8 @@ public class TransJourney extends BasePage {
         connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("POST");
-        connection.setRequestProperty("X-Correlation-Id", "abc123");
         connection.setRequestProperty("Authorization",gettoken);
-        connection.setRequestProperty("Content-Type", "text/plain");
-        connection.setRequestProperty("Accept","*/*");
-        connection.setRequestProperty("Cache-Control","no-cache");
-        connection.setRequestProperty("Host","12r2b5w66k.execute-api.eu-west-1.amazonaws.com");
-        connection.setRequestProperty("Accept-Encoding","gzip, deflate, br");
-        connection.setRequestProperty("Connection","keep-alive");
-        connection.setRequestProperty("Content-Length","1844");
+        configureConnection();
 
         connection.setDoOutput(true);
 
@@ -161,7 +149,6 @@ public class TransJourney extends BasePage {
         configureConnection();
 
         connection.setDoOutput(true);
-        //connection.setDoInput(false);
 
         FileInputStream fileInputStream = new FileInputStream(xmlFile);
         System.out.println("fileInputStream:"+fileInputStream);
@@ -182,7 +169,7 @@ public class TransJourney extends BasePage {
         fileInputStream.close();
 
         // Check the response code
-        //  int responseCode= connection.getResponseCode();
+        //  int responseCode = connection.getResponseCode();
 
 
 
