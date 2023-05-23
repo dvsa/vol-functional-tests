@@ -155,7 +155,8 @@ public class FeeAndPaymentJourney extends BasePage {
     public void clickPayAndConfirm(String paymentMethod)  {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='postcode']");
-        world.UIJourney.clickPay();
+        click("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+        //world.UIJourney.clickPay();
         if (!paymentMethod.toLowerCase().trim().equals("card"))
             waitForTextToBePresent("The payment was made successfully");
     }
