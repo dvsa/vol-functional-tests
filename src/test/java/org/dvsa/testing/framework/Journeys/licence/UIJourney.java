@@ -540,7 +540,7 @@ public class UIJourney extends BasePage {
     }
 
     public void clickPay() {
-        waitAndClick("//*[@id='submitAndPay']", SelectorType.XPATH);
+        waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
     }
 
     public static void inputLicenceAndVehicleType(String licenceType, String vehicleType, String lgvUndertaking) {
