@@ -60,7 +60,7 @@ public class RemoveTM extends BasePage {
     @When("a self-serve user removes the last TM")
     public void aSelfServeUserRemovesTheLastTM() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
-        click("//*[@value='Remove']", SelectorType.XPATH);
+        click("//*[@class='right-aligned govuk-button govuk-button--secondary trigger-modal']", SelectorType.XPATH);
     }
 
     @Then("the remove TM popup should not be displaying new TM remove text")
