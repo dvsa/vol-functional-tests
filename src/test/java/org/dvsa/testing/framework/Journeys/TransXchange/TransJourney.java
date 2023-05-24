@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.TransXchange;
 
+import com.google.gson.JsonObject;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
@@ -18,10 +19,6 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.nio.file.Files;
 
 import static org.junit.Assert.assertEquals;
@@ -30,13 +27,12 @@ import static org.junit.Assert.assertEquals;
 public class TransJourney extends BasePage {
 
     private World world;
-    private URL url;
-    private HttpURLConnection connection;
     private String text;
 
     private final String VALID_XML_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/ValidPdfRequest.xml";
     private final String VALID_XML_RESPONSE_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/ValidPdfResponse.xml";
     private final String INVALID_XML_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml";
+    private final String INVALID_XML_RESPONSE_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfResponse.xml";
 
     public TransJourney(World world) {
         this.world = world;
@@ -59,15 +55,13 @@ public class TransJourney extends BasePage {
 
     public int sendValidXmlRequest() throws Exception {
 
-        final HttpPost request = new HttpPost(world.configuration.config.getString("apiUrl"));
+
         File xmlFile = new File(VALID_XML_PATH);
         String xml = new String(Files.readAllBytes(xmlFile.toPath()));
 
-        String token = world.TransXchangeJourney.getAuthToken();
+        HttpPost request = createRequest();
+        String token = getAuthToken();
         request.setHeader("Authorization","Bearer " + token);
-        request.setHeader("X-Correlation-Id", "abc123");
-        request.setHeader("Content-Type", "application/xml");
-        request.setHeader("Cache-Control","no-cache");
         request.setEntity(new StringEntity(xml));
         CloseableHttpClient client = HttpClientBuilder.create().build();
         ClassicHttpResponse response = client.execute(request, responseHandler -> {
@@ -83,73 +77,56 @@ public class TransJourney extends BasePage {
     }
 
     public int sendInvalidXmlRequest() throws Exception {
+
         File xmlFile = new File(INVALID_XML_PATH);
-        String token = world.TransXchangeJourney.getAuthToken();
-        url = new URL(world.configuration.config.getString("apiUrl"));
-        connection = (HttpURLConnection) url.openConnection();
+        String xml = new String(Files.readAllBytes(xmlFile.toPath()));
+        HttpPost request = createRequest();
+        String token = getAuthToken();
+        request.setHeader("Authorization","Bearer " + token);
+        request.setEntity(new StringEntity(xml));
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+        ClassicHttpResponse response = client.execute(request, responseHandler -> {
+            text = EntityUtils.toString(responseHandler.getEntity());
+            System.out.println("here1");
+            System.out.println(text);
+            return responseHandler;
+        });
 
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Authorization","Bearer " + token);
-        configureConnection();
-
-        connection.setDoOutput(true);
-
-        FileInputStream fileInputStream = new FileInputStream(xmlFile);
-        // Get the output stream of the connection
-        OutputStream outputStream = connection.getOutputStream();
-
-        // Write the XML file contents to the output stream
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-
-        outputStream.flush();
-        outputStream.close();
-
-        fileInputStream.close();
-        return connection.getResponseCode();
+        // Test the response is what we expect
+        File xmlResponseFile = new File(INVALID_XML_RESPONSE_PATH);
+        String xmlResponse = new String(Files.readAllBytes(xmlResponseFile.toPath()));
+        assertEquals(text, xmlResponse);
+        return response.getCode();
 
     }
 
     public int sendUnauthorisedRequest() throws Exception {
+        File xmlFile = new File(VALID_XML_PATH);
+        String xml = new String(Files.readAllBytes(xmlFile.toPath()));
 
-        File xmlFile = new File(INVALID_XML_PATH);
-        url = new URL(world.configuration.config.getString("apiUrl"));
-        connection = (HttpURLConnection) url.openConnection();
+        HttpPost request = createRequest();
+        request.setEntity(new StringEntity(xml));
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+        ClassicHttpResponse response = client.execute(request, responseHandler -> {
+            text = EntityUtils.toString(responseHandler.getEntity());
+            return responseHandler;
+        });
 
-        connection.setRequestMethod("POST");
-        configureConnection();
-
-        connection.setDoOutput(true);
-
-        FileInputStream fileInputStream = new FileInputStream(xmlFile);
-        System.out.println("fileInputStream:"+fileInputStream);
-
-        // Get the output stream of the connection
-        OutputStream outputStream = connection.getOutputStream();
-
-        // Write the XML file contents to the output stream
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-
-        outputStream.flush();
-        outputStream.close();
-
-        fileInputStream.close();
-        return connection.getResponseCode();
+        // Test the response is what we expect
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("message", "Unauthorized");
+        assertEquals(jsonObject.toString(), text);
+        return response.getCode();
     }
 
     /**
-     * Adds common connection configuration
+     * Creates request object and adds common headers
      */
-    private void configureConnection() {
-        connection.setRequestProperty("X-Correlation-Id", "abc123");
-        connection.setRequestProperty("Content-Type", "application/xml");
-        connection.setRequestProperty("Cache-Control","no-cache");
+    private HttpPost createRequest() {
+        HttpPost request = new HttpPost(world.configuration.config.getString("apiUrl"));
+        request.setHeader("X-Correlation-Id", "abc123");
+        request.setHeader("Content-Type", "application/xml");
+        request.setHeader("Cache-Control","no-cache");
+        return request;
     }
 }

@@ -1,11 +1,5 @@
-<catalog>
-    <book id="bk101">
-        <author>Bala Sajja</author>
-        <title>Testing</title>
-        <genre>Computer</genre>
-        <price>44.95</price>
-        <publish_date>2019-10-01</publish_date>
-        <description>An in-depth look at creating APIs
-            with Junit.</description>
-    </book>
-</catalog>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TransXChangePublisherTransport xsi:schemaLocation="http://www.transxchange.org.uk/publisher http://naptan.dft.gov.uk/transxchange/publisher/schema/3.1.2/TransXChangePublisherService.xsd" xmlns="http://www.transxchange.org.uk/publisher" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <PublishDocumentRequest>
+    </PublishDocumentRequest>
+</TransXChangePublisherTransport>
