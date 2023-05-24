@@ -32,7 +32,7 @@ public class TransportManagerJourney extends BasePage {
         }
         clickByLinkText("Transport");
         assertTrue(isTextPresent("Transport Managers"));
-        click("//*[@value='Remove']", SelectorType.XPATH);
+        click("//button[contains(@name,'table[action][delete]')]", SelectorType.XPATH);
     }
 
     public void removeInternalTransportManager()  {

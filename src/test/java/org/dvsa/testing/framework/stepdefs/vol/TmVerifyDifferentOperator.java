@@ -24,11 +24,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TmVerifyDifferentOperator extends BasePage{
     private final World world;
-    Initialisation initialisation;
+
 
     public TmVerifyDifferentOperator(World world) {
         this.world = world;
-        initialisation = new Initialisation(world);
     }
 
     @And("I am the operator and not the transport manager")

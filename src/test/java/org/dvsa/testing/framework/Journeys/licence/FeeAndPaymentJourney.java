@@ -43,7 +43,7 @@ public class FeeAndPaymentJourney extends BasePage {
                     waitAndEnterText("details[customerReference]",SelectorType.NAME, "AutomationCashCustomerRef");
                     clickPayAndConfirm(paymentMethod);
                 } else {
-                    world.UIJourney.clickPay();
+                    waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
                 }
                 break;
             case "cheque":

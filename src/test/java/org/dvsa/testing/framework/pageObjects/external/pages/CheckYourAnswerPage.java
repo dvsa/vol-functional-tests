@@ -29,6 +29,6 @@ public class CheckYourAnswerPage extends BasePermitPage {
     }
 
     public static void clickConfirmAndReturnToOverview() {
-        click("//*[@value='Confirm and return to overview']", SelectorType.XPATH);
+        click("//button[@id='submitbutton']", SelectorType.XPATH);
     }
 }

@@ -122,28 +122,38 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void enterPassportDetails() {
-        waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, world.configuration.config.getString("passportNumber"));
-        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, world.configuration.config.getString("surname"));
-        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, world.configuration.config.getString("firstName"));
+        String passportNumber = "321654987";
+        String firstName = "Kenneth";
+        String surName = "Decerqueira";
+        waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, passportNumber);
+        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, firstName);
+        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, surName);
         enterDOB();
         enterExpiryDate();
     }
 
     public void enterDOB() {
-        enterText("dateOfBirth-day", SelectorType.NAME, world.configuration.config.getString("dateOfBirthDay"));
-        enterText("dateOfBirth-month", SelectorType.NAME, world.configuration.config.getString("dateOfBirthMonth"));
-        enterText("dateOfBirth-year", SelectorType.NAME, world.configuration.config.getString("dateOfBirthYear"));
+        String dateOfBirthDay = "08";
+        String dateOfBirthMonth = "07";
+        String dateOfBirthYear = "1965";
+        enterText("dateOfBirth-day", SelectorType.NAME, dateOfBirthDay);
+        enterText("dateOfBirth-month", SelectorType.NAME, dateOfBirthMonth);
+        enterText("dateOfBirth-year", SelectorType.NAME, dateOfBirthYear);
     }
 
     public void enterExpiryDate() {
-        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, world.configuration.config.getString("expiryDateDay"));
-        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, world.configuration.config.getString("expiryDateMonth"));
-        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, world.configuration.config.getString("expiryDateYear"));
+        String expiryDay = "01";
+        String expiryMonth = "01";
+        String expiryYear = "2030";
+        enterText("//*[@id='expiryDate-day']", SelectorType.XPATH, expiryDay);
+        enterText("//*[@id='expiryDate-month']", SelectorType.XPATH, expiryMonth);
+        enterText("//*[@id='expiryDate-year']", SelectorType.XPATH, expiryYear);
     }
 
     public void cycletThroughSignInJourney() {
+        String postCode = "BA25AA";
         waitAndClick("submitButton", SelectorType.ID);
-        waitAndEnterText("addressSearch", SelectorType.ID, "BA25AA");
+        waitAndEnterText("addressSearch", SelectorType.ID,  postCode);
         waitAndClick("continue", SelectorType.ID);
         selectValueFromDropDown("addressResults", SelectorType.ID, "8 HADLEY ROAD, BATH, BA2 5AA");
         waitAndClick("continue", SelectorType.ID);

@@ -12,7 +12,7 @@ public class PermitTypePage extends BasePermitPage {
     }
 
     public static void clickContinue() {
-        scrollAndClick("//input[@value = 'Continue']", SelectorType.XPATH);
+        scrollAndClick("//button[@id='submit-continue-button']", SelectorType.XPATH);
     }
 
     public static void clickCancel() {

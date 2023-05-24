@@ -5,8 +5,8 @@
 Feature: TM signs through gov-sign-in
 
   Background:
+    Given i have a "goods" "GB" partial application
     And I am the operator and not the transport manager
-    And i have a "goods" "GB" partial application
 
   Scenario: TM who is not Operator_Applicant signs through gov sign in
     When i add an existing person as a transport manager who is not the operator on "application"

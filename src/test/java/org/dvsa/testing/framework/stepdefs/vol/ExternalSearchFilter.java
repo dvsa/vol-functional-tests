@@ -23,7 +23,7 @@ public class ExternalSearchFilter extends BasePage {
         Browser.navigate().get(myURL);
         findSelectAllRadioButtonsByValue("licence");
         enterText("search", SelectorType.NAME, world.applicationDetails.getLicenceNumber());
-        click(nameAttribute("input","submit"), SelectorType.CSS);
+        click(nameAttribute("button","submit"), SelectorType.CSS);
         while (!isLinkPresent(world.applicationDetails.getLicenceNumber(),20)){
             click(nameAttribute("button","submit"), SelectorType.CSS);
         }
