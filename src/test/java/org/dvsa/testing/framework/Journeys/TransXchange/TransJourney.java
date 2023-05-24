@@ -21,7 +21,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import java.io.File;
 import java.nio.file.Files;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class TransJourney extends BasePage {
@@ -86,8 +86,6 @@ public class TransJourney extends BasePage {
         CloseableHttpClient client = HttpClientBuilder.create().build();
         ClassicHttpResponse response = client.execute(request, responseHandler -> {
             text = EntityUtils.toString(responseHandler.getEntity());
-            System.out.println("here1");
-            System.out.println(text);
             return responseHandler;
         });
 
