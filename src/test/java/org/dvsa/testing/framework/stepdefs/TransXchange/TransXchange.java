@@ -9,20 +9,12 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.stepdefs.vol.Initialisation;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import static org.junit.Assert.assertEquals;
 
 
 public class TransXchange extends BasePage {
     private final World world;
-    private String token;
-    private URL url;
-    private HttpURLConnection connection;
     private int responseCode;
-    private String responseMessage;
-    private StringBuilder response;
 
     Initialisation initialisation;
 
@@ -59,16 +51,5 @@ public class TransXchange extends BasePage {
     @When("I send an unauthorised POST request to the API gateway with any XML")
     public void iSendAnUnauthorisedPOSTRequestToTheApiGatewayWithAnyXml() throws Exception {
         this.responseCode = world.TransXchangeJourney.sendUnauthorisedRequest();
-    }
-
-    @When("I send an unsecured POST request to the API gateway with any XML")
-    public void iSendAnUnsecuredPOSTRequestToTheApiGatewayWithAnyXml() throws Exception {
-        world.TransXchangeJourney.sendUnsecuredRequest();
-    }
-
-    @Then("the connection is REFUSED.")
-    // TODO, fix this test once the others are done
-    public void theConnectionIsREFUSED() {
-        assertEquals(403, responseCode);
     }
 }

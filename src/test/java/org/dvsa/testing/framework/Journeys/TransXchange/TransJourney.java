@@ -53,7 +53,7 @@ public class TransJourney extends BasePage {
         url = new URL(world.configuration.config.getString("apiUrl"));
         connection = (HttpURLConnection) url.openConnection();
 
-        connection.setRequestProperty("Authorization",token);
+        connection.setRequestProperty("Authorization","Bearer " + token);
         connection.setRequestMethod("POST");
         configureConnection();
 
@@ -95,7 +95,7 @@ public class TransJourney extends BasePage {
         connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("POST");
-        connection.setRequestProperty("Authorization",token);
+        connection.setRequestProperty("Authorization","Bearer " + token);
         configureConnection();
 
         connection.setDoOutput(true);
@@ -116,17 +116,6 @@ public class TransJourney extends BasePage {
 
         fileInputStream.close();
         return connection.getResponseCode();
-
-        // Check the response code
-        //  int responseCode= connection.getResponseCode();
-
-//        if (responseCode == HttpURLConnection.HTTP_OK) {
-//            // Request successful
-//            System.out.println("XML file sent successfully.");
-//        } else {
-//            // Request failed
-//            System.out.println("Failed to send XML file. Response Code: " + responseCode);
-//        }
 
     }
 
@@ -161,42 +150,12 @@ public class TransJourney extends BasePage {
         return connection.getResponseCode();
     }
 
-    public void sendUnsecuredRequest() throws Exception {
-        File xmlFile = new File(INVALID_XML_PATH);
-
-        url = new URL(world.configuration.config.getString("apiUrl"));
-        connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        configureConnection();
-
-        connection.setDoOutput(true);
-        connection.setDoInput(true);
-
-        FileInputStream fileInputStream = new FileInputStream(xmlFile);
-
-        // Get the output stream of the connection
-        OutputStream outputStream = connection.getOutputStream();
-
-        // Write the XML file contents to the output stream
-        byte[] buffer = new byte[1024];
-        int bytesRead;
-        while ((bytesRead = fileInputStream.read(buffer)) != -1) {
-            outputStream.write(buffer, 0, bytesRead);
-        }
-        int responseCode = connection.getResponseCode();
-    }
-
     /**
      * Adds common connection configuration
      */
     private void configureConnection() {
         connection.setRequestProperty("X-Correlation-Id", "abc123");
-        connection.setRequestProperty("Content-Type", "text/plain");
-        connection.setRequestProperty("Accept","*/*");
+        connection.setRequestProperty("Content-Type", "application/xml");
         connection.setRequestProperty("Cache-Control","no-cache");
-        connection.setRequestProperty("Host","12r2b5w66k.execute-api.eu-west-1.amazonaws.com");
-        connection.setRequestProperty("Accept-Encoding","gzip, deflate, br");
-        connection.setRequestProperty("Connection","keep-alive");
-        connection.setRequestProperty("Content-Length","1844");
     }
 }

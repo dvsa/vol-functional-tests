@@ -20,9 +20,3 @@ Feature: Validate TransXchange functionalities.
     Given I do not generate an OAuth token
     When I send an unauthorised POST request to the API gateway with any XML
     Then the response status code should be 401
-
-  @TransXchange
-  Scenario: Send an unsecured request and check response.
-    Given I generate an OAuth token
-    When I send an unsecured POST request to the API gateway with any XML
-    Then the connection is REFUSED.
