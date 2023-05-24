@@ -249,9 +249,9 @@
                         <include>**/RunCucumberTests.java</include>
                     </includes>
                     <forkCount>1</forkCount>
-                    <reuseForks>true</reuseForks>
+                    <reuseForks>false</reuseForks>
                     <parallel>suites</parallel>
-                    <threadCount>5</threadCount>
+                    <threadCount>6</threadCount>
                 </configuration>
             </plugin>
             <plugin>
