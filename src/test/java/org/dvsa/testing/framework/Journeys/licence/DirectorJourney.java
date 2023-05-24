@@ -22,7 +22,7 @@ public class DirectorJourney extends BasePage {
     private String directorLastName;
 
     public String directorsTitle = "Directors";
-    public String directorLinks = "//tbody/tr/td[1]/input";
+    public String directorLinks = "//*[@class='govuk-table__body']/tr";
     public String addButton = "//button[@name='table[action]']";
     public String directorDetailsTitle = "Add person";
     public String directorVariationDetailsTitle = "Add a director";
@@ -30,7 +30,7 @@ public class DirectorJourney extends BasePage {
     public String firstNameField = "//input[@name='data[forename]']";
     public String lastNameField = "//input[@name='data[familyName]']";
     public String additionalInformation = "//*[@id='data[insolvencyDetails]']";
-    public String deleteDirectorButtons = "//input[contains(@name,'table[action][delete]')]";
+    public String deleteDirectorButtons = "//button[contains(@name,'table[action][delete]')]";
     public String deleteDirectorConfirmationTitle = "Are you sure you want to remove this person?";
     public String lastDirectorRemovedMessage = "Last director removed";
 
@@ -117,7 +117,7 @@ public class DirectorJourney extends BasePage {
     }
 
     public boolean isDirectorPresentInDirectorTable(List<WebElement> directors, String director) {
-        return directors.stream().anyMatch(d -> d.getAttribute("value").contains(director));
+        return directors.stream().distinct().anyMatch(x -> x.getText().contains(director));
     }
 
     public void answerConvictionsAndPenalties(String convictionsAndPenaltiesAnswer) {
@@ -175,9 +175,9 @@ public class DirectorJourney extends BasePage {
     }
 
     public void assertNewDirectorExistsAndMultiplePresent(String director) {
-        List<WebElement> directorList = findElements("//*/tbody/tr[*]/td[1]/input", SelectorType.XPATH);
+        List<WebElement> directorList = findElements("//*[@class='govuk-table__body']/tr", SelectorType.XPATH);
         long directorsCount = directorList.size();
         MatcherAssert.assertThat(directorsCount, greaterThan(1L));
-        assertTrue(directorList.stream().anyMatch(d -> d.getAttribute("value").contains(director)));
+        assertTrue(directorList.stream().anyMatch(d -> d.getText().contains(director)));
     }
 }
