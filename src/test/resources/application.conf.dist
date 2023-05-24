@@ -32,3 +32,10 @@ intSubmitAppUserName =
 intEnvUsername =
 intEnvPassword =
 intSystemAdmin =
+
+#TransXchange test config
+tokenUrl =
+clientId =
+clientSecret =
+scope =
+apiUrl =

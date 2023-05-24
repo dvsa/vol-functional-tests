@@ -38,14 +38,21 @@ public class TransJourney extends BasePage {
     }
 
 
+    /**
+     * Requests an Oauth2 token for authentication with the api gateway.
+     *
+     * @return A string with the token
+     * @throws OAuthSystemException
+     * @throws OAuthProblemException
+     */
     public String getAuthToken() throws OAuthSystemException, OAuthProblemException {
         OAuthClient client = new OAuthClient(new URLConnectionClient());
         OAuthClientRequest request =
                 OAuthClientRequest.tokenLocation(world.configuration.config.getString("tokenUrl"))
                         .setGrantType(GrantType.CLIENT_CREDENTIALS)
-                        .setClientId(world.configuration.config.getString("setClientId"))
-                        .setClientSecret(world.configuration.config.getString("setClientSecret"))
-                        .setScope(world.configuration.config.getString("setScope"))
+                        .setClientId(world.configuration.config.getString("clientId"))
+                        .setClientSecret(world.configuration.config.getString("clientSecret"))
+                        .setScope(world.configuration.config.getString("scope"))
                         .buildBodyMessage();
         return client.accessToken(request,
                 OAuth.HttpMethod.POST,
@@ -53,8 +60,6 @@ public class TransJourney extends BasePage {
     }
 
     public int sendValidXmlRequest() throws Exception {
-
-
         File xmlFile = new File(VALID_XML_PATH);
         String xml = new String(Files.readAllBytes(xmlFile.toPath()));
 
@@ -76,7 +81,6 @@ public class TransJourney extends BasePage {
     }
 
     public int sendInvalidXmlRequest() throws Exception {
-
         File xmlFile = new File(INVALID_XML_PATH);
         String xml = new String(Files.readAllBytes(xmlFile.toPath()));
         HttpPost request = createRequest();
