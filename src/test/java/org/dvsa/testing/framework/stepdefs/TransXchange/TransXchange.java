@@ -14,9 +14,8 @@ import static org.junit.Assert.assertEquals;
 
 public class TransXchange extends BasePage {
     private final World world;
-    private int responseCode;
-
     Initialisation initialisation;
+    private int responseCode;
 
     public TransXchange(World world) {
         this.world = world;

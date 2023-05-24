@@ -26,13 +26,12 @@ import static org.junit.Assert.assertEquals;
 
 public class TransJourney extends BasePage {
 
-    private World world;
-    private String text;
-
     private final String VALID_XML_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/ValidPdfRequest.xml";
     private final String VALID_XML_RESPONSE_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/ValidPdfResponse.xml";
     private final String INVALID_XML_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfRequest.xml";
     private final String INVALID_XML_RESPONSE_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/InvalidPdfResponse.xml";
+    private final World world;
+    private String text;
 
     public TransJourney(World world) {
         this.world = world;
@@ -61,12 +60,12 @@ public class TransJourney extends BasePage {
 
         HttpPost request = createRequest();
         String token = getAuthToken();
-        request.setHeader("Authorization","Bearer " + token);
+        request.setHeader("Authorization", "Bearer " + token);
         request.setEntity(new StringEntity(xml));
         CloseableHttpClient client = HttpClientBuilder.create().build();
         ClassicHttpResponse response = client.execute(request, responseHandler -> {
             text = EntityUtils.toString(responseHandler.getEntity());
-          return responseHandler;
+            return responseHandler;
         });
 
         // Test the response is what we expect
@@ -82,7 +81,7 @@ public class TransJourney extends BasePage {
         String xml = new String(Files.readAllBytes(xmlFile.toPath()));
         HttpPost request = createRequest();
         String token = getAuthToken();
-        request.setHeader("Authorization","Bearer " + token);
+        request.setHeader("Authorization", "Bearer " + token);
         request.setEntity(new StringEntity(xml));
         CloseableHttpClient client = HttpClientBuilder.create().build();
         ClassicHttpResponse response = client.execute(request, responseHandler -> {
@@ -126,7 +125,7 @@ public class TransJourney extends BasePage {
         HttpPost request = new HttpPost(world.configuration.config.getString("apiUrl"));
         request.setHeader("X-Correlation-Id", "abc123");
         request.setHeader("Content-Type", "application/xml");
-        request.setHeader("Cache-Control","no-cache");
+        request.setHeader("Cache-Control", "no-cache");
         return request;
     }
 }

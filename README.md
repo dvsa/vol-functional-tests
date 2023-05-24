@@ -14,12 +14,13 @@ The following technologies should be installed on your system.
 * Maven
 
 ## Additional build notes
-You need access to the `org.dvsa.testing.lib` repository in order to build the project.
+You need access to the `org.dvsa.testing.lib` repository in order to build the project.  To access this, you'll need
+access to the VPN.
 
 
 ## Executing
 
-``mvn clean test -Denv= -Dbrowser= -Dcucumber.filter.tags="@xx" ``
+``mvn clean test -Denv= -Dbrowser= -Dcucumber.filter.tags="@xx"``
 
 ## Reports
 To produce the reports run the following command in your terminal
