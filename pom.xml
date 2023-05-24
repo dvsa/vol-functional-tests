@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.version>3.8.1</maven.compiler.version>
 
-        <active-support.version>2.0.1</active-support.version>
+        <active-support.version>2.0.1.1</active-support.version>
         <api-calls.version>2.0.1</api-calls.version>
         <uri-constructor.version>2.0.1</uri-constructor.version>
 
@@ -31,8 +31,8 @@
         <aspectj.version>1.8.10</aspectj.version>
         <allure-mvn.version>2.10.0</allure-mvn.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M8</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.0.0-M8</maven-failsafe-plugin.version>
+        <maven-surefire-plugin.version>3.1.0</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.1.0</maven-failsafe-plugin.version>
         <apache-commons.version>1.10.0</apache-commons.version>
         <jsoup.version>1.15.4</jsoup.version>
         <gson.version>20230227</gson.version>

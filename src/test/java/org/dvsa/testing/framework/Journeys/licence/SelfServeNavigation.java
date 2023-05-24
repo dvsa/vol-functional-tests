@@ -175,6 +175,7 @@ public class SelfServeNavigation extends BasePage {
             ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(workingDir.concat(financialEvidenceFile));
         }
+        waitForTextToBePresent("File name");
         UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
