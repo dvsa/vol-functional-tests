@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
