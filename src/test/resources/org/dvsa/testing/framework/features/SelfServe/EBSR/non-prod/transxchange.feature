@@ -1,7 +1,4 @@
-Feature: Validate TransXchange functionalities.
-  Description: The purpose of these tests to cover Happy and unhappy flows for TransXchange
-
-  TransXchange pdf request URL: https://649un4tb5j.execute-api.eu-west-1.amazonaws.com/non-prod/pdf-request
+Feature: Test happy and unhappy paths in TransXchange functionality.
 
   @TransXchange
   Scenario: Generate OAuth/Authorisation token, send valid XML request and check response
