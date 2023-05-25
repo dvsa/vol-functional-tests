@@ -248,7 +248,7 @@
                     <includes>
                         <include>**/RunCucumberTests.java</include>
                     </includes>
-                    <forkCount>1</forkCount>
+                    <forkCount>2</forkCount>
                     <reuseForks>false</reuseForks>
                     <parallel>suites</parallel>
                     <threadCount>15</threadCount>
