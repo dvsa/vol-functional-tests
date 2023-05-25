@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Injectors;
 import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
+import org.dvsa.testing.framework.Journeys.TransXchange.TransJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.TransportManagerJourney;
@@ -86,5 +87,6 @@ public class World {
     public CountriesWithLimitedPermitsPage countriesWithLimitedPermitsPage;
     public YearSelectionPage yearSelectionPage;
     public PermitFeePage permitFeePage;
+    public TransJourney TransXchangeJourney;
     public ExternalSearch externalSearch;
 }

@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TmVerifyDifferentOperator extends BasePage{
     private final World world;
 
-
     public TmVerifyDifferentOperator(World world) {
         this.world = world;
     }
