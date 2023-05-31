@@ -3,7 +3,7 @@
     <PublishDocumentRequest>
         <InputOperands>
             <DocumentPath></DocumentPath>
-            <DocumentName></DocumentName>
+            <DocumentName>ValidTimetableOperatorXml.xml</DocumentName>
         </InputOperands>
         <OutputOperands>
             <OutputPath></OutputPath>

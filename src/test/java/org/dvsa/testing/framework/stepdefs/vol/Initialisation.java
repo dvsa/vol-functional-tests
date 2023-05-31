@@ -4,6 +4,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
+import org.dvsa.testing.framework.Journeys.TransXchange.AwsHelper;
 import org.dvsa.testing.framework.Journeys.TransXchange.TransJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
@@ -91,6 +92,7 @@ public class Initialisation extends BasePage {
         world.permitFeePage = new PermitFeePage(world);
         world.govSignIn = new GovSignIn(world);
         world.TransXchangeJourney = new TransJourney(world);
+        world.awsHelper = new AwsHelper(world);
         world.externalSearch = new ExternalSearch(world);
     }
 }
