@@ -15,5 +15,3 @@ Feature: Operator signs digitally
       | OperatorType |
       | Goods        |
       | Public       |
-
-
