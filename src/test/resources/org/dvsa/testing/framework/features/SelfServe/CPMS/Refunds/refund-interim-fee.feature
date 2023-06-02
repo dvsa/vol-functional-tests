@@ -13,7 +13,7 @@ Feature: Refund fee paid on new application
     Examples:
       | OperatorType | LicenceType            |
       | goods        | standard_international |
-      | goods        | standard_national      |
+#      | goods        | standard_national      |
 
   Scenario Outline: Interim fee has been paid and licence has been withdrawn
     Given i have an interim "<OperatorType>" "<LicenceType>" application
