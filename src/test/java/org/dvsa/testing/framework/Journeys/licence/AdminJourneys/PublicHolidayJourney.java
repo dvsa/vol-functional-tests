@@ -24,10 +24,9 @@ public class PublicHolidayJourney extends BasePage {
     }
 
     public void editPublicHoliday() {
-        waitAndClick("(//input[@type='submit'])[2]", SelectorType.XPATH);
+        waitAndClick("button.action-button-link:first-of-type", SelectorType.CSS);
         waitForElementToBeClickable("//input[@type='checkbox']", SelectorType.XPATH);
-        selectRandomCheckBoxOrRadioBtn("checkbox");
-        HashMap<String, String> currentDate = date.getDateHashMap(+0, +0, +2);
+        HashMap<String, String> currentDate = date.getDateHashMap(+0, +7, +2);
         enterDateFieldsByPartialId("fields[holidayDate]", currentDate);
         world.UIJourney.clickSubmit();
         world.UIJourney.closeAlert();
