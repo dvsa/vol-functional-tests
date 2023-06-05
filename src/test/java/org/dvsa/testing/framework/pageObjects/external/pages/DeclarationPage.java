@@ -64,6 +64,6 @@ public class DeclarationPage extends BasePermitPage {
     }
 
     public static boolean isGuidanceNotesLinkPresent() {
-        return isElementPresent("//a [@href='https://www.gov.uk/guidance/international-road-haulage-removal-permits", SelectorType.XPATH);
+        return isElementPresent("//a[@href='https://www.gov.uk/guidance/international-road-haulage-removal-permits']", SelectorType.XPATH);
     }
 }
