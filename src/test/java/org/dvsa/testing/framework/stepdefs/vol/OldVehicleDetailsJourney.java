@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
+import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OldVehicleDetailsJourney extends BasePage {
@@ -38,12 +39,11 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     @When("^i am on the vehicle details page$")
     public void iAmOnTheVehicleDetailsPage() {
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
+        world.selfServeNavigation.navigateToPage("application", SelfServeSection.VEHICLES);
     }
 
-    @When("i add a vehicle to my licence")
-    public void iAddAVehicleToMyLicence() {
+    @When("i add a vehicle to my application")
+    public void iAddAVehicleToMyApplication() {
         click("add", SelectorType.ID);
         waitForTitleToBePresent("Add vehicle");
         enterText(VRMField, SelectorType.XPATH, generatedVRM);
@@ -53,13 +53,13 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     @Then("the vehicle should be appear")
     public void theVehicleShouldBeAppear() {
-        String valueOfFirstVRMInTable = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
+        String valueOfFirstVRMInTable = getText("button.action-button-link:first-of-type", SelectorType.CSS).trim();
         assertEquals(generatedVRM, valueOfFirstVRMInTable);
     }
 
-    @When("i remove a vehicle from my licence")
-    public void iRemoveAVehicleFromMyLicence() {
-        firstVRM = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
+    @When("i remove a vehicle from my application")
+    public void iRemoveAVehicleFromApplication() {
+        firstVRM = getText("button.action-button-link:first-of-type", SelectorType.CSS).trim();
         click(firstVehicleRemoveButton, SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
         world.UIJourney.clickSubmit();
@@ -67,7 +67,8 @@ public class OldVehicleDetailsJourney extends BasePage {
 
     @Then("the vehicle no longer appears")
     public void theVehicleNoLongerAppears() {
-        assertFalse(isTextPresent(firstVRM));
+        waitForTitleToBePresent("Vehicle details");
+        assertFalse(findElements("//tr",SelectorType.XPATH).get(0).getText().contains(firstVRM));
     }
 
     @When("i change a vehicle on my licence")

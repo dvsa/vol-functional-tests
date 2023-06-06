@@ -1,4 +1,4 @@
-@DVLA @VOL-147 @ss_regression
+@DVLA @VOL-147 @ss_regression @
 Feature: Search and add a vehicle
 
   @smoketest

@@ -2,6 +2,10 @@
 @WebDavCheckOSType
 Feature: Check that the OS Version is displayed in the user account details
 
+#  Background:
+#    When I create a new internal admin user
+#    Then I should be able to login with my new credentials
+
   Scenario Outline: Check that OS Version in returned null
     Given i have registered a new "<user_role>" user
     When i view their user details
@@ -68,8 +72,7 @@ Feature: Check that the OS Version is displayed in the user account details
 
   @INT
   Scenario Outline: I update my operating system settings
-    Given i have a valid "goods" "standard_national" licence
-    And i have logged in to internal
+    Given i have logged in to internal
     When i update my operating system on internal to "<OsType>"
     Then the operating system should be updated to "<OsType>"
 

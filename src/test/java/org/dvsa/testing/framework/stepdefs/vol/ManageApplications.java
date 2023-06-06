@@ -35,13 +35,13 @@ public class ManageApplications extends BasePage {
         this.initialisation = new Initialisation(world);
     }
 
-    @Given("I have a {string} application with {int} vehicles and a vehicleAuthority of {int}")
-    public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, int numberOfVehicles, int authority) throws HttpException {
+    @Given("I have a {string} {string} application with {string} vehicles and a vehicleAuthority of {string}")
+    public void iHaveANewApplicationWithVehiclesAndVehicleAuthorityOf(String operatorType, String licenceType, String numberOfVehicles, String authority) throws HttpException {
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        world.createApplication.setNoOfAddedHgvVehicles(numberOfVehicles);
-        world.createApplication.setTotalOperatingCentreHgvAuthority(numberOfVehicles);
-        world.createApplication.setNoOfOperatingCentreVehicleAuthorised(authority);
-        world.licenceCreation.createApplication(operatorType, LicenceType.STANDARD_INTERNATIONAL.name().toLowerCase(Locale.ROOT));
+        world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(numberOfVehicles));
+        world.createApplication.setTotalOperatingCentreHgvAuthority(Integer.parseInt(authority));
+        world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(authority));
+        world.licenceCreation.createApplication(operatorType, licenceType);
     }
 
     @Given("I have a {string} {string} application")
