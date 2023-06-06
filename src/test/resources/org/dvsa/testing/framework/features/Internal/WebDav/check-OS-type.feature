@@ -2,10 +2,6 @@
 @WebDavCheckOSType
 Feature: Check that the OS Version is displayed in the user account details
 
-#  Background:
-#    When I create a new internal admin user
-#    Then I should be able to login with my new credentials
-
   Scenario Outline: Check that OS Version in returned null
     Given i have registered a new "<user_role>" user
     When i view their user details
