@@ -4,6 +4,7 @@ Feature: resetting password with valid/invalid user
 Background:
   Given I create a new external user
 
+  @valid-reset
   Scenario: Reset password for valid user
     And i reset my password
     And I receive the reset password link via email
