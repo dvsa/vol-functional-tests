@@ -100,8 +100,8 @@ public class DVLAJourney extends BasePage {
     public void completeDVLAConfirmationPageAndCheckVRM(String title) {
         waitForTitleToBePresent(title);
         assertTrue(isTextPresent(VRM));
-        click("//input[@id='option-yes']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
+        waitAndClick("next", SelectorType.ID);
         waitForTitleToBePresent("Do you want to");
     }
 
