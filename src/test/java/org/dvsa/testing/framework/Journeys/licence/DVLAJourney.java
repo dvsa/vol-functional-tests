@@ -23,7 +23,9 @@ public class DVLAJourney extends BasePage {
     public List<String> allPreviousDiscNumbers = new ArrayList<String>();
     public String newDiscNumber;
 
-    public DVLAJourney(World world){ this.world = world; }
+    public DVLAJourney(World world) {
+        this.world = world;
+    }
 
     public void navigateToManageVehiclesPage(String licenceStatus) {
         world.selfServeNavigation.navigateToPage(licenceStatus, SelfServeSection.VEHICLES);
@@ -43,13 +45,13 @@ public class DVLAJourney extends BasePage {
 
     public void navigateToReprintVehicleDiscPage() {
         click("//input[@id='reprint-vehicle']", SelectorType.XPATH);
-        waitAndClick("//*[@id='next']",SelectorType.XPATH);
+        waitAndClick("//*[@id='next']", SelectorType.XPATH);
         waitForTitleToBePresent("Reprint vehicle disc");
     }
 
     public void navigateToTransferVehiclePage() {
         click("//input[@id='transfer-vehicle']", SelectorType.XPATH);
-        waitAndClick("//*[@id='next']",SelectorType.XPATH);
+        waitAndClick("//*[@id='next']", SelectorType.XPATH);
         waitForTitleToBePresent("Transfer vehicles between your licences");
     } // Refactoring possible on the @id='next' and @type='submit buttons because it is the same button.
 
@@ -88,10 +90,14 @@ public class DVLAJourney extends BasePage {
             }
             checkboxElements.get(i).click();
         }
-        click("//*[@type='submit']", SelectorType.XPATH);
+        if (isTitlePresent("Transfer vehicles between your licences", 3)) {
+            waitAndClick("//button[contains(text(),'Transfer vehicles')]", SelectorType.XPATH);
+        } else {
+            click("//*[@type='submit']", SelectorType.XPATH);
+        }
     }
 
-    public void searchForExactVRM(String vrm)  {
+    public void searchForExactVRM(String vrm) {
         enterText("vehicleSearch[search-value]", SelectorType.NAME, vrm);
         click("vehicleSearch[submit]", SelectorType.NAME);
         assertTrue(isTextPresent("vehicle found"));
@@ -100,17 +106,17 @@ public class DVLAJourney extends BasePage {
     public void completeDVLAConfirmationPageAndCheckVRM(String title) {
         waitForTitleToBePresent(title);
         assertTrue(isTextPresent(VRM));
-        click("//input[@id='option-yes']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
+        waitAndClick("next", SelectorType.ID);
         waitForTitleToBePresent("Do you want to");
     }
 
     public void completeDVLAConfirmationPageAndCheckAllVRMs(String title) {
         waitForTitleToBePresent(title);
-        for (String VRM: this.allVRMs) {
+        for (String VRM : this.allVRMs) {
             assertTrue(isTextPresent(VRM));
         }
-        click("//input[@id='option-yes']", SelectorType.XPATH);
-        click("//*[@type='submit']", SelectorType.XPATH);
+        click("//*[contains(text(),'Yes')]", SelectorType.XPATH);
+        click("next", SelectorType.ID);
     }
 }

@@ -9,13 +9,6 @@ Feature: Remove a vehicle
     Then the "1 vehicle has been removed" confirmation banner should appear
     And the vehicle should no longer be present
 
-  Scenario: Remove vehicle on licence
-    Given I have a "goods" "standard_national" licence
-    And I navigate to manage vehicle page on a licence
-    And i remove a vehicle
-    Then the "1 vehicle has been removed" confirmation banner should appear
-    And the vehicle should no longer be present
-
   Scenario: Remove vehicle on variation
     Given I have a "goods" "standard_national" licence
     When i add an existing person as a transport manager who is not the operator on "variation"
@@ -24,20 +17,12 @@ Feature: Remove a vehicle
     Then the "1 vehicle has been removed" confirmation banner should appear
     And the vehicle should no longer be present
 
-  @WIP
-  Scenario: Remove a vehicle from a MLH
-    Given I have a "goods" "standard_national" licence
-
   Scenario: Search and remove a vehicle with more than 10 vehicles
     Given I have a "goods" "standard_national" licence with "13" vehicle authorisation
     And I navigate to manage vehicle page on a licence
     And i search and remove a vehicle
     Then the "1 vehicle has been removed" confirmation banner should appear
     And i search and the vehicle should no longer be present
-
-  @WIP
-  Scenario: View a vehicle via remove page?
-    Given I have a "goods" "standard_national" licence
 
   Scenario: Remove all my vehicles
     Given I have a "goods" "standard_national" licence
