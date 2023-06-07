@@ -2,7 +2,7 @@
 @ss_regression
 @gov-sign-in
 @smoketest
-
+@FullRegression
 Feature: Operator signs digitally
 
   Scenario Outline: Operator chooses to sign digitally

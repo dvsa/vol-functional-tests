@@ -1,5 +1,6 @@
-@OLCS-20956 @ap
+@OLCS-20956
 @SS-EXTERNAL-SEARCH
+@FullRegression
 Feature: External user search by Address, Business name, Licence Number and Person's name
 
   Background:

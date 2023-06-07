@@ -1,5 +1,7 @@
 @int_regression
 @task_management
+@FullRegression
+
 Feature:Add, Edit and reassign tasks on the internal application
 
   Background:

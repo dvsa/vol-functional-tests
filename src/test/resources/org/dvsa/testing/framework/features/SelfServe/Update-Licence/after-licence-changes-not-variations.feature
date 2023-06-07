@@ -1,5 +1,6 @@
 @SS-changes-not-variation
 @ss_regression
+@FullRegression
 
 Feature: Self Serve users can make changes to their valid licence.
 

@@ -1,6 +1,7 @@
 @SS
 @External-Search-Filter
 @ss_regression
+@FullRegression
 Feature: Using filters on External Search
 
   Background:

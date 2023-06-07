@@ -3,6 +3,8 @@
 @CPMS_tests
 @smoketest
 @INT-SMOKE
+@FullRegression
+
 Feature: Admin paying fees
 
   Background:

@@ -1,5 +1,7 @@
 @int_regression
 @add-user
+@FullRegression
+
 Feature: Create a new Internal User
 
   Scenario: Users wishes to Login & Create a new internal user
