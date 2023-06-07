@@ -2,6 +2,7 @@
 @Surrender
 @ss_regression
 @gov-sign-in
+@FullRegression
 
 Feature: Multiple licence holder
 

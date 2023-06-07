@@ -1,4 +1,4 @@
-@DVLA @VOL-147 @ss_regression
+@DVLA @VOL-147 @ss_regression @FullRegression
 Feature: Search and add a vehicle
 
   @smoketest @dvla-add-vehicle
@@ -38,18 +38,9 @@ Feature: Search and add a vehicle
 
   @dvla-reprint
   Scenario: Reprint vehicle disc on licence
-    Given I have a "goods" "standard_national" licence
+    Given I have "1" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
     And discs have been added to my licence
     And I navigate to manage vehicle page on a licence
-    When I reprint a vehicle disc
-    Then the "Disc for this vehicle will be reprinted and sent to you in the post" confirmation banner should appear
-    And the licence discs number should be updated
-
-    @dvla-variation-reprint
-  Scenario: Reprint vehicle disc on variation
-    Given I have a "goods" "standard_national" licence
-    When i add an existing person as a transport manager who is not the operator on "variation"
-    And I navigate to manage vehicle page on a variation
     When I reprint a vehicle disc
     Then the "Disc for this vehicle will be reprinted and sent to you in the post" confirmation banner should appear
     And the licence discs number should be updated

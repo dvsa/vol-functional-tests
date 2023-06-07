@@ -2,6 +2,8 @@
 @GRANT-GOODS-INTERIM-APP
 @CPMS_tests
 @int_regression
+@FullRegression
+
 Feature: apply for interim goods licence
 
   Background:

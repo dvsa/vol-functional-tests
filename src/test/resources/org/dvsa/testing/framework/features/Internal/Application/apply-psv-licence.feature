@@ -2,6 +2,8 @@
 @APPLY-PSV-LICENCE
 @int_regression
 @CPMS_tests
+@FullRegression
+
 Feature: Apply for a psv licence
 
   Scenario Outline: Apply for a psv licence

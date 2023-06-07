@@ -1,6 +1,7 @@
 @OLCS-20956 @ap
 @SS-PARTNER-USER-SEARCH
 @ss_regression
+@FullRegression
 Feature: Partner user external search by Address, Business name, Licence Number and Person's name
 
   Background:

@@ -1,6 +1,8 @@
 @int_regression
 @Complaints-convictions
 @OLCS-24339
+@FullRegression
+
 
 Feature: Public enquiry added and published and deletion of case notes
 

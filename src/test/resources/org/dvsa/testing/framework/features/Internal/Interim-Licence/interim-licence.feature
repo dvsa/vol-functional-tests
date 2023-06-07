@@ -2,6 +2,8 @@
 @INT
 @INTERIM
 @int_regression
+@FullRegression
+
 Feature: Change Validation On Interim Vehicle Authority
 
   Background:

@@ -2,6 +2,7 @@
 @Surrender-int
 @int_regression
 @gov-sign-in
+@FullRegression
 
 Feature: Logic for Surrender menu item
 

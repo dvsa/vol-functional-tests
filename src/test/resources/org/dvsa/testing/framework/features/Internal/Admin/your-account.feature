@@ -1,5 +1,6 @@
 @int_regression
 @your_account
+@FullRegression
 
 Feature: User edits their account details
 

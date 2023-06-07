@@ -1,5 +1,5 @@
 @SS-ADD-DIRECTOR
-@ss_regression
+@ss_regression @FullRegression
 Feature: Add a director variation
 
   Background:
