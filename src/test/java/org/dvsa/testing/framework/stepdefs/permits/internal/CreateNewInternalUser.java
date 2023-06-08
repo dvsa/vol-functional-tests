@@ -28,6 +28,6 @@ public class CreateNewInternalUser extends BasePage{
     public void userShouldBeCreated()
     {
         world.internalSearchJourney.searchUser();
-        assertTrue(isTextPresent(world.DataGenerator.getOperatorUserEmail()));
+        assertTrue(isTextPresent(world.DataGenerator.getOperatorUser()));
     }
 }

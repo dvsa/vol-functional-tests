@@ -34,7 +34,7 @@ public class PublicHolidays extends BasePage {
 
     @Then("that holiday should be displayed")
     public void thatHolidayShouldBeDisplayed() {
-        String actualDate = getText("tbody>tr:nth-child(2)>td:nth-child(1)", SelectorType.CSS).trim();
+        String actualDate = getText("tbody>tr:nth-child(1)>td:nth-child(1)", SelectorType.CSS).trim();
         String expectedDate = LocalDate.now().plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         waitForTitleToBePresent("Public holidays");
         assertEquals(expectedDate, actualDate);

@@ -5,6 +5,9 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
+import org.openqa.selenium.WebElement;
+
+import java.util.stream.Stream;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
@@ -23,7 +26,7 @@ public class InternalSearchJourney extends BasePage {
             clickByLinkText("Interim ");
     }
 
-    public void searchAndViewLicence()  {
+    public void searchAndViewLicence() {
         String licenceNo = world.applicationDetails.getLicenceNumber();
         internalSearchUntilTextPresent(SearchType.Licence, licenceNo, licenceNo);
     }
@@ -31,31 +34,33 @@ public class InternalSearchJourney extends BasePage {
     public void searchUser() {
         long kickOut = System.currentTimeMillis() + 200000;
         do {
-            SearchNavBar.search(SearchType.Users, world.DataGenerator.getOperatorUserEmail());
-        } while (!isTextPresent(world.DataGenerator.getOperatorUserEmail()) && System.currentTimeMillis() < kickOut);
+            SearchNavBar.search(SearchType.Users, world.DataGenerator.getOperatorUser());
+        } while (!isTextPresent(world.DataGenerator.getOperatorUser()) && System.currentTimeMillis() < kickOut);
     }
 
-    public void searchAndViewCase()  {
+    public void searchAndViewCase() {
         String caseId = String.valueOf(world.updateLicence.getCaseId());
         internalSearchUntilTextPresent(SearchType.Case, caseId, caseId);
     }
 
     public void searchAndViewPSVDisc() {
-        internalSearchUntilTextPresent(SearchType.PsvDisc,world.updateLicence.getStartNumber(), world.applicationDetails.getLicenceNumber());
+        internalSearchUntilTextPresent(SearchType.PsvDisc, world.updateLicence.getStartNumber(), world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
     }
 
-    public void searchAndViewAddress()  {
+    public void searchAndViewAddress() {
         String address = world.formattedStrings.getFullCommaOperatingAddress();
         internalSearchUntilTextPresent(SearchType.Address, address, world.applicationDetails.getLicenceNumber());
         clickByLinkText("Addresses");
     }
 
     public void internalSearchUntilTextPresent(SearchType searchType, String searchString, String linkText) {
-        long kickOut = System.currentTimeMillis() + 120000;
+        boolean linkIsThere;
+        long kickOut = System.currentTimeMillis() + 80000;
         do {
             SearchNavBar.search(searchType, searchString);
-        } while (!isTextPresent(searchString) && System.currentTimeMillis() < kickOut);
+            linkIsThere = findElements("//tbody", SelectorType.XPATH).stream().filter(x -> x.getText().contains(linkText)).isParallel();
+        } while (!linkIsThere && System.currentTimeMillis() < kickOut);
         waitAndClick(linkText, SelectorType.PARTIALLINKTEXT);
     }
 
