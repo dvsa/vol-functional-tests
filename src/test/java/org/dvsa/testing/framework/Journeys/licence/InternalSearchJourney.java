@@ -19,7 +19,7 @@ public class InternalSearchJourney extends BasePage {
     public void searchAndViewApplication() {
         String applicationId = world.createApplication.getApplicationId();
         internalSearchUntilTextPresent(SearchType.Application, applicationId, applicationId);
-        if (isLinkPresent("Interim", 60))
+        if (isLinkPresent("Interim", 3))
             clickByLinkText("Interim ");
     }
 
