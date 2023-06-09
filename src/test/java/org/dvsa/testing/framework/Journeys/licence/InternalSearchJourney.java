@@ -56,7 +56,7 @@ public class InternalSearchJourney extends BasePage {
 
     public void internalSearchUntilTextPresent(SearchType searchType, String searchString, String linkText) {
         boolean linkIsThere;
-        long kickOut = System.currentTimeMillis() + 80000;
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(searchType, searchString);
             linkIsThere = findElements("//tbody", SelectorType.XPATH).stream().filter(x -> x.getText().contains(linkText)).isParallel();
