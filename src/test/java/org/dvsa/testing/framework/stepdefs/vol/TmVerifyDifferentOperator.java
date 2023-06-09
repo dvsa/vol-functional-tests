@@ -65,7 +65,7 @@ public class TmVerifyDifferentOperator extends BasePage{
     }
 
     @And("the operator countersigns digitally")
-    public void theOperatorCountersignsDigitally() {
+    public void theOperatorCountersignsDigitally() throws InterruptedException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
         String link = world.genericUtils.getResetPasswordLink(world.configuration.getTmAppLink());

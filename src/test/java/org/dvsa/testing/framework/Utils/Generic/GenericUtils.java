@@ -122,7 +122,7 @@ public class GenericUtils extends BasePage {
         }
     }
 
-    public String getResetPasswordLink() throws InterruptedException {
+    public String getResetPasswordLink(String tmAppLink) throws InterruptedException {
         String htmlContent = world.configuration.getPasswordResetLink();
         String sanatisedHTML = htmlContent.replace("3D", "")
                 .replace("co=", "co")
