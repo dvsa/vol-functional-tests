@@ -10,10 +10,11 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.AdminOption;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskAllocationRules extends BasePage {
     private final World world;
+    private String originalTaskNumber;
     Initialisation initialisation;
 
     public TaskAllocationRules(World world) {
@@ -29,12 +30,16 @@ public class TaskAllocationRules extends BasePage {
 
     @And("I delete an allocation rule")
     public void iDeleteAnAllocationRule() {
+        String[] numberOfTasks = findElements("//*[@class='govuk-table__caption govuk-table__caption--m']", SelectorType.XPATH).get(0).getText().split(" ");
+        originalTaskNumber = numberOfTasks[0];
         world.taskAllocationRulesJourney.deleteTaskAllocationRule();
     }
 
     @Then("that rule should have been deleted")
     public void thatRuleShouldHaveBeenDeleted() {
-        assertTrue(isElementPresent("//p[text()='Task allocation rule(s) deleted']", SelectorType.XPATH));
+        String[] numberOfTasks = findElements("//*[@class='govuk-table__caption govuk-table__caption--m']", SelectorType.XPATH).get(0).getText().split(" ");
+        String remainingTaskNumber = numberOfTasks[0];
+        assertNotEquals(remainingTaskNumber, originalTaskNumber);
     }
 
     @Given("I edit an allocated rule")
