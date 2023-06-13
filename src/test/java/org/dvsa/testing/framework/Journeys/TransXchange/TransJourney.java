@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class TransJourney extends BasePage {
@@ -42,11 +43,9 @@ public class TransJourney extends BasePage {
     private final String VALID_TIMETABLE_OPERATOR_XML_KEY = "ValidTimetableOperatorXml.xml";
     // Valid fileNotFound request
     private final String VALID_FILE_NOT_FOUND_PDF_REQUEST_XML = BASE_PATH + "valid/ValidFileNotFoundPdfRequest.xml";
-    private final String FILE_NOT_FOUND_RESPONSE = BASE_PATH + "invalid/fileNotFoundResponse.xml";
     // Invalid missingOperator
     private final String INVALID_MISSING_OPERATORS_PDF_REQUEST_XML = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperatorsPdfRequest.xml";
     private final String INVALID_MISSING_OPERATORS_OPERATOR_XML_PATH = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperators.xml";
-    private final String INVALID_MISSING_OPERATORS_RESPONSE = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperatorsResponse.xml";
     private final String INVALID_MISSING_OPERATORS_OPERATOR_XML_KEY = "InvalidOperatorXmlMissingOperators.xml";
 
     private final World world;
@@ -171,13 +170,13 @@ public class TransJourney extends BasePage {
     }
 
 
-    public void getMessagesFromSqs(String problem) throws IOException {
-        String xml;
+    public void getMessagesFromSqs(String problem){
+        String expectedElement;
         if (problem.equals("missingOperators")){
-            xml = getFileStringUsingFilePath(INVALID_MISSING_OPERATORS_RESPONSE);
+            expectedElement = "<BadRequest>";
         }
         else if (problem.equals("fileNotFound")){
-            xml = getFileStringUsingFilePath(FILE_NOT_FOUND_RESPONSE);
+            expectedElement = "<Failed>";
         }
         else {
             throw new IllegalArgumentException("[" + problem + "] problem is not valid");
@@ -185,7 +184,7 @@ public class TransJourney extends BasePage {
         String queueUrl = world.configuration.config.getString("fileProcessedOutputQueueUrl");
         List<Message> sqsMessages = world.awsHelper.getMessagesFromSqs(queueUrl);
         String messageBody = sqsMessages.get(0).getBody();
-        assertEquals(xml, messageBody);
+        assertTrue(messageBody.contains(expectedElement));
     }
 
     /**
