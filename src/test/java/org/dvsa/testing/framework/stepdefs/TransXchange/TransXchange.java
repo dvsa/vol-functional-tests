@@ -44,11 +44,6 @@ public class TransXchange extends BasePage {
         world.TransXchangeJourney.getMessagesFromSqs(problem);
     }
 
-    @When("I send a POST request to the API gateway with valid XML for missing operators")
-    public void iSendAPOSTRequestToTheApiGatewayWithValidXmlForMissingOperators() throws Exception {
-        this.responseCode = world.TransXchangeJourney.sendMissingOperatorsValidXmlRequest();
-    }
-
     @When("I send a POST request to the API gateway with valid {string} XML")
     public void iSendAPostRequestToTheApiGatewayWithValidTimetableXml(String type) throws Exception {
         this.responseCode = world.TransXchangeJourney.sendValidPdfRequest(type);

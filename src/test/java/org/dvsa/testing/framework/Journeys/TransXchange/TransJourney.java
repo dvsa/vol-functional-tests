@@ -78,15 +78,6 @@ public class TransJourney extends BasePage {
                 OAuthJSONAccessTokenResponse.class).getAccessToken();
     }
 
-    public int sendMissingOperatorsValidXmlRequest() throws Exception {
-        ClassicHttpResponse response = sendPdfRequest(INVALID_MISSING_OPERATORS_PDF_REQUEST_XML);
-
-        // Test the response is what we expect
-        String xmlResponse = getFileStringUsingFilePath(VALID_XML_RESPONSE_PATH);
-        assertEquals(responseBodyText, xmlResponse);
-        return response.getCode();
-    }
-
     public int sendValidPdfRequest(String type) throws Exception {
         String requestXmlPath;
         if (type.equals("timetable")){
@@ -94,6 +85,9 @@ public class TransJourney extends BasePage {
         }
         else if (type.equals("fileNotFound")){
             requestXmlPath = VALID_FILE_NOT_FOUND_PDF_REQUEST_XML;
+        }
+        else if(type.equals("missingOperators")){
+            requestXmlPath = INVALID_MISSING_OPERATORS_PDF_REQUEST_XML;
         }
         else {
             throw new IllegalArgumentException("[" + type + "] is an invalid pdf request type");
