@@ -63,7 +63,7 @@ public class AwsHelper extends BasePage {
                 .build();
 
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(queueUrl)
-                .withWaitTimeSeconds(10)
+                .withWaitTimeSeconds(25)
                 .withMaxNumberOfMessages(1);
 
         List<Message> sqsMessages = sqs.receiveMessage(receiveMessageRequest).getMessages();
