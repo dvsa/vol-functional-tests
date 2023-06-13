@@ -80,24 +80,25 @@ public class TransJourney extends BasePage {
 
     public int sendValidPdfRequest(String type) throws Exception {
         String requestXmlPath;
-        if (type.equals("timetable")){
-            requestXmlPath = VALID_TIMETABLE_PDF_REQUEST_XML;
-        }
-        else if (type.equals("fileNotFound")){
-            requestXmlPath = VALID_FILE_NOT_FOUND_PDF_REQUEST_XML;
-        }
-        else if(type.equals("missingOperators")){
-            requestXmlPath = INVALID_MISSING_OPERATORS_PDF_REQUEST_XML;
-        }
-        else {
-            throw new IllegalArgumentException("[" + type + "] is an invalid pdf request type");
+        switch (type) {
+            case "timetable":
+                requestXmlPath = VALID_TIMETABLE_PDF_REQUEST_XML;
+                break;
+            case "fileNotFound":
+                requestXmlPath = VALID_FILE_NOT_FOUND_PDF_REQUEST_XML;
+                break;
+            case "missingOperators":
+                requestXmlPath = INVALID_MISSING_OPERATORS_PDF_REQUEST_XML;
+                break;
+            default:
+                throw new IllegalArgumentException("[" + type + "] is an invalid pdf request type");
         }
 
         ClassicHttpResponse response = sendPdfRequest(requestXmlPath);
 
         // Test the response is what we expect
         String xmlResponse = getFileStringUsingFilePath(VALID_XML_RESPONSE_PATH);
-        assertEquals(responseBodyText, xmlResponse);
+        assertEquals(xmlResponse, responseBodyText);
         return response.getCode();
     }
 
