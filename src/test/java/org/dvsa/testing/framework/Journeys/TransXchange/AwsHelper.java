@@ -5,6 +5,7 @@ import activesupport.aws.s3.S3;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.Message;
@@ -24,6 +25,27 @@ public class AwsHelper extends BasePage {
         this.world = world;
     }
 
+
+    /**
+     * @param bucketName Name of a s3 bucket
+     * @param key key of the object
+     * @return An s3 object
+     */
+    public S3Object getObjectFromBucket(String bucketName, String key) {
+        AmazonS3 client =  S3.createS3Client();
+        return client.getObject(bucketName, key);
+    }
+
+    /**
+     * Deletes a file in a S3 bucket
+     *
+     * @param bucketName Name of a s3 bucket
+     * @param key key of the object
+     */
+    public void deleteObjectFromBucket(String bucketName, String key) {
+        AmazonS3 client =  S3.createS3Client();
+        client.deleteObject(bucketName, key);
+    }
 
     /**
      * Adds a file to a S3 bucket
