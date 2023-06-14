@@ -39,3 +39,5 @@ clientId =
 clientSecret =
 scope =
 apiUrl =
+operatorXmlInputBucket =
+fileProcessedOutputQueueUrl =

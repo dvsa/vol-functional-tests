@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Injectors;
 import apiCalls.actions.*;
 import org.dvsa.testing.framework.Global.Configuration;
 import org.dvsa.testing.framework.Global.GlobalMethods;
+import org.dvsa.testing.framework.Journeys.TransXchange.AwsHelper;
 import org.dvsa.testing.framework.Journeys.TransXchange.TransJourney;
 import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
@@ -15,7 +16,6 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
-import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 import org.dvsa.testing.framework.stepdefs.vol.ExternalSearch;
 import org.dvsa.testing.framework.stepdefs.vol.GovSignIn;
 
@@ -88,5 +88,6 @@ public class World {
     public YearSelectionPage yearSelectionPage;
     public PermitFeePage permitFeePage;
     public TransJourney TransXchangeJourney;
+    public AwsHelper awsHelper;
     public ExternalSearch externalSearch;
 }

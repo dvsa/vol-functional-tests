@@ -9,6 +9,8 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.stepdefs.vol.Initialisation;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -27,13 +29,28 @@ public class TransXchange extends BasePage {
         world.TransXchangeJourney.getAuthToken();
     }
 
-    @When("I send a POST request to the API gateway with valid XML")
-    public void iSendAPOSTRequestToTheApiGatewayWithValidXml() throws Exception {
-        this.responseCode = world.TransXchangeJourney.sendValidXmlRequest();
+    @When("I upload valid {string} operator xml into the bucket")
+    public void iUploadValidOperatorXmlIntoTheBucket(String type) {
+        world.TransXchangeJourney.inputValidOperatorXml(type);
+    }
+
+    @When("I upload invalid {string} operator xml into the bucket")
+    public void iUploadInvalidOperatorXmlIntoTheBucket(String type) {
+        world.TransXchangeJourney.inputInvalidOperatorXml(type);
+    }
+
+    @Then("I read a message off the queue and verify it looks right for the {string}")
+    public void iReadAMessageFromOffTheQueue(String problem) throws IOException {
+        world.TransXchangeJourney.getMessagesFromSqs(problem);
+    }
+
+    @When("I send a POST request to the API gateway with valid {string} XML")
+    public void iSendAPostRequestToTheApiGatewayWithValidTimetableXml(String type) throws Exception {
+        this.responseCode = world.TransXchangeJourney.sendValidPdfRequest(type);
     }
 
     @Then("the response status code should be {int}")
-    public void theResponseStatusCodeShouldBe(int statusCode) throws Exception {
+    public void theResponseStatusCodeShouldBe(int statusCode){
         assertEquals(statusCode, responseCode);
     }
 
