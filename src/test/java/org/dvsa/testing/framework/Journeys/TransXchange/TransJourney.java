@@ -128,7 +128,7 @@ public class TransJourney extends BasePage {
 
         // Test the response is what we expect
         String xmlResponse = getFileStringUsingFilePath(INVALID_XML_RESPONSE_PATH);
-        assertEquals(responseBodyText, xmlResponse);
+        assertEquals(xmlResponse, responseBodyText);
         return response.getCode();
     }
 
