@@ -1,1 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><PublisherResponse xmlns="http://www.transxchange.org.uk/"><Accepted/></PublisherResponse>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PublisherResponse>
+    <Accepted/>
+</PublisherResponse>
