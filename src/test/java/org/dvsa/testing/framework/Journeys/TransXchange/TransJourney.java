@@ -220,8 +220,7 @@ public class TransJourney extends BasePage {
         assertTrue(messageBody.contains(expectedElement));
     }
 
-    public void getFilenameFromSuccessfulPdfGenerationMessage() throws IOException {
-        //Uncomment section once everything is wired up
+    public void getFilenameFromSuccessfulPdfGenerationMessage() {
         String queueUrl = world.configuration.config.getString("fileProcessedOutputQueueUrl");
         List<Message> sqsMessages = world.awsHelper.getMessagesFromSqs(queueUrl);
         String messageBody = sqsMessages.get(0).getBody();
