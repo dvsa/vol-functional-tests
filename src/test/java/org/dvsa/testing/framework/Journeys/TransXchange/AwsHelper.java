@@ -94,7 +94,7 @@ public class AwsHelper extends BasePage {
         // we'll essentially retry for another 20 seconds to give it chance to appear before failing.
         if (sqsMessages.size() == 0){
             System.out.println("No messages in queue, polling again for another 20 seconds");
-            sqs.receiveMessage(receiveMessageRequest).getMessages();
+            sqsMessages = sqs.receiveMessage(receiveMessageRequest).getMessages();
         }
 
         if (consumeMessages) {
