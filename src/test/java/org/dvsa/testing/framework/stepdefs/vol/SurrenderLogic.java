@@ -15,6 +15,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -188,7 +189,7 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("my application to surrender is under consideration")
-    public void myApplicationToSurrenderIsUnderConsideration() throws HttpException {
+    public void myApplicationToSurrenderIsUnderConsideration() throws HttpException, MalformedURLException, InterruptedException {
         world.updateLicence.printLicenceDiscs();
         world.surrenderJourney.submitSurrender();
     }
@@ -269,7 +270,7 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("the user should be able to re apply for a surrender in internal")
-    public void theUserShouldBeAbleToReApplyForASurrenderInInternal() {
+    public void theUserShouldBeAbleToReApplyForASurrenderInInternal() throws MalformedURLException, InterruptedException {
         world.surrenderJourney.submitSurrender();
     }
 

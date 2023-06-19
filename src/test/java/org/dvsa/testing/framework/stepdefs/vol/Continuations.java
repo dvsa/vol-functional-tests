@@ -141,4 +141,22 @@ public class Continuations extends BasePage {
         world.continuationJourney.checkContinuationReviewSections();
         closeTabAndFocusTab(0);
     }
+
+    @And("a caseworkers continues my licence")
+    public void aCaseworkersContinuesMyLicence() {
+        world.internalSearchJourney.searchAndViewLicence();
+        clickByLinkText("Fees");
+        world.feeAndPaymentJourney.selectFee();
+        world.feeAndPaymentJourney.payFee("401", "cash");
+        waitForTextToBePresent("The payment was made successfully");
+        clickByLinkText("Update details");
+        waitAndClick("//*[contains(text(),'Yes')]",SelectorType.XPATH);
+        selectValueFromDropDown("fields[checklistStatus]",SelectorType.ID,"Acceptable");
+        waitAndClick("continue-licence",SelectorType.ID);
+    }
+
+    @Then("the continuation should be approved")
+    public void theContinuationShouldBeApproved() {
+        assertTrue(isTextPresent("The licence has been continued"));
+    }
 }
