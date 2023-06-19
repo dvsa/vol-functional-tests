@@ -33,7 +33,7 @@ Feature: Test happy and unhappy paths in TransXchange functionality.
     And I read a message off the queue and verify it looks right for the "fileNotFound"
 
   # PDF generator lambda tests
-  @TransXchangeValid
+  @TransXchange
   Scenario Outline: Generate OAuth token, upload valid operator XML, send valid pdf XML request
     Given I generate an OAuth token
     When I upload valid "<type>" operator xml into the bucket

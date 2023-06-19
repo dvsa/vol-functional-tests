@@ -90,6 +90,11 @@ public class AwsHelper extends BasePage {
 
         List<Message> sqsMessages = sqs.receiveMessage(receiveMessageRequest).getMessages();
 
+        if (sqsMessages.size() == 0){
+            System.out.println("No messages in queue, polling again for another 20 seconds");
+            sqs.receiveMessage(receiveMessageRequest).getMessages();
+        }
+
         if (consumeMessages) {
             System.out.println("Receipting message to remove from queue");
             sqs.deleteMessage(queueUrl, sqsMessages.get(0).getReceiptHandle());
