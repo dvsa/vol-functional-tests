@@ -151,7 +151,9 @@ public class Continuations extends BasePage {
         waitForTextToBePresent("The payment was made successfully");
         clickByLinkText("Update details");
         waitAndClick("//*[contains(text(),'Yes')]",SelectorType.XPATH);
-        selectValueFromDropDown("fields[checklistStatus]",SelectorType.ID,"Acceptable");
+        if(isElementEnabled("fields[checklistStatus]",SelectorType.ID)) {
+            selectValueFromDropDown("fields[checklistStatus]", SelectorType.ID, "Acceptable");
+        }
         waitAndClick("continue-licence",SelectorType.ID);
     }
 
