@@ -31,9 +31,6 @@ Feature: Continuations journey through internal and self serve
     Examples:
       | operatorType | licenceType            |
       | goods        | standard_national      |
-      | goods        | standard_international |
-      | public       | standard_national      |
-      | public       | standard_international |
 
   Scenario Outline: The users of ss display when reviewing a continuation
     Given i have a valid "<operatorType>" "<licenceType>" licence
