@@ -90,6 +90,8 @@ public class AwsHelper extends BasePage {
 
         List<Message> sqsMessages = sqs.receiveMessage(receiveMessageRequest).getMessages();
 
+        // Some tests, especially the pdf generation ones take over 20 second to generate a message on the queue,
+        // we'll essentially retry for another 20 seconds to give it chance to appear before failing.
         if (sqsMessages.size() == 0){
             System.out.println("No messages in queue, polling again for another 20 seconds");
             sqs.receiveMessage(receiveMessageRequest).getMessages();
