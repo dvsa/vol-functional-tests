@@ -1,5 +1,6 @@
 @SS-CHECK-DOCUMENTS
 @ss_regression
+@FullRegression
 Feature: Check correspondence
 
   Background:

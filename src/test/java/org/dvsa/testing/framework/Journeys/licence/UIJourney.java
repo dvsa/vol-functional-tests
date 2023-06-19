@@ -508,9 +508,6 @@ public class UIJourney extends BasePage {
         waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
         click(nameAttribute("input","submit"), SelectorType.CSS);
         assertTrue(isTextPresent("Your password was reset successfully"));
-        waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
-        waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
-        clickById("auth.login.button");
     }
 
     public static void clickSaveAndContinue() {
@@ -540,7 +537,7 @@ public class UIJourney extends BasePage {
     }
 
     public void clickPay() {
-        waitAndClick("//*[@id='form-actions[pay]']", SelectorType.XPATH);
+        waitAndClick("//*[@name='form-actions[pay]']", SelectorType.XPATH);
     }
 
     public static void inputLicenceAndVehicleType(String licenceType, String vehicleType, String lgvUndertaking) {

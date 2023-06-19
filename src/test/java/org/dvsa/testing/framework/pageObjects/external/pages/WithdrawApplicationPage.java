@@ -6,6 +6,6 @@ import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePer
 public class WithdrawApplicationPage extends BasePermitPage {
 
     public static void clickWithdraw() {
-        scrollAndClick("//input[@id='withdrawbutton']", SelectorType.XPATH);
+        scrollAndClick("//button[@id='withdrawbutton']", SelectorType.XPATH);
     }
 }

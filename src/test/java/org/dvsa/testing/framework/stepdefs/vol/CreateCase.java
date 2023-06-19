@@ -175,7 +175,7 @@ public class CreateCase extends BasePage {
     }
     @Then("the condition & undertaking should be displayed")
     public void theConditionUndertakingShouldBeDisplayed() {
-        waitForTextToBePresent(world.convictionsAndPenaltiesJourney.getConvictionDescription());
+        waitForTextToBePresent("Conditions and undertakings");
         assertTrue(isTextPresent("Condition / undertaking added successfully"));
         assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
     }

@@ -44,6 +44,14 @@ public class ResettingPassword extends BasePage {
     public void iReceiveTheResetPasswordLinkViaEmail() throws InterruptedException {
         world.genericUtils.getResetPasswordLink();
         world.UIJourney.resetSelfServePassword();
-        assertTrue(isTextPresent(world.registerUser.getForeName()));
+    }
+
+    @Then("I should be able to login with my new password")
+    public void iShouldBeAbleToLoginWithMyNewPassword() {
+        String passWord = world.configuration.config.getString("adminPassword");
+        waitAndEnterText("auth.login.username", SelectorType.ID, world.registerUser.getUserName());
+        waitAndEnterText("auth.login.password", SelectorType.ID, passWord);
+        clickById("auth.login.button");
+        assertTrue(isLinkPresent("Home", 5));
     }
 }

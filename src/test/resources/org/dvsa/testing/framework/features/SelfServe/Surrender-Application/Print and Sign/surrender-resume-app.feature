@@ -1,6 +1,7 @@
 @OLCS-22275
 @Surrenders-resume
 @ss_regression
+@FullRegression
 Feature: User should be able to continue where they left off
 
   Scenario Outline: Update correspondence address and resume surrender journey

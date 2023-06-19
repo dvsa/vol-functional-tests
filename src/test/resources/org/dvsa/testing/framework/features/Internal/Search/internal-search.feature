@@ -1,5 +1,6 @@
 @INT-SEARCH
 @int_regression
+@FullRegression
 Feature: Internal Search
 
   Background:

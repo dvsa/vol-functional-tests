@@ -11,6 +11,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,7 +34,7 @@ public class PublicHolidays extends BasePage {
 
     @Then("that holiday should be displayed")
     public void thatHolidayShouldBeDisplayed() {
-        String actualDate = getValue("(//input[@type='submit'])[2]", SelectorType.XPATH);
+        String actualDate = getText("tbody>tr:nth-child(1)>td:nth-child(1)", SelectorType.CSS).trim();
         String expectedDate = LocalDate.now().plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         waitForTitleToBePresent("Public holidays");
         assertEquals(expectedDate, actualDate);
@@ -46,8 +47,8 @@ public class PublicHolidays extends BasePage {
 
     @Then("that edited holiday should be displayed")
     public void thatEditedHolidayShouldBeDisplayed() {
-        String actualDate = getValue("(//input[@type='submit'])[2]", SelectorType.XPATH);
-        String expectedDate = LocalDate.now().plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String actualDate = getText("button.action-button-link:first-of-type", SelectorType.CSS).trim();
+        String expectedDate = LocalDate.now().plusMonths(7).plusYears(2).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         assertEquals(expectedDate, actualDate);
     }
 

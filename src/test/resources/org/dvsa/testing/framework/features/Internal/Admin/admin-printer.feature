@@ -1,5 +1,6 @@
 @int_regression
 @printing
+@FullRegression
 
 Feature: Admin wishes to add, edit and delete printers
 

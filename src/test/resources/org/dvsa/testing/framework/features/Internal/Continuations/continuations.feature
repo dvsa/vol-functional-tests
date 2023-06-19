@@ -4,7 +4,7 @@
 
 Feature: Continuations journey through internal and self serve
 
-  @int_regression
+  @int_regression @FullRegression
   Scenario Outline: Continue a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal

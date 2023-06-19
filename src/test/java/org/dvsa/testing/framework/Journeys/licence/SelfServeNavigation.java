@@ -37,7 +37,7 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToExternalSearch() {
-        if (Browser.isBrowserOpen()) {
+       if (Browser.isBrowserOpen()) {
             navigate().manage().deleteAllCookies();
             navigate().manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         }
@@ -175,6 +175,7 @@ public class SelfServeNavigation extends BasePage {
             ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(workingDir.concat(financialEvidenceFile));
         }
+        waitForTextToBePresent("File name");
         UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
