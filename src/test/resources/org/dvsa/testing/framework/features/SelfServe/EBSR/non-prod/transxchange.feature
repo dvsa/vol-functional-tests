@@ -54,7 +54,7 @@ Feature: Test happy and unhappy paths in TransXchange functionality.
 #      | dvsaRecord |
 
   # Performance test
-  @TransXchanged
+  @TransXchange
   Scenario Outline: Generate OAuth token, upload valid operator XML, send valid pdf XML request, then time it
     Given I start a timer
     When I generate an OAuth token

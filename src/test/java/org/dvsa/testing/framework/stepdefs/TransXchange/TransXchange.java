@@ -1,10 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.TransXchange;
 
-import com.jcraft.jsch.Logger;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
 import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.dvsa.testing.framework.Injectors.World;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class TransXchange extends BasePage {
+    private static final Logger LOGGER = LogManager.getLogger(TransXchange.class);
     private final World world;
     Initialisation initialisation;
 
@@ -100,6 +102,7 @@ public class TransXchange extends BasePage {
     @And("I stop the timer and check the whole process took less than {int} seconds")
     public void iStopTheTimerAndCheckTheWholeProcessTookLessThanSeconds(int totalTime) {
         long seconds = ChronoUnit.SECONDS.between(this.startTime, LocalDateTime.now());
+        LOGGER.info("Test took [" + seconds + "] seconds to run");
         assertTrue(seconds < totalTime);
     }
 }
