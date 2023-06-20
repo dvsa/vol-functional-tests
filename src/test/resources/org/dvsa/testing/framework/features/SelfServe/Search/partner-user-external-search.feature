@@ -23,3 +23,8 @@ Feature: Partner user external search by Address, Business name, Licence Number 
   Scenario: Person's name partner external search for lorry and bus operators
     When I search for a lorry and bus operator by "person","","","",""
     Then search results page should display names containing our operator name
+
+  Scenario: Search for interim status on vehicle table
+    When I search for a lorry and bus operator by "licence","","","",""
+    And i check if the licence contains any interim vehicles
+    Then the vehicle table should contain the interim status

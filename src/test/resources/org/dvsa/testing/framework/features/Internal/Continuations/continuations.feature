@@ -4,7 +4,7 @@
 
 Feature: Continuations journey through internal and self serve
 
-  @int_regression @FullRegression
+  @int_regression @FullRegression @continuations_smoke
   Scenario Outline: Continue a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
@@ -20,6 +20,17 @@ Feature: Continuations journey through internal and self serve
       | public       | standard_international |
       | public       | restricted             |
       | public       | special_restricted     |
+
+  @int_regression @FullRegression @continuations_smoke
+  Scenario Outline: Caseworker continues a licence that has expired
+    Given i have a valid "<operatorType>" "<licenceType>" licence
+    When i change my continuation and review date on Internal
+    And i generate a continuation
+    And a caseworkers continues my licence
+    Then the continuation should be approved
+    Examples:
+      | operatorType | licenceType            |
+      | goods        | standard_national      |
 
   Scenario Outline: The users of ss display when reviewing a continuation
     Given i have a valid "<operatorType>" "<licenceType>" licence

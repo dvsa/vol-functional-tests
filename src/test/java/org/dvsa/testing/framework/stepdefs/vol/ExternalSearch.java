@@ -10,8 +10,10 @@ import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
 import java.util.Objects;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExternalSearch extends BasePage {
@@ -165,5 +167,19 @@ public class ExternalSearch extends BasePage {
     @Then("the expected licence results should be shown")
     public void theExpectedLicenceResultsShouldBeShown() {
         assertTrue(isTextPresent("TEST USER (SELF SERVICE) (12345)"));
+    }
+
+    @And("i check if the licence contains any interim vehicles")
+    public void iCheckIfTheLicenceContainsAnyInterimVehicles() {
+        world.selfServeNavigation.clickSearchWhileCheckingTextPresent(world.applicationDetails.getLicenceNumber(), 300, "KickOut reached. Licence number external search failed.");
+        clickByLinkText(world.applicationDetails.getLicenceNumber());
+    }
+
+    @Then("the vehicle table should contain the interim status")
+    public void theVehicleTableShouldContainTheInterimStatus() {
+        List<WebElement> interimStatus = findElements("//*[@data-heading='Interim']", SelectorType.XPATH);
+        for (WebElement interim : interimStatus) {
+            assertEquals("No",interim.getText());
+        }
     }
 }

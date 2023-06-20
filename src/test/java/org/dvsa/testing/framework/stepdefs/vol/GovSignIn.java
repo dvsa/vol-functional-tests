@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
 import apiCalls.enums.UserType;
 import io.cucumber.java.en.And;
@@ -10,6 +11,10 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
@@ -58,7 +63,8 @@ public class GovSignIn extends BasePage {
     }
 
     @Then("the application should be digitally signed")
-    public void theApplicationShouldBeDigitallySigned() {
+    public void theApplicationShouldBeDigitallySigned() throws MalformedURLException, InterruptedException {
+        world.govSignInJourney.changeProtocolForSignInToWorkOnLocal();
         waitForTitleToBePresent("Review and declarations");
         assertTrue(isTextPresent("Declaration signed through GOV.UK One Login"));
         assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("dd MMM yyyy"))));

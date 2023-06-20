@@ -55,12 +55,12 @@ public class InternalSearchJourney extends BasePage {
     }
 
     public void internalSearchUntilTextPresent(SearchType searchType, String searchString, String linkText) {
-        boolean linkIsThere;
+        boolean isLinkPresent = false;
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(searchType, searchString);
-            linkIsThere = findElements("//tbody", SelectorType.XPATH).stream().filter(x -> x.getText().contains(linkText)).isParallel();
-        } while (!linkIsThere && System.currentTimeMillis() < kickOut);
+           isLinkPresent = isLinkPresent(linkText,2);
+        } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
         waitAndClick(linkText, SelectorType.PARTIALLINKTEXT);
     }
 

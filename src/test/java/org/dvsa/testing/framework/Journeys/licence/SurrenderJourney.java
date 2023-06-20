@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.LicenceType;
@@ -7,6 +8,8 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
 import static activesupport.driver.Browser.navigate;
@@ -99,11 +102,12 @@ public class SurrenderJourney extends BasePage {
         return getText("//dt[contains(text(),'Country')]//..//dd", SelectorType.XPATH);
     }
 
-    public void submitSurrender() {
+    public void submitSurrender() throws MalformedURLException, InterruptedException {
         submitSurrenderUntilChoiceOfVerification();
         waitAndClick("//*[@id='sign']", SelectorType.XPATH);
         world.govSignInJourney.navigateToGovUkSignIn();
         world.govSignInJourney.signInGovAccount();
+        world.govSignInJourney.changeProtocolForSignInToWorkOnLocal();
         checkSignInConfirmation();
         refreshPageWithJavascript();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");

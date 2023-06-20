@@ -10,6 +10,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class PaymentProcessing extends BasePage {
     private final World world;
@@ -68,5 +69,31 @@ public class PaymentProcessing extends BasePage {
         waitForTextToBePresent("Payments and adjustments");
         refreshPageWithJavascript();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), "PAID");
+    }
+
+    @And("i search for transactional fees")
+    public void iSearchForTransactionalFees() {
+        clickByLinkText("Fees");
+        waitAndSelectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "Historic");
+        clickByLinkText(String.format("GV/SN Grant Fee for application %s", world.createApplication.getApplicationId()));
+        waitForTextToBePresent("Payments and adjustments");
+        String[] transactionId = findElements("//tbody", SelectorType.XPATH).get(0).getText().split(" ");
+        clickByLinkText(transactionId[0]);
+        waitForTextToBePresent("Payment details");
+    }
+
+    @Then("the table should contain the correct values")
+    public void theTableShouldContainTheCorrectValues() {
+        assertNotNull(getText("//li[1]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[2]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[3]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[4]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[5]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[6]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[7]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[8]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[9]/dd", SelectorType.XPATH));
+        assertNotNull(getText("//li[10]/dd", SelectorType.XPATH));
+        assertEquals("COMPLETE", getText("//li[11]/dd", SelectorType.XPATH));
     }
 }

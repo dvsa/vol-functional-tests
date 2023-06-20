@@ -1,9 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Random;
 
 import static activesupport.driver.Browser.navigate;
@@ -234,6 +237,15 @@ public class GovSignInJourney extends BasePage {
         } else {
             clickByXPath("//input[@value='NONE OF THE ABOVE / DOES NOT APPLY']");
             waitAndClick("continue", SelectorType.ID);
+        }
+    }
+
+    public void changeProtocolForSignInToWorkOnLocal() throws InterruptedException, MalformedURLException {
+        if(world.configuration.env.toString().equals("local")) {
+            Thread.sleep(4000);
+            URL url = new URL(Browser.navigate().getCurrentUrl());
+            String urlWithUnsecureProtocol = url.getProtocol().replace("s","").concat("://"+ url.getAuthority() + url.getFile());
+            Browser.navigate().get(urlWithUnsecureProtocol);
         }
     }
 
