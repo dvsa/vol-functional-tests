@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.TransXchange;
 
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.sqs.model.Message;
 import com.google.gson.JsonObject;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
@@ -8,6 +9,8 @@ import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -18,6 +21,9 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,12 +31,12 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class TransJourney extends BasePage {
 
+    private static final Logger LOGGER = LogManager.getLogger(TransJourney.class);
     private final String BASE_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/";
 
     // Valid and Invalid PDF request
@@ -41,6 +47,10 @@ public class TransJourney extends BasePage {
     private final String VALID_TIMETABLE_PDF_REQUEST_XML = BASE_PATH + "valid/ValidTimetableOperatorXmlPdfRequest.xml";
     private final String VALID_TIMETABLE_OPERATOR_XML_PATH = BASE_PATH + "valid/ValidTimetableOperatorXml.xml";
     private final String VALID_TIMETABLE_OPERATOR_XML_KEY = "ValidTimetableOperatorXml.xml";
+    // Valid Dvsa Record request
+    private final String VALID_DVSA_RECORD_PDF_REQUEST_XML = BASE_PATH + "valid/ValidDvsaRecordPdfRequest.xml";
+    private final String VALID_DVSA_RECORD_OPERATOR_XML_PATH = BASE_PATH + "valid/ValidTimetableOperatorXml.xml";
+    private final String VALID_DVSA_RECORD_OPERATOR_XML_KEY = "ValidDvsaRecordOperatorXml.xml";
     // Valid fileNotFound request
     private final String VALID_FILE_NOT_FOUND_PDF_REQUEST_XML = BASE_PATH + "valid/ValidFileNotFoundPdfRequest.xml";
     // Invalid missingOperator
@@ -50,6 +60,7 @@ public class TransJourney extends BasePage {
 
     private final World world;
     private String responseBodyText;
+    private String pdfFilename;
 
     public TransJourney(World world) {
         this.world = world;
@@ -82,6 +93,9 @@ public class TransJourney extends BasePage {
         switch (type) {
             case "timetable":
                 requestXmlPath = VALID_TIMETABLE_PDF_REQUEST_XML;
+                break;
+            case "dvsaRecord":
+                requestXmlPath = VALID_DVSA_RECORD_PDF_REQUEST_XML;
                 break;
             case "fileNotFound":
                 requestXmlPath = VALID_FILE_NOT_FOUND_PDF_REQUEST_XML;
@@ -151,11 +165,15 @@ public class TransJourney extends BasePage {
 
     public void inputValidOperatorXml(String type) {
         String bucketName = world.configuration.config.getString("operatorXmlInputBucket");
-        if (type.equals("timetable")) {
-            world.awsHelper.addFileToBucket(bucketName, VALID_TIMETABLE_OPERATOR_XML_KEY, VALID_TIMETABLE_OPERATOR_XML_PATH);
-        }
-        else {
-            throw new IllegalArgumentException("[" + type + "] type is not valid");
+        switch (type) {
+            case "timetable":
+                world.awsHelper.addFileToBucket(bucketName, VALID_TIMETABLE_OPERATOR_XML_KEY, VALID_TIMETABLE_OPERATOR_XML_PATH);
+                break;
+            case "dvsaRecord":
+                world.awsHelper.addFileToBucket(bucketName, VALID_DVSA_RECORD_OPERATOR_XML_KEY, VALID_DVSA_RECORD_OPERATOR_XML_PATH);
+                break;
+            default:
+                throw new IllegalArgumentException("[" + type + "] type is not valid");
         }
     }
 
@@ -166,6 +184,23 @@ public class TransJourney extends BasePage {
         }
         else {
             throw new IllegalArgumentException("[" + type + "] type is not valid");
+        }
+    }
+
+    /**
+     * Asserts a file exists in the bucket defined by the "pdfOutputBucket" config item by failing the test if it's
+     * missing.
+     * Requires the pdfFilename variable is set in this class
+     */
+    public void verifyFileExistsInOutputBucket(){
+        if (pdfFilename == null) {
+            throw new IllegalArgumentException("pdfFilename hasn't been set");
+        }
+        String bucketName = world.configuration.config.getString("pdfOutputBucket");
+        try {
+            world.awsHelper.getObjectFromBucket(bucketName, pdfFilename);
+        } catch (AmazonS3Exception e){
+            fail("File [" + pdfFilename + "] doesn't exist in the bucket");
         }
     }
 
@@ -182,9 +217,18 @@ public class TransJourney extends BasePage {
             throw new IllegalArgumentException("[" + problem + "] problem is not valid");
         }
         String queueUrl = world.configuration.config.getString("fileProcessedOutputQueueUrl");
-        List<Message> sqsMessages = world.awsHelper.getMessagesFromSqs(queueUrl);
+        List<Message> sqsMessages = world.awsHelper.getMessageFromSqs(queueUrl);
         String messageBody = sqsMessages.get(0).getBody();
+
         assertTrue(messageBody.contains(expectedElement));
+    }
+
+    public void getFilenameFromSuccessfulPdfGenerationMessage() {
+        String queueUrl = world.configuration.config.getString("fileProcessedOutputQueueUrl");
+        List<Message> sqsMessages = world.awsHelper.getMessageFromSqs(queueUrl);
+        String messageBody = sqsMessages.get(0).getBody();
+        Document doc = Jsoup.parse(messageBody, "", Parser.xmlParser());
+        pdfFilename = doc.getElementsByTag("OutputFile").get(0).text();
     }
 
     /**
@@ -197,7 +241,7 @@ public class TransJourney extends BasePage {
         // generate a random integer from 0 to 899, then add 100
         int x = random.nextInt(900) + 100;
         String id = "abc" + x;
-        System.out.println("Id for this request is [" + id + "]");
+        LOGGER.info("Id for this request is [" + id + "]");
         request.setHeader("X-Correlation-Id", id);
         request.setHeader("Content-Type", "application/xml");
         request.setHeader("Cache-Control", "no-cache");
@@ -207,5 +251,14 @@ public class TransJourney extends BasePage {
     private String getFileStringUsingFilePath(String path) throws IOException {
         File xmlResponseFile = new File(path);
         return new String(Files.readAllBytes(xmlResponseFile.toPath()));
+    }
+
+    public void deleteGeneratedFileFromOutputBucket() {
+        if (pdfFilename == null) {
+            throw new IllegalArgumentException("pdfFilename hasn't been set");
+        }
+        String bucketName = world.configuration.config.getString("pdfOutputBucket");
+        world.awsHelper.deleteObjectFromBucket(bucketName, pdfFilename);
+        LOGGER.info("Successfully deleted [" + pdfFilename + "]");
     }
 }

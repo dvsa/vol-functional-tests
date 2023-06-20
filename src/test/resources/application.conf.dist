@@ -40,4 +40,5 @@ clientSecret =
 scope =
 apiUrl =
 operatorXmlInputBucket =
+pdfOutputBucket =
 fileProcessedOutputQueueUrl =

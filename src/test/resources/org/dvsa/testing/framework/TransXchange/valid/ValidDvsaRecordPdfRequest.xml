@@ -3,7 +3,7 @@
     <PublishDocumentRequest>
         <InputOperands>
             <DocumentPath></DocumentPath>
-            <DocumentName>ValidTimetableOperatorXml.xml</DocumentName>
+            <DocumentName>ValidDvsaRecordOperatorXml.xml</DocumentName>
         </InputOperands>
         <OutputOperands>
             <OutputPath></OutputPath>
@@ -16,8 +16,8 @@
         </ProcessingOptions>
         <OutputOptions>
             <Sections>
-                <Particulars>none</Particulars>
-                <EmbeddedParticulars>false</EmbeddedParticulars>
+                <Particulars>full</Particulars>
+                <EmbeddedParticulars>true</EmbeddedParticulars>
                 <Timetable>full</Timetable>
                 <RouteTrack>none</RouteTrack>
                 <Diagnostics>none</Diagnostics>
