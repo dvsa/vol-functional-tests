@@ -71,8 +71,10 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("Start proving your identity with GOV.UK One Login", 2)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-
+        if (isTitlePresent("Are you on a computer or a tablet right now?", 2)) {
+            clickByXPath("//*[@id='select-device-choice']");
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
         if (isTitlePresent("You have already proved your identity", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
