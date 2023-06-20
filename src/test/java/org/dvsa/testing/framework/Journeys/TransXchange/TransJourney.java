@@ -53,6 +53,8 @@ public class TransJourney extends BasePage {
     private final String VALID_DVSA_RECORD_OPERATOR_XML_KEY = "ValidDvsaRecordOperatorXml.xml";
     // Valid fileNotFound request
     private final String VALID_FILE_NOT_FOUND_PDF_REQUEST_XML = BASE_PATH + "valid/ValidFileNotFoundPdfRequest.xml";
+    // Invalid missing DocumentName
+    private final String INVALID_DOCUMENT_NAME_PDF_REQUEST_XML = BASE_PATH + "invalid/InvalidMissingDocumentNamePdfRequest.xml";
     // Invalid missingOperator
     private final String INVALID_MISSING_OPERATORS_PDF_REQUEST_XML = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperatorsPdfRequest.xml";
     private final String INVALID_MISSING_OPERATORS_OPERATOR_XML_PATH = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperators.xml";
@@ -102,6 +104,9 @@ public class TransJourney extends BasePage {
                 break;
             case "missingOperators":
                 requestXmlPath = INVALID_MISSING_OPERATORS_PDF_REQUEST_XML;
+                break;
+            case "missingDocumentName":
+                requestXmlPath = INVALID_DOCUMENT_NAME_PDF_REQUEST_XML;
                 break;
             default:
                 throw new IllegalArgumentException("[" + type + "] is an invalid pdf request type");
@@ -210,7 +215,7 @@ public class TransJourney extends BasePage {
         if (problem.equals("missingOperators")){
             expectedElement = "<BadRequest>";
         }
-        else if (problem.equals("fileNotFound")){
+        else if (problem.equals("fileNotFound") || problem.equals("missingDocumentName")){
             expectedElement = "<Failed>";
         }
         else {
