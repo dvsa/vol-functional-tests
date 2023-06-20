@@ -72,7 +72,7 @@ public class AwsHelper extends BasePage {
      * @return A list of {@link com.amazonaws.services.sqs.model.Message} objects
      */
     public List<Message> getMessageFromSqs(String queueUrl) {
-        return getMessageFromSqs(queueUrl, true, 2);
+        return getMessageFromSqs(queueUrl, true, 4);
     }
 
     /**
