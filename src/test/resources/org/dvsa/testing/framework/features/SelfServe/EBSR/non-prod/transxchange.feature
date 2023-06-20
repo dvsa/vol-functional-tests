@@ -4,7 +4,13 @@ Feature: Test happy and unhappy paths in TransXchange functionality.
   @TransXchange
   Scenario: Generate OAuth/Authorisation token, send a Invalid XML request and check response as Bad request
     Given I generate an OAuth token
-    When I send a POST request to the API gateway with invalid XML
+    When I send a POST request to the API gateway with invalid "rootElementOnly" XML
+    Then the response status code should be 400
+
+  @TransXchange
+  Scenario: Generate OAuth token, send pdf XML request with no document name and check queue for failure response
+    Given I generate an OAuth token
+    When I send a POST request to the API gateway with invalid "missingDocumentName" XML
     Then the response status code should be 400
 
   @TransXchange
