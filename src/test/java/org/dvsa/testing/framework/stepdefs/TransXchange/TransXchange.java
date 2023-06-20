@@ -56,12 +56,12 @@ public class TransXchange extends BasePage {
     }
 
     @Then("I get the filename out of the success message in the output queue")
-    public void iGetTheFilenameOutOfTheSuccessMessageInTheOutputQueue() throws IOException {
+    public void iGetTheFilenameOutOfTheSuccessMessageInTheOutputQueue() {
         world.TransXchangeJourney.getFilenameFromSuccessfulPdfGenerationMessage();
     }
 
     @And("I verify the file is in the bucket")
-    public void iVerifyTheFileIsInTheBucket() throws IOException {
+    public void iVerifyTheFileIsInTheBucket() {
         world.TransXchangeJourney.verifyFileExistsInOutputBucket();
     }
 

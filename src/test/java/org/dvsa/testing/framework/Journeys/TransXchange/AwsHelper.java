@@ -10,6 +10,8 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
@@ -20,6 +22,8 @@ import java.util.List;
 public class AwsHelper extends BasePage {
 
     private final World world;
+
+    private static final Logger LOGGER = LogManager.getLogger(AwsHelper.class);
 
     public AwsHelper(World world) {
         this.world = world;
@@ -67,18 +71,24 @@ public class AwsHelper extends BasePage {
      * @param queueUrl A url to an SQS queue
      * @return A list of {@link com.amazonaws.services.sqs.model.Message} objects
      */
-    public List<Message> getMessagesFromSqs(String queueUrl) {
-        return getMessagesFromSqs(queueUrl, true);
+    public List<Message> getMessageFromSqs(String queueUrl) {
+        return getMessageFromSqs(queueUrl, true, 2);
     }
 
     /**
      * Gets messages from an SQS queue.
+     * An attempt to get a message will have the client wait 20 seconds for a message.  Meaning 2 attempts will wait for
+     * 40 seconds, and so on.
      *
      * @param queueUrl A url to an SQS queue
      * @param consumeMessages A boolean to receipt the message after reading it, or leave it for something else to consume
-     * @return A list of {@link com.amazonaws.services.sqs.model.Message} objects
+     * @param numberOfAttempts The number of attempts that will be made to receive a message
+     * @return A list of {@link com.amazonaws.services.sqs.model.Message} objects or an empty list, if no messages found
      */
-    public List<Message> getMessagesFromSqs(String queueUrl, Boolean consumeMessages){
+    public List<Message> getMessageFromSqs(String queueUrl, Boolean consumeMessages, int numberOfAttempts){
+        if (numberOfAttempts == 0) {
+            throw new IllegalArgumentException("Number of attempts cannot be zero");
+        }
         AmazonSQS sqs = AmazonSQSClientBuilder.standard()
                 .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .withRegion(Regions.EU_WEST_1)
@@ -88,20 +98,25 @@ public class AwsHelper extends BasePage {
                 .withWaitTimeSeconds(20)
                 .withMaxNumberOfMessages(1);
 
-        List<Message> sqsMessages = sqs.receiveMessage(receiveMessageRequest).getMessages();
 
-        // Some tests, especially the pdf generation ones take over 20 second to generate a message on the queue,
-        // we'll essentially retry for another 20 seconds to give it chance to appear before failing.
-        if (sqsMessages.size() == 0){
-            System.out.println("No messages in queue, polling again for another 20 seconds");
+        List<Message> sqsMessages = null;
+        for (int i = 1; i <= numberOfAttempts; i++) {
+            LOGGER.info("Checking for messages");
             sqsMessages = sqs.receiveMessage(receiveMessageRequest).getMessages();
-        }
 
-        if (consumeMessages) {
-            System.out.println("Receipting message to remove from queue");
-            sqs.deleteMessage(queueUrl, sqsMessages.get(0).getReceiptHandle());
-            System.out.println("Successfully receipted message");
+            if (sqsMessages.size() == 0){
+                LOGGER.info("No messages in queue, polling again for another 20 seconds");
+            } else {
+                LOGGER.info("Found a message");
+                if (consumeMessages) {
+                    LOGGER.info("Receipting message to remove from queue");
+                    sqs.deleteMessage(queueUrl, sqsMessages.get(0).getReceiptHandle());
+                    LOGGER.info("Successfully receipted message");
+                }
+                return sqsMessages;
+            }
         }
+        LOGGER.info("No messages found, empty list");
         return sqsMessages;
     }
 }

@@ -9,6 +9,8 @@ import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.oltu.oauth2.client.OAuthClient;
 import org.apache.oltu.oauth2.client.URLConnectionClient;
 import org.apache.oltu.oauth2.client.request.OAuthClientRequest;
@@ -34,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TransJourney extends BasePage {
 
+    private static final Logger LOGGER = LogManager.getLogger(TransJourney.class);
     private final String BASE_PATH = "./src/test/resources/org/dvsa/testing/framework/TransXchange/";
 
     // Valid and Invalid PDF request
@@ -214,7 +217,7 @@ public class TransJourney extends BasePage {
             throw new IllegalArgumentException("[" + problem + "] problem is not valid");
         }
         String queueUrl = world.configuration.config.getString("fileProcessedOutputQueueUrl");
-        List<Message> sqsMessages = world.awsHelper.getMessagesFromSqs(queueUrl);
+        List<Message> sqsMessages = world.awsHelper.getMessageFromSqs(queueUrl);
         String messageBody = sqsMessages.get(0).getBody();
 
         assertTrue(messageBody.contains(expectedElement));
@@ -222,7 +225,7 @@ public class TransJourney extends BasePage {
 
     public void getFilenameFromSuccessfulPdfGenerationMessage() {
         String queueUrl = world.configuration.config.getString("fileProcessedOutputQueueUrl");
-        List<Message> sqsMessages = world.awsHelper.getMessagesFromSqs(queueUrl);
+        List<Message> sqsMessages = world.awsHelper.getMessageFromSqs(queueUrl);
         String messageBody = sqsMessages.get(0).getBody();
         Document doc = Jsoup.parse(messageBody, "", Parser.xmlParser());
         pdfFilename = doc.getElementsByTag("OutputFile").get(0).text();
@@ -238,7 +241,7 @@ public class TransJourney extends BasePage {
         // generate a random integer from 0 to 899, then add 100
         int x = random.nextInt(900) + 100;
         String id = "abc" + x;
-        System.out.println("Id for this request is [" + id + "]");
+        LOGGER.info("Id for this request is [" + id + "]");
         request.setHeader("X-Correlation-Id", id);
         request.setHeader("Content-Type", "application/xml");
         request.setHeader("Cache-Control", "no-cache");
@@ -256,6 +259,6 @@ public class TransJourney extends BasePage {
         }
         String bucketName = world.configuration.config.getString("pdfOutputBucket");
         world.awsHelper.deleteObjectFromBucket(bucketName, pdfFilename);
-        System.out.println("Successfully deleted [" + pdfFilename + "]");
+        LOGGER.info("Successfully deleted [" + pdfFilename + "]");
     }
 }
