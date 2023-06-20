@@ -65,9 +65,9 @@ public class TransXchange extends BasePage {
         world.TransXchangeJourney.verifyFileExistsInOutputBucket();
     }
 
-    @When("I send a POST request to the API gateway with invalid XML")
-    public void iSendAPOSTRequestToTheApiGatewayWithTheInvalidXml() throws Exception {
-        this.responseCode = world.TransXchangeJourney.sendInvalidXmlRequest();
+    @When("I send a POST request to the API gateway with invalid {string} XML")
+    public void iSendAPOSTRequestToTheApiGatewayWithTheInvalidXml(String problem) throws Exception {
+        this.responseCode = world.TransXchangeJourney.sendInvalidXmlRequest(problem);
     }
 
     @Given("I do not generate an OAuth token")

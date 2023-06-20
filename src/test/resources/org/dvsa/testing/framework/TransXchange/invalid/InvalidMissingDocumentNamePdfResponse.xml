@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PublisherResponse>
+    <BadRequest>No document name found in the request XML</BadRequest>
+</PublisherResponse>

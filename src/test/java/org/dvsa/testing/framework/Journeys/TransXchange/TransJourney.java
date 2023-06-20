@@ -54,7 +54,8 @@ public class TransJourney extends BasePage {
     // Valid fileNotFound request
     private final String VALID_FILE_NOT_FOUND_PDF_REQUEST_XML = BASE_PATH + "valid/ValidFileNotFoundPdfRequest.xml";
     // Invalid missing DocumentName
-    private final String INVALID_DOCUMENT_NAME_PDF_REQUEST_XML = BASE_PATH + "invalid/InvalidMissingDocumentNamePdfRequest.xml";
+    private final String INVALID_MISSING_DOCUMENT_NAME_PDF_REQUEST_XML = BASE_PATH + "invalid/InvalidMissingDocumentNamePdfRequest.xml";
+    private final String INVALID_MISSING_DOCUMENT_NAME_PDF_RESPONSE_XML = BASE_PATH + "invalid/InvalidMissingDocumentNamePdfResponse.xml";
     // Invalid missingOperator
     private final String INVALID_MISSING_OPERATORS_PDF_REQUEST_XML = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperatorsPdfRequest.xml";
     private final String INVALID_MISSING_OPERATORS_OPERATOR_XML_PATH = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperators.xml";
@@ -105,9 +106,6 @@ public class TransJourney extends BasePage {
             case "missingOperators":
                 requestXmlPath = INVALID_MISSING_OPERATORS_PDF_REQUEST_XML;
                 break;
-            case "missingDocumentName":
-                requestXmlPath = INVALID_DOCUMENT_NAME_PDF_REQUEST_XML;
-                break;
             default:
                 throw new IllegalArgumentException("[" + type + "] is an invalid pdf request type");
         }
@@ -133,8 +131,21 @@ public class TransJourney extends BasePage {
         });
     }
 
-    public int sendInvalidXmlRequest() throws Exception {
-        String xml = getFileStringUsingFilePath(INVALID_XML_PATH);
+    public int sendInvalidXmlRequest(String problem) throws Exception {
+        String xml;
+        String xmlResponse;
+        switch (problem) {
+            case "missingDocumentName":
+                xml = getFileStringUsingFilePath(INVALID_MISSING_DOCUMENT_NAME_PDF_REQUEST_XML);
+                xmlResponse = getFileStringUsingFilePath(INVALID_MISSING_DOCUMENT_NAME_PDF_RESPONSE_XML);
+                break;
+            case "rootElementOnly":
+                xml = getFileStringUsingFilePath(INVALID_XML_PATH);
+                xmlResponse = getFileStringUsingFilePath(INVALID_XML_RESPONSE_PATH);
+                break;
+            default:
+                throw new IllegalArgumentException("[" + problem + "] type is not valid");
+        }
         HttpPost request = createRequest();
         String token = getAuthToken();
         request.setHeader("Authorization", "Bearer " + token);
@@ -146,7 +157,6 @@ public class TransJourney extends BasePage {
         });
 
         // Test the response is what we expect
-        String xmlResponse = getFileStringUsingFilePath(INVALID_XML_RESPONSE_PATH);
         assertEquals(xmlResponse, responseBodyText);
         return response.getCode();
     }
@@ -215,7 +225,7 @@ public class TransJourney extends BasePage {
         if (problem.equals("missingOperators")){
             expectedElement = "<BadRequest>";
         }
-        else if (problem.equals("fileNotFound") || problem.equals("missingDocumentName")){
+        else if (problem.equals("fileNotFound")){
             expectedElement = "<Failed>";
         }
         else {
