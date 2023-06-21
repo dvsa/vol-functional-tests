@@ -51,7 +51,7 @@ Feature: Test happy and unhappy paths in TransXchange functionality.
     Examples:
       | type       |
       | timetable  |
-#      | dvsaRecord |
+      | dvsaRecord |
 
   # Performance test
   @TransXchange
@@ -68,4 +68,5 @@ Feature: Test happy and unhappy paths in TransXchange functionality.
     Examples:
       | type       |
       | timetable  |
+      | dvsaRecord |
 
