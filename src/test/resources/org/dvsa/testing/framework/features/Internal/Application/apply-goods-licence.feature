@@ -1,5 +1,6 @@
-@INT
 @APPLY-GOODS-LICENCE
+@FullRegression
+@printAndSign
 @int_regression
 @CPMS_tests
 @FullRegression

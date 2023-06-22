@@ -1,4 +1,4 @@
-@INT-SMOKE
+@printAndSign
 @sub-app
 Feature: Complete an application manually
 

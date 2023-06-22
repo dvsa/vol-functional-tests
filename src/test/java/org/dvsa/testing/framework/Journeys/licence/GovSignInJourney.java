@@ -250,5 +250,4 @@ public class GovSignInJourney extends BasePage {
             Browser.navigate().get(urlWithUnsecureProtocol);
         }
     }
-
 }

@@ -1,4 +1,4 @@
-@INT
+@printAndSign
 @CASE-DETAILS
 @int_regression
 @FullRegression

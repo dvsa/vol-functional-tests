@@ -2,6 +2,7 @@
 @int_regression
 @smoketest
 @FullRegression
+@printAndSign
 
 Feature: Transaction Fees Table
 

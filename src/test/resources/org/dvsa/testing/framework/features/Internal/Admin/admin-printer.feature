@@ -1,3 +1,4 @@
+@printAndSign
 @int_regression
 @printing
 @FullRegression
