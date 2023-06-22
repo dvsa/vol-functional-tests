@@ -60,6 +60,10 @@ public class TransJourney extends BasePage {
     private final String INVALID_MISSING_OPERATORS_PDF_REQUEST_XML = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperatorsPdfRequest.xml";
     private final String INVALID_MISSING_OPERATORS_OPERATOR_XML_PATH = BASE_PATH + "invalid/InvalidOperatorXmlMissingOperators.xml";
     private final String INVALID_MISSING_OPERATORS_OPERATOR_XML_KEY = "InvalidOperatorXmlMissingOperators.xml";
+    // Valid MultipleRequestsOneFile
+    private final String ONE_FILE_MULTIPLE_REQUESTS_DVSA_RECORD_PDF_REQUEST_XML = BASE_PATH + "multipleRequestsOneInputFile/DvsaRecordPdfRequest.xml";
+    private final String ONE_FILE_MULTIPLE_REQUESTS_TIMETABLE_PDF_REQUEST_XML = BASE_PATH + "multipleRequestsOneInputFile/TimetablePdfRequest.xml";
+    private final String ONE_FILE_MULTIPLE_REQUESTS_OPERATOR_XML_KEY = "OneFileMultipleRequestsOperatorXml.xml";
 
     private final World world;
     private String responseBodyText;
@@ -99,6 +103,12 @@ public class TransJourney extends BasePage {
                 break;
             case "dvsaRecord":
                 requestXmlPath = VALID_DVSA_RECORD_PDF_REQUEST_XML;
+                break;
+            case "oneFileTimetable":
+                requestXmlPath = ONE_FILE_MULTIPLE_REQUESTS_TIMETABLE_PDF_REQUEST_XML;
+                break;
+            case "oneFileDvsaRecord":
+                requestXmlPath = ONE_FILE_MULTIPLE_REQUESTS_DVSA_RECORD_PDF_REQUEST_XML;
                 break;
             case "fileNotFound":
                 requestXmlPath = VALID_FILE_NOT_FOUND_PDF_REQUEST_XML;
@@ -187,6 +197,9 @@ public class TransJourney extends BasePage {
             case "dvsaRecord":
                 world.awsHelper.addFileToBucket(bucketName, VALID_DVSA_RECORD_OPERATOR_XML_KEY, VALID_DVSA_RECORD_OPERATOR_XML_PATH);
                 break;
+            case "oneFileTimetable":
+                world.awsHelper.addFileToBucket(bucketName, ONE_FILE_MULTIPLE_REQUESTS_OPERATOR_XML_KEY, VALID_TIMETABLE_OPERATOR_XML_PATH);
+                break;
             default:
                 throw new IllegalArgumentException("[" + type + "] type is not valid");
         }
@@ -214,6 +227,7 @@ public class TransJourney extends BasePage {
         String bucketName = world.configuration.config.getString("pdfOutputBucket");
         try {
             world.awsHelper.getObjectFromBucket(bucketName, pdfFilename);
+            LOGGER.info("File [" + pdfFilename + "] exists in the bucket");
         } catch (AmazonS3Exception e){
             fail("File [" + pdfFilename + "] doesn't exist in the bucket");
         }

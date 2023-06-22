@@ -49,7 +49,7 @@ public class TransXchange extends BasePage {
     }
 
     @Then("I read a message off the queue and verify it looks right for the {string}")
-    public void iReadAMessageFromOffTheQueue(String problem) throws IOException {
+    public void iReadAMessageFromOffTheQueue(String problem){
         world.TransXchangeJourney.getMessagesFromSqs(problem);
     }
 
