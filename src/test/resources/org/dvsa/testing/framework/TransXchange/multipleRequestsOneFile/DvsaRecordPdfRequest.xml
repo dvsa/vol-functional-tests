@@ -3,7 +3,7 @@
     <PublishDocumentRequest>
         <InputOperands>
             <DocumentPath></DocumentPath>
-            <DocumentName>OneFileMultipleRequestsOperatorXml.xml</DocumentName>
+            <DocumentName>MultipleRequestsOneFileOperatorXml.xml</DocumentName>
         </InputOperands>
         <OutputOperands>
             <OutputPath></OutputPath>
