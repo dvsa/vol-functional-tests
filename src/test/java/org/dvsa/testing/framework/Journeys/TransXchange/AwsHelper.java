@@ -64,6 +64,14 @@ public class AwsHelper extends BasePage {
         client.putObject(bucketName, key, file);
     }
 
+    /**
+     * Copies a file from a source bucket into another bucket
+     *
+     * @param sourceBucket Name of source bucket
+     * @param sourceKey Name of key in the source bucket
+     * @param destinationBucket Name of destination bucket
+     * @param destinationKey Name of key in destination bucket
+     */
     public void copyFileFromOneBucketToAnother(String sourceBucket, String sourceKey, String destinationBucket, String destinationKey){
         AmazonS3 client =  S3.createS3Client();
         client.copyObject(sourceBucket, sourceKey, destinationBucket, destinationKey);

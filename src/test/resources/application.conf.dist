@@ -39,6 +39,7 @@ clientId =
 clientSecret =
 scope =
 apiUrl =
+exampleFileBucket=
 operatorXmlInputBucket =
 pdfOutputBucket =
 fileProcessedOutputQueueUrl =
