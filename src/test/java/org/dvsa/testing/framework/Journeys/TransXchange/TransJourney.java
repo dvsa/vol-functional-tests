@@ -51,6 +51,10 @@ public class TransJourney extends BasePage {
     private final String VALID_DVSA_RECORD_PDF_REQUEST_XML = BASE_PATH + "valid/ValidDvsaRecordPdfRequest.xml";
     private final String VALID_DVSA_RECORD_OPERATOR_XML_PATH = BASE_PATH + "valid/ValidTimetableOperatorXml.xml";
     private final String VALID_DVSA_RECORD_OPERATOR_XML_KEY = "ValidDvsaRecordOperatorXml.xml";
+    // Valid Route Map request
+    private final String VALID_ROUTE_MAP_PDF_REQUEST_XML = BASE_PATH + "valid/ValidRouteMapAutoScalePdfRequest.xml";
+    private final String VALID_ROUTE_MAP_OPERATOR_XML_PATH = BASE_PATH + "valid/ValidTimetableOperatorXml.xml";
+    private final String VALID_ROUTE_MAP_OPERATOR_XML_KEY = "ValidRouteMapOperatorXml.xml";
     // Valid fileNotFound request
     private final String VALID_FILE_NOT_FOUND_PDF_REQUEST_XML = BASE_PATH + "valid/ValidFileNotFoundPdfRequest.xml";
     // Invalid missing DocumentName
@@ -99,6 +103,9 @@ public class TransJourney extends BasePage {
                 break;
             case "dvsaRecord":
                 requestXmlPath = VALID_DVSA_RECORD_PDF_REQUEST_XML;
+                break;
+            case "routeMap":
+                requestXmlPath = VALID_ROUTE_MAP_PDF_REQUEST_XML;
                 break;
             case "fileNotFound":
                 requestXmlPath = VALID_FILE_NOT_FOUND_PDF_REQUEST_XML;
@@ -186,6 +193,9 @@ public class TransJourney extends BasePage {
                 break;
             case "dvsaRecord":
                 world.awsHelper.addFileToBucket(bucketName, VALID_DVSA_RECORD_OPERATOR_XML_KEY, VALID_DVSA_RECORD_OPERATOR_XML_PATH);
+                break;
+            case "routeMap":
+                world.awsHelper.addFileToBucket(bucketName, VALID_ROUTE_MAP_OPERATOR_XML_KEY, VALID_ROUTE_MAP_OPERATOR_XML_PATH);
                 break;
             default:
                 throw new IllegalArgumentException("[" + type + "] type is not valid");
