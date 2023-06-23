@@ -54,7 +54,7 @@ public class TransJourney extends BasePage {
     // Valid large file test
     private final String VALID_LARGE_FILE_SIZE_TIMETABLE_PDF_REQUEST_XML = BASE_PATH + "valid/ValidLargeFileSizeTimetablePdfRequest.xml";
     private final String VALID_LARGE_FILE_SIZE_DVSA_RECORD_PDF_REQUEST_XML = BASE_PATH + "valid/ValidLargeFileSizeDvsaRecordPdfRequest.xml";
-    private final String VALID_LARGE_FILE_SIZE_OPERATOR_XML_KEY = "ValidLargeFileSizeOperatorXml.xml";
+    private final String VALID_LARGE_FILE_SIZE_OPERATOR_XML_DESTINATION_KEY = "ValidLargeFileSizeOperatorXml.xml";
     private final String VALID_LARGE_FILE_SIZE_SOURCE_KEY = "example-test-files/PD0001111-2.4-10.9Mb-variation-normalstopping-fullnotice/1_NXB_PD_1_20230416.xml";
     // Valid fileNotFound request
     private final String VALID_FILE_NOT_FOUND_PDF_REQUEST_XML = BASE_PATH + "valid/ValidFileNotFoundPdfRequest.xml";
@@ -200,7 +200,7 @@ public class TransJourney extends BasePage {
                 world.awsHelper.addFileToBucket(bucketName, VALID_DVSA_RECORD_OPERATOR_XML_KEY, VALID_DVSA_RECORD_OPERATOR_XML_PATH);
                 break;
             case "largeFileSizeOperatorXml":
-                world.awsHelper.copyFileFromOneBucketToAnother(sourceBucket, VALID_LARGE_FILE_SIZE_SOURCE_KEY, bucketName, VALID_LARGE_FILE_SIZE_OPERATOR_XML_KEY);
+                world.awsHelper.copyFileFromOneBucketToAnother(sourceBucket, VALID_LARGE_FILE_SIZE_SOURCE_KEY, bucketName, VALID_LARGE_FILE_SIZE_OPERATOR_XML_DESTINATION_KEY);
                 break;
             default:
                 throw new IllegalArgumentException("[" + type + "] type is not valid");
