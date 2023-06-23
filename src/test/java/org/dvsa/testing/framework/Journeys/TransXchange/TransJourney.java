@@ -51,6 +51,10 @@ public class TransJourney extends BasePage {
     private final String VALID_DVSA_RECORD_PDF_REQUEST_XML = BASE_PATH + "valid/ValidDvsaRecordPdfRequest.xml";
     private final String VALID_DVSA_RECORD_OPERATOR_XML_PATH = BASE_PATH + "valid/ValidTimetableOperatorXml.xml";
     private final String VALID_DVSA_RECORD_OPERATOR_XML_KEY = "ValidDvsaRecordOperatorXml.xml";
+    // Valid large file test
+    private final String VALID_LARGE_FILE_SIZE_TIMETABLE_PDF_REQUEST_XML = BASE_PATH + "valid/ValidLargeFileSizeTimetablePdfRequest.xml";
+    private final String VALID_LARGE_FILE_SIZE_DVSA_RECORD_PDF_REQUEST_XML = BASE_PATH + "valid/ValidLargeFileSizeDvsaRecordPdfRequest.xml";
+    private final String VALID_LARGE_FILE_SIZE_OPERATOR_XML_KEY = "ValidLargeFileSizeOperatorXml.xml";
     // Valid fileNotFound request
     private final String VALID_FILE_NOT_FOUND_PDF_REQUEST_XML = BASE_PATH + "valid/ValidFileNotFoundPdfRequest.xml";
     // Invalid missing DocumentName
@@ -99,6 +103,12 @@ public class TransJourney extends BasePage {
                 break;
             case "dvsaRecord":
                 requestXmlPath = VALID_DVSA_RECORD_PDF_REQUEST_XML;
+                break;
+            case "largeFileSizeTimetable":
+                requestXmlPath = VALID_LARGE_FILE_SIZE_TIMETABLE_PDF_REQUEST_XML;
+                break;
+            case "largeFileSizeDvsaRecord":
+                requestXmlPath = VALID_LARGE_FILE_SIZE_DVSA_RECORD_PDF_REQUEST_XML;
                 break;
             case "fileNotFound":
                 requestXmlPath = VALID_FILE_NOT_FOUND_PDF_REQUEST_XML;
@@ -180,12 +190,17 @@ public class TransJourney extends BasePage {
 
     public void inputValidOperatorXml(String type) {
         String bucketName = world.configuration.config.getString("operatorXmlInputBucket");
+        String sourceBucket = "000081644369-artefacts";
+        String sourceKey = "example-test-files/PD0001111-2.4-10.9Mb-variation-normalstopping-fullnotice/1_NXB_PD_1_20230416.xml";
         switch (type) {
             case "timetable":
                 world.awsHelper.addFileToBucket(bucketName, VALID_TIMETABLE_OPERATOR_XML_KEY, VALID_TIMETABLE_OPERATOR_XML_PATH);
                 break;
             case "dvsaRecord":
                 world.awsHelper.addFileToBucket(bucketName, VALID_DVSA_RECORD_OPERATOR_XML_KEY, VALID_DVSA_RECORD_OPERATOR_XML_PATH);
+                break;
+            case "largeFileSizeOperatorXml":
+                world.awsHelper.copyFileFromOneBucketToAnother(sourceBucket, sourceKey, bucketName, VALID_LARGE_FILE_SIZE_OPERATOR_XML_KEY);
                 break;
             default:
                 throw new IllegalArgumentException("[" + type + "] type is not valid");

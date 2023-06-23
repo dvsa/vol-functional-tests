@@ -64,6 +64,12 @@ public class AwsHelper extends BasePage {
         client.putObject(bucketName, key, file);
     }
 
+    public void copyFileFromOneBucketToAnother(String sourceBucket, String sourceKey, String destinationBucket, String destinationKey){
+        AmazonS3 client =  S3.createS3Client();
+        client.copyObject(sourceBucket, sourceKey, destinationBucket, destinationKey);
+
+    }
+
     /**
      * Gets messages from an SQS queue.  This version of the function will receipt the message after getting the message,
      * functionally consuming it
@@ -72,7 +78,7 @@ public class AwsHelper extends BasePage {
      * @return A list of {@link com.amazonaws.services.sqs.model.Message} objects
      */
     public List<Message> getMessageFromSqs(String queueUrl) {
-        return getMessageFromSqs(queueUrl, true, 4);
+        return getMessageFromSqs(queueUrl, true, 6);
     }
 
     /**
