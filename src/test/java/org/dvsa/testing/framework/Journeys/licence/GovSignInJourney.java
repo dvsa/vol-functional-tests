@@ -118,6 +118,9 @@ public class GovSignInJourney extends BasePage {
         enterPassportDetails();
         cycletThroughSignInJourney();
         answerPersonalQuestions();
+        if(isTitlePresent("Continue to the service you want to use",5)){
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
     }
 
     public void photoIDQuestion() {
@@ -131,10 +134,11 @@ public class GovSignInJourney extends BasePage {
         String firstName = "Kenneth";
         String surName = "Decerqueira";
         waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, passportNumber);
-        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, firstName);
-        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, surName);
+        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, surName);
+        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, firstName);
         enterDOB();
         enterExpiryDate();
+
     }
 
     public void enterDOB() {
