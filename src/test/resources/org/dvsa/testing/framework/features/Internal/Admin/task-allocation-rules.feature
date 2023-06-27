@@ -1,7 +1,7 @@
 @int_regression
 @task_allocation
 @FullRegression
-
+@printAndSign
 Feature: User is able to Add, edit and delete a Task allocation rule
 
   Background:

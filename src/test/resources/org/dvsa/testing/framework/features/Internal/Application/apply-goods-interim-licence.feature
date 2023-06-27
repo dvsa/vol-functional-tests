@@ -1,8 +1,8 @@
-@INT
 @GRANT-GOODS-INTERIM-APP
 @CPMS_tests
 @int_regression
 @FullRegression
+@printAndSign
 
 Feature: apply for interim goods licence
 

@@ -1,7 +1,7 @@
 @int_regression
 @public_holiday
 @FullRegression
-
+@printAndSign
 Feature: Admin wishes to add and delete a public holiday
 
   Background:

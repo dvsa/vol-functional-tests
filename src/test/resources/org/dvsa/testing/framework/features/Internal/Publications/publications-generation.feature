@@ -1,4 +1,4 @@
-@INT @int_regression @publications @FullRegression
+@int_regression @publications @FullRegression @printAndSign
 Feature: Generate publications in internal for all licence types
 
   Scenario: Generate and publish Publications for different licence types

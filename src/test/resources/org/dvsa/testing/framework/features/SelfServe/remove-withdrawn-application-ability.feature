@@ -1,6 +1,7 @@
 @OLCS-24464
 @ss_regression
 @FullRegression
+@printAndSign
 
 Feature: SS user ability to withdraw application removed when open cases are present
 
