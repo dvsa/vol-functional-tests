@@ -1,26 +1,27 @@
+@TransXchange
 Feature: Test happy and unhappy paths in TransXchange functionality.
 
   # PDF request validator tests
-  @TransXchange
+  @Invalid_rootelement
   Scenario: Generate OAuth/Authorisation token, send a Invalid XML request and check response as Bad request
     Given I generate an OAuth token
     When I send a POST request to the API gateway with invalid "rootElementOnly" XML
     Then the response status code should be 400
 
-  @TransXchange
+  @Invalid_missingdocname
   Scenario: Generate OAuth token, send pdf XML request with no document name and check queue for failure response
     Given I generate an OAuth token
     When I send a POST request to the API gateway with invalid "missingDocumentName" XML
     Then the response status code should be 400
 
-  @TransXchange
+  @TxC_unauthorised
   Scenario: Send an Unauthorised request and check response as Unauthorised.
     Given I do not generate an OAuth token
     When I send an unauthorised POST request to the API gateway with any XML
     Then the response status code should be 401
 
   # Bus operator xml validator tests
-  @TransXchange
+  @Valid_response
   Scenario Outline: Generate OAuth token, upload invalid operator XML, send valid pdf XML request and check queue for failure response
     Given I generate an OAuth token
     When I upload invalid "<problem>" operator xml into the bucket
@@ -31,7 +32,7 @@ Feature: Test happy and unhappy paths in TransXchange functionality.
       | problem          |
       | missingOperators |
 
-  @TransXchange
+  @Valid_filenotfound
   Scenario: Generate OAuth token, send valid pdf XML request but not don't upload bus operator xml and check queue for failure response
     Given I generate an OAuth token
     When I send a POST request to the API gateway with valid "fileNotFound" XML
@@ -39,7 +40,7 @@ Feature: Test happy and unhappy paths in TransXchange functionality.
     And I read a message off the queue and verify it looks right for the "fileNotFound"
 
   # PDF generator lambda tests
-  @TransXchange
+  @PDF_generator
   Scenario Outline: Generate OAuth token, upload valid operator XML, send valid pdf XML request
     Given I generate an OAuth token
     When I upload valid "<type>" operator xml into the bucket
@@ -54,7 +55,7 @@ Feature: Test happy and unhappy paths in TransXchange functionality.
       | dvsaRecord |
 
   # Performance test
-  @TransXchange
+  @TxC_performance
   Scenario Outline: Generate OAuth token, upload valid operator XML, send valid pdf XML request, then time it
     Given I start a timer
     When I generate an OAuth token
