@@ -119,8 +119,8 @@ public class SubmitApplicationJourney extends BasePage {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
         //vehicleDetails
-        boolean add = licenceType.equals("Goods");
-        world.vehicleDetailsJourney.addAVehicle(add);
+        boolean vehicleType = licenceType.equals("Goods");
+        world.vehicleDetailsJourney.addAVehicle(vehicleType);
         if (licenceType.equals("Public")) {
             world.psvJourney.completeVehicleDeclarationsPage();
             waitAndClick("overview-item__safety", SelectorType.ID);

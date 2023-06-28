@@ -82,7 +82,7 @@ public class InternalSearch extends BasePage {
 
     @When("i search for a company and click Create operator")
     public void iSearchForACompanyAndClickCreateOperator() {
-        world.internalSearchJourney.searchForLicenceByName();
+        world.internalSearchJourney.searchForLicenceByName("Company Name");
         waitForTextToBePresent("Search results");
         clickByLinkText("Create operator");
     }
