@@ -129,7 +129,7 @@ public class GenericUtils extends BasePage {
                 .replaceAll("(nfirmationId=[^&]+)=", "$1");
         org.jsoup.nodes.Document doc = Jsoup.parse(sanatisedHTML);
         Elements links = doc.select("a[href]");
-        Thread.sleep(500);
+        Thread.sleep(1500);
         for (Element link : links) {
             if (link.attr("abs:href").contains("ssweb")) {
                 String resetPasswordLink = link.attr("abs:href");
