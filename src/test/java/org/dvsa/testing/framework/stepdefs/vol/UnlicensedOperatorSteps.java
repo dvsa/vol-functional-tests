@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import activesupport.driver.Browser;
 import activesupport.number.Int;
 import activesupport.string.Str;
 import io.cucumber.java.en.And;
@@ -10,11 +9,7 @@ import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-import org.openqa.selenium.WebElement;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -35,8 +30,7 @@ public class UnlicensedOperatorSteps extends BasePage {
     private void createdUnlicensedOperator() {
         operatorName = Str.randomWord(7);
         DataGenerator dataGenerator = new DataGenerator(world);
-        String internalSearchURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "search/licence/search/?search=").toString();
-        Browser.navigate().get(internalSearchURL);
+        waitAndClick("//*[@class='search__button']", SelectorType.XPATH);
         waitAndClick("//*[contains(text(),'Create unlicensed operator')]", SelectorType.XPATH);
         waitAndEnterText("operator-details[name]", SelectorType.NAME, operatorName);
         waitAndClick("//*[contains(text(),'Goods')]", SelectorType.XPATH);
@@ -68,6 +62,6 @@ public class UnlicensedOperatorSteps extends BasePage {
         waitAndEnterText("vrm", SelectorType.ID, String.format("P%sCUX",num));
         waitAndEnterText("plated_weight", SelectorType.ID, "5000");
         world.UIJourney.clickSubmit();
-        assertTrue(isTextPresent("Your vehicle has been created successfully"));
+        assertTrue(isTextPresent("Created record"));
     }
 }
