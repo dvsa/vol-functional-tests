@@ -59,13 +59,12 @@ public class InternalSearchJourney extends BasePage {
         long kickOut = System.currentTimeMillis() + 120000;
         do {
             SearchNavBar.search(searchType, searchString);
-           isLinkPresent = isLinkPresent(linkText,2);
+           isLinkPresent = isTextPresent(searchString);
         } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
         waitAndClick(linkText, SelectorType.PARTIALLINKTEXT);
     }
 
-    public void searchForLicenceByName() {
-        String companyName = "Company Name";
+    public void searchForLicenceByName(String companyName) {
         SearchNavBar.search(SearchType.Licence, companyName);
     }
 }

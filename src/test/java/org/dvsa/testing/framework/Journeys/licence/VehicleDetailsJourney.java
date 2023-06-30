@@ -13,13 +13,12 @@ public class VehicleDetailsJourney extends BasePage {
         this.world = world;
     }
 
-    public void addAVehicle(boolean choice) {
+    public void addAVehicle(boolean vehicleType) {
         waitForTitleToBePresent("Vehicle details");
-        if (choice) {
+        if (vehicleType) {
             clickById("add");
             waitForTitleToBePresent("Add vehicle");
             String num = String.valueOf(Int.random(10,99));
-            String letter = String.valueOf(Str.randomLetter());
             waitAndEnterText("vrm", SelectorType.ID, String.format("P%sCUX",num));
             waitAndEnterText("plated_weight", SelectorType.ID, "5000");
             world.UIJourney.clickSubmit();
