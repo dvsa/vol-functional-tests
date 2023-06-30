@@ -1,4 +1,4 @@
-@int_regression @unlicensed_operator
+@int_regression @unlicensed_operator @smoketest
 Feature: Unlicensed operator
 
   Background:
