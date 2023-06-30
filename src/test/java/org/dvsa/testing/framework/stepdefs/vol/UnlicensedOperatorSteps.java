@@ -9,7 +9,10 @@ import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
+import org.openqa.selenium.WebElement;
 
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,6 +20,8 @@ public class UnlicensedOperatorSteps extends BasePage {
 
     World world;
     private String operatorName;
+    private String vrm;
+    private String platedWeight;
 
     public UnlicensedOperatorSteps(World world) {
         this.world = world;
@@ -55,13 +60,24 @@ public class UnlicensedOperatorSteps extends BasePage {
 
     @Then("i should be able to add vehicles")
     public void iShouldBeAbleToAddVehicles() {
+        vrm = String.format("P%sCUX",Int.random(10,99));
+        platedWeight = "5000";
+
         waitAndClick("Vehicles", SelectorType.PARTIALLINKTEXT);
         clickById("add");
         waitForTextToBePresent("Add vehicle");
-        String num = String.valueOf(Int.random(10,99));
-        waitAndEnterText("vrm", SelectorType.ID, String.format("P%sCUX",num));
-        waitAndEnterText("plated_weight", SelectorType.ID, "5000");
+        waitAndEnterText("vrm", SelectorType.ID, vrm);
+        waitAndEnterText("plated_weight", SelectorType.ID, platedWeight);
         world.UIJourney.clickSubmit();
         assertTrue(isTextPresent("Created record"));
+    }
+
+    @And("the details should be displayed in the vehicles table")
+    public void theDetailsShouldBeDisplayedInTheVehiclesTable() {
+        List<WebElement> vehicles = findElements("//*[@class='govuk-table__body']", SelectorType.XPATH);
+        for (WebElement vehicle : vehicles){
+            assertTrue(vehicle.getText().contains(platedWeight));
+            assertTrue(vehicle.getText().contains(vrm));
+        }
     }
 }
