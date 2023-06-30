@@ -15,3 +15,4 @@ Feature: Unlicensed operator
   Scenario: Add a vehicle to unlicensed operator
     When i create an unlicensed operator
     Then i should be able to add vehicles
+    And the details should be displayed in the vehicles table
