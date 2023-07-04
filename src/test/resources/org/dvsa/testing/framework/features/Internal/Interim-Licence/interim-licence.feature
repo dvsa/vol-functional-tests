@@ -1,6 +1,5 @@
 @OLCS-13203
-@INT
-@INTERIM
+@printAndSign
 @int_regression
 @FullRegression
 

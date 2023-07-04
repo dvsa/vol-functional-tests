@@ -1,5 +1,5 @@
 @OLCS-17639
-@INT
+@printAndSign
 @int_regression
 @FullRegression
 

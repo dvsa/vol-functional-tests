@@ -2,7 +2,7 @@
 @cross-browser
 @int_regression
 @FullRegression
-
+@printAndSign
 Feature: Create a new admin user
 
   Scenario: Creating a internal admin user

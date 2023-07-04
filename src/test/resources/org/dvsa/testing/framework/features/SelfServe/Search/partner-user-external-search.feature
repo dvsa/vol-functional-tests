@@ -2,6 +2,7 @@
 @SS-PARTNER-USER-SEARCH
 @ss_regression
 @FullRegression
+@printAndSign
 Feature: Partner user external search by Address, Business name, Licence Number and Person's name
 
   Background:

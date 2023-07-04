@@ -71,8 +71,10 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("Start proving your identity with GOV.UK One Login", 2)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-
+        if (isTitlePresent("Are you on a computer or a tablet right now?", 2)) {
+            clickByXPath("//*[@id='select-device-choice']");
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
         if (isTitlePresent("You have already proved your identity", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
@@ -116,6 +118,9 @@ public class GovSignInJourney extends BasePage {
         enterPassportDetails();
         cycletThroughSignInJourney();
         answerPersonalQuestions();
+        if(isTitlePresent("Continue to the service you want to use",5)){
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
     }
 
     public void photoIDQuestion() {
@@ -129,10 +134,11 @@ public class GovSignInJourney extends BasePage {
         String firstName = "Kenneth";
         String surName = "Decerqueira";
         waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, passportNumber);
-        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, firstName);
-        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, surName);
+        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, surName);
+        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, firstName);
         enterDOB();
         enterExpiryDate();
+
     }
 
     public void enterDOB() {
@@ -248,5 +254,4 @@ public class GovSignInJourney extends BasePage {
             Browser.navigate().get(urlWithUnsecureProtocol);
         }
     }
-
 }

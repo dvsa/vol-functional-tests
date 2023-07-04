@@ -1,4 +1,4 @@
-@DVLA @VOL-147 @ss_regression @FullRegression
+@DVLA @VOL-147 @ss_regression @FullRegression @printAndSign
 Feature: Search and add a vehicle
 
   @smoketest @dvla-add-vehicle

@@ -1,5 +1,6 @@
 @ss_regression
 @FullRegression
+@printAndSign
 Feature: Vehicle management on an application
 
   Background: Generate a licence and navigate to vehicle page

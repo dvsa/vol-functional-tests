@@ -1,7 +1,7 @@
 @int_regression
 @system_messages
 @FullRegression
-
+@printAndSign
 Feature: Input system messages as an internal user and check they are correctly displayed
 
   Background:

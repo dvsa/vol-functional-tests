@@ -1,6 +1,7 @@
 @int_regression
 @add-user
 @FullRegression
+@printAndSign
 
 Feature: Create a new Internal User
 

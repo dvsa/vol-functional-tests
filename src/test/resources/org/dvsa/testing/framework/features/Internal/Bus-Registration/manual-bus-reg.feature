@@ -2,6 +2,7 @@
 @int_regression
 @CPMS_tests
 @FullRegression
+@printAndSign
 
 Feature: Complete Manual Bus Registration Steps
 
