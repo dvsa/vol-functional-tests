@@ -5,8 +5,6 @@
 Feature: Continuations journey through internal and self serve
 
   @int_regression @FullRegression @continuations_smoke
-    @continuation_gv_sn  @continuation_gv_si  @continuation_gv_r
-    @continuation_psv_sn  @continuation_psv_si  @continuation_psv_r
   Scenario Outline: Continue a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
