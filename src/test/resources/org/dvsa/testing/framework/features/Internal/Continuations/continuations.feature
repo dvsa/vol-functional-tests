@@ -21,7 +21,7 @@ Feature: Continuations journey through internal and self serve
       | public       | restricted             |
       | public       | special_restricted     |
 
-  @int_regression @FullRegression @continuations_smoke @continuations_internal
+  @int_regression @FullRegression @continuations_internal
   Scenario Outline: Caseworker continues a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
