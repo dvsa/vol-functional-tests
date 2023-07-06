@@ -54,7 +54,7 @@ public class TransJourney extends BasePage {
     // Valid Route Map request
     private final String VALID_ROUTE_MAP_PDF_REQUEST_XML = BASE_PATH + "valid/ValidRouteMapAutoScalePdfRequest.xml";
     private final String VALID_ROUTE_MAP_OPERATOR_XML_PATH = BASE_PATH + "valid/ValidTimetableOperatorXml.xml";
-    private final String VALID_ROUTE_MAP_OPERATOR_XML_KEY = "ValidRouteMapOperatorXml.xml";
+    private final String VALID_ROUTE_MAP_OPERATOR_XML_KEY = BASE_PATH + "valid/ValidRouteMapOperatorXml.xml";
     // Valid fileNotFound request
     private final String VALID_FILE_NOT_FOUND_PDF_REQUEST_XML = BASE_PATH + "valid/ValidFileNotFoundPdfRequest.xml";
     // Invalid missing DocumentName
