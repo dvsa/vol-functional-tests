@@ -21,7 +21,7 @@ Feature: Continuations journey through internal and self serve
       | public       | restricted             |
       | public       | special_restricted     |
 
-  @int_regression @FullRegression @continuations_smoke
+  @int_regression @FullRegression @continuations_internal
   Scenario Outline: Caseworker continues a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
@@ -29,8 +29,8 @@ Feature: Continuations journey through internal and self serve
     And a caseworkers continues my licence
     Then the continuation should be approved
     Examples:
-      | operatorType | licenceType            |
-      | goods        | standard_national      |
+      | operatorType | licenceType       |
+      | goods        | standard_national |
 
   Scenario Outline: The users of ss display when reviewing a continuation
     Given i have a valid "<operatorType>" "<licenceType>" licence
@@ -55,15 +55,15 @@ Feature: Continuations journey through internal and self serve
     And i generate a continuation
     And i have logged in to self serve
     Then the continuation conditions and undertaking page and snapshot should display the right text
-      Examples:
-        | operatorType | licenceType            |
-        | goods        | standard_national      |
-        | goods        | standard_international |
-        | goods        | restricted             |
-        | public       | standard_national      |
-        | public       | standard_international |
-        | public       | restricted             |
-        | public       | special_restricted     |
+    Examples:
+      | operatorType | licenceType            |
+      | goods        | standard_national      |
+      | goods        | standard_international |
+      | goods        | restricted             |
+      | public       | standard_national      |
+      | public       | standard_international |
+      | public       | restricted             |
+      | public       | special_restricted     |
 
   @WIP
   Scenario Outline: The correct checks should display when reviewing a continuation and snapshot
@@ -72,12 +72,12 @@ Feature: Continuations journey through internal and self serve
     And i generate a continuation
     And i have logged in to self serve
     Then the correct checks should display on the continuation review details page and continuation snapshot
-      Examples:
-        | operatorType | licenceType            |
-        | goods        | standard_national      |
-        | goods        | standard_international |
-        | goods        | restricted             |
-        | public       | standard_national      |
-        | public       | standard_international |
-        | public       | restricted             |
-        | public       | special_restricted     |
+    Examples:
+      | operatorType | licenceType            |
+      | goods        | standard_national      |
+      | goods        | standard_international |
+      | goods        | restricted             |
+      | public       | standard_national      |
+      | public       | standard_international |
+      | public       | restricted             |
+      | public       | special_restricted     |
