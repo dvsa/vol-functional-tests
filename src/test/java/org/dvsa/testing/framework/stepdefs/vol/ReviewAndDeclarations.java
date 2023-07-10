@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.stepdefs.lgv;
+package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.Then;
 import org.dvsa.testing.framework.pageObjects.BasePage;

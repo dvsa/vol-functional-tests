@@ -16,6 +16,7 @@ public class TypeOfLicenceJourney extends BasePage {
     public String greatBritain = "//input[@id='type-of-licence[operator-location]']";
     public String northernIreland = "//input[@name='type-of-licence[operator-location]'][@value='Y']";
     public String goodsLicence = String.format("//input[@value='%s']", OperatorType.GOODS.asString());
+    public String standardNational = String.format("//input[contains(@id,'%s')]", LicenceType.STANDARD_NATIONAL.asString());
     public String standardInternational = String.format("//input[contains(@id,'%s')]", LicenceType.STANDARD_INTERNATIONAL.asString());
     public String lgvOnly = String.format("//input[@value='%s']", VehicleType.LGV_ONLY_FLEET.asString());
     public String mixedFleet = String.format("//input[@value='%s']", VehicleType.MIXED_FLEET.asString());
@@ -57,9 +58,9 @@ public class TypeOfLicenceJourney extends BasePage {
 
     public void chooseGBOrNI(String licenceWhere) {
         if (licenceWhere.equals("GB"))
-            clickByXPath(world.typeOfLicence.greatBritain);
+            clickByXPath(world.typeOfLicenceJourney.greatBritain);
         else
-            clickByXPath(world.typeOfLicence.northernIreland);
+            clickByXPath(world.typeOfLicenceJourney.northernIreland);
     }
 
     public void isLGVChoiceTextAndRadioButtonsPresent() {

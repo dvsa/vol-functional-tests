@@ -14,7 +14,6 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
-import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 import org.dvsa.testing.framework.stepdefs.vol.ExternalSearch;
 import org.dvsa.testing.framework.stepdefs.vol.GovSignIn;
 
@@ -70,7 +69,7 @@ public class World {
     public PSVJourney psvJourney;
     public GovSignInJourney govSignInJourney;
 
-    public TypeOfLicenceJourney typeOfLicence;
+    public TypeOfLicenceJourney typeOfLicenceJourney;
     public GeneralVariationJourney generalVariationJourney;
     public TrailersJourney trailersJourney;
     public SystemMessagesJourney systemMessagesJourney;
