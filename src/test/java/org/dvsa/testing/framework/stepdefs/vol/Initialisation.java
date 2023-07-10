@@ -17,7 +17,6 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
-import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 
 public class Initialisation extends BasePage {
  private final World world;
@@ -72,7 +71,7 @@ public class Initialisation extends BasePage {
         world.taskAllocationRulesJourney = new TaskAllocationRulesJourney(world);
         world.taskAllocation = new TaskAllocation(world);
         world.printingAndScanningJourney = new PrintingAndScanningJourney(world);
-        world.typeOfLicence = new TypeOfLicenceJourney(world);
+        world.typeOfLicenceJourney = new TypeOfLicenceJourney(world);
         world.psvJourney = new PSVJourney(world);
         world.trailersJourney = new TrailersJourney(world);
         world.systemMessagesJourney = new SystemMessagesJourney(world);

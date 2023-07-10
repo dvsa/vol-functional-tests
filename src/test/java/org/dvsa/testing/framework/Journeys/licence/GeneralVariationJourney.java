@@ -34,4 +34,7 @@ public class GeneralVariationJourney extends BasePage {
         world.UIJourney.changeLicenceForVariation();
     }
 
+    public void beginUpgradeVariation() {
+        beginVariation(SelfServeSection.TYPE_OF_LICENCE);
+    }
 }

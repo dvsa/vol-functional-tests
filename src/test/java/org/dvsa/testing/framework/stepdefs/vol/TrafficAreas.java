@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.stepdefs.lgv;
+package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.VehicleType;
@@ -79,7 +79,7 @@ public class TrafficAreas extends BasePage {
     @When("i apply for a new {string} lgv only application and enter a postcode in the North West of England")
     public void iApplyForANewGoodsStandardInternationalApplicationAndEnterAPostcodeInTheNorthWestOfEngland(String GBOrNI) {
         clickByLinkText("Apply for a new licence");
-        world.typeOfLicence.chooseGBOrNI(GBOrNI);
+        world.typeOfLicenceJourney.chooseGBOrNI(GBOrNI);
         clickByXPath("//input[@value='lcat_gv']");
         clickByXPath("//input[@value='ltyp_si']");
         clickByXPath("//input[@value='app_veh_type_lgv']");
