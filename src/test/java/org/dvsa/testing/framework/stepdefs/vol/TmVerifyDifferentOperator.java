@@ -68,7 +68,7 @@ public class TmVerifyDifferentOperator extends BasePage{
     public void theOperatorCountersignsDigitally() throws InterruptedException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
-        String link = world.genericUtils.getResetPasswordLink(world.configuration.getTmAppLink());
+        String link = world.genericUtils.getTransportManagerLink(world.configuration.getTmAppLink());
         System.out.println(link);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         if (Browser.navigate().findElements(By.partialLinkText(world.createApplication.getApplicationId())).size() != 0) {
