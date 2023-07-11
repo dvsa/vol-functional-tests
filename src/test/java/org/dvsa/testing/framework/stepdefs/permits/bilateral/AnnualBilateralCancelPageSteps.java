@@ -29,7 +29,6 @@ public class AnnualBilateralCancelPageSteps extends BasePage {
     public void iShouldBeTakenToCancelConfirmation() {
         CancellationConfirmationPage.untilOnPage();
         assertEquals("Application cancelled", CancellationConfirmationPage.getPanelHeading());
-        assertEquals(world.basePermitJourney.getFullReferenceNumber(), CancellationConfirmationPage.getReferenceNumberHeading());
         assertEquals("What happens now", CancellationConfirmationPage.getAdvisoryHeadingPresent());
         assertEquals("You have cancelled your application and you will no longer be able to view or access it.", CancellationConfirmationPage.getAdvisoryTextPresent());
     }

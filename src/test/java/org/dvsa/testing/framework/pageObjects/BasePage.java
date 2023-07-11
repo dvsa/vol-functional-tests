@@ -343,6 +343,23 @@ public abstract class BasePage extends DriverUtils {
     public static boolean isElementEnabled(@NotNull String selector, @NotNull SelectorType selectorType) {
         return findElement(selector, selectorType).isEnabled();
     }
+    public static boolean isElementClickable(@NotNull String selector, @NotNull SelectorType selectorType) {
+        boolean visible = true;
+        try {
+            Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                    .withTimeout(ofSeconds(TIME_OUT_SECONDS))
+                    .pollingEvery(ofSeconds(POLLING_SECONDS))
+                    .ignoring(NoSuchElementException.class)
+                    .ignoring(StaleElementReferenceException.class);
+
+            wait.until(WebDriver ->
+                    ExpectedConditions.elementToBeClickable(by(selector, selectorType)));
+        } catch (Exception ex) {
+            visible = false;
+        }
+
+        return visible;
+    }
 
     public static void waitForElementToBeClickable(@NotNull String selector, @NotNull SelectorType selectorType) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())

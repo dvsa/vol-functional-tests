@@ -1,5 +1,7 @@
 @int_regression
 @your_account
+@FullRegression
+@printAndSign
 
 Feature: User edits their account details
 

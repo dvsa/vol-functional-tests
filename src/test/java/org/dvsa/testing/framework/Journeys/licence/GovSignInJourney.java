@@ -1,9 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.driver.Browser;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Random;
 
 import static activesupport.driver.Browser.navigate;
@@ -68,8 +71,10 @@ public class GovSignInJourney extends BasePage {
         if (isTitlePresent("Start proving your identity with GOV.UK One Login", 2)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }
-        waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-
+        if (isTitlePresent("Are you on a computer or a tablet right now?", 2)) {
+            clickByXPath("//*[@id='select-device-choice']");
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
         if (isTitlePresent("You have already proved your identity", 2)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         } else if (isTitlePresent("Do you have a smartphone you can use?", 2))
@@ -113,6 +118,9 @@ public class GovSignInJourney extends BasePage {
         enterPassportDetails();
         cycletThroughSignInJourney();
         answerPersonalQuestions();
+        if(isTitlePresent("Continue to the service you want to use",5)){
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
     }
 
     public void photoIDQuestion() {
@@ -126,10 +134,11 @@ public class GovSignInJourney extends BasePage {
         String firstName = "Kenneth";
         String surName = "Decerqueira";
         waitAndEnterText("//*[@id='passportNumber']", SelectorType.XPATH, passportNumber);
-        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, firstName);
-        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, surName);
+        waitAndEnterText("//*[@id='surname']", SelectorType.XPATH, surName);
+        waitAndEnterText("//*[@id='firstName']", SelectorType.XPATH, firstName);
         enterDOB();
         enterExpiryDate();
+
     }
 
     public void enterDOB() {
@@ -237,4 +246,12 @@ public class GovSignInJourney extends BasePage {
         }
     }
 
+    public void changeProtocolForSignInToWorkOnLocal() throws InterruptedException, MalformedURLException {
+        if(world.configuration.env.toString().equals("local")) {
+            Thread.sleep(4000);
+            URL url = new URL(Browser.navigate().getCurrentUrl());
+            String urlWithUnsecureProtocol = url.getProtocol().replace("s","").concat("://"+ url.getAuthority() + url.getFile());
+            Browser.navigate().get(urlWithUnsecureProtocol);
+        }
+    }
 }

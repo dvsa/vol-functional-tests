@@ -1,7 +1,10 @@
-@INT
 @APPLY-GOODS-LICENCE
+@FullRegression
+@printAndSign
 @int_regression
 @CPMS_tests
+@FullRegression
+
 Feature: Apply for a goods licence
 
   Scenario Outline: Apply for a goods licence

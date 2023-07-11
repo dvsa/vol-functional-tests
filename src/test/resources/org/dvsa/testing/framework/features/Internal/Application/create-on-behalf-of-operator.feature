@@ -1,7 +1,9 @@
-@INT
+@printAndSign
 @OLCS-24241
 @Create-On-Behalf-Of-User
 @int_regression
+@FullRegression
+
 Feature: Internal User should be able to create an operator account
 
   Scenario Outline: Caseworker submits application

@@ -1,6 +1,7 @@
-@INT
+@printAndSign
 @CASE-DETAILS
 @int_regression
+@FullRegression
 Feature: Add case details
 
   Background:

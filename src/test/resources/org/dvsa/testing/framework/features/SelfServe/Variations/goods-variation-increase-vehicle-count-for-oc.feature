@@ -1,6 +1,8 @@
 @ss_regression
 @SS-GOODS-VAR-OC-INCREASE-VEHICLE
 @OLCS-21133
+@FullRegression
+@printAndSign
 
 Feature: Goods Variation increase vehicle count for an OC
 

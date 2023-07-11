@@ -1,9 +1,8 @@
 @OLCS-23724
 @ss-interim-refund
-@SS
 Feature: Refund fee paid on new application
 
-  @ss_regression
+  @ss_regression @printAndSign
   Scenario Outline: Interim fee has been paid and licence has been refused
     Given i have an interim "<OperatorType>" "<LicenceType>" application
     When the interim fee has been paid

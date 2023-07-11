@@ -1,6 +1,6 @@
 @SS
 @VOL-273
-@ss_regression
+@ss_regression @FullRegression
 Feature: Manage users page should comply to the WCAG 2.1 AA accessibility standards
 
   Background: Create an account

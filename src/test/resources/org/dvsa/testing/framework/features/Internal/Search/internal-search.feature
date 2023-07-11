@@ -1,5 +1,7 @@
 @INT-SEARCH
 @int_regression
+@FullRegression
+@printAndSign
 Feature: Internal Search
 
   Background:

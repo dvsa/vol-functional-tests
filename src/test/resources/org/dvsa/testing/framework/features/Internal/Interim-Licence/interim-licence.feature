@@ -1,7 +1,8 @@
 @OLCS-13203
-@INT
-@INTERIM
+@printAndSign
 @int_regression
+@FullRegression
+
 Feature: Change Validation On Interim Vehicle Authority
 
   Background:

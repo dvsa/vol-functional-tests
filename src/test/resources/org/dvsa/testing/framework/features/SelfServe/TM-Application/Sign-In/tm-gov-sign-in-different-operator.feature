@@ -1,6 +1,7 @@
 @gov-sign-in
 @tm-application-gov
 @ss_regression
+@FullRegression
 
 Feature: TM signs through gov-sign-in
 

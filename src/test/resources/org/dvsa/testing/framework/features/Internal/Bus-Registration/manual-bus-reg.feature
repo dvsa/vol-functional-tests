@@ -1,13 +1,15 @@
 @MANUAL-BUS-REG
 @int_regression
 @CPMS_tests
+@FullRegression
+@printAndSign
+
 Feature: Complete Manual Bus Registration Steps
 
   Background: Testing
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And i have logged in to internal
 
-  @cross-browser
   Scenario: Paying Fees to Complete Bus Registration Manually
     And i add a new bus registration
     When it has been paid and granted

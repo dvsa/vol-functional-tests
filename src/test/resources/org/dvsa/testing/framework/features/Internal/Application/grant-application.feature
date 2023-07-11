@@ -1,6 +1,8 @@
-@INT
+@printAndSign
 @int_regression
 @grant_under_consideration
+@FullRegression
+
 Feature: Grant under consideration application
 
   Scenario Outline:  Grant a licence

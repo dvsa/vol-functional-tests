@@ -3,7 +3,7 @@ Feature: ECMT International Removal Self Service End to End Smoke test
 
   Background:
     Given I have a "goods" "standard_international" licence
-    And I have a valid ECMT removal permit
+    When I have a valid ECMT removal permit
     And I am viewing my issued ECMT removal permit on selfserve
 
   @EXTERNAL @olcs-26303

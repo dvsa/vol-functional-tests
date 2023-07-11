@@ -1,5 +1,7 @@
 @int_regression
 @scanning_journey
+@FullRegression
+@printAndSign
 Feature: Generate scanning separator sheets as an internal user
 
   Background:

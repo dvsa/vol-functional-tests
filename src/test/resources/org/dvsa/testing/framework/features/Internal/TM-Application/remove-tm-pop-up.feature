@@ -1,6 +1,9 @@
 @OLCS-19478
 @LAST-TM-POP-UP
 @int_regression
+@FullRegression
+@printAndSign
+
 Feature: Remove last Transport Manager (TM) pop up
 
   Background:
