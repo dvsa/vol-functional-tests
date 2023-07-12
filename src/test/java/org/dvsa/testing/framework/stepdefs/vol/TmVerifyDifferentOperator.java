@@ -9,6 +9,7 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -68,15 +69,10 @@ public class TmVerifyDifferentOperator extends BasePage{
     public void theOperatorCountersignsDigitally() throws InterruptedException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
-        String link = world.genericUtils.getTransportManagerLink(world.configuration.getTmAppLink());
-        System.out.println(link);
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
-        if (Browser.navigate().findElements(By.partialLinkText(world.createApplication.getApplicationId())).size() != 0) {
-            world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
-        } else if (Browser.navigate().findElements(By.partialLinkText(world.updateLicence.getVariationApplicationId())).size() != 0) {
-            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.TRANSPORT_MANAGERS);
-        }
-        clickByLinkText(world.DataGenerator.getOperatorForeName() + " " + world.DataGenerator.getOperatorFamilyName());
+        String link = world.genericUtils.getTransportManagerLink();
+        WebDriver driver = Browser.navigate();
+        driver.get(link);
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
