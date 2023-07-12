@@ -280,7 +280,7 @@ public class UIJourney extends BasePage {
         clickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
-        enterText("interim[goodsApplicationInterimReason]", SelectorType.NAME, "Testing");
+        enterText("applicationInterimReason", SelectorType.ID, "Testing");
         click("submitAndPay", SelectorType.ID);
         clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();

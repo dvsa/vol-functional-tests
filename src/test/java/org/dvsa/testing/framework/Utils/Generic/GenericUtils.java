@@ -33,6 +33,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 
@@ -122,6 +124,24 @@ public class GenericUtils extends BasePage {
         }
     }
 
+
+    public String getTransportManagerLink() throws InterruptedException {
+        String htmlContent = world.configuration.getTmAppLink();
+        String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
+        Pattern pattern = Pattern.compile("Reviewapplicationat(https?://[\\w./?-]+?/details/\\d{6})");
+        Matcher matcher = pattern.matcher(sanitizedHTML);
+        if (matcher.find()) {
+            String url = matcher.group(1);
+            int endIndex = url.indexOf("--");
+            if (endIndex != -1) {
+                url = url.substring(0, endIndex);
+            }
+            return url;
+        } else {
+            throw new RuntimeException("Review application link not found in HTML content.");
+        }
+    }
+
     public String getResetPasswordLink() throws InterruptedException {
         String htmlContent = world.configuration.getPasswordResetLink();
         String sanatisedHTML = htmlContent.replace("3D", "")
@@ -140,6 +160,7 @@ public class GenericUtils extends BasePage {
         }
         throw new RuntimeException("Reset password link not found in HTML content.");
     }
+
 
     public static String getDates(String state, int months) {
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
