@@ -14,5 +14,5 @@ Feature: Apply for a goods licence
     Examples:
       | operator | licenceType            |
       | goods    | restricted             |
-#      | goods    | standard_international |
-#      | goods    | standard_national      |
+      | goods    | standard_international |
+      | goods    | standard_national      |
