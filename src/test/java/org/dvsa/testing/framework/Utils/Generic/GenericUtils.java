@@ -127,17 +127,11 @@ public class GenericUtils extends BasePage {
 
     public String getTransportManagerLink() throws InterruptedException {
         String htmlContent = world.configuration.getTmAppLink();
-        String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "").
-                replace("Review20applicationat", "Rewiewapplicationat");
-        Pattern pattern = Pattern.compile("Reviewapplicationat(https?://[\\w./?-]+?/details/\\d{6})");
+        String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
+        Pattern pattern = Pattern.compile("(?:(?:Review\\d*applicationat)|(?<=0A0AReview\\dapplicationat))(?:20)?(https?://[\\w./?-]+?/details/\\d{6})");
         Matcher matcher = pattern.matcher(sanitizedHTML);
         if (matcher.find()) {
-            String url = matcher.group(1);
-            int endIndex = url.indexOf("--");
-            if (endIndex != -1) {
-                url = url.substring(0, endIndex);
-            }
-            return url;
+            return matcher.group(1);
         } else {
             throw new RuntimeException("Review application link not found in HTML content.");
         }
