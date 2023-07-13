@@ -127,7 +127,8 @@ public class GenericUtils extends BasePage {
 
     public String getTransportManagerLink() throws InterruptedException {
         String htmlContent = world.configuration.getTmAppLink();
-        String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
+        String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "").
+                replace("Review20applicationat", "Rewiewapplicationat");
         Pattern pattern = Pattern.compile("Reviewapplicationat(https?://[\\w./?-]+?/details/\\d{6})");
         Matcher matcher = pattern.matcher(sanitizedHTML);
         if (matcher.find()) {
