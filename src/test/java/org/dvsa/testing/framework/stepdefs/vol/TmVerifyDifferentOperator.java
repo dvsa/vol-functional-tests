@@ -69,12 +69,12 @@ public class TmVerifyDifferentOperator extends BasePage{
     public void theOperatorCountersignsDigitally() throws InterruptedException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         String link = world.genericUtils.getTransportManagerLink();
         WebDriver driver = Browser.navigate();
         driver.get(link);
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
+        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
