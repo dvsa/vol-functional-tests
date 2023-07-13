@@ -124,7 +124,6 @@ public class GenericUtils extends BasePage {
         }
     }
 
-
     public String getTransportManagerLink() throws InterruptedException {
         String htmlContent = world.configuration.getTmAppLink();
         String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
