@@ -72,9 +72,9 @@ public class TmVerifyDifferentOperator extends BasePage{
         String link = world.genericUtils.getTransportManagerLink();
         WebDriver driver = Browser.navigate();
         driver.get(link);
+        world.globalMethods.signIn(world.registerUser.getUserName(), world.configuration.config.getString("defaultPassword"));
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
-        world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
