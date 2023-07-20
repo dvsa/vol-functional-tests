@@ -232,7 +232,7 @@
                     <forkCount>2</forkCount>
                     <reuseForks>true</reuseForks>
                     <parallel>methods</parallel>
-                    <threadCount>13</threadCount>
+                    <threadCount>11</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
