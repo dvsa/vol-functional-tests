@@ -230,7 +230,7 @@
 <!--                    <rerunFailingTestsCount>1</rerunFailingTestsCount>-->
                     <forkCount>2</forkCount>
                     <reuseForks>true</reuseForks>
-                    <parallel>classes</parallel>
+                    <parallel>methods</parallel>
                     <threadCount>15</threadCount>
                 </configuration>
                 <dependencies>
