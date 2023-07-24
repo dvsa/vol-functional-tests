@@ -86,8 +86,9 @@ public class TransportManagerJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Add other employment')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='tm-employer-name-details[employerName]']", SelectorType.XPATH, "test");
         world.UIJourney.searchAndSelectAddress("postcodeInput1", postCode, 1);
-        waitAndEnterText("//*[@id='tm-employment-details[position]']", SelectorType.XPATH, "test");
-        waitAndEnterText("//*[@id='tm-employment-details[hoursPerWeek]']", SelectorType.XPATH, "Test");
+        waitAndEnterText("//*[@id='tm-employment-details[position]']", SelectorType.XPATH, "DVSA Tester");
+        waitAndEnterText("//*[@id='tm-employment-details[hoursPerWeek]']", SelectorType.XPATH, "Testing Monday Tuesday Wednesday");
+        waitAndClick("//*[@id='understoodAvailabilityAgreement']",SelectorType.XPATH);
         world.UIJourney.clickSubmit();
 
 

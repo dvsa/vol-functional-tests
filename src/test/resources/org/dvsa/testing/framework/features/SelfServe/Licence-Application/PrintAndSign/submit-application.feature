@@ -1,5 +1,6 @@
 @INT-SMOKE
 @sub-app
+@ss_regression
 Feature: Complete an application manually
 
   Scenario Outline: Submit an application
