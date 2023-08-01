@@ -6,7 +6,7 @@
 Feature:Add, Edit and reassign tasks on the internal application
 
   Background:
-    Given i have a valid "goods" "standard_national" licence
+    Given i have an internal admin user
     When I have logged into the internal application
 
   @re-assign-task @localsmoke
