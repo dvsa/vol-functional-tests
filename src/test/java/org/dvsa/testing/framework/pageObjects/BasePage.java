@@ -132,13 +132,13 @@ public abstract class BasePage extends DriverUtils {
         selectItem.selectByIndex(listValue);
     }
 
-    public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
+    public void cycleThroughPaginationUntilElementIsDisplayed(String selector) {
         List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='govuk-pagination__list']"));
         int pagination_count = pagination.size();
 
-        while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
+        while (!isElementPresent(selector, SelectorType.LINKTEXT)) {
             for (int i = 0; i < pagination_count; i++) {
-                if (isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
+                if (isElementPresent(selector, SelectorType.LINKTEXT)) {
                     break;
                 }
                 scrollAndClick("Next", SelectorType.LINKTEXT);
