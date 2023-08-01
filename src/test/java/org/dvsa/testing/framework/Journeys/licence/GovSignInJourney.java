@@ -68,6 +68,9 @@ public class GovSignInJourney extends BasePage {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
         }
 
+        if (isTextPresent("By continuing you agree to our updated terms of use.")) {
+            waitAndClick("//*[@id='form-tracking']/button", SelectorType.XPATH);
+        }
         if (isTitlePresent("Start proving your identity with GOV.UK One Login", 2)) {
             waitAndClick("//*[@id='submitButton']", SelectorType.XPATH);
         }

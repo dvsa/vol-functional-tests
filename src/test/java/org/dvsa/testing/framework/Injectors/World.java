@@ -17,6 +17,7 @@ import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
 import org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval.SubmissionPageSteps;
 import org.dvsa.testing.framework.stepdefs.vol.ExternalSearch;
 import org.dvsa.testing.framework.stepdefs.vol.GovSignIn;
+import org.dvsa.testing.framework.stepdefs.vol.PresidingTCsStep;
 
 
 public class World {
@@ -87,4 +88,8 @@ public class World {
     public YearSelectionPage yearSelectionPage;
     public PermitFeePage permitFeePage;
     public ExternalSearch externalSearch;
+
+    public PresidingTCsStep presidingTCsStep;
+
+    public SubmissionsJourney submissionsJourney;
 }

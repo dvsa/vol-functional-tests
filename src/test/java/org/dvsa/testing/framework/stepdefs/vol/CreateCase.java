@@ -70,7 +70,7 @@ public class CreateCase extends BasePage {
 
     @When("i add a submission")
     public void iAddASubmission() {
-        world.UIJourney.createAndSubmitSubmission();
+        world.submissionsJourney.createAndSubmitSubmission();
     }
 
     @Then("the submission details should be displayed")

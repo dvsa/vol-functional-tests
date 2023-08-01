@@ -20,7 +20,9 @@ public enum AdminOption {
     SYSTEM_PARAMETERS("System parameters"),
     TASK_ALLOCATION_RULES("Task allocation rules"),
     USER_MANAGEMENT("User management"),
-    YOUR_ACCOUNT("Your account");
+    YOUR_ACCOUNT("Your account"),
+    PRESIDING_TCS("Presiding TCs");
+
 
     private String name;
 
