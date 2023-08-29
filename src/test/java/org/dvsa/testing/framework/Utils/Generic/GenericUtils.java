@@ -137,13 +137,13 @@ public class GenericUtils extends BasePage {
     }
 
     public String getResetPasswordLink() throws InterruptedException {
+        Thread.sleep(3000);
         String htmlContent = world.configuration.getPasswordResetLink();
         String sanatisedHTML = htmlContent.replace("3D", "")
                 .replace("co=", "co")
                 .replaceAll("(nfirmationId=[^&]+)=", "$1");
         org.jsoup.nodes.Document doc = Jsoup.parse(sanatisedHTML);
         Elements links = doc.select("a[href]");
-        Thread.sleep(1500);
         for (Element link : links) {
             if (link.attr("abs:href").contains("ssweb")) {
                 String resetPasswordLink = link.attr("abs:href");
