@@ -9,7 +9,6 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -74,7 +73,8 @@ public class TmVerifyDifferentOperator extends BasePage{
         clickByLinkText("Sign out");
         String link = world.genericUtils.getTransportManagerLink();
         Browser.navigate().get(link);
-        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
+        world.globalMethods.signIn(world.registerUser.getUserName(), world.configuration.config.getString("adminPassword"));
+        world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
