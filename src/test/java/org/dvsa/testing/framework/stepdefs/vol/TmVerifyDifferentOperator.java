@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import com.amazonaws.services.dynamodbv2.xspec.B;
+import org.apache.commons.codec.DecoderException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
@@ -24,7 +25,7 @@ import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDa
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TmVerifyDifferentOperator extends BasePage {
+public class TmVerifyDifferentOperator extends BasePage{
     private final World world;
 
 
@@ -67,29 +68,22 @@ public class TmVerifyDifferentOperator extends BasePage {
     }
 
     @And("the operator countersigns digitally")
-    public void theOperatorCountersignsDigitally() throws InterruptedException {
+    public void theOperatorCountersignsDigitally() throws InterruptedException, DecoderException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
         String link = world.genericUtils.getTransportManagerLink();
+        world.globalMethods.enterCredentialsAndLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), world.configuration.config.getString("defaultPassword"));
         Browser.navigate().get(link);
-        try {
-            world.globalMethods.signIn(world.registerUser.getUserName(), world.configuration.config.getString("defaultPassword"));
-            if (isTextPresent("Please check your username and password")) {
-                world.globalMethods.signIn(world.registerUser.getUserName(), world.configuration.config.getString("defaultPassword"));
-            }
-            world.UIJourney.clickSubmit();
-            world.UIJourney.signDeclaration();
-        } finally {
-            if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
-                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-                waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
-            } else {
-                world.govSignInJourney.signInGovAccount();
-            }
+        world.UIJourney.clickSubmit();
+        world.UIJourney.signDeclaration();
+        if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        } else {
+            world.govSignInJourney.signInGovAccount();
         }
     }
-
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
         waitForTextToBePresent("What happens next?");
@@ -234,7 +228,7 @@ public class TmVerifyDifferentOperator extends BasePage {
     @Then("the user is displayed in the Transport Manager list")
     public void theUserIsDisplayedInTheTransportManagerList() {
         waitForTextToBePresent("List of Transport Managers");
-        assertTrue(isTextPresent(world.registerUser.getForeName() + " " + world.registerUser.getFamilyName()));
+        assertTrue(isTextPresent(world.registerUser.getForeName()+" "+world.registerUser.getFamilyName()));
         assertTrue(isTextPresent(world.registerUser.getEmailAddress()));
     }
 }
