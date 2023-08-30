@@ -69,10 +69,7 @@ public class TmVerifyDifferentOperator extends BasePage{
     public void theOperatorCountersignsDigitally() throws InterruptedException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
-        String link = world.genericUtils.getTransportManagerLink();
-        WebDriver driver = Browser.navigate();
-        driver.get(link);
-        System.out.println("+++++++++++++ " + world.registerUser.getUserName());
+        Browser.navigate().get(world.genericUtils.getTransportManagerLink());
         world.globalMethods.signIn(world.registerUser.getUserName(), world.configuration.config.getString("defaultPassword"));
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
