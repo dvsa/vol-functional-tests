@@ -115,7 +115,6 @@ public class TmVerifyDifferentOperator extends BasePage{
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
-        waitForElementToBePresent("//*[@id='emailAddress']");
         click("submit", SelectorType.ID);
         waitForTextToBePresent("The link has been e-mailed");
     }
