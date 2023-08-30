@@ -9,6 +9,7 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -69,15 +70,11 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @And("the operator countersigns digitally")
     public void theOperatorCountersignsDigitally() throws InterruptedException {
-        System.out.println("+URL+++++ " + Browser.navigate().getCurrentUrl());
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
         String link = world.genericUtils.getTransportManagerLink();
-        System.out.println("--------- " + link);
         Browser.navigate().get(link);
-        System.out.println("===USERNAME======== " + world.registerUser.getUserName());
-        world.globalMethods.signIn(world.registerUser.getUserName(), world.configuration.config.getString("defaultPassword"));
-        world.UIJourney.clickSubmit();
+        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
         world.UIJourney.signDeclaration();
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
             waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
