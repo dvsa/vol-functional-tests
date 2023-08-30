@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import com.amazonaws.services.dynamodbv2.xspec.B;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
@@ -67,9 +68,13 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @And("the operator countersigns digitally")
     public void theOperatorCountersignsDigitally() throws InterruptedException {
+        System.out.println("+URL+++++ " + Browser.navigate().getCurrentUrl());
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
-        Browser.navigate().get(world.genericUtils.getTransportManagerLink());
+        String link = world.genericUtils.getTransportManagerLink();
+        System.out.println("--------- " + link);
+        Browser.navigate().get(link);
+        System.out.println("===USERNAME======== " + world.registerUser.getUserName());
         world.globalMethods.signIn(world.registerUser.getUserName(), world.configuration.config.getString("defaultPassword"));
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
