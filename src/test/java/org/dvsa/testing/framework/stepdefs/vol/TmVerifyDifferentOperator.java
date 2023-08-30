@@ -42,6 +42,7 @@ public class TmVerifyDifferentOperator extends BasePage{
         boolean applicationOrNot = applicationType.equals("application");
         world.DataGenerator.generateAndAddOperatorUser();
         world.TMJourney.addAndCompleteOperatorUserAsTransportManager("N", applicationOrNot);
+        System.out.println("=========== + " + Browser.navigate().getCurrentUrl());
     }
 
     @And("i sign the declaration")
