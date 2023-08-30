@@ -22,6 +22,7 @@ Feature: Search and add a vehicle
       | Make                      |
     And the vehicle details should not be empty
 
+  @dvla-add-vehicle-another-licence
   Scenario: Add an a vehicle belonging to another licence
     Given I have a "goods" "standard_national" licence
     When I navigate to manage vehicle page on a licence
