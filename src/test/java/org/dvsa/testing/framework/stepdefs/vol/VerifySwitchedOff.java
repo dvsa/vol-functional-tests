@@ -29,7 +29,6 @@ public class VerifySwitchedOff extends BasePage{
             world.APIJourney.nIAddressBuilder();
         }
         world.APIJourney.registerAndGetUserDetails(UserType.EXTERNAL.asString());
-        System.out.println("=======OGU= " + world.registerUser.getUserName());
         world.APIJourney.createPartialApplication();
     }
 
