@@ -138,8 +138,8 @@ public class GenericUtils extends BasePage {
     }
 
     public String getResetPasswordLink() throws InterruptedException {
-        Thread.sleep(3000);
         String htmlContent = world.configuration.getPasswordResetLink();
+        Thread.sleep(6000);
         String sanatisedHTML = htmlContent.replace("3D", "")
                 .replace("co=", "co")
                 .replaceAll("(nfirmationId=[^&]+)=", "$1");
