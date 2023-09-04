@@ -15,7 +15,8 @@ public class SubmissionsJourney extends BasePage {
     public void addPresidingTC() {
         waitAndClick("add", SelectorType.ID);
         waitAndClick("user", SelectorType.ID);
-        selectValueFromDropDown("user", SelectorType.ID, "ROBERT WATTS");
+        selectRandomValueFromDropDown("user");
+     //   selectValueFromDropDown("user", SelectorType.ID, "Unassigned");
         waitAndEnterText("presidingTcDetails[name]",SelectorType.ID, world.DataGenerator.getOperatorForeName());
         world.UIJourney.clickSubmit();
     }
@@ -36,7 +37,7 @@ public class SubmissionsJourney extends BasePage {
         waitForTextToBePresent("Assign to:");
         clickByXPath("//*[@id='tcOrOther']");
         clickByXPath("//*[@id='fields[urgent]']");
-        selectValueFromDropDown("user", SelectorType.ID, "ROBERT WATTS");
+        selectRandomValueFromDropDown("user");
         world.UIJourney.clickSubmit();
     }
 
