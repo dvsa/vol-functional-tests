@@ -20,8 +20,7 @@ public class LicenceAuthorisation extends BasePage {
     String lgvTotalAuthorisationText = "Light goods vehicle authorisation";
     String vehicleTotalAuthorisationText = "Vehicle authorisation";
     String hgvTableHeading = "//a[@class='sortable' and contains(text(),'Heavy goods vehicles')]";
-    String vehicleTableHeading = "//a[@class='sortable' and contains(text(),'Vehicles')]";
-
+    String vehicleTableHeading = "(//a[@class='govuk-link govuk-link--no-visited-state'])[2]";
     String noHGVAuthErrorText = "Enter a value for the field: \"How many heavy goods vehicles do you want to authorise on the licence?\"";
     String noLGVAuthErrorText = "Enter a value for the field: \"How many light goods vehicles do you want to authorise on the licence for international haulage? \"";
     String noTrailerAuthErrorText = "Enter a value for the field: \"How many trailers do you want to authorise on the licence?\"";
