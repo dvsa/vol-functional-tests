@@ -6,6 +6,7 @@ Feature: Review and Declarations page text is modified for lgv only applications
     When i navigate to the application review and declarations page
     Then the review and declaration page should display the modified lgv only text
 
+
   Scenario: LGV application snapshot displays the modified declarations as required
     Given I have a "GB" lgv only application
     When i navigate to the snapshot on the review and declarations page
