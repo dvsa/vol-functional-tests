@@ -19,7 +19,7 @@ public class LicenceAuthorisation extends BasePage {
     String hgvTotalAuthorisationText = "Heavy goods vehicle authorisation";
     String lgvTotalAuthorisationText = "Light goods vehicle authorisation";
     String vehicleTotalAuthorisationText = "Vehicle authorisation";
-    String hgvTableHeading = "//a[@class='sortable' and contains(text(),'Heavy goods vehicles')]";
+    String hgvTableHeading = "Heavy goods vehicles";
     String vehicleTableHeading = "(//a[@class='govuk-link govuk-link--no-visited-state'])[2]";
     String noHGVAuthErrorText = "Enter a value for the field: \"How many heavy goods vehicles do you want to authorise on the licence?\"";
     String noLGVAuthErrorText = "Enter a value for the field: \"How many light goods vehicles do you want to authorise on the licence for international haulage? \"";
@@ -141,7 +141,7 @@ public class LicenceAuthorisation extends BasePage {
 
     @Then("the operating centre table hgv text is present")
     public void theOperatingCentreTableHgvTextIsPresent() {
-        assertTrue(isElementPresent(hgvTableHeading, SelectorType.XPATH));
+        assertTrue(isElementPresent(hgvTableHeading, SelectorType.LINKTEXT));
     }
 
     @Then("the operating centre table vehicle text is not present")
