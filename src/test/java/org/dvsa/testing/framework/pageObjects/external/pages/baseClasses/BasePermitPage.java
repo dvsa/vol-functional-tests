@@ -30,14 +30,9 @@ public class BasePermitPage extends BasePage {
         return getText(PANEL_HEADING, SelectorType.XPATH).trim();
     }
 
-//    public static String getReferenceFromPage() {
-//        return getText("span.govuk-caption-xl").trim();
-//    }
-
     public static String getReferenceFromPage() {
-        return getText("//*[@data-heading='Application reference']").trim();
+        return getText("span.govuk-caption-xl").trim();
     }
-
     public static void back() {
         untilElementIsPresent(BACK, SelectorType.XPATH, BasePermitPage.WAIT_TIME_SECONDS, TimeUnit.SECONDS);
         scrollAndClick(BACK, SelectorType.XPATH);

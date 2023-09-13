@@ -84,7 +84,7 @@ public class HomePage extends BasePage {
             do {
                 refreshPageWithJavascript();
             } while(!getText("//*//tr//th", SelectorType.XPATH).toLowerCase().contains("licence number") && System.currentTimeMillis() < kickoutTime);
-            waitAndClick(REFERENCE_NUMBER_TEMPLATE, SelectorType.XPATH);
+            waitAndClick("span.overview__link--underline", SelectorType.CSS);
         }
 
         public static void selectFirstOngoingApplication() {
