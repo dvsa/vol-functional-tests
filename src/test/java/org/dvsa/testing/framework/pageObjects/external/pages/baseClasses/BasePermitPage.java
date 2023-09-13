@@ -30,8 +30,12 @@ public class BasePermitPage extends BasePage {
         return getText(PANEL_HEADING, SelectorType.XPATH).trim();
     }
 
+//    public static String getReferenceFromPage() {
+//        return getText("span.govuk-caption-xl").trim();
+//    }
+
     public static String getReferenceFromPage() {
-        return getText("span.govuk-caption-xl").trim();
+        return getText("//*[@data-heading='Application reference']").trim();
     }
 
     public static void back() {
