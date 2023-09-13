@@ -22,6 +22,8 @@ public final class ElementCondition extends BasePage {
         };
     }
 
+
+
     public static ExpectedCondition<Boolean> isPresent(@NotNull String selector, SelectorType selectorType) {
         return new ExpectedCondition<Boolean>(){
             @Override
