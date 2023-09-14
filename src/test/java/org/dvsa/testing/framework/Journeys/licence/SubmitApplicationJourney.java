@@ -130,11 +130,11 @@ public class SubmitApplicationJourney extends BasePage {
         clickById("application[safetyConfirmation]");
         UIJourney.clickSaveAndContinue();
         //Financial History
-        world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit();
+        world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("application");
         //Licence details
         world.licenceDetailsJourney.answerNoToAllQuestionsAndSubmit();
         //Convictions
-        world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit();
+        world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("application");
     }
 
     public void submitAndPayForApplication() {

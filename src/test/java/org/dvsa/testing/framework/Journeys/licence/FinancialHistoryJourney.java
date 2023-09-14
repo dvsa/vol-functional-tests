@@ -12,11 +12,15 @@ public class FinancialHistoryJourney extends BasePage {
         this.world = world;
     }
 
-    public void answerNoToAllQuestionsAndSubmit() {
+    public void answerNoToAllQuestionsAndSubmit(String licenceType) {
         waitForTitleToBePresent("Financial history");
         clickById("data[financialHistoryConfirmation][insolvencyConfirmation]");
         findSelectAllRadioButtonsByValue("N");
-        UIJourney.clickSaveAndContinue();
+        if (licenceType.equals("application")) {
+            UIJourney.clickSaveAndContinue();
+        } else if (licenceType.equals("variation")) {
+            UIJourney.clickSaveAndReturn();
+        }
     }
 
     public void answerYesToAllQuestionsAndSubmit(){
