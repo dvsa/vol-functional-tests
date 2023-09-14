@@ -14,4 +14,3 @@ Feature: Complete an application manually
       | Licence |
       | Goods   |
 
-

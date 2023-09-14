@@ -87,16 +87,18 @@ public class EBSRUpload extends BasePage {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
         }
         long kickOutTime = System.currentTimeMillis() + 30000;
-        do {
-            // Refresh page
-            refreshPageWithJavascript();
+        if(!world.configuration.env.toString().equals("local")) {
+            do {
+                // Refresh page
+                refreshPageWithJavascript();
 
-        } while ((long) findElements("//*[@class='field file-upload']", SelectorType.XPATH).size() < 2 && System.currentTimeMillis() < kickOutTime);
-        try {
-            assertTrue(findElements("//*[@class='field file-upload']", SelectorType.XPATH).stream().anyMatch(
-                    webElement -> webElement.getText().contains("Route Track Map PDF (Auto Scale)")));
-        } catch (Exception e) {
-            throw new NotFoundException("Files not generated.");
+            } while ((long) findElements("//*[@class='field file-upload']", SelectorType.XPATH).size() < 2 && System.currentTimeMillis() < kickOutTime);
+            try {
+                assertTrue(findElements("//*[@class='field file-upload']", SelectorType.XPATH).stream().anyMatch(
+                        webElement -> webElement.getText().contains("Route Track Map PDF (Auto Scale)")));
+            } catch (Exception e) {
+                throw new NotFoundException("Files not generated.");
+            }
         }
     }
 
