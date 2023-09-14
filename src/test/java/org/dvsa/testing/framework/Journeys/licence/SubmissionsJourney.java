@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.openqa.selenium.WebElement;
 
 public class SubmissionsJourney extends BasePage {
 
@@ -16,9 +17,10 @@ public class SubmissionsJourney extends BasePage {
         waitAndClick("add", SelectorType.ID);
         waitAndClick("user", SelectorType.ID);
         selectRandomValueFromDropDown("user");
-     //   selectValueFromDropDown("user", SelectorType.ID, "Unassigned");
-        waitAndEnterText("presidingTcDetails[name]",SelectorType.ID, world.DataGenerator.getOperatorForeName());
+        String operatorForename = world.DataGenerator.getOperatorForeName();
+        waitAndEnterText("presidingTcDetails[name]",SelectorType.ID, operatorForename);
         world.UIJourney.clickSubmit();
+        world.genericUtils.navigateToUserLink(operatorForename);
     }
 
     public void createAndSubmitSubmission() {
