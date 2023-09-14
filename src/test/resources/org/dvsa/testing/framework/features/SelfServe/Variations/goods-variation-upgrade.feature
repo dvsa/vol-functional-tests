@@ -7,3 +7,9 @@ Feature: Goods variation upgrade of licence type
     Given i have a valid "goods" "restricted" licence
     When i upgrade my licence type to Standard National
     Then correct statuses are shown by the correct seven sections
+
+  Scenario: Goods upgrade to Standard National with interim request
+    Given i have a valid "goods" "restricted" licence
+    When i upgrade my licence type to Standard National
+    And i complete the required five section
+    And the variation fee is not required on internal

@@ -1,8 +1,11 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -36,5 +39,26 @@ public class GoodVarUpgrade extends BasePage {
         assertTrue(convictionsPenaltiesStatus.contains("REQUIRES ATTENTION"));
         String reviewDeclarationsStatus = getText("//div[@class='overview__item']//strong[1]", SelectorType.XPATH);
         assertTrue(reviewDeclarationsStatus.contains("CAN'T START YET"));
+    }
+
+    @And("i complete the required five sections")
+    public void iCompleteTheRequiredFiveSections() {
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.ADDRESSES);
+        UIJourney.clickSaveAndReturn();
+        world.UIJourney.completeFinancialEvidencePage();
+        world.TMJourney.addNewPersonAsTransportManager("variation");
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_HISTORY);
+        world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("variation");
+        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.CONVICTIONS_AND_PENALTIES);
+        world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("variation");
+
+
+
+
+
+
+
+
+
     }
 }
