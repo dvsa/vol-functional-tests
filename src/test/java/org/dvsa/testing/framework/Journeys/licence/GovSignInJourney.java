@@ -247,7 +247,7 @@ public class GovSignInJourney extends BasePage {
     }
 
     public void changeProtocolForSignInToWorkOnLocal() throws InterruptedException, MalformedURLException {
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         if(world.configuration.env.toString().equals("local")) {
             URL url = new URL(Browser.navigate().getCurrentUrl());
             String urlWithUnsecureProtocol = url.getProtocol().replace("s","").concat("://"+ url.getAuthority() + url.getFile());
