@@ -12,15 +12,21 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GoodVarUpgrade extends BasePage {
-    private final World world;
 
-    public GoodVarUpgrade (World world) {this.world = world;}
+    private final World world;
+    String upgradeInterimSubmittedText1 = "You must follow the terms and conditions of your current licence until we've granted either:";
+    String upgradeInterimSubmittedText2 = "your variation application";
+    String upgradeInterimSubmittedText3 = "an interim authorisation";
+
+    public GoodVarUpgrade(World world) {
+        this.world = world;
+    }
 
     @When("i upgrade my licence type to Standard National")
     public void iUpgradeMyLicenceTypeToStandardNational() {
         world.generalVariationJourney.beginUpgradeVariation();
         click(world.typeOfLicenceJourney.standardNational, SelectorType.XPATH);
-        world.UIJourney.clickSaveAndReturn();
+        UIJourney.clickSaveAndReturn();
     }
 
     @Then("correct statuses are shown by the correct seven sections")
@@ -33,7 +39,7 @@ public class GoodVarUpgrade extends BasePage {
         assertTrue(financialEvidenceStatus.contains("REQUIRES ATTENTION"));
         String transportManagersStatus = getText("//a[@id='overview-item__transport_managers']//strong[1]", SelectorType.XPATH);
         assertTrue(transportManagersStatus.contains("REQUIRES ATTENTION"));
-        String financialHistoryStatus = getText("//a[@id='overview-item__financial_history']//strong[1]",SelectorType.XPATH);
+        String financialHistoryStatus = getText("//a[@id='overview-item__financial_history']//strong[1]", SelectorType.XPATH);
         assertTrue(financialHistoryStatus.contains("REQUIRES ATTENTION"));
         String convictionsPenaltiesStatus = getText("//a[@id='overview-item__convictions_penalties']//strong[1]", SelectorType.XPATH);
         assertTrue(convictionsPenaltiesStatus.contains("REQUIRES ATTENTION"));
@@ -51,14 +57,14 @@ public class GoodVarUpgrade extends BasePage {
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("variation");
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.CONVICTIONS_AND_PENALTIES);
         world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("variation");
+    }
 
-
-
-
-
-
-
-
-
+    @Then("the upgrade variation and interim are submitted")
+    public void theUpgradeVariationAndInterimAreSubmitted() {
+        assertTrue(isTitlePresent("Application overview", 30));
+        String warningText = getText("//span[@class='govuk-warning-text__icon']/following-sibling::strong[1]", SelectorType.XPATH);
+        assertTrue(warningText.contains(upgradeInterimSubmittedText1));
+        assertTrue(warningText.contains(upgradeInterimSubmittedText2));
+        assertTrue(warningText.contains(upgradeInterimSubmittedText3));
     }
 }

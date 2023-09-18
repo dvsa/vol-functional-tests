@@ -280,4 +280,13 @@ public class InterimLicence extends BasePage {
         assertFalse(isTextPresent(interimOfferText));
         assertFalse(isElementPresent(interimRadioYes, SelectorType.XPATH));
     }
+
+    @And("i request an interim authority on the {string}")
+    public void iRequestAnInterimAuthority(String applicationType) {
+        world.selfServeNavigation.navigateToPage(applicationType, SelfServeSection.REVIEW_AND_DECLARATIONS);
+        click("(//input[@name='declarationsAndUndertakings[declarationConfirmation]'])[2]", SelectorType.XPATH);
+        click(interimRadioYes, SelectorType.XPATH);
+        waitAndEnterText("applicationInterimReason", SelectorType.ID, "I request an interim");
+        world.UIJourney.clickSubmit();
+    }
 }
