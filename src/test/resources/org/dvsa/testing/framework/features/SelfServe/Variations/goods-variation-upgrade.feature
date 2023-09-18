@@ -1,7 +1,7 @@
 @ss_regression
 @SS-GOODS-VAR-UPGRADE
 
-Feature: Goods variation upgrade of licence type
+Feature: Goods variation upgrade with interim
 
   Scenario: Goods variation to upgrade from Restricted to Standard National
     Given i have a valid "goods" "restricted" licence
