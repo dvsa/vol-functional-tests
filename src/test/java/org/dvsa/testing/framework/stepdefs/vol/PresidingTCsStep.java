@@ -34,12 +34,17 @@ public class PresidingTCsStep extends BasePage {
         assertTrue(isTextPresent(world.DataGenerator.getOperatorForeName()));
     }
 
-    @When("i add a Presiding TC and then create a Submission")
+    @When("I add a Presiding TC and then create a Submission")
     public void iAddAPresidingTCAndThenCreateASubmission() {
         world.internalNavigation.adminNavigation(AdminOption.PRESIDING_TCS);
         world.submissionsJourney.addPresidingTC();
         world.internalNavigation.getLicence();
         world.submissionsJourney.createAndSubmitSubmission();
         world.submissionsJourney.setInfoCompleteAndAssignSubmission();
+    }
+
+    @Then("I can view the added Presiding TC in the drop down list")
+    public void iCanViewTheAddedPresidingTCInTheDropDownList() {
+        assertTrue(isTextPresent(getSelectedValue()));
     }
 }

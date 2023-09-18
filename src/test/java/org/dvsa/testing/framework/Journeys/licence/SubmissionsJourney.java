@@ -20,7 +20,6 @@ public class SubmissionsJourney extends BasePage {
         String operatorForename = world.DataGenerator.getOperatorForeName();
         waitAndEnterText("presidingTcDetails[name]",SelectorType.ID, operatorForename);
         world.UIJourney.clickSubmit();
-        world.genericUtils.navigateToUserLink(operatorForename);
     }
 
     public void createAndSubmitSubmission() {
@@ -38,9 +37,9 @@ public class SubmissionsJourney extends BasePage {
         waitAndClick("Assign submission", SelectorType.LINKTEXT);
         waitForTextToBePresent("Assign to:");
         clickByXPath("//*[@id='tcOrOther']");
-        clickByXPath("//*[@id='fields[urgent]']");
-        selectRandomValueFromDropDown("user");
-        world.UIJourney.clickSubmit();
+        clickByXPath("//*[@id='presidingTcUser_chosen']");
+        waitAndEnterText("//*[@id='presidingTcUser_chosen']/div/div/input", SelectorType.XPATH, getSelectedValue());
+        waitAndClick("//*[@id='presidingTcUser_chosen']/div/ul/li[2]", SelectorType.XPATH);
     }
 
 
