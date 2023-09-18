@@ -35,7 +35,6 @@ Feature: Public enquiry added and published and deletion of case notes
       When I add a Presiding TC and then create a Submission
       Then I can view the added Presiding TC in the drop down list
 
-
   @Create_Complaint
   Scenario: UI - Creating a case with a complaint
     And I navigate to a case

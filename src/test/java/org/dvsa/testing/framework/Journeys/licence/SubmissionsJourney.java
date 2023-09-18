@@ -23,7 +23,7 @@ public class SubmissionsJourney extends BasePage {
     }
 
     public void createAndSubmitSubmission() {
-        click("//*[@id='menu-licence/cases']", SelectorType.XPATH);
+        waitAndClick("//*[@id='menu-licence/cases']", SelectorType.XPATH);
         clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
         clickByLinkText("Submissions");
         waitAndClick("add", SelectorType.ID);

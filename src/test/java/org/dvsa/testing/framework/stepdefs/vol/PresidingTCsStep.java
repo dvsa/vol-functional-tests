@@ -38,6 +38,7 @@ public class PresidingTCsStep extends BasePage {
     public void iAddAPresidingTCAndThenCreateASubmission() {
         world.internalNavigation.adminNavigation(AdminOption.PRESIDING_TCS);
         world.submissionsJourney.addPresidingTC();
+        refreshPage();
         world.internalNavigation.getLicence();
         world.submissionsJourney.createAndSubmitSubmission();
         world.submissionsJourney.setInfoCompleteAndAssignSubmission();
