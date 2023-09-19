@@ -14,5 +14,3 @@ Feature: Admin wishes to add and delete a Presiding tc
     Then I can view the added Presiding TC in the drop down list
 
 
-
-
