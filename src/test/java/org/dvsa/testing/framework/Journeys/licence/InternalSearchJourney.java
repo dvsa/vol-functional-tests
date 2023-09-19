@@ -38,13 +38,6 @@ public class InternalSearchJourney extends BasePage {
         } while (!isTextPresent(world.DataGenerator.getOperatorUser()) && System.currentTimeMillis() < kickOut);
     }
 
-    public void searchForename() {
-        long kickOut = System.currentTimeMillis() + 200000;
-        do {
-            SearchNavBar.search(SearchType.Users, world.DataGenerator.getOperatorForeName());
-        } while (!isTextPresent(world.DataGenerator.getOperatorForeName()) && System.currentTimeMillis() < kickOut);
-    }
-
     public void searchAndViewCase() {
         String caseId = String.valueOf(world.updateLicence.getCaseId());
         internalSearchUntilTextPresent(SearchType.Case, caseId, caseId);
