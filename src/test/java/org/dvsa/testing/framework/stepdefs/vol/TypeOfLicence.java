@@ -155,7 +155,7 @@ public class TypeOfLicence extends BasePage {
     public void aCaseworkerGoesToApplyForAGoodsStandard_internationalLicence() throws HttpException {
         String organisationId = world.userDetails.getOrganisationId().substring(1, world.userDetails.getOrganisationId().length() - 1);
         String internalOrganisationUrl = String.format("%soperator/%s/licences/", URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), organisationId);
-        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
+        world.internalNavigation.loginIntoInternal();
         get(internalOrganisationUrl);
         waitForTitleToBePresent(world.registerUser.getOrganisationName());
         clickByLinkText("New application");
