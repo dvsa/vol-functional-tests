@@ -3,15 +3,15 @@
 Feature: Admin wishes to add and delete a Presiding tc
 
   Background:
-    Given i have an internal admin user
-    When I am on the Presiding TC page
+    Given i have a valid "goods" "standard_national" licence
+    And I create a new case
+    And i have logged in to internal
+    When i url search for my licence
 
-  Scenario: Admin adds a Presiding TC
-    Given an admin adds a Presiding TC
-    And the Presiding TC should be displayed
-
-
-
+  Scenario: UI - New Transport Manager added to a submission
+    Given I am on the Presiding TC page
+    When I add a Presiding TC and then create a Submission
+    Then I can view the added Presiding TC in the drop down list
 
 
 
