@@ -175,30 +175,6 @@ public class GenericUtils extends BasePage {
         throw new RuntimeException("Reset password link not found in HTML content.");
     }
 
-    public void navigateToUserLink(String dynamicName) {
-        String pageSource = getDriver().getPageSource();
-        org.jsoup.nodes.Document doc = Jsoup.parse(pageSource);
-        Elements nameCells = doc.select("td.govuk-table__cell");
-        for (Element nameCell : nameCells) {
-            if (nameCell.text().trim().equals(dynamicName)) {
-                Element linkCell = nameCell.nextElementSibling();
-                Element link = linkCell.selectFirst("a.govuk-link");
-                if (link != null) {
-                    String linkHref = link.attr("href");
-                    try {
-                        URI currentUri = new URI(getCurrentUrl());
-                        URI linkUri = new URI(linkHref);
-                        URI finalUri = currentUri.resolve(linkUri);
-                        get(finalUri.toString());
-                    } catch (URISyntaxException e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                }
-            }
-        }
-    }
-
     public static String getDates(String state, int months) {
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
