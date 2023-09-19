@@ -6,6 +6,7 @@ Feature: Add a director variation
     Given i have a valid "public" "standard_international" licence
     And i navigate to the "licence" directors page
 
+  @director-no-convictions
   Scenario: Director without any convictions
     When I begin adding a new director and their details
     And i enter "No" to financial details question
@@ -14,6 +15,7 @@ Feature: Add a director variation
     Then a new director should be added to my licence
     And a non urgent task is created in internal
 
+  @director-convictions
   Scenario: Director with convictions and bankruptcy
     When I begin adding a new director and their details
     And i enter "Yes" to financial details question

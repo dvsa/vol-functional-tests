@@ -5,6 +5,8 @@ import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import java.util.Objects;
+
 public class BusinessDetailsJourney extends BasePage {
     private World world;
     FakerUtils faker = new FakerUtils();
@@ -15,16 +17,22 @@ public class BusinessDetailsJourney extends BasePage {
 
     public void addBusinessDetails() {
         waitForTitleToBePresent("Business details");
-        if(getAttribute("data[companyNumber][company_number]", SelectorType.ID, "value").equals("")) {
-            waitAndEnterText("data[companyNumber][company_number]", SelectorType.ID, "12345678");
+        if(getAttribute("data[companyNumber][company_number]", SelectorType.ID, "value").equals("") &&
+                (!Objects.equals(world.configuration.env.toString(), "local"))) {
+            enterText("data[companyNumber][company_number]", SelectorType.ID, "12345678");
             waitAndClick("data[companyNumber][submit_lookup_company]", SelectorType.ID);
-            waitAndEnterText("natureOfBusiness", SelectorType.ID, faker.generateCompanyName());
+            enterText("natureOfBusiness", SelectorType.ID, faker.generateCompanyName());
         }
-        enterAddress();
+        if(Objects.equals(world.configuration.env.toString(), "local")){
+            enterText("data[companyNumber][company_number]", SelectorType.ID, "12345678");
+            enterText("natureOfBusiness", SelectorType.ID, faker.generateCompanyName());
+            enterRegisteredAddress();
+        }
+        enterCorrespondenceAddress();
         UIJourney.clickSaveAndContinue();
     }
 
-    public void enterAddress() {
+    public void enterCorrespondenceAddress() {
         UIJourney.clickSaveAndContinue();
         waitForTitleToBePresent("Addresses");
         waitAndEnterText("correspondence_address[searchPostcode][postcode]", SelectorType.NAME, "NG1 6LP");
@@ -32,5 +40,12 @@ public class BusinessDetailsJourney extends BasePage {
         waitAndSelectByIndex( "//*[@id='selectAddress1']", SelectorType.XPATH, 1);
         waitAndEnterText("contact[phone_primary]", SelectorType.NAME, "07123456780");
         waitAndEnterText("contact[email]", SelectorType.NAME, faker.bothify("????????##@volTest.org"));
+    }
+
+    public void enterRegisteredAddress(){
+        enterText("registeredAddress[addressLine1]", SelectorType.NAME, faker.generateAddress().get("addressLine1"));
+        enterText("registeredAddress[addressLine2]", SelectorType.NAME, faker.generateAddress().get("addressLine2"));
+        enterText("registeredAddress[town]", SelectorType.NAME, faker.generateAddress().get("addressLine4"));
+        enterText("registeredAddress[postcode]", SelectorType.NAME, "NG1 6LP");
     }
 }

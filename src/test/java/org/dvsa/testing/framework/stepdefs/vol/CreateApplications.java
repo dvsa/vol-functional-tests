@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;

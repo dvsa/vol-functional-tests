@@ -36,6 +36,7 @@ public class PsvSurrenders extends BasePage {
     @And("the surrender status is {string}")
     public void theSurrenderStatusIs(String status) {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
+        refreshPage();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), status.toUpperCase());
     }
 

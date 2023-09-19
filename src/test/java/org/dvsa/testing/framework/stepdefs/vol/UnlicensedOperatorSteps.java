@@ -50,12 +50,15 @@ public class UnlicensedOperatorSteps extends BasePage {
     @Then("the operator should be created")
     public void theOperatorShouldBeCreated() {
         assertTrue(isTextPresent("The operator has been created successfully"));
+        assertTrue(isTextPresent(operatorName));
     }
 
     @And("searchable in internal")
     public void searchableInInternal() {
-        world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Licence,operatorName,operatorName);
-        assertTrue(isTitlePresent(operatorName, 4));
+        if (!world.configuration.env.toString().equals("local")) {
+            world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Licence, operatorName, operatorName);
+            assertTrue(isTitlePresent(operatorName, 4));
+        }
     }
 
     @Then("i should be able to add vehicles")

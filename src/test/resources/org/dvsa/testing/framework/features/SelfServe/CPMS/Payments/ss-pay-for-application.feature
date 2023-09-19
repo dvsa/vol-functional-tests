@@ -1,4 +1,3 @@
-@SS
 @ss-pay-app
 @ss_regression @FullRegression
 Feature: Self Serve Apply for licence
@@ -16,7 +15,7 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
-  @stored_cards @smoketest @printAndSign
+  @stored_cards @smoketest @printAndSign @localsmoke
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_west |

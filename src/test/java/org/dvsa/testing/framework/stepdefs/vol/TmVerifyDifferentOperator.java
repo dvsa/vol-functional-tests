@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -48,7 +49,10 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @And("i sign the declaration")
     public void iSignTheDeclaration() {
-        world.UIJourney.signDeclaration();
+        world.UIJourney.signDeclarationManually();
+        if(Browser.navigate().getCurrentUrl().contains("transport-managers")) {
+            assertTrue(isTextPresent("Awaiting operator review"));
+        }
     }
 
     @When("i add an operator as a transport manager")
@@ -86,14 +90,20 @@ public class TmVerifyDifferentOperator extends BasePage{
     }
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
-        waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         world.UIJourney.clickSubmit();
-        click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        world.UIJourney.clickSubmit();
+        if(isTitlePresent("Declaration",2)){
+            world.UIJourney.clickSubmit();
+            clickByLinkText("print");
+            ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
+            switchToWindow(tabs.get(0));
+        }else {
+            click("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            world.UIJourney.clickSubmit();
+        }
     }
 
     @When("i add new person as a transport manager and they fill out their details")
@@ -201,7 +211,13 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @And("the user chooses to print and sign")
     public void theUserChoosesToPrintAndSign() {
-        click("//*[@id=\"content[isDigitallySigned]\"]", SelectorType.XPATH);
+        waitAndClick("Print", SelectorType.PARTIALLINKTEXT);
+        waitForTitleToBePresent("What you need to do next");
+        waitAndClick("Print", SelectorType.PARTIALLINKTEXT);
+        ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
+        switchToWindow(tabs.get(0));
+        waitForTitleToBePresent("What you need to do next");
+        waitAndClick("//*[contains(text(),'Return to home')]", SelectorType.XPATH);
     }
 
     @Then("the declaration text and verify button are not displayed")
@@ -229,5 +245,14 @@ public class TmVerifyDifferentOperator extends BasePage{
         waitForTextToBePresent("List of Transport Managers");
         assertTrue(isTextPresent(world.registerUser.getForeName()+" "+world.registerUser.getFamilyName()));
         assertTrue(isTextPresent(world.registerUser.getEmailAddress()));
+    }
+
+    @And("the TM print and signs")
+    public void theTMPrintAndSigns() {
+        clickByLinkText("Print");
+        clickByLinkText("Print");
+        ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
+        switchToWindow(tabs.get(0));
+        waitAndClick("//*[contains(text(),'Return to home')]", SelectorType.XPATH);
     }
 }
