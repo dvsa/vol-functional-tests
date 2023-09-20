@@ -1,4 +1,4 @@
-package org.dvsa.testing.framework.stepdefs.lgv;
+package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
@@ -31,7 +31,7 @@ public class TypeOfLicence extends BasePage {
     @Given("I apply for a {string} {string} {string} {string} {string} licence")
     public void iApplyForALicence(String licenceWhere, String operatorType, String licenceType, String vehicleType, String lgvUndertaking) {
         clickByLinkText("Apply for a new licence");
-        world.typeOfLicence.chooseGBOrNI(licenceWhere);
+        world.typeOfLicenceJourney.chooseGBOrNI(licenceWhere);
         if (licenceWhere.equals("GB")) {
             clickByXPath("//input[@value='" + OperatorType.valueOf(operatorType.toUpperCase()).asString() + "']");
         }
@@ -41,7 +41,7 @@ public class TypeOfLicence extends BasePage {
     @Given("I {string} the LGV undertaking declaration checkbox")
     public void iCheckTheLGVUndertakingDeclaration(String checkBoxAction) {
         if (checkBoxAction.equals("select")){
-            clickByXPath(world.typeOfLicence.lgvDeclarationCheckbox);
+            clickByXPath(world.typeOfLicenceJourney.lgvDeclarationCheckbox);
         }
     }
 
@@ -88,11 +88,11 @@ public class TypeOfLicence extends BasePage {
 
         if (newType.equals("lgv_only_fleet")) {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                assertEquals(world.typeOfLicence.expectedLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                assertEquals(world.typeOfLicenceJourney.expectedLgvOnlyStatusArray[i], applicationOverviewStatusElements.get(i).getText());
             }
         } else {
             for (int i = 0; i < applicationOverviewStatusElements.size(); i++) {
-                assertEquals(world.typeOfLicence.expectedStandardNationalOrMixedFleetStatusArray[i], applicationOverviewStatusElements.get(i).getText());
+                assertEquals(world.typeOfLicenceJourney.expectedStandardNationalOrMixedFleetStatusArray[i], applicationOverviewStatusElements.get(i).getText());
             }
         }
     }
@@ -101,21 +101,21 @@ public class TypeOfLicence extends BasePage {
     public void iManuallyApplyForAGoodsStandardInternationalLicence(String licenceWhere) {
         clickByLinkText("Apply for a new licence");
         waitForTitleToBePresent("Type of licence");
-        world.typeOfLicence.chooseGBOrNI(licenceWhere);
+        world.typeOfLicenceJourney.chooseGBOrNI(licenceWhere);
         if (licenceWhere.equals("GB"))
-            click(world.typeOfLicence.goodsLicence, SelectorType.XPATH);
-        click(world.typeOfLicence.standardInternational, SelectorType.XPATH);
+            click(world.typeOfLicenceJourney.goodsLicence, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.standardInternational, SelectorType.XPATH);
     }
 
     @Then("i am prompted with the choice of LGV Mixed and LGV Only applications")
     public void iAmPromptedWithTheChoiceOfLGVMixedAndLGVOnlyApplications() {
-        world.typeOfLicence.isLGVChoiceTextAndRadioButtonsPresent();
+        world.typeOfLicenceJourney.isLGVChoiceTextAndRadioButtonsPresent();
     }
 
     @And("i choose to have light goods vehicles only and click save and continue")
     public void iChooseToHaveLightGoodsVehiclesOnlyAndClickSaveAndContinue() {
-        click(world.typeOfLicence.lgvOnly, SelectorType.XPATH);
-        click(world.typeOfLicence.lgvDeclarationCheckbox, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.lgvDeclarationCheckbox, SelectorType.XPATH);
         UIJourney.clickSaveAndContinue();
         String url = navigate().getCurrentUrl();
         world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 1));
@@ -123,7 +123,7 @@ public class TypeOfLicence extends BasePage {
 
     @And("i choose to have mixed vehicles and click save and continue")
     public void iChooseToHaveMixedVehiclesAndClickSaveAndContinue() {
-        click(world.typeOfLicence.mixedFleet, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.mixedFleet, SelectorType.XPATH);
         UIJourney.clickSaveAndContinue();
         String url = navigate().getCurrentUrl();
         world.createApplication.setApplicationId(returnNthNumberSequenceInString(url, 1));
@@ -132,13 +132,13 @@ public class TypeOfLicence extends BasePage {
     @Then("the caseworker can review the {string} LGV Only choice on internal")
     public void theCaseworkerCanReviewTheLGVOnlyChoiceOnInternal(String choice) throws HttpException {
         world.internalNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
-        world.typeOfLicence.isLGVChoiceTextAndRadioButtonsPresent();
+        world.typeOfLicenceJourney.isLGVChoiceTextAndRadioButtonsPresent();
 
         if (choice.equals("yes")) {
-            assertTrue(findElement(world.typeOfLicence.lgvOnly, SelectorType.XPATH).isSelected());
-            assertTrue(findElement(world.typeOfLicence.lgvDeclarationCheckbox,SelectorType.XPATH).isSelected());
+            assertTrue(findElement(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH).isSelected());
+            assertTrue(findElement(world.typeOfLicenceJourney.lgvDeclarationCheckbox,SelectorType.XPATH).isSelected());
         } else {
-            assertTrue(findElement(world.typeOfLicence.mixedFleet, SelectorType.XPATH).isSelected());
+            assertTrue(findElement(world.typeOfLicenceJourney.mixedFleet, SelectorType.XPATH).isSelected());
         }
     }
 
@@ -155,13 +155,13 @@ public class TypeOfLicence extends BasePage {
     public void aCaseworkerGoesToApplyForAGoodsStandard_internationalLicence() throws HttpException {
         String organisationId = world.userDetails.getOrganisationId().substring(1, world.userDetails.getOrganisationId().length() - 1);
         String internalOrganisationUrl = String.format("%soperator/%s/licences/", URL.build(ApplicationType.INTERNAL, world.configuration.env).toString(), organisationId);
-        world.internalNavigation.navigateToPage("application", SelfServeSection.VIEW);
+        world.internalNavigation.loginIntoInternal();
         get(internalOrganisationUrl);
         waitForTitleToBePresent(world.registerUser.getOrganisationName());
         clickByLinkText("New application");
         waitForTextToBePresent("Application received");
-        click(world.typeOfLicence.goodsLicence, SelectorType.XPATH);
-        click(world.typeOfLicence.standardInternational, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.goodsLicence, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.standardInternational, SelectorType.XPATH);
         if (isElementPresent("//input[@id='appliedVia']", SelectorType.XPATH)) {
             click("//input[@id='appliedVia']", SelectorType.XPATH);
         }
@@ -169,14 +169,14 @@ public class TypeOfLicence extends BasePage {
 
     @When("i choose to have light goods vehicles only and click create")
     public void iChooseToHaveLightGoodsVehiclesOnlyAndClickCreate() {
-        click(world.typeOfLicence.lgvOnly, SelectorType.XPATH);
-        click(world.typeOfLicence.lgvDeclarationCheckbox, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.lgvDeclarationCheckbox, SelectorType.XPATH);
         world.UIJourney.clickSubmit();
     }
 
     @When("i choose to have mixed vehicles and create")
     public void iChooseToHaveMixedVehiclesAndCreate() {
-        click(world.typeOfLicence.mixedFleet, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.mixedFleet, SelectorType.XPATH);
         world.UIJourney.clickSubmit();
     }
 
@@ -200,7 +200,7 @@ public class TypeOfLicence extends BasePage {
 
     @And("i choose to have light goods vehicles only and click create without confirming the declaration")
     public void iChooseToHaveLightGoodsVehiclesOnlyAndClickCreateWithoutConfirmingTheDeclaration() {
-        click(world.typeOfLicence.lgvOnly, SelectorType.XPATH);
+        click(world.typeOfLicenceJourney.lgvOnly, SelectorType.XPATH);
         world.UIJourney.clickSubmit();
     }
 }

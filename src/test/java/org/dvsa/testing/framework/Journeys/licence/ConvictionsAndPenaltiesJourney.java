@@ -28,11 +28,15 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         this.world = world;
     }
 
-    public void answerNoToAllQuestionsAndSubmit() {
+    public void answerNoToAllQuestionsAndSubmit(String applicationType) {
         waitForTitleToBePresent("Convictions and Penalties");
         findSelectAllRadioButtonsByValue("N");
         clickById("convictionsConfirmation[convictionsConfirmation]");
-        UIJourney.clickSaveAndContinue();
+        if (applicationType.equals("application")) {
+            UIJourney.clickSaveAndContinue();
+        } else if (applicationType.equals("variation")) {
+            UIJourney.clickSaveAndReturn();
+        }
     }
 
     public void answerYesToAllQuestionsAndSubmit() {

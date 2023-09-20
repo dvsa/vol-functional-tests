@@ -22,7 +22,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.*;
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
@@ -552,7 +551,7 @@ public class UIJourney extends BasePage {
             if (!"no_selection".equals(vehicleType)) {
                 clickByXPath("//input[@value='" + VehicleType.valueOf(vehicleType.toUpperCase()).asString() + "']");
                 if (lgvUndertaking.equals("checked")) {
-                    clickByXPath(world.typeOfLicence.lgvDeclarationCheckbox);
+                    clickByXPath(world.typeOfLicenceJourney.lgvDeclarationCheckbox);
                 }
             }
         }
