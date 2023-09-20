@@ -9,7 +9,7 @@ Feature: Remove last Transport Manager (TM) pop up
   Background:
     Given i have an application with a transport manager
 
-  @last-tm-internal @localsmoke
+  @last-tm-internal
   Scenario: Last TM is removed displays a pop up
     Given the licence has been granted
     When the internal user goes to remove the last transport manager
