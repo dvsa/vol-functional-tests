@@ -64,12 +64,14 @@ public class DirectorJourney extends BasePage {
 
     public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties() {
         click(addButton, SelectorType.XPATH);
-        if (isTitlePresent(directorDetailsTitle,3)) {
+        if (isTitlePresent(directorDetailsTitle,30)) {
             addPersonDetails();
-        } else if (isTitlePresent(directorVariationDetailsTitle,3)) {
+        } else if (isTitlePresent(directorVariationDetailsTitle,30)) {
             addDirectorDetails();
         }
         completeDirectorFinancialHistory("N");
+        completeLicenceHistory("N");
+        completeConvictionsAndPenalties("N");
     }
 
     public void addDirectorDetails()  {

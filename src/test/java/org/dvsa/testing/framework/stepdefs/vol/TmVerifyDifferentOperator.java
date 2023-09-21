@@ -49,10 +49,7 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @And("i sign the declaration")
     public void iSignTheDeclaration() {
-        world.UIJourney.signDeclarationManually();
-        if(Browser.navigate().getCurrentUrl().contains("transport-managers")) {
-            assertTrue(isTextPresent("Awaiting operator review"));
-        }
+        world.UIJourney.signDeclaration();
     }
 
     @When("i add an operator as a transport manager")
@@ -90,20 +87,14 @@ public class TmVerifyDifferentOperator extends BasePage{
     }
     @And("the operator countersigns by print and sign")
     public void theOperatorCountersignsByPrintAndSign() {
+        waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
         world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         world.UIJourney.clickSubmit();
-        if(isTitlePresent("Declaration",2)){
-            world.UIJourney.clickSubmit();
-            clickByLinkText("print");
-            ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
-            switchToWindow(tabs.get(0));
-        }else {
-            click("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            world.UIJourney.clickSubmit();
-        }
+        click("//*[contains(text(),'Print')]", SelectorType.XPATH);
+        world.UIJourney.clickSubmit();
     }
 
     @When("i add new person as a transport manager and they fill out their details")
@@ -125,6 +116,7 @@ public class TmVerifyDifferentOperator extends BasePage{
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
+        waitForElementToBePresent("//*[@id='emailAddress']");
         click("submit", SelectorType.ID);
         waitForTextToBePresent("The link has been e-mailed");
     }
@@ -211,13 +203,7 @@ public class TmVerifyDifferentOperator extends BasePage{
 
     @And("the user chooses to print and sign")
     public void theUserChoosesToPrintAndSign() {
-        waitAndClick("Print", SelectorType.PARTIALLINKTEXT);
-        waitForTitleToBePresent("What you need to do next");
-        waitAndClick("Print", SelectorType.PARTIALLINKTEXT);
-        ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
-        switchToWindow(tabs.get(0));
-        waitForTitleToBePresent("What you need to do next");
-        waitAndClick("//*[contains(text(),'Return to home')]", SelectorType.XPATH);
+        click("//*[@id=\"content[isDigitallySigned]\"]", SelectorType.XPATH);
     }
 
     @Then("the declaration text and verify button are not displayed")

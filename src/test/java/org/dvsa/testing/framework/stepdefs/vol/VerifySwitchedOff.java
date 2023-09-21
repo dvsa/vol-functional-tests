@@ -12,11 +12,13 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class VerifySwitchedOff extends BasePage{
+public class VerifySwitchedOff extends BasePage {
     private final World world;
     Initialisation initialisation;
+
     public VerifySwitchedOff(World world) {
         this.world = world;
         this.initialisation = new Initialisation(world);
@@ -40,7 +42,8 @@ public class VerifySwitchedOff extends BasePage{
 
     @And("transport manager status is {string} and {string}")
     public void transportManagerStatusIs(String classString, String Text) {
-        assertTrue(isElementPresent(String.format("//*[contains(@class,'status %s') and contains(text(),'%s')]", classString, Text), SelectorType.XPATH));
+        assertTrue(isElementPresent(String.format("//*[@class='govuk-tag govuk-tag--%s']", classString), SelectorType.XPATH));
+        assertTrue(getText(String.format("//*[@class='govuk-tag govuk-tag--%s']", classString), SelectorType.XPATH).equals(Text.toUpperCase()));
     }
 
     @And("submit to operator button is displayed")
