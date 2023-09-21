@@ -229,6 +229,7 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
         if (isTitlePresent("Review and declarations", 10)) {
             click("//*[@name='declarationsAndUndertakings[signatureOptions]']", SelectorType.XPATH);
+            waitAndClick("form-actions[sign]", SelectorType.NAME);
         } else if (isTitlePresent("Declaration", 10)) {
             waitAndClick(submitButton, SelectorType.ID);
         }
