@@ -14,10 +14,13 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 import static activesupport.database.DBUnit.executeUpdateSQL;
 import static java.lang.Thread.sleep;
@@ -118,5 +121,20 @@ public class RemoveTM extends BasePage {
         sleep(10000);
         boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
         assertTrue(letterExists);
+    }
+
+    @And("the user confirms a letter should be issued")
+    public void theUserConfirmsALetterShouldBeIssued() {
+        waitForTextToBePresent(alertHeaderValue);
+        findSelectAllRadioButtonsByValue("Y");
+        world.UIJourney.clickSubmit();
+    }
+
+    @And("the last TM letter job is run")
+    public void theLastTMLetterJobIsRun() throws IOException {
+  //      EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+        String []command = {"curl -X POST -L --user culshawn:" + world.configuration.jenkinsAPIKey + " https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli/buildWithParameters/Run&&on&&Nodes=qa&&api&&olcs&COMMAND=last-tm-letter"};
+        Process process = Runtime.getRuntime().exec(command);
+        process.getInputStream();
     }
 }
