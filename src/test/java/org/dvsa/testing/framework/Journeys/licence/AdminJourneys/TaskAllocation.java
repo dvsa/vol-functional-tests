@@ -31,7 +31,7 @@ public class TaskAllocation extends BasePage {
     public void selectSystemTeam() {
         selectValueFromDropDown("assignedToTeam", SelectorType.ID, "System Team");
         waitAndClick("assignedToUser", SelectorType.ID);
-        String ownerName = selectRandomValueFromDropDown("assignedToUser");
+        String ownerName = selectRandomValueFromDropDown("assignedToUser", SelectorType.ID);
         world.taskAllocationRulesJourney.setOwnerName(ownerName);
         waitAndClick("assignedToUser", SelectorType.ID);
     }

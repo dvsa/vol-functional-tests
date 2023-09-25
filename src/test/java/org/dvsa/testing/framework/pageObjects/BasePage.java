@@ -146,8 +146,24 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
-        public static String selectRandomValueFromDropDown(String id) {
-            Select select = new Select(getDriver().findElement(By.id(id)));
+    private static By createBySelector(String selector, SelectorType selectorType) {
+        switch (selectorType) {
+            case ID:
+                return By.id(selector);
+            case NAME:
+                return By.name(selector);
+            case XPATH:
+                return By.xpath(selector);
+            case CSS:
+                return By.cssSelector(selector);
+            default:
+                throw new IllegalArgumentException("Unsupported SelectorType: " + selectorType);
+        }
+    }
+
+        public static String selectRandomValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
+            By bySelector = createBySelector(selector, selectorType);
+            Select select = new Select(getDriver().findElement(bySelector));
             List<WebElement> options = select.getOptions();
             options = options.stream()
                     .filter(option -> option.getText() != null && !option.getText().isEmpty())

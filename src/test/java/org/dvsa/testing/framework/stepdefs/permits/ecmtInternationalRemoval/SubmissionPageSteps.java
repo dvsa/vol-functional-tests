@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
+import io.cucumber.java.en.Given;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -91,5 +92,25 @@ public class SubmissionPageSteps extends BasePermitPage{
         HomePage.PermitsTab.selectFirstOngoingApplication();
         OverviewPageJourney.clickOverviewSection(OverviewSection.Declaration);
         DeclarationPageJourney.completeDeclaration();
+    }
+
+    @Given("I have a submission")
+    public void iHaveASubmission() {
+        world.internalNavigation.getLicence();
+        world.submissionsJourney.createAndSubmitSubmission();
+    }
+
+    @And("I edit that submission")
+    public void iEditThatSubmission() {
+        clickByLinkText("Edit submission");
+        selectRandomValueFromDropDown("fields[submissionSections][submissionType]", SelectorType.NAME);
+        world.UIJourney.clickSubmit();
+    }
+
+    @Then("The change should be displayed on the Submission detail page")
+    public void theChangeShouldBeDisplayedOnTheSubmissionDetailPage() {
+        waitForElementToBePresent("//div[@class='read-only__header']//h3[1]");
+        String submissionBanner = getText("//div[@class='read-only__header']//h3[1]", SelectorType.XPATH);
+        assertTrue(isTextPresent(submissionBanner));
     }
 }
