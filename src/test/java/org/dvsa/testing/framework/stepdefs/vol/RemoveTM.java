@@ -11,6 +11,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -132,9 +133,8 @@ public class RemoveTM extends BasePage {
 
     @And("the last TM letter job is run")
     public void theLastTMLetterJobIsRun() throws IOException {
-  //      EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        String []command = {"curl -X POST -L --user culshawn:" + world.configuration.jenkinsAPIKey + " https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli/buildWithParameters/Run&&on&&Nodes=qa&&api&&olcs&COMMAND=last-tm-letter"};
-        Process process = Runtime.getRuntime().exec(command);
-        process.getInputStream();
+        //      EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+        // String []command = {"curl -X POST -L --user culshawn:" + world.configuration.jenkinsAPIKey + " https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli/buildWithParameters/Run&&on&&Nodes=qa&&api&&olcs&COMMAND=last-tm-letter"};
+        GenericUtils.jenkinsTest("culshawn",world.configuration.config.getString("enkinsAPIKey"));
     }
 }

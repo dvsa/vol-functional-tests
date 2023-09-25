@@ -12,7 +12,6 @@ public class Configuration {
     public Config config = new activesupport.config.Configuration(env.toString()).getConfig();
     public Mailhog mailhog = new Mailhog();
     private final World world;
-    public String jenkinsAPIKey;
 
     public Configuration(World world) {
         this.world = world;
