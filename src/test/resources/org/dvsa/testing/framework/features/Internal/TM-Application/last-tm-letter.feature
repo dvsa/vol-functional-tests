@@ -1,3 +1,7 @@
+@LAST-TM-LETTER
+@int_regression
+@FullRegression
+
 Feature: Last TM letter sent
 
   Background:
@@ -7,5 +11,5 @@ Feature: Last TM letter sent
       When the licence has been granted
       And the internal user goes to remove the last transport manager
       And the user confirms a letter should be issued
-      And the last TM letter job is run
-      Then the TM email should be generated and letter attached
+      Then the last TM letter job is run
+      And the last TM letter should be sent

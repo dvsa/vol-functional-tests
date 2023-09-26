@@ -8,6 +8,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.io.FileUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
@@ -363,15 +364,16 @@ public class GenericUtils extends BasePage {
         HttpResponse response = httpClient.execute(host, httpPost, localContext);
         return response.getStatusLine().getStatusCode();
     }
-      public static void jenkinsTest(String username, String password) throws IOException {
-        String node = URLEncoder.encode("qa&&api&&olcs");
+      public static boolean jenkinsTest(EnvironmentType env, String username, String password) throws IOException, InterruptedException {
+        String node = URLEncoder.encode(env + "&&api&&olcs");
         String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli/" +
                 "buildWithParameters?Run+on+Nodes=%s&COMMAND=last-tm-letter", node);
 
         int statusCode = kickOffJenkinsJob(Jenkins_Url,username,password);
         //you can assert against the status code here == 201
-          assert statusCode == 201;
+        return(statusCode==201);
+          }
     }
 
-}
+
 

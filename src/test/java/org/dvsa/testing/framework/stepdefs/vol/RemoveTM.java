@@ -132,9 +132,16 @@ public class RemoveTM extends BasePage {
     }
 
     @And("the last TM letter job is run")
-    public void theLastTMLetterJobIsRun() throws IOException {
-        //      EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        // String []command = {"curl -X POST -L --user culshawn:" + world.configuration.jenkinsAPIKey + " https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli/buildWithParameters/Run&&on&&Nodes=qa&&api&&olcs&COMMAND=last-tm-letter"};
-        GenericUtils.jenkinsTest("culshawn",world.configuration.config.getString("enkinsAPIKey"));
+    public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
+        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+        assertTrue(GenericUtils.jenkinsTest(env,"culshawn",world.configuration.config.getString("jenkinsAPIKey")));
+    }
+
+    @And("the last TM letter should be sent")
+    public void theLastTMLetterShouldBeSent() throws InterruptedException, HttpException {
+        sleep(10000);
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
+        clickByLinkText("Docs & attachments");
+        assertTrue(isTextPresent("Last TM letter"));
     }
 }
