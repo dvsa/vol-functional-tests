@@ -104,12 +104,12 @@ public class SubmissionPageSteps extends BasePermitPage{
     public void iEditThatSubmission() {
         clickByLinkText("Edit submission");
         selectRandomValueFromDropDown("fields[submissionSections][submissionType]", SelectorType.NAME);
+        refreshPage();
         world.UIJourney.clickSubmit();
     }
 
     @Then("The change should be displayed on the Submission detail page")
     public void theChangeShouldBeDisplayedOnTheSubmissionDetailPage() {
-        waitForElementToBePresent("//div[@class='read-only__header']//h3[1]");
         String submissionBanner = getText("//div[@class='read-only__header']//h3[1]", SelectorType.XPATH);
         assertTrue(isTextPresent(submissionBanner));
     }
