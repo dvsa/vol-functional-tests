@@ -1,12 +1,13 @@
-@sub-app @ss_regression @printAndSign @localsmoke
+@INT-SMOKE @sub-app @ss_regression @localsmoke
 Feature: Complete an application manually
 
   Scenario Outline: Submit an application
-    Given i have a "<OperatorType>" application in progress
-    And i submit and pay for the application
-    Then the application should be under consideration
+    Given i have a self serve account
+    And i have no existing applications
+    And i submit and pay for a "<Licence>" licence application
+    Then the licence should be granted by a caseworker
+    And the application status should be "Awaiting grant fee"
 
     Examples:
-      | OperatorType |
-      | Goods        |
-
+      | Licence |
+      | Goods   |
