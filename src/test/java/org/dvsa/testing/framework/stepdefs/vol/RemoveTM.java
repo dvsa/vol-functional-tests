@@ -134,12 +134,12 @@ public class RemoveTM extends BasePage {
     @And("the last TM letter job is run")
     public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
-        assertTrue(GenericUtils.jenkinsTest(env,"culshawn",world.configuration.config.getString("jenkinsAPIKey")));
+        assertTrue(GenericUtils.jenkinsTest(env,world.configuration.config.getString("jenkinsUser"),world.configuration.config.getString("jenkinsAPIKey")));
     }
 
     @And("the last TM letter should be sent")
     public void theLastTMLetterShouldBeSent() throws InterruptedException, HttpException {
-        sleep(10000);
+        sleep(20000);
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Docs & attachments");
         assertTrue(isTextPresent("Last TM letter"));
