@@ -11,13 +11,17 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.utils.EnvironmentType;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
 import static activesupport.database.DBUnit.executeUpdateSQL;
 import static java.lang.Thread.sleep;
@@ -118,5 +122,26 @@ public class RemoveTM extends BasePage {
         sleep(10000);
         boolean letterExists = S3.checkLastTMLetterAttachment(email, licenceNo);
         assertTrue(letterExists);
+    }
+
+    @And("the user confirms a letter should be issued")
+    public void theUserConfirmsALetterShouldBeIssued() {
+        waitForTextToBePresent(alertHeaderValue);
+        findSelectAllRadioButtonsByValue("Y");
+        world.UIJourney.clickSubmit();
+    }
+
+    @And("the last TM letter job is run")
+    public void theLastTMLetterJobIsRun() throws IOException, InterruptedException {
+        EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
+        assertTrue(GenericUtils.jenkinsTest(env,world.configuration.config.getString("jenkinsUser"),world.configuration.config.getString("jenkinsAPIKey")));
+    }
+
+    @And("the last TM letter should be sent")
+    public void theLastTMLetterShouldBeSent() throws InterruptedException, HttpException {
+        sleep(20000);
+        world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
+        clickByLinkText("Docs & attachments");
+        assertTrue(isTextPresent("Last TM letter"));
     }
 }
