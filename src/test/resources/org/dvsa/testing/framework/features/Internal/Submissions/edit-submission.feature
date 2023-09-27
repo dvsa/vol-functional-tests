@@ -11,3 +11,9 @@ Feature: Internal users wishes to edit a submission
       Given I have a submission
       And I edit that submission
       Then The change should be displayed on the Submission detail page
+
+      Scenario: Internal user adds comments to a submission
+        Given I have a submission
+        And I add a comment under the TM section
+        Then that comment should be displayed
+

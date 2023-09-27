@@ -102,15 +102,22 @@ public class SubmissionPageSteps extends BasePermitPage{
 
     @And("I edit that submission")
     public void iEditThatSubmission() {
-        clickByLinkText("Edit submission");
-        selectRandomValueFromDropDown("fields[submissionSections][submissionType]", SelectorType.NAME);
-        refreshPage();
-        world.UIJourney.clickSubmit();
+        world.submissionsJourney.editSubmission();
     }
 
     @Then("The change should be displayed on the Submission detail page")
     public void theChangeShouldBeDisplayedOnTheSubmissionDetailPage() {
         String submissionBanner = getText("//div[@class='read-only__header']//h3[1]", SelectorType.XPATH);
         assertTrue(isTextPresent(submissionBanner));
+    }
+
+    @And("I add a comment under the TM section")
+    public void iAddACommentUnderTheTMSection() {
+        world.submissionsJourney.addTransportManagerComments();
+    }
+
+    @Then("that comment should be displayed")
+    public void thatCommentShouldBeDisplayed() {
+        assertTrue(isTextPresent(world.DataGenerator.getRandomWord()));
     }
 }

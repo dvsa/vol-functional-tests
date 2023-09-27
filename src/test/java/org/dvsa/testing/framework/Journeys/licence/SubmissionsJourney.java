@@ -41,4 +41,18 @@ public class SubmissionsJourney extends BasePage {
         waitAndEnterText("//*[@id='presidingTcUser_chosen']/div/div/input", SelectorType.XPATH, getSelectedValue());
         waitAndClick("//*[@id='presidingTcUser_chosen']/div/ul/li[2]", SelectorType.XPATH);
     }
+
+    public void editSubmission() {
+        clickByLinkText("Edit submission");
+        selectRandomValueFromDropDown("fields[submissionSections][submissionType]", SelectorType.NAME);
+        refreshPage();
+        world.UIJourney.clickSubmit();
+    }
+
+    public void addTransportManagerComments(){
+        clickByXPath("//form[@name='transport-managers-section-attachments']/following-sibling::a[1]");
+        waitAndEnterText("fields[comment]_ifr",SelectorType.ID, "-" + world.DataGenerator.getRandomWord());
+        world.UIJourney.clickSubmit();
+    }
+
 }
