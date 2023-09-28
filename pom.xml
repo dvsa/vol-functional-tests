@@ -230,7 +230,7 @@
                     </properties>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>3</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                     <parallel>methods</parallel>
                     <threadCount>6</threadCount>
                 </configuration>
