@@ -228,12 +228,21 @@ public class UIJourney extends BasePage {
     public void signDeclaration() {
         waitAndClick("//*[contains(text(),'Sign your declaration online')]", SelectorType.XPATH);
         if (isTitlePresent("Review and declarations", 10)) {
-            click("//*[@name='form-actions[sign]']", SelectorType.XPATH);
+            click("//*[@name='declarationsAndUndertakings[signatureOptions]']", SelectorType.XPATH);
+            waitAndClick("form-actions[sign]", SelectorType.NAME);
         } else if (isTitlePresent("Declaration", 10)) {
             waitAndClick(submitButton, SelectorType.ID);
         }
     }
 
+    public void signDeclarationManually() {
+        waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+        if (isTitlePresent("Review and declarations", 10)) {
+            click("//*[@name='declarationsAndUndertakings[signatureOptions]']", SelectorType.XPATH);
+        } else if (isTitlePresent("Declaration", 10)) {
+            waitAndClick(submitButton, SelectorType.ID);
+        }
+    }
     public void signDeclarationForVariation() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);

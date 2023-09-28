@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
@@ -23,6 +24,7 @@ import java.util.Locale;
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ManageApplications extends BasePage {
     World world;
@@ -33,6 +35,11 @@ public class ManageApplications extends BasePage {
     public ManageApplications(World world) {
         this.world = world;
         this.initialisation = new Initialisation(world);
+    }
+
+    @Given("i have a self serve account")
+    public void iHaveASelfServeAccount() {
+        world.userRegistrationJourney.navigateAndLogIntoSelfServiceWithExistingUser();
     }
 
     @Given("I have a {string} {string} application with {string} vehicles and a vehicleAuthority of {string}")
@@ -229,7 +236,9 @@ public class ManageApplications extends BasePage {
         refreshPageWithJavascript();
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
         world.selfServeNavigation.navigateThroughApplication();
-        world.UIJourney.signDeclaration();
+        if(!world.configuration.env.equals("local")) {
+            world.UIJourney.signDeclaration();
+        }
     }
 
     @And("the licence status is {string}")
@@ -287,5 +296,11 @@ public class ManageApplications extends BasePage {
         clickByLinkText("Not taken up");
         waitForTextToBePresent("Not taken up");
         waitAndClick("form-actions[submit]", SelectorType.ID);
+    }
+
+    @Then("the application should be under consideration")
+    public void theApplicationShouldBeUnderConsideration() {
+        waitForTitleToBePresent("Application overview");
+        assertTrue(isTextPresent("Under Consideration"));
     }
 }

@@ -2,6 +2,7 @@
 @CASE-DETAILS
 @int_regression
 @FullRegression
+@localmoke
 Feature: Add case details
 
   Background:

@@ -88,7 +88,9 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.searchAndSelectAddress("postcodeInput1", postCode, 1);
         waitAndEnterText("//*[@id='tm-employment-details[position]']", SelectorType.XPATH, "DVSA Tester");
         waitAndEnterText("//*[@id='tm-employment-details[hoursPerWeek]']", SelectorType.XPATH, "Testing Monday Tuesday Wednesday");
-        clickById("understoodAvailabilityAgreement");
+        if(isElementPresent("understoodAvailabilityAgreement", SelectorType.ID)) {
+            clickById("understoodAvailabilityAgreement");
+        }
         world.UIJourney.clickSubmit();
 
 

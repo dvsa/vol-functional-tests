@@ -48,7 +48,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
 
-  @ebsrsmoketest
+  @ebsrsmoketest @localsmoke
   Scenario: import EBSR in self-serve smoke test
     Given I have a psv application with traffic area "west" and enforcement area "west" which has been granted
     When I upload an ebsr file with "42" days notice

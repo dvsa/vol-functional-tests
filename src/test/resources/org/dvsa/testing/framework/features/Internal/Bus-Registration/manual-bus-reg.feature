@@ -10,6 +10,7 @@ Feature: Complete Manual Bus Registration Steps
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And i have logged in to internal
 
+    @localsmoke
   Scenario: Paying Fees to Complete Bus Registration Manually
     And i add a new bus registration
     When it has been paid and granted

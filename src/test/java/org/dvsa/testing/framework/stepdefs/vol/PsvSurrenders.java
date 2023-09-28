@@ -36,6 +36,7 @@ public class PsvSurrenders extends BasePage {
     @And("the surrender status is {string}")
     public void theSurrenderStatusIs(String status) {
         waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
+        refreshPage();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--green')]", SelectorType.XPATH), status.toUpperCase());
     }
 
@@ -108,7 +109,7 @@ public class PsvSurrenders extends BasePage {
         waitForTextToBePresent("What happens next");
         assertTrue(isElementPresent("//*[@class='govuk-panel govuk-panel--confirmation']", SelectorType.XPATH));
         assertTrue(isTextPresent(String.format("Application to surrender licence %s", world.applicationDetails.getLicenceNumber())));
-        assertTrue(isTextPresent(String.format("Signed by Kenneth Decerqueira on %s", getCurrentDate("d MMM yyyy"))));
+        assertTrue(isTextPresent(String.format("Signed by KENNETH DECERQUEIRA on %s", getCurrentDate("dd MMM yyyy"))));
         assertTrue(isTextPresent("notifications@vehicle-operator-licensing.service.gov.uk"));
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }

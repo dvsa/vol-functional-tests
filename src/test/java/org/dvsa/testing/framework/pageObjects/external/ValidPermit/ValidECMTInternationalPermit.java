@@ -16,7 +16,7 @@ public class ValidECMTInternationalPermit {
 
     public ValidECMTInternationalPermit(String permitNumber, String applicationNumber, String notValidForTravel, String startDate, String expiryDate,
                                         String status) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         this.permitNumber = permitNumber;
         this.applicationNumber = applicationNumber;

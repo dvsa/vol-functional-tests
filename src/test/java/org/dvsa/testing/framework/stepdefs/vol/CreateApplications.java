@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -25,9 +26,14 @@ public class CreateApplications extends BasePage {
     @When("i choose to print and sign")
     public void iChooseToPrintAndSign() {
         refreshPageWithJavascript();
-        world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
-        waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-        waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+        if(!getCurrentUrl().contains("tm-declaration")) {
+            world.selfServeNavigation.navigateToPage("application", SelfServeSection.REVIEW_AND_DECLARATIONS);
+            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            waitAndClick("//*[@name='form-actions[submitAndPay]']", SelectorType.XPATH);
+        }else {
+            waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
+            waitAndClick("//*[@name='form-actions[submit]']", SelectorType.XPATH);
+        }
     }
 
     @Then("the application should be submitted")

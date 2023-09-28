@@ -33,7 +33,6 @@ public class BasePermitPage extends BasePage {
     public static String getReferenceFromPage() {
         return getText("span.govuk-caption-xl").trim();
     }
-
     public static void back() {
         untilElementIsPresent(BACK, SelectorType.XPATH, BasePermitPage.WAIT_TIME_SECONDS, TimeUnit.SECONDS);
         scrollAndClick(BACK, SelectorType.XPATH);

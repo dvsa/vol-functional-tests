@@ -1,5 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import com.amazonaws.services.dynamodbv2.xspec.B;
+import org.apache.commons.codec.DecoderException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.And;
@@ -8,6 +10,7 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -15,6 +18,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -66,13 +70,11 @@ public class TmVerifyDifferentOperator extends BasePage{
     }
 
     @And("the operator countersigns digitally")
-    public void theOperatorCountersignsDigitally() throws InterruptedException {
+    public void theOperatorCountersignsDigitally() throws InterruptedException, DecoderException {
         waitForTextToBePresent("What happens next?");
         clickByLinkText("Sign out");
-        String link = world.genericUtils.getTransportManagerLink();
-        WebDriver driver = Browser.navigate();
-        driver.get(link);
-        world.globalMethods.signIn(world.registerUser.getUserName(), world.configuration.config.getString("defaultPassword"));
+        world.globalMethods.navigateToLoginWithoutCookies(world.registerUser.getUserName(), world.registerUser.getEmailAddress(), ApplicationType.EXTERNAL);
+        Browser.navigate().get(world.genericUtils.getTransportManagerLink());
         world.UIJourney.clickSubmit();
         world.UIJourney.signDeclaration();
         if (isTitlePresent("Prove your identity with a GOV.UK account", 20)) {
@@ -114,7 +116,6 @@ public class TmVerifyDifferentOperator extends BasePage{
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         clickByLinkText(String.format("%s %s", world.DataGenerator.getOperatorForeName(), world.DataGenerator.getOperatorFamilyName()));
         click("//span[@class='govuk-details__summary-text']", SelectorType.XPATH);
-        waitForElementToBePresent("//*[@id='emailAddress']");
         click("submit", SelectorType.ID);
         waitForTextToBePresent("The link has been e-mailed");
     }
@@ -229,5 +230,14 @@ public class TmVerifyDifferentOperator extends BasePage{
         waitForTextToBePresent("List of Transport Managers");
         assertTrue(isTextPresent(world.registerUser.getForeName()+" "+world.registerUser.getFamilyName()));
         assertTrue(isTextPresent(world.registerUser.getEmailAddress()));
+    }
+
+    @And("the TM print and signs")
+    public void theTMPrintAndSigns() {
+        clickByLinkText("Print");
+        clickByLinkText("Print");
+        ArrayList<String> tabs = new ArrayList<>(getWindowHandles());
+        switchToWindow(tabs.get(0));
+        waitAndClick("//*[contains(text(),'Return to home')]", SelectorType.XPATH);
     }
 }

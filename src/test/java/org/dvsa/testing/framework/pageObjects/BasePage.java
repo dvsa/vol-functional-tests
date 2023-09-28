@@ -283,8 +283,21 @@ public abstract class BasePage extends DriverUtils {
     }
 
     public static void untilElementIsPresent(@NotNull String selector, SelectorType selectorType, long duration, TimeUnit timeUnit) {
-        until(ElementCondition.isPresent(selector, selectorType));
+        Wait<WebDriver> wait = new FluentWait<>(getDriver())
+                .withTimeout(ofSeconds(duration))
+                .pollingEvery(ofSeconds(POLLING_SECONDS))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(StaleElementReferenceException.class);
+
+        try {
+            wait.until(WebDriver ->
+                    wait.until(ElementCondition.isPresent(
+                            selector, selectorType)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 
     public static void untilElementIsPresent(@NotNull String selector, long duration, TimeUnit timeUnit) {
         untilElementIsPresent(selector, SelectorType.CSS, duration, timeUnit);

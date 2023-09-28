@@ -3,6 +3,7 @@
 @smoketest
 @FullRegression
 @printAndSign
+@transactionFees
 
 Feature: Transaction Fees Table
 

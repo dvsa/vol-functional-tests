@@ -13,7 +13,7 @@ Feature: Transfer a vehicle
     When i transfer a vehicle to a specified licence
     Then the "1 vehicle has been transferred to licence" confirmation banner should appear
 
-
+  @transfer-all-vehicles
   Scenario: Transfer all vehicles from licence
     Given I have "2" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
     And I navigate to manage vehicle page on a licence
@@ -28,6 +28,7 @@ Feature: Transfer a vehicle
     When i transfer all the vehicles from my licence
     Then a "Transferring these vehicles would exceed the vehicle authority on licence" error banner should appear
 
+  @transfer-validation
   Scenario: Error validation
     Given I have "3" "goods" "standard_national" licences with "3" vehicles and a vehicleAuthority of "5"
     And I navigate to manage vehicle page on a licence

@@ -144,7 +144,7 @@ public class Continuations extends BasePage {
 
     @And("a caseworkers continues my licence")
     public void aCaseworkersContinuesMyLicence() {
-        world.internalSearchJourney.searchAndViewLicence();
+        world.internalNavigation.getLicence();
         clickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
         world.feeAndPaymentJourney.payFee("401", "cash");

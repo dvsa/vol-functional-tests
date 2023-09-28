@@ -1,6 +1,4 @@
-@INT-SMOKE
-@sub-app
-@ss_regression
+@INT-SMOKE @sub-app @ss_regression @localsmoke
 Feature: Complete an application manually
 
   Scenario Outline: Submit an application
@@ -13,5 +11,3 @@ Feature: Complete an application manually
     Examples:
       | Licence |
       | Goods   |
-
-

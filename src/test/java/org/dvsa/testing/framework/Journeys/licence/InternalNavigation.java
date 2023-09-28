@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class InternalNavigation extends BasePage {
 
-    private final World world;
+    World world;
     private String url = URL.build(ApplicationType.INTERNAL, EnvironmentType.getEnum(Properties.get("env", true))).toString();
     public String adminDropdown = "//li[@class='admin__title']";
     public String taskTitle = "//h2[text()='Edit task']";
@@ -125,6 +125,10 @@ public class InternalNavigation extends BasePage {
 
     public void getApplication() {
         get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
+    }
+
+    public void getApplication(String applicationId){
+        get(this.url.concat(String.format("application/%s",  applicationId)));
     }
 
     public void getLicence() {

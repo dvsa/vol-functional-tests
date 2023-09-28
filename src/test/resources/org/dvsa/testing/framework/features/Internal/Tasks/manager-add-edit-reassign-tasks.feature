@@ -9,6 +9,7 @@ Feature:Add, Edit and reassign tasks on the internal application
     Given i have a valid "goods" "standard_national" licence
     When I have logged into the internal application
 
+  @re-assign-task @localsmoke
   Scenario: User wishes to re-assign a task
     Then I re-assign a task
     Then the User has re-assigned a task

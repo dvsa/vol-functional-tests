@@ -22,7 +22,7 @@ import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDra
 
 public class SubmitApplicationJourney extends BasePage {
 
-    private final World world;
+    World world;
     private String applicationNumber;
     private String licence;
 
@@ -83,11 +83,10 @@ public class SubmitApplicationJourney extends BasePage {
         UIJourney.clickSaveAndContinue();
         //business details
         world.businessDetailsJourney.addBusinessDetails();
-        if (isTitlePresent("Directors", 10) || isTitlePresent("Responsible people", 10)) {
+        if (isTitlePresent("Directors", 2) || isTitlePresent("Responsible people", 2)) {
             if (isElementPresent("add", SelectorType.ID)) {
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
             }
-            UIJourney.clickSaveAndContinue();
         }
         //operating centre
         String authority = "2";

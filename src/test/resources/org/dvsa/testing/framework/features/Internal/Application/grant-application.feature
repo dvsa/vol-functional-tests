@@ -2,6 +2,7 @@
 @int_regression
 @grant_under_consideration
 @FullRegression
+@localsmoke
 
 Feature: Grant under consideration application
 

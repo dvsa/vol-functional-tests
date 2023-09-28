@@ -12,13 +12,10 @@ import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
 import org.openqa.selenium.WebElement;
 
 
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GrantApplication extends BasePage {
-    private final World world;
+    World world;
     private ValidatableResponse apiResponse;
 
     public GrantApplication(World world) {
@@ -44,7 +41,7 @@ public class GrantApplication extends BasePage {
         if (!env.equals("int")) {
             world.APIJourney.createAdminUser();
             world.internalNavigation.logInAsAdmin();
-            world.internalSearchJourney.internalSearchUntilTextPresent(SearchType.Application, world.submitApplicationJourney.getApplicationNumber(), world.submitApplicationJourney.getApplicationNumber());
+            world.internalNavigation.getApplication(world.submitApplicationJourney.getApplicationNumber());
             overrideOppositionAndDates();
         }else{
             String[] licenceNumber = getText("h2", SelectorType.CSS).split("/");
@@ -62,7 +59,11 @@ public class GrantApplication extends BasePage {
         clickByLinkText("Operating centres");
         waitForTextToBePresent("Operating centres");
         selectValueFromDropDown("trafficArea", SelectorType.ID, "Wales");
-        selectValueFromDropDown("dataTrafficArea[enforcementArea]", SelectorType.ID, "Wales");
+        if(getText("dataTrafficArea[enforcementArea]", SelectorType.ID).contains("Wales")) {
+            selectValueFromDropDown("dataTrafficArea[enforcementArea]", SelectorType.ID, "Wales");
+        }else{
+            selectValueFromDropDownByIndex("dataTrafficArea[enforcementArea]", SelectorType.ID,1);
+        }
         UIJourney.clickSaveAndReturn();
         clickByLinkText("Review and declarations");
         waitAndClick("declarations[declarationConfirmation]", SelectorType.ID);

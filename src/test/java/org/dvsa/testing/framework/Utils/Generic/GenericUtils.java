@@ -142,6 +142,7 @@ public class GenericUtils extends BasePage {
     }
 
     public String getTransportManagerLink() throws InterruptedException {
+        Thread.sleep(2000);
         String htmlContent = world.configuration.getTmAppLink();
         String sanitizedHTML = htmlContent.replaceAll("(?<!=)=(?!=)", "").replaceAll("\\s+", "");
         Pattern pattern = Pattern.compile("(?:(?:Review\\d*applicationat)|(?<=0A0AReview\\dapplicationat))(?:20)?(https?://[\\w./?-]+?/details/\\d{6})");
@@ -154,13 +155,13 @@ public class GenericUtils extends BasePage {
     }
 
     public String getResetPasswordLink() throws InterruptedException {
+        Thread.sleep(10000);
         String htmlContent = world.configuration.getPasswordResetLink();
         String sanatisedHTML = htmlContent.replace("3D", "")
                 .replace("co=", "co")
                 .replaceAll("(nfirmationId=[^&]+)=", "$1");
         org.jsoup.nodes.Document doc = Jsoup.parse(sanatisedHTML);
         Elements links = doc.select("a[href]");
-        Thread.sleep(1500);
         for (Element link : links) {
             if (link.attr("abs:href").contains("ssweb")) {
                 String resetPasswordLink = link.attr("abs:href");

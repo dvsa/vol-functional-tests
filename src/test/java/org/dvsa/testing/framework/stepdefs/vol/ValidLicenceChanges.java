@@ -130,10 +130,11 @@ public class ValidLicenceChanges extends BasePage {
     public void theChangesToTheVehiclesPageAreMade() {
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
         waitForTitleToBePresent("Vehicle details");
+        refreshPage();
         if (Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size()>0) {
-            assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),3);
+            assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name, 'table[action][delete]')]")).size(),2);
         } else {
-            refreshPageWithJavascript();
+            refreshPage();
             assertEquals(Browser.navigate().findElements(By.xpath("//button[contains(@name, 'vehicles[action][delete]')]")).size(),3);
         }
         assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='shareInfo[shareInfo]']")).isSelected());

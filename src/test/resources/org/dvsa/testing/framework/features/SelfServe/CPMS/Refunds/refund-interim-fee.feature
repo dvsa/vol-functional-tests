@@ -2,7 +2,7 @@
 @ss-interim-refund
 Feature: Refund fee paid on new application
 
-  @ss_regression @printAndSign
+  @ss_regression @printAndSign @interim-refused-refund
   Scenario Outline: Interim fee has been paid and licence has been refused
     Given i have an interim "<OperatorType>" "<LicenceType>" application
     When the interim fee has been paid

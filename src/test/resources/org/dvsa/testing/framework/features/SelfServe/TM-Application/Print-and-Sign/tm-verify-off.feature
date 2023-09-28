@@ -1,4 +1,4 @@
-@printAndSign
+@printAndSign @localsmoke @ss_regression
 Feature: Countersigning declaration page for the operator Print and Sign
 
   Background:
