@@ -231,8 +231,8 @@
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>3</forkCount>
                     <reuseForks>true</reuseForks>
-                    <parallel>methods</parallel>
-                    <threadCount>20</threadCount>
+                    <parallel>methodsAndSuites</parallel>
+                    <threadCount>15</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
