@@ -1,4 +1,4 @@
-@internal_short_term_apgg_euro5_or_euro6 @eupa_regression
+@internal_short_term_apgg_euro5_or_euro6
 Feature: Internal Short Term permits APGG Euro 5 or Euro 6 until UC Status
 
   Background:

@@ -6,7 +6,6 @@ Feature: Internal Licence details page
 
   Scenario: Display of IRHP Permits tab when operating licence is for goods
     Given I have a "goods" "standard_international" licence
-    And I have completed an ECMT application
     And i create an admin and url search for my licence
     Then I should see the IRHP permits tab
 

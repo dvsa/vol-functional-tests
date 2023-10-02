@@ -6,7 +6,6 @@ Feature: Caseworker creates an ECMT removal application
     And I am on the VOL internal site
     And i create an admin and url search for my licence
 
-
   Scenario: Case Worker submits and pays for ECMT removal Application by Card
     And the case worker apply for an ECMT Removal application
     And I pay fee for the ECMT removal application
