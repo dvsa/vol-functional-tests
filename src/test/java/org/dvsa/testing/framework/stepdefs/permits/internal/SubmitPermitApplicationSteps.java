@@ -107,8 +107,8 @@ public class SubmitPermitApplicationSteps extends BasePage{
     }
 
     //withdraw permit application
-    @Then("In application details page, I withdraw Permit Application")
-    public void inApplicationDetailsPageIWithdrawPermitApplication() {
+    @Then("I withdraw Permit Application")
+    public void iWithdrawPermitApplication() {
         withdrawPermitApplication();
         viewApplication();
     }
