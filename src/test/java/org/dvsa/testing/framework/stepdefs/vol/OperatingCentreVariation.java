@@ -6,6 +6,7 @@ import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -233,5 +234,16 @@ public class OperatingCentreVariation extends BasePage {
     public void theOperatingCentreCannotBeAdded() {
         assertTrue(isTextPresent("Add operating centre"));
         // add assertion on error message when/if validation error is fixed
+    }
+
+    @And("i increase total PSV authorisation to {string} vehicles")
+    public void iIncreasePSVAuthorisation(String numberOfPSVVehicles) {
+        enterText("totAuthHgvVehicles", SelectorType.ID, numberOfPSVVehicles);
+        UIJourney.clickSaveAndReturn();
+    }
+
+    @Then("the increase in PSV authorisation is not allowed")
+    public void theIncreaseInPSVAuthorisationIsNotAllowed() {
+        assertTrue(isTextPresent("The total number of vehicles on a restricted licence cannot exceed 2"));
     }
 }
