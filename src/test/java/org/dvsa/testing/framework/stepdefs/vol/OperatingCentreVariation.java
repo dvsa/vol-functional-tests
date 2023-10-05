@@ -213,9 +213,9 @@ public class OperatingCentreVariation extends BasePage {
         world.generalVariationJourney.beginOperatingCentreVariation();
     }
 
-    @And("i create a new operating centre with {string} hgvs and {string} trailers")
-    public void iCreateANewOperatingCentreWithHgvsAndTrailers(String numberOfHGVs, String numberOfTrailers) {
-        world.operatingCentreJourney.addNewOperatingCentre(numberOfHGVs, numberOfTrailers);
+    @And("i create a new operating centre with {string} vehicles and {string} trailers")
+    public void iCreateANewOperatingCentreWithVehiclesAndTrailers(String numberOfVehicles, String numberOfTrailers) {
+        world.operatingCentreJourney.addNewOperatingCentre(numberOfVehicles, numberOfTrailers);
     }
 
     @And("The variation is submitted")
@@ -227,5 +227,11 @@ public class OperatingCentreVariation extends BasePage {
         world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTextToBePresent("Thank you, your application has been submitted.");
+    }
+
+    @Then("the operating centre cannot be added")
+    public void theOperatingCentreCannotBeAdded() {
+        assertTrue(isTextPresent("Add operating centre"));
+        // add assertion on error message when/if validation error is fixed
     }
 }
