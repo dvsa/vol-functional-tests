@@ -26,8 +26,8 @@ public class LicenceCreation {
     }
 
     public void createApplicationWithVehicles(String operatorType, String licenceType, String vehicles) throws HttpException {
-        if(licenceType.equals("special_restricted") && Integer.parseInt(vehicles) > 2){
-            throw new InvalidArgumentException("Special restricted licences can not have more than 2 vehicles on them.");
+        if(operatorType.equals("public") && licenceType.equals("restricted") && Integer.parseInt(vehicles) > 2){
+            throw new InvalidArgumentException("PSV restricted licences can not have more than 2 vehicles on them.");
         }
         world.createApplication.setNoOfOperatingCentreVehicleAuthorised(Integer.parseInt(vehicles));
         world.createApplication.setNoOfAddedHgvVehicles(Integer.parseInt(vehicles));

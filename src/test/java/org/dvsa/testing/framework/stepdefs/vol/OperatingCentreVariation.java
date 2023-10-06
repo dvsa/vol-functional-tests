@@ -238,7 +238,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("i increase total PSV authorisation to {string} vehicles")
     public void iIncreasePSVAuthorisation(String numberOfPSVVehicles) {
-        enterText("totAuthHgvVehicles", SelectorType.ID, numberOfPSVVehicles);
+        replaceText("totAuthHgvVehicles", SelectorType.ID, numberOfPSVVehicles);
         UIJourney.clickSaveAndReturn();
     }
 
