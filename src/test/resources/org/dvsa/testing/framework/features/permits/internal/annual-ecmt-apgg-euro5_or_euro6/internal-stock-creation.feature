@@ -1,8 +1,8 @@
-@smoketest @eupa_regression
+@smoketest @eupa_regression @localsmoke
 Feature: Annual ECMT APGG Euro 5 or Euro 6 stock creation
 
   Background:
-    Given i have an admin account to add users
+  Given i have an admin account to add users
 
  @OLCS-28353  @OLCS-28261
   Scenario: Admin internal caseworker creates ECMT APGG Euro 5 or Euro 6 stock successfully
