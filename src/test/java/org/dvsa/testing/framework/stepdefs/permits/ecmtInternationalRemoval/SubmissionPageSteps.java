@@ -14,7 +14,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
-import org.dvsa.testing.framework.stepdefs.vol.Initialisation;
 import org.openqa.selenium.WebDriver;
 
 import static org.junit.jupiter.api.Assertions.*;
