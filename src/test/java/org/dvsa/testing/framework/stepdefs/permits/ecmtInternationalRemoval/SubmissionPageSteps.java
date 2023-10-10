@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -119,5 +120,25 @@ public class SubmissionPageSteps extends BasePermitPage{
     @Then("that comment should be displayed")
     public void thatCommentShouldBeDisplayed() {
         assertTrue(isTextPresent(world.DataGenerator.getRandomWord()));
+    }
+
+    @When("I close a submission")
+    public void iCloseASubmission() {
+        world.submissionsJourney.closeSubmission();
+    }
+
+    @Then("the sub status should be closed")
+    public void theSubStatusShouldBeClosed() {
+        assertTrue(isTextPresent("Closed"));
+    }
+
+    @When("I attach a file to the submission")
+    public void iAttachAFileToTheSubmission() {
+        world.submissionsJourney.attachFile();
+    }
+
+    @Then("that file should be displayed")
+    public void thatFileShouldBeDisplayed() {
+        assertTrue(isTextPresent("newspapeAdvert.jpeg"));
     }
 }
