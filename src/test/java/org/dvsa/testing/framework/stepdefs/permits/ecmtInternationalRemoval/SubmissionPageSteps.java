@@ -138,6 +138,6 @@ public class SubmissionPageSteps extends BasePermitPage{
 
     @Then("that file should be displayed")
     public void thatFileShouldBeDisplayed() {
-        assertTrue(isTextPresent("newspapeAdvert.jpeg"));
+        assertTrue(isTextPresent("newspaperAdvert.jpeg"));
     }
 }
