@@ -31,7 +31,7 @@ Feature: Public enquiry added and published and deletion of case notes
 
 
     @PresidingTC
-    Scenario: UI - New Transport Manager added to a submission
+    Scenario: UI - New Traffic Commissioner added to a submission
       When I add a Presiding TC and then create a Submission
       Then I can view the added Presiding TC in the drop down list
 
