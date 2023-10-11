@@ -89,5 +89,7 @@ public class Initialisation extends BasePage {
         world.permitFeePage = new PermitFeePage(world);
         world.govSignIn = new GovSignIn(world);
         world.externalSearch = new ExternalSearch(world);
+        world.presidingTCsStep = new PresidingTCsStep(world);
+        world.submissionsJourney = new SubmissionsJourney(world);
     }
 }
