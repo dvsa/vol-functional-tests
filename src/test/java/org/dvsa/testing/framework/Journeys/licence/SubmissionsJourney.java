@@ -72,7 +72,7 @@ public class SubmissionsJourney extends BasePage {
         if (System.getProperty("platform") == null) {
             enterText("//*[@id='attachments[file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
         } else {
-            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='attachments[file]']']"));
+            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='attachments[file]']"));
             ((RemoteWebElement)addFile).setFileDetector(new LocalFileDetector());
             addFile.sendKeys(workingDir.concat(financialEvidenceFile));
     }
