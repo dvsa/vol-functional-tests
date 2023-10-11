@@ -14,7 +14,7 @@ Feature: Internal ECMT APGG Euro5 or Euro 6 permits Application is Withdrawn
     And I pay fee for application
     Then I am in application details page, I should see withdraw button
     Then I am in fee details page, I should see withdraw button
-    Then In application details page, I withdraw Permit Application
+    Then I withdraw Permit Application
     And I am in application details page, I should not see withdraw button
     And I am in application details page, I should see application as withdrawn
 
@@ -24,6 +24,6 @@ Feature: Internal ECMT APGG Euro5 or Euro 6 permits Application is Withdrawn
     And I select application to pay
     And I pay fee for application
     Then I am in application details page, I should see withdraw button
-    When In application details page, I withdraw Permit Application
+    When I withdraw Permit Application
     Then I am in application details page, I should not see withdraw button
     And I am in application details page, I should see application as withdrawn

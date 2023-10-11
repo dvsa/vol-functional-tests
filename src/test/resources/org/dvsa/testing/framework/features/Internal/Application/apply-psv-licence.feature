@@ -1,5 +1,4 @@
-@FullRegression
-@printAndSign
+@INT
 @APPLY-PSV-LICENCE
 @int_regression
 @CPMS_tests

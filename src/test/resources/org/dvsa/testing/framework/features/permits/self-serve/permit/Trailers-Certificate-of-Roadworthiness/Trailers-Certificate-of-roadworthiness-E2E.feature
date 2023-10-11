@@ -1,4 +1,4 @@
-@certificateofroadworthiness_trailers_E2E @eupa_regression
+@certificateofroadworthiness_trailers_E2E @eupa_regression @localsmoke
 Feature: Certificate of roadworthiness for Trailers end to end happy path journey
 
   Background:
