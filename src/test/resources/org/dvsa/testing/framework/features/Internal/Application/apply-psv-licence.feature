@@ -12,7 +12,7 @@ Feature: Apply for a psv licence
     Then the licence should be granted
     Examples:
       | operator | licenceType            |
-#      | public   | restricted             |
-#      | public   | special_restricted     |
+      | public   | restricted             |
+      | public   | special_restricted     |
       | public   | standard_international |
-#      | public   | standard_national      |
+      | public   | standard_national      |
