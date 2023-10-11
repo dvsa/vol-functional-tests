@@ -4,6 +4,7 @@ import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
+import io.restassured.response.ValidatableResponse;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
@@ -107,7 +108,6 @@ public class ManageApplications extends BasePage {
         world.createApplication.setNoOfAddedHgvVehicles(3);
         for (TrafficArea ta : trafficAreaList()) {
             world.licenceCreation.createApplicationWithTrafficArea(operatorType, licenceType, ta);
-            world.createApplication.setApplicationId(null);
         }
     }
 

@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.time.Duration.ofSeconds;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,6 +32,8 @@ public abstract class BasePage extends DriverUtils {
     private static final int TIME_OUT_SECONDS = 500;
     private static final int POLLING_SECONDS = 10;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
+
+    private static String selectedValue;
 
     protected static String getAttribute(@NotNull String selector, @NotNull SelectorType selectorType, @NotNull String attribute) {
         return findElement(selector, selectorType).getAttribute(attribute);
@@ -129,13 +132,13 @@ public abstract class BasePage extends DriverUtils {
         selectItem.selectByIndex(listValue);
     }
 
-    public void cycleThroughPaginationUntilElementIsDisplayed(String linkTextArgument) {
+    public void cycleThroughPaginationUntilElementIsDisplayed(String selector) {
         List<WebElement> pagination = getDriver().findElements(By.xpath("//ul[@class='govuk-pagination__list']"));
         int pagination_count = pagination.size();
 
-        while (!isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
+        while (!isElementPresent(selector, SelectorType.LINKTEXT)) {
             for (int i = 0; i < pagination_count; i++) {
-                if (isElementPresent(linkTextArgument, SelectorType.LINKTEXT)) {
+                if (isElementPresent(selector, SelectorType.LINKTEXT)) {
                     break;
                 }
                 scrollAndClick("Next", SelectorType.LINKTEXT);
@@ -143,13 +146,42 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
-    public static String selectRandomValueFromDropDown(String id) {
-        Select select = new Select(getDriver().findElement(By.id(id)));
-        List<WebElement> options = select.getOptions();
-        WebElement randomOption = options.get(new Random().nextInt(options.size()));
-        select.selectByVisibleText(randomOption.getText());
-        return randomOption.getText();
+    private static By createBySelector(String selector, SelectorType selectorType) {
+        switch (selectorType) {
+            case ID:
+                return By.id(selector);
+            case NAME:
+                return By.name(selector);
+            case XPATH:
+                return By.xpath(selector);
+            case CSS:
+                return By.cssSelector(selector);
+            default:
+                throw new IllegalArgumentException("Unsupported SelectorType: " + selectorType);
+        }
     }
+
+        public static String selectRandomValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
+            By bySelector = createBySelector(selector, selectorType);
+            Select select = new Select(getDriver().findElement(bySelector));
+            List<WebElement> options = select.getOptions();
+            options = options.stream()
+                    .filter(option -> option.getText() != null && !option.getText().isEmpty())
+                    .collect(Collectors.toList());
+            String valueToSave = null;
+            while (valueToSave == null) {
+                WebElement randomOption = options.get(new Random().nextInt(options.size()));
+                valueToSave = randomOption.getText();
+                if (valueToSave != null && !valueToSave.isEmpty()) {
+                    select.selectByVisibleText(valueToSave);
+                }
+            }
+            selectedValue = valueToSave;
+            return selectedValue;
+        }
+        public static String getSelectedValue() {
+            return selectedValue;
+        }
 
     protected static boolean isLinkPresent(String locator, int duration) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())

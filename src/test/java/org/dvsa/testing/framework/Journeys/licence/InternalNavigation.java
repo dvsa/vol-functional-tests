@@ -54,6 +54,8 @@ public class InternalNavigation extends BasePage {
         clickByLinkText(option.toString());
         switch (option) {
             case CONTINUATIONS:
+            case PRESIDING_TCS:
+                break;
             case PUBLICATIONS:
             case REPORTS:
             case PRINTING:
