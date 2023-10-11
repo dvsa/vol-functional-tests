@@ -36,6 +36,7 @@ public class PresidingTCsStep extends BasePage {
 
     @When("I add a Presiding TC and then create a Submission")
     public void iAddAPresidingTCAndThenCreateASubmission() {
+        world.internalNavigation.adminNavigation(AdminOption.PRESIDING_TCS);
         world.submissionsJourney.addPresidingTC();
         refreshPage();
         world.internalNavigation.getLicence();
