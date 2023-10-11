@@ -40,6 +40,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -172,7 +174,6 @@ public class GenericUtils extends BasePage {
         }
         throw new RuntimeException("Reset password link not found in HTML content.");
     }
-
 
     public static String getDates(String state, int months) {
         DateTimeFormatter date = DateTimeFormatter.ofPattern("yyyy-MM-dd");

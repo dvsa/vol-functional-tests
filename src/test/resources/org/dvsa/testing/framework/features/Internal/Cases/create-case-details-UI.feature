@@ -29,6 +29,13 @@ Feature: Public enquiry added and published and deletion of case notes
     When i add a submission
     Then the submission details should be displayed
 
+
+    @PresidingTC
+    Scenario: UI - New Traffic Commissioner added to a submission
+      When I add a Presiding TC and then create a Submission
+      Then I can view the added Presiding TC in the drop down list
+
+
   @Create_Complaint
   Scenario: UI - Creating a case with a complaint
     And I navigate to a case

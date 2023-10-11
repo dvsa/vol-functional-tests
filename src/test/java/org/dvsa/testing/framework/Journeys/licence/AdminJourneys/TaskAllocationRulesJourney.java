@@ -26,7 +26,7 @@ public class TaskAllocationRulesJourney extends BasePage {
         selectValueFromDropDown("category", SelectorType.ID, "Application");
         waitForElementToBeClickable("//input[@class='govuk-radios__input']", SelectorType.XPATH);
         waitAndClick("(//input[@type='radio'])[3]", SelectorType.XPATH);
-        selectRandomValueFromDropDown("trafficArea");
+        selectRandomValueFromDropDown("trafficArea", SelectorType.ID);
         selectDropDownValues();
     }
 

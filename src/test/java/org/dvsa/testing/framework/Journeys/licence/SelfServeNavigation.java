@@ -18,7 +18,7 @@ import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
+
 
 import static activesupport.driver.Browser.navigate;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;

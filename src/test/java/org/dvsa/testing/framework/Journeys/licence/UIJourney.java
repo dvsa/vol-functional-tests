@@ -471,14 +471,6 @@ public class UIJourney extends BasePage {
         waitAndClick("action-button", SelectorType.ID);
     }
 
-    public void createAndSubmitSubmission() {
-        click("//*[@id='menu-licence/cases']", SelectorType.XPATH);
-        clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
-        clickByLinkText("Submissions");
-        waitAndClick("add", SelectorType.ID);
-        selectValueFromDropDownByIndex("fields[submissionSections][submissionType]", SelectorType.NAME, 1);
-        waitAndClick(submitButton, SelectorType.ID);
-    }
 
     public List<WebElement> getTableBodyRowList() {
         return findElements("//tbody", SelectorType.XPATH);
