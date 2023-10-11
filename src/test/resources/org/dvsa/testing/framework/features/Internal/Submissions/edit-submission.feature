@@ -1,5 +1,5 @@
 @int_regression
-@int_submissions
+@internal_submissions
 
 Feature: Internal users wishes to edit a submission
 
