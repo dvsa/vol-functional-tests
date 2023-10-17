@@ -165,20 +165,12 @@ public abstract class BasePage extends DriverUtils {
             By bySelector = createBySelector(selector, selectorType);
             Select select = new Select(getDriver().findElement(bySelector));
             List<WebElement> options = select.getOptions();
-            options = options.stream()
-                    .filter(option -> option.getText() != null && !option.getText().isEmpty())
-                    .collect(Collectors.toList());
-            String valueToSave = null;
-            while (valueToSave == null) {
-                WebElement randomOption = options.get(new Random().nextInt(options.size()));
-                valueToSave = randomOption.getText();
-                if (valueToSave != null && !valueToSave.isEmpty()) {
-                    select.selectByVisibleText(valueToSave);
-                }
-            }
-            selectedValue = valueToSave;
+            WebElement randomOption = options.get(new Random().nextInt(options.size()));
+            selectedValue = randomOption.getText();
+            select.selectByVisibleText(selectedValue);
             return selectedValue;
         }
+
         public static String getSelectedValue() {
             return selectedValue;
         }
