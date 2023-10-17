@@ -4,6 +4,7 @@
 @int_regression
 @CPMS_tests
 @FullRegression
+@APIsmoke
 
 Feature: Apply for a goods licence
 
