@@ -38,7 +38,6 @@ public class LicenceCreation {
         createApplication(operatorType, licenceType);
     }
 
-
     public void createApplicationWithTrafficArea(String operatorType, String licenceType, TrafficArea trafficArea) throws HttpException {
         world.createApplication.setTrafficArea(trafficArea);
         world.createApplication.setEnforcementArea(EnforcementArea.valueOf(trafficArea.name()));
