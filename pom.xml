@@ -35,7 +35,7 @@
         <maven-failsafe-plugin.version>3.1.0</maven-failsafe-plugin.version>
         <apache-commons.version>1.10.0</apache-commons.version>
         <jsoup.version>1.15.4</jsoup.version>
-        <gson.version>20230227</gson.version>
+        <gson.version>20231013</gson.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>1.8</java.version>
 
@@ -229,10 +229,10 @@
                         </configurationParameters>
                     </properties>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>2</forkCount>
-                    <reuseForks>false</reuseForks>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
                     <parallel>methods</parallel>
-                    <threadCount>3</threadCount>
+                    <threadCount>11</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
