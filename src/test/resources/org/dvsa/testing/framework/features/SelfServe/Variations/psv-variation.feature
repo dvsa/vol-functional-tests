@@ -1,3 +1,5 @@
+@ss_regression @PSV_VARIATION
+
 Feature: PSV variation to make operating centre and authorisation changes
 
   Scenario: Attempt to increase operating centre authorisation above 2 on a PSV Restricted licence
@@ -18,4 +20,5 @@ Feature: PSV variation to make operating centre and authorisation changes
     And i begin an operating centre and authorisation variation
     And i create a new operating centre with "2" vehicles and "0" trailers
     And i increase total PSV authorisation to "2" vehicles
-    And The variation is submitted
+    And the "public" "restricted" variation is submitted
+    Then the application should be under consideration

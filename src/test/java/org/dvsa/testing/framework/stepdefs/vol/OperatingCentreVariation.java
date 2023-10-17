@@ -246,4 +246,23 @@ public class OperatingCentreVariation extends BasePage {
     public void theIncreaseInPSVAuthorisationIsNotAllowed() {
         assertTrue(isTextPresent("The total number of vehicles on a restricted licence cannot exceed 2"));
     }
+
+    @And("the {string} {string} variation is submitted")
+    public void theVariationIsSubmitted(String operatorType, String licenceType) {
+        world.UIJourney.completeFinancialEvidencePage();
+        if (operatorType.equals("public")) {
+        clickByLinkText("Vehicle declarations");
+            if (licenceType.equals("restricted")){
+                world.psvJourney.completeRestrictedVehicleDeclarations();
+            }
+            else {
+                world.psvJourney.completeVehicleDeclarationsPage();
+            }
+        }
+        clickByLinkText("Review and declarations");
+        click(confirmDeclaration, SelectorType.XPATH);
+        click(submitAndPayForApplication, SelectorType.XPATH);
+        world.UIJourney.clickPay();
+        world.feeAndPaymentJourney.customerPaymentModule();
+    }
 }
