@@ -6,6 +6,7 @@ import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -213,9 +214,9 @@ public class OperatingCentreVariation extends BasePage {
         world.generalVariationJourney.beginOperatingCentreVariation();
     }
 
-    @And("i create a new operating centre with {string} hgvs and {string} trailers")
-    public void iCreateANewOperatingCentreWithHgvsAndTrailers(String numberOfHGVs, String numberOfTrailers) {
-        world.operatingCentreJourney.addNewOperatingCentre(numberOfHGVs, numberOfTrailers);
+    @And("i create a new operating centre with {string} vehicles and {string} trailers")
+    public void iCreateANewOperatingCentreWithVehiclesAndTrailers(String numberOfVehicles, String numberOfTrailers) {
+        world.operatingCentreJourney.addNewOperatingCentre(numberOfVehicles, numberOfTrailers);
     }
 
     @And("The variation is submitted")
@@ -227,5 +228,41 @@ public class OperatingCentreVariation extends BasePage {
         world.UIJourney.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTextToBePresent("Thank you, your application has been submitted.");
+    }
+
+    @Then("the operating centre cannot be added")
+    public void theOperatingCentreCannotBeAdded() {
+        assertTrue(isTextPresent("Add operating centre"));
+        // add assertion on error message when/if validation error is fixed
+    }
+
+    @And("i increase total PSV authorisation to {string} vehicles")
+    public void iIncreasePSVAuthorisation(String numberOfPSVVehicles) {
+        replaceText("totAuthHgvVehicles", SelectorType.ID, numberOfPSVVehicles);
+        UIJourney.clickSaveAndReturn();
+    }
+
+    @Then("the increase in PSV authorisation is not allowed")
+    public void theIncreaseInPSVAuthorisationIsNotAllowed() {
+        assertTrue(isTextPresent("The total number of vehicles on a restricted licence cannot exceed 2"));
+    }
+
+    @And("the {string} {string} variation is submitted")
+    public void theVariationIsSubmitted(String operatorType, String licenceType) {
+        world.UIJourney.completeFinancialEvidencePage();
+        if (operatorType.equals("public")) {
+        clickByLinkText("Vehicle declarations");
+            if (licenceType.equals("restricted")){
+                world.psvJourney.completeRestrictedVehicleDeclarations();
+            }
+            else {
+                world.psvJourney.completeVehicleDeclarationsPage();
+            }
+        }
+        clickByLinkText("Review and declarations");
+        click(confirmDeclaration, SelectorType.XPATH);
+        click(submitAndPayForApplication, SelectorType.XPATH);
+        world.UIJourney.clickPay();
+        world.feeAndPaymentJourney.customerPaymentModule();
     }
 }
