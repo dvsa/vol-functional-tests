@@ -229,9 +229,9 @@
                         </configurationParameters>
                     </properties>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <forkCount>2</forkCount>
+                    <forkCount>3</forkCount>
                     <reuseForks>true</reuseForks>
-                    <parallel>suites</parallel>
+                    <parallel>methods</parallel>
 <!--                    <threadCount>15</threadCount>-->
                 </configuration>
                 <dependencies>
