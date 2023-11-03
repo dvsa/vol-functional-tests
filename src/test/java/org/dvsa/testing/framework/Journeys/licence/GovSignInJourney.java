@@ -43,6 +43,10 @@ public class GovSignInJourney extends BasePage {
         String signInUsername = world.configuration.config.getString("signInUsername");
         String signInPassword = world.configuration.config.getString("signInPassword");
 
+        if(Browser.navigate().getCurrentUrl().contains("updated")){
+            waitAndClick("//*[contains(text(),'Continue')]", SelectorType.XPATH);
+        }
+
         if (isTitlePresent("Prove your identity with a GOV.UK account", 1) &&
                 (isTextPresent("Choose a way to prove your identity"))) {
             clickById("chooseWayPyi");

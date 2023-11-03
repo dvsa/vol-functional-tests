@@ -8,6 +8,7 @@ Feature: Publications are generated correctly upon creating an lgv increase vari
     When i navigate to the application publications page
     Then the variation publication for LGV Only should be correct on internal with 5 more lgvs
 
+    @variation-lgv
   Scenario: A submitted LGV Only variation displays the correct information publication overview on self serve search
     Given I have a valid "GB" lgv only licence
     And i create and submit an lgv authorisation variation with 5 more LGVs
