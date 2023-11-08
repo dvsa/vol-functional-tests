@@ -8,23 +8,23 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Messaging extends BasePage {
-    @Then("the messaging tab should be displayed")
-    public void theMessagingTabShouldBeDisplayed() {
+    @Then("the messaging heading should be displayed")
+    public void theMessagingHeadingShouldBeDisplayed() {
         assertTrue(isTextPresent("Messages"));
     }
 
-    @Then("the messaging tab should not be displayed")
-    public void theMessagingTabShouldNotBeDisplayed() {
+    @Then("the messaging heading should not be displayed")
+    public void theMessagingHeadingShouldNotBeDisplayed() {
         assertFalse(isTextPresent("Messages"));
     }
 
-    @And("i click the messages tab")
-    public void iClickTheMessagesTab() {
+    @And("i click the messages heading")
+    public void iClickTheMessagesHeading() {
         clickByLinkText("Messages");
     }
 
-    @Then("the messages page is displayed correctly")
-    public void theMessagesPageIsDisplayedCorrectly() {
+    @Then("the internal messages page is displayed correctly")
+    public void theInternalMessagesPageIsDisplayedCorrectly() {
         assertTrue(isTitlePresent("Messages", 100));
     }
 }
