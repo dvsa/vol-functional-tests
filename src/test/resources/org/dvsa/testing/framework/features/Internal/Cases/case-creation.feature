@@ -1,5 +1,7 @@
 @INT
 @CASE-CREATION
+@APIsmoke
+
 Feature: Create a new case
 
   Background:
