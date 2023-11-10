@@ -73,6 +73,4 @@ public class PrintingAndScanningJourney extends BasePage {
         waitForTextToBePresent("Remove printer");
         world.UIJourney.clickConfirm();
     }
-
-
 }
