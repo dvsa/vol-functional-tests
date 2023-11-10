@@ -67,7 +67,7 @@ public class PrintingAndScanningJourney extends BasePage {
     public void deletePrinter() {
         long kickOut = System.currentTimeMillis() + 120000;
         do {
-            selectRandomCheckBoxOrRadioBtn("checkbox");
+            waitAndClick(String.format("//tr[td]//*[contains(text(),'%s')]//following-sibling::td",world.printingAndScanningJourney.postCode),SelectorType.XPATH);
             waitAndClick("delete", SelectorType.ID);
         } while (!isTextPresent("Remove printer") && System.currentTimeMillis() < kickOut);
 
