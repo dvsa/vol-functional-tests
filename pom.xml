@@ -227,8 +227,8 @@
                     </properties>
                     <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>1</forkCount>
-                    <reuseForks>false</reuseForks>
-                    <parallel>suitesAndMethods</parallel>
+                    <reuseForks>true</reuseForks>
+                    <parallel>suites</parallel>
                 </configuration>
                 <dependencies>
                     <dependency>
