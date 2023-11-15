@@ -163,19 +163,19 @@ public class SelfServeNavigation extends BasePage {
         waitAndContinuePage("Directors");
         waitAndContinuePage("Operating centres and authorisation");
         waitForTitleToBePresent("Financial evidence");
-        waitAndClick("//*[contains(text(),'Upload documents later')]", SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Upload documents now')]", SelectorType.XPATH);
 
-//        String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
-//        javaScriptExecutor(jScript);
-//
-//        if (System.getProperty("platform") == null) {
-//            enterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
-//        } else {
-//            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
-//            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
-//            addFile.sendKeys(workingDir.concat(financialEvidenceFile));
-//        }
-//        waitForTextToBePresent("File name");
+        String jScript = "document.getElementById('evidence[files][file]').style.left = 0";
+        javaScriptExecutor(jScript);
+
+        if (System.getProperty("platform") == null) {
+            enterText("//*[@id='evidence[files][file]']", SelectorType.XPATH, workingDir.concat(financialEvidenceFile));
+        } else {
+            WebElement addFile = getDriver().findElement(By.xpath("//*[@id='evidence[files][file]']"));
+            ((RemoteWebElement) addFile).setFileDetector(new LocalFileDetector());
+            addFile.sendKeys(workingDir.concat(financialEvidenceFile));
+        }
+        waitForTextToBePresent("File name");
         UIJourney.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
