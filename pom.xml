@@ -250,8 +250,8 @@
                     <includes>**/**.java</includes>
                     <forkCount>3</forkCount>
                     <parallel>suites</parallel>
-                    <threadCountSuites>1</threadCountSuites>
-<!--                    <reuseForks>true</reuseForks>-->
+                    <threadCountSuites>4</threadCountSuites>
+                    <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
