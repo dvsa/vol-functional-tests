@@ -248,9 +248,9 @@
                 </executions>
                 <configuration>
                     <includes>**/**.java</includes>
-                    <forkCount>1</forkCount>
+                    <forkCount>2</forkCount>
                     <parallel>suites</parallel>
-                    <threadCountSuites>10</threadCountSuites>
+                    <threadCountSuites>1</threadCountSuites>
 <!--                    <reuseForks>false</reuseForks>-->
                 </configuration>
             </plugin>
