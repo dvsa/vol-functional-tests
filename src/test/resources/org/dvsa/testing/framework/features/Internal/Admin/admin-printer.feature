@@ -17,5 +17,6 @@ Feature: Admin wishes to add, edit and delete printers
     Then that printer should have been edited
 
   Scenario: Admin wishes to Delete a printer
-    When I delete a printer
+    When I add a printer
+    And I delete a printer
     Then that printer should have been deleted
