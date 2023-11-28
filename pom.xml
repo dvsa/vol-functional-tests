@@ -230,6 +230,7 @@
                     <reuseForks>true</reuseForks>
                     <parallel>methods</parallel>
                     <forkedProcessTimeoutInSeconds>30</forkedProcessTimeoutInSeconds>
+                    <forkedProcessExitTimeoutInSeconds>30</forkedProcessExitTimeoutInSeconds>
                     <threadCount>1</threadCount>
                 </configuration>
                 <dependencies>
