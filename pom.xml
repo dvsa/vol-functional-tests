@@ -249,7 +249,7 @@
                 <configuration>
                     <includes>**/**.java</includes>
                     <forkCount>5</forkCount>
-                    <parallel>methods</parallel>
+                    <parallel>suites</parallel>
                     <threadCountMethods>2</threadCountMethods>
                     <reuseForks>true</reuseForks>
                 </configuration>
