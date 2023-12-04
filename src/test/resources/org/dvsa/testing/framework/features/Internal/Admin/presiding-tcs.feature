@@ -1,4 +1,5 @@
 @int_regression
+@transportCommissionerSubmission
 
 Feature: Admin wishes to add and delete a Presiding tc
 
