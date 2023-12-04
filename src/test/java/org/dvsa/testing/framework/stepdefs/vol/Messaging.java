@@ -26,9 +26,9 @@ public class Messaging extends BasePage {
 
     @Then("the internal messages page is displayed correctly")
     public void theInternalMessagesPageIsDisplayedCorrectly() {
-        assertTrue(isTitlePresent("Conversations", 100));
+        assertTrue(isTextPresent("Conversations"));
         assertTrue(isElementPresent("(//span[text()='Messages'])[2]", SelectorType.XPATH));
-        assertTrue(isElementPresent("//a[@href='/licence/247712/conversation/new/']", SelectorType.XPATH));
-        assertTrue(isElementPresent("//a[@href='/licence/247712/conversation/disable/']", SelectorType.XPATH));
+        assertTrue(isElementPresent("New Conversation", SelectorType.LINKTEXT));
+        assertTrue(isElementPresent("Disable Messaging", SelectorType.LINKTEXT));
     }
 }
