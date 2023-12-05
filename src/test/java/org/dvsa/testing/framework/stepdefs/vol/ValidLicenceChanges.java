@@ -161,12 +161,10 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the licence discs page are made")
     public void theChangesToTheLicenceDiscsPageAreMade() {
-        world.selfServeNavigation.navigateToPage("licence", SelfServeSection.LICENCE_DISCS);
         assertEquals(Browser.navigate().findElements(By.xpath("//input[contains(@name,'table[action][void]')]")).size(),0);
-        click("//*[contains(text(),'More actions')]", SelectorType.XPATH);
-        click("//*[@id='ceased-show-hide']",SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'More actions')]", SelectorType.XPATH);
+        waitAndClick("//*[@id='ceased-show-hide']",SelectorType.XPATH);
         assertEquals(Browser.navigate().findElements(By.xpath("//tbody//tr")).size(),7);
-
     }
 
     @When("i make changes to the safety and compliance page")
