@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
@@ -12,7 +13,10 @@ import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import scanner.AXEScanner;
+import scanner.ReportGenerator;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +29,8 @@ public class SubmitApplicationJourney extends BasePage {
     World world;
     private String applicationNumber;
     private String licence;
+
+    public AXEScanner axeScanner = new AXEScanner();
 
     List<WebElement> applications;
 
@@ -75,17 +81,17 @@ public class SubmitApplicationJourney extends BasePage {
         }
     }
 
-    public void startANewLicenceApplication(String licenceType) {
+    public void startANewLicenceApplication(String licenceType, boolean scanOrNot) throws IllegalBrowserException, IOException {
         setLicence(licenceType);
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
         chooseLicenceType(licenceType);
         UIJourney.clickSaveAndContinue();
         //business details
-        world.businessDetailsJourney.addBusinessDetails();
+        world.businessDetailsJourney.addBusinessDetails(scanOrNot);
         if (isTitlePresent("Directors", 2) || isTitlePresent("Responsible people", 2)) {
             if (isElementPresent("add", SelectorType.ID)) {
-                world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
+                world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(true);
             }
         }
         //operating centre
@@ -100,40 +106,49 @@ public class SubmitApplicationJourney extends BasePage {
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(false);
+        }
         UIJourney.clickSaveAndContinue();
-
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(false);
+        }
         UIJourney.clickSaveAndContinue();
-
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(false);
+        }
         world.UIJourney.clickContinue();
-
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            world.UIJourney.clickSend();
-        } else {
-            world.transportManagerJourney.submitTMApplicationPrintAndSign();
+                world.UIJourney.clickSend();
+            } else {
+                world.transportManagerJourney.submitTMApplicationPrintAndSign(true);
+            if (scanOrNot) {
+                world.submitApplicationJourney.axeScanner.scan(false);
+            }
+            //vehicleDetails
+            boolean vehicleType = licenceType.equals("Goods");
+            world.vehicleDetailsJourney.addAVehicle(vehicleType);
+            if (licenceType.equals("Public")) {
+                world.psvJourney.completeVehicleDeclarationsPage();
+                waitAndClick("overview-item__safety", SelectorType.ID);
+            }
+            world.safetyComplianceJourney.addSafetyAndComplianceData(true);
+            world.safetyInspectorJourney.addASafetyInspector(true);
+            clickById("application[safetyConfirmation]");
+            UIJourney.clickSaveAndContinue();
+            //Financial History
+            world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("application", true);
+            //Licence details
+            world.licenceDetailsJourney.answerNoToAllQuestionsAndSubmit(true);
+            //Convictions
+            world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("application", true);
         }
-        //vehicleDetails
-        boolean vehicleType = licenceType.equals("Goods");
-        world.vehicleDetailsJourney.addAVehicle(vehicleType);
-        if (licenceType.equals("Public")) {
-            world.psvJourney.completeVehicleDeclarationsPage();
-            waitAndClick("overview-item__safety", SelectorType.ID);
-        }
-        world.safetyComplianceJourney.addSafetyAndComplianceData();
-        world.safetyInspectorJourney.addASafetyInspector();
-        clickById("application[safetyConfirmation]");
-        UIJourney.clickSaveAndContinue();
-        //Financial History
-        world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("application");
-        //Licence details
-        world.licenceDetailsJourney.answerNoToAllQuestionsAndSubmit();
-        //Convictions
-        world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("application");
     }
 
     public void submitAndPayForApplication() {

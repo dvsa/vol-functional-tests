@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
@@ -15,6 +16,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +62,7 @@ public class SurrenderLogic extends BasePage {
     }
 
     @Given("i remove a disc to my licence")
-    public void iRemoveADiscToMyLicence() {
+    public void iRemoveADiscToMyLicence() throws IllegalBrowserException, IOException {
         world.surrenderJourney.removeDisc();
     }
 
@@ -72,8 +74,8 @@ public class SurrenderLogic extends BasePage {
     }
 
     @Given("i add a disc to my licence")
-    public void iAddADiscToMyLicence() {
-        world.surrenderJourney.addDiscInformation();
+    public void iAddADiscToMyLicence() throws IllegalBrowserException, IOException {
+        world.surrenderJourney.addDiscInformation(false);
     }
 
     @Given("i am on the surrenders review contact details page")
@@ -107,9 +109,9 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("i am on the operator licence page")
-    public void iAmOnTheOperatorLicencePage() {
+    public void iAmOnTheOperatorLicencePage() throws IllegalBrowserException, IOException {
         world.UIJourney.clickSubmit();
-        world.surrenderJourney.addDiscInformation();
+        world.surrenderJourney.addDiscInformation(false);
         waitForTextToBePresent("In your possession");
         assertTrue(Browser.navigate().getCurrentUrl().contains("operator-licence"));
     }
@@ -121,12 +123,12 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("i am on the community licence page")
-    public void iAmOnTheCommunityLicencePage() {
+    public void iAmOnTheCommunityLicencePage() throws IllegalBrowserException, IOException {
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             world.UIJourney.clickSubmit();
-            world.surrenderJourney.addDiscInformation();
+            world.surrenderJourney.addDiscInformation(false);
             waitForTextToBePresent("In your possession");
-            world.surrenderJourney.addOperatorLicenceDetails();
+            world.surrenderJourney.addOperatorLicenceDetails(true);
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
         } else {
             throw new InvalidArgumentException("Only a goods standard international licence has community pages");
@@ -140,11 +142,11 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("i am on the disc and doc review page")
-    public void iAmOnTheDiscAndDocReviewPage() {
+    public void iAmOnTheDiscAndDocReviewPage() throws IllegalBrowserException, IOException {
         world.UIJourney.clickSubmit();
-        world.surrenderJourney.addDiscInformation();
+        world.surrenderJourney.addDiscInformation(false);
         waitForTextToBePresent("In your possession");
-        world.surrenderJourney.addOperatorLicenceDetails();
+        world.surrenderJourney.addOperatorLicenceDetails(true);
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
@@ -159,11 +161,11 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("i am on the destroy disc page")
-    public void iAmOnTheDestroyDiscPage() {
+    public void iAmOnTheDestroyDiscPage() throws IllegalBrowserException, IOException {
         world.UIJourney.clickSubmit();
-        world.surrenderJourney.addDiscInformation();
+        world.surrenderJourney.addDiscInformation(false);
         waitForTextToBePresent("In your possession");
-        world.surrenderJourney.addOperatorLicenceDetails();
+        world.surrenderJourney.addOperatorLicenceDetails(true);
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
@@ -173,11 +175,11 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("i am on the declaration page")
-    public void iAmOnTheDeclarationPage() {
+    public void iAmOnTheDeclarationPage() throws IllegalBrowserException, IOException {
         world.UIJourney.clickSubmit();
-        world.surrenderJourney.addDiscInformation();
+        world.surrenderJourney.addDiscInformation(false);
         waitForTextToBePresent("In your possession");
-        world.surrenderJourney.addOperatorLicenceDetails();
+        world.surrenderJourney.addOperatorLicenceDetails(true);
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
@@ -189,9 +191,12 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("my application to surrender is under consideration")
-    public void myApplicationToSurrenderIsUnderConsideration() throws HttpException, MalformedURLException, InterruptedException {
+    public void myApplicationToSurrenderIsUnderConsideration(boolean scanOrNot) throws HttpException, IOException, InterruptedException, IllegalBrowserException {
         world.updateLicence.printLicenceDiscs();
-        world.surrenderJourney.submitSurrender();
+        world.surrenderJourney.submitSurrender(true);
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(true);
+        }
     }
 
     @When("the caseworker approves the surrender")
@@ -270,8 +275,8 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("the user should be able to re apply for a surrender in internal")
-    public void theUserShouldBeAbleToReApplyForASurrenderInInternal() throws MalformedURLException, InterruptedException {
-        world.surrenderJourney.submitSurrender();
+    public void theUserShouldBeAbleToReApplyForASurrenderInInternal() throws IOException, InterruptedException, IllegalBrowserException {
+        world.surrenderJourney.submitSurrender(false);
     }
 
     @And("the case worker undoes the surrender")
@@ -301,8 +306,17 @@ public class SurrenderLogic extends BasePage {
     }
 
     @And("i have started a surrender")
-    public void iHaveStartedASurrender() {
-        world.surrenderJourney.navigateToSurrendersStartPage();
-        world.surrenderJourney.startSurrender();
+    public void iHaveStartedASurrenderWithAxeScanner() throws IllegalBrowserException, IOException {
+        world.surrenderJourney.navigateToSurrendersStartPage(true);
+        world.surrenderJourney.startSurrender(true);
+    }
+
+    @And("my application to surrender is under consideration with axeScanner {}")
+    public void myApplicationToSurrenderIsUnderConsiderationWithAxeScanner(boolean scanOrNot) throws HttpException, IllegalBrowserException, IOException, InterruptedException {
+        world.updateLicence.printLicenceDiscs();
+        world.surrenderJourney.submitSurrender(true);
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(true);
+        }
     }
 }

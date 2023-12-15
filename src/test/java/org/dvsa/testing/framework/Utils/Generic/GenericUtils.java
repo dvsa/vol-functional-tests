@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Utils.Generic;
 
+import activesupport.IllegalBrowserException;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
@@ -32,6 +33,8 @@ import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import scanner.AXEScanner;
+import scanner.ReportGenerator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -62,6 +65,8 @@ public class GenericUtils extends BasePage {
 
     private final World world;
     private String registrationNumber;
+    AXEScanner scanner = new AXEScanner();
+    ReportGenerator reportGenerator = new ReportGenerator();
     private static final String zipFilePath = "/src/test/resources/import EBSR.zip";
 
     public String getRegistrationNumber() {
@@ -78,7 +83,7 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String RegistrationNumber = String.valueOf(Int.random(0,9999));
+            String RegistrationNumber = String.valueOf(Int.random(0, 9999));
             String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -108,9 +113,9 @@ public class GenericUtils extends BasePage {
                     }
                     if ("TrafficAreaName".equals(node.getNodeName())) {
                         String trafficAreaName;
-                        if(world.configuration.env.toString().equals("int")){
+                        if (world.configuration.env.toString().equals("int")) {
                             trafficAreaName = "East";
-                        }else{
+                        } else {
                             trafficAreaName = world.updateLicence.getTrafficAreaName();
                         }
                         switch (trafficAreaName) {
@@ -366,16 +371,18 @@ public class GenericUtils extends BasePage {
         HttpResponse response = httpClient.execute(host, httpPost, localContext);
         return response.getStatusLine().getStatusCode();
     }
-      public static boolean jenkinsTest(EnvironmentType env, String username, String password) throws IOException, InterruptedException {
+
+    public static boolean jenkinsTest(EnvironmentType env, String username, String password) throws IOException, InterruptedException {
         String node = URLEncoder.encode(env + "&&api&&olcs");
         String Jenkins_Url = String.format("https://jenkins.olcs.dev-dvsacloud.uk/view/Batch/job/Batch/job/Batch_Run_Cli/" +
                 "buildWithParameters?Run+on+Nodes=%s&COMMAND=last-tm-letter", node);
 
-        int statusCode = kickOffJenkinsJob(Jenkins_Url,username,password);
+        int statusCode = kickOffJenkinsJob(Jenkins_Url, username, password);
         //you can assert against the status code here == 201
-        return(statusCode==201);
-          }
+        return (statusCode == 201);
     }
+
+}
 
 
 

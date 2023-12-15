@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.faker.FakerUtils;
@@ -8,6 +9,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.joda.time.LocalDate;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class ConvictionsAndPenaltiesJourney extends BasePage {
@@ -28,7 +30,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         this.world = world;
     }
 
-    public void answerNoToAllQuestionsAndSubmit(String applicationType) {
+    public void answerNoToAllQuestionsAndSubmit(String applicationType, Boolean scanOrNot) throws IllegalBrowserException, IOException {
         waitForTitleToBePresent("Convictions and Penalties");
         findSelectAllRadioButtonsByValue("N");
         clickById("convictionsConfirmation[convictionsConfirmation]");
@@ -36,6 +38,9 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
             UIJourney.clickSaveAndContinue();
         } else if (applicationType.equals("variation")) {
             UIJourney.clickSaveAndReturn();
+        }
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(true);
         }
     }
 

@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -8,6 +9,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
@@ -19,7 +21,7 @@ public class TransportManagerJourney extends BasePage {
     private World world;
     static int tmCount;
 
-    public TransportManagerJourney(World world){
+    public TransportManagerJourney(World world) {
         this.world = world;
     }
 
@@ -35,14 +37,14 @@ public class TransportManagerJourney extends BasePage {
         click("//button[contains(@name,'table[action][delete]')]", SelectorType.XPATH);
     }
 
-    public void removeInternalTransportManager()  {
+    public void removeInternalTransportManager() {
         promptRemovalOfInternalTransportManager();
         waitForTextToBePresent("Are you sure you want to remove this Transport Manager?");
         findSelectAllRadioButtonsByValue("Y");
         world.UIJourney.clickSubmit();
     }
 
-    public void addTransportManagerDetails()  {
+    public void addTransportManagerDetails(boolean scanOrNot) throws IllegalBrowserException, IOException {
         //Add Personal Details
         waitForTitleToBePresent("Transport Manager details");
         String birthPlace = world.createApplication.getTransportManagerTown();
@@ -60,12 +62,12 @@ public class TransportManagerJourney extends BasePage {
         //Add Home Address
         enterText("postcodeInput1", SelectorType.ID, postCode);
         clickByName("homeAddress[searchPostcode][search]");
-        waitAndSelectByIndex("//*[@id='selectAddress1']",SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='selectAddress1']", SelectorType.XPATH, 1);
 
         //Add Work Address
         waitAndEnterText("postcodeInput2", SelectorType.ID, postCode);
         waitAndClick("workAddress[searchPostcode][search]", SelectorType.ID);
-        waitAndSelectByIndex("//*[@id='selectAddress2']",SelectorType.XPATH, 1);
+        waitAndSelectByIndex("//*[@id='selectAddress2']", SelectorType.XPATH, 1);
 
         //Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);
@@ -88,7 +90,7 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.searchAndSelectAddress("postcodeInput1", postCode, 1);
         waitAndEnterText("//*[@id='tm-employment-details[position]']", SelectorType.XPATH, "DVSA Tester");
         waitAndEnterText("//*[@id='tm-employment-details[hoursPerWeek]']", SelectorType.XPATH, "Testing Monday Tuesday Wednesday");
-        if(isElementPresent("understoodAvailabilityAgreement", SelectorType.ID)) {
+        if (isElementPresent("understoodAvailabilityAgreement", SelectorType.ID)) {
             clickById("understoodAvailabilityAgreement");
         }
         world.UIJourney.clickSubmit();
@@ -111,6 +113,9 @@ public class TransportManagerJourney extends BasePage {
         waitAndEnterText("//*[@id='holderName']", SelectorType.XPATH, "PD263849");
         world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Transport Manager details");
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(false);
+        }
         world.UIJourney.clickSubmit();
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
 
@@ -144,7 +149,7 @@ public class TransportManagerJourney extends BasePage {
     public void addAndCompleteOperatorUserAsTransportManager(String isOwner, boolean applicationOrNot) {
         HashMap<String, String> dob = world.globalMethods.date.getDateHashMap(-5, 0, -20);
         addOperatorUserAsTransportManager(dob, applicationOrNot);
-        world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(),world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL);
+        world.globalMethods.navigateToLoginWithoutCookies(world.DataGenerator.getOperatorUser(), world.DataGenerator.getOperatorUserEmail(), ApplicationType.EXTERNAL);
         if (applicationOrNot) {
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         } else {
@@ -219,25 +224,28 @@ public class TransportManagerJourney extends BasePage {
         assertTrue(isLinkPresent("Provide details", 10));
     }
 
-    public void submitTMApplicationAndSignWithVerify(){
-        addTransportManagerDetails();
+    public void submitTMApplicationAndSignWithVerify() throws IllegalBrowserException, IOException {
+        addTransportManagerDetails(false);
         waitForTitleToBePresent("Check your answers");
         world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
         world.UIJourney.clickSubmit();
         world.UIJourney.signWithVerify();
-        waitAndClick("//*[contains(text(),'Finish')]",SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Finish')]", SelectorType.XPATH);
     }
 
-    public void submitTMApplicationPrintAndSign(){
-        addTransportManagerDetails();
+    public void submitTMApplicationPrintAndSign(boolean scanOrNot) throws IllegalBrowserException, IOException {
+        addTransportManagerDetails(true);
         waitForTitleToBePresent("Check your answers");
         world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
-        waitAndClick("//*[contains(text(),'Print')]",SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         world.UIJourney.clickSubmit();
         clickByLinkText("Back to Transport Managers");
         waitForTitleToBePresent("Transport Managers");
         UIJourney.clickSaveAndContinue();
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(false);
+        }
     }
 }

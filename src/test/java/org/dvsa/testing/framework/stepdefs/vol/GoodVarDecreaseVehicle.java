@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -7,6 +8,8 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.io.IOException;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 
@@ -19,7 +22,7 @@ public class GoodVarDecreaseVehicle extends BasePage {
     }
 
     @When("A selfserve user decreases the vehicle authority count")
-    public void aSelfserveUserDecreasesTheVehicleAuthorityCount() {
+    public void aSelfserveUserDecreasesTheVehicleAuthorityCount() throws IllegalBrowserException, IOException {
         world.generalVariationJourney.beginOperatingCentreVariation();
         world.operatingCentreJourney.updateOperatingCentreAuthorisation(String.valueOf(world.createApplication.getNoOfAddedHgvVehicles() - 1), String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
@@ -46,7 +49,7 @@ public class GoodVarDecreaseVehicle extends BasePage {
     }
 
     @When("A selfserve user decreases the vehicle authority by invalid charecters")
-    public void aSelfserveUserDecreasesTheVehicleAuthorityByInvalidCharecters() {
+    public void aSelfserveUserDecreasesTheVehicleAuthorityByInvalidCharecters() throws IllegalBrowserException, IOException {
         world.generalVariationJourney.beginOperatingCentreVariation();
         String currentTrailerTotalAuthority = String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority());
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority("-6", null, currentTrailerTotalAuthority);

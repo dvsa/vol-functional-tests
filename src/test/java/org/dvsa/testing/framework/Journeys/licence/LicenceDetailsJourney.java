@@ -1,10 +1,13 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.io.IOException;
 
 public class LicenceDetailsJourney extends BasePage {
     private World world;
@@ -13,10 +16,13 @@ public class LicenceDetailsJourney extends BasePage {
         this.world = world;
     }
 
-    public void answerNoToAllQuestionsAndSubmit() {
+    public void answerNoToAllQuestionsAndSubmit(boolean scanOrNot) throws IllegalBrowserException, IOException {
         waitForTitleToBePresent("Licence history");
         findSelectAllRadioButtonsByValue("N");
         UIJourney.clickSaveAndContinue();
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(false);
+        }
     }
     //TODO: Licence details for every No selected
     public void answerYesToAllQuestionsAndSubmit(){

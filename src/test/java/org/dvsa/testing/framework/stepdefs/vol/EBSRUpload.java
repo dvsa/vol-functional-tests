@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -7,6 +8,8 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.NotFoundException;
+
+import java.io.IOException;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
@@ -20,16 +23,16 @@ public class EBSRUpload extends BasePage {
     }
 
     @Then("A short notice flag should be displayed in selfserve")
-    public void aShortNoticeFlagShouldBeDisplayedInSelfserve() {
-        world.busRegistrationJourney.viewEBSRInExternal();
+    public void aShortNoticeFlagShouldBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
+        world.busRegistrationJourney.viewEBSRInExternal(false);
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'successful')]", SelectorType.XPATH));
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'short notice')]", SelectorType.XPATH));
     }
 
     @Then("A short notice flag should not be displayed in selfserve")
-    public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() {
-        world.busRegistrationJourney.viewEBSRInExternal();
+    public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
+        world.busRegistrationJourney.viewEBSRInExternal(false);
         waitForTextToBePresent("successful");
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'successful')]", SelectorType.XPATH));
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
@@ -73,18 +76,39 @@ public class EBSRUpload extends BasePage {
         assertNotNull(trafficArea);
     }
 
-    @And("Documents are generated")
-    public void documentsAreGenerated() {
+
+
+    @Then("all Service Details fields should be editable")
+    public void allServiceDetailsFieldsShouldBeEditable() {
+        clickByLinkText("Service details");
+        world.busRegistrationJourney.internalSiteEditBusReg();
+    }
+
+    @And("the edited Bus Registration details should be saved")
+    public void theEditedBusRegistrationDetailsShouldBeSaved() {
+        world.selfServeNavigation.navigateToBusRegExternal();
+        assertTrue(isTextPresent("1234"));
+    }
+
+
+    @And("Documents are generated with axeScanner {}")
+    public void documentsAreGeneratedWithAxeScanner(boolean scanOrNot) throws IllegalBrowserException, IOException {
         String licenceNumber;
         if(world.configuration.env.toString().equals("int")){
             licenceNumber = existingLicenceNumber;
         }else{
             licenceNumber = world.applicationDetails.getLicenceNumber();
+            if (scanOrNot) {
+                world.submitApplicationJourney.axeScanner.scan(true);
+            }
         }
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
         waitForTextToBePresent("Your file was processed successfully");
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
+            if (scanOrNot) {
+                world.submitApplicationJourney.axeScanner.scan(true);
+            }
         }
         long kickOutTime = System.currentTimeMillis() + 30000;
         if(!world.configuration.env.toString().equals("local")) {
@@ -101,16 +125,4 @@ public class EBSRUpload extends BasePage {
             }
         }
     }
-
-    @Then("all Service Details fields should be editable")
-    public void allServiceDetailsFieldsShouldBeEditable() {
-        clickByLinkText("Service details");
-        world.busRegistrationJourney.internalSiteEditBusReg();
     }
-
-    @And("the edited Bus Registration details should be saved")
-    public void theEditedBusRegistrationDetailsShouldBeSaved() {
-        world.selfServeNavigation.navigateToBusRegExternal();
-        assertTrue(isTextPresent("1234"));
-    }
-}

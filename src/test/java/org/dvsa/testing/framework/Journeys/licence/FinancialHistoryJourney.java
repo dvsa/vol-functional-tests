@@ -1,9 +1,12 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.io.IOException;
 
 public class FinancialHistoryJourney extends BasePage {
     private World world;
@@ -12,7 +15,7 @@ public class FinancialHistoryJourney extends BasePage {
         this.world = world;
     }
 
-    public void answerNoToAllQuestionsAndSubmit(String applicationType) {
+    public void answerNoToAllQuestionsAndSubmit(String applicationType, boolean scanOrNot) throws IllegalBrowserException, IOException {
         waitForTitleToBePresent("Financial history");
         clickById("data[financialHistoryConfirmation][insolvencyConfirmation]");
         findSelectAllRadioButtonsByValue("N");
@@ -20,6 +23,9 @@ public class FinancialHistoryJourney extends BasePage {
             UIJourney.clickSaveAndContinue();
         } else if (applicationType.equals("variation")) {
             UIJourney.clickSaveAndReturn();
+        }
+        if (scanOrNot) {
+            world.submitApplicationJourney.axeScanner.scan(true);
         }
     }
 

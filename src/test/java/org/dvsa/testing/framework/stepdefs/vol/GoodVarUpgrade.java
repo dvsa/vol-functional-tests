@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,6 +9,8 @@ import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -48,15 +51,15 @@ public class GoodVarUpgrade extends BasePage {
     }
 
     @And("i complete the required five sections")
-    public void iCompleteTheRequiredFiveSections() {
+    public void iCompleteTheRequiredFiveSections() throws IllegalBrowserException, IOException {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.ADDRESSES);
         UIJourney.clickSaveAndReturn();
         world.UIJourney.completeFinancialEvidencePage();
         world.TMJourney.addNewPersonAsTransportManager("variation");
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_HISTORY);
-        world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("variation");
+        world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("variation", false);
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.CONVICTIONS_AND_PENALTIES);
-        world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("variation");
+        world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("variation", false);
     }
 
     @Then("the upgrade variation and interim are submitted")
