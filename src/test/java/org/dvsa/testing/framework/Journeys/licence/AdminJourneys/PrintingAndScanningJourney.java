@@ -63,7 +63,6 @@ public class PrintingAndScanningJourney extends BasePage {
         ClickPage50AndWait();
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
     }
-
     public void deletePrinter() {
         long kickOut = System.currentTimeMillis() + 120000;
         do {

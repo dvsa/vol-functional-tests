@@ -17,7 +17,7 @@ Background:
     Given i try resetting my password
     Then i will receive an error that username invalid
 
-#  @WIP
+#  @WIP @WIP
 #  Scenario: try reset password for inactive user
 #    Given i have a valid "goods" "standard_national" licence
 #    And i then try reset my password
