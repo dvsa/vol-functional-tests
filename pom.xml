@@ -251,7 +251,7 @@
                     <forkCount>2</forkCount>
                     <parallel>suites</parallel>
                     <threadCount>5</threadCount>
-                    <reuseForks>true</reuseForks>
+                    <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
