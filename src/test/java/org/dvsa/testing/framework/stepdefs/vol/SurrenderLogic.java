@@ -1,23 +1,28 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
 import activesupport.IllegalBrowserException;
-import org.apache.hc.core5.http.HttpException;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.cucumber.datatable.DataTable;
+import org.apache.commons.logging.Log;
+import org.apache.hc.core5.http.HttpException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
+import scanner.AXEScanner;
+import scanner.ReportGenerator;
+
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +33,11 @@ public class SurrenderLogic extends BasePage {
     private final World world;
     private final FakerUtils faker = new FakerUtils();
     private final HashMap<String, String> address = faker.generateAddress();
+    AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+    ReportGenerator reportGenerator = new ReportGenerator();
+
+    private static final Logger LOGGER = LogManager.getLogger(SurrenderLogic.class);
+
 
     public SurrenderLogic(World word) {
         this.world = word;
@@ -195,7 +205,7 @@ public class SurrenderLogic extends BasePage {
         world.updateLicence.printLicenceDiscs();
         world.surrenderJourney.submitSurrender(true);
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(true);
+            axeScanner.scan(true);
         }
     }
 
@@ -316,7 +326,19 @@ public class SurrenderLogic extends BasePage {
         world.updateLicence.printLicenceDiscs();
         world.surrenderJourney.submitSurrender(true);
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(true);
+            axeScanner.scan(true);
         }
+    }
+
+    @Then("no issues should be present across the Submissions journey")
+    public void noIssuesShouldBePresentAcrossTheSubmissionsJourney() throws IOException {
+        if (axeScanner.getTotalViolationsCount() != 0) {
+            LOGGER.info("ERROR: Violation found");
+        } else {
+            LOGGER.info("No violation found");
+        }
+        reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
+        reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), axeScanner);
+        reportGenerator.createReport(axeScanner);
     }
 }

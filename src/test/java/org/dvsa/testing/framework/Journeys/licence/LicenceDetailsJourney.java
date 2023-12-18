@@ -6,6 +6,8 @@ import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 
@@ -21,7 +23,8 @@ public class LicenceDetailsJourney extends BasePage {
         findSelectAllRadioButtonsByValue("N");
         UIJourney.clickSaveAndContinue();
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+            AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+            axeScanner.scan(false);
         }
     }
     //TODO: Licence details for every No selected

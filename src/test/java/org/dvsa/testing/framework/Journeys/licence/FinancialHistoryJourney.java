@@ -5,6 +5,8 @@ import org.dvsa.testing.framework.Injectors.World;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 
@@ -25,7 +27,8 @@ public class FinancialHistoryJourney extends BasePage {
             UIJourney.clickSaveAndReturn();
         }
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(true);
+            AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+            axeScanner.scan(true);
         }
     }
 

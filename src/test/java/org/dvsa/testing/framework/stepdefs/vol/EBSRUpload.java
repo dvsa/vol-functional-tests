@@ -8,6 +8,7 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.NotFoundException;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 
@@ -17,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EBSRUpload extends BasePage {
     private final World world;
+
+
 
     public EBSRUpload(World world) {
         this.world = world;
@@ -93,13 +96,14 @@ public class EBSRUpload extends BasePage {
 
     @And("Documents are generated with axeScanner {}")
     public void documentsAreGeneratedWithAxeScanner(boolean scanOrNot) throws IllegalBrowserException, IOException {
+        AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
         String licenceNumber;
         if(world.configuration.env.toString().equals("int")){
             licenceNumber = existingLicenceNumber;
         }else{
             licenceNumber = world.applicationDetails.getLicenceNumber();
             if (scanOrNot) {
-                world.submitApplicationJourney.axeScanner.scan(true);
+                axeScanner.scan(true);
             }
         }
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
@@ -107,7 +111,7 @@ public class EBSRUpload extends BasePage {
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
             if (scanOrNot) {
-                world.submitApplicationJourney.axeScanner.scan(true);
+                axeScanner.scan(true);
             }
         }
         long kickOutTime = System.currentTimeMillis() + 30000;

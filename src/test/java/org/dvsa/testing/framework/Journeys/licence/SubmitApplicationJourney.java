@@ -8,6 +8,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
@@ -19,7 +20,6 @@ import scanner.ReportGenerator;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
@@ -30,7 +30,9 @@ public class SubmitApplicationJourney extends BasePage {
     private String applicationNumber;
     private String licence;
 
-    public AXEScanner axeScanner = new AXEScanner();
+    AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+
+    ReportGenerator reportGenerator = new ReportGenerator();
 
     List<WebElement> applications;
 
@@ -107,20 +109,20 @@ public class SubmitApplicationJourney extends BasePage {
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+           axeScanner.scan(false);
         }
         UIJourney.clickSaveAndContinue();
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+            axeScanner.scan(false);
         }
         UIJourney.clickSaveAndContinue();
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+            axeScanner.scan(false);
         }
         world.UIJourney.clickContinue();
         //transport manager details
@@ -129,7 +131,7 @@ public class SubmitApplicationJourney extends BasePage {
             } else {
                 world.transportManagerJourney.submitTMApplicationPrintAndSign(true);
             if (scanOrNot) {
-                world.submitApplicationJourney.axeScanner.scan(false);
+                axeScanner.scan(false);
             }
             //vehicleDetails
             boolean vehicleType = licenceType.equals("Goods");

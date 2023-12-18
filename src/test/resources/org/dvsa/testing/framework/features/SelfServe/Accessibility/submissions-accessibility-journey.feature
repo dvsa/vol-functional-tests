@@ -1,5 +1,5 @@
 @ss_regression @FullRegression
-@accessibility
+
 Feature: Check that Submissions journey is accessible
 
   Background:
@@ -12,6 +12,7 @@ Feature: Check that Submissions journey is accessible
     And the surrender menu should be hidden in internal
     And the licence should not displayed in selfserve
     Then no issues should be present on the page
+
 
     Examples:
       |  | scanOrNot |

@@ -6,8 +6,10 @@ import activesupport.dates.Dates;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.joda.time.LocalDate;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -20,6 +22,9 @@ public class TransportManagerJourney extends BasePage {
 
     private World world;
     static int tmCount;
+
+    AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+
 
     public TransportManagerJourney(World world) {
         this.world = world;
@@ -114,7 +119,7 @@ public class TransportManagerJourney extends BasePage {
         world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Transport Manager details");
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+            axeScanner.scan(false);
         }
         world.UIJourney.clickSubmit();
     } // Look where this should be used. It's good code so it'll be a waste. Definitely remember it being part of a TM journey.s
@@ -245,7 +250,7 @@ public class TransportManagerJourney extends BasePage {
         waitForTitleToBePresent("Transport Managers");
         UIJourney.clickSaveAndContinue();
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+            axeScanner.scan(true);
         }
     }
 }

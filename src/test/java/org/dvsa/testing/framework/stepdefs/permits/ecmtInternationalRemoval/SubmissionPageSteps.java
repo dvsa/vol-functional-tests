@@ -1,10 +1,12 @@
 package org.dvsa.testing.framework.stepdefs.permits.ecmtInternationalRemoval;
 
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Journeys.permits.pages.DeclarationPageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.HomePageJourney;
 import org.dvsa.testing.framework.Journeys.permits.pages.OverviewPageJourney;
@@ -15,11 +17,18 @@ import org.dvsa.testing.framework.pageObjects.external.pages.HomePage;
 import org.dvsa.testing.framework.pageObjects.external.pages.SubmittedPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.baseClasses.BasePermitPage;
 import org.openqa.selenium.WebDriver;
+import scanner.AXEScanner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SubmissionPageSteps extends BasePermitPage{
     World world;
+
+
+    private static final Logger LOGGER = LogManager.getLogger(SubmissionPageSteps.class);
 
     public SubmissionPageSteps(World world) {
         this.world = world;
@@ -140,4 +149,5 @@ public class SubmissionPageSteps extends BasePermitPage{
     public void thatFileShouldBeDisplayed() {
         assertTrue(isTextPresent("newspaperAdvert.jpeg"));
     }
+
 }

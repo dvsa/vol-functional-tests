@@ -5,6 +5,8 @@ import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.OperatorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 
@@ -26,7 +28,8 @@ public class SafetyComplianceJourney extends BasePage {
         waitAndClick("//*[contains(text(),'In-house')]", SelectorType.XPATH);
         waitAndClick("table[action]", SelectorType.NAME);
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+            AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+            axeScanner.scan(false);
         }
     }
 }

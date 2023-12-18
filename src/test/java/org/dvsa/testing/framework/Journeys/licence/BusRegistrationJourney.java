@@ -14,12 +14,14 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -141,7 +143,8 @@ public class BusRegistrationJourney extends BasePage {
             throw new NotFoundException("import EBSR is still displaying as 'processing' when kick out time was reached.");
         }
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(true);
+            AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+            axeScanner.scan(true);
         }
     }
 

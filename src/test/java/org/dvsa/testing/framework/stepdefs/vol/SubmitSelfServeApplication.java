@@ -16,7 +16,7 @@ public class SubmitSelfServeApplication extends BasePage {
 
     World world;
 
-    AXEScanner scanner = new AXEScanner();
+   public static final AXEScanner scanner = new AXEScanner();
 
     public SubmitSelfServeApplication(World world) {
         this.world = world;
@@ -33,7 +33,7 @@ public class SubmitSelfServeApplication extends BasePage {
             world.submitApplicationJourney.submitAndPayForApplication();
         }
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+            scanner.scan(true);
         }
     }
 

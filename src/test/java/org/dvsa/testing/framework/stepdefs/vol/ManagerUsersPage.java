@@ -1,20 +1,17 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import activesupport.system.Properties;
-import org.apache.hc.core5.http.HttpException;
-import org.apache.logging.log4j.core.util.Assert;
-import org.dvsa.testing.framework.Injectors.World;
 import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import apiCalls.enums.UserType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.pageObjects.BasePage;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.apache.hc.core5.http.HttpException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.pageObjects.BasePage;
+import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.support.Color;
 import scanner.AXEScanner;
 import scanner.ReportGenerator;
@@ -29,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ManagerUsersPage extends BasePage {
     private final World world;
     Initialisation initialisation;
-    AXEScanner scanner = new AXEScanner();
+    AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
     ReportGenerator reportGenerator = new ReportGenerator();
     private static final Logger LOGGER = LogManager.getLogger(ManagerUsersPage.class);
 
@@ -46,19 +43,19 @@ public class ManagerUsersPage extends BasePage {
 
     @When("i scan for accessibility violations")
     public void iScanForAccessibilityViolations() throws IllegalBrowserException, IOException {
-        scanner.scan(false);
+        axeScanner.scan(false);
     }
 
     @Then("no issues should be present on the page")
     public void noIssuesShouldBePresentOnThePage() throws IOException, URISyntaxException {
-        if (scanner.getTotalViolationsCount() != 0) {
+        if (axeScanner.getTotalViolationsCount() != 0) {
             LOGGER.info("ERROR: Violation found");
         } else {
             LOGGER.info("No violation found");
         }
         reportGenerator.urlScannedReportSection(Browser.navigate().getCurrentUrl());
-        reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), scanner);
-        reportGenerator.createReport(scanner);
+        reportGenerator.violationsReportSectionHTML(Browser.navigate().getCurrentUrl(), axeScanner);
+        reportGenerator.createReport(axeScanner);
     }
 
     @Then("name of button should be {string}")

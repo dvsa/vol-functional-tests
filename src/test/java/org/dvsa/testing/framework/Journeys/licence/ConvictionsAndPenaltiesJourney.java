@@ -7,7 +7,9 @@ import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
 import org.joda.time.LocalDate;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -40,7 +42,8 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
             UIJourney.clickSaveAndReturn();
         }
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(true);
+            AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+            axeScanner.scan(true);
         }
     }
 

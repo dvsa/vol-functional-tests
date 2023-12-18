@@ -6,8 +6,10 @@ import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -75,7 +77,8 @@ public class DirectorJourney extends BasePage {
         completeLicenceHistory("N");
         completeConvictionsAndPenalties("N");
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(true);
+            AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+            axeScanner.scan(true);
         }
     }
 

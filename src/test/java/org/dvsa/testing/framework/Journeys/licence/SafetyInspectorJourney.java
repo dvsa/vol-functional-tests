@@ -5,6 +5,8 @@ import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.SubmitSelfServeApplication;
+import scanner.AXEScanner;
 
 import java.io.IOException;
 
@@ -26,7 +28,8 @@ public class SafetyInspectorJourney extends BasePage {
         waitAndEnterText("addressTown", SelectorType.ID, "Nottingham");
         waitAndEnterText("postcode", SelectorType.ID, "NG1 6LP");
         if (scanOrNot) {
-            world.submitApplicationJourney.axeScanner.scan(false);
+            AXEScanner axeScanner = SubmitSelfServeApplication.scanner;
+            axeScanner.scan(false);
         }
         world.UIJourney.clickSubmit();
     }
