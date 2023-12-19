@@ -1,4 +1,3 @@
-@ss_regression @FullRegression
 @accessibility
 Feature: Check that Submissions journey is accessible
 

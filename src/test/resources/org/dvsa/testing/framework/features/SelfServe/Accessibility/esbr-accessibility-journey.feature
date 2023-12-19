@@ -1,4 +1,4 @@
-@accessibility
+@accessibility @ss_regression
 Feature: Check the EBSR journey is accessibile
 
   Scenario Outline: Scan for accessibility violations
