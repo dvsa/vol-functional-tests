@@ -9,7 +9,7 @@ Feature: Generate letter pop up should contain letter details
     And i have logged in to internal
     And i url search for my licence
 
-  @smoketest
+  @smoketest  @reads-and-writes-system-properties
   Scenario Outline: Check generate letter pop up and email/print letter
     When i generate a letter
     And The pop up should contain letter details
@@ -20,6 +20,7 @@ Feature: Generate letter pop up should contain letter details
       | email        |
       | printAndPost |
 
+  @reads-and-writes-system-properties
   Scenario: Check Propose to revoke letter process
     When i generate a letter of Subcategory In Office Revocation
     And i save the letter clicking the Propose To Revoke button

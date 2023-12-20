@@ -7,7 +7,7 @@ Feature: Set and check criteria for triggering automatic letter
   Background:
     Given i have a valid "public" "standard_international" licence
 
-  @ss_regression @FullRegression
+  @ss_regression @FullRegression  @reads-and-writes-system-properties
   Scenario: Generate letter for valid licence when ss removes last TM
     When a self-serve user removes the last TM
     Then a pop up should be displayed advising the user that they are about to remove the last TM

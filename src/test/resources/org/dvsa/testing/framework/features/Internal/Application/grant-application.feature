@@ -6,6 +6,7 @@
 
 Feature: Grant under consideration application
 
+  @reads-and-writes-system-properties
   Scenario Outline:  Grant a licence
     Given I have a "<vehicle_type>" "<type_of_licence>" application which is under consideration
     When I grant licence

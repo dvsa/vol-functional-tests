@@ -7,6 +7,7 @@
 
 Feature: Apply for a psv licence
 
+  @reads-and-writes-system-properties
   Scenario Outline: Apply for a psv licence
     Given I have a submitted "<operator>" "<licenceType>" application
     When I grant licence

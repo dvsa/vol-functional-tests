@@ -1,8 +1,7 @@
-@ss-pay-app
-@ss_regression @FullRegression
+@ss-pay-app @ss_regression @FullRegression
 Feature: Self Serve Apply for licence
 
-  @CPMS_tests @printAndSign
+  @CPMS_tests @printAndSign  @reads-and-writes-system-properties
   Scenario Outline: Create and pay application fees
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_east |
@@ -15,7 +14,7 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
-  @stored_cards @smoketest @printAndSign @localsmoke
+  @stored_cards @smoketest @printAndSign @localsmoke  @reads-and-writes-system-properties
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_west |
@@ -30,7 +29,7 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
-  @cross-browser @NI_application @smoketest
+  @cross-browser @NI_application @smoketest @reads-and-writes-system-properties
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |

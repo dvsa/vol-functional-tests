@@ -1,7 +1,7 @@
 @EBSR
 Feature: import EBSR for English, Welsh and Scottish Areas
 
-  @ss_regression @FullRegression @printAndSign
+  @ss_regression @FullRegression @printAndSign  @reads-and-writes-system-properties
   Scenario Outline: Short notice import EBSR in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
@@ -15,7 +15,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | east       | 41   |
       | west       | 41   |
 
-  @ss_regression @FullRegression @printAndSign
+  @ss_regression @FullRegression @printAndSign  @reads-and-writes-system-properties
   Scenario Outline: import EBSR in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     When I upload an ebsr file with "<Days>" days notice
@@ -29,7 +29,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | east       | 42   |
       | west       | 42   |
 
-  @ss_regression @FullRegression @printAndSign
+  @ss_regression @FullRegression @printAndSign  @reads-and-writes-system-properties
   Scenario Outline: import EBSR for curtailed and suspended licence in self-serve
     Given I have a psv application with traffic area "<Area>" and enforcement area "<Area>" which has been granted
     And the licence status is "<LicenceStatus>"
@@ -41,21 +41,21 @@ Feature: import EBSR for English, Welsh and Scottish Areas
       | north_east | 41   | curtail       |
       | wales      | 55   | suspend       |
 
-  @smoketest
+  @smoketest  @reads-and-writes-system-properties
   Scenario: Short notice import EBSR in self-serve smoke test
     Given I have a psv application with traffic area "west" and enforcement area "west" which has been granted
     When I upload an ebsr file with "41" days notice
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
 
-  @ebsrsmoketest @localsmoke
+  @ebsrsmoketest @localsmoke  @reads-and-writes-system-properties
   Scenario: import EBSR in self-serve smoke test
     Given I have a psv application with traffic area "west" and enforcement area "west" which has been granted
     When I upload an ebsr file with "42" days notice
     Then A short notice flag should not be displayed in selfserve
     And Documents are generated
 
-  @smoketest
+  @smoketest  @reads-and-writes-system-properties
   Scenario: import EBSR for curtailed and suspended licence in self-serve smoke test
     Given I have a psv application with traffic area "north_east" and enforcement area "north_east" which has been granted
     And the licence status is "curtail"

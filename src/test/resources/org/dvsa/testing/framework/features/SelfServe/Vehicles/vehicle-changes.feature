@@ -7,11 +7,13 @@ Feature: Vehicle management on an application
     Given I have a "goods" "standard_national" application with "2" vehicles and a vehicleAuthority of "5"
     And i am on the vehicle details page
 
+  @reads-and-writes-system-properties
   Scenario: I can add a vehicle on my application
     When i add a vehicle to my application
     Then the "The vehicle has been added" alert should appear
     And the vehicle should be appear
 
+  @reads-and-writes-system-properties
   Scenario: I can remove a vehicle on my application
     When i remove a vehicle from my application
     Then the vehicle no longer appears

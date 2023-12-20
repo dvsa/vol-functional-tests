@@ -4,6 +4,7 @@
 @FullRegression
 Feature: User should be able to continue where they left off
 
+  @reads-and-writes-system-properties
   Scenario Outline: Update correspondence address and resume surrender journey
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     And i have started a surrender
@@ -29,6 +30,7 @@ Feature: User should be able to continue where they left off
 
 #  Careful here. Will need to change the code to incorporate the new DVLA journey.
 
+  @reads-and-writes-system-properties
   Scenario Outline: Leave correspondence page back to correspondence page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender
@@ -42,6 +44,7 @@ Feature: User should be able to continue where they left off
       | public       | standard_national      |
       | goods        | standard_international |
 
+  @reads-and-writes-system-properties
   Scenario Outline: Leave current discs page and return back to current discs page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender
@@ -55,6 +58,7 @@ Feature: User should be able to continue where they left off
       | public       | standard_national      |
       | goods        | standard_international |
 
+  @reads-and-writes-system-properties
   Scenario Outline: Leave operator licence page and return back to operator licence page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender
@@ -68,6 +72,7 @@ Feature: User should be able to continue where they left off
       | public       | standard_national      |
       | goods        | standard_international |
 
+  @reads-and-writes-system-properties
   Scenario:  Leave community licence page and return back to community licence page
     Given i have a valid "goods" "standard_international" licence
     When i have started a surrender
@@ -76,6 +81,7 @@ Feature: User should be able to continue where they left off
     Then continue with application link is displayed
     And user is taken to the community licence page on clicking continue application
 
+  @reads-and-writes-system-properties
   Scenario Outline: Return back to disc and doc review page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender
@@ -89,6 +95,7 @@ Feature: User should be able to continue where they left off
       | public       | standard_national      |
       | goods        | standard_international |
 
+  @reads-and-writes-system-properties
   Scenario Outline: Leave destroy disc page and navigate back to disc and doc review page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender
@@ -102,6 +109,7 @@ Feature: User should be able to continue where they left off
       | public       | standard_national      |
       | goods        | standard_international |
 
+  @reads-and-writes-system-properties
   Scenario Outline: Leave declaration page and navigate back to disc and doc review page
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     When i have started a surrender

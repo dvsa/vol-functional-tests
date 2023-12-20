@@ -9,17 +9,17 @@ Feature:Add, Edit and reassign tasks on the internal application
     Given i have a valid "goods" "standard_national" licence
     When I have logged into the internal application
 
-  @re-assign-task @localsmoke
+  @re-assign-task @localsmoke  @reads-and-writes-system-properties
   Scenario: User wishes to re-assign a task
     Then I re-assign a task
     Then the User has re-assigned a task
 
-  @edit_task
+  @edit_task  @reads-and-writes-system-properties
   Scenario: User wishes to edit a task
     Then I edit a task
     Then the User has edited a task
 
-  @dd_task
+  @dd_task  @reads-and-writes-system-properties
   Scenario: User wishes to add a task
     Then I add a new task
     Then the User has added a task

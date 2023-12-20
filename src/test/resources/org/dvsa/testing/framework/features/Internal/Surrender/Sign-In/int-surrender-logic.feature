@@ -9,6 +9,7 @@ Feature: Logic for Surrender menu item
   Background:
     Given i have a valid "goods" "standard_national" licence
 
+  @reads-and-writes-system-properties
   Scenario: Surrender Licence
     And my application to surrender is under consideration
     When the caseworker approves the surrender
@@ -16,11 +17,13 @@ Feature: Logic for Surrender menu item
     And the surrender menu should be hidden in internal
     And the licence should not displayed in selfserve
 
+  @reads-and-writes-system-properties
   Scenario: Attempt to Withdraw surrender
     And my application to surrender is under consideration
     When the caseworker attempts to withdraw the surrender
     Then a modal box is displayed
 
+  @reads-and-writes-system-properties
   Scenario: Withdrawn and re apply for a surrender
     And my application to surrender is under consideration
     When the caseworker attempts to withdraw the surrender
@@ -30,6 +33,7 @@ Feature: Logic for Surrender menu item
     And the change history shows the surrender and its withdrawal
     And the user should be able to re apply for a surrender in internal
 
+  @reads-and-writes-system-properties
   Scenario: Cancel surrender withdraw for valid licence
     And my application to surrender is under consideration
     When the caseworker attempts to withdraw the surrender
@@ -37,6 +41,7 @@ Feature: Logic for Surrender menu item
     Then the modal box is hidden
     And the surrender menu should be displayed
 
+  @reads-and-writes-system-properties
   Scenario Outline: Cancel surrender withdraw for suspended and curtailed licence
     And the licence status is "<licence_status>"
     And my application to surrender is under consideration
@@ -51,6 +56,7 @@ Feature: Logic for Surrender menu item
       | suspend        |
       | curtail        |
 
+  @reads-and-writes-system-properties
   Scenario Outline: Undo a surrender
     And the licence status is "<licence_status>"
     And my application to surrender is under consideration
@@ -64,6 +70,7 @@ Feature: Logic for Surrender menu item
       | suspend        | suspended |
       | curtail        | curtailed |
 
+  @reads-and-writes-system-properties
   Scenario Outline: Surrender suspended, curtailed licence
     And the licence status is "<licence_status>"
     And my application to surrender is under consideration
@@ -77,6 +84,7 @@ Feature: Logic for Surrender menu item
       | suspend        | Surrendered |
       | curtail        | Surrendered |
 
+  @reads-and-writes-system-properties
   Scenario: Check links are hidden
     And my application to surrender is under consideration
     When i create an admin and url search for my licence

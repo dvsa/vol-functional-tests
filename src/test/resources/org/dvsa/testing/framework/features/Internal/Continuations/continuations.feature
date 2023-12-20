@@ -4,7 +4,7 @@
 
 Feature: Continuations journey through internal and self serve
 
-  @int_regression @FullRegression @continuations_smoke
+  @int_regression @FullRegression @continuations_smoke @reads-and-writes-system-properties
   Scenario Outline: Continue a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
@@ -21,7 +21,7 @@ Feature: Continuations journey through internal and self serve
       | public       | restricted             |
       | public       | special_restricted     |
 
-  @int_regression @FullRegression @continuations_internal @localsmoke
+  @int_regression @FullRegression @continuations_internal @localsmoke  @reads-and-writes-system-properties
   Scenario Outline: Caseworker continues a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal

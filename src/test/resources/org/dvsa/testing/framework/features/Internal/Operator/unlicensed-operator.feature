@@ -5,12 +5,12 @@ Feature: Unlicensed operator
     Given i have an internal admin user
     And i have logged in to internal
 
-  @unlicensed_operator_add @smoketest @localsmoke
+  @unlicensed_operator_add @smoketest @localsmoke @reads-and-writes-system-properties
   Scenario: Create unlicensed operator
     When i create an unlicensed operator
     Then the operator should be created
 
-  @unlicensed_operator_vehicle
+  @unlicensed_operator_vehicle @reads-and-writes-system-properties
   Scenario: Add a vehicle to unlicensed operator
     When i create an unlicensed operator
     Then i should be able to add vehicles
