@@ -36,9 +36,12 @@
         <jsoup.version>1.17.1</jsoup.version>
         <gson.version>2.10.1</gson.version>
         <zt-zip.version>1.15</zt-zip.version>
+        <cucable.version>1.11.0</cucable.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
-
+        <generated.runner.directory>${project.build.directory}/parallel/runners</generated.runner.directory>
+        <generated.feature.directory>${project.build.directory}/parallel/features</generated.feature.directory>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <jvmMemory>4000</jvmMemory>
     </properties>
 
@@ -200,6 +203,46 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>com.trivago.rta</groupId>
+                <artifactId>cucable-plugin</artifactId>
+                <version>${cucable.version}</version>
+                <executions>
+                    <execution>
+                        <id>generate-test-resources</id>
+                        <phase>generate-test-resources</phase>
+                        <goals>
+                            <goal>parallel</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceFeatures>src/test/resources/org/dvsa/testing/framework/features</sourceFeatures>
+                    <sourceRunnerTemplateFile>src/test/java/org/dvsa/testing/framework/parallel/RunCucumberTests.java</sourceRunnerTemplateFile>
+                    <generatedFeatureDirectory>${project.build.directory}/parallel/features</generatedFeatureDirectory>
+                    <generatedRunnerDirectory>${project.build.directory}/parallel/runners</generatedRunnerDirectory>
+                    <desiredNumberOfRunners>0</desiredNumberOfRunners>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build.helper.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/target/parallel/runners</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
@@ -251,10 +294,9 @@
                 <configuration>
                     <includes>**/**.java</includes>
                     <forkCount>2</forkCount>
+                    <threadCount>5</threadCount>
                     <testFailureIgnore>true</testFailureIgnore>
-                    <parallel>suites</parallel>
-                    <threadCount>3</threadCount>
-                    <reuseForks>true</reuseForks>
+                    <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
             <plugin>

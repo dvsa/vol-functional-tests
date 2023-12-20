@@ -4398,7 +4398,7 @@
             <OperatorShortName>Stagecoach</OperatorShortName>
             <OperatorNameOnLicence>Greater Manchester Buses South Ltd</OperatorNameOnLicence>
             <TradingName>Stagecoach Manchester</TradingName>
-            <LicenceNumber>PH2073949</LicenceNumber>
+            <LicenceNumber>PB2071773</LicenceNumber>
             <LicenceClassification>standardNational</LicenceClassification>
             <EnquiryTelephoneNumber>
                 <TelNationalNumber>0161 228 7811</TelNationalNumber>
@@ -4498,7 +4498,7 @@
                 </Line>
             </Lines>
             <OperatingPeriod>
-                <StartDate>2024-01-08</StartDate>
+                <StartDate>2024-01-30</StartDate>
             </OperatingPeriod>
             <OperatingProfile>
                 <RegularDayType>
@@ -10007,8 +10007,8 @@
             <SubmissionDate>2016-10-24</SubmissionDate>
             <VosaRegistrationNumber>
                 <TanCode>PC</TanCode>
-                <LicenceNumber>PH2073949</LicenceNumber>
-                <RegistrationNumber>302</RegistrationNumber>
+                <LicenceNumber>PB2071773</LicenceNumber>
+                <RegistrationNumber>303</RegistrationNumber>
             </VosaRegistrationNumber>
             <ApplicationClassification>new</ApplicationClassification>
             <VariationNumber>0</VariationNumber>
