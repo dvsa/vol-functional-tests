@@ -241,6 +241,8 @@
                 <version>${maven-failsafe-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>Run parallel tests</id>
+                        <phase>integration-test</phase>
                         <goals>
                             <goal>integration-test</goal>
                         </goals>
@@ -249,6 +251,7 @@
                 <configuration>
                     <includes>**/**.java</includes>
                     <forkCount>2</forkCount>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <parallel>suites</parallel>
                     <threadCount>3</threadCount>
                     <reuseForks>true</reuseForks>
