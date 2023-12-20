@@ -13,7 +13,7 @@ Feature: Vehicle management on an application
     Then the "The vehicle has been added" alert should appear
     And the vehicle should be appear
 
-  @reads-and-writes-system-properties
+  @reads-system-properties
   Scenario: I can remove a vehicle on my application
     When i remove a vehicle from my application
     Then the vehicle no longer appears

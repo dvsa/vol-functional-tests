@@ -14,7 +14,7 @@ Feature: Self Serve Apply for licence
       | goods        | standard_international |
       | public       | standard_national      |
 
-  @stored_cards @smoketest @printAndSign @localsmoke  @reads-and-writes-system-properties
+  @stored_cards @smoketest @printAndSign @localsmoke @reads-system-properties
   Scenario Outline: Saved card payment
     Given i have a "<operatorType>" "<licenceType>" "GB" application in traffic area
       | north_west |
@@ -29,7 +29,7 @@ Feature: Self Serve Apply for licence
       | operatorType | licenceType            |
       | goods        | standard_international |
 
-  @cross-browser @NI_application @smoketest @reads-and-writes-system-properties
+  @cross-browser @NI_application @smoketest @reads-system-properties
   Scenario Outline: Create and pay NI application fees
     Given i have a "<operatorType>" "<licenceType>" "NI" application in traffic area
       | northern_ireland |

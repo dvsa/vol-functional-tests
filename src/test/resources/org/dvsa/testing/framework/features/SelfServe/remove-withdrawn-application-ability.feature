@@ -12,7 +12,7 @@ Feature: SS user ability to withdraw application removed when open cases are pre
     And i add a case in internal on the "application" page
     Then on self serve the withdraw application link is not present on "application"
 
-  @reads-and-writes-system-properties
+  @reads-system-properties
   Scenario: SS user ability to not withdraw application removed for variation with cases
     Given i have a valid "goods" "standard_national" licence
     And i create a variation

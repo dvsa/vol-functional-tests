@@ -13,7 +13,7 @@ Background:
     And I receive the reset password link via email
     Then I should be able to login with my new password
 
-  @reads-and-writes-system-properties
+  @reads-system-properties
   Scenario: Reset password for invalid user
     Given i try resetting my password
     Then i will receive an error that username invalid

@@ -14,17 +14,17 @@ Feature: Internal users wishes to edit a submission
     And I edit that submission
     Then The change should be displayed on the Submission detail page
 
-  @reads-and-writes-system-properties @comment-submission
+  @reads-system-properties @comment-submission
   Scenario: Internal user adds comments to a submission
     And I add a comment under the TM section
     Then that comment should be displayed
 
-  @reads-and-writes-system-properties @close-submission
+  @reads-system-properties @close-submission
   Scenario: Internal user closes a submission
     When I close a submission
     Then the sub status should be closed
 
-  @reads-and-writes-system-properties @attach-submission
+  @reads-system-properties @attach-submission
   Scenario: Internal users attaches a file
     When I attach a file to the submission
     Then that file should be displayed

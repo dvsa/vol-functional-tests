@@ -14,7 +14,7 @@ Feature: User edits their account details
     Given I change my team
     Then my new team should be visible
 
-  @reads-and-writes-system-properties
+  @reads-system-properties
   Scenario: User wishes to edit their personal details
     Given I edit my personal details
     Then my details should have updated

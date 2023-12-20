@@ -20,7 +20,7 @@ Feature: Generate letter pop up should contain letter details
       | email        |
       | printAndPost |
 
-  @reads-and-writes-system-properties
+  @reads-system-properties
   Scenario: Check Propose to revoke letter process
     When i generate a letter of Subcategory In Office Revocation
     And i save the letter clicking the Propose To Revoke button

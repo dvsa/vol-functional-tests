@@ -9,7 +9,8 @@ Feature: TM signs through gov-sign-in
     Given i have a "goods" "GB" partial application
     And I am the operator and not the transport manager
 
-  @tm-not-operator  @reads-and-writes-system-properties
+  @tm-not-operator
+  @reads-and-writes-system-properties
   Scenario: TM who is not Operator_Applicant signs through gov sign in
     When i add an existing person as a transport manager who is not the operator on "application"
     And i sign the declaration
@@ -17,7 +18,8 @@ Feature: TM signs through gov-sign-in
     And I sign in to gov sign in to complete the process
     Then the VOL 'Awaiting operator review' post signature page is displayed
 
-  @tm-operator  @reads-and-writes-system-properties
+  @tm-operator
+  @reads-system-properties
   Scenario: TM who is Operator signs through gov sign in
     When i add an operator as a transport manager
     And i sign the declaration
@@ -25,7 +27,8 @@ Feature: TM signs through gov-sign-in
     And I sign in to gov sign in to complete the process
     And the VOL 'Review and declarations' post signature page is displayed
 
-  @operator-cosigns  @reads-and-writes-system-properties
+  @operator-cosigns
+  @reads-system-properties
   Scenario: Operator co-signs through gov sign in
     When i add an existing person as a transport manager who is not the operator on "application"
     And i sign the declaration
@@ -34,7 +37,8 @@ Feature: TM signs through gov-sign-in
     And the operator countersigns digitally
     And the VOL 'Review and declarations' post signature page is displayed
 
-  @tm-operator-cosigns-manually  @reads-and-writes-system-properties
+  @tm-operator-cosigns-manually
+  @reads-system-properties
   Scenario: Operator co-signs manually
     When i add an existing person as a transport manager who is not the operator on "application"
     And i sign the declaration
@@ -43,7 +47,8 @@ Feature: TM signs through gov-sign-in
     And the operator countersigns by print and sign
     And the print and sign page is displayed
 
-  @tm-operator-rejects-details  @reads-and-writes-system-properties
+  @tm-operator-rejects-details
+  @reads-system-properties
   Scenario: Operator rejects TM details and TM details are marked incomplete
     When i add new person as a transport manager and they fill out their details
     And i sign the declaration

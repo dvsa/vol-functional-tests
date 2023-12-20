@@ -17,7 +17,7 @@ Feature: Complete Manual Bus Registration Steps
     Then the bus registration should be granted
     And the traffic areas should be displayed on the service details page
 
-  @reads-and-writes-system-properties
+  @reads-system-properties
   Scenario: Editing a bus registration of status Registered
     When i add a new bus registration
     And it has been paid and granted

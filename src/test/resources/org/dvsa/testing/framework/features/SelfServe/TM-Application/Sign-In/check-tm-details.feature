@@ -21,7 +21,7 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
       | Add convictions and penalties |
       | Add licences                  |
 
-  @reads-and-writes-system-properties
+  @reads-system-properties
   Scenario: Radio button clicked
     When I select yes to all radio buttons
     Then the section buttons should be displayed

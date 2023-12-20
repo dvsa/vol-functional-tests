@@ -6,7 +6,6 @@
 
 Feature: Internal User should be able to create an operator account
 
-  @reads-and-writes-system-properties
   Scenario Outline: Caseworker submits application
     Given I have a "<operator>" "<licence-type>" application
     When the caseworker completes and submits the application
