@@ -14,12 +14,12 @@ Feature: Continuations journey through internal and self serve
     Examples:
       | operatorType | licenceType            |
       | goods        | standard_national      |
-#      | goods        | standard_international |
-#      | goods        | restricted             |
-#      | public       | standard_national      |
-#      | public       | standard_international |
-#      | public       | restricted             |
-#      | public       | special_restricted     |
+      | goods        | standard_international |
+      | goods        | restricted             |
+      | public       | standard_national      |
+      | public       | standard_international |
+      | public       | restricted             |
+      | public       | special_restricted     |
 
   @int_regression @FullRegression @continuations_internal @localsmoke
   Scenario Outline: Caseworker continues a licence that has expired
