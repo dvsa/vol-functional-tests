@@ -50,7 +50,8 @@ public class CreateCase extends BasePage {
 
     @Then("the public inquiry should be published")
     public void thePublicInquiryShouldBePublished() {
-        waitForTextToBePresent("There is currently no decision");
+        waitForTextToBePresent("TC/DTC/HTRU/DHTRU agreement and legislation");
+        assertTrue(isTextPresent("Test"));
     }
 
     @And("I add notes")
