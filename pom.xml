@@ -270,7 +270,7 @@
                     <forkCount>3</forkCount>
                     <threadCount>5</threadCount>
                     <parallel>methods</parallel>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
