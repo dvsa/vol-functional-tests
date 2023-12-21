@@ -7,7 +7,7 @@ Feature: Internal admin Cancels Short term APGG Euro5 or Euro 6 permit Applicati
     And I am viewing a licences IRHP section
     And I apply for a short term APGG Euro5 or Euro 6 application
 
-  @INTERNAL @OLCS-25288 @OLCS-28230
+  @INTERNAL @OLCS-25288 @OLCS-28230 @reads-and-writes-system-properties
   Scenario: Cancel Permit Application
     When I am on application details page, I should see cancel button
     When I cancel Permit Application on the Application details page

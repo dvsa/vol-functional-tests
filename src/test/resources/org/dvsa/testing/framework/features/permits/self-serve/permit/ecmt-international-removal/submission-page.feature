@@ -4,7 +4,7 @@ Feature: ECMT International Removal submission page
   Background:
     Given I have a "goods" "standard_international" licence
 
-  @EXTERNAL @OLCS-26739 @olcs-28201
+  @EXTERNAL @OLCS-26739 @olcs-28201 @reads-and-writes-system-properties
   Scenario: Application submission page details are displayed correctly
     And   I am on the ECMT International removal submission page
     Then the page heading on the submission page is displayed correctly
@@ -14,7 +14,7 @@ Feature: ECMT International Removal submission page
     When I select finish button
     Then the application is under issued permits table with status as valid
 
-  @EXTERNAL @OLCS-26739
+  @EXTERNAL @OLCS-26739 @reads-system-properties
   Scenario: Fee waived, view receipt link is NOT displayed
     And I have partial ECMT international removal application
     And i create an admin and url search for my licence
@@ -23,7 +23,7 @@ Feature: ECMT International Removal submission page
     When I'm on the ECMT international submitted page for my active application
     Then I should not see the view receipt link
 
-  @EXTERNAL @OLCS-26739
+  @EXTERNAL @OLCS-26739 @reads-system-properties
   Scenario: Fee payments processed by case worker
     And I have partial ECMT international removal application
     And i create an admin and url search for my licence

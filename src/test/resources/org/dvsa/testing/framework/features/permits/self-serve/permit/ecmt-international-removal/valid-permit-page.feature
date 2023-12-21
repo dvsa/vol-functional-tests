@@ -6,7 +6,7 @@ Feature: ECMT International Removal Self Service End to End Smoke test
     When I have a valid ECMT removal permit
     And I am viewing my issued ECMT removal permit on selfserve
 
-  @EXTERNAL @olcs-26303
+  @EXTERNAL @olcs-26303 @reads-and-writes-system-properties
   Scenario: Valid Permit Page details are displayed correctly
     Then I am on the ECMT removal Permit list page
     And  the licence number is displayed correctly

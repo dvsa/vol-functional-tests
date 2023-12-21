@@ -6,7 +6,7 @@ Feature:  ECMT APGG Euro5 or Euro 6 with cross trade Permit application is grant
     And i create an admin and url search for my licence
     And I am viewing a licences IRHP section
 
-  @INTERNAL @ECMTAPGGINTERNAL @OLCS-25288
+  @INTERNAL @ECMTAPGGINTERNAL @OLCS-25288 @reads-and-writes-system-properties
   Scenario: To verify that Application status goes to Valid when Application is granted and issue fee is paid
     And I apply for an ECMT APGG Euro5 or Euro 6 application
     Then In application details page, I should see Submit button
