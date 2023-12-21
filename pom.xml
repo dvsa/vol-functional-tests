@@ -269,7 +269,7 @@
                     <includes>**/**.java</includes>
                     <forkCount>3</forkCount>
                     <threadCount>5</threadCount>
-                    <testFailureIgnore>true</testFailureIgnore>
+                    <parallel>methods</parallel>
                     <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
