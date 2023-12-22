@@ -268,8 +268,8 @@
                 <configuration>
                     <includes>**/**.java</includes>
                     <forkCount>3</forkCount>
-                    <threadCount>8</threadCount>
-                    <parallel>suites</parallel>
+                    <threadCount>10</threadCount>
+                    <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
