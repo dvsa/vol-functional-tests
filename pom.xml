@@ -248,8 +248,8 @@
                 </executions>
                 <configuration>
                     <includes>**/**.java</includes>
-                    <forkCount>3</forkCount>
-                    <threadCount>8</threadCount>
+                    <forkCount>2</forkCount>
+                    <threadCount>9</threadCount>
                     <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
                 </configuration>
