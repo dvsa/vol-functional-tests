@@ -249,7 +249,7 @@
                 <configuration>
                     <includes>**/**.java</includes>
                     <forkCount>2</forkCount>
-                    <threadCount>20</threadCount>
+                    <threadCount>7</threadCount>
                     <parallel>suites</parallel>
                     <reuseForks>true</reuseForks>
                 </configuration>
