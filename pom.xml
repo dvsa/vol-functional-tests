@@ -249,8 +249,8 @@
                 <configuration>
                     <includes>**/**.java</includes>
 <!--                    <forkCount>3</forkCount>-->
-                    <parallel>suites</parallel>
-<!--                    <reuseForks>true</reuseForks>-->
+                    <parallel>methods</parallel>
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
