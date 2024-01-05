@@ -248,7 +248,7 @@
                 </executions>
                 <configuration>
                     <includes>**/**.java</includes>
-                    <forkCount>2</forkCount>
+                    <forkCount>3</forkCount>
                     <parallel>methods</parallel>
                     <reuseForks>true</reuseForks>
                 </configuration>
