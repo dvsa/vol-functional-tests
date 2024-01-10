@@ -56,10 +56,13 @@ public class InternalSearchJourney extends BasePage {
 
     public void internalSearchUntilTextPresent(SearchType searchType, String searchString, String linkText) {
         boolean isLinkPresent;
-        long kickOut = System.currentTimeMillis() + 120000;
+        long kickOut = System.currentTimeMillis() + 70000;
         do {
+            isLinkPresent = isElementPresent("//*[@data-heading='Disc Number']", SelectorType.XPATH);
             SearchNavBar.search(searchType, searchString);
-           isLinkPresent = isTextPresent(searchString);
+            if(isElementPresent("//*[@data-heading='Disc Number']", SelectorType.XPATH)) {
+                isLinkPresent = String.valueOf(isTextPresent(findElements("//*[@data-heading='Disc Number']", SelectorType.XPATH).listIterator().next().getText())).contains(searchString);
+            }
         } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
         waitAndClick(linkText, SelectorType.PARTIALLINKTEXT);
     }

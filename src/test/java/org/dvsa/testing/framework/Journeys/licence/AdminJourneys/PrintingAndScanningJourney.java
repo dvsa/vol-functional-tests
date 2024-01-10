@@ -35,7 +35,7 @@ public class PrintingAndScanningJourney extends BasePage {
         selectValueFromDropDown("category", SelectorType.ID, "Compliance");
         waitAndClick("subCategory", SelectorType.ID);
         selectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");
-        selectValueFromDropDownByIndex("description",SelectorType.ID, 0);
+        selectRandomValueFromDropDown("description",SelectorType.ID);
         enterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
         world.UIJourney.clickSubmit();
     }
