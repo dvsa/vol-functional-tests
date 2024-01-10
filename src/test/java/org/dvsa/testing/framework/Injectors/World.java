@@ -14,6 +14,7 @@ import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
+import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
 import org.dvsa.testing.framework.stepdefs.vol.ExternalSearch;
 import org.dvsa.testing.framework.stepdefs.vol.GovSignIn;
 import org.dvsa.testing.framework.stepdefs.vol.PresidingTCsStep;
@@ -91,4 +92,6 @@ public class World {
     public PresidingTCsStep presidingTCsStep;
 
     public SubmissionsJourney submissionsJourney;
+
+    public AccessibilitySteps accessibilitySteps;
 }
