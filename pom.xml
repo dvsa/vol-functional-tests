@@ -39,7 +39,7 @@
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
-        <jvmMemory>6000</jvmMemory>
+        <jvmMemory>5000</jvmMemory>
     </properties>
 
     <dependencyManagement>
@@ -225,6 +225,7 @@
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
                     </properties>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
                     <forkCount>1</forkCount>
                     <reuseForks>true</reuseForks>
                     <parallel>methods</parallel>
