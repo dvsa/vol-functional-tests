@@ -56,12 +56,12 @@ public class InternalSearchJourney extends BasePage {
 
     public void internalSearchUntilTextPresent(SearchType searchType, String searchString, String linkText) {
         boolean isLinkPresent;
-        long kickOut = System.currentTimeMillis() + 70000;
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
             isLinkPresent = isElementPresent("//*[@data-heading='Disc Number']", SelectorType.XPATH);
             SearchNavBar.search(searchType, searchString);
         } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
-        clickByLinkText(linkText);
+        waitAndClick(linkText, SelectorType.LINKTEXT);
     }
 
     public void searchForLicenceByName(String companyName) {
