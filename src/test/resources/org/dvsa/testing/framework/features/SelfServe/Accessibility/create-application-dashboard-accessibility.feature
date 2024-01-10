@@ -1,6 +1,5 @@
 @ss_regression
 @accessibility
-@
 
 Feature: Create application page should comply to the WCAG 2.1 AA accessibility standards
 
