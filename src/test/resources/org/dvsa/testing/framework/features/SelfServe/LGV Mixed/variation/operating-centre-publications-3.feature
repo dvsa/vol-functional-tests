@@ -1,5 +1,5 @@
 @lgv
-@cross-browser
+
 
 Feature: 3 - Publications generate on LGV related changes and regression
 

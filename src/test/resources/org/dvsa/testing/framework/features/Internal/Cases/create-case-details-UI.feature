@@ -23,7 +23,7 @@ Feature: Public enquiry added and published and deletion of case notes
     And I delete a case note
     Then the note should be deleted
 
-  @cross-browser
+
   @Submission
   Scenario: UI - Add a submission
     When i add a submission

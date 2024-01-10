@@ -1,5 +1,5 @@
 @lgv
-@cross-browser
+
 
 Feature: 4 - Publications generate for increased vehicle authorities where OCs are not changed
 
