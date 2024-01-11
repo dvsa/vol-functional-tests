@@ -58,7 +58,7 @@ public class InternalSearchJourney extends BasePage {
         boolean isLinkPresent;
         long kickOut = System.currentTimeMillis() + 120000;
         do {
-            isLinkPresent = isElementPresent("//*[@data-heading='Disc Number']", SelectorType.XPATH);
+            isLinkPresent = isTextPresent(linkText);
             SearchNavBar.search(searchType, searchString);
         } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
         waitAndClick(linkText, SelectorType.LINKTEXT);
