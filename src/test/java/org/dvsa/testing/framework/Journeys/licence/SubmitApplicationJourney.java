@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
@@ -7,15 +8,17 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
+import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
+import scanner.AXEScanner;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
@@ -27,6 +30,9 @@ public class SubmitApplicationJourney extends BasePage {
     private String licence;
 
     List<WebElement> applications;
+
+    AXEScanner axeScanner = AccessibilitySteps.scanner;
+
 
     public SubmitApplicationJourney(World world) {
         this.world = world;
@@ -75,17 +81,17 @@ public class SubmitApplicationJourney extends BasePage {
         }
     }
 
-    public void startANewLicenceApplication(String licenceType) {
+    public void startANewLicenceApplication(String licenceType, boolean scanOrNot) throws IllegalBrowserException, IOException {
         setLicence(licenceType);
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
         chooseLicenceType(licenceType);
         UIJourney.clickSaveAndContinue();
         //business details
-        world.businessDetailsJourney.addBusinessDetails();
+        world.businessDetailsJourney.addBusinessDetails(true);
         if (isTitlePresent("Directors", 2) || isTitlePresent("Responsible people", 2)) {
             if (isElementPresent("add", SelectorType.ID)) {
-                world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
+                world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(true);
             }
         }
         //operating centre
@@ -100,6 +106,9 @@ public class SubmitApplicationJourney extends BasePage {
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
+        if (scanOrNot) {
+            axeScanner.scan(true);
+        }
         UIJourney.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
@@ -109,13 +118,19 @@ public class SubmitApplicationJourney extends BasePage {
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
+        if (scanOrNot) {
+            axeScanner.scan(true);
+        }
         world.UIJourney.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
             world.UIJourney.clickSend();
         } else {
-            world.transportManagerJourney.submitTMApplicationPrintAndSign();
+            world.transportManagerJourney.submitTMApplicationPrintAndSign(); // -
+        }
+        if (scanOrNot) {
+            axeScanner.scan(true);
         }
         //vehicleDetails
         boolean vehicleType = licenceType.equals("Goods");
