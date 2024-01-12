@@ -78,8 +78,7 @@ public class GenericUtils extends BasePage {
 
     public void modifyXML(String dateState, int months) {
         try {
-            String RegistrationNumber = String.valueOf(Int.random(0,9999));
-            String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
+            String xmlFile = "./src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml"; //delete
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder xmlBuilder = documentBuilderFactory.newDocumentBuilder();
             Document xmlDoc = xmlBuilder.parse(xmlFile);
