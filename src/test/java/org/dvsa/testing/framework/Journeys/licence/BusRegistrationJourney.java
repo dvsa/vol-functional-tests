@@ -20,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
@@ -140,7 +141,7 @@ public class BusRegistrationJourney extends BasePage {
         }
     }
 
-    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
+    public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument, IOException {
         refreshPageWithJavascript();
         String ebsrFileName = null;
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
@@ -149,6 +150,7 @@ public class BusRegistrationJourney extends BasePage {
         }else {
              ebsrFileName = world.applicationDetails.getLicenceNumber().concat("EBSR.zip");
         }
+        String existingXmlContent=world.genericUtils.readXML();
         world.genericUtils.modifyXML(state, interval);
         String zipFilePath = GenericUtils.createZipFolder(ebsrFileName);
 
@@ -167,6 +169,7 @@ public class BusRegistrationJourney extends BasePage {
             addFile.sendKeys(System.getProperty("user.dir").concat("/"+zipFilePath));
         }
         world.UIJourney.clickSubmit();
+        world.genericUtils.writeXmlStringToFile(existingXmlContent, "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml");
     }
 
     public void internalSiteEditBusReg() {

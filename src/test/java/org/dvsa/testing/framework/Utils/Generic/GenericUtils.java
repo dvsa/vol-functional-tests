@@ -375,6 +375,22 @@ public class GenericUtils extends BasePage {
         //you can assert against the status code here == 201
         return(statusCode==201);
           }
+
+    public static  String readXML() throws IOException {
+        String filePath = "src/test/resources/org/dvsa/testing/framework/EBSR/EBSR.xml";
+        String xmlContent = new String(Files.readAllBytes(Paths.get(filePath)));
+        return  xmlContent;// Now xmlContent holds the XML content
+    }
+
+    public static void writeXmlStringToFile(String xmlString, String filePath) throws IOException {
+        // Read the existing XML file content
+        byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+        String updatedContent = xmlString;
+        // Write the updated content back to the file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write(updatedContent);
+        }
+    }
     }
 
 
