@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Given;
@@ -12,6 +13,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.WebElement;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -77,8 +79,8 @@ public class DirectorVariation extends BasePage {
     }
 
     @Given("^i add a director$")
-    public void iAddADirector() {
-        directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
+    public void iAddADirector() throws IllegalBrowserException, IOException {
+        directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(false);
     }
 
     @Then("^i should have multiple directors on my application$")
@@ -88,8 +90,8 @@ public class DirectorVariation extends BasePage {
     }
 
     @When("^i add another new director$")
-    public void iAddAnotherNewDirector() {
-        directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties();
+    public void iAddAnotherNewDirector() throws IllegalBrowserException, IOException {
+        directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(false);
     }
 
     @When("^i remove a director$")
