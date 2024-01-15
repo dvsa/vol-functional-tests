@@ -14,6 +14,8 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.WebElement;
 
+import java.net.MalformedURLException;
+
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,7 +59,7 @@ public class Surrenders extends BasePage {
         assertEquals("stolen", communityLicenceDocumentStatus);
     }
     @And("i choose to surrender my licence with {string}")
-    public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) {
+    public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) throws MalformedURLException {
         world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         if (surrenderMethod.equalsIgnoreCase("gov-sign-in")) {

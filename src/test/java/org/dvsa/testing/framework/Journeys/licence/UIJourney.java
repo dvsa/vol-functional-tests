@@ -350,7 +350,7 @@ public class UIJourney extends BasePage {
         enterDateFieldsByPartialId("hearingDate", hearingDate);
         selectValueFromDropDown("//*[@id='hearingDate_hour']", SelectorType.XPATH, "16");
         selectValueFromDropDown("//*[@id='hearingDate_minute']", SelectorType.XPATH, "00");
-        selectValueFromDropDown("//*[@id='presidingTc']", SelectorType.XPATH, "Nick Jones");
+        selectRandomValueFromDropDown("//*[@id='presidingTc']", SelectorType.XPATH);
         selectValueFromDropDown("//*[@id='presidedByRole']", SelectorType.XPATH, "Traffic Commissioner");
         enterText("//*[@id='fields[witnesses]']", SelectorType.XPATH, "1");
         enterText("//*[@id='fields[drivers]']", SelectorType.XPATH, "1");

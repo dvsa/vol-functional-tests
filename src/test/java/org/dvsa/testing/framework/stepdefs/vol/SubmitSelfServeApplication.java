@@ -10,6 +10,8 @@ import scanner.AXEScanner;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+
 public class SubmitSelfServeApplication extends BasePage {
 
     World world;
