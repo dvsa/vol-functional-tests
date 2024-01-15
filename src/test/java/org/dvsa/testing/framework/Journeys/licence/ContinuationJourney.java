@@ -14,6 +14,7 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -111,7 +112,7 @@ public class ContinuationJourney extends BasePage {
         click("licenceChecklistConfirmation[yesContent][submit]", SelectorType.ID);
     }
 
-    public void completeContinuationsSignPage()  {
+    public void completeContinuationsSignPage() {
         if (Objects.equals(world.configuration.env.toString(), "qa") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             click("content[signatureOptions]", SelectorType.ID);
             waitAndClick("sign", SelectorType.ID);

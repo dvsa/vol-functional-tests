@@ -5,6 +5,8 @@ import io.cucumber.java.en.And;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
+import java.net.MalformedURLException;
+
 public class SubmitSelfServeApplication extends BasePage {
 
     World world;
@@ -14,7 +16,7 @@ public class SubmitSelfServeApplication extends BasePage {
     }
 
     @And("i submit and pay for a {string} licence application")
-    public void iStartANewLicenceApplication(String licenceType) {
+    public void iStartANewLicenceApplication(String licenceType) throws MalformedURLException {
         world.submitApplicationJourney.startANewLicenceApplication(licenceType);
         if (world.configuration.env.toString().equals("int")) {
             world.govSignInJourney.navigateToGovUkSignIn();
