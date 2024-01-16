@@ -197,7 +197,7 @@ public class SurrenderLogic extends BasePage {
     @And("my application to surrender is under consideration")
     public void myApplicationToSurrenderIsUnderConsideration() throws HttpException, IOException, InterruptedException, IllegalBrowserException {
         world.updateLicence.printLicenceDiscs();
-        world.surrenderJourney.submitSurrender(true);
+        world.surrenderJourney.submitSurrender(false);
     }
 
     @When("the caseworker approves the surrender")
