@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
@@ -8,6 +9,8 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.io.IOException;
 
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,8 +22,8 @@ public class PsvSurrenders extends BasePage {
     public PsvSurrenders(World world) {this.world= world;}
 
     @And("i choose to surrender my licence")
-    public void iChooseToSurrenderMyLicence() {
-        world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
+    public void iChooseToSurrenderMyLicence() throws IllegalBrowserException, IOException {
+        world.surrenderJourney.submitSurrenderUntilChoiceOfVerification(false);
     }
 
     @Then("the post verify success page is displayed")
