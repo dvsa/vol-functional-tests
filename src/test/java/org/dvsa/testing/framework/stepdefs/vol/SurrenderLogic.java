@@ -169,7 +169,7 @@ public class SurrenderLogic extends BasePage {
         world.UIJourney.clickSubmit();
         world.surrenderJourney.addDiscInformation(false);
         waitForTextToBePresent("In your possession");
-        world.surrenderJourney.addOperatorLicenceDetails(true);
+        world.surrenderJourney.addOperatorLicenceDetails(false);
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
@@ -183,7 +183,7 @@ public class SurrenderLogic extends BasePage {
         world.UIJourney.clickSubmit();
         world.surrenderJourney.addDiscInformation(false);
         waitForTextToBePresent("In your possession");
-        world.surrenderJourney.addOperatorLicenceDetails(true);
+        world.surrenderJourney.addOperatorLicenceDetails(false);
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.surrenderJourney.addCommunityLicenceDetails();
