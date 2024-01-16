@@ -1,11 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,8 +18,8 @@ public class SurrenderStartPage extends BasePage {
     public SurrenderStartPage(World world) {this.world=world;}
 
     @When("i click on apply to surrender licence")
-    public void iClickOnApplyToSurrenderLicence() {
-        world.surrenderJourney.navigateToSurrendersStartPage();
+    public void iClickOnApplyToSurrenderLicence() throws IllegalBrowserException, IOException {
+        world.surrenderJourney.navigateToSurrendersStartPage(false);
     }
 
     @Then("the correct page heading for {string} should be displayed")
