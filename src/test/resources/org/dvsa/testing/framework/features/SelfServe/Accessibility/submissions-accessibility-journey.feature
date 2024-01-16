@@ -1,4 +1,5 @@
 @accessibility
+@ss_regression
 Feature: Check that Submissions journey is accessible
 
   Background:
