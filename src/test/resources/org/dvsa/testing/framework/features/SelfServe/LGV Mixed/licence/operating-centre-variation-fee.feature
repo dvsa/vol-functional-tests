@@ -1,5 +1,5 @@
 @lgv
-@cross-browser
+
 Feature: Operating Centre authorisation variations triggering fees
 
   Scenario: LGVs total authorisation increase on a goods standard international triggers a fee

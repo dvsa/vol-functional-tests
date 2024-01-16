@@ -26,7 +26,7 @@ public class GovSignIn extends BasePage {
     public GovSignIn(World world) {this.world = world;}
 
     @Given("I can navigate to gov sign in")
-    public void iCanNavigateToGovSignIn() {
+    public void iCanNavigateToGovSignIn() throws MalformedURLException {
         world.govSignInJourney.navigateToGovUkSignIn();
     }
 
