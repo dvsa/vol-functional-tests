@@ -308,8 +308,8 @@ public class SurrenderLogic extends BasePage {
 
     @And("i have started a surrender")
     public void iHaveStartedASurrenderWithAxeScanner() throws IllegalBrowserException, IOException {
-        world.surrenderJourney.navigateToSurrendersStartPage(true);
-        world.surrenderJourney.startSurrender(true);
+        world.surrenderJourney.navigateToSurrendersStartPage(false);
+        world.surrenderJourney.startSurrender(false);
     }
 
     @And("my application to surrender is under consideration with axeScanner {}")
