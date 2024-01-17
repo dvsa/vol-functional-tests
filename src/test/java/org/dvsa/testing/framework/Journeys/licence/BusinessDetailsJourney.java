@@ -1,10 +1,14 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
+import scanner.AXEScanner;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class BusinessDetailsJourney extends BasePage {
@@ -15,7 +19,7 @@ public class BusinessDetailsJourney extends BasePage {
         this.world = world;
     }
 
-    public void addBusinessDetails() {
+    public void addBusinessDetails(boolean scanOrNot) throws IllegalBrowserException, IOException {
         waitForTitleToBePresent("Business details");
         if(getAttribute("data[companyNumber][company_number]", SelectorType.ID, "value").equals("") &&
                 (!Objects.equals(world.configuration.env.toString(), "local"))) {
@@ -30,6 +34,10 @@ public class BusinessDetailsJourney extends BasePage {
         }
         enterCorrespondenceAddress();
         UIJourney.clickSaveAndContinue();
+        if (scanOrNot) {
+            AXEScanner axeScanner = AccessibilitySteps.scanner;
+            axeScanner.scan(true);
+        }
     }
 
     public void enterCorrespondenceAddress() {
