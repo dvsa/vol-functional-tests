@@ -38,7 +38,8 @@
         <zt-zip.version>1.15</zt-zip.version>
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
-        <jvmMemory>4000</jvmMemory>
+
+        <jvmMemory>5000</jvmMemory>
     </properties>
 
     <dependencyManagement>

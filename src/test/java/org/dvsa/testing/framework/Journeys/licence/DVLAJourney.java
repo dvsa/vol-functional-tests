@@ -93,7 +93,7 @@ public class DVLAJourney extends BasePage {
         if (isTitlePresent("Transfer vehicles between your licences", 3)) {
             waitAndClick("//button[contains(text(),'Transfer vehicles')]", SelectorType.XPATH);
         } else {
-            click("//*[@type='submit']", SelectorType.XPATH);
+            waitAndClick("//*[@type='submit']", SelectorType.XPATH);
         }
     }
 
@@ -116,7 +116,7 @@ public class DVLAJourney extends BasePage {
         for (String VRM : this.allVRMs) {
             assertTrue(isTextPresent(VRM));
         }
-        click("//*[contains(text(),'Yes')]", SelectorType.XPATH);
-        click("next", SelectorType.ID);
+        waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
+        waitAndClick("next", SelectorType.ID);
     }
 }

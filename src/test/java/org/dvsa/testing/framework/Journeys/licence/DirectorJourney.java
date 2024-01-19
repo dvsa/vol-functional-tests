@@ -1,13 +1,17 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
 import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.WebElement;
+import scanner.AXEScanner;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,7 +66,7 @@ public class DirectorJourney extends BasePage {
         return directorFirstName.concat(" ").concat(directorLastName);
     }
 
-    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties() {
+    public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties(boolean scanOrNot) throws IllegalBrowserException, IOException {
         click(addButton, SelectorType.XPATH);
         if (isTitlePresent(directorDetailsTitle,30)) {
             addPersonDetails();
@@ -72,6 +76,10 @@ public class DirectorJourney extends BasePage {
         completeDirectorFinancialHistory("N");
         completeLicenceHistory("N");
         completeConvictionsAndPenalties("N");
+        if (scanOrNot) {
+            AXEScanner axeScanner = AccessibilitySteps.scanner;
+            axeScanner.scan(true);
+        }
     }
 
     public void addDirectorDetails()  {
