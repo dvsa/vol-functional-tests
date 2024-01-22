@@ -121,8 +121,4 @@ public class EBSRUpload extends BasePage {
         world.selfServeNavigation.navigateToBusRegExternal();
         assertTrue(isTextPresent("1234"));
     }
-
-    @And("Documents are generated with axeScanner {}")
-    public void documentsAreGeneratedWithAxeScanner(boolean scanOrNot) {
-    }
 }
