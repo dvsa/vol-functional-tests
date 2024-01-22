@@ -50,8 +50,4 @@ public class ElectronicBusRegistration extends BasePage {
            assertTrue(isTextPresent(header));
        }
     }
-
-    @When("I upload an ebsr file with {string} days notice with axeScanner {}")
-    public void iUploadAnEbsrFileWithDaysNoticeWithAxeScanner(String arg0, String arg1) {
-    }
 }
