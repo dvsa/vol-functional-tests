@@ -20,9 +20,9 @@ public class SubmitSelfServeApplication extends BasePage {
         this.world = world;
     }
 
-    @Given("I submit and pay for a {string} licence application with axe scanner {}")
-    public void iSubmitAndPayForLicenceApplicationWithAxeScanner(String licenceType, boolean scanOrNot) throws IllegalBrowserException, IOException, IllegalBrowserException, IOException {
-        world.submitApplicationJourney.startANewLicenceApplication(licenceType, scanOrNot);
+    @And("I submit and pay for a {string} licence application")
+    public void iSubmitAndPayForALicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
+        world.submitApplicationJourney.startANewLicenceApplication(licenceType);
         if (world.configuration.env.toString().equals("int")) {
             world.govSignInJourney.navigateToGovUkSignIn();
             world.govSignInJourney.signInGovAccount();
@@ -30,9 +30,7 @@ public class SubmitSelfServeApplication extends BasePage {
         } else {
             world.submitApplicationJourney.submitAndPayForApplication();
         }
-        if (scanOrNot) {
-            axeScanner.scan(true);
-        }
+        axeScanner.scan(true);
     }
 
     @And("i have no existing applications")

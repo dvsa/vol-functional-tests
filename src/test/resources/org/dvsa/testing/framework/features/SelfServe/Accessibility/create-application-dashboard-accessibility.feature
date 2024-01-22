@@ -15,9 +15,9 @@ Feature: Create application page should comply to the WCAG 2.1 AA accessibility 
     Then the colour of the 'Directors' section should be grey
 
   Scenario Outline: Scan for accessibility violations
-    Given I submit and pay for a "<Licence>" licence application with axe scanner <ScanOrNot>
+    Given I submit and pay for a "<Licence>" licence application
     Then no issues should be present on the page
 
     Examples:
-      | Licence | ScanOrNot |
-      | Goods   | true      |
+      | Licence |  |
+      | Goods   |  |
