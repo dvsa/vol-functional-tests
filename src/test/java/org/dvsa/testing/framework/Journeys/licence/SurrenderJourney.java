@@ -64,7 +64,7 @@ public class SurrenderJourney extends BasePage {
         this.world = world;
     }
 
-    public void navigateToSurrendersStartPage(boolean scanOrNot) {
+    public void navigateToSurrendersStartPage() {
         refreshPageWithJavascript();
         if (!getDriver().getCurrentUrl().contains("ssweb")) {
             if (!isTextPresent("Current licences")) {
@@ -75,26 +75,21 @@ public class SurrenderJourney extends BasePage {
         clickByLinkText("Apply to surrender licence");
     }
 
-    public void startSurrender(boolean scanOrNot) throws IllegalBrowserException, IOException {
-        if (scanOrNot) {
-            axeScanner.scan(true);
-        }
+    public void startSurrender() throws IllegalBrowserException, IOException {
+        axeScanner.scan(true);
         click("//*[@id='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Review your contact information");
-        if (scanOrNot) {
             axeScanner.scan(true);
-        }
     }
 
 
-    public void addOperatorLicenceDetails(boolean scanOrNot) throws IllegalBrowserException, IOException {
+    public void addOperatorLicenceDetails() throws IllegalBrowserException, IOException {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
         world.UIJourney.clickSubmit();
-        if (scanOrNot) {
             axeScanner.scan(true);
         }
-    }
+
 
     public void addCommunityLicenceDetails() {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
@@ -114,8 +109,8 @@ public class SurrenderJourney extends BasePage {
         return getText("//dt[contains(text(),'Country')]//..//dd", SelectorType.XPATH);
     }
 
-    public void submitSurrender(boolean scanOrNot) throws IOException, InterruptedException, IllegalBrowserException {
-        submitSurrenderUntilChoiceOfVerification(scanOrNot);
+    public void submitSurrender() throws IOException, InterruptedException, IllegalBrowserException {
+        submitSurrenderUntilChoiceOfVerification();
         waitAndClick("//*[@id='sign']", SelectorType.XPATH);
         world.govSignInJourney.navigateToGovUkSignIn();
         world.govSignInJourney.signInGovAccount();
@@ -123,37 +118,31 @@ public class SurrenderJourney extends BasePage {
         checkSignInConfirmation();
         refreshPageWithJavascript();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
-        if (scanOrNot) {
             axeScanner.scan(true);
         }
-    }
 
-    public void submitSurrenderUntilChoiceOfVerification(boolean scanOrNot) throws IllegalBrowserException, IOException {
-        submitSurrenderUntilReviewPage(scanOrNot);
-        if (scanOrNot) {
+    public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, IOException {
+        submitSurrenderUntilReviewPage();
+            axeScanner.scan(true);
+        acknowledgeDestroyPage();
             axeScanner.scan(true);
         }
-        acknowledgeDestroyPage(scanOrNot);
-        if (scanOrNot) {
-            axeScanner.scan(scanOrNot);
-        }
-    }
 
-    public void submitSurrenderUntilReviewPage(boolean scanOrNot) throws IllegalBrowserException, IOException {
-        navigateToSurrendersStartPage(scanOrNot);
-        startSurrender(scanOrNot);
+
+    public void submitSurrenderUntilReviewPage() throws IllegalBrowserException, IOException {
+        navigateToSurrendersStartPage();
+        startSurrender();
         world.UIJourney.clickSubmit();
-        addDiscInformation(scanOrNot);
+        addDiscInformation();
         waitForTextToBePresent("In your possession");
-        addOperatorLicenceDetails(scanOrNot);
+        addOperatorLicenceDetails();
         if (world.createApplication.getLicenceType().equals(LicenceType.STANDARD_INTERNATIONAL.asString())) {
             assertTrue(navigate().getCurrentUrl().contains("community-licence"));
             addCommunityLicenceDetails();
         }
-        if (scanOrNot) {
             axeScanner.scan(true);
         }
-    }
+
 
     public void caseworkManageSurrender() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
@@ -187,17 +176,15 @@ public class SurrenderJourney extends BasePage {
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 
-    public void acknowledgeDestroyPage(boolean scanOrNot) throws IllegalBrowserException, IOException {
+    public void acknowledgeDestroyPage() throws IllegalBrowserException, IOException {
         world.UIJourney.clickSubmit();
-        if (scanOrNot) {
-            axeScanner.scan(true);
-        }
+        axeScanner.scan(true);
         waitForTextToBePresent("Securely destroy");
         world.UIJourney.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 
-    public void addDiscInformation(boolean scanOrNot) throws IllegalBrowserException, IOException {
+    public void addDiscInformation() throws IllegalBrowserException, IOException {
         assertTrue(getCurrentUrl().contains("current-discs"));
         clickById("stolenSection[stolen]");
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
@@ -208,18 +195,15 @@ public class SurrenderJourney extends BasePage {
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");
         waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, getDiscsStolen());
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
-        if (scanOrNot) {
-            axeScanner.scan(true);
-        }
+        axeScanner.scan(true);
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
-        if (scanOrNot) {
-            axeScanner.scan(true);
+        axeScanner.scan(true);
         }
-    }
+
 
     public void removeDisc() throws IllegalBrowserException, IOException {
         world.UIJourney.clickSubmit();
-        addDiscInformation(false);
+        addDiscInformation();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
