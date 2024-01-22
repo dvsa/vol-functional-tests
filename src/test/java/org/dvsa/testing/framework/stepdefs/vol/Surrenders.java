@@ -27,7 +27,7 @@ public class Surrenders extends BasePage {
 
     @When("i surrender my licence to the review discs and documentation page")
     public void iSurrenderMyLicenceToTheReviewDiscsAndDocumentationPage() throws IllegalBrowserException, IOException {
-        world.surrenderJourney.submitSurrenderUntilReviewPage(false);
+        world.surrenderJourney.submitSurrenderUntilReviewPage();
     }
 
     @And("the correct destroyed disc details should be displayed")
@@ -61,7 +61,7 @@ public class Surrenders extends BasePage {
     }
     @And("i choose to surrender my licence with {string}")
     public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) throws IOException, IllegalBrowserException {
-        world.surrenderJourney.submitSurrenderUntilChoiceOfVerification(false);
+        world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         if (surrenderMethod.equalsIgnoreCase("gov-sign-in")) {
             if (GenericUtils.isGovSignInSupportedPlatform(env.name())) {

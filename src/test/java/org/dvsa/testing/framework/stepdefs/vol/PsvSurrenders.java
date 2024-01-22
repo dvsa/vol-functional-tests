@@ -23,7 +23,7 @@ public class PsvSurrenders extends BasePage {
 
     @And("i choose to surrender my licence")
     public void iChooseToSurrenderMyLicence() throws IllegalBrowserException, IOException {
-        world.surrenderJourney.submitSurrenderUntilChoiceOfVerification(false);
+        world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
     }
 
     @Then("the post verify success page is displayed")

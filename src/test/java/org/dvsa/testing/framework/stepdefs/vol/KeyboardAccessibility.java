@@ -79,16 +79,16 @@ public class KeyboardAccessibility extends BasePage {
 
     @When("i navigate to self serve licence surrender pages i can skip to main content")
     public void iNavigateToSelfServeLicenceSurrenderPagesICanSkipToMainContent() throws IllegalBrowserException, IOException {
-        world.surrenderJourney.navigateToSurrendersStartPage(false);
+        world.surrenderJourney.navigateToSurrendersStartPage();
         world.UIJourney.skipToMainContentAndCheck();
-        world.surrenderJourney.startSurrender(false);
+        world.surrenderJourney.startSurrender();
         world.UIJourney.skipToMainContentAndCheck();
         world.UIJourney.clickSubmit();
         world.UIJourney.skipToMainContentAndCheck();
-        world.surrenderJourney.addDiscInformation(false);
+        world.surrenderJourney.addDiscInformation();
         waitForTextToBePresent("In your possession");
         world.UIJourney.skipToMainContentAndCheck();
-        world.surrenderJourney.addOperatorLicenceDetails(false);
+        world.surrenderJourney.addOperatorLicenceDetails();
         if (world.createApplication.getLicenceType().equals("standard_international")) {
             assertTrue(Browser.navigate().getCurrentUrl().contains("community-licence"));
             world.UIJourney.skipToMainContentAndCheck();
