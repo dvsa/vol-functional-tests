@@ -15,8 +15,4 @@ public class ElectronicBusRegistration {
         // for the date state the options are ['current','past','future'] and depending on your choice the months you want to add/remove
         world.busRegistrationJourney.uploadAndSubmitEBSR("futureDay", Integer.parseInt(days));
     }
-
-    @When("I upload an ebsr file with {string} days notice with axeScanner {}")
-    public void iUploadAnEbsrFileWithDaysNoticeWithAxeScanner(String arg0, String arg1) {
-    }
 }
