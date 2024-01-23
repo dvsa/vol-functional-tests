@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
+import activesupport.IllegalBrowserException;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.MissingRequiredArgument;
@@ -13,13 +14,16 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
+import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebElement;
+import scanner.AXEScanner;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
@@ -126,7 +130,7 @@ public class BusRegistrationJourney extends BasePage {
         world.updateLicence.createCase();
     }
 
-    public void viewEBSRInExternal() {
+    public void viewEBSRInExternal() throws IllegalBrowserException, IOException {
         long kickOutTime = System.currentTimeMillis() + 250000;
         do {
             // Refresh page
@@ -138,6 +142,8 @@ public class BusRegistrationJourney extends BasePage {
         } catch (Exception e) {
             throw new NotFoundException("import EBSR is still displaying as 'processing' when kick out time was reached.");
         }
+        AXEScanner axeScanner = AccessibilitySteps.scanner;
+        axeScanner.scan(true);
     }
 
     public void uploadAndSubmitEBSR(String state, int interval) throws MissingRequiredArgument {
