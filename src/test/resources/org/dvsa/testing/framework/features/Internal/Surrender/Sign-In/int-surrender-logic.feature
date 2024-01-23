@@ -96,6 +96,7 @@ Feature: Logic for Surrender menu item
       | Fees            |
       | Licence details |
 
+  @accessibility
   Scenario: Scan for accessibility violations
     And my application to surrender is under consideration
     When the caseworker approves the surrender
