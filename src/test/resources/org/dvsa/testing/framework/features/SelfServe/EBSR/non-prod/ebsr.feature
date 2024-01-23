@@ -65,6 +65,7 @@ Feature: import EBSR for English, Welsh and Scottish Areas
 
 #  The upload will be Successful but it's only from accessing the bus registration or checking the created task that you can see if the files were generated.
 
+  @accessibility
   Scenario: Scan for accessibility violations
     Given I have a psv application with traffic area "west" and enforcement area "west" which has been granted
     When I upload an ebsr file with "41" days notice
