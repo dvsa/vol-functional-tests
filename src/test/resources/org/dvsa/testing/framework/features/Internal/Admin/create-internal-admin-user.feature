@@ -1,5 +1,5 @@
 @INT-NEW-ADMIN-USER
-@cross-browser
+
 @int_regression
 @FullRegression
 @printAndSign
