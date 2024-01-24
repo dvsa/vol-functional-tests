@@ -30,8 +30,8 @@
 
         <aspectj.version>1.9.21</aspectj.version>
         <build.helper.plugin.version>3.0.0</build.helper.plugin.version>
-        <maven-surefire-plugin.version>3.2.3</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.2.3</maven-failsafe-plugin.version>
+        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
         <apache-commons.version>1.10.0</apache-commons.version>
         <jsoup.version>1.17.1</jsoup.version>
         <gson.version>2.10.1</gson.version>
@@ -248,11 +248,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <includes>**/**.java</includes>
                     <forkCount>2</forkCount>
+                    <includes>**/**.java</includes>
                     <parallel>methods</parallel>
-                    <threadCount>7</threadCount>
-                    <reuseForks>true</reuseForks>
+                    <threadCount>2</threadCount>
+                    <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
