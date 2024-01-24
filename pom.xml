@@ -249,7 +249,9 @@
                 </executions>
                 <configuration>
                     <forkCount>2</forkCount>
-                    <includes>**/**.java</includes>
+                    <includes>
+                        <include>**/**.java</include>
+                    </includes>
                     <parallel>methods</parallel>
                     <threadCount>2</threadCount>
                     <reuseForks>false</reuseForks>
