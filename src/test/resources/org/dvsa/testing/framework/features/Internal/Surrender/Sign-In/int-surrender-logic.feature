@@ -3,7 +3,7 @@
 @int_regression
 @gov-sign-in
 @FullRegression
-
+@laminas
 Feature: Logic for Surrender menu item
 
   Background:
