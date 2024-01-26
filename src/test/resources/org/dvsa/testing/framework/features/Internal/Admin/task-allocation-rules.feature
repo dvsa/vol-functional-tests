@@ -2,6 +2,7 @@
 @task_allocation
 @FullRegression
 @printAndSign
+@INTERNAL-ADMIN-TESTS
 Feature: User is able to Add, edit and delete a Task allocation rule
 
   Background:

@@ -2,6 +2,7 @@
 @scanning_journey
 @FullRegression
 @printAndSign
+@INTERNAL-ADMIN-TESTS
 Feature: Generate scanning separator sheets as an internal user
 
   Background:

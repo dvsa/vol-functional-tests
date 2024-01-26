@@ -1,6 +1,6 @@
 @int_regression
 @internal_submissions
-
+@laminas
 Feature: Internal users wishes to edit a submission
 
   Background:

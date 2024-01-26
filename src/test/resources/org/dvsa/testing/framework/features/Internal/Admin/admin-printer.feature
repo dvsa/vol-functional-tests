@@ -2,6 +2,7 @@
 @int_regression
 @printing
 @FullRegression
+@INTERNAL-ADMIN-TESTS
 
 Feature: Admin wishes to add, edit and delete printers
 

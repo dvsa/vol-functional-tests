@@ -1,5 +1,5 @@
 @INT-NEW-ADMIN-USER
-
+@INTERNAL-ADMIN-TESTS
 @int_regression
 @FullRegression
 @printAndSign

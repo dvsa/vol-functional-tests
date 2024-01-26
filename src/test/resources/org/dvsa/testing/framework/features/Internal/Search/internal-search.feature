@@ -2,6 +2,7 @@
 @int_regression
 @FullRegression
 @printAndSign
+@laminas
 Feature: Internal Search
 
   Background:

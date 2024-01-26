@@ -1,6 +1,6 @@
 @create-operator
 @INT-SMOKE
-
+@laminas
 Feature: Create operator from search results
 
   Background:

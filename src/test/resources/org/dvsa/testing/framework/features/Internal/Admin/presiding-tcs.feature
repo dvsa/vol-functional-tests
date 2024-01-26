@@ -1,6 +1,6 @@
 @int_regression
 @transportCommissionerSubmission
-
+@INTERNAL-ADMIN-TESTS
 Feature: Admin wishes to add and delete a Presiding tc
 
   Background:

@@ -2,7 +2,7 @@
 @task_management
 @FullRegression
 @printAndSign
-
+@laminas
 Feature:Add, Edit and reassign tasks on the internal application
 
   Background:

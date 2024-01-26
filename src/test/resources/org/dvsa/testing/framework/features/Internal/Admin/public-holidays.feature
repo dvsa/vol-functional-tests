@@ -2,6 +2,7 @@
 @public_holiday
 @FullRegression
 @printAndSign
+@INTERNAL-ADMIN-TESTS
 Feature: Admin wishes to add and delete a public holiday
 
   Background:

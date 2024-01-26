@@ -2,7 +2,7 @@
 @your_account
 @FullRegression
 @printAndSign
-
+@INTERNAL-ADMIN-TESTS
 Feature: User edits their account details
 
   Background:

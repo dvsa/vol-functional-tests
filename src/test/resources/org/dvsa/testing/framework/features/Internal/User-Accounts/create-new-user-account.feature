@@ -2,7 +2,7 @@
 @add-user
 @FullRegression
 @printAndSign
-
+@laminas
 Feature: Create a new Internal User
 
   Scenario: Users wishes to Login & Create a new internal user

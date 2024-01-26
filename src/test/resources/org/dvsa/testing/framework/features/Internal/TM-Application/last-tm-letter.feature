@@ -1,7 +1,7 @@
 @LAST-TM-LETTER
 @int_regression
 @FullRegression
-
+@laminas
 Feature: Last TM letter sent
 
   Background:

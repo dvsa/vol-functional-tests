@@ -2,6 +2,7 @@
 @system_messages
 @FullRegression
 @printAndSign
+@INTERNAL-ADMIN-TESTS
 Feature: Input system messages as an internal user and check they are correctly displayed
 
   Background:
