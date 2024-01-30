@@ -5,12 +5,12 @@ Feature: ECMT International Removals Certificates required  Page
     Given I have a "goods" "standard_national" licence
     And I am on the ECMT removals permit start page
 
-  @EXTERNAL @r222gremovalsfix @reads-and-writes-system-properties
+  @EXTERNAL @r222gremovalsfix
   Scenario: Application back button takes back to overview page
     When I click the back link
     Then I should be on the overview page
 
-  @EXTERNAL @r222gremovalsfix @reads-system-properties
+  @EXTERNAL @r222gremovalsfix
   Scenario: Permit Start Date Page functionalities work properly
     And  the reference number is displayed correctly
     And  the page heading on permit start date page should be correct
