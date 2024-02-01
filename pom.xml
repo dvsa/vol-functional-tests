@@ -224,7 +224,6 @@
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
                     </properties>
-                    <skipTests>true</skipTests>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -254,7 +253,7 @@
                     </includes>
                     <parallel>methods</parallel>
                     <threadCount>1</threadCount>
-                    <reuseForks>true</reuseForks>
+                    <reuseForks>false</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
