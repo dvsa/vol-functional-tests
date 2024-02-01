@@ -247,13 +247,13 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <forkCount>1</forkCount>
+                    <forkCount>2</forkCount>
                     <includes>
                         <include>**/**.java</include>
                     </includes>
                     <parallel>methods</parallel>
                     <threadCount>1</threadCount>
-                    <reuseForks>false</reuseForks>
+                    <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
             <plugin>
