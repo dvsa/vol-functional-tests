@@ -39,7 +39,7 @@
         <nexus.releases>https://nexus.olcs.dev-dvsacloud.uk/repository/maven-releases</nexus.releases>
         <java.version>11</java.version>
 
-        <jvmMemory>5000</jvmMemory>
+        <jvmMemory>2048</jvmMemory>
     </properties>
 
     <dependencyManagement>
