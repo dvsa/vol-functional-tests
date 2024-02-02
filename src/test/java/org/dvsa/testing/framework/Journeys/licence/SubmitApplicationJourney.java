@@ -80,7 +80,6 @@ public class SubmitApplicationJourney extends BasePage {
             }
         }
     }
-
     public void startANewLicenceApplication(String licenceType, boolean scanOrNot) throws IllegalBrowserException, IOException {
         setLicence(licenceType);
         waitForTitleToBePresent("Licences");
