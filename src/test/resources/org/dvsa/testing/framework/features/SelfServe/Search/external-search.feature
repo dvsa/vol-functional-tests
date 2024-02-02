@@ -7,19 +7,17 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     Given i have a valid "goods" "standard_national" licence
     And  I am on the external search page
 
-  @reads-and-writes-system-properties
+
   Scenario: Address external user search for lorry and bus operators
     When I search for a lorry and bus operator by "address","","","",""
     Then search results page addresses should only display address belonging to our post code
 
-  @smoketest
-  @reads-system-properties
+  @smoketest @ss_regression
   Scenario: Business name external search for lorry and bus operators
     When I search for a lorry and bus operator by "business","","","",""
     Then search results page should display operator names containing our "businessName"
     And I am able to view the applicants licence number
 
-  @reads-system-properties
   Scenario: Licence number external search for lorry and bus operators
     When I search for a lorry and bus operator by "licence","","","",""
     Then search results page should only display our "licenceNumber"
