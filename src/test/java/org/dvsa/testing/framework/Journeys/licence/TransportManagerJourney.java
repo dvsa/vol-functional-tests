@@ -69,7 +69,7 @@ public class TransportManagerJourney extends BasePage {
 
         //Hours Of Week
         waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);
-        enterTextIntoMultipleFields("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH, "3");
+        enterTextIntoMultipleFields("//*[contains(@name,'responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]')]", SelectorType.XPATH, "3");
 
         //Add Other Licences
         String role = "Transport Manager";

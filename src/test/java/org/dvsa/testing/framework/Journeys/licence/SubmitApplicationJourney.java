@@ -80,7 +80,7 @@ public class SubmitApplicationJourney extends BasePage {
             }
         }
     }
-    public void startANewLicenceApplication(String licenceType, boolean scanOrNot) throws IllegalBrowserException, IOException {
+    public void startANewLicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
         setLicence(licenceType);
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
@@ -92,6 +92,7 @@ public class SubmitApplicationJourney extends BasePage {
             if (isElementPresent("add", SelectorType.ID)) {
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(true);
             }
+            UIJourney.clickSaveAndContinue();
         }
         //operating centre
         String authority = "2";
@@ -105,9 +106,7 @@ public class SubmitApplicationJourney extends BasePage {
         }
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
-        if (scanOrNot) {
-            axeScanner.scan(true);
-        }
+
         UIJourney.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
@@ -117,19 +116,14 @@ public class SubmitApplicationJourney extends BasePage {
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
-        if (scanOrNot) {
-            axeScanner.scan(true);
-        }
+
         world.UIJourney.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
             world.UIJourney.clickSend();
         } else {
-            world.transportManagerJourney.submitTMApplicationPrintAndSign(); // -
-        }
-        if (scanOrNot) {
-            axeScanner.scan(true);
+            world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
         //vehicleDetails
         boolean vehicleType = licenceType.equals("Goods");
