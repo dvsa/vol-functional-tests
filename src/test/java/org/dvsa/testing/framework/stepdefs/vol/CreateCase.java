@@ -8,6 +8,8 @@ import io.cucumber.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.lib.url.webapp.URL;
+import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.hamcrest.Matchers;
 
 import java.time.LocalDate;
@@ -135,10 +137,14 @@ public class CreateCase extends BasePage {
 
     @And("i add a case in internal on the {string} page")
     public void iAddACaseInInternalOnThePage(String page) throws HttpException {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
+        String user = world.configuration.config.getString("adminUser");
+        String password = world.configuration.config.getString("defaultPassword");
+
+        String internalURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
+        get(internalURL);
+        world.globalMethods.signIn(user, password);
         world.UIJourney.createCaseUI(page);
-}
+    }
 
     @And("submit the Condition and Undertaking form")
     public void submitTheConditionAndUndertakingForm() {
@@ -160,10 +166,12 @@ public class CreateCase extends BasePage {
         world.convictionsAndPenaltiesJourney.addConvictionToCase();
 
     }
+
     @And("I raise a complaint")
     public void iRaiseAComplaint() {
         world.convictionsAndPenaltiesJourney.addComplaint();
     }
+
     @Then("the complaint should be displayed")
     public void theComplaintShouldBeDisplayed() {
         String date = LocalDate.now().minusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -174,12 +182,14 @@ public class CreateCase extends BasePage {
     public void iCompleteTheConditionsUndertakingsForm() {
         world.convictionsAndPenaltiesJourney.completConditionUndertakings();
     }
+
     @Then("the condition & undertaking should be displayed")
     public void theConditionUndertakingShouldBeDisplayed() {
         waitForTextToBePresent("Conditions and undertakings");
         assertTrue(isTextPresent("Condition / undertaking added successfully"));
         assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
     }
+
     @And("I navigate to Notes")
     public void iNavigateToNotes() {
         world.internalNavigation.getCaseNote();

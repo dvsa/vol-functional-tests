@@ -69,8 +69,7 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToPage(String type, SelfServeSection page)  {
-        clickByLinkText("GOV.UK");
-        waitForTextToBePresent("You must keep your records up to date");
+        refreshPage();
         String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {
