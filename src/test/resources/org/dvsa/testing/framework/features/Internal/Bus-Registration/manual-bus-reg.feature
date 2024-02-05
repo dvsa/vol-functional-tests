@@ -3,6 +3,7 @@
 @CPMS_tests
 @FullRegression
 @printAndSign
+@laminas
 
 
 Feature: Complete Manual Bus Registration Steps
