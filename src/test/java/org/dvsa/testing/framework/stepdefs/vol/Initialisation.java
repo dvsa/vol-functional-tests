@@ -92,5 +92,6 @@ public class Initialisation extends BasePage {
         world.presidingTCsStep = new PresidingTCsStep(world);
         world.submissionsJourney = new SubmissionsJourney(world);
         world.accessibilitySteps = new AccessibilitySteps(world);
+        world.messagingJourney = new MessagingJourney(world);
     }
 }

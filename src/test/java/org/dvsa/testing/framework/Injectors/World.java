@@ -94,4 +94,5 @@ public class World {
     public SubmissionsJourney submissionsJourney;
 
     public AccessibilitySteps accessibilitySteps;
+    public MessagingJourney messagingJourney;
 }
