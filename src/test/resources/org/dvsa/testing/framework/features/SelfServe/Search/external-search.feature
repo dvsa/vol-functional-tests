@@ -23,7 +23,7 @@ Feature: External user search by Address, Business name, Licence Number and Pers
     Then search results page should only display our "licenceNumber"
     And I am able to view the licence number
 
-  @reads-system-properties
+
   Scenario: Person's name external search for lorry and bus operators
     When I search for a lorry and bus operator by "person","","","",""
     Then search results page should display names containing our operator name

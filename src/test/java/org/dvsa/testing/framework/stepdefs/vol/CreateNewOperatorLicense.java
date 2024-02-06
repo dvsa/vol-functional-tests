@@ -52,7 +52,6 @@ public class CreateNewOperatorLicense extends BasePage {
         String externalURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
         get(externalURL);
         waitForTextToBePresent("Password");
-
         {
             world.globalMethods.signIn(user, password);
         }

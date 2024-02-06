@@ -12,7 +12,7 @@ Feature: Countersigning declaration page for the operator Print and Sign
     Then transport manager details approved banner appears
     And transport manager status is "green" and "Not yet received"
 
-  @OLCS-21678 @reads-system-properties
+  @OLCS-21678
   Scenario: Add TM who is not the Operator Print and Sign
     When the transport manager is not the owner
     And i choose to print and sign

@@ -23,7 +23,7 @@ Feature: ECMT International Removal Eligiblity page
     Then the error message is displayed on ECMT Remove Eligibility Page
 
   #AC09
-  @EXTERNAL @OLCS-24816 @reads-system-properties
+  @EXTERNAL @OLCS-24816
   Scenario: The user is taken to Overview page when the 'Save and return to overview' link is selected
     When the checkbox is ticked
     And I save and return to overview

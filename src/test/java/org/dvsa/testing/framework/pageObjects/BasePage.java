@@ -161,19 +161,19 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
-        public static String selectRandomValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
-            By bySelector = createBySelector(selector, selectorType);
-            Select select = new Select(getDriver().findElement(bySelector));
-            List<WebElement> options = select.getOptions();
-            WebElement randomOption = options.get(new Random().nextInt(options.size()));
-            selectedValue = randomOption.getText();
-            select.selectByVisibleText(selectedValue);
-            return selectedValue;
-        }
+    public static String selectRandomValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
+        By bySelector = createBySelector(selector, selectorType);
+        Select select = new Select(getDriver().findElement(bySelector));
+        List<WebElement> options = select.getOptions();
+        WebElement randomOption = options.get(new Random().nextInt(options.size()));
+        selectedValue = randomOption.getText();
+        select.selectByVisibleText(selectedValue);
+        return selectedValue;
+    }
 
-        public static String getSelectedValue() {
-            return selectedValue;
-        }
+    public static String getSelectedValue() {
+        return selectedValue;
+    }
 
     protected static boolean isLinkPresent(String locator, int duration) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
@@ -380,6 +380,7 @@ public abstract class BasePage extends DriverUtils {
     public static boolean isElementEnabled(@NotNull String selector, @NotNull SelectorType selectorType) {
         return findElement(selector, selectorType).isEnabled();
     }
+
     public static boolean isElementClickable(@NotNull String selector, @NotNull SelectorType selectorType) {
         boolean visible = true;
         try {
@@ -458,9 +459,11 @@ public abstract class BasePage extends DriverUtils {
     public static void waitForTitleToBePresent(@NotNull String selector) {
         waitForElementToBePresent(String.format("//h1[contains(text(),'%s')]", selector));
     }
+
     public static void waitForTitleToBePresent(@NotNull String htmlTag, @NotNull String selector) {
         waitForElementToBePresent(String.format("//%s[contains(text(),'%s')]", htmlTag, selector));
     }
+
     public static void waitForElementToBePresent(@NotNull String selector) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))

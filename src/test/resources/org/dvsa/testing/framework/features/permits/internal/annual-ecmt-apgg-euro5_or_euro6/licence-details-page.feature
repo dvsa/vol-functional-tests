@@ -10,7 +10,7 @@ Feature: Internal Licence details page
     And i create an admin and url search for my licence
     Then I should see the IRHP permits tab
 
-  @reads-system-properties
+
   Scenario: Condition to display IRHP Permits tab is not met
     Given I have a "public" "standard_international" licence
     And i create an admin and url search for my licence

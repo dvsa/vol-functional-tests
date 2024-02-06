@@ -142,6 +142,9 @@ public class CreateCase extends BasePage {
 
         String internalURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
         get(internalURL);
+        if (isElementPresent("declarationRead", SelectorType.ID)) {
+            waitAndClick("declarationRead", SelectorType.ID);
+        }
         world.globalMethods.signIn(user, password);
         world.UIJourney.createCaseUI(page);
     }

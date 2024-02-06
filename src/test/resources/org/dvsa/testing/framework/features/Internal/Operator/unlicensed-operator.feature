@@ -11,7 +11,7 @@ Feature: Unlicensed operator
     Then the operator should be created
 
   @unlicensed_operator_vehicle
-  @reads-system-properties
+
   Scenario: Add a vehicle to unlicensed operator
     When i create an unlicensed operator
     Then i should be able to add vehicles
