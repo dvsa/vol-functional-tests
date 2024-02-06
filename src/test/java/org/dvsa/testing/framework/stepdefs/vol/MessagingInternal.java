@@ -8,7 +8,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class Messaging extends BasePage {
+public class MessagingInternal extends BasePage {
     @Then("the messaging heading should be displayed")
     public void theMessagingHeadingShouldBeDisplayed() {
         assertTrue(isTextPresent("Messages"));
