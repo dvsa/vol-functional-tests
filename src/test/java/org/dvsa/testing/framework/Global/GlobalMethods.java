@@ -29,7 +29,6 @@ public class GlobalMethods extends BasePage {
     private final String submitButton = "//*[@id='auth.login.button']";
 
 
-
     public GlobalMethods(World world) {
         this.world = world;
     }
@@ -63,19 +62,19 @@ public class GlobalMethods extends BasePage {
         // Also look at calls in SS and Internal Navigational steps cause there is a lot of replication.
         String password;
         QuotedPrintableCodec quotedPrintableCodec = new QuotedPrintableCodec();
-        if(!world.configuration.env.toString().equals("local")) {
+        if (!world.configuration.env.toString().equals("local")) {
             password = quotedPrintableCodec.decode(world.configuration.getTempPassword(emailAddress));
-        }else{
+        } else {
             password = quotedPrintableCodec.decode(world.configuration.getTempPasswordFromMailhog(emailAddress));
         }
         try {
             if (isElementPresent("declarationRead", SelectorType.ID)) {
                 waitAndClick("declarationRead", SelectorType.ID);
-                    signIn(username, password);
-                    if (isTextPresent("Please check your username and password")) {
-                        signIn(username, getLoginPassword());
-                    }
+                signIn(username, password);
+                if (isTextPresent("Please check your username and password")) {
+                    signIn(username, getLoginPassword());
                 }
+            }
         } finally {
             if (isTextPresent("Your password must:")) {
                 waitAndEnterText(newPasswordField, SelectorType.CSS, newPassword);
