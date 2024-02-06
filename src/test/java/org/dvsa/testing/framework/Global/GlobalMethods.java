@@ -83,7 +83,6 @@ public class GlobalMethods extends BasePage {
         }
     }
 
-
     public void signIn(String userName, String password) {
         if (isElementPresent("declarationRead", SelectorType.ID)) {
             waitAndClick("declarationRead", SelectorType.ID);
