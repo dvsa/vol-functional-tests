@@ -220,7 +220,7 @@ public class UIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
-        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
+        clickByLinkText("Financial evidence");
         click(uploadLaterRadioButton, SelectorType.XPATH);
         clickSaveAndReturn();
     }

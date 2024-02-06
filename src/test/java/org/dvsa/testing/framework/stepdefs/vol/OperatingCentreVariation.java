@@ -38,6 +38,7 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("i create and submit an operating centre variation with {string} hgvs and {string} lgvs")
     public void iCreateAndSubmitAnOperatingCentreVariationWithHgvsAndLgvs(String numberOfHGVs, String numberOfLGVs) {
+        clickByLinkText("Home");
         world.operatingCentreJourney.submitOperatingCentreVehicleAuthorisationVariationApplication(numberOfHGVs, numberOfLGVs);
     }
 
@@ -124,11 +125,12 @@ public class OperatingCentreVariation extends BasePage {
 
     @And("increase the authority on an existing operating centre authorisation and update the total authorisations")
     public void increaseTheAuthorityOnAnExistingOperatingCentreAuthorisationAndUpdateTheTotalAuthorisations() {
-        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
+        clickByLinkText("Operating centres and authorisation");
         String updatedOperatingCentreVehicleAuthorisation = "10";
         world.operatingCentreJourney.updateOperatingCentreAuthorisation(updatedOperatingCentreVehicleAuthorisation, String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
         int newTotalHGVAuthorisation = Integer.parseInt(numberOfNewOperatingCentreVehicles) + Integer.parseInt(updatedOperatingCentreVehicleAuthorisation);
         world.operatingCentreJourney.updateOperatingCentreTotalVehicleAuthority(String.valueOf(newTotalHGVAuthorisation), "0", String.valueOf(world.createApplication.getTotalOperatingCentreTrailerAuthority()));
+        clickByLinkText("Home");
     }
 
     @When("i increase my lgv authorisation and delete the new operating centre")
