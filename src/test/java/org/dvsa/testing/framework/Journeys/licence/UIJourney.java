@@ -21,8 +21,10 @@ import org.joda.time.LocalDate;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+
 import java.io.IOException;
 import java.util.*;
+
 import static activesupport.autoITX.AutoITX.initiateAutoItX;
 import static activesupport.driver.Browser.navigate;
 import static activesupport.msWindowsHandles.MSWindowsHandles.focusWindows;
@@ -220,7 +222,11 @@ public class UIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
-        clickByLinkText("Financial evidence");
+        if (isElementPresent("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH)) {
+            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
+        } else {
+            clickByLinkText("Financial evidence");
+        }
         click(uploadLaterRadioButton, SelectorType.XPATH);
         clickSaveAndReturn();
     }
@@ -243,6 +249,7 @@ public class UIJourney extends BasePage {
             waitAndClick(submitButton, SelectorType.ID);
         }
     }
+
     public void signDeclarationForVariation() {
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
@@ -401,8 +408,8 @@ public class UIJourney extends BasePage {
     public void changeLicenceForVariation() {
         refreshPageWithJavascript();
         waitForPageLoad();
-        waitForElementToBePresent("//*[contains(text(),'change your licence')]");
-        waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
+        waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
+        clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         waitAndClick(submitButton, SelectorType.ID);
         refreshPageWithJavascript();
@@ -507,7 +514,7 @@ public class UIJourney extends BasePage {
         String passWord = world.configuration.config.getString("adminPassword");
         waitAndEnterText("auth.reset-password.new-password", SelectorType.ID, passWord);
         waitAndEnterText("auth.reset-password.confirm-password", SelectorType.ID, passWord);
-        click(nameAttribute("input","submit"), SelectorType.CSS);
+        click(nameAttribute("input", "submit"), SelectorType.CSS);
         assertTrue(isTextPresent("Your password was reset successfully"));
     }
 
@@ -515,11 +522,17 @@ public class UIJourney extends BasePage {
         waitAndClick("//*[@id='form-actions[saveAndContinue]']", SelectorType.XPATH);
     }
 
-    public void clickSubmit() { waitAndClick("form-actions[submit]", SelectorType.NAME);}
+    public void clickSubmit() {
+        waitAndClick("form-actions[submit]", SelectorType.NAME);
+    }
 
-    public void clickSend() { waitAndClick("form-actions[send]", SelectorType.NAME);}
+    public void clickSend() {
+        waitAndClick("form-actions[send]", SelectorType.NAME);
+    }
 
-    public void clickContinue() { waitAndClick("form-actions[continue]", SelectorType.ID);}
+    public void clickContinue() {
+        waitAndClick("form-actions[continue]", SelectorType.ID);
+    }
 
     public static void clickSaveAndReturn() {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
@@ -567,6 +580,6 @@ public class UIJourney extends BasePage {
 
     public void closeAlert() {
         waitForElementToBePresent("//p[@role='alert']");
-        waitAndClick("//*[contains(text(),'Close')]",SelectorType.XPATH);
+        waitAndClick("//*[contains(text(),'Close')]", SelectorType.XPATH);
     }
 }
