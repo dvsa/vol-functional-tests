@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import org.dvsa.testing.framework.Journeys.licence.MessagingJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -30,5 +31,10 @@ public class MessagingInternal extends BasePage {
         assertTrue(isElementPresent("(//span[text()='Messages'])[2]", SelectorType.XPATH));
         assertTrue(isElementPresent("New Conversation", SelectorType.LINKTEXT));
         assertTrue(isElementPresent("Disable Messaging", SelectorType.LINKTEXT));
+    }
+
+    @And("i create a new conversation to operator")
+    public void iCreateANewConversationToOperator() {
+        MessagingJourney.createConversation();
     }
 }
