@@ -68,12 +68,9 @@ public class GlobalMethods extends BasePage {
             password = quotedPrintableCodec.decode(world.configuration.getTempPasswordFromMailhog(emailAddress));
         }
         try {
-            if (isElementPresent("declarationRead", SelectorType.ID)) {
-                waitAndClick("declarationRead", SelectorType.ID);
-                signIn(username, password);
-                if (isTextPresent("Please check your username and password")) {
-                    signIn(username, getLoginPassword());
-                }
+            signIn(username, password);
+            if (isTextPresent("Please check your username and password")) {
+                signIn(username, getLoginPassword());
             }
         } finally {
             if (isTextPresent("Your password must:")) {
@@ -88,6 +85,9 @@ public class GlobalMethods extends BasePage {
 
 
     public void signIn(String userName, String password) {
+        if (isElementPresent("declarationRead", SelectorType.ID)) {
+            waitAndClick("declarationRead", SelectorType.ID);
+        }
         replaceText(emailField, SelectorType.CSS, userName);
         replaceText(passwordField, SelectorType.CSS, password);
         click(submitButton, SelectorType.XPATH);
