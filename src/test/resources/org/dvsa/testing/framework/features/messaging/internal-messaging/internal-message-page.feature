@@ -25,6 +25,16 @@ Feature: Viewing messages tab as an internal user
       And i click the messages heading
       And i create a new conversation to operator
 
+      @int-message-archive-conversation
+      Scenario: Case worker archive the conversation
+        Given i have a valid "goods" "restricted" licence
+        And i create an admin and url search for my licence
+        And i click the messages heading
+        And i create a new conversation to operator
+        Then i end and archive the conversation
+
+
+
 
 
     

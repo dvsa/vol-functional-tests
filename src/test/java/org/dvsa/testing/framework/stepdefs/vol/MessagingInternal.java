@@ -38,9 +38,9 @@ public class MessagingInternal extends BasePage {
         MessagingJourney.createConversation();
     }
 
-//    @And("I redirect to the message tab to respond to the case worker's message")
-//    public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() {
-//        iClickTheMessagesHeading();
-//        MessagingJourney.replyForMessage();
-//    }
+    @Then("i end and archive the conversation")
+    public void iEndAndArchiveTheConversation() {
+        MessagingJourney.archiveTheConversation();
+    }
+
 }
