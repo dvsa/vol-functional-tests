@@ -136,18 +136,11 @@ public class CreateCase extends BasePage {
     }
 
     @And("i add a case in internal on the {string} page")
-    public void iAddACaseInInternalOnThePage(String page) throws HttpException {
-        String user = world.configuration.config.getString("adminUser");
-        String password = world.configuration.config.getString("defaultPassword");
-
-        String internalURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
-        get(internalURL);
-        if (isElementPresent("declarationRead", SelectorType.ID)) {
-            waitAndClick("declarationRead", SelectorType.ID);
-        }
-        world.globalMethods.signIn(user, password);
+    public void iAddACaseInInternalOnThePage(String page) {
+        world.UIJourney.loginIntoInternalAsExistingAdmin();
         world.UIJourney.createCaseUI(page);
     }
+
 
     @And("submit the Condition and Undertaking form")
     public void submitTheConditionAndUndertakingForm() {

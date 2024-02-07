@@ -15,7 +15,7 @@ public class LicenceDiscs extends BasePage{
     public LicenceDiscs (World world) {this.world = world;}
 
     @And("the licence discs should be present")
-    public void theLicenceDiscsShouldBPresent() throws SQLException, UnsupportedDatabaseDriverException {
+    public void theLicenceDiscsShouldBPresent() {
         int psvDiscNumber = Integer.parseInt(world.updateLicence.getStartNumber());
         for (int i = 0; i < 5; i++){
             assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i)));

@@ -110,6 +110,11 @@ public abstract class BasePage extends DriverUtils {
         findElement(selector, SelectorType.PARTIALLINKTEXT).click();
     }
 
+    protected static void clickByFullLinkText(@NotNull String selector) {
+        findElement(selector, SelectorType.LINKTEXT).click();
+    }
+
+
     protected static void clickByXPath(@NotNull String selector) {
         findElement(selector, SelectorType.XPATH).click();
     }

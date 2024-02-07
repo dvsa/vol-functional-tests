@@ -347,6 +347,17 @@ public class UIJourney extends BasePage {
         waitAndClick(submitButton, SelectorType.ID);
     }
 
+    public void loginIntoInternalAsExistingAdmin(){
+        String user = world.configuration.config.getString("adminUser");
+        String password = world.configuration.config.getString("defaultPassword");
+
+        String internalURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
+        get(internalURL);
+        if (isElementPresent("declarationRead", SelectorType.ID)) {
+            waitAndClick("declarationRead", SelectorType.ID);
+        }
+        world.globalMethods.signIn(user, password);
+    }
     public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");

@@ -49,8 +49,7 @@ public class InternalSearch extends BasePage {
     }
     @When("i search for my psv disc and click on my licence and discs")
     public void iSearchForMyPsvDiscAndClickOnMyLicenceAndDiscs() throws HttpException {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
+        world.UIJourney.loginIntoInternalAsExistingAdmin();
         world.internalSearchJourney.searchAndViewPSVDisc();
     }
     @When("i search for my address and click on my licence and addresses")
