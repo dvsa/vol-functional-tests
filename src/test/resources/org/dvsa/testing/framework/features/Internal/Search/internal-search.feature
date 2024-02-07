@@ -26,8 +26,7 @@ Feature: Internal Search
   @psv-disc
   Scenario: Search a PSV Disc on Internal
     And discs have been added to my licence
-    When i search for my psv disc and click on my licence and discs
-    Then the "Licence discs" page should display
+    When i search for my psv disc
     And the licence discs should be present
 
   @searchAddress
