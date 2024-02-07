@@ -65,7 +65,7 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToCreateAnAccount() {
-        clickByLinkText("create an account");
+        waitAndClick("create an account", SelectorType.LINKTEXT);
     }
 
     public void navigateToPage(String type, SelfServeSection page)  {

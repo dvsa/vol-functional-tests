@@ -7,7 +7,7 @@ Feature: resetting password with valid/invalid user
 Background:
   Given I create a new external user
 
-  @valid-reset  @reads-and-writes-system-properties
+  @valid-reset
   Scenario: Reset password for valid user
     When i reset my password
     And I receive the reset password link via email

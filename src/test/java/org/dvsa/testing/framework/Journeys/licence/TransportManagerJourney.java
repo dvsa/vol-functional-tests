@@ -130,8 +130,10 @@ public class TransportManagerJourney extends BasePage {
 
     public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) {
         if (applicationOrNot) {
+            clickByLinkText("Home");
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         } else {
+            clickByLinkText("Home");
             world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
             world.UIJourney.changeLicenceForVariation();
         }

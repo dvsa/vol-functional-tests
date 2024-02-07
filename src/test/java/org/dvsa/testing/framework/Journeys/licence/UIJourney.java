@@ -222,7 +222,7 @@ public class UIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
-        if (isElementPresent("//strong[contains(@class,'govuk-tag')]", SelectorType.XPATH)) {
+        if (isElementPresent("//tr[@class='govuk-table__row']", SelectorType.XPATH)) {
             world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
         } else {
             clickByLinkText("Financial evidence");
@@ -251,7 +251,11 @@ public class UIJourney extends BasePage {
     }
 
     public void signDeclarationForVariation() {
-        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
+        if (isElementPresent("//tr[@class='govuk-table__row']", SelectorType.XPATH)) {
+            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
+        } else {
+            clickByLinkText("Review and declarations");
+        }
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (size("//*[@id='submitAndPay']", SelectorType.XPATH) != 0) {
             click("//*[@id='submitAndPay']", SelectorType.XPATH);
@@ -347,7 +351,7 @@ public class UIJourney extends BasePage {
         waitAndClick(submitButton, SelectorType.ID);
     }
 
-    public void loginIntoInternalAsExistingAdmin(){
+    public void loginIntoInternalAsExistingAdmin() {
         String user = world.configuration.config.getString("adminUser");
         String password = world.configuration.config.getString("defaultPassword");
 
@@ -358,6 +362,7 @@ public class UIJourney extends BasePage {
         }
         world.globalMethods.signIn(user, password);
     }
+
     public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");

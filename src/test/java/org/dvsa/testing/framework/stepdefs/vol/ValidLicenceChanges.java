@@ -56,6 +56,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the business details page are made")
     public void theChangesToTheBusinessDetailsPageAreMade() {
+        clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.BUSINESS_DETAILS);
         world.UIJourney.checkValue("//*[@id='data[tradingNames][0][name]']",SelectorType.XPATH,tradingName);
         world.UIJourney.checkValue("//*[@id='data[tradingNames][1][name]']",SelectorType.XPATH,tradingName2);
