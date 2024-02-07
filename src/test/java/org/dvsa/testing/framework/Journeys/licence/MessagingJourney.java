@@ -6,6 +6,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage.yesAndCabotagePermitConfirmation;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class MessagingJourney extends BasePage {
@@ -35,5 +36,13 @@ public class MessagingJourney extends BasePage {
         clickById("send");
         assert (Str.randomWord(10).equals("//*[@id='main-content']//tr[1]//div[2]/p"));
     }
+
+    public static void archiveTheConversation() {
+        clickById("close");
+        assert (isElementPresent("//*[contains(@class,'field')]", SelectorType.XPATH));
+        clickById("close");
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "CLOSED");
+    }
+
 }
 
