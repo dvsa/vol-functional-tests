@@ -21,7 +21,7 @@ public class MessagingInternal extends BasePage {
     }
 
     @And("i click the messages heading")
-    public void iClickTheMessagesHeading() {
+    public static void iClickTheMessagesHeading() {
         clickByLinkText("Messages");
     }
 
@@ -38,10 +38,9 @@ public class MessagingInternal extends BasePage {
         MessagingJourney.createConversation();
     }
 
-    @And("I redirect to the message tab to respond to the case worker's message")
-    public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() {
-        iClickTheMessagesHeading();
-        MessagingJourney.replyForMessage();
-
-    }
+//    @And("I redirect to the message tab to respond to the case worker's message")
+//    public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() {
+//        iClickTheMessagesHeading();
+//        MessagingJourney.replyForMessage();
+//    }
 }
