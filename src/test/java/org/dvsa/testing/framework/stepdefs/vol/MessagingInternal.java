@@ -37,4 +37,11 @@ public class MessagingInternal extends BasePage {
     public void iCreateANewConversationToOperator() {
         MessagingJourney.createConversation();
     }
+
+    @And("I redirect to the message tab to respond to the case worker's message")
+    public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() {
+        iClickTheMessagesHeading();
+        MessagingJourney.replyForMessage();
+
+    }
 }
