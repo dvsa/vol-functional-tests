@@ -32,8 +32,8 @@ public class MessagingJourney extends BasePage {
         click("//span[contains(@class,'govuk-details__summary-text')]", SelectorType.XPATH);
         click("//*[@id='form-actions[reply]']", SelectorType.XPATH);
         waitAndEnterText("//*[@id='form-actions[reply]']", SelectorType.XPATH, Str.randomWord(10));
-        assert(Str.randomWord(10).equals("//*[@id='main-content']//tr[1]//div[2]/p"));
         clickById("send");
+        assert(Str.randomWord(10).equals("//*[@id='main-content']//tr[1]//div[2]/p"));
     }
 }
 
