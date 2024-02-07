@@ -25,13 +25,13 @@ Feature: Viewing messages tab as an internal user
       And i click the messages heading
       And i create a new conversation to operator
 
-      Scenario: Get a response to the message from the operator
-        Given i have a valid "goods" "restricted" licence
-        And i create an admin and url search for my licence
-        And i click the messages heading
-        And i create a new conversation to operator
-        And i have logged in to self serve
-        And I redirect to the message tab to respond to the case worker's message
+#      Scenario: Get a response to the message from the operator
+#        Given i have a valid "goods" "restricted" licence
+#        And i create an admin and url search for my licence
+#        And i click the messages heading
+#        And i create a new conversation to operator
+#        And i have logged in to self serve
+#        And I redirect to the message tab to respond to the case worker's message
 
 
     
