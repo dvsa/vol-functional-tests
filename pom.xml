@@ -224,6 +224,11 @@
                             cucumber.junit-platform.naming-strategy=long
                         </configurationParameters>
                     </properties>
+                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <parallel>methods</parallel>
+                    <threadCount>1</threadCount>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -232,30 +237,6 @@
                         <version>${aspectj.version}</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-                <version>${maven-failsafe-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>Run parallel tests</id>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>integration-test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <forkCount>1</forkCount>
-                    <includes>
-                        <include>**/**.java</include>
-                    </includes>
-                    <rerunFailingTestsCount>1</rerunFailingTestsCount>
-                    <parallel>methods</parallel>
-                    <threadCount>1</threadCount>
-                    <reuseForks>true</reuseForks>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>io.qameta.allure</groupId>

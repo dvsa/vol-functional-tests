@@ -33,3 +33,8 @@ Feature: Internal Search
   Scenario: Search for Address on Internal
     When i search for my address and click on my licence and addresses
     Then the "Correspondence address" page should display
+
+  @searchVehicle
+  Scenario: Search for Address on Internal
+    When i search for a vehicle by registration "AE83XUF"
+    Then the registration "AE83XUF" should be displayed

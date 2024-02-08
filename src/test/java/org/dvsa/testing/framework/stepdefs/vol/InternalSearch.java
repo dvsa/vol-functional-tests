@@ -1,19 +1,15 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import dev.failsafe.internal.util.Assert;
 import io.cucumber.java.en.Then;
 import org.apache.hc.core5.http.HttpException;
-import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.junit.platform.commons.util.StringUtils;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class InternalSearch extends BasePage {
@@ -51,6 +47,12 @@ public class InternalSearch extends BasePage {
     public void iSearchForMyPsvDiscAndClickOnMyLicenceAndDiscs() {
         world.UIJourney.loginIntoInternalAsExistingAdmin();
         world.internalSearchJourney.searchAndViewPSVDisc();
+    }
+
+    @When("i search for a vehicle by registration {string}")
+    public void iSearchForAVehicleByRegistration(String vrm) {
+        world.UIJourney.loginIntoInternalAsExistingAdmin();
+        world.internalSearchJourney.searchAndViewVehicleRegistration(vrm);
     }
     @When("i search for my address and click on my licence and addresses")
     public void iSearchForMyAddressAndClickOnMyLicenceAndAddresses() throws HttpException {

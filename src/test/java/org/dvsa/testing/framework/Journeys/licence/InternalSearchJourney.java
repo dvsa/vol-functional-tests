@@ -49,6 +49,10 @@ public class InternalSearchJourney extends BasePage {
         clickByLinkText("Licence discs");
     }
 
+    public void searchAndViewVehicleRegistration(String vehicleRegistration) {
+        internalSearchUntilTextPresent(SearchType.Vehicle, vehicleRegistration, vehicleRegistration);
+    }
+
     public void searchAndViewAddress() {
         String address = world.formattedStrings.getFullCommaOperatingAddress();
         internalSearchUntilTextPresent(SearchType.Address, address, world.applicationDetails.getLicenceNumber());
@@ -62,7 +66,9 @@ public class InternalSearchJourney extends BasePage {
             isLinkPresent = isTextPresent(searchString);
             SearchNavBar.search(searchType, searchString);
         } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
-        waitAndClick(linkText, SelectorType.LINKTEXT);
+        if(!searchType.name().equals("Vehicle")) {
+            waitAndClick(linkText, SelectorType.LINKTEXT);
+        }
     }
 
     public void searchForLicenceByName(String companyName) {
