@@ -9,16 +9,16 @@ import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LicenceDiscs extends BasePage {
+public class LicenceDiscs extends BasePage{
     private final World world;
 
-    public LicenceDiscs(World world) {
-        this.world = world;
-    }
+    public LicenceDiscs (World world) {this.world = world;}
 
     @And("the licence discs should be present")
-    public void theLicenceDiscsShouldBPresent() {
-        assertTrue(isTextPresent(world.updateLicence.getStartNumber()));
-        assertTrue(isLinkPresent(world.applicationDetails.getLicenceNumber(), 2));
+    public void theLicenceDiscsShouldBPresent() throws SQLException, UnsupportedDatabaseDriverException {
+        int psvDiscNumber = Integer.parseInt(world.updateLicence.getStartNumber());
+        for (int i = 0; i < 5; i++){
+            assertTrue(isTextPresent(String.valueOf(psvDiscNumber + i)));
+        }
     }
 }

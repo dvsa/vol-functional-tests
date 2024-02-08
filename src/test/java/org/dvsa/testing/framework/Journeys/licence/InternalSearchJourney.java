@@ -44,7 +44,8 @@ public class InternalSearchJourney extends BasePage {
     }
 
     public void searchAndViewPSVDisc() {
-        internalSearchUntilTextPresent(SearchType.PsvDisc, world.updateLicence.getStartNumber(), world.applicationDetails.getLicenceNumber());
+        String licenceNo = world.applicationDetails.getLicenceNumber();
+        internalSearchUntilTextPresent(SearchType.PsvDisc, world.updateLicence.getStartNumber(), licenceNo);
         clickByLinkText("Licence discs");
     }
 
@@ -58,7 +59,7 @@ public class InternalSearchJourney extends BasePage {
         boolean isLinkPresent;
         long kickOut = System.currentTimeMillis() + 120000;
         do {
-            isLinkPresent = isTextPresent(linkText);
+            isLinkPresent = isTextPresent(searchString);
             SearchNavBar.search(searchType, searchString);
         } while (!isLinkPresent && System.currentTimeMillis() < kickOut);
         waitAndClick(linkText, SelectorType.LINKTEXT);

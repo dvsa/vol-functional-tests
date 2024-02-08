@@ -7,12 +7,12 @@ Feature: Internal Search
   Background:
     Given i have a valid "public" "standard_national" licence
 
-  @smoketest
+  @smoketest @searchLicence
   Scenario: Search a Licence on Internal
     When i search for and click on my licence
     Then the "Licence details" page should display
 
-  @smoketest
+  @smoketest @searchApplication
   Scenario: Search an Application on Internal
     When i search for and click on my application
     Then the "Application details" page should display
