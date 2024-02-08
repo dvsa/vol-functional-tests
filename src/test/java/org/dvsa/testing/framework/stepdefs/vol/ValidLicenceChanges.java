@@ -87,6 +87,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the addresses page are made")
     public void theChangesToTheAddressesPageAreMade() {
+        clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.ADDRESSES);
         world.UIJourney.checkValue("//*[@id='correspondence[fao]']",SelectorType.XPATH,forAttentionOf);
         world.UIJourney.checkAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
@@ -129,6 +130,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the vehicles page are made")
     public void theChangesToTheVehiclesPageAreMade() {
+        clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.VEHICLES);
         waitForTitleToBePresent("Vehicle details");
         refreshPageWithJavascript();
@@ -187,6 +189,7 @@ public class ValidLicenceChanges extends BasePage {
 
     @Then("the changes to the safety and compliance page are made")
     public void theChangesToTheSafetyAndCompliancePageAreMade() {
+        clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("licence", SelfServeSection.SAFETY_AND_COMPLIANCE);
         world.UIJourney.checkValue("//*[@id='licence[safetyInsVehicles]']", SelectorType.XPATH, "6");
         assertTrue(Browser.navigate().findElement(By.xpath("//*[@id='licence[safetyInsVaries]']")).isSelected());
