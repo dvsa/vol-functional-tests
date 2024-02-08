@@ -153,6 +153,7 @@ public class Continuations extends BasePage {
         waitAndClick("//*[contains(text(),'Yes')]",SelectorType.XPATH);
         if(isElementClickable("fields[checklistStatus]",SelectorType.ID)) {
             selectValueFromDropDown("fields[checklistStatus]", SelectorType.ID, "Acceptable");
+            waitAndEnterText("fields[numberOfCommunityLicences]",SelectorType.NAME,"0");
         }
         waitAndClick("continue-licence",SelectorType.ID);
     }
