@@ -25,5 +25,5 @@ Feature: Viewing messages tab as an external user
     And i click the messages heading
     And i create a new conversation to operator
     And i have logged in to self serve
-    And I redirect to the message tab to respond to the case worker's message
+    And i redirect to the message tab to respond to the case worker's message
 

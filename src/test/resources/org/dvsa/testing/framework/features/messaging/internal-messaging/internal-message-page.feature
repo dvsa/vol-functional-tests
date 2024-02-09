@@ -18,23 +18,34 @@ Feature: Viewing messages tab as an internal user
   Scenario: Check display of messages tab from a valid licence
     Given i have a valid "goods" "restricted" licence
     And i create an admin and url search for my licence
-    And i click the messages heading
+    * i click the messages heading
     Then the internal messages page is displayed correctly
 
   @int-message-new-conversation
   Scenario: Create a new conversation from caseworker
     Given i have a valid "goods" "restricted" licence
-    And i create an admin and url search for my licence
-    And i click the messages heading
-    And i create a new conversation to operator
+    * i create an admin and url search for my licence
+    * i click the messages heading
+    * i create a new conversation to operator
 
   @int-message-archive-conversation
   Scenario: Case worker archive the conversation
     Given i have a valid "goods" "restricted" licence
     And i create an admin and url search for my licence
-    And i click the messages heading
-    And i create a new conversation to operator
+    * i click the messages heading
+    * i create a new conversation to operator
     Then i end and archive the conversation
+
+    Scenario: Check if a task has been created in internal for the new message
+      Given i have a valid "goods" "restricted" licence
+      And i create an admin and url search for my licence
+      * i click the messages heading
+      * i create a new conversation to operator
+      * i have logged in to self serve
+      * i redirect to the message tab to respond to the case worker's message
+      * i have logged in to internal
+      When i select a message check box and team
+      Then i should able to see new task created as new message for case worker
 
 
 

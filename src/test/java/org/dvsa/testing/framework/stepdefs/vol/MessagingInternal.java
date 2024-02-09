@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Journeys.licence.MessagingJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -43,4 +44,13 @@ public class MessagingInternal extends BasePage {
         MessagingJourney.archiveTheConversation();
     }
 
+    @When("i select a message check box and team")
+    public void iSelectAMessageCheckBoxAndTeam() {
+        MessagingJourney.selectMessageCheckBox();
+    }
+
+    @Then("i should able to see new task created as new message for case worker")
+    public void iShouldAbleToSeeNewTaskCreatedAsNewMessageForCaseWorker() {
+        MessagingJourney.checkForNewTask();
+    }
 }

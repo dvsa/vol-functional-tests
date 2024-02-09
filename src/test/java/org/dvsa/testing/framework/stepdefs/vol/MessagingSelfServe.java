@@ -12,7 +12,7 @@ public class MessagingSelfServe extends BasePage {
         MessagingJourney.createNewConversation();
     }
 
-    @And("I redirect to the message tab to respond to the case worker's message")
+    @And("i redirect to the message tab to respond to the case worker's message")
     public void iRedirectToTheMessageTabToRespondToTheCaseWorkerSMessage() {
         MessagingInternal.iClickTheMessagesHeading();
         MessagingJourney.replyForMessage();
