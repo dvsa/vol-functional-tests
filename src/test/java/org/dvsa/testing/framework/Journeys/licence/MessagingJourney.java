@@ -7,6 +7,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import static org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage.yesAndCabotagePermitConfirmation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class MessagingJourney extends BasePage {
@@ -49,6 +50,17 @@ public class MessagingJourney extends BasePage {
         click("//*[@id='form-actions[appOrLicNo]']/optgroup[1]/option ", SelectorType.XPATH);
         waitAndEnterText("//*[@id='form-actions[messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("send");
+    }
+
+    public static void selectMessageCheckBox(){
+        selectValueFromDropDown("//*[@id='assignedToTeam']", SelectorType.XPATH, "Leeds Licensing Goods");
+        clickById("date");
+        clickById("messaging");
+    }
+
+    public static void checkForNewTask(){
+//        Put assertion
+        assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
     }
 
 }
