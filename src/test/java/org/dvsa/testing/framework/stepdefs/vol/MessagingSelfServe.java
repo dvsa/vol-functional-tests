@@ -7,9 +7,9 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 
 public class MessagingSelfServe extends BasePage {
 
-    @Then("i click on Start a new conversation link")
+    @Then("i click on start a new conversation link")
     public void iClickOnStartANewConversationLink() {
-        clickByLinkText("Start a new conversation");
+        MessagingJourney.createNewConversation();
     }
 
     @And("I redirect to the message tab to respond to the case worker's message")

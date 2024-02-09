@@ -16,7 +16,7 @@ Feature: Viewing messages tab as an external user
     And the caseworker completes and submits the application
     And i have logged in to self serve
     And i click the messages heading
-    And i click on Start a new conversation link
+    And i click on start a new conversation link
 
   @ss-message-replymessage
   Scenario: Operator reply for case worker message

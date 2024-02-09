@@ -24,7 +24,6 @@ public class MessagingJourney extends BasePage {
         waitAndSelectValueFromDropDown("//*[@id='appOrLicNo']", SelectorType.XPATH, world.applicationDetails.getLicenceNumber());
         waitAndEnterText("//*[@id='fields[messageContent]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("form-actions[submit]");
-        assert (yesAndCabotagePermitConfirmation().equals("//*[@class='govuk-body']"));
     }
 
     public static void replyForMessage() {
@@ -34,7 +33,6 @@ public class MessagingJourney extends BasePage {
         click("//*[@id='form-actions[reply]']", SelectorType.XPATH);
         waitAndEnterText("//*[@id='form-actions[reply]']", SelectorType.XPATH, Str.randomWord(10));
         clickById("send");
-        assert (Str.randomWord(10).equals("//*[@id='main-content']//tr[1]//div[2]/p"));
     }
 
     public static void archiveTheConversation() {
@@ -42,6 +40,15 @@ public class MessagingJourney extends BasePage {
         assert (isElementPresent("//*[contains(@class,'field')]", SelectorType.XPATH));
         clickById("close");
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "CLOSED");
+    }
+
+    public static void createNewConversation(){
+        clickByLinkText("Start a new conversation");
+        selectRandomValueFromDropDown("//*[@id='form-actions[messageSubject]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[appOrLicNo]']", SelectorType.XPATH);
+        click("//*[@id='form-actions[appOrLicNo]']/optgroup[1]/option ", SelectorType.XPATH);
+        waitAndEnterText("//*[@id='form-actions[messageContent]']", SelectorType.XPATH, Str.randomWord(10));
+        clickById("send");
     }
 
 }
