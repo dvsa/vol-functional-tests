@@ -145,6 +145,7 @@ public class Continuations extends BasePage {
     @And("a caseworkers continues my licence")
     public void aCaseworkersContinuesMyLicence() {
         world.internalNavigation.getLicence();
+        waitForTitleToBePresent(world.applicationDetails.getLicenceNumber());
         refreshPage();
         clickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
