@@ -74,8 +74,9 @@ public class Surrenders extends BasePage {
         } else {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
             world.UIJourney.signManually();
-            refreshPageWithJavascript();
         }
+        waitForTitleToBePresent("Licences");
+        refreshPage();
         assertEquals(getText("//*[@class='govuk-tag govuk-tag--green']", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
     }
 

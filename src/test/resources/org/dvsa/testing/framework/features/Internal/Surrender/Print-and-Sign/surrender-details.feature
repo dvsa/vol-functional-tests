@@ -10,7 +10,6 @@ Feature: View Surrender Menu and details on Internal
     And i choose to surrender my licence with "print and sign"
 
   @surrender-print @localsmoke
-
   Scenario: Surrender details should be displayed appropriately on Internal print & sign
     Given a caseworker views the surrender details
     Then any open cases should be displayed

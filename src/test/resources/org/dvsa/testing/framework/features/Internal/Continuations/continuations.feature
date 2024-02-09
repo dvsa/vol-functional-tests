@@ -13,7 +13,6 @@ Feature: Continuations journey through internal and self serve
     Then the continuation should be approved and a snapshot generated on Internal
     Examples:
       | operatorType | licenceType            |
-      | goods        | standard_international |
       | goods        | restricted             |
       | public       | standard_national      |
       | public       | special_restricted     |

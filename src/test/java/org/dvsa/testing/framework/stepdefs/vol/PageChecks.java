@@ -42,7 +42,6 @@ public class PageChecks extends BasePage {
         if (isElementPresent("//a[contains(text(),'Docs & attachments')]", SelectorType.XPATH)) {
             clickByLinkText("Docs & attachments");
         }
-        waitForTextToBePresent(world.applicationDetails.getLicenceNumber());
         assertTrue(checkForPartialMatch(documentType));
     }
 }
