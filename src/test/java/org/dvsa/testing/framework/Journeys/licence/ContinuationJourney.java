@@ -42,6 +42,7 @@ public class ContinuationJourney extends BasePage {
         waitAndEnterText("filters[licenceNo]",  SelectorType.ID, licenceNo);
         waitAndClick("main", SelectorType.ID);
         waitForTextToBePresent("1 licence(s)");
+        refreshPageWithJavascript();
         waitAndClick("checkall", SelectorType.ID);
         waitAndClick("generate", SelectorType.ID);
         world.UIJourney.clickSubmit();

@@ -65,6 +65,9 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToCreateAnAccount() {
+        if(isLinkPresent("Sign out", 3)){
+            clickByLinkText("Sign out");
+        }
         waitForTitleToBePresent("Sign in to your Vehicle Operator Licensing account");
         waitAndClick("create an account", SelectorType.LINKTEXT);
     }

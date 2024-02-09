@@ -68,7 +68,7 @@ public class TransportManagerJourney extends BasePage {
         waitAndSelectByIndex("//*[@id='selectAddress2']",SelectorType.XPATH, 1);
 
         //Hours Of Week
-        waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);
+        waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]')]", SelectorType.XPATH);
         enterTextIntoMultipleFields("//*[contains(@name,'responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]')]", SelectorType.XPATH, "3");
 
         //Add Other Licences

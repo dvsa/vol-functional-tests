@@ -8,8 +8,6 @@ import io.cucumber.java.en.When;
 import io.restassured.response.ValidatableResponse;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.lib.url.webapp.URL;
-import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
 import org.hamcrest.Matchers;
 
 import java.time.LocalDate;
