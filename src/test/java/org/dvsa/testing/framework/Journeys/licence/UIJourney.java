@@ -422,6 +422,7 @@ public class UIJourney extends BasePage {
     }
 
     public void changeLicenceForVariation() {
+        waitForElementToBePresent("//*[contains(text(),'change your licence')]");
         waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
         clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
