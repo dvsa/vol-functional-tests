@@ -1,4 +1,4 @@
-@INT-SMOKE @sub-app @ss_regression @localsmoke
+@INT-SMOKE @sub-app @localsmoke
 Feature: Complete an application manually
   Scenario Outline: Submit an application
     Given i have a self serve account
