@@ -113,12 +113,13 @@ public class ValidLicenceChanges extends BasePage {
                 waitAndClick("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you want to remove these records?");
                 world.UIJourney.clickSubmit();
+                refreshPage();
                 waitForElementToBeClickable("//input[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
             } else {
                 waitAndClick("//button[contains(@name, 'vehicles[action][delete]')]", SelectorType.XPATH);
                 waitForTextToBePresent("Are you sure you want to remove these records?");
                 world.UIJourney.clickSubmit();
-                refreshPageWithJavascript();
+                refreshPage();
                 waitForTitleToBePresent("Vehicle details");
                 waitForElementToBeClickable("//input[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             }
