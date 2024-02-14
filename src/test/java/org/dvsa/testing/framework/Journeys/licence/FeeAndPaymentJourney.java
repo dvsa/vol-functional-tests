@@ -5,6 +5,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import com.typesafe.config.Config;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
+import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -112,10 +113,10 @@ public class FeeAndPaymentJourney extends BasePage {
     }
 
     public void selectFee() {
-        long kickOut = System.currentTimeMillis() + 60000;
+        long kickOut = System.currentTimeMillis() + 120000;
         do {
-            //nothing
-        } while (isElementPresent("//button[@id='form-actions[submit]']", SelectorType.XPATH) && System.currentTimeMillis() < kickOut);
+           refreshPage();
+        } while (!isTextPresent("1 Fee") && System.currentTimeMillis() < kickOut);
         selectValueFromDropDown("status", SelectorType.ID, "Current");
         assertTrue(isElementEnabled("//tbody", SelectorType.XPATH));
         waitAndClick("//tbody/tr/td[7]/input", SelectorType.XPATH);

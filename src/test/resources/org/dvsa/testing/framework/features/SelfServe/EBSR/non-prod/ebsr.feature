@@ -63,4 +63,8 @@ Feature: import EBSR for English, Welsh and Scottish Areas
     Then A short notice flag should be displayed in selfserve
     And Documents are generated
 
-#  The upload will be Successful but it's only from accessing the bus registration or checking the created task that you can see if the files were generated.
+  @localAuthorityUser
+  Scenario: Local Authority User Checks Bus Registrations
+    When I log in as a Local Authority User
+    Then I should be able to view to bus registration details
+    And I should also be able to view EBSR uploads

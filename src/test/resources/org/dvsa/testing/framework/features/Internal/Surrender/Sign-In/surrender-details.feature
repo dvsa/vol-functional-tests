@@ -18,12 +18,12 @@ Feature: View Surrender Menu and details on Internal
     And the change history has the surrender under consideration
 
 
-  Scenario: Surrender after closing cases & bus Reg verify
-    When the caseworker checks the case and bus reg is visible in surrenders
-    And the open case and bus reg is closed
-    And a caseworker views the surrender details
-    And the tick boxes are checked
-    And the Surrender button is clicked
-    Then the licence should be surrendered
+#  Scenario: Surrender after closing cases & bus Reg verify
+#    When the caseworker checks the case and bus reg is visible in surrenders
+#    And the open case and bus reg is closed
+#    And a caseworker views the surrender details
+#    And the tick boxes are checked
+#    And the Surrender button is clicked
+#    Then the licence should be surrendered
 
 

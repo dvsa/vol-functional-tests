@@ -1,9 +1,10 @@
-@SS
+@ss_regression
+@TM-validation
 Feature: Error Validation for TM Application
 
   Background:
-    And I am the operator and not the transport manager
     And i have a "goods" "GB" partial application
+    And I am the operator and not the transport manager
 
   Scenario: Error message for future TM DOBs (application not signed in as OP)
     When create a user and add them as a tm with a future DOB

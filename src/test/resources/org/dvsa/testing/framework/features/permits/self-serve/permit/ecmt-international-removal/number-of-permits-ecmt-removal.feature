@@ -5,6 +5,7 @@ Feature: ECMT International Number of permits Page
     Given I have a "goods" "standard_international" licence
     And I am on the ECMT Removal number of permits page
 
+
   Scenario: Number of permits page ECMT Removal - Check validations and content on the page
     Then the page heading on the ECMT removals number of permits page is displayed correctly
     And  the application reference on the ECMT removals number of permits page is displayed correctly
@@ -15,6 +16,7 @@ Feature: ECMT International Number of permits Page
     And I enter number of permits more than the authorised vehicles and click save and continue
     Then I should get the maximum number of permits exceeded page error message
     And I enter valid number of permits on the removals number of permits page and click save and continue
+
 
   Scenario: Number of permits page ECMT Removal- Check Navigation and section status
     When I enter valid number of permits on the removals number of permits page

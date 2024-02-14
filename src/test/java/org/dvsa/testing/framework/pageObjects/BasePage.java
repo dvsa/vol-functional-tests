@@ -29,8 +29,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public abstract class BasePage extends DriverUtils {
     public static final int WAIT_TIME_SECONDS = 5;
-    private static final int TIME_OUT_SECONDS = 500;
-    private static final int POLLING_SECONDS = 10;
+    private static final int TIME_OUT_SECONDS = 60;
+    private static final int POLLING_SECONDS = 2;
     private static final Logger LOGGER = LogManager.getLogger(BasePage.class);
 
     private static String selectedValue;
@@ -110,6 +110,11 @@ public abstract class BasePage extends DriverUtils {
         findElement(selector, SelectorType.PARTIALLINKTEXT).click();
     }
 
+    protected static void clickByFullLinkText(@NotNull String selector) {
+        findElement(selector, SelectorType.LINKTEXT).click();
+    }
+
+
     protected static void clickByXPath(@NotNull String selector) {
         findElement(selector, SelectorType.XPATH).click();
     }
@@ -161,19 +166,19 @@ public abstract class BasePage extends DriverUtils {
         }
     }
 
-        public static String selectRandomValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
-            By bySelector = createBySelector(selector, selectorType);
-            Select select = new Select(getDriver().findElement(bySelector));
-            List<WebElement> options = select.getOptions();
-            WebElement randomOption = options.get(new Random().nextInt(options.size()));
-            selectedValue = randomOption.getText();
-            select.selectByVisibleText(selectedValue);
-            return selectedValue;
-        }
+    public static String selectRandomValueFromDropDown(@NotNull String selector, @NotNull SelectorType selectorType) {
+        By bySelector = createBySelector(selector, selectorType);
+        Select select = new Select(getDriver().findElement(bySelector));
+        List<WebElement> options = select.getOptions();
+        WebElement randomOption = options.get(new Random().nextInt(options.size()));
+        selectedValue = randomOption.getText();
+        select.selectByVisibleText(selectedValue);
+        return selectedValue;
+    }
 
-        public static String getSelectedValue() {
-            return selectedValue;
-        }
+    public static String getSelectedValue() {
+        return selectedValue;
+    }
 
     protected static boolean isLinkPresent(String locator, int duration) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
@@ -380,6 +385,7 @@ public abstract class BasePage extends DriverUtils {
     public static boolean isElementEnabled(@NotNull String selector, @NotNull SelectorType selectorType) {
         return findElement(selector, selectorType).isEnabled();
     }
+
     public static boolean isElementClickable(@NotNull String selector, @NotNull SelectorType selectorType) {
         boolean visible = true;
         try {
@@ -458,9 +464,11 @@ public abstract class BasePage extends DriverUtils {
     public static void waitForTitleToBePresent(@NotNull String selector) {
         waitForElementToBePresent(String.format("//h1[contains(text(),'%s')]", selector));
     }
+
     public static void waitForTitleToBePresent(@NotNull String htmlTag, @NotNull String selector) {
         waitForElementToBePresent(String.format("//%s[contains(text(),'%s')]", htmlTag, selector));
     }
+
     public static void waitForElementToBePresent(@NotNull String selector) {
         Wait<WebDriver> wait = new FluentWait<>(getDriver())
                 .withTimeout(ofSeconds(TIME_OUT_SECONDS))
