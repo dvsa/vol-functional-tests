@@ -5,7 +5,7 @@ Feature: Countersigning declaration page for the operator Print and Sign
     Given i have a "goods" "GB" partial application
     And i select a transport manager to add
 
-  @OLCS-21374 @reads-and-writes-system-properties
+  @OLCS-21374
   Scenario: Add TM as the Operator Print and Sign
     When the transport manager is the owner
     And i choose to print and sign

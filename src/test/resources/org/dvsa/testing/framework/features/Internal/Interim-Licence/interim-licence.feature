@@ -10,7 +10,7 @@ Feature: Change Validation On Interim Vehicle Authority
     And i create an admin and url search for my licence
     And i create a variation in internal
 
-  @reads-and-writes-system-properties
+
   Scenario: Interim Vehicle Authority Greater than Application Vehicle Authority
     When  I have an interim vehicle authority greater than my application vehicle authority
     Then  I should get an error when i save the application

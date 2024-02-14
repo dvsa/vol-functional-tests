@@ -9,7 +9,7 @@ Feature: Internal users wishes to edit a submission
     Then i have logged in to internal
     And I have a submission
 
-  @reads-and-writes-system-properties @edit-submission
+   @edit-submission
   Scenario: Internal user edits a submission
     And I edit that submission
     Then The change should be displayed on the Submission detail page

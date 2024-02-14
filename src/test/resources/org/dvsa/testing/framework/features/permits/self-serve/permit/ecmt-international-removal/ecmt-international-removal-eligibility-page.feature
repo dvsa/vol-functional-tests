@@ -12,7 +12,7 @@ Feature: ECMT International Removal Eligiblity page
     When I click the back link
     Then I should be on the overview page
 
-  @EXTERNAL @OLCS-24816 @r222gremovalsfix @reads-and-writes-system-properties
+  @EXTERNAL @OLCS-24816 @r222gremovalsfix
   Scenario: Eligibility page details are displayed correctly
     And  the Application Number is shown correctly on ECMT International Eligibility page
     And  the page heading is shown as per updated AC

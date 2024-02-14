@@ -1,7 +1,7 @@
 @VOL-90 @VOL-91 @DVLA @ss_regression @FullRegression @printAndSign
 Feature: Transfer a vehicle
 
-  @reads-and-writes-system-properties
+
   Scenario: Transfer vehicles for dual licence holder
     Given I have "2" "goods" "standard_international" licences with "3" vehicles and a vehicleAuthority of "5"
     And I navigate to manage vehicle page on a licence

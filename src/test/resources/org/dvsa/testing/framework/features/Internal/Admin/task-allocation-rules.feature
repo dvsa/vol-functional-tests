@@ -7,7 +7,7 @@ Feature: User is able to Add, edit and delete a Task allocation rule
   Background:
     Given I am on the task allocation rules page
 
-  @reads-and-writes-system-properties
+
   Scenario: User wants to delete a task allocation rule
     Given I delete an allocation rule
     Then that rule should have been deleted

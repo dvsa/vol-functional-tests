@@ -10,7 +10,7 @@ Feature: Internal ECMT APGG Euro5 or Euro 6 with cross trade permits Application
     And I apply for an ECMT APGG Euro5 or Euro 6 application
 
 
-  @OLCS-25288 @reads-and-writes-system-properties
+  @OLCS-25288
   Scenario: I should see withdraw button under the Application details when application is in status of Under Consideration
     When I click on submit button
     And I pay fee for application

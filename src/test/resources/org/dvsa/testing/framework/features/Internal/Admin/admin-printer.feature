@@ -8,7 +8,7 @@ Feature: Admin wishes to add, edit and delete printers
   Background:
     Given I am on the Printers page
 
-  @reads-and-writes-system-properties
+
   Scenario: Admin wishes to add a printer
     When I add a printer
     Then that printer should be added

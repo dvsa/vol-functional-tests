@@ -4,7 +4,7 @@
 @FullRegression
 Feature: User should be able to continue where they left off
 
-  @reads-and-writes-system-properties
+
   Scenario Outline: Update correspondence address and resume surrender journey
     Given i have a valid "<OperatorType>" "<LicenceType>" licence
     And i have started a surrender

@@ -4,7 +4,7 @@ Feature: ECMT International Removal submission page
   Background:
     Given I have a "goods" "standard_international" licence
 
-  @EXTERNAL @OLCS-26739 @olcs-28201 @reads-and-writes-system-properties
+  @EXTERNAL @OLCS-26739 @olcs-28201
   Scenario: Application submission page details are displayed correctly
     And   I am on the ECMT International removal submission page
     Then the page heading on the submission page is displayed correctly

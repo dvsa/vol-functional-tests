@@ -5,7 +5,7 @@ Feature: ECMT International Number of permits Page
     Given I have a "goods" "standard_international" licence
     And I am on the ECMT Removal number of permits page
 
-  @reads-and-writes-system-properties
+
   Scenario: Number of permits page ECMT Removal - Check validations and content on the page
     Then the page heading on the ECMT removals number of permits page is displayed correctly
     And  the application reference on the ECMT removals number of permits page is displayed correctly
