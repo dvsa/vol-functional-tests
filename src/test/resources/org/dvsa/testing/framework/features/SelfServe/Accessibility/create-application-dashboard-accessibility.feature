@@ -12,7 +12,7 @@ Feature: Create application page should comply to the WCAG 2.1 AA accessibility 
 
   Scenario: Check 'Can't start yet' section colour
     And I apply for a "GB" "goods" "standard_international" "lgv_only_fleet" "checked" licence
-    Then the colour of the 'Directors' section should be grey
+    Then the colour of the 'Directors' section should be greyz
 
   Scenario Outline: Scan for accessibility violations
     Given I submit and pay for a "<Licence>" licence application
