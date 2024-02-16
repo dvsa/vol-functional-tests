@@ -55,11 +55,15 @@ public class MessagingJourney extends BasePage {
     public static void selectMessageCheckBox(){
         selectValueFromDropDown("//*[@id='assignedToTeam']", SelectorType.XPATH, "Leeds Licensing Goods");
         clickById("date");
-        clickById("messaging");
+        selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "Open");
+        click("//*[@id='messaging']", SelectorType.XPATH);
     }
 
     public static void checkForNewTask(){
-//        Put assertion
+        if(isTextPresent("results per page")) {
+            waitAndClick("//*[@id='main']//div[3]/nav[1]/ul/li[3]/a", SelectorType.XPATH);
+            selectMessageCheckBox();
+        } else if (isTextPresent(world.applicationDetails.getLicenceNumber()));
         assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
     }
 
