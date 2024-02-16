@@ -80,6 +80,7 @@ public class SubmitApplicationJourney extends BasePage {
             }
         }
     }
+
     public void startANewLicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
         setLicence(licenceType);
         waitForTitleToBePresent("Licences");
@@ -107,6 +108,8 @@ public class SubmitApplicationJourney extends BasePage {
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
 
+            axeScanner.scan(true);
+
         UIJourney.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
@@ -117,14 +120,18 @@ public class SubmitApplicationJourney extends BasePage {
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
 
+            axeScanner.scan(true);
+
         world.UIJourney.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
             world.UIJourney.clickSend();
         } else {
-            world.transportManagerJourney.submitTMApplicationPrintAndSign();
+            world.transportManagerJourney.submitTMApplicationPrintAndSign(); // -
         }
+            axeScanner.scan(true);
+
         //vehicleDetails
         boolean vehicleType = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(vehicleType);

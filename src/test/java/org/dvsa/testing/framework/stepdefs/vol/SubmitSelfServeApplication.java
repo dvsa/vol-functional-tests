@@ -22,6 +22,19 @@ public class SubmitSelfServeApplication extends BasePage {
         this.world = world;
     }
 
+    @And("I submit and pay for a {string} licence application")
+    public void iSubmitAndPayForALicenceApplication(String licenceType) throws IllegalBrowserException, IOException {
+        world.submitApplicationJourney.startANewLicenceApplication(licenceType);
+        if (world.configuration.env.toString().equals("int")) {
+            world.govSignInJourney.navigateToGovUkSignIn();
+            world.govSignInJourney.signInGovAccount();
+            world.govSignIn.iCompleteThePaymentProcess();
+        } else {
+            world.submitApplicationJourney.submitAndPayForApplication();
+        }
+        axeScanner.scan(true);
+    }
+
     @Given("I submit and pay for a {string} licence application")
     public void iSubmitAndPayForLicenceApplicationWithAxeScanner(String licenceType) throws IllegalBrowserException, IOException {
         world.submitApplicationJourney.startANewLicenceApplication(licenceType);
