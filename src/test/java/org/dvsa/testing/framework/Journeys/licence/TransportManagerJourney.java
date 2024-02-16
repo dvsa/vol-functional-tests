@@ -68,8 +68,8 @@ public class TransportManagerJourney extends BasePage {
         waitAndSelectByIndex("//*[@id='selectAddress2']",SelectorType.XPATH, 1);
 
         //Hours Of Week
-        waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH);
-        enterTextIntoMultipleFields("//*[contains(@name,'responsibilities[hoursOfWeek]')]", SelectorType.XPATH, "3");
+        waitForElementToBeClickable("//*[contains(@name,'responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]')]", SelectorType.XPATH);
+        enterTextIntoMultipleFields("//*[contains(@name,'responsibilities[hoursOfWeek][hoursPerWeekContent][hoursMon]')]", SelectorType.XPATH, "3");
 
         //Add Other Licences
         String role = "Transport Manager";
@@ -130,8 +130,10 @@ public class TransportManagerJourney extends BasePage {
 
     public void nominateOperatorUserAsTransportManager(String user, boolean applicationOrNot) {
         if (applicationOrNot) {
+            clickByLinkText("Home");
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.TRANSPORT_MANAGERS);
         } else {
+            clickByLinkText("Home");
             world.selfServeNavigation.navigateToPage("licence", SelfServeSection.TRANSPORT_MANAGERS);
             world.UIJourney.changeLicenceForVariation();
         }

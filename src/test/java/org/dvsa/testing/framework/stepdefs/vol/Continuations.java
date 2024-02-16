@@ -145,6 +145,8 @@ public class Continuations extends BasePage {
     @And("a caseworkers continues my licence")
     public void aCaseworkersContinuesMyLicence() {
         world.internalNavigation.getLicence();
+        waitForTitleToBePresent(world.applicationDetails.getLicenceNumber());
+        refreshPage();
         clickByLinkText("Fees");
         world.feeAndPaymentJourney.selectFee();
         world.feeAndPaymentJourney.payFee("401", "cash");
@@ -153,6 +155,7 @@ public class Continuations extends BasePage {
         waitAndClick("//*[contains(text(),'Yes')]",SelectorType.XPATH);
         if(isElementClickable("fields[checklistStatus]",SelectorType.ID)) {
             selectValueFromDropDown("fields[checklistStatus]", SelectorType.ID, "Acceptable");
+            waitAndEnterText("fields[numberOfCommunityLicences]",SelectorType.NAME,"0");
         }
         waitAndClick("continue-licence",SelectorType.ID);
     }

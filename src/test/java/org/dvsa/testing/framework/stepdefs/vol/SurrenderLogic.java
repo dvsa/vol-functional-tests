@@ -217,6 +217,11 @@ public class SurrenderLogic extends BasePage {
         assertTrue(isTextPresent(page));
     }
 
+    @Then("the registration {string} should be displayed")
+    public void theRegistrationShouldBedDisplayed(String vrm) {
+        assertTrue(isTextPresent(vrm));
+    }
+
     @When("the caseworker attempts to withdraw the surrender")
     public void theCaseworkerAttemptsToWithdrawTheSurrender() throws HttpException {
         world.surrenderJourney.caseworkManageSurrender();

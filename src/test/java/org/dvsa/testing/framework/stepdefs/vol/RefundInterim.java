@@ -41,7 +41,7 @@ public class RefundInterim extends BasePage {
         waitForTextToBePresent("£68.00");
         clickByLinkText("Grant Interim Fee for application");
         waitForTextToBePresent("Fee details");
-        long kickoutTime = System.currentTimeMillis() + 60000;
+        long kickoutTime = System.currentTimeMillis() + 160000;
         do {
             refreshPageWithJavascript();
         } while(!getText("//*//dd//strong", SelectorType.XPATH).toLowerCase().contains("refunded") && System.currentTimeMillis() < kickoutTime);

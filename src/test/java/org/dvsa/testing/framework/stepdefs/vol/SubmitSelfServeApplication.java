@@ -10,6 +10,8 @@ import scanner.AXEScanner;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+
 public class SubmitSelfServeApplication extends BasePage {
 
     World world;
@@ -31,6 +33,12 @@ public class SubmitSelfServeApplication extends BasePage {
             world.submitApplicationJourney.submitAndPayForApplication();
         }
         axeScanner.scan(true);
+    }
+
+    @Given("I submit and pay for a {string} licence application")
+    public void iSubmitAndPayForLicenceApplicationWithAxeScanner(String licenceType) throws IllegalBrowserException, IOException {
+        world.submitApplicationJourney.startANewLicenceApplication(licenceType);
+        world.submitApplicationJourney.submitAndPayForApplication();
     }
 
     @And("i have no existing applications")

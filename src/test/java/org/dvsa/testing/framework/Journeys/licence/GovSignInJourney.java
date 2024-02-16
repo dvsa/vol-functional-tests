@@ -35,7 +35,13 @@ public class GovSignInJourney extends BasePage {
         }
         String userName = world.configuration.config.getString("basicAuthUserName");
         String passWord = world.configuration.config.getString("basicAuthPassword");
-        navigate().get(String.format("https://%s:%s@signin.integration.account.gov.uk/", userName, passWord));
+        try {
+            URL redirectURL = new URL(Browser.navigate().getCurrentUrl());
+            String urlWithUnsecureProtocol = redirectURL.getProtocol().concat(String.format("://%s:%s@" + redirectURL.getAuthority() + redirectURL.getFile(), userName, passWord));
+            Browser.navigate().get(urlWithUnsecureProtocol);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void signInGovAccount() {

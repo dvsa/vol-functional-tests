@@ -13,15 +13,11 @@ Feature: Continuations journey through internal and self serve
     Then the continuation should be approved and a snapshot generated on Internal
     Examples:
       | operatorType | licenceType            |
-      | goods        | standard_national      |
-      | goods        | standard_international |
       | goods        | restricted             |
       | public       | standard_national      |
-      | public       | standard_international |
-      | public       | restricted             |
       | public       | special_restricted     |
 
-  @int_regression @FullRegression @continuations_internal @localsmoke
+  @int_regression @FullRegression @continuations_internal @continuations_smoke
   Scenario Outline: Caseworker continues a licence that has expired
     Given i have a valid "<operatorType>" "<licenceType>" licence
     When i change my continuation and review date on Internal
@@ -29,8 +25,8 @@ Feature: Continuations journey through internal and self serve
     And a caseworkers continues my licence
     Then the continuation should be approved
     Examples:
-      | operatorType | licenceType       |
-      | goods        | standard_national |
+      | operatorType | licenceType            |
+      | goods        | standard_international |
 
   Scenario Outline: The users of ss display when reviewing a continuation
     Given i have a valid "<operatorType>" "<licenceType>" licence

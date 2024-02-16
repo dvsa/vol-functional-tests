@@ -50,7 +50,8 @@ public class CreateCase extends BasePage {
 
     @Then("the public inquiry should be published")
     public void thePublicInquiryShouldBePublished() {
-        waitForTextToBePresent("There is currently no decision");
+        waitForTextToBePresent("TC/DTC/HTRU/DHTRU agreement and legislation");
+        assertTrue(isTextPresent("Test"));
     }
 
     @And("I add notes")
@@ -133,11 +134,11 @@ public class CreateCase extends BasePage {
     }
 
     @And("i add a case in internal on the {string} page")
-    public void iAddACaseInInternalOnThePage(String page) throws HttpException {
-        world.APIJourney.createAdminUser();
-        world.internalNavigation.logInAsAdmin();
+    public void iAddACaseInInternalOnThePage(String page) {
+        world.UIJourney.loginIntoInternalAsExistingAdmin();
         world.UIJourney.createCaseUI(page);
-}
+    }
+
 
     @And("submit the Condition and Undertaking form")
     public void submitTheConditionAndUndertakingForm() {
@@ -159,10 +160,12 @@ public class CreateCase extends BasePage {
         world.convictionsAndPenaltiesJourney.addConvictionToCase();
 
     }
+
     @And("I raise a complaint")
     public void iRaiseAComplaint() {
         world.convictionsAndPenaltiesJourney.addComplaint();
     }
+
     @Then("the complaint should be displayed")
     public void theComplaintShouldBeDisplayed() {
         String date = LocalDate.now().minusYears(1).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -173,12 +176,14 @@ public class CreateCase extends BasePage {
     public void iCompleteTheConditionsUndertakingsForm() {
         world.convictionsAndPenaltiesJourney.completConditionUndertakings();
     }
+
     @Then("the condition & undertaking should be displayed")
     public void theConditionUndertakingShouldBeDisplayed() {
         waitForTextToBePresent("Conditions and undertakings");
         assertTrue(isTextPresent("Condition / undertaking added successfully"));
         assertTrue(isTextPresent(world.convictionsAndPenaltiesJourney.getConvictionDescription()));
     }
+
     @And("I navigate to Notes")
     public void iNavigateToNotes() {
         world.internalNavigation.getCaseNote();

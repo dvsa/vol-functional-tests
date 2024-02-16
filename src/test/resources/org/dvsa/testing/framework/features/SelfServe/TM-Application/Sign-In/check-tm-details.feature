@@ -8,6 +8,7 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
     Given I have a "goods" "standard_national" application
     And i navigate to the admin transport managers details page
 
+
   Scenario: Radio button not clicked
     Then the optional wording should not be displayed on the page
       | Other Licences       |
@@ -19,6 +20,7 @@ Feature: TM/operator checks optional wording has been removed for TM details pag
       | Add other employment          |
       | Add convictions and penalties |
       | Add licences                  |
+
 
   Scenario: Radio button clicked
     When I select yes to all radio buttons

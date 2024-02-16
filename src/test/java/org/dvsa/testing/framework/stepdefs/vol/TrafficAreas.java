@@ -20,7 +20,7 @@ public class TrafficAreas extends BasePage {
 
     World world;
 
-    public TrafficAreas (World world) {
+    public TrafficAreas(World world) {
         this.world = world;
     }
 
@@ -213,7 +213,7 @@ public class TrafficAreas extends BasePage {
     }
 
     private void enterAndSelectEstablishmentAddressWithPostcodeSearch(String postcode) {
-        enterText(establishmentAddressSearchField, SelectorType.XPATH,  postcode);
+        enterText(establishmentAddressSearchField, SelectorType.XPATH, postcode);
         click(establishmentAddressSearchButton, SelectorType.XPATH);
         waitForElementToBePresent(establishmentAddressSearchDropdown);
         selectValueFromDropDownByIndex(establishmentAddressSearchDropdown, SelectorType.XPATH, 1);
@@ -245,10 +245,13 @@ public class TrafficAreas extends BasePage {
     }
 
     private void navigateToAppropriateAuthorisationPageAndAssert(String trafficAreaText, boolean presence) {
-        if (world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString()))
+        if (world.createApplication.getVehicleType().equals(VehicleType.LGV_ONLY_FLEET.asString())) {
+            clickByLinkText("Home");
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.LICENCE_AUTHORISATION);
-        else
+        } else {
+            clickByLinkText("Home");
             world.selfServeNavigation.navigateToPage("application", SelfServeSection.OPERATING_CENTERS_AND_AUTHORISATION);
+        }
         if (presence) {
             assertTrue(isTextPresent(trafficAreaText));
         } else

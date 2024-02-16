@@ -93,6 +93,7 @@ public class SubmitApplicationJourney extends BasePage {
             if (isElementPresent("add", SelectorType.ID)) {
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(true);
             }
+            UIJourney.clickSaveAndContinue();
         }
         //operating centre
         String authority = "2";
@@ -129,7 +130,6 @@ public class SubmitApplicationJourney extends BasePage {
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign(); // -
         }
-
             axeScanner.scan(true);
 
         //vehicleDetails

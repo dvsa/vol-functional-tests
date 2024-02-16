@@ -11,6 +11,7 @@ Feature: Search and add a vehicle
       | Operator | VRM     |
       | goods    | S679ASX |
 
+
   Scenario: Add a vehicle registration mark on a licence
     Given I have "1" "goods" "standard_national" licences with "2" vehicles and a vehicleAuthority of "5"
     When I navigate to manage vehicle page on a licence
@@ -45,6 +46,7 @@ Feature: Search and add a vehicle
     When I reprint a vehicle disc
     Then the "Disc for this vehicle will be reprinted and sent to you in the post" confirmation banner should appear
     And the licence discs number should be updated
+
 
   Scenario: Error validation
     Given I have a "goods" "standard_national" licence

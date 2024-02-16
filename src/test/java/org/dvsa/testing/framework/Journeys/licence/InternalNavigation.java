@@ -86,10 +86,7 @@ public class InternalNavigation extends BasePage {
         if (Objects.equals(world.configuration.env.toString(), "int") || (Objects.equals(world.configuration.env.toString(), "pp"))) {
             String myURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
             DriverUtils.get(myURL);
-            if (isElementPresent("declarationRead", SelectorType.ID)) {
-                waitAndClick("declarationRead", SelectorType.ID);
-                world.globalMethods.signIn(intSystemAdmin, intEnvPassword);
-            }
+            world.globalMethods.signIn(intSystemAdmin, intEnvPassword);
         } else {
             world.internalNavigation.logInAsAdmin();
         }
@@ -129,8 +126,8 @@ public class InternalNavigation extends BasePage {
         get(this.url.concat(String.format("application/%s", world.createApplication.getApplicationId())));
     }
 
-    public void getApplication(String applicationId){
-        get(this.url.concat(String.format("application/%s",  applicationId)));
+    public void getApplication(String applicationId) {
+        get(this.url.concat(String.format("application/%s", applicationId)));
     }
 
     public void getLicence() {
