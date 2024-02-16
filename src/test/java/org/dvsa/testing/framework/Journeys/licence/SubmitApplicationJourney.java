@@ -109,6 +109,8 @@ public class SubmitApplicationJourney extends BasePage {
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
 
         UniversalActions.clickSaveAndContinue();
+        axeScanner.scan(true);
+        UIJourney.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
@@ -119,6 +121,8 @@ public class SubmitApplicationJourney extends BasePage {
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
 
         world.universalActions.clickContinue();
+        axeScanner.scan(true);
+        world.UIJourney.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
@@ -126,6 +130,7 @@ public class SubmitApplicationJourney extends BasePage {
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
+        axeScanner.scan(true);
         //vehicleDetails
         boolean vehicleType = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(vehicleType);
