@@ -65,12 +65,17 @@ public class SelfServeNavigation extends BasePage {
     }
 
     public void navigateToCreateAnAccount() {
+        if(isLinkPresent("Sign out", 3)){
+            clickByLinkText("Sign out");
+        }
+        getDriver().manage().deleteAllCookies();
+        refreshPage();
+        waitForTitleToBePresent("Sign in to your Vehicle Operator Licensing account");
         clickByLinkText("create an account");
     }
 
     public void navigateToPage(String type, SelfServeSection page)  {
-        clickByLinkText("GOV.UK");
-        waitForTextToBePresent("You must keep your records up to date");
+        refreshPage();
         String applicationStatus;
         String overviewStatus;
         switch (type.toLowerCase()) {

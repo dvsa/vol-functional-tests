@@ -49,14 +49,20 @@ public class GoodVarUpgrade extends BasePage {
 
     @And("i complete the required five sections")
     public void iCompleteTheRequiredFiveSections() {
+        clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.ADDRESSES);
         UIJourney.clickSaveAndReturn();
+        clickByLinkText("Home");
         world.UIJourney.completeFinancialEvidencePage();
+        clickByLinkText("Home");
         world.TMJourney.addNewPersonAsTransportManager("variation");
+        clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_HISTORY);
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("variation");
+        clickByLinkText("Home");
         world.selfServeNavigation.navigateToPage("variation", SelfServeSection.CONVICTIONS_AND_PENALTIES);
         world.convictionsAndPenaltiesJourney.answerNoToAllQuestionsAndSubmit("variation");
+        clickByLinkText("Home");
     }
 
     @Then("the upgrade variation and interim are submitted")

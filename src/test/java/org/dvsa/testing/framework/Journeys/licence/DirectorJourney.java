@@ -29,6 +29,9 @@ public class DirectorJourney extends BasePage {
     public String directorLinks = "//*[@class='govuk-table__body']/tr";
     public String addButton = "//button[@name='table[action]']";
     public String directorDetailsTitle = "Add person";
+    public String financialHistoryTitle = "Financial history";
+    public String licenceHistoryTitle = "Licence history";
+    public String convictionsAndPenaltiesTitle = "Convictions and Penalties";
     public String directorVariationDetailsTitle = "Add a director";
     public String directorTitleDropdown = "//select[@id='title']";
     public String firstNameField = "//input[@name='data[forename]']";
@@ -58,7 +61,7 @@ public class DirectorJourney extends BasePage {
     public String convictionsAndPenaltiesValidation = "Value is required";
 
 
-    public DirectorJourney(World world){
+    public DirectorJourney(World world) {
         this.world = world;
     }
 
@@ -68,26 +71,32 @@ public class DirectorJourney extends BasePage {
 
     public void addDirectorWithNoFinancialHistoryConvictionsOrPenalties(boolean scanOrNot) throws IllegalBrowserException, IOException {
         click(addButton, SelectorType.XPATH);
-        if (isTitlePresent(directorDetailsTitle,30)) {
+        if (isTitlePresent(directorDetailsTitle, 5)) {
             addPersonDetails();
-        } else if (isTitlePresent(directorVariationDetailsTitle,30)) {
+        } else if (isTitlePresent(directorVariationDetailsTitle, 5)) {
             addDirectorDetails();
         }
-        completeDirectorFinancialHistory("N");
-        completeLicenceHistory("N");
-        completeConvictionsAndPenalties("N");
+        if (isTitlePresent(financialHistoryTitle, 3)) {
+            completeDirectorFinancialHistory("N");
+        }
+        if (isTitlePresent(licenceHistoryTitle, 3)) {
+            completeLicenceHistory("N");
+        }
+        if (isTitlePresent(convictionsAndPenaltiesTitle, 5)) {
+            completeConvictionsAndPenalties("N");
+        }
         if (scanOrNot) {
             AXEScanner axeScanner = AccessibilitySteps.scanner;
             axeScanner.scan(true);
         }
     }
 
-    public void addDirectorDetails()  {
+    public void addDirectorDetails() {
         personDetails();
         UIJourney.clickSaveAndContinue();
     }
 
-    public void addPersonDetails()  {
+    public void addPersonDetails() {
         personDetails();
         world.UIJourney.clickSubmit();
     }
@@ -118,7 +127,7 @@ public class DirectorJourney extends BasePage {
         UIJourney.clickSaveAndContinue();
     }
 
-    public void removeDirector()  {
+    public void removeDirector() {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
         world.UIJourney.clickSubmit();

@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -7,6 +8,9 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.NotFoundException;
+import scanner.AXEScanner;
+
+import java.io.IOException;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
@@ -20,7 +24,7 @@ public class EBSRUpload extends BasePage {
     }
 
     @Then("A short notice flag should be displayed in selfserve")
-    public void aShortNoticeFlagShouldBeDisplayedInSelfserve() {
+    public void aShortNoticeFlagShouldBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
         world.busRegistrationJourney.viewEBSRInExternal();
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'successful')]", SelectorType.XPATH));
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--orange' and contains(text(),'New')]", SelectorType.XPATH));
@@ -28,7 +32,7 @@ public class EBSRUpload extends BasePage {
     }
 
     @Then("A short notice flag should not be displayed in selfserve")
-    public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() {
+    public void aShortNoticeFlagShouldNotBeDisplayedInSelfserve() throws IllegalBrowserException, IOException {
         world.busRegistrationJourney.viewEBSRInExternal();
         waitForTextToBePresent("successful");
         assertTrue(isElementPresent("//strong[@class='govuk-tag govuk-tag--green' and contains(text(),'successful')]", SelectorType.XPATH));
@@ -74,17 +78,20 @@ public class EBSRUpload extends BasePage {
     }
 
     @And("Documents are generated")
-    public void documentsAreGenerated() {
+    public void documentsAreGenerated() throws IllegalBrowserException, IOException {
+        AXEScanner axeScanner = AccessibilitySteps.scanner;
         String licenceNumber;
         if(world.configuration.env.toString().equals("int")){
             licenceNumber = existingLicenceNumber;
         }else{
             licenceNumber = world.applicationDetails.getLicenceNumber();
+            axeScanner.scan(true);
         }
         waitAndClick(String.format("//*[contains(text(),'%s')]", licenceNumber), SelectorType.XPATH);
         waitForTextToBePresent("Your file was processed successfully");
         if (isElementPresent("//*[contains(text(),'View bus')]", SelectorType.XPATH)) {
             waitAndClick("//*[contains(text(),'View bus')]", SelectorType.XPATH);
+            axeScanner.scan(true);
         }
         long kickOutTime = System.currentTimeMillis() + 30000;
         if(!world.configuration.env.toString().equals("local")) {

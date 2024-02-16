@@ -1,14 +1,10 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
-import activesupport.driver.Browser;
 import apiCalls.enums.OperatorType;
-import io.cucumber.java.After;
 import io.cucumber.java.en.And;
-import io.restassured.response.ValidatableResponse;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.aws.s3.S3;
-import apiCalls.enums.LicenceType;
 import apiCalls.enums.TrafficArea;
 import apiCalls.enums.UserType;
 import io.cucumber.java.en.Given;
@@ -20,7 +16,6 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
 
 import java.util.List;
-import java.util.Locale;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
