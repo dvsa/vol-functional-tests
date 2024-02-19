@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -289,7 +289,7 @@ public class PublicationsRelatedSteps extends BasePage {
         waitForTextToBePresent("Publish application");
         clickByLinkText("Publish application");
         waitForTextToBePresent("publish this application");
-        world.UIJourney.clickOk();
+        world.universalActions.clickOk();
         waitForTextToBePresent("Republish application");
     }
 

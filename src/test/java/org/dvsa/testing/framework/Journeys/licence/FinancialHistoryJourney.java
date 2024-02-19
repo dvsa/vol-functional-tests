@@ -2,6 +2,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.string.Str;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -17,9 +18,9 @@ public class FinancialHistoryJourney extends BasePage {
         clickById("data[financialHistoryConfirmation][insolvencyConfirmation]");
         findSelectAllRadioButtonsByValue("N");
         if (applicationType.equals("application")) {
-            UIJourney.clickSaveAndContinue();
+            UniversalActions.clickSaveAndContinue();
         } else if (applicationType.equals("variation")) {
-            UIJourney.clickSaveAndReturn();
+            UniversalActions.clickSaveAndReturn();
         }
     }
 
@@ -28,6 +29,6 @@ public class FinancialHistoryJourney extends BasePage {
         clickById("data[financialHistoryConfirmation][insolvencyConfirmation]");
         findSelectAllRadioButtonsByValue("Y");
         waitAndEnterText("data[insolvencyDetails]",SelectorType.ID,Str.randomWord(155));
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 }

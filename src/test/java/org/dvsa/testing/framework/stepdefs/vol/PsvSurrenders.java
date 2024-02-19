@@ -5,8 +5,6 @@ import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -71,7 +69,7 @@ public class PsvSurrenders extends BasePage {
         waitForTitleToBePresent("Addresses");
         findElement("addressTown", SelectorType.ID, 5).clear();
         enterText("addressTown", SelectorType.ID, world.surrenderJourney.getUpdatedTown());
-        UIJourney.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
         waitForTitleToBePresent("Review your contact information");
     }
 
@@ -98,7 +96,7 @@ public class PsvSurrenders extends BasePage {
 
     @And("i navigate to the current discs page")
     public void iNavigateToTheCurrentDiscsPage() {
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     @Then("the number of disc should match the vehicles registered on the licence")

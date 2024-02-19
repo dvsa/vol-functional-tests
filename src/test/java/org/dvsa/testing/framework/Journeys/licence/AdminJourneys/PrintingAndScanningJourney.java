@@ -37,7 +37,7 @@ public class PrintingAndScanningJourney extends BasePage {
         selectValueFromDropDown("subCategory", SelectorType.ID, "Conviction");
         selectValueFromDropDown("description", SelectorType.ID, "Conviction Notification");
         enterText("entity_identifier", SelectorType.ID, Integer.toString(world.updateLicence.getCaseId()));
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void addPrinter() {
@@ -45,7 +45,7 @@ public class PrintingAndScanningJourney extends BasePage {
         waitAndClick("add", SelectorType.ID);
         waitAndEnterText("printer-details[printerName]", SelectorType.ID, uniqueId);
         waitAndEnterText("printer-details[description]", SelectorType.ID, postCode);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForElementToBePresent(createdRecord);
         ClickPage50AndWait();
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
@@ -58,7 +58,7 @@ public class PrintingAndScanningJourney extends BasePage {
         waitForTextToBePresent("Edit printer");
         replaceText("printer-details[printerName]", SelectorType.ID, uniqueId);
         replaceText("printer-details[description]", SelectorType.ID, postCode);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForElementToBePresent(updatedRecord);
         ClickPage50AndWait();
         cycleThroughPaginationUntilElementIsDisplayed(world.printingAndScanningJourney.getUniqueId());
@@ -71,6 +71,6 @@ public class PrintingAndScanningJourney extends BasePage {
         } while (!isTextPresent("Remove printer") && System.currentTimeMillis() < kickOut);
 
         waitForTextToBePresent("Remove printer");
-        world.UIJourney.clickConfirm();
+        world.universalActions.clickConfirm();
     }
 }

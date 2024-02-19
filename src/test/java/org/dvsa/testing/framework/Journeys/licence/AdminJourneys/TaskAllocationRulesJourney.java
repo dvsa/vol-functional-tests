@@ -35,7 +35,7 @@ public class TaskAllocationRulesJourney extends BasePage {
         waitForElementToBeClickable("details[user]", SelectorType.NAME);
         waitAndSelectByIndex("details[user]", SelectorType.NAME, 4);
         setOwnerName(getSelectedTextFromDropDown("//select[@name='details[user]']", SelectorType.XPATH));
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitAndClick("50", SelectorType.LINKTEXT);
     }
 
@@ -52,7 +52,7 @@ public class TaskAllocationRulesJourney extends BasePage {
             waitForTextToBePresent("Edit alpha split");
             waitForElementToBeClickable("taskAlphaSplit[letters]", SelectorType.ID);
             replaceText("taskAlphaSplit[letters]", SelectorType.ID, abbreviation);
-            world.UIJourney.clickSubmit();
+            world.universalActions.clickSubmit();
             waitForElementToBeClickable("addAlphaSplit", SelectorType.ID);
             waitForTextToBePresent("Alpha split updated");
         } else {
@@ -65,6 +65,6 @@ public class TaskAllocationRulesJourney extends BasePage {
     public void deleteTaskAllocationRule() {
         waitAndClick("(//input[@type='checkbox'])[2]", SelectorType.XPATH);
         waitAndClick("delete", SelectorType.ID);
-        world.UIJourney.clickConfirm();
+        world.universalActions.clickConfirm();
     }
 }

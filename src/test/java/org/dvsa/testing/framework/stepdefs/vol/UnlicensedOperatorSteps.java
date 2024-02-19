@@ -71,7 +71,7 @@ public class UnlicensedOperatorSteps extends BasePage {
         waitForTextToBePresent("Add vehicle");
         waitAndEnterText("vrm", SelectorType.ID, vrm);
         waitAndEnterText("plated_weight", SelectorType.ID, platedWeight);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         assertTrue(isTextPresent("Created record"));
     }
 

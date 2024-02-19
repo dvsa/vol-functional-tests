@@ -78,7 +78,7 @@ public class FinancialStandingRates extends BasePage {
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate));
         enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForElementToBePresent(successfulAddedRecordAlert);
     }
 
@@ -103,7 +103,7 @@ public class FinancialStandingRates extends BasePage {
         replaceText(firstVehicleRateField, SelectorType.XPATH, String.valueOf(firstVehicleRate + 100));
         replaceText(additionalVehicleRateField, SelectorType.XPATH, String.valueOf(additionalVehicleRate + 100));
         enterDateFieldsByPartialId(effectiveDateFieldPartialSelector, effectiveDate);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForElementToBePresent(successfullyEditedRecordAlert);
     }
 
@@ -121,7 +121,7 @@ public class FinancialStandingRates extends BasePage {
         click(mostRecentRow.concat("/td/input[@type='checkbox']"), SelectorType.XPATH);
         click(deleteButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
-        world.UIJourney.clickConfirm();
+        world.universalActions.clickConfirm();
         waitForElementToBePresent(successfullyDeletedRecordAlert);
     }
 
@@ -149,7 +149,7 @@ public class FinancialStandingRates extends BasePage {
     public void iSubmitNoInformationOnAFinancialStandingRate() {
         click(addButton, SelectorType.XPATH);
         waitForElementToBePresent(modalTitle);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForTextToBePresent("There is a problem");
     }
 

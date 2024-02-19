@@ -3,8 +3,6 @@ package org.dvsa.testing.framework.stepdefs.vol;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.UserType;
-import io.cucumber.java.Scenario;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -58,7 +56,7 @@ public class VerifySwitchedOff extends BasePage {
         waitAndClick("//*[@id='add']", SelectorType.XPATH);
         waitForTitleToBePresent("Add Transport Manager");
         selectValueFromDropDown("data[registeredUser]", SelectorType.ID, String.format("%s %s", world.registerUser.getForeName(), world.registerUser.getFamilyName()));
-        world.UIJourney.clickContinue();
+        world.universalActions.clickContinue();
     }
 
     @When("the transport manager is the owner")

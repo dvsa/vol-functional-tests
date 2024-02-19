@@ -43,7 +43,7 @@ public class ManageVehicle extends BasePage {
 
     @And("choose to add a {string} vehicle")
     public void chooseToAddAVehicle(String VRM){
-        world.UIJourney.addAVehicle(VRM);
+        world.selfServeUIJourney.addAVehicle(VRM);
         waitAndClick("confirm", SelectorType.ID);
         if(isTextPresent(String.format("%s is specified on another licence.", VRM))){
             findSelectAllRadioButtonsByValue("yes");
@@ -58,7 +58,7 @@ public class ManageVehicle extends BasePage {
 
     @And("I search without entering a registration number")
     public void iSearchWithoutEnteringARegistrationNumber() {
-        world.UIJourney.addAVehicle("");
+        world.selfServeUIJourney.addAVehicle("");
     }
 
     @Then("An error message should be displayed")
@@ -111,7 +111,7 @@ public class ManageVehicle extends BasePage {
 
     @And("I choose to remove a vehicle")
     public void iChooseToRemoveAVehicle() {
-        world.UIJourney.removeVehicle();
+        world.selfServeUIJourney.removeVehicle();
     }
 
     @And("I choose to reprint a vehicle disc")
@@ -121,7 +121,7 @@ public class ManageVehicle extends BasePage {
 
     @And("I want to confirm a vehicle removal")
     public void iWantToConfirmAVehicleRemoval() {
-        world.UIJourney.vehicleRemovalConfirmationPage();
+        world.selfServeUIJourney.vehicleRemovalConfirmationPage();
     }
 
     @And("I choose to transfer a vehicle")
@@ -326,7 +326,7 @@ public class ManageVehicle extends BasePage {
         for (int i = 0; i < numberOfVehicles; i++) {
             waitAndClick("//button[contains(@name, 'table[action][delete]')]", SelectorType.XPATH);
             waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
-            world.UIJourney.clickSubmit();
+            world.universalActions.clickSubmit();
             waitForElementToBeClickable("//input[@value='Remove']", SelectorType.XPATH);
             Thread.sleep(2000);
         }

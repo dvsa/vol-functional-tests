@@ -19,7 +19,7 @@ public class SelfServePayFees extends BasePage {
 
         @When("^I pay fees on self serve")
         public void iPayFeesOnSelfServe() {
-        world.UIJourney.clickPay();
+        world.universalActions.clickPay();
         world.feeAndPaymentJourney.payFee(null, "card");
     }
 

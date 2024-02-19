@@ -7,11 +7,8 @@ import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
-import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.webapp.URL;
 import org.dvsa.testing.lib.url.webapp.utils.ApplicationType;
-
-import java.util.Objects;
 
 public class InternalNavigation extends BasePage {
 
@@ -28,7 +25,7 @@ public class InternalNavigation extends BasePage {
 
     @When("i click submit")
     public void iClickSubmit() {
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     @And("i have logged in to internal")

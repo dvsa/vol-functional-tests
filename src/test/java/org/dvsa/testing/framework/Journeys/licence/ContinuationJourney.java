@@ -14,12 +14,11 @@ import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.By;
 
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ContinuationJourney extends BasePage {
@@ -44,7 +43,7 @@ public class ContinuationJourney extends BasePage {
         waitForTextToBePresent("1 licence(s)");
         waitAndClick("checkall", SelectorType.ID);
         waitAndClick("generate", SelectorType.ID);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForTextToBePresent("The selected licence(s) have been queued");
     }
 
@@ -91,13 +90,13 @@ public class ContinuationJourney extends BasePage {
         enterDateFieldsByPartialId("details[continuationDate]", continuationDates);
         enterDateFieldsByPartialId("details[reviewDate]", reviewDates);
         waitForElementToBeClickable("form-actions[submit]", SelectorType.ID);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void completeContinuationPayOrSubmit()  {
         if (world.licenceCreation.isGoodsLicence() || world.createApplication.getLicenceType().equals(LicenceType.SPECIAL_RESTRICTED.asString())) {
             waitAndClick("submitAndPay", SelectorType.ID);
-            world.UIJourney.clickPay();
+            world.universalActions.clickPay();
             world.feeAndPaymentJourney.customerPaymentModule();
         } else {
             waitForTextToBePresent("Declaration");

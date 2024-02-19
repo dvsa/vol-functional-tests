@@ -43,7 +43,7 @@ public class WebDav extends BasePage{
         world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     @And("i open the document in word for the first time")
@@ -69,7 +69,7 @@ public class WebDav extends BasePage{
         String licenceNumber = world.applicationDetails.getLicenceNumber();
         String documentLink = Browser.navigate().findElement(By.id("letter-link")).getText();
 
-        world.UIJourney.editDocumentWithWebDav();
+        world.internalUIJourney.editDocumentWithWebDav();
 
         String fileName = getText("//table//tbody//tr//td", SelectorType.XPATH);
         world.genericUtils.writeLineToFile(
@@ -91,7 +91,7 @@ public class WebDav extends BasePage{
 
     @And("upload a document")
     public void uploadADocument() {
-        world.UIJourney.uploadDocument(String.format("%s/%s",System.getProperty("user.dir"), "src/test/resources/testBusTemplate.rtf"));
+        world.internalUIJourney.uploadDocument(String.format("%s/%s",System.getProperty("user.dir"), "src/test/resources/testBusTemplate.rtf"));
     }
 
     @Then("the operating system should be updated to {string}")
@@ -99,6 +99,6 @@ public class WebDav extends BasePage{
         world.internalNavigation.getEditUserAccount(world.updateLicence.getInternalUserId());
         waitForTextToBePresent("User type");
         selectValueFromDropDown("//*[@id='osType']", SelectorType.XPATH, operatingSystem);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 }

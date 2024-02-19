@@ -1,6 +1,7 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -29,7 +30,7 @@ public class PSVJourney extends BasePage {
         click(nineSeatsOrMoreDeclarations, SelectorType.XPATH);
         click(limousinesYes, SelectorType.XPATH);
         click(limousinesYesDeclarations, SelectorType.XPATH);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     public void completeRestrictedVehicleDeclarations() {
@@ -38,6 +39,6 @@ public class PSVJourney extends BasePage {
         click(confirmSmallVehiclesConditions, SelectorType.XPATH);
         click(limousinesNo, SelectorType.XPATH);
         click(limousinesNoDeclarations, SelectorType.XPATH);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 }

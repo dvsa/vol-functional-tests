@@ -1,19 +1,16 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import activesupport.IllegalBrowserException;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.LicenceType;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
-import scanner.AXEScanner;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
 
 import static activesupport.driver.Browser.navigate;
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,8 +22,6 @@ public class SurrenderJourney extends BasePage {
     private String discsLost = "2";
     private String discsStolen = "1";
     private String updatedTown;
-
-    AXEScanner axeScanner = AccessibilitySteps.scanner;
 
     public String getDiscsLost() {
         return discsLost;
@@ -75,26 +70,21 @@ public class SurrenderJourney extends BasePage {
         clickByLinkText("Apply to surrender licence");
     }
 
-    public void startSurrender() throws IllegalBrowserException, IOException {
-        axeScanner.scan(true);
+    public void startSurrender() {
         click("//*[@id='submit']", SelectorType.XPATH);
         waitForTitleToBePresent("Review your contact information");
-            axeScanner.scan(true);
     }
 
-
-    public void addOperatorLicenceDetails() throws IllegalBrowserException, IOException {
+    public void addOperatorLicenceDetails() {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
-        world.UIJourney.clickSubmit();
-            axeScanner.scan(true);
-        }
-
+        world.universalActions.clickSubmit();
+    }
 
     public void addCommunityLicenceDetails() {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public String getSurrenderAddressLine1() {
@@ -109,7 +99,7 @@ public class SurrenderJourney extends BasePage {
         return getText("//dt[contains(text(),'Country')]//..//dd", SelectorType.XPATH);
     }
 
-    public void submitSurrender() throws IOException, InterruptedException, IllegalBrowserException {
+    public void submitSurrender() throws MalformedURLException, InterruptedException {
         submitSurrenderUntilChoiceOfVerification();
         waitAndClick("//*[@id='sign']", SelectorType.XPATH);
         world.govSignInJourney.navigateToGovUkSignIn();
@@ -118,21 +108,17 @@ public class SurrenderJourney extends BasePage {
         checkSignInConfirmation();
         refreshPageWithJavascript();
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag')]", SelectorType.XPATH), "SURRENDER UNDER CONSIDERATION");
-            axeScanner.scan(true);
-        }
+    }
 
-    public void submitSurrenderUntilChoiceOfVerification() throws IllegalBrowserException, IOException {
+    public void submitSurrenderUntilChoiceOfVerification() {
         submitSurrenderUntilReviewPage();
-            axeScanner.scan(true);
         acknowledgeDestroyPage();
-            axeScanner.scan(true);
-        }
+    }
 
-
-    public void submitSurrenderUntilReviewPage() throws IllegalBrowserException, IOException {
+    public void submitSurrenderUntilReviewPage() {
         navigateToSurrendersStartPage();
         startSurrender();
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
@@ -140,16 +126,14 @@ public class SurrenderJourney extends BasePage {
             assertTrue(navigate().getCurrentUrl().contains("community-licence"));
             addCommunityLicenceDetails();
         }
-            axeScanner.scan(true);
-        }
-
+    }
 
     public void caseworkManageSurrender() throws HttpException {
         world.internalNavigation.navigateToPage("licence", SelfServeSection.VIEW);
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
-        world.UIJourney.closeAlert();
+        world.universalActions.closeAlert();
         // Refresh page
         refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
@@ -176,15 +160,14 @@ public class SurrenderJourney extends BasePage {
         waitAndClick("//*[contains(text(),'home')]", SelectorType.XPATH);
     }
 
-    public void acknowledgeDestroyPage() throws IllegalBrowserException, IOException {
-        world.UIJourney.clickSubmit();
-        axeScanner.scan(true);
+    public void acknowledgeDestroyPage() {
+        world.universalActions.clickSubmit();
         waitForTextToBePresent("Securely destroy");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 
-    public void addDiscInformation() throws IllegalBrowserException, IOException {
+    public void addDiscInformation() {
         assertTrue(getCurrentUrl().contains("current-discs"));
         clickById("stolenSection[stolen]");
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
@@ -195,21 +178,18 @@ public class SurrenderJourney extends BasePage {
         waitAndEnterText("//*[@id='lostSection[info][details]']", SelectorType.XPATH, "lost");
         waitAndEnterText("//*[@id='stolenSection[info][number]']", SelectorType.XPATH, getDiscsStolen());
         waitAndEnterText("//*[@id='stolenSection[info][details]']", SelectorType.XPATH, "stolen");
-        axeScanner.scan(true);
         waitAndClick("//*[@id='submit']", SelectorType.XPATH);
-        axeScanner.scan(true);
-        }
+    }
 
-
-    public void removeDisc() throws IllegalBrowserException, IOException {
-        world.UIJourney.clickSubmit();
+    public void removeDisc() {
+        world.universalActions.clickSubmit();
         addDiscInformation();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='modal-title']");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         refreshPageWithJavascript();
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }

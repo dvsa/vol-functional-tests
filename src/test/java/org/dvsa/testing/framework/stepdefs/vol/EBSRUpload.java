@@ -12,7 +12,7 @@ import scanner.AXEScanner;
 
 import java.io.IOException;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.existingLicenceNumber;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -46,14 +46,14 @@ public class EBSRUpload extends BasePage {
         world.busRegistrationJourney.internalSiteAddBusNewReg(5);
         clickByLinkText("Register");
         findSelectAllRadioButtonsByValue("Y");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         clickByLinkText("Service details");
         clickByLinkText("TA's");
         click("//*[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result\"]");
         click("//*[@id='localAuthoritys_chosen']/ul[@class='chosen-choices']", SelectorType.XPATH);
         selectFirstValueInList("//*[@class=\"active-result group-option\"]");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     @When("it has been paid and granted")

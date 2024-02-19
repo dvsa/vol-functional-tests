@@ -40,12 +40,12 @@ public class CreateCase extends BasePage {
     public void iAddANewPublicInquiry() {
         click("//*[@id='menu-licence/cases']", SelectorType.XPATH);
         clickByLinkText(Integer.toString(world.updateLicence.getCaseId()));
-        world.UIJourney.createPublicInquiry();
+        world.internalUIJourney.createPublicInquiry();
     }
 
     @And("i add and publish a hearing")
     public void iAddAndPublishAHearing() {
-        world.UIJourney.addAndPublishHearing();
+        world.internalUIJourney.addAndPublishHearing();
     }
 
     @Then("the public inquiry should be published")
@@ -61,7 +61,7 @@ public class CreateCase extends BasePage {
 
     @And("I delete a case note")
     public void iDeleteACaseNote() {
-        world.UIJourney.deleteCaseNote();
+        world.internalUIJourney.deleteCaseNote();
     }
 
     @Then("the note should be deleted")
@@ -135,8 +135,8 @@ public class CreateCase extends BasePage {
 
     @And("i add a case in internal on the {string} page")
     public void iAddACaseInInternalOnThePage(String page) {
-        world.UIJourney.loginIntoInternalAsExistingAdmin();
-        world.UIJourney.createCaseUI(page);
+        world.internalUIJourney.loginIntoInternalAsExistingAdmin();
+        world.internalUIJourney.createCaseUI(page);
     }
 
 

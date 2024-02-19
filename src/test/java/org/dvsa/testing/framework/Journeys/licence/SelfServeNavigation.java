@@ -4,6 +4,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import activesupport.system.Properties;
 import com.sun.istack.NotNull;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
@@ -161,7 +162,7 @@ public class SelfServeNavigation extends BasePage {
         String workingDir = System.getProperty("user.dir");
         String financialEvidenceFile = "/src/test/resources/newspaperAdvert.jpeg";
 
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         waitAndContinuePage("Business type");
         waitAndContinuePage("Business details");
         waitAndContinuePage("Addresses");
@@ -181,12 +182,12 @@ public class SelfServeNavigation extends BasePage {
             addFile.sendKeys(workingDir.concat(financialEvidenceFile));
         }
         waitForTextToBePresent("File name");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         waitAndContinuePage("Transport Managers");
         waitAndContinuePage("Vehicle details");
 
         if (isTitlePresent("Vehicle declarations", 30)) {
-            UIJourney.clickSaveAndContinue();
+            UniversalActions.clickSaveAndContinue();
         }
         waitAndContinuePage("Safety and compliance");
         waitAndContinuePage("Financial history");
@@ -196,7 +197,7 @@ public class SelfServeNavigation extends BasePage {
 
     private void waitAndContinuePage(String pageTitle) {
         waitForTitleToBePresent(pageTitle);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void getVariationFinancialEvidencePage() {

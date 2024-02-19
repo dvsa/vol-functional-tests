@@ -4,6 +4,7 @@ import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
@@ -93,12 +94,12 @@ public class DirectorJourney extends BasePage {
 
     public void addDirectorDetails() {
         personDetails();
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void addPersonDetails() {
         personDetails();
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     private void personDetails() {
@@ -114,23 +115,23 @@ public class DirectorJourney extends BasePage {
 
     public void completeDirectorFinancialHistory(String financialHistoryAnswers) {
         findSelectAllRadioButtonsByValue(financialHistoryAnswers);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void completeConvictionsAndPenalties(String convictionsAndPenaltiesAnswers) {
         findSelectAllRadioButtonsByValue(convictionsAndPenaltiesAnswers);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void completeLicenceHistory(String licenceHistoryAnswers) {
         findSelectAllRadioButtonsByValue(licenceHistoryAnswers);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void removeDirector() {
         click(deleteDirectorButtons, SelectorType.XPATH);
         waitForTextToBePresent(deleteDirectorConfirmationTitle);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public boolean isDirectorPresentInDirectorTable(List<WebElement> directors, String director) {
@@ -174,12 +175,12 @@ public class DirectorJourney extends BasePage {
     }
 
     public void assertLastDirectorTaskNotCreated() {
-        List<WebElement> directors = world.UIJourney.getTableBodyRowList();
+        List<WebElement> directors = world.universalActions.getTableBodyRowList();
         assertFalse(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 
     public void assertLastDirectorTaskCreated() {
-        List<WebElement> directors = world.UIJourney.getTableBodyRowList();
+        List<WebElement> directors = world.universalActions.getTableBodyRowList();
         assertTrue(directors.stream().anyMatch(d -> d.getText().contains(lastDirectorRemovedMessage)));
     }
 

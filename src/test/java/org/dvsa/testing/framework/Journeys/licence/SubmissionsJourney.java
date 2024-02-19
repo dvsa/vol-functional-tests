@@ -22,7 +22,7 @@ public class SubmissionsJourney extends BasePage {
         selectRandomValueFromDropDown("user", SelectorType.ID);
         String operatorForename = world.DataGenerator.getOperatorForeName();
         waitAndEnterText("presidingTcDetails[name]", SelectorType.ID, operatorForename);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void createAndSubmitSubmission() {
@@ -31,12 +31,12 @@ public class SubmissionsJourney extends BasePage {
         clickByLinkText("Submissions");
         waitAndClick("add", SelectorType.ID);
         selectValueFromDropDownByIndex("fields[submissionSections][submissionType]", SelectorType.NAME, 13);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void setInfoCompleteAndAssignSubmission() {
         clickByLinkText("Set info complete");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitAndClick("Assign submission", SelectorType.LINKTEXT);
         waitForTextToBePresent("Assign to:");
         clickByXPath("//*[@id='tcOrOther']");
@@ -49,13 +49,13 @@ public class SubmissionsJourney extends BasePage {
         clickByLinkText("Edit submission");
         selectRandomValueFromDropDown("fields[submissionSections][submissionType]", SelectorType.NAME);
         refreshPage();
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void addTransportManagerComments() {
         clickByXPath("//form[@name='transport-managers-section-attachments']/following-sibling::a[1]");
         waitAndEnterText("fields[comment]_ifr", SelectorType.ID, "-" + world.DataGenerator.getRandomWord());
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void closeSubmission() {

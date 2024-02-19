@@ -37,7 +37,7 @@ public class ManagerUsersPage extends BasePage {
 
     @When("i add a user")
     public void iAddAUser() {
-        world.UIJourney.addUser();
+        world.selfServeUIJourney.addUser();
     }
 
     @Then("remove button column should be named {string}")
