@@ -4,6 +4,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import activesupport.dates.Dates;
 import activesupport.faker.FakerUtils;
 import activesupport.string.Str;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.joda.time.LocalDate;
@@ -33,9 +34,9 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         findSelectAllRadioButtonsByValue("N");
         clickById("convictionsConfirmation[convictionsConfirmation]");
         if (applicationType.equals("application")) {
-            UIJourney.clickSaveAndContinue();
+            UniversalActions.clickSaveAndContinue();
         } else if (applicationType.equals("variation")) {
-            UIJourney.clickSaveAndReturn();
+            UniversalActions.clickSaveAndReturn();
         }
     }
 
@@ -46,7 +47,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         addPreviousConviction();
         waitForTitleToBePresent("Convictions and Penalties");
         waitAndClick("convictionsConfirmation[convictionsConfirmation]", SelectorType.ID);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     public void addPreviousConviction() {
@@ -64,7 +65,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         enterText("data[convictionDate][day]", SelectorType.NAME, dates.get("day"));
         enterText("data[convictionDate][month]", SelectorType.NAME, dates.get("month"));
         enterText("data[convictionDate][year]", SelectorType.NAME, dates.get("year"));
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void addConvictionToCase() {
@@ -84,7 +85,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         enterDateFieldsByPartialId("fields[convictionDate]", convictionDate);
         selectValueFromDropDownByIndex("//select[@id='fields[msi]']", SelectorType.XPATH, 2);
         selectValueFromDropDownByIndex("//select[@id='fields[isDeclared]']", SelectorType.XPATH, 2);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void addComplaint() {
@@ -96,7 +97,7 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         enterDateFieldsByPartialId("complaintDate", complaintDate);
         selectValueFromDropDownByIndex("//select[@id='complaintType']", SelectorType.XPATH, 1);
         selectValueFromDropDownByIndex("//select[@id='status']", SelectorType.XPATH, 1);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void completConditionUndertakings() {
@@ -108,12 +109,12 @@ public class ConvictionsAndPenaltiesJourney extends BasePage {
         enterText("notes", SelectorType.ID, convictionDescription);
         click("//*[@id='fields[fulfilled]']", SelectorType.XPATH);
         selectValueFromDropDownByIndex("attachedTo", SelectorType.ID, 2);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void addANote() {
         waitAndClick("add", SelectorType.ID);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
 }

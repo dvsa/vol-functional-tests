@@ -1,11 +1,9 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import activesupport.driver.Browser;
-import org.dvsa.testing.framework.Injectors.World;
 import com.typesafe.config.Config;
+import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
-import org.dvsa.testing.framework.pageObjects.internal.SearchNavBar;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -26,7 +24,7 @@ public class FeeAndPaymentJourney extends BasePage {
         waitForTextToBePresent("Create new fee");
         selectValueFromDropDown("fee-details[feeType]", SelectorType.NAME, feeType);
         waitAndEnterText("amount", SelectorType.ID, amount);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void payFee(String amount, @NotNull String paymentMethod) {
@@ -42,7 +40,7 @@ public class FeeAndPaymentJourney extends BasePage {
             case "cash":
                 selectValueFromDropDown("details[paymentType]", SelectorType.NAME, "Cash");
                 if (isTextPresent("Customer reference")) {
-                    world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                    world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                     waitAndEnterText("details[customerName]", SelectorType.NAME, "Jane Doe");
                     waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCashCustomerRef");
                     clickPayAndConfirm(paymentMethod);
@@ -55,7 +53,7 @@ public class FeeAndPaymentJourney extends BasePage {
                 if (isTextPresent("Customer reference")) {
                     waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationChequeCustomerRef");
                 }
-                world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 waitAndEnterText("details[chequeNo]", SelectorType.NAME, "12345");
                 waitAndEnterText("details[customerName]", SelectorType.NAME, "Jane Doe");
 
@@ -72,7 +70,7 @@ public class FeeAndPaymentJourney extends BasePage {
                 if (isTextPresent("Payer name")) {
                     waitAndEnterText("details[payer]", SelectorType.NAME, "Jane Doe");
                 }
-                world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                 waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationPostalOrderCustomerRef");
                 waitAndEnterText("details[customerName]", SelectorType.NAME, "Jane Doe");
                 waitAndEnterText("details[poNo]", SelectorType.NAME, "123456");
@@ -84,7 +82,7 @@ public class FeeAndPaymentJourney extends BasePage {
                     if (isTextPresent("Customer reference")) {
                         waitAndEnterText("details[customerName]", SelectorType.NAME, "Veena Skish");
                         waitAndEnterText("details[customerReference]", SelectorType.NAME, "AutomationCardCustomerRef"); // 15 Chars max due to CPSM API value length cap.
-                        world.UIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
+                        world.internalUIJourney.searchAndSelectAddress("postcodeInput1", "NG1 5FW", 1);
                         clickPayAndConfirm(paymentMethod);
                     }
                     if (isElementPresent("form-actions[pay]", SelectorType.ID)) {
@@ -159,7 +157,7 @@ public class FeeAndPaymentJourney extends BasePage {
     public void clickPayAndConfirm(String paymentMethod) {
         waitForElementToBeClickable("//*[@id='address[searchPostcode][search]']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='postcode']");
-        world.UIJourney.clickPay();
+        world.universalActions.clickPay();
         if (!paymentMethod.toLowerCase().trim().equals("card"))
             waitForTextToBePresent("The payment was made successfully");
     }

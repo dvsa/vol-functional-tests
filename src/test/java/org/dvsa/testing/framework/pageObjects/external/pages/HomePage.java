@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class HomePage extends BasePage {

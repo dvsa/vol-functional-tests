@@ -4,7 +4,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -62,13 +62,13 @@ public class LicenceAuthorisation extends BasePage {
     @When("i try to save an authorisation exceeding the valid values")
     public void iTryToSaveAnAuthorisationExceedingTheValidValues() {
         replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, "5001");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @When("i try to save a community authorisation exceeding the valid values")
     public void iTryToSaveACommunityAuthorisationExceedingTheValidValues() {
         replaceText(world.operatingCentreJourney.totalCommunityAuthorisationField, SelectorType.XPATH, "5001");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @Then("a maximum authorisation value error message should appear")
@@ -87,7 +87,7 @@ public class LicenceAuthorisation extends BasePage {
     public void iEnterAnLgvAuthorisationAndAHigherCommunityAuthorisation() {
         replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, "5");
         replaceText(world.operatingCentreJourney.totalCommunityAuthorisationField, SelectorType.XPATH, "10");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @Then("the community authorisation exceeding lgv authorisation error appears")
@@ -100,7 +100,7 @@ public class LicenceAuthorisation extends BasePage {
         replaceText(world.operatingCentreJourney.totalHGVAuthorisationField, SelectorType.XPATH, "5");
         replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, "5");
         replaceText(world.operatingCentreJourney.totalCommunityAuthorisationField, SelectorType.XPATH, "20");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 
     @When("I create an lgv only authorisation variation with {string}")
@@ -108,7 +108,7 @@ public class LicenceAuthorisation extends BasePage {
         world.generalVariationJourney.signInAndBeginLicenceAuthorisationVariation();
         waitAndClick(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH);
         replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, newLGVTotalAuthority);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @Then("the lgv hint text is visible")
@@ -153,7 +153,7 @@ public class LicenceAuthorisation extends BasePage {
         replaceText(world.operatingCentreJourney.totalHGVAuthorisationField, SelectorType.XPATH, "");
         replaceText(world.operatingCentreJourney.totalLGVAuthorisationField, SelectorType.XPATH, "");
         replaceText(world.operatingCentreJourney.totalTrailersAuthorisationField, SelectorType.XPATH, "");
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @Then("hgv, lgv and trailer missing authorisation value errors should display")

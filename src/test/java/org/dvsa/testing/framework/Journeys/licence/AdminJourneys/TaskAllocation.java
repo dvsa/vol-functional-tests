@@ -41,7 +41,7 @@ public class TaskAllocation extends BasePage {
         waitAndClick("re-assign task", SelectorType.ID);
         waitForTextToBePresent("Assigned to");
         selectSystemTeam();
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void editTask() {

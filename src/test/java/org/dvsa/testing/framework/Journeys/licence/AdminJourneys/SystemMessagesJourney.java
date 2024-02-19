@@ -31,8 +31,8 @@ public class SystemMessagesJourney extends BasePage {
         enterDateFieldsByPartialId("details[endDate]", EndDate);
         selectValueFromDropDown("details[endDate]_hour", SelectorType.ID, "00");
         selectValueFromDropDown("details[endDate]_minute", SelectorType.ID, "00");
-        world.UIJourney.clickSubmit();
-        world.UIJourney.closeAlert();
+        world.universalActions.clickSubmit();
+        world.universalActions.closeAlert();
     }
 }
 

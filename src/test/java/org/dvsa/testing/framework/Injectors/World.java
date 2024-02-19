@@ -7,10 +7,7 @@ import org.dvsa.testing.framework.Journeys.licence.*;
 import org.dvsa.testing.framework.Journeys.licence.AdminJourneys.*;
 import org.dvsa.testing.framework.Journeys.licence.TransportManagerJourney;
 import org.dvsa.testing.framework.Journeys.permits.*;
-import org.dvsa.testing.framework.Utils.Generic.DBUtils;
-import org.dvsa.testing.framework.Utils.Generic.DataGenerator;
-import org.dvsa.testing.framework.Utils.Generic.FormattedStrings;
-import org.dvsa.testing.framework.Utils.Generic.GenericUtils;
+import org.dvsa.testing.framework.Utils.Generic.*;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.CountriesWithLimitedPermitsPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.ECMTAndShortTermECMTOnly.YearSelectionPage;
 import org.dvsa.testing.framework.pageObjects.external.pages.PermitFeePage;
@@ -37,7 +34,7 @@ public class World {
     public LicenceCreation licenceCreation;
 
     public APIJourney APIJourney;
-    public UIJourney UIJourney;
+    public UniversalActions universalActions;
     public GovSignInJourney GovSignInJourney;
 
     public ForgottenCredsJourney forgottenCredsJourney;
@@ -94,4 +91,8 @@ public class World {
     public SubmissionsJourney submissionsJourney;
 
     public AccessibilitySteps accessibilitySteps;
+
+    public SelfServeUIJourney selfServeUIJourney;
+
+    public InternalUIJourney internalUIJourney;
 }

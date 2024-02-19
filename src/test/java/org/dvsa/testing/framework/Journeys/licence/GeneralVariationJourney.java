@@ -31,7 +31,7 @@ public class GeneralVariationJourney extends BasePage {
     public void beginVariation(SelfServeSection selfServePage) {
         //world.selfServeNavigation.navigateToLogin(world.registerUser.getUserName(), world.registerUser.getEmailAddress());
         world.selfServeNavigation.navigateToPage("licence", selfServePage);
-        world.UIJourney.changeLicenceForVariation();
+        world.selfServeUIJourney.changeLicenceForVariation();
     }
 
     public void beginUpgradeVariation() {

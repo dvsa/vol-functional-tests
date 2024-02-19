@@ -5,7 +5,7 @@ import org.dvsa.testing.framework.Injectors.World;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.response.ValidatableResponse;
-import org.dvsa.testing.framework.Journeys.licence.UIJourney;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.internal.enums.SearchType;
@@ -55,7 +55,7 @@ public class GrantApplication extends BasePage {
         waitAndClick("details[overrideOppositionDate]", SelectorType.ID);
         findElements("//*[@value]", SelectorType.XPATH)
                 .stream().filter(x -> x.getText().equals("Accepted")).forEach(WebElement::click);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         clickByLinkText("Operating centres");
         waitForTextToBePresent("Operating centres");
         selectValueFromDropDown("trafficArea", SelectorType.ID, "Wales");
@@ -64,10 +64,10 @@ public class GrantApplication extends BasePage {
         }else{
             selectValueFromDropDownByIndex("dataTrafficArea[enforcementArea]", SelectorType.ID,1);
         }
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         clickByLinkText("Review and declarations");
         waitAndClick("declarations[declarationConfirmation]", SelectorType.ID);
-        UIJourney.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
         clickByLinkText("Grant application");
         waitForTextToBePresent("Grant application");
         waitAndClick("//*[@value='grant_authority_tc']", SelectorType.XPATH);

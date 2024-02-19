@@ -21,7 +21,7 @@ public class CreateNewInternalUser extends BasePage{
 
     @Then("I add a new User")
     public void iAddANewUser() {
-       world.UIJourney.addNewInternalUser();
+       world.internalUIJourney.addNewInternalUser();
     }
 
     @Then("User should be created")

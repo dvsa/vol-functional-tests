@@ -1,6 +1,5 @@
 package org.dvsa.testing.framework.Journeys.licence;
 
-import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import apiCalls.enums.LicenceType;
@@ -9,11 +8,9 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Objects;
 
 import static activesupport.driver.Browser.navigate;
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.Utils.Generic.GenericUtils.getCurrentDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -81,13 +78,13 @@ public class SurrenderJourney extends BasePage {
     public void addOperatorLicenceDetails() {
         click("//*[contains(text(),'Lost')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='operatorLicenceDocument[lostContent][details]']", SelectorType.XPATH, "lost in the washing");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public void addCommunityLicenceDetails() {
         click("//*[contains(text(),'Stolen')]", SelectorType.XPATH);
         waitAndEnterText("//*[@id='communityLicenceDocument[stolenContent][details]']", SelectorType.XPATH, "Stolen on the way here");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     public String getSurrenderAddressLine1() {
@@ -121,7 +118,7 @@ public class SurrenderJourney extends BasePage {
     public void submitSurrenderUntilReviewPage() {
         navigateToSurrendersStartPage();
         startSurrender();
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         addDiscInformation();
         waitForTextToBePresent("In your possession");
         addOperatorLicenceDetails();
@@ -136,7 +133,7 @@ public class SurrenderJourney extends BasePage {
         clickByLinkText("Surrender");
         waitForTextToBePresent("Surrender details");
         waitAndClick("//*[@for='checks[ecms]']", SelectorType.XPATH);
-        world.UIJourney.closeAlert();
+        world.universalActions.closeAlert();
         // Refresh page
         refreshPageWithJavascript();
         waitAndClick("//*[contains(text(),'Digital signature')]", SelectorType.XPATH);
@@ -164,9 +161,9 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void acknowledgeDestroyPage() {
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForTextToBePresent("Securely destroy");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForTitleToBePresent("Declaration");
     }
 
@@ -185,14 +182,14 @@ public class SurrenderJourney extends BasePage {
     }
 
     public void removeDisc() {
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         addDiscInformation();
         clickByLinkText("Home");
         clickByLinkText(world.applicationDetails.getLicenceNumber());
         clickByLinkText("Licence discs");
         waitAndClick("//*[@value='Remove']", SelectorType.XPATH);
         waitForElementToBePresent("//*[@id='modal-title']");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         refreshPageWithJavascript();
         waitForTextToBePresent("The selected discs have been voided. You must destroy the old discs");
     }

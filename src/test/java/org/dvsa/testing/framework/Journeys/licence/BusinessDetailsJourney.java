@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.stepdefs.vol.AccessibilitySteps;
@@ -33,7 +34,7 @@ public class BusinessDetailsJourney extends BasePage {
             enterRegisteredAddress();
         }
         enterCorrespondenceAddress();
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         if (scanOrNot) {
             AXEScanner axeScanner = AccessibilitySteps.scanner;
             axeScanner.scan(true);
@@ -41,7 +42,7 @@ public class BusinessDetailsJourney extends BasePage {
     }
 
     public void enterCorrespondenceAddress() {
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         waitForTitleToBePresent("Addresses");
         waitAndEnterText("correspondence_address[searchPostcode][postcode]", SelectorType.NAME, "NG1 6LP");
         clickByName("correspondence_address[searchPostcode][search]");

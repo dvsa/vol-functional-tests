@@ -18,7 +18,7 @@ import org.openqa.selenium.InvalidArgumentException;
 import java.util.List;
 
 import static apiCalls.enums.TrafficArea.trafficAreaList;
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -232,7 +232,7 @@ public class ManageApplications extends BasePage {
         world.selfServeNavigation.navigateToPage("application", SelfServeSection.TYPE_OF_LICENCE);
         world.selfServeNavigation.navigateThroughApplication();
         if(!world.configuration.env.equals("local")) {
-            world.UIJourney.signDeclaration();
+            world.selfServeUIJourney.signDeclaration();
         }
     }
 

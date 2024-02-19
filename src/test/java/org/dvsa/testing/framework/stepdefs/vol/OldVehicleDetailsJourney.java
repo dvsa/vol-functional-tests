@@ -10,7 +10,7 @@ import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class OldVehicleDetailsJourney extends BasePage {
@@ -48,7 +48,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         waitForTitleToBePresent("Add vehicle");
         enterText(VRMField, SelectorType.XPATH, generatedVRM);
         enterText(weightField, SelectorType.XPATH, generatedWeight);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     @Then("the vehicle should be appear")
@@ -62,7 +62,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         firstVRM = getText("button.action-button-link:first-of-type", SelectorType.CSS).trim();
         click(firstVehicleRemoveButton, SelectorType.XPATH);
         waitForTextToBePresent("Are you sure you want to remove these vehicle(s)?");
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     @Then("the vehicle no longer appears")
@@ -76,7 +76,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         firstVRM = getAttribute(firstVehicleInTable, SelectorType.XPATH, "value");
         click(firstVehicleInTable, SelectorType.XPATH);
         replaceText(weightField, SelectorType.XPATH, generatedWeight);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     @Then("the vehicle should have changed")
@@ -94,7 +94,7 @@ public class OldVehicleDetailsJourney extends BasePage {
         click(transferButton, SelectorType.XPATH);
         transferLicence = getText(firstLicenceInTransferDropdown, SelectorType.XPATH);
         selectValueFromDropDown(transferDropdown, SelectorType.XPATH, transferLicence);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
     }
 
     @And("the other licence contains that vehicle")

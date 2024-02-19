@@ -3,6 +3,7 @@ package org.dvsa.testing.framework.Journeys.licence;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.faker.FakerUtils;
 import activesupport.number.Int;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
@@ -16,7 +17,7 @@ public class LicenceDetailsJourney extends BasePage {
     public void answerNoToAllQuestionsAndSubmit() {
         waitForTitleToBePresent("Licence history");
         findSelectAllRadioButtonsByValue("N");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
     //TODO: Licence details for every No selected
     public void answerYesToAllQuestionsAndSubmit(){
@@ -28,8 +29,8 @@ public class LicenceDetailsJourney extends BasePage {
         waitAndEnterText("data[licNo]",SelectorType.NAME,"OB".concat(String.valueOf(Int.random(8))));
         waitAndEnterText("data[holderName]",SelectorType.NAME,faker.generateFirstName());
         waitAndClick("//*[contains(text(),'Yes')]",SelectorType.XPATH);
-        world.UIJourney.clickSubmit();
+        world.universalActions.clickSubmit();
         waitForTitleToBePresent("Licence history");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
     }
 }

@@ -4,6 +4,7 @@ import activesupport.IllegalBrowserException;
 import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -20,7 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
 
 public class SubmitApplicationJourney extends BasePage {
@@ -50,12 +51,12 @@ public class SubmitApplicationJourney extends BasePage {
                         if (isTextPresent("Not Yet Submitted")) {
                             apps.click();
                             waitAndClick("Cancel application", SelectorType.LINKTEXT);
-                            world.UIJourney.clickSubmit();
+                            world.universalActions.clickSubmit();
                         }
                         if (isTextPresent("Under Consideration")) {
                             apps.click();
                             waitAndClick("Withdraw application", SelectorType.LINKTEXT);
-                            world.UIJourney.clickSubmit();
+                            world.universalActions.clickSubmit();
                         }
                         if (isTextPresent("Awaiting grant fee")) {
                             apps.click();
@@ -85,14 +86,14 @@ public class SubmitApplicationJourney extends BasePage {
         waitForTitleToBePresent("Licences");
         waitAndClick("//*[contains(text(),'Apply for a new licence')]", SelectorType.XPATH);
         chooseLicenceType(licenceType);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         //business details
         world.businessDetailsJourney.addBusinessDetails(true);
         if (isTitlePresent("Directors", 2) || isTitlePresent("Responsible people", 2)) {
             if (isElementPresent("add", SelectorType.ID)) {
                 world.directorJourney.addDirectorWithNoFinancialHistoryConvictionsOrPenalties(true);
             }
-            UIJourney.clickSaveAndContinue();
+            UniversalActions.clickSaveAndContinue();
         }
         //operating centre
         String authority = "2";
@@ -107,21 +108,21 @@ public class SubmitApplicationJourney extends BasePage {
         world.operatingCentreJourney.addNewOperatingCentre(authority, trailers);
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
 
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
 
         //transport manager
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
 
-        world.UIJourney.clickContinue();
+        world.universalActions.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            world.UIJourney.clickSend();
+            world.universalActions.clickSend();
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
@@ -135,7 +136,7 @@ public class SubmitApplicationJourney extends BasePage {
         world.safetyComplianceJourney.addSafetyAndComplianceData();
         world.safetyInspectorJourney.addASafetyInspector();
         clickById("application[safetyConfirmation]");
-        UIJourney.clickSaveAndContinue();
+        UniversalActions.clickSaveAndContinue();
         //Financial History
         world.financialHistoryJourney.answerNoToAllQuestionsAndSubmit("application");
         //Licence details
@@ -147,7 +148,7 @@ public class SubmitApplicationJourney extends BasePage {
     public void submitAndPayForApplication() {
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         clickById("submitAndPay");
-        world.UIJourney.clickPay();
+        world.universalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
         List<String> licenceApplicationArray = Arrays.asList(Browser.navigate().findElement(By.xpath("//h2")).getText().split("/"));

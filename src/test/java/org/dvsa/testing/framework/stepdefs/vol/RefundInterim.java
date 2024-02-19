@@ -2,9 +2,7 @@ package org.dvsa.testing.framework.stepdefs.vol;
 
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
-import apiCalls.enums.UserType;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeSection;
@@ -12,7 +10,7 @@ import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.TimeoutException;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -81,7 +79,7 @@ public class RefundInterim extends BasePage {
 
     @When("i pay for the interim application")
     public void iPayForTheInterimApplication() {
-        world.UIJourney.payForInterimApp();
+        world.internalUIJourney.payForInterimApp();
         waitForTitleToBePresent("Application overview");
     }
 

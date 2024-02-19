@@ -45,13 +45,13 @@ public class InternalSearch extends BasePage {
     }
     @When("i search for my psv disc")
     public void iSearchForMyPsvDiscAndClickOnMyLicenceAndDiscs() {
-        world.UIJourney.loginIntoInternalAsExistingAdmin();
+        world.internalUIJourney.loginIntoInternalAsExistingAdmin();
         world.internalSearchJourney.searchAndViewPSVDisc();
     }
 
     @When("i search for a vehicle by registration {string}")
     public void iSearchForAVehicleByRegistration(String vrm) {
-        world.UIJourney.loginIntoInternalAsExistingAdmin();
+        world.internalUIJourney.loginIntoInternalAsExistingAdmin();
         world.internalSearchJourney.searchAndViewVehicleRegistration(vrm);
     }
     @When("i search for my address and click on my licence and addresses")

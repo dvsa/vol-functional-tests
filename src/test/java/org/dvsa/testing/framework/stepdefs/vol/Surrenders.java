@@ -16,7 +16,7 @@ import org.openqa.selenium.WebElement;
 
 import java.net.MalformedURLException;
 
-import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Surrenders extends BasePage {
@@ -69,11 +69,11 @@ public class Surrenders extends BasePage {
                 world.govSignInJourney.signInGovAccount();
                 world.surrenderJourney.checkVerifyConfirmation();
             } else {
-                fail("Verify not supported on this platform");
+                fail("GOV Sign in not supported on this platform");
             }
         } else {
             waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
-            world.UIJourney.signManually();
+            world.selfServeUIJourney.signManually();
         }
         waitForTitleToBePresent("Licences");
         refreshPage();
@@ -132,7 +132,7 @@ public class Surrenders extends BasePage {
     public void theOpenCaseAndBusRegIsClosed() {
         world.internalNavigation.getLicence();
         clickByLinkText("Cases");
-        world.UIJourney.closeCase();
+        world.internalUIJourney.closeCase();
         waitForTextToBePresent("Case closed");
         world.internalNavigation.getLicence();
         clickByLinkText("Bus registrations");
