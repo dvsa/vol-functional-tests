@@ -5,7 +5,6 @@ import activesupport.faker.FakerUtils;
 import apiCalls.enums.LicenceType;
 import apiCalls.enums.VehicleType;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -82,7 +81,7 @@ public class SelfServeUIJourney extends BasePage {
             clickByLinkText("Financial evidence");
         }
         click("//input[@id='uploadLaterRadio']", SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
     }
 
     public void signDeclaration() {
@@ -159,7 +158,7 @@ public class SelfServeUIJourney extends BasePage {
             world.createApplication.setVehicleType(VehicleType.LGV_ONLY_FLEET.asString());
         else
             world.createApplication.setVehicleType(VehicleType.MIXED_FLEET.asString());
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
         if (!getCurrentUrl().contains("#validationSummary"))
             world.createApplication.setApplicationId(returnNthNumberSequenceInString(navigate().getCurrentUrl(), 1));
     }

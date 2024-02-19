@@ -6,7 +6,6 @@ import autoitx4java.AutoItX;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -165,7 +164,7 @@ public class InternalUIJourney extends BasePage {
     public void payForInterimApp() {
         clickByLinkText("Financial");
         waitAndClick("//*[contains(text(),'Send')]", SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
         clickByLinkText("Review");
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         waitAndClick("//*[contains(text(),'Yes')]", SelectorType.XPATH);
@@ -202,19 +201,19 @@ public class InternalUIJourney extends BasePage {
 
     public void caseWorkerCompleteConditionsAndUndertakings() {
         clickByLinkText("Conditions and undertakings");
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
     }
 
     public void caseWorkerCompleteReviewAndDeclarations() {
         clickByLinkText("Review and declarations");
         waitAndClick("//*[@id='declarations[declarationConfirmation]']", SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
     }
 
     public void caseWorkerCompleteOverview() {
         click("//*[@id='details[overrideOppositionDate]']", SelectorType.XPATH);
         navigate().findElements(By.xpath("//*[contains(@id,'tracking')]/option[2]")).stream().forEach(WebElement::click);
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
     }
 
     public void createPublicInquiry() {
