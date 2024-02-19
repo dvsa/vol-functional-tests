@@ -5,6 +5,7 @@ import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -21,8 +22,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.clickContinue;
-import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
 
 public class SubmitApplicationJourney extends BasePage {
@@ -52,12 +51,12 @@ public class SubmitApplicationJourney extends BasePage {
                         if (isTextPresent("Not Yet Submitted")) {
                             apps.click();
                             waitAndClick("Cancel application", SelectorType.LINKTEXT);
-                            UniversalActions.clickSubmit();
+                            world.universalActions.clickSubmit();
                         }
                         if (isTextPresent("Under Consideration")) {
                             apps.click();
                             waitAndClick("Withdraw application", SelectorType.LINKTEXT);
-                            UniversalActions.clickSubmit();
+                            world.universalActions.clickSubmit();
                         }
                         if (isTextPresent("Awaiting grant fee")) {
                             apps.click();
@@ -67,7 +66,7 @@ public class SubmitApplicationJourney extends BasePage {
                             withDrawApplication();
                             String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
                             DriverUtils.get(myURL);
-                            refreshPageWithJavascript();
+                            world.universalActions.refreshPageWithJavascript();
                         }
                     } catch (StaleElementReferenceException | HttpException e) {
                         e.fillInStackTrace();
@@ -78,7 +77,7 @@ public class SubmitApplicationJourney extends BasePage {
                     break;
                 }
                 waitForTitleToBePresent("Licences");
-                refreshPageWithJavascript();
+                world.universalActions.refreshPageWithJavascript();
             }
         }
     }
@@ -111,7 +110,7 @@ public class SubmitApplicationJourney extends BasePage {
 
         UniversalActions.clickSaveAndContinue();
         axeScanner.scan(true);
-
+        UniversalActions.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
@@ -121,13 +120,13 @@ public class SubmitApplicationJourney extends BasePage {
         clickById("add");
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
 
-        clickContinue();
+        world.universalActions.clickContinue();
         axeScanner.scan(true);
-        clickContinue();
+        world.universalActions.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
-            UniversalActions.clickSend();
+            world.universalActions.clickSend();
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
@@ -154,7 +153,7 @@ public class SubmitApplicationJourney extends BasePage {
     public void submitAndPayForApplication() {
         waitAndClick("//*[contains(text(),'Print')]", SelectorType.XPATH);
         clickById("submitAndPay");
-        UniversalActions.clickPay();
+        world.universalActions.clickPay();
         world.feeAndPaymentJourney.customerPaymentModule();
         waitForTitleToBePresent("Application overview");
         List<String> licenceApplicationArray = Arrays.asList(Browser.navigate().findElement(By.xpath("//h2")).getText().split("/"));
