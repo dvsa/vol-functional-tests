@@ -14,7 +14,7 @@ Feature: Viewing messages tab as an internal user
     And the caseworker completes and submits the application
     Then the messaging heading should be displayed
 
-  @int-message-page-disply
+  @int-message-page-display
   Scenario: Check display of messages tab from a valid licence
     Given i have a valid "goods" "restricted" licence
     And i create an admin and url search for my licence
