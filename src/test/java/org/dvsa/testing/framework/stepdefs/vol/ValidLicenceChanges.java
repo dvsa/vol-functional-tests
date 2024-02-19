@@ -5,7 +5,6 @@ import activesupport.faker.FakerUtils;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.Injectors.World;
-import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -52,7 +51,7 @@ public class ValidLicenceChanges extends BasePage {
         waitAndEnterText("//*[@id='companyNo']", SelectorType.XPATH, companyNumber);
         world.universalActions.clickSubmit();
 //        waitAndClick("//*[@name='allow-email[allowEmail]']", SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
     }
 
     @Then("the changes to the business details page are made")
@@ -83,7 +82,7 @@ public class ValidLicenceChanges extends BasePage {
         replaceText("//*[@id='tc_phone_primary']", SelectorType.XPATH, phoneNumber);
         replaceText("//*[@id='tc_phone_secondary']", SelectorType.XPATH, secondaryPhoneNumber);
         replaceText("//*[@id='consultantContact[email]']", SelectorType.XPATH, email);
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
     }
 
     @Then("the changes to the addresses page are made")
@@ -127,7 +126,7 @@ public class ValidLicenceChanges extends BasePage {
         }
         waitForTextToBePresent("Tick the box");
         click("//*[@id='shareInfo[shareInfo]']", SelectorType.XPATH);
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
     }
 
     @Then("the changes to the vehicles page are made")
@@ -185,7 +184,7 @@ public class ValidLicenceChanges extends BasePage {
         world.selfServeUIJourney.addNewAddressDetails(newAddress, world.createApplication.getPostCodeByTrafficArea(), "address");
         world.universalActions.clickSubmit();
         waitForTextToBePresent("Safety inspectors");
-        UniversalActions.clickSaveAndReturn();
+        world.universalActions.clickSaveAndReturn();
     }
 
     @Then("the changes to the safety and compliance page are made")

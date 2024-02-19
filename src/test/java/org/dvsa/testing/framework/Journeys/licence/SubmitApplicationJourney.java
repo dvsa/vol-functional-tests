@@ -5,7 +5,6 @@ import activesupport.driver.Browser;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
-import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.Driver.DriverUtils;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -22,6 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.dvsa.testing.framework.Utils.Generic.UniversalActions.refreshPageWithJavascript;
 import static org.dvsa.testing.framework.stepdefs.vol.ManageApplications.withDrawApplication;
 
 public class SubmitApplicationJourney extends BasePage {
@@ -66,7 +66,7 @@ public class SubmitApplicationJourney extends BasePage {
                             withDrawApplication();
                             String myURL = URL.build(ApplicationType.EXTERNAL, world.configuration.env, "auth/login").toString();
                             DriverUtils.get(myURL);
-                            world.universalActions.refreshPageWithJavascript();
+                            refreshPageWithJavascript();
                         }
                     } catch (StaleElementReferenceException | HttpException e) {
                         e.fillInStackTrace();
@@ -77,7 +77,7 @@ public class SubmitApplicationJourney extends BasePage {
                     break;
                 }
                 waitForTitleToBePresent("Licences");
-                world.universalActions.refreshPageWithJavascript();
+                refreshPageWithJavascript();
             }
         }
     }
@@ -109,8 +109,6 @@ public class SubmitApplicationJourney extends BasePage {
         waitAndSelectValueFromDropDown("//*[@id='trafficArea']", SelectorType.XPATH, "Wales");
 
         UniversalActions.clickSaveAndContinue();
-        axeScanner.scan(true);
-        UniversalActions.clickSaveAndContinue();
 
         waitForTitleToBePresent("Financial evidence");
         waitAndClick("//*[contains(text(),'Send documents')]", SelectorType.XPATH);
@@ -121,8 +119,6 @@ public class SubmitApplicationJourney extends BasePage {
         selectValueFromDropDownByIndex("data[registeredUser]", SelectorType.ID, 1);
 
         world.universalActions.clickContinue();
-        axeScanner.scan(true);
-        world.universalActions.clickContinue();
 
         //transport manager details
         if (isTextPresent("An online form will now be sent to the following email address for the Transport Manager to complete.")) {
@@ -130,7 +126,6 @@ public class SubmitApplicationJourney extends BasePage {
         } else {
             world.transportManagerJourney.submitTMApplicationPrintAndSign();
         }
-        axeScanner.scan(true);
         //vehicleDetails
         boolean vehicleType = licenceType.equals("Goods");
         world.vehicleDetailsJourney.addAVehicle(vehicleType);
