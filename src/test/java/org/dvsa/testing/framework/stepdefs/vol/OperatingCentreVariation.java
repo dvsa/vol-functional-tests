@@ -6,6 +6,7 @@ import activesupport.IllegalBrowserException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
@@ -240,7 +241,7 @@ public class OperatingCentreVariation extends BasePage {
     @And("i increase total PSV authorisation to {string} vehicles")
     public void iIncreasePSVAuthorisation(String numberOfPSVVehicles) {
         replaceText("totAuthHgvVehicles", SelectorType.ID, numberOfPSVVehicles);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @Then("the increase in PSV authorisation is not allowed")

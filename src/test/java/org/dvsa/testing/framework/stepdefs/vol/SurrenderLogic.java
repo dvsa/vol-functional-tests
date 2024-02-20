@@ -10,6 +10,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
+import org.dvsa.testing.framework.Utils.Generic.UniversalActions;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.openqa.selenium.InvalidArgumentException;
@@ -39,7 +40,7 @@ public class SurrenderLogic extends BasePage {
         world.selfServeUIJourney.addNewAddressDetails(address, world.createApplication.getPostCodeByTrafficArea(), "correspondence_address");
         String contactNumber = "07123465976";
         replaceText("phone_primary", SelectorType.ID, contactNumber);
-        world.universalActions.clickSaveAndReturn();
+        UniversalActions.clickSaveAndReturn();
     }
 
     @Then("continue with application link is displayed")
