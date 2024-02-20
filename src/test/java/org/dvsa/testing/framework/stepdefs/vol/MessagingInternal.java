@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class MessagingInternal extends BasePage {
     @Then("the messaging heading should be displayed")
     public void theMessagingHeadingShouldBeDisplayed() {
-        assertTrue(isTextPresent("Messages"));
+        MessagingJourney.messageHeading();
     }
 
     @Then("the messaging heading should not be displayed")
     public void theMessagingHeadingShouldNotBeDisplayed() {
-        assertFalse(isTextPresent("Messages"));
+        MessagingJourney.messageHeading();
     }
 
     @And("i click the messages heading")
@@ -28,10 +28,7 @@ public class MessagingInternal extends BasePage {
 
     @Then("the internal messages page is displayed correctly")
     public void theInternalMessagesPageIsDisplayedCorrectly() {
-        assertTrue(isTextPresent("Conversations"));
-        assertTrue(isElementPresent("(//span[text()='Messages'])[2]", SelectorType.XPATH));
-        assertTrue(isElementPresent("New Conversation", SelectorType.LINKTEXT));
-        assertTrue(isElementPresent("Disable Messaging", SelectorType.LINKTEXT));
+        MessagingJourney.internalMessagePageDisplay();
     }
 
     @And("i create a new conversation to operator")

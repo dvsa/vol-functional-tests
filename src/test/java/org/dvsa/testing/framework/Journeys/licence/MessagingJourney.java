@@ -19,6 +19,17 @@ public class MessagingJourney extends BasePage {
     private static World world;
 
 
+    public static void messageHeading(){
+        assertTrue(isTextPresent("Messages"));
+    }
+
+
+    public static void internalMessagePageDisplay(){
+        assertTrue(isTextPresent("Conversations"));
+        assertTrue(isElementPresent("(//span[text()='Messages'])[2]", SelectorType.XPATH));
+        assertTrue(isElementPresent("New Conversation", SelectorType.LINKTEXT));
+        assertTrue(isElementPresent("Disable Messaging", SelectorType.LINKTEXT));
+    }
     public static void createConversation() {
         click("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
         selectRandomValueFromDropDown("//*[@id='subject']", SelectorType.XPATH);
