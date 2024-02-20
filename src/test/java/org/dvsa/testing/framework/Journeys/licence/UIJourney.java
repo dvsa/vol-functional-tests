@@ -223,7 +223,11 @@ public class UIJourney extends BasePage {
     }
 
     public void completeFinancialEvidencePage() {
-        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
+        if (isElementPresent("//tr[@class='govuk-table__row']", SelectorType.XPATH)) {
+            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.FINANCIAL_EVIDENCE);
+        } else {
+            clickByLinkText("Financial evidence");
+        }
         click(uploadLaterRadioButton, SelectorType.XPATH);
         clickSaveAndReturn();
     }
@@ -248,7 +252,11 @@ public class UIJourney extends BasePage {
     }
 
     public void signDeclarationForVariation() {
-        world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
+        if (isElementPresent("//tr[@class='govuk-table__row']", SelectorType.XPATH)) {
+            world.selfServeNavigation.navigateToPage("variation", SelfServeSection.REVIEW_AND_DECLARATIONS);
+        } else {
+            clickByLinkText("Review and declarations");
+        }
         click("declarationsAndUndertakings[declarationConfirmation]", SelectorType.ID);
         if (size("//*[@id='submitAndPay']", SelectorType.XPATH) != 0) {
             click("//*[@id='submitAndPay']", SelectorType.XPATH);
@@ -344,6 +352,18 @@ public class UIJourney extends BasePage {
         waitAndClick(submitButton, SelectorType.ID);
     }
 
+    public void loginIntoInternalAsExistingAdmin() {
+        String user = world.configuration.config.getString("adminUser");
+        String password = world.configuration.config.getString("defaultPassword");
+
+        String internalURL = URL.build(ApplicationType.INTERNAL, world.configuration.env, "auth/login").toString();
+        get(internalURL);
+        if (isElementPresent("declarationRead", SelectorType.ID)) {
+            waitAndClick("declarationRead", SelectorType.ID);
+        }
+        world.globalMethods.signIn(user, password);
+    }
+
     public void addAndPublishHearing() {
         waitForTextToBePresent("Add hearing");
         clickByLinkText("Add hearing");
@@ -403,13 +423,12 @@ public class UIJourney extends BasePage {
     }
 
     public void changeLicenceForVariation() {
-        refreshPageWithJavascript();
-        waitForPageLoad();
-        waitForElementToBePresent("//*[contains(text(),'change your licence')]");
-        waitAndClick("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
+        waitForTextToBePresent( world.applicationDetails.getLicenceNumber());
+        waitForElementToBeClickable("//*[contains(text(),'change your licence')]", SelectorType.XPATH);
+        clickByLinkText("change your licence");
         waitForTextToBePresent("Applying to change a licence");
         waitAndClick(submitButton, SelectorType.ID);
-        refreshPage();
+        refreshPageWithJavascript();
         String url = navigate().getCurrentUrl();
         world.updateLicence.setVariationApplicationId(returnNthNumberSequenceInString(url, 1));
     }
