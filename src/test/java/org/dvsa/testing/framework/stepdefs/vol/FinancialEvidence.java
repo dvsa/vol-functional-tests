@@ -79,7 +79,7 @@ public class FinancialEvidence extends BasePage {
                 this.licences.get(world.createApplication.getLicenceId())[4] = newLGVTotalAuthority;
             }
         }
-        world.selfServeNavigation.getVariationFinancialEvidencePage();
+        clickByLinkText("Financial evidence");
         int actualFinancialEvidenceValue = getFinancialValueFromPage();
         expectedFinancialEvidenceValue = calculateExpectedFinancialEvidenceValue(licences);
         this.licences = new HashMap<>();
