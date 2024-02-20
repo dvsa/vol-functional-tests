@@ -19,7 +19,7 @@ public class UniversalActions extends BasePage {
         this.world = world;
     }
 
-    public void refreshPageWithJavascript() {javaScriptExecutor("location.reload(true)");
+    public static void refreshPageWithJavascript() {javaScriptExecutor("location.reload(true)");
     }
 
     public List<WebElement> getTableBodyRowList() {
