@@ -17,4 +17,15 @@ public class MessagingSelfServe extends BasePage {
         MessagingInternal.iClickTheMessagesHeading();
         MessagingJourney.replyForMessage();
     }
+
+    @Then("i view the new message that the caseworker has sent")
+    public void iViewTheNewMessageThatTheCaseworkerHasSent() {
+        MessagingInternal.iClickTheMessagesHeading();
+        MessagingJourney.viewNewMessage();
+    }
+
+    @And("i have opened a new message, which will appear as open")
+    public void iHaveOpenedANewMessageWhichWillAppearAsOpen() {
+        MessagingJourney.openMessageStatusCheck();
+    }
 }

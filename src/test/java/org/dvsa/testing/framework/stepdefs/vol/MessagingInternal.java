@@ -34,6 +34,7 @@ public class MessagingInternal extends BasePage {
     @And("i create a new conversation to operator")
     public void iCreateANewConversationToOperator() {
         MessagingJourney.createConversation();
+        MessagingJourney.openMessageStatusCheck();
     }
 
     @Then("i end and archive the conversation")

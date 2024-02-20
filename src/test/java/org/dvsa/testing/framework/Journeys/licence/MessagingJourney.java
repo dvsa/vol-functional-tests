@@ -5,7 +5,6 @@ import org.dvsa.testing.framework.Injectors.World;
 import org.dvsa.testing.framework.pageObjects.BasePage;
 import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 
-import static org.dvsa.testing.framework.pageObjects.external.pages.CabotagePage.yesAndCabotagePermitConfirmation;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,17 +18,18 @@ public class MessagingJourney extends BasePage {
     private static World world;
 
 
-    public static void messageHeading(){
+    public static void messageHeading() {
         assertTrue(isTextPresent("Messages"));
     }
 
 
-    public static void internalMessagePageDisplay(){
+    public static void internalMessagePageDisplay() {
         assertTrue(isTextPresent("Conversations"));
         assertTrue(isElementPresent("(//span[text()='Messages'])[2]", SelectorType.XPATH));
         assertTrue(isElementPresent("New Conversation", SelectorType.LINKTEXT));
         assertTrue(isElementPresent("Disable Messaging", SelectorType.LINKTEXT));
     }
+
     public static void createConversation() {
         click("//*[contains(text(),'New Conversation')]", SelectorType.XPATH);
         selectRandomValueFromDropDown("//*[@id='subject']", SelectorType.XPATH);
@@ -39,7 +39,8 @@ public class MessagingJourney extends BasePage {
     }
 
     public static void replyForMessage() {
-        if (getText("//*/strong[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH).equals("NEW MESSAGE"));
+        if (getText("//*/strong[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH).equals("NEW MESSAGE"))
+            ;
         waitAndClick("//*[contains(@class,'govuk-body govuk-link govuk-!-padding-right-1 govuk-!-font-weight-bold')]", SelectorType.XPATH);
         click("//span[contains(@class,'govuk-details__summary-text')]", SelectorType.XPATH);
         click("//*[@id='form-actions[reply]']", SelectorType.XPATH);
@@ -54,7 +55,7 @@ public class MessagingJourney extends BasePage {
         assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--grey')]", SelectorType.XPATH), "CLOSED");
     }
 
-    public static void createNewConversation(){
+    public static void createNewConversation() {
         clickByLinkText("Start a new conversation");
         selectRandomValueFromDropDown("//*[@id='form-actions[messageSubject]']", SelectorType.XPATH);
         click("//*[@id='form-actions[appOrLicNo]']", SelectorType.XPATH);
@@ -63,19 +64,29 @@ public class MessagingJourney extends BasePage {
         clickById("send");
     }
 
-    public static void selectMessageCheckBox(){
+    public static void selectMessageCheckBox() {
         selectValueFromDropDown("//*[@id='assignedToTeam']", SelectorType.XPATH, "Leeds Licensing Goods");
         clickById("date");
         selectValueFromDropDown("//*[@id='status']", SelectorType.XPATH, "Open");
         click("//*[@id='messaging']", SelectorType.XPATH);
     }
 
-    public static void checkForNewTask(){
-        if(isTextPresent("results per page")) {
+    public static void checkForNewTask() {
+        if (isTextPresent("results per page")) {
             waitAndClick("//*[@id='main']//div[3]/nav[1]/ul/li[3]/a", SelectorType.XPATH);
             selectMessageCheckBox();
-        } else if (isTextPresent(world.applicationDetails.getLicenceNumber()));
+        } else if (isTextPresent(world.applicationDetails.getLicenceNumber())) ;
         assertTrue(isTextPresent(world.applicationDetails.getLicenceNumber()));
+    }
+
+    public static void viewNewMessage() {
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--red')]", SelectorType.XPATH), "NEW MESSAGE");
+        click("//*[@id='main-content']//tbody/tr[1]/td[1]/a", SelectorType.XPATH);
+    }
+
+    public static void openMessageStatusCheck() {
+        clickByLinkText("Messages");
+        assertEquals(getText("//*[contains(@class,'govuk-tag govuk-tag--blue')]", SelectorType.XPATH), "OPEN");
     }
 
 }
