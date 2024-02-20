@@ -46,7 +46,7 @@ public class UniversalActions extends BasePage {
         waitAndClick("form-actions[continue]", SelectorType.ID);
     }
 
-    public void clickSaveAndReturn() {
+    public static void clickSaveAndReturn() {
         waitAndClick("//*[@id='form-actions[save]']", SelectorType.XPATH);
     }
 
