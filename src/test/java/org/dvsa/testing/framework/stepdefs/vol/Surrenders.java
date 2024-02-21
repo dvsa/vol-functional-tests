@@ -1,5 +1,6 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.apache.hc.core5.http.HttpException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.system.Properties;
@@ -14,7 +15,7 @@ import org.dvsa.testing.framework.pageObjects.enums.SelectorType;
 import org.dvsa.testing.lib.url.utils.EnvironmentType;
 import org.openqa.selenium.WebElement;
 
-import java.net.MalformedURLException;
+import java.io.IOException;
 
 import static org.dvsa.testing.framework.Journeys.licence.UIJourney.refreshPageWithJavascript;
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,7 +26,7 @@ public class Surrenders extends BasePage {
     public Surrenders(World world) {this.world = world;}
 
     @When("i surrender my licence to the review discs and documentation page")
-    public void iSurrenderMyLicenceToTheReviewDiscsAndDocumentationPage() {
+    public void iSurrenderMyLicenceToTheReviewDiscsAndDocumentationPage() throws IllegalBrowserException, IOException {
         world.surrenderJourney.submitSurrenderUntilReviewPage();
     }
 
@@ -59,7 +60,7 @@ public class Surrenders extends BasePage {
         assertEquals("stolen", communityLicenceDocumentStatus);
     }
     @And("i choose to surrender my licence with {string}")
-    public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) throws MalformedURLException {
+    public void iChooseToSurrenderMyLicenceWith(String surrenderMethod) throws IOException, IllegalBrowserException {
         world.surrenderJourney.submitSurrenderUntilChoiceOfVerification();
         EnvironmentType env = EnvironmentType.getEnum(Properties.get("env", true));
         if (surrenderMethod.equalsIgnoreCase("gov-sign-in")) {

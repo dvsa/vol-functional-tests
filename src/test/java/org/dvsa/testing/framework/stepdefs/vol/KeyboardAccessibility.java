@@ -1,11 +1,14 @@
 package org.dvsa.testing.framework.stepdefs.vol;
 
+import activesupport.IllegalBrowserException;
 import org.dvsa.testing.framework.Injectors.World;
 import activesupport.driver.Browser;
 import io.cucumber.java.en.When;
 import org.dvsa.testing.framework.enums.SelfServeNavBar;
 import org.dvsa.testing.framework.enums.SelfServeSection;
 import org.dvsa.testing.framework.pageObjects.BasePage;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -75,7 +78,7 @@ public class KeyboardAccessibility extends BasePage {
     }
 
     @When("i navigate to self serve licence surrender pages i can skip to main content")
-    public void iNavigateToSelfServeLicenceSurrenderPagesICanSkipToMainContent() {
+    public void iNavigateToSelfServeLicenceSurrenderPagesICanSkipToMainContent() throws IllegalBrowserException, IOException {
         world.surrenderJourney.navigateToSurrendersStartPage();
         world.UIJourney.skipToMainContentAndCheck();
         world.surrenderJourney.startSurrender();
